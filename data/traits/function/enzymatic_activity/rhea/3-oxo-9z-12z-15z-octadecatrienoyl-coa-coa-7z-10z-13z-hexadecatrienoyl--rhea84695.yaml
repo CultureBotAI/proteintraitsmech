@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:233842
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,94 @@ definitions:
       Catalyses the reaction: 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA + CoA = (7Z,10Z,13Z)-hexadecatrienoyl-CoA + acetyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA + CoA = (7Z,10Z,13Z)-hexadecatrienoyl-CoA
+    + ace…
+  description: Substrate-to-product chemistry of RHEA:84695, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:84696 (rh:substrates → 84695_L, rh:products → 84695_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA + CoA = (7Z,10Z,13Z)-hexadecatrienoy…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:84695
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA + CoA = (7Z,10Z,13Z)-hexadecatrienoyl-CoA
+      + acetyl-CoA'
+  - node_id: sub1
+    label: 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:233842
+    description: Formula C39H58N7O18P3S.
+  - node_id: sub2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd1
+    label: (7Z,10Z,13Z)-hexadecatrienoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:177091
+    description: Formula C37H56N7O17P3S.
+  - node_id: prd2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:84696
+      snippet: 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA + CoA => (7Z,10Z,13Z)-hexadecatrienoyl-CoA + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:84696 declares side 84695_L as its substrates
+        (rh:substrates); the master reaction RHEA:84695 is undirected. This participant is CHEBI:233842
+        with coefficient 1. Rhea cites PMID:26474213 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84696
+      snippet: 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA + CoA => (7Z,10Z,13Z)-hexadecatrienoyl-CoA + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:84696 declares side 84695_L as its substrates
+        (rh:substrates); the master reaction RHEA:84695 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:26474213 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (7Z,10Z,13Z)-hexadecatrienoyl-CoA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:84696
+      snippet: 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA + CoA => (7Z,10Z,13Z)-hexadecatrienoyl-CoA + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:84696 declares side 84695_R as its products
+        (rh:products); the master reaction RHEA:84695 is undirected. This participant is CHEBI:177091
+        with coefficient 1. Rhea cites PMID:26474213 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84696
+      snippet: 3-oxo-(9Z,12Z,15Z)-octadecatrienoyl-CoA + CoA => (7Z,10Z,13Z)-hexadecatrienoyl-CoA + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:84696 declares side 84695_R as its products
+        (rh:products); the master reaction RHEA:84695 is undirected. This participant is CHEBI:57288 with
+        coefficient 1. Rhea cites PMID:26474213 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

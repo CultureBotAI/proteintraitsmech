@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -38,4 +38,135 @@ definitions:
       Catalyses: dTDP-alpha-D-glucose = dTDP-4-dehydro-6-deoxy-alpha-D-glucose + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dTDP-glucose 4,6-dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.46. EC 4.2.1.46 maps to exactly
+    one curated Rhea reaction (RHEA:17221), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dTDP-alpha-D-glucose
+    = dTDP-4-dehydro-6-deoxy-alpha-D-glucose + H2O". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dTDP-glucose 4,6-dehydratase
+    grounding: EC:4.2.1.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dTDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:57477
+    description: Formula C16H24N2O16P2.
+  - node_id: prd1
+    label: dTDP-4-dehydro-6-deoxy-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:57649
+    description: Formula C16H22N2O15P2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dTDP-glucose 4,6-dehydratase activity
+    grounding: GO:0008460
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9L9E8
+    node_type: PROTEIN
+    label: NOVT_STRNV
+    grounding: UniProtKB:Q9L9E8
+  - node_id: prot_Q9RR28
+    node_type: PROTEIN
+    label: OLEE_STRAT
+    grounding: UniProtKB:Q9RR28
+  - node_id: prot_P55462
+    node_type: PROTEIN
+    label: RFBB_SINFN
+    grounding: UniProtKB:P55462
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTDP-alpha-D-glucose is a substrate consumed by RHEA:17221 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17222
+      snippet: dTDP-alpha-D-glucose => dTDP-4-dehydro-6-deoxy-alpha-D-glucose + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:17222 declares side 17221_L as its substrates
+        (rh:substrates); the master reaction RHEA:17221 is undirected. This participant is CHEBI:57477
+        with coefficient 1. Rhea cites PMID:11601973, PMID:12672826, PMID:11380254, PMID:11796113 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTDP-4-dehydro-6-deoxy-alpha-D-glucose is a product released by RHEA:17221 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17222
+      snippet: dTDP-alpha-D-glucose => dTDP-4-dehydro-6-deoxy-alpha-D-glucose + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:17222 declares side 17221_R as its products
+        (rh:products); the master reaction RHEA:17221 is undirected. This participant is CHEBI:57649 with
+        coefficient 1. Rhea cites PMID:11601973, PMID:12672826, PMID:11380254, PMID:11796113 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:17221 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17222
+      snippet: dTDP-alpha-D-glucose => dTDP-4-dehydro-6-deoxy-alpha-D-glucose + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:17222 declares side 17221_R as its products
+        (rh:products); the master reaction RHEA:17221 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:11601973, PMID:12672826, PMID:11380254, PMID:11796113 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.46
+      snippet: EC:4.2.1.46 > GO:dTDP-glucose 4,6-dehydratase activity ; GO:0008460
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008460 is itself a record
+        in this KB.
+  - subject: prot_Q9L9E8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NOVT_STRNV is an exemplar enzyme with EC 4.2.1.46 activity.
+    evidence:
+    - reference: EC:4.2.1.46
+      snippet: DR   Q9L9E8, NOVT_STRNV ;  Q9RR28, OLEE_STRAT ;  P55462, RFBB_SINFN ;
+      notes: ExPASy ENZYME entry EC 4.2.1.46 cross-references UniProtKB:Q9L9E8 (NOVT_STRNV) as a protein
+        with this activity.
+  - subject: prot_Q9RR28
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLEE_STRAT is an exemplar enzyme with EC 4.2.1.46 activity.
+    evidence:
+    - reference: EC:4.2.1.46
+      snippet: DR   Q9L9E8, NOVT_STRNV ;  Q9RR28, OLEE_STRAT ;  P55462, RFBB_SINFN ;
+      notes: ExPASy ENZYME entry EC 4.2.1.46 cross-references UniProtKB:Q9RR28 (OLEE_STRAT) as a protein
+        with this activity.
+  - subject: prot_P55462
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RFBB_SINFN is an exemplar enzyme with EC 4.2.1.46 activity.
+    evidence:
+    - reference: EC:4.2.1.46
+      snippet: DR   Q9L9E8, NOVT_STRNV ;  Q9RR28, OLEE_STRAT ;  P55462, RFBB_SINFN ;
+      notes: ExPASy ENZYME entry EC 4.2.1.46 cross-references UniProtKB:P55462 (RFBB_SINFN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

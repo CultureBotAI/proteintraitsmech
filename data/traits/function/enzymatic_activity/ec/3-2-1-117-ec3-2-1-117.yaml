@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -38,4 +38,146 @@ definitions:
       Catalyses: (R)-amygdalin + H2O = (R)-prunasin + D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of amygdalin beta-glucosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.117. EC 3.2.1.117 maps to
+    exactly one curated Rhea reaction (RHEA:14177), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-amygdalin
+    + H2O = (R)-prunasin + D-glucose". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: amygdalin beta-glucosidase
+    grounding: EC:3.2.1.117
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-amygdalin
+    node_type: CHEMICAL
+    grounding: CHEBI:17019
+    description: Formula C20H27NO11.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (R)-prunasin
+    node_type: CHEMICAL
+    grounding: CHEBI:17396
+    description: Formula C14H17NO6.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: amygdalin beta-glucosidase activity
+    grounding: GO:0047668
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P29259
+    node_type: PROTEIN
+    label: AH1_PRUSE
+    grounding: UniProtKB:P29259
+  - node_id: prot_P29260
+    node_type: PROTEIN
+    label: AH2_PRUSE
+    grounding: UniProtKB:P29260
+  - node_id: prot_P29261
+    node_type: PROTEIN
+    label: AH3_PRUSE
+    grounding: UniProtKB:P29261
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-amygdalin is a substrate consumed by RHEA:14177 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14178
+      snippet: (R)-amygdalin + H2O => (R)-prunasin + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:14178 declares side 14177_L as its substrates
+        (rh:substrates); the master reaction RHEA:14177 is undirected. This participant is CHEBI:17019
+        with coefficient 1. Rhea cites PMID:16652959 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:14177 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14178
+      snippet: (R)-amygdalin + H2O => (R)-prunasin + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:14178 declares side 14177_L as its substrates
+        (rh:substrates); the master reaction RHEA:14177 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16652959 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-prunasin is a product released by RHEA:14177 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14178
+      snippet: (R)-amygdalin + H2O => (R)-prunasin + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:14178 declares side 14177_R as its products
+        (rh:products); the master reaction RHEA:14177 is undirected. This participant is CHEBI:17396 with
+        coefficient 1. Rhea cites PMID:16652959 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by RHEA:14177 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14178
+      snippet: (R)-amygdalin + H2O => (R)-prunasin + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:14178 declares side 14177_R as its products
+        (rh:products); the master reaction RHEA:14177 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:16652959 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.117
+      snippet: EC:3.2.1.117 > GO:amygdalin beta-glucosidase activity ; GO:0047668
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047668 is itself a record
+        in this KB.
+  - subject: prot_P29259
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AH1_PRUSE is an exemplar enzyme with EC 3.2.1.117 activity.
+    evidence:
+    - reference: EC:3.2.1.117
+      snippet: DR   P29259, AH1_PRUSE  ;  P29260, AH2_PRUSE  ;  P29261, AH3_PRUSE  ;
+      notes: ExPASy ENZYME entry EC 3.2.1.117 cross-references UniProtKB:P29259 (AH1_PRUSE) as a protein
+        with this activity.
+  - subject: prot_P29260
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AH2_PRUSE is an exemplar enzyme with EC 3.2.1.117 activity.
+    evidence:
+    - reference: EC:3.2.1.117
+      snippet: DR   P29259, AH1_PRUSE  ;  P29260, AH2_PRUSE  ;  P29261, AH3_PRUSE  ;
+      notes: ExPASy ENZYME entry EC 3.2.1.117 cross-references UniProtKB:P29260 (AH2_PRUSE) as a protein
+        with this activity.
+  - subject: prot_P29261
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AH3_PRUSE is an exemplar enzyme with EC 3.2.1.117 activity.
+    evidence:
+    - reference: EC:3.2.1.117
+      snippet: DR   P29259, AH1_PRUSE  ;  P29260, AH2_PRUSE  ;  P29261, AH3_PRUSE  ;
+      notes: ExPASy ENZYME entry EC 3.2.1.117 cross-references UniProtKB:P29261 (AH3_PRUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

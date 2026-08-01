@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.99.-
 mapped_xrefs:
@@ -25,4 +25,74 @@ definitions:
       Catalyses: a 16alpha-hydroxysteroid = a 16beta-hydroxysteroid
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 16-hydroxysteroid epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.99.2. EC 5.1.99.2 maps to exactly
+    one curated Rhea reaction (RHEA:15829), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 16alpha-hydroxysteroid
+    = a 16beta-hydroxysteroid". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 16-hydroxysteroid epimerase
+    grounding: EC:5.1.99.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 16alpha-hydroxysteroid
+    node_type: CHEMICAL
+    grounding: CHEBI:16799
+    description: Formula C19H31OR.
+  - node_id: prd1
+    label: a 16beta-hydroxysteroid
+    node_type: CHEMICAL
+    grounding: CHEBI:17354
+    description: Formula C19H31OR.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 16-hydroxysteroid epimerase activity
+    grounding: GO:0047524
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 16alpha-hydroxysteroid is a substrate consumed by RHEA:15829 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15830
+      snippet: a 16alpha-hydroxysteroid => a 16beta-hydroxysteroid
+      notes: Rhea's left-to-right directional reaction RHEA:15830 declares side 15829_L as its substrates
+        (rh:substrates); the master reaction RHEA:15829 is undirected. This participant is CHEBI:16799
+        with coefficient 1. Rhea cites PMID:5657462 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 16beta-hydroxysteroid is a product released by RHEA:15829 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15830
+      snippet: a 16alpha-hydroxysteroid => a 16beta-hydroxysteroid
+      notes: Rhea's left-to-right directional reaction RHEA:15830 declares side 15829_R as its products
+        (rh:products); the master reaction RHEA:15829 is undirected. This participant is CHEBI:17354 with
+        coefficient 1. Rhea cites PMID:5657462 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.99.2
+      snippet: EC:5.1.99.2 > GO:16-hydroxysteroid epimerase activity ; GO:0047524
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047524 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

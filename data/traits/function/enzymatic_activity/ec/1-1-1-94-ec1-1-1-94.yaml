@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -51,4 +51,286 @@ definitions:
       Catalyses: (1) sn-glycerol 3-phosphate + NAD(+) = dihydroxyacetone phosphate + NADH + H(+). (2) sn-glycerol 3-phosphate + NADP(+) = dihydroxyacetone phosphate + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glycerol-3-phosphate dehydrogenase [NAD(P)(+)]
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.94. Rhea assigns 2 curated
+    reactions to EC 1.1.1.94. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) sn-glycerol 3-phosphate + NAD(+) = dihydroxyacetone
+    phosphate + NADH + H(+). (2) sn-glycerol 3-phosphate + NADP(+) = dihydroxyacetone phosphate + NADPH
+    + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glycerol-3-phosphate dehydrogenase [NAD(P)(+)]
+    grounding: EC:1.1.1.94
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of sn-glycerol 3-phosphate + NAD(+) = dihydroxyacetone phosphate + NADH + H(+)
+    grounding: RHEA:11092
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: sn-glycerol 3-phosphate + NAD(+) = dihydroxyacetone phosphate + NADH +
+      H(+)'
+  - node_id: rxn1_sub1
+    label: sn-glycerol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+    description: Formula C3H7O6P.
+  - node_id: rxn1_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn1_prd1
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: rxn1_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of sn-glycerol 3-phosphate + NADP(+) = dihydroxyacetone phosphate + NADPH + H(+)
+    grounding: RHEA:11096
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: sn-glycerol 3-phosphate + NADP(+) = dihydroxyacetone phosphate + NADPH
+      + H(+)'
+  - node_id: rxn2_sub1
+    label: sn-glycerol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+    description: Formula C3H7O6P.
+  - node_id: rxn2_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_prd1
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glycerol-3-phosphate dehydrogenase [NAD(P)+] activity
+    grounding: GO:0047952
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q93FD0
+    node_type: PROTEIN
+    label: GPDA1_LACDA
+    grounding: UniProtKB:Q93FD0
+  - node_id: prot_P64189
+    node_type: PROTEIN
+    label: GPDA1_MYCBO
+    grounding: UniProtKB:P64189
+  - node_id: prot_P61743
+    node_type: PROTEIN
+    label: GPDA1_MYCPA
+    grounding: UniProtKB:P61743
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:11092 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.94; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:11092
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.94"/>
+      notes: The rh:ec triple on RHEA:11092 in rhea.rdf assigns that reaction to EC 1.1.1.94.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: sn-glycerol 3-phosphate is a substrate consumed by RHEA:11092 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11093
+      snippet: sn-glycerol 3-phosphate + NAD(+) => dihydroxyacetone phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11093 declares side 11092_L as its substrates
+        (rh:substrates); the master reaction RHEA:11092 is undirected. This participant is CHEBI:57597
+        with coefficient 1. Rhea cites PMID:15557260, PMID:22645576, PMID:4307630, PMID:1499720 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NAD(+) is a substrate consumed by RHEA:11092 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11093
+      snippet: sn-glycerol 3-phosphate + NAD(+) => dihydroxyacetone phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11093 declares side 11092_L as its substrates
+        (rh:substrates); the master reaction RHEA:11092 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:15557260, PMID:22645576, PMID:4307630, PMID:1499720 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: dihydroxyacetone phosphate is a product released by RHEA:11092 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11093
+      snippet: sn-glycerol 3-phosphate + NAD(+) => dihydroxyacetone phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11093 declares side 11092_R as its products
+        (rh:products); the master reaction RHEA:11092 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:15557260, PMID:22645576, PMID:4307630, PMID:1499720 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADH is a product released by RHEA:11092 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11093
+      snippet: sn-glycerol 3-phosphate + NAD(+) => dihydroxyacetone phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11093 declares side 11092_R as its products
+        (rh:products); the master reaction RHEA:11092 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:15557260, PMID:22645576, PMID:4307630, PMID:1499720 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:11092 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11093
+      snippet: sn-glycerol 3-phosphate + NAD(+) => dihydroxyacetone phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11093 declares side 11092_R as its products
+        (rh:products); the master reaction RHEA:11092 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15557260, PMID:22645576, PMID:4307630, PMID:1499720 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:11096 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.94; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:11096
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.94"/>
+      notes: The rh:ec triple on RHEA:11096 in rhea.rdf assigns that reaction to EC 1.1.1.94.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: sn-glycerol 3-phosphate is a substrate consumed by RHEA:11096 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11097
+      snippet: sn-glycerol 3-phosphate + NADP(+) => dihydroxyacetone phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11097 declares side 11096_L as its substrates
+        (rh:substrates); the master reaction RHEA:11096 is undirected. This participant is CHEBI:57597
+        with coefficient 1. Rhea cites PMID:15557260, PMID:6767719, PMID:355254, PMID:4389388 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADP(+) is a substrate consumed by RHEA:11096 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11097
+      snippet: sn-glycerol 3-phosphate + NADP(+) => dihydroxyacetone phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11097 declares side 11096_L as its substrates
+        (rh:substrates); the master reaction RHEA:11096 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:15557260, PMID:6767719, PMID:355254, PMID:4389388 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: dihydroxyacetone phosphate is a product released by RHEA:11096 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11097
+      snippet: sn-glycerol 3-phosphate + NADP(+) => dihydroxyacetone phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11097 declares side 11096_R as its products
+        (rh:products); the master reaction RHEA:11096 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:15557260, PMID:6767719, PMID:355254, PMID:4389388 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:11096 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11097
+      snippet: sn-glycerol 3-phosphate + NADP(+) => dihydroxyacetone phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11097 declares side 11096_R as its products
+        (rh:products); the master reaction RHEA:11096 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:15557260, PMID:6767719, PMID:355254, PMID:4389388 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:11096 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11097
+      snippet: sn-glycerol 3-phosphate + NADP(+) => dihydroxyacetone phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11097 declares side 11096_R as its products
+        (rh:products); the master reaction RHEA:11096 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15557260, PMID:6767719, PMID:355254, PMID:4389388 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.1.94
+      snippet: EC:1.1.1.94 > GO:glycerol-3-phosphate dehydrogenase [NAD(P)+] activity ; GO:0047952
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047952 is itself a record
+        in this KB.
+  - subject: prot_Q93FD0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPDA1_LACDA is an exemplar enzyme with EC 1.1.1.94 activity.
+    evidence:
+    - reference: EC:1.1.1.94
+      snippet: DR   Q93FD0, GPDA1_LACDA;  P64189, GPDA1_MYCBO;  P61743, GPDA1_MYCPA;
+      notes: ExPASy ENZYME entry EC 1.1.1.94 cross-references UniProtKB:Q93FD0 (GPDA1_LACDA) as a protein
+        with this activity.
+  - subject: prot_P64189
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPDA1_MYCBO is an exemplar enzyme with EC 1.1.1.94 activity.
+    evidence:
+    - reference: EC:1.1.1.94
+      snippet: DR   Q93FD0, GPDA1_LACDA;  P64189, GPDA1_MYCBO;  P61743, GPDA1_MYCPA;
+      notes: ExPASy ENZYME entry EC 1.1.1.94 cross-references UniProtKB:P64189 (GPDA1_MYCBO) as a protein
+        with this activity.
+  - subject: prot_P61743
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPDA1_MYCPA is an exemplar enzyme with EC 1.1.1.94 activity.
+    evidence:
+    - reference: EC:1.1.1.94
+      snippet: DR   Q93FD0, GPDA1_LACDA;  P64189, GPDA1_MYCBO;  P61743, GPDA1_MYCPA;
+      notes: ExPASy ENZYME entry EC 1.1.1.94 cross-references UniProtKB:P61743 (GPDA1_MYCPA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

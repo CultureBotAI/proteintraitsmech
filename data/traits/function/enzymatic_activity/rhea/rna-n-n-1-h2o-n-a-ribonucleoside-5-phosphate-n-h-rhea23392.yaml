@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:140395
     role: SUBSTRATE_OR_PRODUCT
@@ -33,4 +33,96 @@ definitions:
       Catalyses the reaction: RNA(n) + (n-1) H2O = n a ribonucleoside 5'-phosphate + n H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of RNA(n) + (n-1) H2O = n a ribonucleoside 5'-phosphate + n H(+)
+  description: Substrate-to-product chemistry of RHEA:23392, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23393 (rh:substrates → 23392_L, rh:products → 23392_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of RNA(n) + (n-1) H2O = n a ribonucleoside 5'-phosphate + n H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23392
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: RNA(n) + (n-1) H2O = n a ribonucleoside 5''-phosphate + n H(+)'
+  - node_id: sub1
+    label: RNA(n)
+    node_type: CHEMICAL
+    grounding: CHEBI:140395
+    xrefs:
+    - RHEA-COMP:14527
+    description: Rhea compound POLYMER:14527. Formula H2O(C5H7O6PR)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a ribonucleoside 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58043
+    description: Formula C5H8O7PR.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: RNA(n) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23393
+      snippet: RNA(n) + (n-1) H2O => n a ribonucleoside 5'-phosphate + n H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23393 declares side 23392_L as its substrates
+        (rh:substrates); the master reaction RHEA:23392 is undirected. This participant is POLYMER:14527
+        with coefficient 1. Rhea cites PMID:7608167, PMID:2434925, PMID:8417335, PMID:6244307 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient (n-1)).
+    evidence:
+    - reference: RHEA:23393
+      snippet: RNA(n) + (n-1) H2O => n a ribonucleoside 5'-phosphate + n H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23393 declares side 23392_L as its substrates
+        (rh:substrates); the master reaction RHEA:23392 is undirected. This participant is CHEBI:15377
+        with coefficient (n-1). Rhea cites PMID:7608167, PMID:2434925, PMID:8417335, PMID:6244307 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a ribonucleoside 5'-phosphate is a product released by this reaction (stoichiometric
+      coefficient n).
+    evidence:
+    - reference: RHEA:23393
+      snippet: RNA(n) + (n-1) H2O => n a ribonucleoside 5'-phosphate + n H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23393 declares side 23392_R as its products
+        (rh:products); the master reaction RHEA:23392 is undirected. This participant is CHEBI:58043 with
+        coefficient n. Rhea cites PMID:7608167, PMID:2434925, PMID:8417335, PMID:6244307 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:23393
+      snippet: RNA(n) + (n-1) H2O => n a ribonucleoside 5'-phosphate + n H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23393 declares side 23392_R as its products
+        (rh:products); the master reaction RHEA:23392 is undirected. This participant is CHEBI:15378 with
+        coefficient n. Rhea cites PMID:7608167, PMID:2434925, PMID:8417335, PMID:6244307 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

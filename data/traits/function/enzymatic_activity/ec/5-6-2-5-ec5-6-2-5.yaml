@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.6.2.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: n ATP + n H2O + wound RNA = n ADP + n phosphate + unwound RNA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of RNA 5'-3' helicase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.6.2.5. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "n ATP +
+    n H2O + wound RNA = n ADP + n phosphate + unwound RNA".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: RNA 5'-3' helicase
+    grounding: EC:5.6.2.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 5'-3' RNA helicase activity
+    grounding: GO:0032574
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q6J5K9
+    node_type: PROTEIN
+    label: ARMI_DROME
+    grounding: UniProtKB:Q6J5K9
+  - node_id: prot_Q1LXK4
+    node_type: PROTEIN
+    label: M10B1_DANRE
+    grounding: UniProtKB:Q1LXK4
+  - node_id: prot_Q1LXK5
+    node_type: PROTEIN
+    label: M10B2_DANRE
+    grounding: UniProtKB:Q1LXK5
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.6.2.5
+      snippet: EC:5.6.2.5 > GO:5'-3' RNA helicase activity ; GO:0032574
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0032574 is itself a record
+        in this KB.
+  - subject: prot_Q6J5K9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARMI_DROME is an exemplar enzyme with EC 5.6.2.5 activity.
+    evidence:
+    - reference: EC:5.6.2.5
+      snippet: DR   Q6J5K9, ARMI_DROME ;  Q1LXK4, M10B1_DANRE;  Q1LXK5, M10B2_DANRE;
+      notes: ExPASy ENZYME entry EC 5.6.2.5 cross-references UniProtKB:Q6J5K9 (ARMI_DROME) as a protein
+        with this activity.
+  - subject: prot_Q1LXK4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: M10B1_DANRE is an exemplar enzyme with EC 5.6.2.5 activity.
+    evidence:
+    - reference: EC:5.6.2.5
+      snippet: DR   Q6J5K9, ARMI_DROME ;  Q1LXK4, M10B1_DANRE;  Q1LXK5, M10B2_DANRE;
+      notes: ExPASy ENZYME entry EC 5.6.2.5 cross-references UniProtKB:Q1LXK4 (M10B1_DANRE) as a protein
+        with this activity.
+  - subject: prot_Q1LXK5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: M10B2_DANRE is an exemplar enzyme with EC 5.6.2.5 activity.
+    evidence:
+    - reference: EC:5.6.2.5
+      snippet: DR   Q6J5K9, ARMI_DROME ;  Q1LXK4, M10B1_DANRE;  Q1LXK5, M10B2_DANRE;
+      notes: ExPASy ENZYME entry EC 5.6.2.5 cross-references UniProtKB:Q1LXK5 (M10B2_DANRE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

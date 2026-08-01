@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:183091
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,81 @@ definitions:
       Catalyses the reaction: (Z)-3-hydroxypropyl-N-(sulfonatooxy)methanimidothioate = 3-hydroxypropyl isothiocyanate + sulfate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (Z)-3-hydroxypropyl-N-(sulfonatooxy)methanimidothioate = 3-hydroxypropyl
+    isothiocyanate…
+  description: Substrate-to-product chemistry of RHEA:69280, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69281 (rh:substrates → 69280_L, rh:products → 69280_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (Z)-3-hydroxypropyl-N-(sulfonatooxy)methanimidothioate = 3-hydroxypropyl iso…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69280
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (Z)-3-hydroxypropyl-N-(sulfonatooxy)methanimidothioate = 3-hydroxypropyl isothiocyanate
+      + sulfate'
+  - node_id: sub1
+    label: (Z)-3-hydroxypropyl-N-(sulfonatooxy)methanimidothioate
+    node_type: CHEMICAL
+    grounding: CHEBI:183091
+    description: Formula C4H7NO5S2.
+  - node_id: prd1
+    label: 3-hydroxypropyl isothiocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:183103
+    description: Formula C4H7NOS.
+  - node_id: prd2
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (Z)-3-hydroxypropyl-N-(sulfonatooxy)methanimidothioate is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69281
+      snippet: (Z)-3-hydroxypropyl-N-(sulfonatooxy)methanimidothioate => 3-hydroxypropyl isothiocyanate
+        + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69281 declares side 69280_L as its substrates
+        (rh:substrates); the master reaction RHEA:69280 is undirected. This participant is CHEBI:183091
+        with coefficient 1. Rhea cites PMID:11752388 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-hydroxypropyl isothiocyanate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69281
+      snippet: (Z)-3-hydroxypropyl-N-(sulfonatooxy)methanimidothioate => 3-hydroxypropyl isothiocyanate
+        + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69281 declares side 69280_R as its products
+        (rh:products); the master reaction RHEA:69280 is undirected. This participant is CHEBI:183103
+        with coefficient 1. Rhea cites PMID:11752388 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69281
+      snippet: (Z)-3-hydroxypropyl-N-(sulfonatooxy)methanimidothioate => 3-hydroxypropyl isothiocyanate
+        + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69281 declares side 69280_R as its products
+        (rh:products); the master reaction RHEA:69280 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:11752388 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

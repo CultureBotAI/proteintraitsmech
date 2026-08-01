@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.4.-
 synonyms:
@@ -31,4 +31,71 @@ definitions:
       Catalyses: linalool = (2E)-geraniol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of linalool isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.4.8. EC 5.4.4.8 maps to exactly
+    one curated Rhea reaction (RHEA:54656), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "linalool = (2E)-geraniol".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: linalool isomerase
+    grounding: EC:5.4.4.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: linalool
+    node_type: CHEMICAL
+    grounding: CHEBI:17580
+    description: Formula C10H18O.
+  - node_id: prd1
+    label: (2E)-geraniol
+    node_type: CHEMICAL
+    grounding: CHEBI:17447
+    description: Formula C10H18O.
+  - node_id: prot_N6Z5E2
+    node_type: PROTEIN
+    label: LIS_THAL4
+    grounding: UniProtKB:N6Z5E2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: linalool is a substrate consumed by RHEA:54656 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54657
+      snippet: linalool => (2E)-geraniol
+      notes: Rhea's left-to-right directional reaction RHEA:54657 declares side 54656_L as its substrates
+        (rh:substrates); the master reaction RHEA:54656 is undirected. This participant is CHEBI:17580
+        with coefficient 1. Rhea cites PMID:26979141 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-geraniol is a product released by RHEA:54656 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54657
+      snippet: linalool => (2E)-geraniol
+      notes: Rhea's left-to-right directional reaction RHEA:54657 declares side 54656_R as its products
+        (rh:products); the master reaction RHEA:54656 is undirected. This participant is CHEBI:17447 with
+        coefficient 1. Rhea cites PMID:26979141 for this reaction.
+  - subject: prot_N6Z5E2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LIS_THAL4 is an exemplar enzyme with EC 5.4.4.8 activity.
+    evidence:
+    - reference: EC:5.4.4.8
+      snippet: DR   N6Z5E2, LIS_THAL4  ;
+      notes: ExPASy ENZYME entry EC 5.4.4.8 cross-references UniProtKB:N6Z5E2 (LIS_THAL4) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

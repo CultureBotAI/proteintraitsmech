@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.169
     mapping_source: rhea2ec
@@ -46,4 +46,167 @@ definitions:
       Catalyses the reaction: 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein] + H2O = N-acetyl-D-glucosamine + L-seryl-[protein]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein] + H2O = N-acetyl-D-glucosamine
+    + L…
+  description: Substrate-to-product chemistry of RHEA:48876, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48877 (rh:substrates → 48876_L, rh:products → 48876_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein] + H2O = N-acetyl-D-gluc…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48876
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein] + H2O = N-acetyl-D-glucosamine
+      + L-seryl-[protein]'
+  - node_id: sub1
+    label: 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12251
+    description: Rhea compound GENERIC:12251.
+  - node_id: sub1_rp1
+    label: O-(N-acetyl-beta-D-glucosaminyl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12251 (3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90838
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+    description: Formula C8H15NO6.
+  - node_id: prd2
+    label: L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9863
+    description: Rhea compound GENERIC:9863.
+  - node_id: prd2_rp1
+    label: L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9863 (L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: '[protein]-3-O-(N-acetyl-D-glucosaminyl)-L-serine/L-threonine O-N-acetyl-alpha-D-glucosaminase
+      activity'
+    grounding: GO:0102571
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: protein O-GlcNAcase
+    grounding: EC:3.2.1.169
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein] is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48877
+      snippet: 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein] + H2O => N-acetyl-D-glucosamine +
+        L-seryl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:48877 declares side 48876_L as its substrates
+        (rh:substrates); the master reaction RHEA:48876 is undirected. This participant is GENERIC:12251
+        with coefficient 1. Rhea cites PMID:16533067, PMID:11148210, PMID:16541109, PMID:16584714 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(N-acetyl-beta-D-glucosaminyl)-L-serine residue is the reactive part of 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein].
+    evidence:
+    - reference: RHEA:48876
+      snippet: O-(N-acetyl-beta-D-glucosaminyl)-L-serine residue
+      notes: Rhea compound GENERIC:12251 (3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein]) declares
+        rh:reactivePart = O-(N-acetyl-beta-D-glucosaminyl)-L-serine residue (CHEBI:90838), formula C11H18N2O7.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48877
+      snippet: 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein] + H2O => N-acetyl-D-glucosamine +
+        L-seryl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:48877 declares side 48876_L as its substrates
+        (rh:substrates); the master reaction RHEA:48876 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16533067, PMID:11148210, PMID:16541109, PMID:16584714 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-D-glucosamine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48877
+      snippet: 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein] + H2O => N-acetyl-D-glucosamine +
+        L-seryl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:48877 declares side 48876_R as its products
+        (rh:products); the master reaction RHEA:48876 is undirected. This participant is CHEBI:506227
+        with coefficient 1. Rhea cites PMID:16533067, PMID:11148210, PMID:16541109, PMID:16584714 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-seryl-[protein] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48877
+      snippet: 3-O-(N-acetyl-beta-D-glucosaminyl)-L-seryl-[protein] + H2O => N-acetyl-D-glucosamine +
+        L-seryl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:48877 declares side 48876_R as its products
+        (rh:products); the master reaction RHEA:48876 is undirected. This participant is GENERIC:9863
+        with coefficient 1. Rhea cites PMID:16533067, PMID:11148210, PMID:16541109, PMID:16584714 for
+        this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-serine residue is the reactive part of L-seryl-[protein].
+    evidence:
+    - reference: RHEA:48876
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:9863 (L-seryl-[protein]) declares rh:reactivePart = L-serine residue
+        (CHEBI:29999), formula C3H5NO2.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:48876
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102571"/>
+      notes: The rdfs:seeAlso triple on RHEA:48876 in rhea.rdf. GO term GO:0102571 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.169; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:48876
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.169"/>
+      notes: The rh:ec triple on RHEA:48876 in rhea.rdf. EC 3.2.1.169 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

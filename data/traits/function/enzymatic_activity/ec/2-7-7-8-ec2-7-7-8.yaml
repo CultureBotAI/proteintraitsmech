@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -43,4 +43,151 @@ definitions:
       Catalyses: RNA(n+1) + phosphate = RNA(n) + a ribonucleoside 5'-diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of polyribonucleotide nucleotidyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.8. EC 2.7.7.8 maps to exactly
+    one curated Rhea reaction (RHEA:22096), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "RNA(n+1) + phosphate
+    = RNA(n) + a ribonucleoside 5''-diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: polyribonucleotide nucleotidyltransferase
+    grounding: EC:2.7.7.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: RNA(n+1)
+    node_type: CHEMICAL
+    grounding: CHEBI:140395
+    xrefs:
+    - RHEA-COMP:17342
+    description: Rhea compound POLYMER:17342. Formula H2O(C5H7O6PR)<i><sub>n+1</sub></i>.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: RNA(n)
+    node_type: CHEMICAL
+    grounding: CHEBI:140395
+    xrefs:
+    - RHEA-COMP:14527
+    description: Rhea compound POLYMER:14527. Formula H2O(C5H7O6PR)<i><sub>n</sub></i>.
+  - node_id: prd2
+    label: a ribonucleoside 5'-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57930
+    description: Formula C5H8O10P2R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: polyribonucleotide nucleotidyltransferase activity
+    grounding: GO:0004654
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A6TM00
+    node_type: PROTEIN
+    label: PNP1_ALKMQ
+    grounding: UniProtKB:A6TM00
+  - node_id: prot_Q8GZQ3
+    node_type: PROTEIN
+    label: PNP1_ARATH
+    grounding: UniProtKB:Q8GZQ3
+  - node_id: prot_Q69LE7
+    node_type: PROTEIN
+    label: PNP1_ORYSJ
+    grounding: UniProtKB:Q69LE7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: RNA(n+1) is a substrate consumed by RHEA:22096 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22097
+      snippet: RNA(n+1) + phosphate => RNA(n) + a ribonucleoside 5'-diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22097 declares side 22096_L as its substrates
+        (rh:substrates); the master reaction RHEA:22096 is undirected. This participant is POLYMER:17342
+        with coefficient 1. Rhea cites PMID:13438894, PMID:14481058 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:22096 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22097
+      snippet: RNA(n+1) + phosphate => RNA(n) + a ribonucleoside 5'-diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22097 declares side 22096_L as its substrates
+        (rh:substrates); the master reaction RHEA:22096 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:13438894, PMID:14481058 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: RNA(n) is a product released by RHEA:22096 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22097
+      snippet: RNA(n+1) + phosphate => RNA(n) + a ribonucleoside 5'-diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22097 declares side 22096_R as its products
+        (rh:products); the master reaction RHEA:22096 is undirected. This participant is POLYMER:14527
+        with coefficient 1. Rhea cites PMID:13438894, PMID:14481058 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a ribonucleoside 5'-diphosphate is a product released by RHEA:22096 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22097
+      snippet: RNA(n+1) + phosphate => RNA(n) + a ribonucleoside 5'-diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22097 declares side 22096_R as its products
+        (rh:products); the master reaction RHEA:22096 is undirected. This participant is CHEBI:57930 with
+        coefficient 1. Rhea cites PMID:13438894, PMID:14481058 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.7.8
+      snippet: EC:2.7.7.8 > GO:polyribonucleotide nucleotidyltransferase activity ; GO:0004654
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004654 is itself a record
+        in this KB.
+  - subject: prot_A6TM00
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PNP1_ALKMQ is an exemplar enzyme with EC 2.7.7.8 activity.
+    evidence:
+    - reference: EC:2.7.7.8
+      snippet: DR   A6TM00, PNP1_ALKMQ ;  Q8GZQ3, PNP1_ARATH ;  Q69LE7, PNP1_ORYSJ ;
+      notes: ExPASy ENZYME entry EC 2.7.7.8 cross-references UniProtKB:A6TM00 (PNP1_ALKMQ) as a protein
+        with this activity.
+  - subject: prot_Q8GZQ3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PNP1_ARATH is an exemplar enzyme with EC 2.7.7.8 activity.
+    evidence:
+    - reference: EC:2.7.7.8
+      snippet: DR   A6TM00, PNP1_ALKMQ ;  Q8GZQ3, PNP1_ARATH ;  Q69LE7, PNP1_ORYSJ ;
+      notes: ExPASy ENZYME entry EC 2.7.7.8 cross-references UniProtKB:Q8GZQ3 (PNP1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q69LE7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PNP1_ORYSJ is an exemplar enzyme with EC 2.7.7.8 activity.
+    evidence:
+    - reference: EC:2.7.7.8
+      snippet: DR   A6TM00, PNP1_ALKMQ ;  Q8GZQ3, PNP1_ARATH ;  Q69LE7, PNP1_ORYSJ ;
+      notes: ExPASy ENZYME entry EC 2.7.7.8 cross-references UniProtKB:Q69LE7 (PNP1_ORYSJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

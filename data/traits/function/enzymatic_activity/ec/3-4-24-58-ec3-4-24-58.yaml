@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -40,4 +40,67 @@ definitions:
       Catalyses: Specifically activates several components of the blood clotting system, including coagulation factor X, coagulation factor IX and protein C by cleavage of Arg-|-Xaa bonds. Has no action on insulin B chain
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of russellysin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.58. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Specifically
+    activates several components of the blood clotting system, including coagulation factor X, coagulation
+    factor IX and protein C by cleavage of Arg-|-Xaa bonds. Has no action on insulin B chain".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: russellysin
+    grounding: EC:3.4.24.58
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P86536
+    node_type: PROTEIN
+    label: VM3CX_DABRR
+    grounding: UniProtKB:P86536
+  - node_id: prot_Q7LZ61
+    node_type: PROTEIN
+    label: VM3CX_DABSI
+    grounding: UniProtKB:Q7LZ61
+  - node_id: prot_Q7T046
+    node_type: PROTEIN
+    label: VM3CX_MACLB
+    grounding: UniProtKB:Q7T046
+  edges:
+  - subject: prot_P86536
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VM3CX_DABRR is an exemplar enzyme with EC 3.4.24.58 activity.
+    evidence:
+    - reference: EC:3.4.24.58
+      snippet: DR   P86536, VM3CX_DABRR;  Q7LZ61, VM3CX_DABSI;  Q7T046, VM3CX_MACLB;
+      notes: ExPASy ENZYME entry EC 3.4.24.58 cross-references UniProtKB:P86536 (VM3CX_DABRR) as a protein
+        with this activity.
+  - subject: prot_Q7LZ61
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VM3CX_DABSI is an exemplar enzyme with EC 3.4.24.58 activity.
+    evidence:
+    - reference: EC:3.4.24.58
+      snippet: DR   P86536, VM3CX_DABRR;  Q7LZ61, VM3CX_DABSI;  Q7T046, VM3CX_MACLB;
+      notes: ExPASy ENZYME entry EC 3.4.24.58 cross-references UniProtKB:Q7LZ61 (VM3CX_DABSI) as a protein
+        with this activity.
+  - subject: prot_Q7T046
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VM3CX_MACLB is an exemplar enzyme with EC 3.4.24.58 activity.
+    evidence:
+    - reference: EC:3.4.24.58
+      snippet: DR   P86536, VM3CX_DABRR;  Q7LZ61, VM3CX_DABSI;  Q7T046, VM3CX_MACLB;
+      notes: ExPASy ENZYME entry EC 3.4.24.58 cross-references UniProtKB:Q7T046 (VM3CX_MACLB) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

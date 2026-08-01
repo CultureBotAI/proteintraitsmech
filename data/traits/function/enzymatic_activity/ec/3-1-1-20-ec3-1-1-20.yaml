@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 mapped_xrefs:
@@ -34,4 +34,133 @@ definitions:
       Catalyses: digallate + H2O = 2 3,4,5-trihydroxybenzoate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tannase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.20. EC 3.1.1.20 maps to exactly
+    one curated Rhea reaction (RHEA:16365), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "digallate + H2O
+    = 2 3,4,5-trihydroxybenzoate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tannase
+    grounding: EC:3.1.1.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: digallate
+    node_type: CHEMICAL
+    grounding: CHEBI:17866
+    description: Formula C14H9O9.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 3,4,5-trihydroxybenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16918
+    description: Formula C7H5O5.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tannase activity
+    grounding: GO:0050318
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P78581
+    node_type: PROTEIN
+    label: TAN_ASPOR
+    grounding: UniProtKB:P78581
+  - node_id: prot_C0HJL9
+    node_type: PROTEIN
+    label: TAN_BACIU
+    grounding: UniProtKB:C0HJL9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: digallate is a substrate consumed by RHEA:16365 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16366
+      snippet: digallate + H2O => 2 3,4,5-trihydroxybenzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16366 declares side 16365_L as its substrates
+        (rh:substrates); the master reaction RHEA:16365 is undirected. This participant is CHEBI:17866
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:16365 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16366
+      snippet: digallate + H2O => 2 3,4,5-trihydroxybenzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16366 declares side 16365_L as its substrates
+        (rh:substrates); the master reaction RHEA:16365 is undirected. This participant is CHEBI:15377
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3,4,5-trihydroxybenzoate is a product released by RHEA:16365 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:16366
+      snippet: digallate + H2O => 2 3,4,5-trihydroxybenzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16366 declares side 16365_R as its products
+        (rh:products); the master reaction RHEA:16365 is undirected. This participant is CHEBI:16918 with
+        coefficient 2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:16365 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16366
+      snippet: digallate + H2O => 2 3,4,5-trihydroxybenzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16366 declares side 16365_R as its products
+        (rh:products); the master reaction RHEA:16365 is undirected. This participant is CHEBI:15378 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.20
+      snippet: EC:3.1.1.20 > GO:tannase activity ; GO:0050318
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050318 is itself a record
+        in this KB.
+  - subject: prot_P78581
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAN_ASPOR is an exemplar enzyme with EC 3.1.1.20 activity.
+    evidence:
+    - reference: EC:3.1.1.20
+      snippet: DR   P78581, TAN_ASPOR  ;  C0HJL9, TAN_BACIU  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.20 cross-references UniProtKB:P78581 (TAN_ASPOR) as a protein
+        with this activity.
+  - subject: prot_C0HJL9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAN_BACIU is an exemplar enzyme with EC 3.1.1.20 activity.
+    evidence:
+    - reference: EC:3.1.1.20
+      snippet: DR   P78581, TAN_ASPOR  ;  C0HJL9, TAN_BACIU  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.20 cross-references UniProtKB:C0HJL9 (TAN_BACIU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

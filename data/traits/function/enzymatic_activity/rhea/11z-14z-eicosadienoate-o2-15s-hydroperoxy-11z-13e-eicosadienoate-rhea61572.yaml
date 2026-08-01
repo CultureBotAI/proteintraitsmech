@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:77220
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,76 @@ definitions:
       Catalyses the reaction: (11Z,14Z)-eicosadienoate + O2 = (15S)-hydroperoxy-(11Z,13E)-eicosadienoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (11Z,14Z)-eicosadienoate + O2 = (15S)-hydroperoxy-(11Z,13E)-eicosadienoate
+  description: Substrate-to-product chemistry of RHEA:61572, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:61573 (rh:substrates → 61572_L, rh:products → 61572_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (11Z,14Z)-eicosadienoate + O2 = (15S)-hydroperoxy-(11Z,13E)-eicosadienoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:61572
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (11Z,14Z)-eicosadienoate + O2 = (15S)-hydroperoxy-(11Z,13E)-eicosadienoate'
+  - node_id: sub1
+    label: (11Z,14Z)-eicosadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:77220
+    description: Formula C20H35O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (15S)-hydroperoxy-(11Z,13E)-eicosadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:144832
+    description: Formula C20H35O4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (11Z,14Z)-eicosadienoate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61573
+      snippet: (11Z,14Z)-eicosadienoate + O2 => (15S)-hydroperoxy-(11Z,13E)-eicosadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:61573 declares side 61572_L as its substrates
+        (rh:substrates); the master reaction RHEA:61572 is undirected. This participant is CHEBI:77220
+        with coefficient 1. Rhea cites PMID:27500637 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61573
+      snippet: (11Z,14Z)-eicosadienoate + O2 => (15S)-hydroperoxy-(11Z,13E)-eicosadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:61573 declares side 61572_L as its substrates
+        (rh:substrates); the master reaction RHEA:61572 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:27500637 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (15S)-hydroperoxy-(11Z,13E)-eicosadienoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:61573
+      snippet: (11Z,14Z)-eicosadienoate + O2 => (15S)-hydroperoxy-(11Z,13E)-eicosadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:61573 declares side 61572_R as its products
+        (rh:products); the master reaction RHEA:61572 is undirected. This participant is CHEBI:144832
+        with coefficient 1. Rhea cites PMID:27500637 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

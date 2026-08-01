@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.99.-
 synonyms:
@@ -43,4 +43,115 @@ definitions:
       Catalyses: 6-tuliposide A = tulipalin A + D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tuliposide A-converting enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.99.22. EC 4.2.99.22 maps to
+    exactly one curated Rhea reaction (RHEA:36071), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "6-tuliposide
+    A = tulipalin A + D-glucose". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tuliposide A-converting enzyme
+    grounding: EC:4.2.99.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 6-tuliposide A
+    node_type: CHEMICAL
+    grounding: CHEBI:72781
+    description: Formula C11H18O8.
+  - node_id: prd1
+    label: tulipalin A
+    node_type: CHEMICAL
+    grounding: CHEBI:104120
+    description: Formula C5H6O2.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: prot_R4X244
+    node_type: PROTEIN
+    label: TCAB1_TULGE
+    grounding: UniProtKB:R4X244
+  - node_id: prot_R4X4V6
+    node_type: PROTEIN
+    label: TCAB2_TULGE
+    grounding: UniProtKB:R4X4V6
+  - node_id: prot_R4X5P0
+    node_type: PROTEIN
+    label: TCAB3_TULGE
+    grounding: UniProtKB:R4X5P0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 6-tuliposide A is a substrate consumed by RHEA:36071 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36072
+      snippet: 6-tuliposide A => tulipalin A + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:36072 declares side 36071_L as its substrates
+        (rh:substrates); the master reaction RHEA:36071 is undirected. This participant is CHEBI:72781
+        with coefficient 1. Rhea cites PMID:19661715, PMID:22474185 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tulipalin A is a product released by RHEA:36071 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36072
+      snippet: 6-tuliposide A => tulipalin A + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:36072 declares side 36071_R as its products
+        (rh:products); the master reaction RHEA:36071 is undirected. This participant is CHEBI:104120
+        with coefficient 1. Rhea cites PMID:19661715, PMID:22474185 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by RHEA:36071 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36072
+      snippet: 6-tuliposide A => tulipalin A + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:36072 declares side 36071_R as its products
+        (rh:products); the master reaction RHEA:36071 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:19661715, PMID:22474185 for this reaction.
+  - subject: prot_R4X244
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TCAB1_TULGE is an exemplar enzyme with EC 4.2.99.22 activity.
+    evidence:
+    - reference: EC:4.2.99.22
+      snippet: DR   R4X244, TCAB1_TULGE;  R4X4V6, TCAB2_TULGE;  R4X5P0, TCAB3_TULGE;
+      notes: ExPASy ENZYME entry EC 4.2.99.22 cross-references UniProtKB:R4X244 (TCAB1_TULGE) as a protein
+        with this activity.
+  - subject: prot_R4X4V6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TCAB2_TULGE is an exemplar enzyme with EC 4.2.99.22 activity.
+    evidence:
+    - reference: EC:4.2.99.22
+      snippet: DR   R4X244, TCAB1_TULGE;  R4X4V6, TCAB2_TULGE;  R4X5P0, TCAB3_TULGE;
+      notes: ExPASy ENZYME entry EC 4.2.99.22 cross-references UniProtKB:R4X4V6 (TCAB2_TULGE) as a protein
+        with this activity.
+  - subject: prot_R4X5P0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TCAB3_TULGE is an exemplar enzyme with EC 4.2.99.22 activity.
+    evidence:
+    - reference: EC:4.2.99.22
+      snippet: DR   R4X244, TCAB1_TULGE;  R4X4V6, TCAB2_TULGE;  R4X5P0, TCAB3_TULGE;
+      notes: ExPASy ENZYME entry EC 4.2.99.22 cross-references UniProtKB:R4X5P0 (TCAB3_TULGE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

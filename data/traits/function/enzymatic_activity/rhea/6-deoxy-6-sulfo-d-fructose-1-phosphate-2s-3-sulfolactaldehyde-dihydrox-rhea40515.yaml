@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.57
     mapping_source: rhea2ec
@@ -26,4 +26,154 @@ definitions:
       Catalyses the reaction: 6-deoxy-6-sulfo-D-fructose 1-phosphate = (2S)-3-sulfolactaldehyde + dihydroxyacetone phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-deoxy-6-sulfo-D-fructose 1-phosphate = (2S)-3-sulfolactaldehyde + dihydroxyacetone
+    ph…
+  description: Substrate-to-product chemistry of RHEA:40515, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:40516 (rh:substrates → 40515_L, rh:products → 40515_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 6-deoxy-6-sulfo-D-fructose 1-phosphate = (2S)-3-sulfolactaldehyde + dihydrox…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:40515
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 6-deoxy-6-sulfo-D-fructose 1-phosphate = (2S)-3-sulfolactaldehyde + dihydroxyacetone
+      phosphate'
+  - node_id: sub1
+    label: 6-deoxy-6-sulfo-D-fructose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:77134
+    description: Formula C6H10O11PS.
+  - node_id: prd1
+    label: (2S)-3-sulfolactaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:90109
+    description: Formula C3H5O5S.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: sulfofructosephosphate aldolase
+    grounding: EC:4.1.2.57
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A2P6MHY1
+    node_type: PROTEIN
+    label: SQIA_ALKUR
+    grounding: UniProtKB:A0A2P6MHY1
+  - node_id: prot_Q8X8D5
+    node_type: PROTEIN
+    label: SQUT_ECO57
+    grounding: UniProtKB:Q8X8D5
+  - node_id: prot_P32141
+    node_type: PROTEIN
+    label: SQUT_ECOLI
+    grounding: UniProtKB:P32141
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 6-deoxy-6-sulfo-D-fructose 1-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:40516
+      snippet: 6-deoxy-6-sulfo-D-fructose 1-phosphate => (2S)-3-sulfolactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:40516 declares side 40515_L as its substrates
+        (rh:substrates); the master reaction RHEA:40515 is undirected. This participant is CHEBI:77134
+        with coefficient 1. Rhea cites PMID:24463506 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-3-sulfolactaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:40516
+      snippet: 6-deoxy-6-sulfo-D-fructose 1-phosphate => (2S)-3-sulfolactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:40516 declares side 40515_R as its products
+        (rh:products); the master reaction RHEA:40515 is undirected. This participant is CHEBI:90109 with
+        coefficient 1. Rhea cites PMID:24463506 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:40516
+      snippet: 6-deoxy-6-sulfo-D-fructose 1-phosphate => (2S)-3-sulfolactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:40516 declares side 40515_R as its products
+        (rh:products); the master reaction RHEA:40515 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:24463506 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.57; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:40515
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.57"/>
+      notes: The rh:ec triple on RHEA:40515 in rhea.rdf. EC 4.1.2.57 is itself a record in this KB.
+  - subject: prot_A0A2P6MHY1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQIA_ALKUR is an exemplar enzyme carrying EC 4.1.2.57, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.57
+      snippet: DR   A0A2P6MHY1, SQIA_ALKUR ;  Q8X8D5, SQUT_ECO57 ;  P32141, SQUT_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.1.2.57 cross-references UniProtKB:A0A2P6MHY1 (SQIA_ALKUR) as a protein
+        with this activity.
+    - reference: RHEA:40515
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.57"/>
+      notes: Rhea assigns RHEA:40515 to EC 4.1.2.57, and EC 4.1.2.57 maps to exactly one Rhea master reaction
+        (RHEA:40515), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q8X8D5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQUT_ECO57 is an exemplar enzyme carrying EC 4.1.2.57, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.57
+      snippet: DR   A0A2P6MHY1, SQIA_ALKUR ;  Q8X8D5, SQUT_ECO57 ;  P32141, SQUT_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.1.2.57 cross-references UniProtKB:Q8X8D5 (SQUT_ECO57) as a protein
+        with this activity.
+    - reference: RHEA:40515
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.57"/>
+      notes: Rhea assigns RHEA:40515 to EC 4.1.2.57, and EC 4.1.2.57 maps to exactly one Rhea master reaction
+        (RHEA:40515), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P32141
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQUT_ECOLI is an exemplar enzyme carrying EC 4.1.2.57, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.57
+      snippet: DR   A0A2P6MHY1, SQIA_ALKUR ;  Q8X8D5, SQUT_ECO57 ;  P32141, SQUT_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.1.2.57 cross-references UniProtKB:P32141 (SQUT_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:40515
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.57"/>
+      notes: Rhea assigns RHEA:40515 to EC 4.1.2.57, and EC 4.1.2.57 maps to exactly one Rhea master reaction
+        (RHEA:40515), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

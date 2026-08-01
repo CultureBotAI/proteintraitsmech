@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:83624
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,147 @@ definitions:
       Catalyses the reaction: [Rab1 protein]-O(4)-(5'-adenylyl)-L-tyrosine + H2O = [Rab1 protein]-L-tyrosine + AMP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [Rab1 protein]-O(4)-(5'-adenylyl)-L-tyrosine + H2O = [Rab1 protein]-L-tyrosine
+    + AMP +…
+  description: Substrate-to-product chemistry of RHEA:53740, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53741 (rh:substrates → 53740_L, rh:products → 53740_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [Rab1 protein]-O(4)-(5'-adenylyl)-L-tyrosine + H2O = [Rab1 protein]-L-tyrosi…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53740
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [Rab1 protein]-O(4)-(5''-adenylyl)-L-tyrosine + H2O = [Rab1 protein]-L-tyrosine +
+      AMP + H(+)'
+  - node_id: sub1
+    label: '[Rab1 protein]-O(4)-(5''-adenylyl)-L-tyrosine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13638
+    description: Rhea compound GENERIC:13638.
+  - node_id: sub1_rp1
+    label: L-tyrosine-O-adenyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13638 ([Rab1 protein]-O(4)-(5'-adenylyl)-L-tyrosine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83624
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: '[Rab1 protein]-L-tyrosine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13639
+    description: Rhea compound GENERIC:13639.
+  - node_id: prd1_rp1
+    label: L-tyrosine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13639 ([Rab1 protein]-L-tyrosine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:46858
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[Rab1 protein]-O(4)-(5''-adenylyl)-L-tyrosine is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:53741
+      snippet: '[Rab1 protein]-O(4)-(5''-adenylyl)-L-tyrosine + H2O => [Rab1 protein]-L-tyrosine + AMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:53741 declares side 53740_L as its substrates
+        (rh:substrates); the master reaction RHEA:53740 is undirected. This participant is GENERIC:13638
+        with coefficient 1. Rhea cites PMID:21734656, PMID:21680813 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-tyrosine-O-adenyl residue is the reactive part of [Rab1 protein]-O(4)-(5'-adenylyl)-L-tyrosine.
+    evidence:
+    - reference: RHEA:53740
+      snippet: L-tyrosine-O-adenyl residue
+      notes: Rhea compound GENERIC:13638 ([Rab1 protein]-O(4)-(5'-adenylyl)-L-tyrosine) declares rh:reactivePart
+        = L-tyrosine-O-adenyl residue (CHEBI:83624), formula C19H20N6O8P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53741
+      snippet: '[Rab1 protein]-O(4)-(5''-adenylyl)-L-tyrosine + H2O => [Rab1 protein]-L-tyrosine + AMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:53741 declares side 53740_L as its substrates
+        (rh:substrates); the master reaction RHEA:53740 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21734656, PMID:21680813 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[Rab1 protein]-L-tyrosine is a product released by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:53741
+      snippet: '[Rab1 protein]-O(4)-(5''-adenylyl)-L-tyrosine + H2O => [Rab1 protein]-L-tyrosine + AMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:53741 declares side 53740_R as its products
+        (rh:products); the master reaction RHEA:53740 is undirected. This participant is GENERIC:13639
+        with coefficient 1. Rhea cites PMID:21734656, PMID:21680813 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-tyrosine residue is the reactive part of [Rab1 protein]-L-tyrosine.
+    evidence:
+    - reference: RHEA:53740
+      snippet: L-tyrosine residue
+      notes: Rhea compound GENERIC:13639 ([Rab1 protein]-L-tyrosine) declares rh:reactivePart = L-tyrosine
+        residue (CHEBI:46858), formula C9H9NO2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53741
+      snippet: '[Rab1 protein]-O(4)-(5''-adenylyl)-L-tyrosine + H2O => [Rab1 protein]-L-tyrosine + AMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:53741 declares side 53740_R as its products
+        (rh:products); the master reaction RHEA:53740 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:21734656, PMID:21680813 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53741
+      snippet: '[Rab1 protein]-O(4)-(5''-adenylyl)-L-tyrosine + H2O => [Rab1 protein]-L-tyrosine + AMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:53741 declares side 53740_R as its products
+        (rh:products); the master reaction RHEA:53740 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21734656, PMID:21680813 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: (2Z,6E)-farnesyl diphosphate = (-)-alpha-cedrene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (-)-alpha-cedrene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.227. EC 4.2.3.227 maps to
+    exactly one curated Rhea reaction (RHEA:31423), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2Z,6E)-farnesyl
+    diphosphate = (-)-alpha-cedrene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-alpha-cedrene synthase
+    grounding: EC:4.2.3.227
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2Z,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:162247
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (-)-alpha-cedrene
+    node_type: CHEMICAL
+    grounding: CHEBI:10216
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q40577
+    node_type: PROTEIN
+    label: 5EAS_TOBAC
+    grounding: UniProtKB:Q40577
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2Z,6E)-farnesyl diphosphate is a substrate consumed by RHEA:31423 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31424
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-alpha-cedrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31424 declares side 31423_L as its substrates
+        (rh:substrates); the master reaction RHEA:31423 is undirected. This participant is CHEBI:162247
+        with coefficient 1. Rhea cites PMID:20201526, PMID:20175559 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-alpha-cedrene is a product released by RHEA:31423 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31424
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-alpha-cedrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31424 declares side 31423_R as its products
+        (rh:products); the master reaction RHEA:31423 is undirected. This participant is CHEBI:10216 with
+        coefficient 1. Rhea cites PMID:20201526, PMID:20175559 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:31423 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31424
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-alpha-cedrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31424 declares side 31423_R as its products
+        (rh:products); the master reaction RHEA:31423 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20201526, PMID:20175559 for this reaction.
+  - subject: prot_Q40577
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5EAS_TOBAC is an exemplar enzyme with EC 4.2.3.227 activity.
+    evidence:
+    - reference: EC:4.2.3.227
+      snippet: DR   Q40577, 5EAS_TOBAC ;
+      notes: ExPASy ENZYME entry EC 4.2.3.227 cross-references UniProtKB:Q40577 (5EAS_TOBAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

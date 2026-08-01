@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.2.-
 synonyms:
@@ -28,4 +28,59 @@ definitions:
       Catalyses: dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-3-dehydro-6-deoxy-alpha-D- glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of TDP-4-oxo-6-deoxy-alpha-D-glucose-3,4-oxoisomerase (dTDP-3-dehydro-6- deoxy-alpha-D-glu…
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.2.4. EC 5.3.2.4 maps to exactly
+    one curated Rhea reaction (RHEA:31839), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dTDP-4-dehydro-6-deoxy-alpha-D-glucose
+    = dTDP-3-dehydro-6-deoxy-alpha-D- glucose". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: TDP-4-oxo-6-deoxy-alpha-D-glucose-3,4-oxoisomerase (dTDP-3-dehydro-6- deoxy-alpha-D-gluco…
+    grounding: EC:5.3.2.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dTDP-4-dehydro-6-deoxy-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:57649
+    description: Formula C16H22N2O15P2.
+  - node_id: prd1
+    label: dTDP-3-dehydro-6-deoxy-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:63269
+    description: Formula C16H22N2O15P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTDP-4-dehydro-6-deoxy-alpha-D-glucose is a substrate consumed by RHEA:31839 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31840
+      snippet: dTDP-4-dehydro-6-deoxy-alpha-D-glucose => dTDP-3-dehydro-6-deoxy-alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:31840 declares side 31839_L as its substrates
+        (rh:substrates); the master reaction RHEA:31839 is undirected. This participant is CHEBI:57649
+        with coefficient 1. Rhea cites PMID:17209568 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTDP-3-dehydro-6-deoxy-alpha-D-glucose is a product released by RHEA:31839 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31840
+      snippet: dTDP-4-dehydro-6-deoxy-alpha-D-glucose => dTDP-3-dehydro-6-deoxy-alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:31840 declares side 31839_R as its products
+        (rh:products); the master reaction RHEA:31839 is undirected. This participant is CHEBI:63269 with
+        coefficient 1. Rhea cites PMID:17209568 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

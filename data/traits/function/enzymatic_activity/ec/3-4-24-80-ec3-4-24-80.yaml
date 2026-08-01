@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -36,4 +36,68 @@ definitions:
       Catalyses: Endopeptidase activity. Activates progelatinase A by cleavage of the propeptide at 37-Asn-|-Leu-38. Other bonds hydrolyzed include 35-Gly-|-Ile-36 in the propeptide of collagenase 3, and 341-Asn-|-Phe- 342, 441-Asp-|-Leu-442 and 354-Gln-|-Thr-355 in the aggrecan interglobular domain
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of membrane-type matrix metalloproteinase-1
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.80. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endopeptidase
+    activity. Activates progelatinase A by cleavage of the propeptide at 37-Asn-|-Leu-38. Other bonds
+    hydrolyzed include 35-Gly-|-Ile-36 in the propeptide of collagenase 3, and 341-Asn-|-Phe- 342, 441-Asp-|-Leu-442
+    and 354-Gln-|-Thr-355 in the aggrecan interglobular domain".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: membrane-type matrix metalloproteinase-1
+    grounding: EC:3.4.24.80
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9GLE4
+    node_type: PROTEIN
+    label: MMP14_BOVIN
+    grounding: UniProtKB:Q9GLE4
+  - node_id: prot_P50281
+    node_type: PROTEIN
+    label: MMP14_HUMAN
+    grounding: UniProtKB:P50281
+  - node_id: prot_P53690
+    node_type: PROTEIN
+    label: MMP14_MOUSE
+    grounding: UniProtKB:P53690
+  edges:
+  - subject: prot_Q9GLE4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP14_BOVIN is an exemplar enzyme with EC 3.4.24.80 activity.
+    evidence:
+    - reference: EC:3.4.24.80
+      snippet: DR   Q9GLE4, MMP14_BOVIN;  P50281, MMP14_HUMAN;  P53690, MMP14_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.24.80 cross-references UniProtKB:Q9GLE4 (MMP14_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P50281
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP14_HUMAN is an exemplar enzyme with EC 3.4.24.80 activity.
+    evidence:
+    - reference: EC:3.4.24.80
+      snippet: DR   Q9GLE4, MMP14_BOVIN;  P50281, MMP14_HUMAN;  P53690, MMP14_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.24.80 cross-references UniProtKB:P50281 (MMP14_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P53690
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP14_MOUSE is an exemplar enzyme with EC 3.4.24.80 activity.
+    evidence:
+    - reference: EC:3.4.24.80
+      snippet: DR   Q9GLE4, MMP14_BOVIN;  P50281, MMP14_HUMAN;  P53690, MMP14_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.24.80 cross-references UniProtKB:P53690 (MMP14_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

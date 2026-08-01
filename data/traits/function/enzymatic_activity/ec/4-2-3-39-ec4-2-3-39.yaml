@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -35,4 +35,119 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate + H2O = epi-cedrol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of epi-cedrol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.39. EC 4.2.3.39 maps to exactly
+    one curated Rhea reaction (RHEA:26115), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate + H2O = epi-cedrol + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: epi-cedrol synthase
+    grounding: EC:4.2.3.39
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: epi-cedrol
+    node_type: CHEMICAL
+    grounding: CHEBI:52226
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: epi-cedrol synthase activity
+    grounding: GO:0052682
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9LLR9
+    node_type: PROTEIN
+    label: ECS1_ARTAN
+    grounding: UniProtKB:Q9LLR9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:26115 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26116
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => epi-cedrol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26116 declares side 26115_L as its substrates
+        (rh:substrates); the master reaction RHEA:26115 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:10486140, PMID:10486139 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:26115 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26116
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => epi-cedrol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26116 declares side 26115_L as its substrates
+        (rh:substrates); the master reaction RHEA:26115 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10486140, PMID:10486139 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: epi-cedrol is a product released by RHEA:26115 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26116
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => epi-cedrol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26116 declares side 26115_R as its products
+        (rh:products); the master reaction RHEA:26115 is undirected. This participant is CHEBI:52226 with
+        coefficient 1. Rhea cites PMID:10486140, PMID:10486139 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:26115 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26116
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => epi-cedrol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26116 declares side 26115_R as its products
+        (rh:products); the master reaction RHEA:26115 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:10486140, PMID:10486139 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.39
+      snippet: EC:4.2.3.39 > GO:epi-cedrol synthase activity ; GO:0052682
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0052682 is itself a record
+        in this KB.
+  - subject: prot_Q9LLR9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ECS1_ARTAN is an exemplar enzyme with EC 4.2.3.39 activity.
+    evidence:
+    - reference: EC:4.2.3.39
+      snippet: DR   Q9LLR9, ECS1_ARTAN ;
+      notes: ExPASy ENZYME entry EC 4.2.3.39 cross-references UniProtKB:Q9LLR9 (ECS1_ARTAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

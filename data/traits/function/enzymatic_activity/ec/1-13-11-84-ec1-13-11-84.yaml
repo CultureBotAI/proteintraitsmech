@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -31,4 +31,106 @@ definitions:
       Catalyses: all-trans-zeaxanthin + 2 O2 = crocetin dialdehyde + 2 3beta-hydroxy-beta- cyclocitral
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of crocetin dialdehyde synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.84. EC 1.13.11.84 maps to
+    exactly one curated Rhea reaction (RHEA:26397), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-zeaxanthin
+    + 2 O2 = crocetin dialdehyde + 2 3beta-hydroxy-beta- cyclocitral". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: crocetin dialdehyde synthase
+    grounding: EC:1.13.11.84
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-zeaxanthin
+    node_type: CHEMICAL
+    grounding: CHEBI:27547
+    description: Formula C40H56O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: crocetin dialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:53166
+    description: Formula C20H24O2.
+  - node_id: prd2
+    label: 3beta-hydroxy-beta-cyclocitral
+    node_type: CHEMICAL
+    grounding: CHEBI:53167
+    description: Formula C10H16O2.
+  - node_id: prot_Q84K96
+    node_type: PROTEIN
+    label: ZCD_CROSA
+    grounding: UniProtKB:Q84K96
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-zeaxanthin is a substrate consumed by RHEA:26397 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26398
+      snippet: all-trans-zeaxanthin + 2 O2 => crocetin dialdehyde + 2 3beta-hydroxy-beta-cyclocitral
+      notes: Rhea's left-to-right directional reaction RHEA:26398 declares side 26397_L as its substrates
+        (rh:substrates); the master reaction RHEA:26397 is undirected. This participant is CHEBI:27547
+        with coefficient 1. Rhea cites PMID:12509521, PMID:25097262 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:26397 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:26398
+      snippet: all-trans-zeaxanthin + 2 O2 => crocetin dialdehyde + 2 3beta-hydroxy-beta-cyclocitral
+      notes: Rhea's left-to-right directional reaction RHEA:26398 declares side 26397_L as its substrates
+        (rh:substrates); the master reaction RHEA:26397 is undirected. This participant is CHEBI:15379
+        with coefficient 2. Rhea cites PMID:12509521, PMID:25097262 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: crocetin dialdehyde is a product released by RHEA:26397 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26398
+      snippet: all-trans-zeaxanthin + 2 O2 => crocetin dialdehyde + 2 3beta-hydroxy-beta-cyclocitral
+      notes: Rhea's left-to-right directional reaction RHEA:26398 declares side 26397_R as its products
+        (rh:products); the master reaction RHEA:26397 is undirected. This participant is CHEBI:53166 with
+        coefficient 1. Rhea cites PMID:12509521, PMID:25097262 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 3beta-hydroxy-beta-cyclocitral is a product released by RHEA:26397 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:26398
+      snippet: all-trans-zeaxanthin + 2 O2 => crocetin dialdehyde + 2 3beta-hydroxy-beta-cyclocitral
+      notes: Rhea's left-to-right directional reaction RHEA:26398 declares side 26397_R as its products
+        (rh:products); the master reaction RHEA:26397 is undirected. This participant is CHEBI:53167 with
+        coefficient 2. Rhea cites PMID:12509521, PMID:25097262 for this reaction.
+  - subject: prot_Q84K96
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ZCD_CROSA is an exemplar enzyme with EC 1.13.11.84 activity.
+    evidence:
+    - reference: EC:1.13.11.84
+      snippet: DR   Q84K96, ZCD_CROSA  ;
+      notes: ExPASy ENZYME entry EC 1.13.11.84 cross-references UniProtKB:Q84K96 (ZCD_CROSA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

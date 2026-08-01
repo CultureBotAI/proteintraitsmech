@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -41,4 +41,149 @@ definitions:
       Catalyses: an N-(long-chain fatty acyl)ethanolamine + H2O = a long-chain fatty acid + ethanolamine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-(long-chain-acyl)ethanolamine deacylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.60. EC 3.5.1.60 maps to exactly
+    one curated Rhea reaction (RHEA:17505), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an N-(long-chain
+    fatty acyl)ethanolamine + H2O = a long-chain fatty acid + ethanolamine". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-(long-chain-acyl)ethanolamine deacylase
+    grounding: EC:3.5.1.60
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an N-(long-chain fatty acyl)ethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:15897
+    description: Formula C3H6NO2R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a long-chain fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:57560
+    description: Formula CO2R.
+  - node_id: prd2
+    label: ethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57603
+    description: Formula C2H8NO.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-(long-chain-acyl)ethanolamine deacylase activity
+    grounding: GO:0047412
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9GUI1
+    node_type: PROTEIN
+    label: NAAA_CAEEL
+    grounding: UniProtKB:Q9GUI1
+  - node_id: prot_H0VCJ6
+    node_type: PROTEIN
+    label: NAAA_CAVPO
+    grounding: UniProtKB:H0VCJ6
+  - node_id: prot_Q02083
+    node_type: PROTEIN
+    label: NAAA_HUMAN
+    grounding: UniProtKB:Q02083
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-(long-chain fatty acyl)ethanolamine is a substrate consumed by RHEA:17505 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17506
+      snippet: an N-(long-chain fatty acyl)ethanolamine + H2O => a long-chain fatty acid + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:17506 declares side 17505_L as its substrates
+        (rh:substrates); the master reaction RHEA:17505 is undirected. This participant is CHEBI:15897
+        with coefficient 1. Rhea cites PMID:4055775 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:17505 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17506
+      snippet: an N-(long-chain fatty acyl)ethanolamine + H2O => a long-chain fatty acid + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:17506 declares side 17505_L as its substrates
+        (rh:substrates); the master reaction RHEA:17505 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4055775 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a long-chain fatty acid is a product released by RHEA:17505 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17506
+      snippet: an N-(long-chain fatty acyl)ethanolamine + H2O => a long-chain fatty acid + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:17506 declares side 17505_R as its products
+        (rh:products); the master reaction RHEA:17505 is undirected. This participant is CHEBI:57560 with
+        coefficient 1. Rhea cites PMID:4055775 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ethanolamine is a product released by RHEA:17505 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17506
+      snippet: an N-(long-chain fatty acyl)ethanolamine + H2O => a long-chain fatty acid + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:17506 declares side 17505_R as its products
+        (rh:products); the master reaction RHEA:17505 is undirected. This participant is CHEBI:57603 with
+        coefficient 1. Rhea cites PMID:4055775 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.60
+      snippet: EC:3.5.1.60 > GO:N-(long-chain-acyl)ethanolamine deacylase activity ; GO:0047412
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047412 is itself a record
+        in this KB.
+  - subject: prot_Q9GUI1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NAAA_CAEEL is an exemplar enzyme with EC 3.5.1.60 activity.
+    evidence:
+    - reference: EC:3.5.1.60
+      snippet: DR   Q9GUI1, NAAA_CAEEL ;  H0VCJ6, NAAA_CAVPO ;  Q02083, NAAA_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.60 cross-references UniProtKB:Q9GUI1 (NAAA_CAEEL) as a protein
+        with this activity.
+  - subject: prot_H0VCJ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NAAA_CAVPO is an exemplar enzyme with EC 3.5.1.60 activity.
+    evidence:
+    - reference: EC:3.5.1.60
+      snippet: DR   Q9GUI1, NAAA_CAEEL ;  H0VCJ6, NAAA_CAVPO ;  Q02083, NAAA_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.60 cross-references UniProtKB:H0VCJ6 (NAAA_CAVPO) as a protein
+        with this activity.
+  - subject: prot_Q02083
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NAAA_HUMAN is an exemplar enzyme with EC 3.5.1.60 activity.
+    evidence:
+    - reference: EC:3.5.1.60
+      snippet: DR   Q9GUI1, NAAA_CAEEL ;  H0VCJ6, NAAA_CAVPO ;  Q02083, NAAA_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.60 cross-references UniProtKB:Q02083 (NAAA_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

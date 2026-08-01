@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.99.-
 synonyms:
@@ -45,4 +45,300 @@ definitions:
       Catalyses: (1) all-trans-beta-carotene + 2 AH2 + 2 O2 = echinenone + 2 A + 3 H2O. (2) echinenone + 2 AH2 + 2 O2 = canthaxanthin + 2 A + 3 H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-carotene 4-ketolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.99.63. Rhea assigns 2 curated
+    reactions to EC 1.14.99.63. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) all-trans-beta-carotene + 2 AH2 + 2 O2 = echinenone
+    + 2 A + 3 H2O. (2) echinenone + 2 AH2 + 2 O2 = canthaxanthin + 2 A + 3 H2O". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-carotene 4-ketolase
+    grounding: EC:1.14.99.63
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of all-trans-beta-carotene + 2 AH2 + 2 O2 = echinenone + 2 A + 3 H2O
+    grounding: RHEA:55660
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: all-trans-beta-carotene + 2 AH2 + 2 O2 = echinenone + 2 A + 3 H2O'
+  - node_id: rxn1_sub1
+    label: all-trans-beta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:17579
+    description: Formula C40H56.
+  - node_id: rxn1_sub2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: rxn1_sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn1_prd1
+    label: echinenone
+    node_type: CHEMICAL
+    grounding: CHEBI:4746
+    description: Formula C40H54O.
+  - node_id: rxn1_prd2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: rxn1_prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of echinenone + 2 AH2 + 2 O2 = canthaxanthin + 2 A + 3 H2O
+    grounding: RHEA:55664
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: echinenone + 2 AH2 + 2 O2 = canthaxanthin + 2 A + 3 H2O'
+  - node_id: rxn2_sub1
+    label: echinenone
+    node_type: CHEMICAL
+    grounding: CHEBI:4746
+    description: Formula C40H54O.
+  - node_id: rxn2_sub2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: rxn2_sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn2_prd1
+    label: canthaxanthin
+    node_type: CHEMICAL
+    grounding: CHEBI:3362
+    description: Formula C40H52O2.
+  - node_id: rxn2_prd2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: rxn2_prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q6J3N5
+    node_type: PROTEIN
+    label: BKT3_HAELA
+    grounding: UniProtKB:Q6J3N5
+  - node_id: prot_Q4VKB4
+    node_type: PROTEIN
+    label: BKT_CHLRE
+    grounding: UniProtKB:Q4VKB4
+  - node_id: prot_G3F5K2
+    node_type: PROTEIN
+    label: BKT_PROBT
+    grounding: UniProtKB:G3F5K2
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:55660 is one of the 2 curated reactions Rhea assigns to EC 1.14.99.63; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:55660
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.14.99.63"/>
+      notes: The rh:ec triple on RHEA:55660 in rhea.rdf assigns that reaction to EC 1.14.99.63.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: all-trans-beta-carotene is a substrate consumed by RHEA:55660 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:55661
+      snippet: all-trans-beta-carotene + 2 AH2 + 2 O2 => echinenone + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55661 declares side 55660_L as its substrates
+        (rh:substrates); the master reaction RHEA:55660 is undirected. This participant is CHEBI:17579
+        with coefficient 1. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: AH2 is a substrate consumed by RHEA:55660 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:55661
+      snippet: all-trans-beta-carotene + 2 AH2 + 2 O2 => echinenone + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55661 declares side 55660_L as its substrates
+        (rh:substrates); the master reaction RHEA:55660 is undirected. This participant is CHEBI:17499
+        with coefficient 2. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: O2 is a substrate consumed by RHEA:55660 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:55661
+      snippet: all-trans-beta-carotene + 2 AH2 + 2 O2 => echinenone + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55661 declares side 55660_L as its substrates
+        (rh:substrates); the master reaction RHEA:55660 is undirected. This participant is CHEBI:15379
+        with coefficient 2. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: echinenone is a product released by RHEA:55660 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55661
+      snippet: all-trans-beta-carotene + 2 AH2 + 2 O2 => echinenone + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55661 declares side 55660_R as its products
+        (rh:products); the master reaction RHEA:55660 is undirected. This participant is CHEBI:4746 with
+        coefficient 1. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: A is a product released by RHEA:55660 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:55661
+      snippet: all-trans-beta-carotene + 2 AH2 + 2 O2 => echinenone + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55661 declares side 55660_R as its products
+        (rh:products); the master reaction RHEA:55660 is undirected. This participant is CHEBI:13193 with
+        coefficient 2. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H2O is a product released by RHEA:55660 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:55661
+      snippet: all-trans-beta-carotene + 2 AH2 + 2 O2 => echinenone + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55661 declares side 55660_R as its products
+        (rh:products); the master reaction RHEA:55660 is undirected. This participant is CHEBI:15377 with
+        coefficient 3. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:55664 is one of the 2 curated reactions Rhea assigns to EC 1.14.99.63; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:55664
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.14.99.63"/>
+      notes: The rh:ec triple on RHEA:55664 in rhea.rdf assigns that reaction to EC 1.14.99.63.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: echinenone is a substrate consumed by RHEA:55664 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55665
+      snippet: echinenone + 2 AH2 + 2 O2 => canthaxanthin + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55665 declares side 55664_L as its substrates
+        (rh:substrates); the master reaction RHEA:55664 is undirected. This participant is CHEBI:4746
+        with coefficient 1. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: AH2 is a substrate consumed by RHEA:55664 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:55665
+      snippet: echinenone + 2 AH2 + 2 O2 => canthaxanthin + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55665 declares side 55664_L as its substrates
+        (rh:substrates); the master reaction RHEA:55664 is undirected. This participant is CHEBI:17499
+        with coefficient 2. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: O2 is a substrate consumed by RHEA:55664 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:55665
+      snippet: echinenone + 2 AH2 + 2 O2 => canthaxanthin + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55665 declares side 55664_L as its substrates
+        (rh:substrates); the master reaction RHEA:55664 is undirected. This participant is CHEBI:15379
+        with coefficient 2. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: canthaxanthin is a product released by RHEA:55664 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55665
+      snippet: echinenone + 2 AH2 + 2 O2 => canthaxanthin + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55665 declares side 55664_R as its products
+        (rh:products); the master reaction RHEA:55664 is undirected. This participant is CHEBI:3362 with
+        coefficient 1. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: A is a product released by RHEA:55664 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:55665
+      snippet: echinenone + 2 AH2 + 2 O2 => canthaxanthin + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55665 declares side 55664_R as its products
+        (rh:products); the master reaction RHEA:55664 is undirected. This participant is CHEBI:13193 with
+        coefficient 2. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H2O is a product released by RHEA:55664 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:55665
+      snippet: echinenone + 2 AH2 + 2 O2 => canthaxanthin + 2 A + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:55665 declares side 55664_R as its products
+        (rh:products); the master reaction RHEA:55664 is undirected. This participant is CHEBI:15377 with
+        coefficient 3. Rhea cites PMID:16416328, PMID:16625353, PMID:7750556, PMID:15269553 for this reaction.
+  - subject: prot_Q6J3N5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BKT3_HAELA is an exemplar enzyme with EC 1.14.99.63 activity.
+    evidence:
+    - reference: EC:1.14.99.63
+      snippet: DR   Q6J3N5, BKT3_HAELA ;  Q4VKB4, BKT_CHLRE  ;  G3F5K2, BKT_PROBT  ;
+      notes: ExPASy ENZYME entry EC 1.14.99.63 cross-references UniProtKB:Q6J3N5 (BKT3_HAELA) as a protein
+        with this activity.
+  - subject: prot_Q4VKB4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BKT_CHLRE is an exemplar enzyme with EC 1.14.99.63 activity.
+    evidence:
+    - reference: EC:1.14.99.63
+      snippet: DR   Q6J3N5, BKT3_HAELA ;  Q4VKB4, BKT_CHLRE  ;  G3F5K2, BKT_PROBT  ;
+      notes: ExPASy ENZYME entry EC 1.14.99.63 cross-references UniProtKB:Q4VKB4 (BKT_CHLRE) as a protein
+        with this activity.
+  - subject: prot_G3F5K2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BKT_PROBT is an exemplar enzyme with EC 1.14.99.63 activity.
+    evidence:
+    - reference: EC:1.14.99.63
+      snippet: DR   Q6J3N5, BKT3_HAELA ;  Q4VKB4, BKT_CHLRE  ;  G3F5K2, BKT_PROBT  ;
+      notes: ExPASy ENZYME entry EC 1.14.99.63 cross-references UniProtKB:G3F5K2 (BKT_PROBT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (17 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

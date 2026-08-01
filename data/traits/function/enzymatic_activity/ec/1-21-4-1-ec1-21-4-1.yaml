@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.21.4.-
 mapped_xrefs:
@@ -34,4 +34,190 @@ definitions:
       Catalyses: [PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine + 5-aminopentanoate = [PrdC protein]-L-selenocysteine/L-cysteine + D-proline
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-proline reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.21.4.1. EC 1.21.4.1 maps to exactly
+    one curated Rhea reaction (RHEA:12737), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine
+    + 5-aminopentanoate = [PrdC protein]-L-selenocysteine/L-cysteine + D-proline". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-proline reductase
+    grounding: EC:1.21.4.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14983
+    description: Rhea compound GENERIC:14983.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: Se-L-selenocysteine-S-L-cysteine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14983 ([PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142235
+  - node_id: sub2
+    label: 5-aminopentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:356010
+    description: Formula C5H11NO2.
+  - node_id: prd1
+    label: '[PrdC protein]-L-selenocysteine/L-cysteine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14984
+    description: Rhea compound GENERIC:14984.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14984 ([PrdC protein]-L-selenocysteine/L-cysteine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1_rp2
+    node_type: RESIDUE
+    label: L-selenocysteine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14984 ([PrdC protein]-L-selenocysteine/L-cysteine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30000
+  - node_id: prd2
+    label: D-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:57726
+    description: Formula C5H9NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: D-proline reductase activity
+    grounding: GO:0050002
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9Z4P6
+    node_type: PROTEIN
+    label: PRDA_ACESD
+    grounding: UniProtKB:Q9Z4P6
+  - node_id: prot_Q9Z4Q7
+    node_type: PROTEIN
+    label: PRDB_ACESD
+    grounding: UniProtKB:Q9Z4Q7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine is a substrate consumed by RHEA:12737
+      (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:12738
+      snippet: '[PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine + 5-aminopentanoate => [PrdC protein]-L-selenocysteine/L-cysteine
+        + D-proline'
+      notes: Rhea's left-to-right directional reaction RHEA:12738 declares side 12737_L as its substrates
+        (rh:substrates); the master reaction RHEA:12737 is undirected. This participant is GENERIC:14983
+        with coefficient 1. Rhea cites PMID:13475375, PMID:11422384, PMID:5778643, PMID:10085076 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Se-L-selenocysteine-S-L-cysteine residue is the reactive part of [PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine.
+    evidence:
+    - reference: RHEA:12737
+      snippet: Se-L-selenocysteine-S-L-cysteine residue
+      notes: Rhea compound GENERIC:14983 ([PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine) declares rh:reactivePart
+        = Se-L-selenocysteine-S-L-cysteine residue (CHEBI:142235).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 5-aminopentanoate is a substrate consumed by RHEA:12737 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12738
+      snippet: '[PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine + 5-aminopentanoate => [PrdC protein]-L-selenocysteine/L-cysteine
+        + D-proline'
+      notes: Rhea's left-to-right directional reaction RHEA:12738 declares side 12737_L as its substrates
+        (rh:substrates); the master reaction RHEA:12737 is undirected. This participant is CHEBI:356010
+        with coefficient 1. Rhea cites PMID:13475375, PMID:11422384, PMID:5778643, PMID:10085076 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[PrdC protein]-L-selenocysteine/L-cysteine is a product released by RHEA:12737 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:12738
+      snippet: '[PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine + 5-aminopentanoate => [PrdC protein]-L-selenocysteine/L-cysteine
+        + D-proline'
+      notes: Rhea's left-to-right directional reaction RHEA:12738 declares side 12737_R as its products
+        (rh:products); the master reaction RHEA:12737 is undirected. This participant is GENERIC:14984
+        with coefficient 1. Rhea cites PMID:13475375, PMID:11422384, PMID:5778643, PMID:10085076 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of [PrdC protein]-L-selenocysteine/L-cysteine.
+    evidence:
+    - reference: RHEA:12737
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:14984 ([PrdC protein]-L-selenocysteine/L-cysteine) declares rh:reactivePart
+        = L-cysteine residue (CHEBI:29950).
+  - subject: prd1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-selenocysteine residue is the reactive part of [PrdC protein]-L-selenocysteine/L-cysteine.
+    evidence:
+    - reference: RHEA:12737
+      snippet: L-selenocysteine residue
+      notes: Rhea compound GENERIC:14984 ([PrdC protein]-L-selenocysteine/L-cysteine) declares rh:reactivePart
+        = L-selenocysteine residue (CHEBI:30000).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-proline is a product released by RHEA:12737 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12738
+      snippet: '[PrdC protein]-Se-L-selenocysteinyl-S-L-cysteine + 5-aminopentanoate => [PrdC protein]-L-selenocysteine/L-cysteine
+        + D-proline'
+      notes: Rhea's left-to-right directional reaction RHEA:12738 declares side 12737_R as its products
+        (rh:products); the master reaction RHEA:12737 is undirected. This participant is CHEBI:57726 with
+        coefficient 1. Rhea cites PMID:13475375, PMID:11422384, PMID:5778643, PMID:10085076 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.21.4.1
+      snippet: EC:1.21.4.1 > GO:D-proline reductase activity ; GO:0050002
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050002 is itself a record
+        in this KB.
+  - subject: prot_Q9Z4P6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRDA_ACESD is an exemplar enzyme with EC 1.21.4.1 activity.
+    evidence:
+    - reference: EC:1.21.4.1
+      snippet: DR   Q9Z4P6, PRDA_ACESD ;  Q9Z4Q7, PRDB_ACESD ;
+      notes: ExPASy ENZYME entry EC 1.21.4.1 cross-references UniProtKB:Q9Z4P6 (PRDA_ACESD) as a protein
+        with this activity.
+  - subject: prot_Q9Z4Q7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRDB_ACESD is an exemplar enzyme with EC 1.21.4.1 activity.
+    evidence:
+    - reference: EC:1.21.4.1
+      snippet: DR   Q9Z4P6, PRDA_ACESD ;  Q9Z4Q7, PRDB_ACESD ;
+      notes: ExPASy ENZYME entry EC 1.21.4.1 cross-references UniProtKB:Q9Z4Q7 (PRDB_ACESD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

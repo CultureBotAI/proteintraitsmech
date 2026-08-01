@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:90778
     role: SUBSTRATE_OR_PRODUCT
@@ -24,4 +24,141 @@ definitions:
       Catalyses the reaction: [protein]-C-terminal Gly-Gly + ATP + H(+) = [protein]-C-terminal Gly-Gly-AMP + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [protein]-C-terminal Gly-Gly + ATP + H(+) = [protein]-C-terminal Gly-Gly-AMP
+    + diphosph…
+  description: Substrate-to-product chemistry of RHEA:56096, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:56097 (rh:substrates → 56096_L, rh:products → 56096_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [protein]-C-terminal Gly-Gly + ATP + H(+) = [protein]-C-terminal Gly-Gly-AMP…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:56096
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [protein]-C-terminal Gly-Gly + ATP + H(+) = [protein]-C-terminal Gly-Gly-AMP + diphosphate'
+  - node_id: sub1
+    label: '[protein]-C-terminal Gly-Gly'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14379
+    description: Rhea compound GENERIC:14379.
+  - node_id: sub1_rp1
+    label: C-terminal Gly-Gly residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14379 ([protein]-C-terminal
+      Gly-Gly); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90778
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: '[protein]-C-terminal Gly-Gly-AMP'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14382
+    description: Rhea compound GENERIC:14382.
+  - node_id: prd1_rp1
+    label: C-terminal Gly-Gly-AMP
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14382 ([protein]-C-terminal
+      Gly-Gly-AMP); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90618
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[protein]-C-terminal Gly-Gly is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:56097
+      snippet: '[protein]-C-terminal Gly-Gly + ATP + H(+) => [protein]-C-terminal Gly-Gly-AMP + diphosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:56097 declares side 56096_L as its substrates
+        (rh:substrates); the master reaction RHEA:56096 is undirected. This participant is GENERIC:14379
+        with coefficient 1.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: C-terminal Gly-Gly residue is the reactive part of [protein]-C-terminal Gly-Gly.
+    evidence:
+    - reference: RHEA:56096
+      snippet: C-terminal Gly-Gly residue
+      notes: Rhea compound GENERIC:14379 ([protein]-C-terminal Gly-Gly) declares rh:reactivePart = C-terminal
+        Gly-Gly residue (CHEBI:90778), formula C4H6N2O3.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56097
+      snippet: '[protein]-C-terminal Gly-Gly + ATP + H(+) => [protein]-C-terminal Gly-Gly-AMP + diphosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:56097 declares side 56096_L as its substrates
+        (rh:substrates); the master reaction RHEA:56096 is undirected. This participant is CHEBI:30616
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56097
+      snippet: '[protein]-C-terminal Gly-Gly + ATP + H(+) => [protein]-C-terminal Gly-Gly-AMP + diphosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:56097 declares side 56096_L as its substrates
+        (rh:substrates); the master reaction RHEA:56096 is undirected. This participant is CHEBI:15378
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[protein]-C-terminal Gly-Gly-AMP is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:56097
+      snippet: '[protein]-C-terminal Gly-Gly + ATP + H(+) => [protein]-C-terminal Gly-Gly-AMP + diphosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:56097 declares side 56096_R as its products
+        (rh:products); the master reaction RHEA:56096 is undirected. This participant is GENERIC:14382
+        with coefficient 1.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: C-terminal Gly-Gly-AMP is the reactive part of [protein]-C-terminal Gly-Gly-AMP.
+    evidence:
+    - reference: RHEA:56096
+      snippet: C-terminal Gly-Gly-AMP
+      notes: Rhea compound GENERIC:14382 ([protein]-C-terminal Gly-Gly-AMP) declares rh:reactivePart =
+        C-terminal Gly-Gly-AMP (CHEBI:90618), formula C14H18N7O9P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56097
+      snippet: '[protein]-C-terminal Gly-Gly + ATP + H(+) => [protein]-C-terminal Gly-Gly-AMP + diphosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:56097 declares side 56096_R as its products
+        (rh:products); the master reaction RHEA:56096 is undirected. This participant is CHEBI:33019 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

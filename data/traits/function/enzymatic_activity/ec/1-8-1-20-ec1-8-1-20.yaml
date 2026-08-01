@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.1.-
 mapped_xrefs:
@@ -28,4 +28,121 @@ definitions:
       Catalyses: 2 4-sulfanylbutanoate + NAD(+) = 4,4'-disulfanyldibutanoate + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4,4'-dithiodibutanoate disulfide reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.1.20. EC 1.8.1.20 maps to exactly
+    one curated Rhea reaction (RHEA:54804), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 4-sulfanylbutanoate
+    + NAD(+) = 4,4''-disulfanyldibutanoate + NADH + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4,4'-dithiodibutanoate disulfide reductase
+    grounding: EC:1.8.1.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-sulfanylbutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:138358
+    description: Formula C4H7O2S.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: 4,4'-disulfanyldibutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:138359
+    description: Formula C8H12O4S2.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A0A0N9HP11
+    node_type: PROTEIN
+    label: NOX_RHOER
+    grounding: UniProtKB:A0A0N9HP11
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-sulfanylbutanoate is a substrate consumed by RHEA:54804 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:54805
+      snippet: 2 4-sulfanylbutanoate + NAD(+) => 4,4'-disulfanyldibutanoate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54805 declares side 54804_L as its substrates
+        (rh:substrates); the master reaction RHEA:54804 is undirected. This participant is CHEBI:138358
+        with coefficient 2. Rhea cites PMID:27564089, PMID:26407888 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:54804 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54805
+      snippet: 2 4-sulfanylbutanoate + NAD(+) => 4,4'-disulfanyldibutanoate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54805 declares side 54804_L as its substrates
+        (rh:substrates); the master reaction RHEA:54804 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:27564089, PMID:26407888 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4,4'-disulfanyldibutanoate is a product released by RHEA:54804 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54805
+      snippet: 2 4-sulfanylbutanoate + NAD(+) => 4,4'-disulfanyldibutanoate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54805 declares side 54804_R as its products
+        (rh:products); the master reaction RHEA:54804 is undirected. This participant is CHEBI:138359
+        with coefficient 1. Rhea cites PMID:27564089, PMID:26407888 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by RHEA:54804 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54805
+      snippet: 2 4-sulfanylbutanoate + NAD(+) => 4,4'-disulfanyldibutanoate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54805 declares side 54804_R as its products
+        (rh:products); the master reaction RHEA:54804 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:27564089, PMID:26407888 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:54804 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54805
+      snippet: 2 4-sulfanylbutanoate + NAD(+) => 4,4'-disulfanyldibutanoate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54805 declares side 54804_R as its products
+        (rh:products); the master reaction RHEA:54804 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:27564089, PMID:26407888 for this reaction.
+  - subject: prot_A0A0N9HP11
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NOX_RHOER is an exemplar enzyme with EC 1.8.1.20 activity.
+    evidence:
+    - reference: EC:1.8.1.20
+      snippet: DR   A0A0N9HP11, NOX_RHOER  ;
+      notes: ExPASy ENZYME entry EC 1.8.1.20 cross-references UniProtKB:A0A0N9HP11 (NOX_RHOER) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

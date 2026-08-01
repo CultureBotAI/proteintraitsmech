@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78483
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,132 @@ definitions:
       Catalyses the reaction: hexadecanoyl-[ACP] + sn-glycerol 3-phosphate = 1-hexadecanoyl-sn-glycero-3-phosphate + holo-[ACP]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hexadecanoyl-[ACP] + sn-glycerol 3-phosphate = 1-hexadecanoyl-sn-glycero-3-phosphate
+    +…
+  description: Substrate-to-product chemistry of RHEA:30171, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30172 (rh:substrates → 30171_L, rh:products → 30171_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of hexadecanoyl-[ACP] + sn-glycerol 3-phosphate = 1-hexadecanoyl-sn-glycero-3-p…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30171
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: hexadecanoyl-[ACP] + sn-glycerol 3-phosphate = 1-hexadecanoyl-sn-glycero-3-phosphate
+      + holo-[ACP]'
+  - node_id: sub1
+    label: hexadecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9652
+    description: Rhea compound GENERIC:9652.
+  - node_id: sub1_rp1
+    label: O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9652 (hexadecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78483
+  - node_id: sub2
+    label: sn-glycerol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+    description: Formula C3H7O6P.
+  - node_id: prd1
+    label: 1-hexadecanoyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57518
+    description: Formula C19H37O7P.
+  - node_id: prd2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: prd2_rp1
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hexadecanoyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30172
+      snippet: hexadecanoyl-[ACP] + sn-glycerol 3-phosphate => 1-hexadecanoyl-sn-glycero-3-phosphate +
+        holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:30172 declares side 30171_L as its substrates
+        (rh:substrates); the master reaction RHEA:30171 is undirected. This participant is GENERIC:9652
+        with coefficient 1. Rhea cites PMID:7026564 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of
+      hexadecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:30171
+      snippet: O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9652 (hexadecanoyl-[ACP]) declares rh:reactivePart = O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78483), formula C30H55N3O9PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sn-glycerol 3-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30172
+      snippet: hexadecanoyl-[ACP] + sn-glycerol 3-phosphate => 1-hexadecanoyl-sn-glycero-3-phosphate +
+        holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:30172 declares side 30171_L as its substrates
+        (rh:substrates); the master reaction RHEA:30171 is undirected. This participant is CHEBI:57597
+        with coefficient 1. Rhea cites PMID:7026564 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-hexadecanoyl-sn-glycero-3-phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:30172
+      snippet: hexadecanoyl-[ACP] + sn-glycerol 3-phosphate => 1-hexadecanoyl-sn-glycero-3-phosphate +
+        holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:30172 declares side 30171_R as its products
+        (rh:products); the master reaction RHEA:30171 is undirected. This participant is CHEBI:57518 with
+        coefficient 1. Rhea cites PMID:7026564 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[ACP] is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30172
+      snippet: hexadecanoyl-[ACP] + sn-glycerol 3-phosphate => 1-hexadecanoyl-sn-glycero-3-phosphate +
+        holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:30172 declares side 30171_R as its products
+        (rh:products); the master reaction RHEA:30171 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:7026564 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:30171
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479), formula C14H25N3O8PS.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.1.-
 synonyms:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: L-seryl-[protein] = D-seryl-[protein]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-serine epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.1.16. EC 5.1.1.16 maps to exactly
+    one curated Rhea reaction (RHEA:10660), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-seryl-[protein]
+    = D-seryl-[protein]". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-serine epimerase
+    grounding: EC:5.1.1.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9863
+    description: Rhea compound GENERIC:9863.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9863 (L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: prd1
+    label: D-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9864
+    description: Rhea compound GENERIC:9864.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: D-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9864 (D-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29998
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-serine epimerase activity
+    grounding: GO:0018365
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-seryl-[protein] is a substrate consumed by RHEA:10660 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10661
+      snippet: L-seryl-[protein] => D-seryl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:10661 declares side 10660_L as its substrates
+        (rh:substrates); the master reaction RHEA:10660 is undirected. This participant is GENERIC:9863
+        with coefficient 1. Rhea cites PMID:7622482 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of L-seryl-[protein].
+    evidence:
+    - reference: RHEA:10660
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:9863 (L-seryl-[protein]) declares rh:reactivePart = L-serine residue
+        (CHEBI:29999).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-seryl-[protein] is a product released by RHEA:10660 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10661
+      snippet: L-seryl-[protein] => D-seryl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:10661 declares side 10660_R as its products
+        (rh:products); the master reaction RHEA:10660 is undirected. This participant is GENERIC:9864
+        with coefficient 1. Rhea cites PMID:7622482 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: D-serine residue is the reactive part of D-seryl-[protein].
+    evidence:
+    - reference: RHEA:10660
+      snippet: D-serine residue
+      notes: Rhea compound GENERIC:9864 (D-seryl-[protein]) declares rh:reactivePart = D-serine residue
+        (CHEBI:29998).
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.1.16
+      snippet: EC:5.1.1.16 > GO:protein-serine epimerase activity ; GO:0018365
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018365 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

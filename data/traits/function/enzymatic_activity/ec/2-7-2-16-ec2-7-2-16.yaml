@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.2.-
 mapped_xrefs:
@@ -36,4 +36,149 @@ definitions:
       Catalyses: (2R)-2-phosphoglycerate + ATP = (2R)-2,3-bisphosphoglycerate + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-phosphoglycerate kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.2.16. EC 2.7.2.16 maps to exactly
+    one curated Rhea reaction (RHEA:42408), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2R)-2-phosphoglycerate
+    + ATP = (2R)-2,3-bisphosphoglycerate + ADP + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-phosphoglycerate kinase
+    grounding: EC:2.7.2.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2R)-2-phosphoglycerate
+    node_type: CHEMICAL
+    grounding: CHEBI:58289
+    description: Formula C3H4O7P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: (2R)-2,3-bisphosphoglycerate
+    node_type: CHEMICAL
+    grounding: CHEBI:58248
+    description: Formula C3H3O10P2.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q49156
+    node_type: PROTEIN
+    label: PGK2_METFV
+    grounding: UniProtKB:Q49156
+  - node_id: prot_Q58877
+    node_type: PROTEIN
+    label: PGK2_METJA
+    grounding: UniProtKB:Q58877
+  - node_id: prot_Q8TGY9
+    node_type: PROTEIN
+    label: PGK2_METKA
+    grounding: UniProtKB:Q8TGY9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2R)-2-phosphoglycerate is a substrate consumed by RHEA:42408 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42409
+      snippet: (2R)-2-phosphoglycerate + ATP => (2R)-2,3-bisphosphoglycerate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42409 declares side 42408_L as its substrates
+        (rh:substrates); the master reaction RHEA:42408 is undirected. This participant is CHEBI:58289
+        with coefficient 1. Rhea cites PMID:8159166 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:42408 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42409
+      snippet: (2R)-2-phosphoglycerate + ATP => (2R)-2,3-bisphosphoglycerate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42409 declares side 42408_L as its substrates
+        (rh:substrates); the master reaction RHEA:42408 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:8159166 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2R)-2,3-bisphosphoglycerate is a product released by RHEA:42408 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42409
+      snippet: (2R)-2-phosphoglycerate + ATP => (2R)-2,3-bisphosphoglycerate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42409 declares side 42408_R as its products
+        (rh:products); the master reaction RHEA:42408 is undirected. This participant is CHEBI:58248 with
+        coefficient 1. Rhea cites PMID:8159166 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:42408 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42409
+      snippet: (2R)-2-phosphoglycerate + ATP => (2R)-2,3-bisphosphoglycerate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42409 declares side 42408_R as its products
+        (rh:products); the master reaction RHEA:42408 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:8159166 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:42408 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42409
+      snippet: (2R)-2-phosphoglycerate + ATP => (2R)-2,3-bisphosphoglycerate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42409 declares side 42408_R as its products
+        (rh:products); the master reaction RHEA:42408 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8159166 for this reaction.
+  - subject: prot_Q49156
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGK2_METFV is an exemplar enzyme with EC 2.7.2.16 activity.
+    evidence:
+    - reference: EC:2.7.2.16
+      snippet: DR   Q49156, PGK2_METFV ;  Q58877, PGK2_METJA ;  Q8TGY9, PGK2_METKA ;
+      notes: ExPASy ENZYME entry EC 2.7.2.16 cross-references UniProtKB:Q49156 (PGK2_METFV) as a protein
+        with this activity.
+  - subject: prot_Q58877
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGK2_METJA is an exemplar enzyme with EC 2.7.2.16 activity.
+    evidence:
+    - reference: EC:2.7.2.16
+      snippet: DR   Q49156, PGK2_METFV ;  Q58877, PGK2_METJA ;  Q8TGY9, PGK2_METKA ;
+      notes: ExPASy ENZYME entry EC 2.7.2.16 cross-references UniProtKB:Q58877 (PGK2_METJA) as a protein
+        with this activity.
+  - subject: prot_Q8TGY9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGK2_METKA is an exemplar enzyme with EC 2.7.2.16 activity.
+    evidence:
+    - reference: EC:2.7.2.16
+      snippet: DR   Q49156, PGK2_METFV ;  Q58877, PGK2_METJA ;  Q8TGY9, PGK2_METKA ;
+      notes: ExPASy ENZYME entry EC 2.7.2.16 cross-references UniProtKB:Q8TGY9 (PGK2_METKA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

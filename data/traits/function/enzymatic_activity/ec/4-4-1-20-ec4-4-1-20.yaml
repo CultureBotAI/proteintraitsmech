@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 synonyms:
@@ -47,4 +47,131 @@ definitions:
       Catalyses: leukotriene C4 = leukotriene A4 + glutathione
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of leukotriene-C4 synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.20. EC 4.4.1.20 maps to exactly
+    one curated Rhea reaction (RHEA:17617), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "leukotriene C4
+    = leukotriene A4 + glutathione". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: leukotriene-C4 synthase
+    grounding: EC:4.4.1.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: leukotriene C4
+    node_type: CHEMICAL
+    grounding: CHEBI:57973
+    description: Formula C30H45N3O9S.
+  - node_id: prd1
+    label: leukotriene A4
+    node_type: CHEMICAL
+    grounding: CHEBI:57463
+    description: Formula C20H29O3.
+  - node_id: prd2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: leukotriene-C4 synthase activity
+    grounding: GO:0004464
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q03013
+    node_type: PROTEIN
+    label: GSTM4_HUMAN
+    grounding: UniProtKB:Q03013
+  - node_id: prot_Q8R5I6
+    node_type: PROTEIN
+    label: GSTM4_MOUSE
+    grounding: UniProtKB:Q8R5I6
+  - node_id: prot_Q5BK56
+    node_type: PROTEIN
+    label: GSTM4_RAT
+    grounding: UniProtKB:Q5BK56
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: leukotriene C4 is a substrate consumed by RHEA:17617 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17618
+      snippet: leukotriene C4 => leukotriene A4 + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:17618 declares side 17617_L as its substrates
+        (rh:substrates); the master reaction RHEA:17617 is undirected. This participant is CHEBI:57973
+        with coefficient 1. Rhea cites PMID:12023288, PMID:12432940, PMID:2846379, PMID:8706658 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: leukotriene A4 is a product released by RHEA:17617 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17618
+      snippet: leukotriene C4 => leukotriene A4 + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:17618 declares side 17617_R as its products
+        (rh:products); the master reaction RHEA:17617 is undirected. This participant is CHEBI:57463 with
+        coefficient 1. Rhea cites PMID:12023288, PMID:12432940, PMID:2846379, PMID:8706658 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glutathione is a product released by RHEA:17617 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17618
+      snippet: leukotriene C4 => leukotriene A4 + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:17618 declares side 17617_R as its products
+        (rh:products); the master reaction RHEA:17617 is undirected. This participant is CHEBI:57925 with
+        coefficient 1. Rhea cites PMID:12023288, PMID:12432940, PMID:2846379, PMID:8706658 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.4.1.20
+      snippet: EC:4.4.1.20 > GO:leukotriene-C4 synthase activity ; GO:0004464
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004464 is itself a record
+        in this KB.
+  - subject: prot_Q03013
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GSTM4_HUMAN is an exemplar enzyme with EC 4.4.1.20 activity.
+    evidence:
+    - reference: EC:4.4.1.20
+      snippet: DR   Q03013, GSTM4_HUMAN;  Q8R5I6, GSTM4_MOUSE;  Q5BK56, GSTM4_RAT  ;
+      notes: ExPASy ENZYME entry EC 4.4.1.20 cross-references UniProtKB:Q03013 (GSTM4_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q8R5I6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GSTM4_MOUSE is an exemplar enzyme with EC 4.4.1.20 activity.
+    evidence:
+    - reference: EC:4.4.1.20
+      snippet: DR   Q03013, GSTM4_HUMAN;  Q8R5I6, GSTM4_MOUSE;  Q5BK56, GSTM4_RAT  ;
+      notes: ExPASy ENZYME entry EC 4.4.1.20 cross-references UniProtKB:Q8R5I6 (GSTM4_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q5BK56
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GSTM4_RAT is an exemplar enzyme with EC 4.4.1.20 activity.
+    evidence:
+    - reference: EC:4.4.1.20
+      snippet: DR   Q03013, GSTM4_HUMAN;  Q8R5I6, GSTM4_MOUSE;  Q5BK56, GSTM4_RAT  ;
+      notes: ExPASy ENZYME entry EC 4.4.1.20 cross-references UniProtKB:Q5BK56 (GSTM4_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

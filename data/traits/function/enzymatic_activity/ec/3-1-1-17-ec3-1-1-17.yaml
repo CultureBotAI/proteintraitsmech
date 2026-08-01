@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -45,4 +45,151 @@ definitions:
       Catalyses: D-glucono-1,5-lactone + H2O = D-gluconate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gluconolactonase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.17. EC 3.1.1.17 maps to exactly
+    one curated Rhea reaction (RHEA:10440), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-glucono-1,5-lactone
+    + H2O = D-gluconate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gluconolactonase
+    grounding: EC:3.1.1.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-glucono-1,5-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:16217
+    description: Formula C6H10O6.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:18391
+    description: Formula C6H11O7.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: gluconolactonase activity
+    grounding: GO:0004341
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q01578
+    node_type: PROTEIN
+    label: GNL_ZYMMO
+    grounding: UniProtKB:Q01578
+  - node_id: prot_Q9TTJ5
+    node_type: PROTEIN
+    label: RGN_BOVIN
+    grounding: UniProtKB:Q9TTJ5
+  - node_id: prot_Q9I923
+    node_type: PROTEIN
+    label: RGN_CHICK
+    grounding: UniProtKB:Q9I923
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-glucono-1,5-lactone is a substrate consumed by RHEA:10440 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10441
+      snippet: D-glucono-1,5-lactone + H2O => D-gluconate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10441 declares side 10440_L as its substrates
+        (rh:substrates); the master reaction RHEA:10440 is undirected. This participant is CHEBI:16217
+        with coefficient 1. Rhea cites PMID:16585534, PMID:12005536, PMID:11179980, PMID:20329768 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:10440 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10441
+      snippet: D-glucono-1,5-lactone + H2O => D-gluconate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10441 declares side 10440_L as its substrates
+        (rh:substrates); the master reaction RHEA:10440 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16585534, PMID:12005536, PMID:11179980, PMID:20329768 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-gluconate is a product released by RHEA:10440 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10441
+      snippet: D-glucono-1,5-lactone + H2O => D-gluconate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10441 declares side 10440_R as its products
+        (rh:products); the master reaction RHEA:10440 is undirected. This participant is CHEBI:18391 with
+        coefficient 1. Rhea cites PMID:16585534, PMID:12005536, PMID:11179980, PMID:20329768 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:10440 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10441
+      snippet: D-glucono-1,5-lactone + H2O => D-gluconate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10441 declares side 10440_R as its products
+        (rh:products); the master reaction RHEA:10440 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:16585534, PMID:12005536, PMID:11179980, PMID:20329768 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.17
+      snippet: EC:3.1.1.17 > GO:gluconolactonase activity ; GO:0004341
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004341 is itself a record
+        in this KB.
+  - subject: prot_Q01578
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GNL_ZYMMO is an exemplar enzyme with EC 3.1.1.17 activity.
+    evidence:
+    - reference: EC:3.1.1.17
+      snippet: DR   Q01578, GNL_ZYMMO  ;  Q9TTJ5, RGN_BOVIN  ;  Q9I923, RGN_CHICK  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.17 cross-references UniProtKB:Q01578 (GNL_ZYMMO) as a protein
+        with this activity.
+  - subject: prot_Q9TTJ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RGN_BOVIN is an exemplar enzyme with EC 3.1.1.17 activity.
+    evidence:
+    - reference: EC:3.1.1.17
+      snippet: DR   Q01578, GNL_ZYMMO  ;  Q9TTJ5, RGN_BOVIN  ;  Q9I923, RGN_CHICK  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.17 cross-references UniProtKB:Q9TTJ5 (RGN_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q9I923
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RGN_CHICK is an exemplar enzyme with EC 3.1.1.17 activity.
+    evidence:
+    - reference: EC:3.1.1.17
+      snippet: DR   Q01578, GNL_ZYMMO  ;  Q9TTJ5, RGN_BOVIN  ;  Q9I923, RGN_CHICK  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.17 cross-references UniProtKB:Q9I923 (RGN_CHICK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

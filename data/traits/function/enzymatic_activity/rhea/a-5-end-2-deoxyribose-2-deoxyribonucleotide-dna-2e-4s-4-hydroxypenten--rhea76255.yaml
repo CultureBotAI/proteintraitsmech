@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:195194
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,148 @@ definitions:
       Catalyses the reaction: a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA = (2E,4S)-4-hydroxypenten-2-al-5-phosphate + a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA = (2E,4S)-4-hydroxypenten-2-al-5-pho…
+  description: Substrate-to-product chemistry of RHEA:76255, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:76256 (rh:substrates → 76255_L, rh:products → 76255_R), and Rhea
+    curates the reverse direction too. 1 substrate, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA = (2E,4S)-4-hydroxypenten…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:76255
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 5''-end 2''-deoxyribose-2''-deoxyribonucleotide-DNA = (2E,4S)-4-hydroxypenten-2-al-5-phosphate
+      + a 5''-end 5''-phospho-2''-deoxyribonucleoside-DNA + H(+)'
+  - node_id: sub1
+    label: a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18657
+    description: Rhea compound GENERIC:18657.
+  - node_id: sub1_rp1
+    label: a 5'-end 2'-deoxyribose-deoxyribonucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18657 (a 5'-end
+      2'-deoxyribose-2'-deoxyribonucleotide-DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:195194
+  - node_id: prd1
+    label: (2E,4S)-4-hydroxypenten-2-al-5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:195195
+    description: Formula C5H7O6P.
+  - node_id: prd2
+    label: a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13180
+    description: Rhea compound GENERIC:13180.
+  - node_id: prd2_rp1
+    label: 5'-phosphate 2'-deoxynucleoside residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13180 (a 5'-end
+      5'-phospho-2'-deoxyribonucleoside-DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:136412
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 5'-deoxyribose-5-phosphate lyase activity
+    grounding: GO:0051575
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76256
+      snippet: a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA => (2E,4S)-4-hydroxypenten-2-al-5-phosphate
+        + a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:76256 declares side 76255_L as its substrates
+        (rh:substrates); the master reaction RHEA:76255 is undirected. This participant is GENERIC:18657
+        with coefficient 1. Rhea cites PMID:9614142, PMID:11251121 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a 5'-end 2'-deoxyribose-deoxyribonucleotide residue is the reactive part of a 5'-end
+      2'-deoxyribose-2'-deoxyribonucleotide-DNA.
+    evidence:
+    - reference: RHEA:76255
+      snippet: a 5'-end 2'-deoxyribose-deoxyribonucleotide residue
+      notes: Rhea compound GENERIC:18657 (a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA) declares
+        rh:reactivePart = a 5'-end 2'-deoxyribose-deoxyribonucleotide residue (CHEBI:195194), formula
+        C10H15O12P2R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E,4S)-4-hydroxypenten-2-al-5-phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:76256
+      snippet: a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA => (2E,4S)-4-hydroxypenten-2-al-5-phosphate
+        + a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:76256 declares side 76255_R as its products
+        (rh:products); the master reaction RHEA:76255 is undirected. This participant is CHEBI:195195
+        with coefficient 1. Rhea cites PMID:9614142, PMID:11251121 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76256
+      snippet: a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA => (2E,4S)-4-hydroxypenten-2-al-5-phosphate
+        + a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:76256 declares side 76255_R as its products
+        (rh:products); the master reaction RHEA:76255 is undirected. This participant is GENERIC:13180
+        with coefficient 1. Rhea cites PMID:9614142, PMID:11251121 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: 5'-phosphate 2'-deoxynucleoside residue is the reactive part of a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA.
+    evidence:
+    - reference: RHEA:76255
+      snippet: 5'-phosphate 2'-deoxynucleoside residue
+      notes: Rhea compound GENERIC:13180 (a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA) declares rh:reactivePart
+        = 5'-phosphate 2'-deoxynucleoside residue (CHEBI:136412), formula C5H7O6PR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76256
+      snippet: a 5'-end 2'-deoxyribose-2'-deoxyribonucleotide-DNA => (2E,4S)-4-hydroxypenten-2-al-5-phosphate
+        + a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:76256 declares side 76255_R as its products
+        (rh:products); the master reaction RHEA:76255 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9614142, PMID:11251121 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:76255
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0051575"/>
+      notes: The rdfs:seeAlso triple on RHEA:76255 in rhea.rdf. GO term GO:0051575 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

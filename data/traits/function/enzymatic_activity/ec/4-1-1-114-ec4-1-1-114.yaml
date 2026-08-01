@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 mapped_xrefs:
@@ -32,4 +32,102 @@ definitions:
       Catalyses: a cis-3-alkyl-4-alkyloxetan-2-one = a cis-alkene + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cis-3-alkyl-4-alkyloxetan-2-one decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.114. EC 4.1.1.114 maps to
+    exactly one curated Rhea reaction (RHEA:18345), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a cis-3-alkyl-4-alkyloxetan-2-one
+    = a cis-alkene + CO2". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cis-3-alkyl-4-alkyloxetan-2-one decarboxylase
+    grounding: EC:4.1.1.114
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a cis-3-alkyl-4-alkyloxetan-2-one
+    node_type: CHEMICAL
+    grounding: CHEBI:138483
+    description: Formula C3H2O2R2.
+  - node_id: prd1
+    label: a cis-alkene
+    node_type: CHEMICAL
+    grounding: CHEBI:139021
+    description: Formula C2H2R2.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prot_Q8EG65
+    node_type: PROTEIN
+    label: OLEB_SHEON
+    grounding: UniProtKB:Q8EG65
+  - node_id: prot_Q8PDW8
+    node_type: PROTEIN
+    label: OLEB_XANCP
+    grounding: UniProtKB:Q8PDW8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a cis-3-alkyl-4-alkyloxetan-2-one is a substrate consumed by RHEA:18345 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18346
+      snippet: a cis-3-alkyl-4-alkyloxetan-2-one => a cis-alkene + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:18346 declares side 18345_L as its substrates
+        (rh:substrates); the master reaction RHEA:18345 is undirected. This participant is CHEBI:138483
+        with coefficient 1. Rhea cites PMID:28029240, PMID:28223313 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a cis-alkene is a product released by RHEA:18345 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18346
+      snippet: a cis-3-alkyl-4-alkyloxetan-2-one => a cis-alkene + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:18346 declares side 18345_R as its products
+        (rh:products); the master reaction RHEA:18345 is undirected. This participant is CHEBI:139021
+        with coefficient 1. Rhea cites PMID:28029240, PMID:28223313 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:18345 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18346
+      snippet: a cis-3-alkyl-4-alkyloxetan-2-one => a cis-alkene + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:18346 declares side 18345_R as its products
+        (rh:products); the master reaction RHEA:18345 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:28029240, PMID:28223313 for this reaction.
+  - subject: prot_Q8EG65
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLEB_SHEON is an exemplar enzyme with EC 4.1.1.114 activity.
+    evidence:
+    - reference: EC:4.1.1.114
+      snippet: DR   Q8EG65, OLEB_SHEON ;  Q8PDW8, OLEB_XANCP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.114 cross-references UniProtKB:Q8EG65 (OLEB_SHEON) as a protein
+        with this activity.
+  - subject: prot_Q8PDW8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLEB_XANCP is an exemplar enzyme with EC 4.1.1.114 activity.
+    evidence:
+    - reference: EC:4.1.1.114
+      snippet: DR   Q8EG65, OLEB_SHEON ;  Q8PDW8, OLEB_XANCP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.114 cross-references UniProtKB:Q8PDW8 (OLEB_XANCP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

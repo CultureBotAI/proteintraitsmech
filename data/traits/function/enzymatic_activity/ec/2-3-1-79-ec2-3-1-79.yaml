@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -34,4 +34,132 @@ definitions:
       Catalyses: D-maltose + acetyl-CoA = 1-O-acetylmaltose + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of maltose O-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.79. EC 2.3.1.79 maps to exactly
+    one curated Rhea reaction (RHEA:10456), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-maltose + acetyl-CoA
+    = 1-O-acetylmaltose + CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: maltose O-acetyltransferase
+    grounding: EC:2.3.1.79
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-maltose
+    node_type: CHEMICAL
+    grounding: CHEBI:17306
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: 1-O-acetylmaltose
+    node_type: CHEMICAL
+    grounding: CHEBI:13714
+    description: Formula C14H24O12.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: maltose O-acetyltransferase activity
+    grounding: GO:0008925
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P37515
+    node_type: PROTEIN
+    label: MAA_BACSU
+    grounding: UniProtKB:P37515
+  - node_id: prot_P77791
+    node_type: PROTEIN
+    label: MAA_ECOLI
+    grounding: UniProtKB:P77791
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-maltose is a substrate consumed by RHEA:10456 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10457
+      snippet: D-maltose + acetyl-CoA => 1-O-acetylmaltose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10457 declares side 10456_L as its substrates
+        (rh:substrates); the master reaction RHEA:10456 is undirected. This participant is CHEBI:17306
+        with coefficient 1. Rhea cites PMID:12731863, PMID:1856235 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:10456 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10457
+      snippet: D-maltose + acetyl-CoA => 1-O-acetylmaltose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10457 declares side 10456_L as its substrates
+        (rh:substrates); the master reaction RHEA:10456 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:12731863, PMID:1856235 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-O-acetylmaltose is a product released by RHEA:10456 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10457
+      snippet: D-maltose + acetyl-CoA => 1-O-acetylmaltose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10457 declares side 10456_R as its products
+        (rh:products); the master reaction RHEA:10456 is undirected. This participant is CHEBI:13714 with
+        coefficient 1. Rhea cites PMID:12731863, PMID:1856235 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:10456 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10457
+      snippet: D-maltose + acetyl-CoA => 1-O-acetylmaltose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10457 declares side 10456_R as its products
+        (rh:products); the master reaction RHEA:10456 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:12731863, PMID:1856235 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.79
+      snippet: EC:2.3.1.79 > GO:maltose O-acetyltransferase activity ; GO:0008925
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008925 is itself a record
+        in this KB.
+  - subject: prot_P37515
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAA_BACSU is an exemplar enzyme with EC 2.3.1.79 activity.
+    evidence:
+    - reference: EC:2.3.1.79
+      snippet: DR   P37515, MAA_BACSU  ;  P77791, MAA_ECOLI  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.79 cross-references UniProtKB:P37515 (MAA_BACSU) as a protein
+        with this activity.
+  - subject: prot_P77791
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAA_ECOLI is an exemplar enzyme with EC 2.3.1.79 activity.
+    evidence:
+    - reference: EC:2.3.1.79
+      snippet: DR   P37515, MAA_BACSU  ;  P77791, MAA_ECOLI  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.79 cross-references UniProtKB:P77791 (MAA_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

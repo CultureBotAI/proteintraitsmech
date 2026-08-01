@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.31.-
 synonyms:
@@ -39,4 +39,81 @@ definitions:
       Catalyses: Endonucleolytic cleavage to nucleoside 3'-phosphates and 3'-phosphooligonucleotide end-products
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of micrococcal nuclease
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.31.1. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endonucleolytic
+    cleavage to nucleoside 3''-phosphates and 3''-phosphooligonucleotide end-products".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: micrococcal nuclease
+    grounding: EC:3.1.31.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3' overhang single-stranded DNA endonuclease activity
+    grounding: GO:1990599
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P29769
+    node_type: PROTEIN
+    label: NUC_SHIFL
+    grounding: UniProtKB:P29769
+  - node_id: prot_Q5HHM4
+    node_type: PROTEIN
+    label: NUC_STAAC
+    grounding: UniProtKB:Q5HHM4
+  - node_id: prot_Q99VJ0
+    node_type: PROTEIN
+    label: NUC_STAAM
+    grounding: UniProtKB:Q99VJ0
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.31.1
+      snippet: EC:3.1.31.1 > GO:3' overhang single-stranded DNA endonuclease activity ; GO:1990599
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:1990599 is itself a record
+        in this KB.
+  - subject: prot_P29769
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUC_SHIFL is an exemplar enzyme with EC 3.1.31.1 activity.
+    evidence:
+    - reference: EC:3.1.31.1
+      snippet: DR   P29769, NUC_SHIFL  ;  Q5HHM4, NUC_STAAC  ;  Q99VJ0, NUC_STAAM  ;
+      notes: ExPASy ENZYME entry EC 3.1.31.1 cross-references UniProtKB:P29769 (NUC_SHIFL) as a protein
+        with this activity.
+  - subject: prot_Q5HHM4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUC_STAAC is an exemplar enzyme with EC 3.1.31.1 activity.
+    evidence:
+    - reference: EC:3.1.31.1
+      snippet: DR   P29769, NUC_SHIFL  ;  Q5HHM4, NUC_STAAC  ;  Q99VJ0, NUC_STAAM  ;
+      notes: ExPASy ENZYME entry EC 3.1.31.1 cross-references UniProtKB:Q5HHM4 (NUC_STAAC) as a protein
+        with this activity.
+  - subject: prot_Q99VJ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUC_STAAM is an exemplar enzyme with EC 3.1.31.1 activity.
+    evidence:
+    - reference: EC:3.1.31.1
+      snippet: DR   P29769, NUC_SHIFL  ;  Q5HHM4, NUC_STAAC  ;  Q99VJ0, NUC_STAAM  ;
+      notes: ExPASy ENZYME entry EC 3.1.31.1 cross-references UniProtKB:Q99VJ0 (NUC_STAAM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

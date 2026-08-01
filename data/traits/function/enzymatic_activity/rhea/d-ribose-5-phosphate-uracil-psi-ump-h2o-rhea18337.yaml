@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.70
     mapping_source: rhea2ec
@@ -32,4 +32,182 @@ definitions:
       Catalyses the reaction: D-ribose 5-phosphate + uracil = psi-UMP + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-ribose 5-phosphate + uracil = psi-UMP + H2O
+  description: Substrate-to-product chemistry of RHEA:18337, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:18338 (rh:substrates → 18337_L, rh:products → 18337_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-ribose 5-phosphate + uracil = psi-UMP + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:18337
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-ribose 5-phosphate + uracil = psi-UMP + H2O'
+  - node_id: sub1
+    label: D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:78346
+    description: Formula C5H9O8P.
+  - node_id: sub2
+    label: uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:17568
+    description: Formula C4H4N2O2.
+  - node_id: prd1
+    label: psi-UMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58380
+    description: Formula C9H11N2O9P.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: pseudouridylate synthase activity
+    grounding: GO:0004730
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: pseudouridylate synthase
+    grounding: EC:4.2.1.70
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q7N4X5
+    node_type: PROTEIN
+    label: PSUG1_PHOLL
+    grounding: UniProtKB:Q7N4X5
+  - node_id: prot_Q1MFZ6
+    node_type: PROTEIN
+    label: PSUG1_RHIJ3
+    grounding: UniProtKB:Q1MFZ6
+  - node_id: prot_Q7MZE1
+    node_type: PROTEIN
+    label: PSUG2_PHOLL
+    grounding: UniProtKB:Q7MZE1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-ribose 5-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18338
+      snippet: D-ribose 5-phosphate + uracil => psi-UMP + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18338 declares side 18337_L as its substrates
+        (rh:substrates); the master reaction RHEA:18337 is undirected. This participant is CHEBI:78346
+        with coefficient 1. Rhea cites PMID:4569284, PMID:18591240, PMID:23066817 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: uracil is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18338
+      snippet: D-ribose 5-phosphate + uracil => psi-UMP + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18338 declares side 18337_L as its substrates
+        (rh:substrates); the master reaction RHEA:18337 is undirected. This participant is CHEBI:17568
+        with coefficient 1. Rhea cites PMID:4569284, PMID:18591240, PMID:23066817 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: psi-UMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18338
+      snippet: D-ribose 5-phosphate + uracil => psi-UMP + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18338 declares side 18337_R as its products
+        (rh:products); the master reaction RHEA:18337 is undirected. This participant is CHEBI:58380 with
+        coefficient 1. Rhea cites PMID:4569284, PMID:18591240, PMID:23066817 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18338
+      snippet: D-ribose 5-phosphate + uracil => psi-UMP + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18338 declares side 18337_R as its products
+        (rh:products); the master reaction RHEA:18337 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:4569284, PMID:18591240, PMID:23066817 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:18337
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004730"/>
+      notes: The rdfs:seeAlso triple on RHEA:18337 in rhea.rdf. GO term GO:0004730 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.70; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:18337
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.70"/>
+      notes: The rh:ec triple on RHEA:18337 in rhea.rdf. EC 4.2.1.70 is itself a record in this KB.
+  - subject: prot_Q7N4X5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSUG1_PHOLL is an exemplar enzyme carrying EC 4.2.1.70, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.70
+      snippet: DR   Q7N4X5, PSUG1_PHOLL;  Q1MFZ6, PSUG1_RHIJ3;  Q7MZE1, PSUG2_PHOLL;
+      notes: ExPASy ENZYME entry EC 4.2.1.70 cross-references UniProtKB:Q7N4X5 (PSUG1_PHOLL) as a protein
+        with this activity.
+    - reference: RHEA:18337
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.70"/>
+      notes: Rhea assigns RHEA:18337 to EC 4.2.1.70, and EC 4.2.1.70 maps to exactly one Rhea master reaction
+        (RHEA:18337), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q1MFZ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSUG1_RHIJ3 is an exemplar enzyme carrying EC 4.2.1.70, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.70
+      snippet: DR   Q7N4X5, PSUG1_PHOLL;  Q1MFZ6, PSUG1_RHIJ3;  Q7MZE1, PSUG2_PHOLL;
+      notes: ExPASy ENZYME entry EC 4.2.1.70 cross-references UniProtKB:Q1MFZ6 (PSUG1_RHIJ3) as a protein
+        with this activity.
+    - reference: RHEA:18337
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.70"/>
+      notes: Rhea assigns RHEA:18337 to EC 4.2.1.70, and EC 4.2.1.70 maps to exactly one Rhea master reaction
+        (RHEA:18337), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q7MZE1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSUG2_PHOLL is an exemplar enzyme carrying EC 4.2.1.70, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.70
+      snippet: DR   Q7N4X5, PSUG1_PHOLL;  Q1MFZ6, PSUG1_RHIJ3;  Q7MZE1, PSUG2_PHOLL;
+      notes: ExPASy ENZYME entry EC 4.2.1.70 cross-references UniProtKB:Q7MZE1 (PSUG2_PHOLL) as a protein
+        with this activity.
+    - reference: RHEA:18337
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.70"/>
+      notes: Rhea assigns RHEA:18337 to EC 4.2.1.70, and EC 4.2.1.70 maps to exactly one Rhea master reaction
+        (RHEA:18337), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

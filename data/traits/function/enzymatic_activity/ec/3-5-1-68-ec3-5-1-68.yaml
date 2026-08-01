@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -37,4 +37,133 @@ definitions:
       Catalyses: N-formyl-L-glutamate + H2O = formate + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-formylglutamate deformylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.68. EC 3.5.1.68 maps to exactly
+    one curated Rhea reaction (RHEA:12476), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-formyl-L-glutamate
+    + H2O = formate + L-glutamate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-formylglutamate deformylase
+    grounding: EC:3.5.1.68
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-formyl-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:17684
+    description: Formula C6H7NO5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-formylglutamate deformylase activity
+    grounding: GO:0050129
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9HU92
+    node_type: PROTEIN
+    label: HUTG_PSEAE
+    grounding: UniProtKB:Q9HU92
+  - node_id: prot_O31201
+    node_type: PROTEIN
+    label: HUTG_PSEPU
+    grounding: UniProtKB:O31201
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-formyl-L-glutamate is a substrate consumed by RHEA:12476 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12477
+      snippet: N-formyl-L-glutamate + H2O => formate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:12477 declares side 12476_L as its substrates
+        (rh:substrates); the master reaction RHEA:12476 is undirected. This participant is CHEBI:17684
+        with coefficient 1. Rhea cites PMID:6414521, PMID:3308850 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:12476 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12477
+      snippet: N-formyl-L-glutamate + H2O => formate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:12477 declares side 12476_L as its substrates
+        (rh:substrates); the master reaction RHEA:12476 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:6414521, PMID:3308850 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: formate is a product released by RHEA:12476 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12477
+      snippet: N-formyl-L-glutamate + H2O => formate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:12477 declares side 12476_R as its products
+        (rh:products); the master reaction RHEA:12476 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:6414521, PMID:3308850 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:12476 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12477
+      snippet: N-formyl-L-glutamate + H2O => formate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:12477 declares side 12476_R as its products
+        (rh:products); the master reaction RHEA:12476 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:6414521, PMID:3308850 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.68
+      snippet: EC:3.5.1.68 > GO:N-formylglutamate deformylase activity ; GO:0050129
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050129 is itself a record
+        in this KB.
+  - subject: prot_Q9HU92
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTG_PSEAE is an exemplar enzyme with EC 3.5.1.68 activity.
+    evidence:
+    - reference: EC:3.5.1.68
+      snippet: DR   Q9HU92, HUTG_PSEAE ;  O31201, HUTG_PSEPU ;
+      notes: ExPASy ENZYME entry EC 3.5.1.68 cross-references UniProtKB:Q9HU92 (HUTG_PSEAE) as a protein
+        with this activity.
+  - subject: prot_O31201
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTG_PSEPU is an exemplar enzyme with EC 3.5.1.68 activity.
+    evidence:
+    - reference: EC:3.5.1.68
+      snippet: DR   Q9HU92, HUTG_PSEAE ;  O31201, HUTG_PSEPU ;
+      notes: ExPASy ENZYME entry EC 3.5.1.68 cross-references UniProtKB:O31201 (HUTG_PSEPU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

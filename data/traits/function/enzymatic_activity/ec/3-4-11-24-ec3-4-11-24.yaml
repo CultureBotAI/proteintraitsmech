@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.11.-
 synonyms:
@@ -30,4 +30,38 @@ definitions:
       Catalyses: Release of an N-terminal amino acid with a preference for large hydrophobic amino-terminus residues
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aminopeptidase S
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.11.24. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of an N-terminal amino acid with a preference for large hydrophobic amino-terminus residues".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aminopeptidase S
+    grounding: EC:3.4.11.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P80561
+    node_type: PROTEIN
+    label: APX_STRGG
+    grounding: UniProtKB:P80561
+  edges:
+  - subject: prot_P80561
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APX_STRGG is an exemplar enzyme with EC 3.4.11.24 activity.
+    evidence:
+    - reference: EC:3.4.11.24
+      snippet: DR   P80561, APX_STRGG  ;
+      notes: ExPASy ENZYME entry EC 3.4.11.24 cross-references UniProtKB:P80561 (APX_STRGG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

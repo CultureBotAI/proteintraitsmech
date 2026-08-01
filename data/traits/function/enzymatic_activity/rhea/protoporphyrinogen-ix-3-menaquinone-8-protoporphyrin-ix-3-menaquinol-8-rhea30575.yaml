@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57307
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,92 @@ definitions:
       Catalyses the reaction: protoporphyrinogen IX + 3 menaquinone-8 = protoporphyrin IX + 3 menaquinol-8
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protoporphyrinogen IX + 3 menaquinone-8 = protoporphyrin IX + 3 menaquinol-8
+  description: Substrate-to-product chemistry of RHEA:30575, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30576 (rh:substrates → 30575_L, rh:products → 30575_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of protoporphyrinogen IX + 3 menaquinone-8 = protoporphyrin IX + 3 menaquinol-8
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30575
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: protoporphyrinogen IX + 3 menaquinone-8 = protoporphyrin IX + 3 menaquinol-8'
+  - node_id: sub1
+    label: protoporphyrinogen IX
+    node_type: CHEMICAL
+    grounding: CHEBI:57307
+    description: Formula C34H38N4O4.
+  - node_id: sub2
+    label: menaquinone-8
+    node_type: CHEMICAL
+    grounding: CHEBI:44027
+    description: Formula C51H72O2.
+  - node_id: prd1
+    label: protoporphyrin IX
+    node_type: CHEMICAL
+    grounding: CHEBI:57306
+    description: Formula C34H32N4O4.
+  - node_id: prd2
+    label: menaquinol-8
+    node_type: CHEMICAL
+    grounding: CHEBI:61684
+    description: Formula C51H74O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: protoporphyrinogen IX is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30576
+      snippet: protoporphyrinogen IX + 3 menaquinone-8 => protoporphyrin IX + 3 menaquinol-8
+      notes: Rhea's left-to-right directional reaction RHEA:30576 declares side 30575_L as its substrates
+        (rh:substrates); the master reaction RHEA:30575 is undirected. This participant is CHEBI:57307
+        with coefficient 1. Rhea cites PMID:788792, PMID:20484676, PMID:318855 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: menaquinone-8 is a substrate consumed by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:30576
+      snippet: protoporphyrinogen IX + 3 menaquinone-8 => protoporphyrin IX + 3 menaquinol-8
+      notes: Rhea's left-to-right directional reaction RHEA:30576 declares side 30575_L as its substrates
+        (rh:substrates); the master reaction RHEA:30575 is undirected. This participant is CHEBI:44027
+        with coefficient 3. Rhea cites PMID:788792, PMID:20484676, PMID:318855 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: protoporphyrin IX is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30576
+      snippet: protoporphyrinogen IX + 3 menaquinone-8 => protoporphyrin IX + 3 menaquinol-8
+      notes: Rhea's left-to-right directional reaction RHEA:30576 declares side 30575_R as its products
+        (rh:products); the master reaction RHEA:30575 is undirected. This participant is CHEBI:57306 with
+        coefficient 1. Rhea cites PMID:788792, PMID:20484676, PMID:318855 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: menaquinol-8 is a product released by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:30576
+      snippet: protoporphyrinogen IX + 3 menaquinone-8 => protoporphyrin IX + 3 menaquinol-8
+      notes: Rhea's left-to-right directional reaction RHEA:30576 declares side 30575_R as its products
+        (rh:products); the master reaction RHEA:30575 is undirected. This participant is CHEBI:61684 with
+        coefficient 3. Rhea cites PMID:788792, PMID:20484676, PMID:318855 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

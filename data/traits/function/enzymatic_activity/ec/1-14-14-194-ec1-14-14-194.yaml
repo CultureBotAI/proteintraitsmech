@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.14.-
 synonyms:
@@ -41,4 +41,222 @@ definitions:
       Catalyses: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate + reduced [NADPH- -hemoprotein reductase] + O2 = (+)-ecgonone + oxidized [NADPH- -hemoprotein reductase] + 2 H2O + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ecgonone synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.14.194. EC 1.14.14.194 maps
+    to exactly one curated Rhea reaction (RHEA:85255), so that reaction''s substrates and products are
+    the class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate
+    + reduced [NADPH- -hemoprotein reductase] + O2 = (+)-ecgonone + oxidized [NADPH- -hemoprotein reductase]
+    + 2 H2O + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ecgonone synthase
+    grounding: EC:1.14.14.194
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:234008
+    description: Formula C9H15NO3.
+  - node_id: sub2
+    label: reduced [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11964
+    description: Rhea compound GENERIC:11964.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: FMNH2
+    description: The reacting group Rhea names inside the generic participant GENERIC:11964 (reduced [NADPH--hemoprotein
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57618
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (+)-ecgonone
+    node_type: CHEMICAL
+    grounding: CHEBI:234007
+    description: Formula C9H13NO3.
+  - node_id: prd2
+    label: oxidized [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11965
+    description: Rhea compound GENERIC:11965.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: FMN
+    description: The reacting group Rhea names inside the generic participant GENERIC:11965 (oxidized
+      [NADPH--hemoprotein reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58210
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A0A9E9NIU8
+    node_type: PROTEIN
+    label: C81AN_ERYCB
+    grounding: UniProtKB:A0A9E9NIU8
+  - node_id: prot_A0A9E8M4C5
+    node_type: PROTEIN
+    label: C81AN_ERYNO
+    grounding: UniProtKB:A0A9E8M4C5
+  - node_id: prot_A0A3G4RHY7
+    node_type: PROTEIN
+    label: C82M3_ATRBE
+    grounding: UniProtKB:A0A3G4RHY7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate is a substrate consumed by RHEA:85255
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85256
+      snippet: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate + reduced [NADPH--hemoprotein reductase]
+        + O2 => (+)-ecgonone + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85256 declares side 85255_L as its substrates
+        (rh:substrates); the master reaction RHEA:85255 is undirected. This participant is CHEBI:234008
+        with coefficient 1. Rhea cites PMID:30538251, PMID:37068250, PMID:36376019 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [NADPH--hemoprotein reductase] is a substrate consumed by RHEA:85255 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:85256
+      snippet: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate + reduced [NADPH--hemoprotein reductase]
+        + O2 => (+)-ecgonone + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85256 declares side 85255_L as its substrates
+        (rh:substrates); the master reaction RHEA:85255 is undirected. This participant is GENERIC:11964
+        with coefficient 1. Rhea cites PMID:30538251, PMID:37068250, PMID:36376019 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: FMNH2 is the reactive part of reduced [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:85255
+      snippet: FMNH2
+      notes: Rhea compound GENERIC:11964 (reduced [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMNH2 (CHEBI:57618).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:85255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85256
+      snippet: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate + reduced [NADPH--hemoprotein reductase]
+        + O2 => (+)-ecgonone + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85256 declares side 85255_L as its substrates
+        (rh:substrates); the master reaction RHEA:85255 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:30538251, PMID:37068250, PMID:36376019 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-ecgonone is a product released by RHEA:85255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85256
+      snippet: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate + reduced [NADPH--hemoprotein reductase]
+        + O2 => (+)-ecgonone + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85256 declares side 85255_R as its products
+        (rh:products); the master reaction RHEA:85255 is undirected. This participant is CHEBI:234007
+        with coefficient 1. Rhea cites PMID:30538251, PMID:37068250, PMID:36376019 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [NADPH--hemoprotein reductase] is a product released by RHEA:85255 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:85256
+      snippet: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate + reduced [NADPH--hemoprotein reductase]
+        + O2 => (+)-ecgonone + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85256 declares side 85255_R as its products
+        (rh:products); the master reaction RHEA:85255 is undirected. This participant is GENERIC:11965
+        with coefficient 1. Rhea cites PMID:30538251, PMID:37068250, PMID:36376019 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: FMN is the reactive part of oxidized [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:85255
+      snippet: FMN
+      notes: Rhea compound GENERIC:11965 (oxidized [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMN (CHEBI:58210).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:85255 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:85256
+      snippet: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate + reduced [NADPH--hemoprotein reductase]
+        + O2 => (+)-ecgonone + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85256 declares side 85255_R as its products
+        (rh:products); the master reaction RHEA:85255 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:30538251, PMID:37068250, PMID:36376019 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:85255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85256
+      snippet: (S)-4-(1-methylpyrrolidin-2-yl)-3-oxobutanoate + reduced [NADPH--hemoprotein reductase]
+        + O2 => (+)-ecgonone + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85256 declares side 85255_R as its products
+        (rh:products); the master reaction RHEA:85255 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:30538251, PMID:37068250, PMID:36376019 for this reaction.
+  - subject: prot_A0A9E9NIU8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C81AN_ERYCB is an exemplar enzyme with EC 1.14.14.194 activity.
+    evidence:
+    - reference: EC:1.14.14.194
+      snippet: DR   A0A9E9NIU8, C81AN_ERYCB;  A0A9E8M4C5, C81AN_ERYNO;  A0A3G4RHY7, C82M3_ATRBE;
+      notes: ExPASy ENZYME entry EC 1.14.14.194 cross-references UniProtKB:A0A9E9NIU8 (C81AN_ERYCB) as
+        a protein with this activity.
+  - subject: prot_A0A9E8M4C5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C81AN_ERYNO is an exemplar enzyme with EC 1.14.14.194 activity.
+    evidence:
+    - reference: EC:1.14.14.194
+      snippet: DR   A0A9E9NIU8, C81AN_ERYCB;  A0A9E8M4C5, C81AN_ERYNO;  A0A3G4RHY7, C82M3_ATRBE;
+      notes: ExPASy ENZYME entry EC 1.14.14.194 cross-references UniProtKB:A0A9E8M4C5 (C81AN_ERYNO) as
+        a protein with this activity.
+  - subject: prot_A0A3G4RHY7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C82M3_ATRBE is an exemplar enzyme with EC 1.14.14.194 activity.
+    evidence:
+    - reference: EC:1.14.14.194
+      snippet: DR   A0A9E9NIU8, C81AN_ERYCB;  A0A9E8M4C5, C81AN_ERYNO;  A0A3G4RHY7, C82M3_ATRBE;
+      notes: ExPASy ENZYME entry EC 1.14.14.194 cross-references UniProtKB:A0A3G4RHY7 (C82M3_ATRBE) as
+        a protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

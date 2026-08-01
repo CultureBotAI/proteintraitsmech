@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.99.-
 mapped_xrefs:
@@ -25,4 +25,72 @@ definitions:
       Catalyses: (S)-allantoin = (R)-allantoin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of allantoin racemase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.99.3. EC 5.1.99.3 maps to exactly
+    one curated Rhea reaction (RHEA:10804), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-allantoin
+    = (R)-allantoin". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: allantoin racemase
+    grounding: EC:5.1.99.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-allantoin
+    node_type: CHEMICAL
+    grounding: CHEBI:15678
+    description: Formula C4H6N4O3.
+  - node_id: prd1
+    label: (R)-allantoin
+    node_type: CHEMICAL
+    grounding: CHEBI:15677
+    description: Formula C4H6N4O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: allantoin racemase activity
+    grounding: GO:0047653
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-allantoin is a substrate consumed by RHEA:10804 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10805
+      snippet: (S)-allantoin => (R)-allantoin
+      notes: Rhea's left-to-right directional reaction RHEA:10805 declares side 10804_L as its substrates
+        (rh:substrates); the master reaction RHEA:10804 is undirected. This participant is CHEBI:15678
+        with coefficient 1. Rhea cites PMID:237557 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-allantoin is a product released by RHEA:10804 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10805
+      snippet: (S)-allantoin => (R)-allantoin
+      notes: Rhea's left-to-right directional reaction RHEA:10805 declares side 10804_R as its products
+        (rh:products); the master reaction RHEA:10804 is undirected. This participant is CHEBI:15677 with
+        coefficient 1. Rhea cites PMID:237557 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.99.3
+      snippet: EC:5.1.99.3 > GO:allantoin racemase activity ; GO:0047653
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047653 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

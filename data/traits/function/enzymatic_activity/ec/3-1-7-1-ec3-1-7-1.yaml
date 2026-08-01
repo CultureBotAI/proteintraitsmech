@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.7.-
 synonyms:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: dimethylallyl diphosphate + H2O = prenol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of prenyl-diphosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.7.1. EC 3.1.7.1 maps to exactly
+    one curated Rhea reaction (RHEA:21496), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dimethylallyl
+    diphosphate + H2O = prenol + diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: prenyl-diphosphatase
+    grounding: EC:3.1.7.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: prenol
+    node_type: CHEMICAL
+    grounding: CHEBI:16019
+    description: Formula C5H10O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: prenyl-diphosphatase activity
+    grounding: GO:0050210
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:21496 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21497
+      snippet: dimethylallyl diphosphate + H2O => prenol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21497 declares side 21496_L as its substrates
+        (rh:substrates); the master reaction RHEA:21496 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:4288361 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:21496 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21497
+      snippet: dimethylallyl diphosphate + H2O => prenol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21497 declares side 21496_L as its substrates
+        (rh:substrates); the master reaction RHEA:21496 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4288361 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: prenol is a product released by RHEA:21496 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21497
+      snippet: dimethylallyl diphosphate + H2O => prenol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21497 declares side 21496_R as its products
+        (rh:products); the master reaction RHEA:21496 is undirected. This participant is CHEBI:16019 with
+        coefficient 1. Rhea cites PMID:4288361 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:21496 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21497
+      snippet: dimethylallyl diphosphate + H2O => prenol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21497 declares side 21496_R as its products
+        (rh:products); the master reaction RHEA:21496 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:4288361 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.7.1
+      snippet: EC:3.1.7.1 > GO:prenyl-diphosphatase activity ; GO:0050210
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050210 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.3.-
 mapped_xrefs:
@@ -36,4 +36,116 @@ definitions:
       Catalyses: (S)-4-hydroxy-2-oxohexanoate = propanal + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-hydroxy-2-oxohexanoate aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.3.43. EC 4.1.3.43 maps to exactly
+    one curated Rhea reaction (RHEA:36003), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-4-hydroxy-2-oxohexanoate
+    = propanal + pyruvate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxy-2-oxohexanoate aldolase
+    grounding: EC:4.1.3.43
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-4-hydroxy-2-oxohexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:73142
+    description: Formula C6H9O4.
+  - node_id: prd1
+    label: propanal
+    node_type: CHEMICAL
+    grounding: CHEBI:17153
+    description: Formula C3H6O.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prot_P51015
+    node_type: PROTEIN
+    label: HOA4_PARXL
+    grounding: UniProtKB:P51015
+  - node_id: prot_Q7TW97
+    node_type: PROTEIN
+    label: HOA_MYCBO
+    grounding: UniProtKB:Q7TW97
+  - node_id: prot_A1KPL9
+    node_type: PROTEIN
+    label: HOA_MYCBP
+    grounding: UniProtKB:A1KPL9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-4-hydroxy-2-oxohexanoate is a substrate consumed by RHEA:36003 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36004
+      snippet: (S)-4-hydroxy-2-oxohexanoate => propanal + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:36004 declares side 36003_L as its substrates
+        (rh:substrates); the master reaction RHEA:36003 is undirected. This participant is CHEBI:73142
+        with coefficient 1. Rhea cites PMID:23614353, PMID:22081904, PMID:19476337 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: propanal is a product released by RHEA:36003 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36004
+      snippet: (S)-4-hydroxy-2-oxohexanoate => propanal + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:36004 declares side 36003_R as its products
+        (rh:products); the master reaction RHEA:36003 is undirected. This participant is CHEBI:17153 with
+        coefficient 1. Rhea cites PMID:23614353, PMID:22081904, PMID:19476337 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:36003 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36004
+      snippet: (S)-4-hydroxy-2-oxohexanoate => propanal + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:36004 declares side 36003_R as its products
+        (rh:products); the master reaction RHEA:36003 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:23614353, PMID:22081904, PMID:19476337 for this reaction.
+  - subject: prot_P51015
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOA4_PARXL is an exemplar enzyme with EC 4.1.3.43 activity.
+    evidence:
+    - reference: EC:4.1.3.43
+      snippet: DR   P51015, HOA4_PARXL ;  Q7TW97, HOA_MYCBO  ;  A1KPL9, HOA_MYCBP  ;
+      notes: ExPASy ENZYME entry EC 4.1.3.43 cross-references UniProtKB:P51015 (HOA4_PARXL) as a protein
+        with this activity.
+  - subject: prot_Q7TW97
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOA_MYCBO is an exemplar enzyme with EC 4.1.3.43 activity.
+    evidence:
+    - reference: EC:4.1.3.43
+      snippet: DR   P51015, HOA4_PARXL ;  Q7TW97, HOA_MYCBO  ;  A1KPL9, HOA_MYCBP  ;
+      notes: ExPASy ENZYME entry EC 4.1.3.43 cross-references UniProtKB:Q7TW97 (HOA_MYCBO) as a protein
+        with this activity.
+  - subject: prot_A1KPL9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOA_MYCBP is an exemplar enzyme with EC 4.1.3.43 activity.
+    evidence:
+    - reference: EC:4.1.3.43
+      snippet: DR   P51015, HOA4_PARXL ;  Q7TW97, HOA_MYCBO  ;  A1KPL9, HOA_MYCBP  ;
+      notes: ExPASy ENZYME entry EC 4.1.3.43 cross-references UniProtKB:A1KPL9 (HOA_MYCBP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -39,4 +39,204 @@ definitions:
       Catalyses: lactate + 2 reduced [2Fe-2S]-[ferredoxin] + 2 NAD(+) = 2 oxidized [2Fe- 2S]-[ferredoxin] + pyruvate + 2 NADH
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lactate dehydrogenase (NAD(+),ferredoxin)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.436. EC 1.1.1.436 maps to
+    exactly one curated Rhea reaction (RHEA:46964), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "lactate
+    + 2 reduced [2Fe-2S]-[ferredoxin] + 2 NAD(+) = 2 oxidized [2Fe- 2S]-[ferredoxin] + pyruvate + 2 NADH".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lactate dehydrogenase (NAD(+),ferredoxin)
+    grounding: EC:1.1.1.436
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:24996
+    description: Formula C3H5O3.
+  - node_id: sub2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub3
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd3
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prot_H6LBB0
+    node_type: PROTEIN
+    label: LCTB_ACEWD
+    grounding: UniProtKB:H6LBB0
+  - node_id: prot_H6LBB1
+    node_type: PROTEIN
+    label: LCTC_ACEWD
+    grounding: UniProtKB:H6LBB1
+  - node_id: prot_H6LBS1
+    node_type: PROTEIN
+    label: LCTD_ACEWD
+    grounding: UniProtKB:H6LBS1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: lactate is a substrate consumed by RHEA:46964 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46965
+      snippet: lactate + 2 reduced [2Fe-2S]-[ferredoxin] + 2 NAD(+) => 2 oxidized [2Fe-2S]-[ferredoxin]
+        + pyruvate + 2 NADH
+      notes: Rhea's left-to-right directional reaction RHEA:46965 declares side 46964_L as its substrates
+        (rh:substrates); the master reaction RHEA:46964 is undirected. This participant is CHEBI:24996
+        with coefficient 1. Rhea cites PMID:24762045 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:46964 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:46965
+      snippet: lactate + 2 reduced [2Fe-2S]-[ferredoxin] + 2 NAD(+) => 2 oxidized [2Fe-2S]-[ferredoxin]
+        + pyruvate + 2 NADH
+      notes: Rhea's left-to-right directional reaction RHEA:46965 declares side 46964_L as its substrates
+        (rh:substrates); the master reaction RHEA:46964 is undirected. This participant is GENERIC:10001
+        with coefficient 2. Rhea cites PMID:24762045 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:46964
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: NAD(+) is a substrate consumed by RHEA:46964 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:46965
+      snippet: lactate + 2 reduced [2Fe-2S]-[ferredoxin] + 2 NAD(+) => 2 oxidized [2Fe-2S]-[ferredoxin]
+        + pyruvate + 2 NADH
+      notes: Rhea's left-to-right directional reaction RHEA:46965 declares side 46964_L as its substrates
+        (rh:substrates); the master reaction RHEA:46964 is undirected. This participant is CHEBI:57540
+        with coefficient 2. Rhea cites PMID:24762045 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: oxidized [2Fe-2S]-[ferredoxin] is a product released by RHEA:46964 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:46965
+      snippet: lactate + 2 reduced [2Fe-2S]-[ferredoxin] + 2 NAD(+) => 2 oxidized [2Fe-2S]-[ferredoxin]
+        + pyruvate + 2 NADH
+      notes: Rhea's left-to-right directional reaction RHEA:46965 declares side 46964_R as its products
+        (rh:products); the master reaction RHEA:46964 is undirected. This participant is GENERIC:10000
+        with coefficient 2. Rhea cites PMID:24762045 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:46964
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:46964 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46965
+      snippet: lactate + 2 reduced [2Fe-2S]-[ferredoxin] + 2 NAD(+) => 2 oxidized [2Fe-2S]-[ferredoxin]
+        + pyruvate + 2 NADH
+      notes: Rhea's left-to-right directional reaction RHEA:46965 declares side 46964_R as its products
+        (rh:products); the master reaction RHEA:46964 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:24762045 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NADH is a product released by RHEA:46964 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:46965
+      snippet: lactate + 2 reduced [2Fe-2S]-[ferredoxin] + 2 NAD(+) => 2 oxidized [2Fe-2S]-[ferredoxin]
+        + pyruvate + 2 NADH
+      notes: Rhea's left-to-right directional reaction RHEA:46965 declares side 46964_R as its products
+        (rh:products); the master reaction RHEA:46964 is undirected. This participant is CHEBI:57945 with
+        coefficient 2. Rhea cites PMID:24762045 for this reaction.
+  - subject: prot_H6LBB0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCTB_ACEWD is an exemplar enzyme with EC 1.1.1.436 activity.
+    evidence:
+    - reference: EC:1.1.1.436
+      snippet: DR   H6LBB0, LCTB_ACEWD ;  H6LBB1, LCTC_ACEWD ;  H6LBS1, LCTD_ACEWD ;
+      notes: ExPASy ENZYME entry EC 1.1.1.436 cross-references UniProtKB:H6LBB0 (LCTB_ACEWD) as a protein
+        with this activity.
+  - subject: prot_H6LBB1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCTC_ACEWD is an exemplar enzyme with EC 1.1.1.436 activity.
+    evidence:
+    - reference: EC:1.1.1.436
+      snippet: DR   H6LBB0, LCTB_ACEWD ;  H6LBB1, LCTC_ACEWD ;  H6LBS1, LCTD_ACEWD ;
+      notes: ExPASy ENZYME entry EC 1.1.1.436 cross-references UniProtKB:H6LBB1 (LCTC_ACEWD) as a protein
+        with this activity.
+  - subject: prot_H6LBS1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCTD_ACEWD is an exemplar enzyme with EC 1.1.1.436 activity.
+    evidence:
+    - reference: EC:1.1.1.436
+      snippet: DR   H6LBB0, LCTB_ACEWD ;  H6LBB1, LCTC_ACEWD ;  H6LBS1, LCTD_ACEWD ;
+      notes: ExPASy ENZYME entry EC 1.1.1.436 cross-references UniProtKB:H6LBS1 (LCTD_ACEWD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

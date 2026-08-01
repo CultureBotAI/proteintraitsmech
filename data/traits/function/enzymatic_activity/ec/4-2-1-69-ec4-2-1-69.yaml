@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -38,4 +38,130 @@ definitions:
       Catalyses: urea = cyanamide + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyanamide hydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.69. EC 4.2.1.69 maps to exactly
+    one curated Rhea reaction (RHEA:23056), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "urea = cyanamide
+    + H2O". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cyanamide hydratase
+    grounding: EC:4.2.1.69
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: urea
+    node_type: CHEMICAL
+    grounding: CHEBI:16199
+    description: Formula CH4N2O.
+  - node_id: prd1
+    label: cyanamide
+    node_type: CHEMICAL
+    grounding: CHEBI:16698
+    description: Formula CH2N2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cyanamide hydratase activity
+    grounding: GO:0018820
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q1LZA1
+    node_type: PROTEIN
+    label: CAH1_BOVIN
+    grounding: UniProtKB:Q1LZA1
+  - node_id: prot_Q7M316
+    node_type: PROTEIN
+    label: CAH1_GORGO
+    grounding: UniProtKB:Q7M316
+  - node_id: prot_P00917
+    node_type: PROTEIN
+    label: CAH1_HORSE
+    grounding: UniProtKB:P00917
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: urea is a substrate consumed by RHEA:23056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23057
+      snippet: urea => cyanamide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23057 declares side 23056_L as its substrates
+        (rh:substrates); the master reaction RHEA:23056 is undirected. This participant is CHEBI:16199
+        with coefficient 1. Rhea cites PMID:25847245 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cyanamide is a product released by RHEA:23056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23057
+      snippet: urea => cyanamide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23057 declares side 23056_R as its products
+        (rh:products); the master reaction RHEA:23056 is undirected. This participant is CHEBI:16698 with
+        coefficient 1. Rhea cites PMID:25847245 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:23056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23057
+      snippet: urea => cyanamide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23057 declares side 23056_R as its products
+        (rh:products); the master reaction RHEA:23056 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:25847245 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.69
+      snippet: EC:4.2.1.69 > GO:cyanamide hydratase activity ; GO:0018820
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018820 is itself a record
+        in this KB.
+  - subject: prot_Q1LZA1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAH1_BOVIN is an exemplar enzyme with EC 4.2.1.69 activity.
+    evidence:
+    - reference: EC:4.2.1.69
+      snippet: DR   Q1LZA1, CAH1_BOVIN ;  Q7M316, CAH1_GORGO ;  P00917, CAH1_HORSE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.69 cross-references UniProtKB:Q1LZA1 (CAH1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q7M316
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAH1_GORGO is an exemplar enzyme with EC 4.2.1.69 activity.
+    evidence:
+    - reference: EC:4.2.1.69
+      snippet: DR   Q1LZA1, CAH1_BOVIN ;  Q7M316, CAH1_GORGO ;  P00917, CAH1_HORSE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.69 cross-references UniProtKB:Q7M316 (CAH1_GORGO) as a protein
+        with this activity.
+  - subject: prot_P00917
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAH1_HORSE is an exemplar enzyme with EC 4.2.1.69 activity.
+    evidence:
+    - reference: EC:4.2.1.69
+      snippet: DR   Q1LZA1, CAH1_BOVIN ;  Q7M316, CAH1_GORGO ;  P00917, CAH1_HORSE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.69 cross-references UniProtKB:P00917 (CAH1_HORSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

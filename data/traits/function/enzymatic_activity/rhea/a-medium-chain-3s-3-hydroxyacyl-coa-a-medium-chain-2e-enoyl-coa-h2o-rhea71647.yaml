@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.74
     mapping_source: rhea2ec
@@ -30,4 +30,108 @@ definitions:
       Catalyses the reaction: a medium-chain (3S)-3-hydroxyacyl-CoA = a medium-chain (2E)-enoyl-CoA + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a medium-chain (3S)-3-hydroxyacyl-CoA = a medium-chain (2E)-enoyl-CoA +
+    H2O
+  description: Substrate-to-product chemistry of RHEA:71647, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71648 (rh:substrates → 71647_L, rh:products → 71647_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a medium-chain (3S)-3-hydroxyacyl-CoA = a medium-chain (2E)-enoyl-CoA + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71647
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a medium-chain (3S)-3-hydroxyacyl-CoA = a medium-chain (2E)-enoyl-CoA + H2O'
+  - node_id: sub1
+    label: a medium-chain (3S)-3-hydroxyacyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:191200
+    description: Formula C24H35N7O18P3SR.
+  - node_id: prd1
+    label: a medium-chain (2E)-enoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:83726
+    description: Formula C24H33N7O17P3SR.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3-hydroxyacyl-CoA dehydratase activity
+    grounding: GO:0018812
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: medium-chain-enoyl-CoA hydratase
+    grounding: EC:4.2.1.74
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a medium-chain (3S)-3-hydroxyacyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:71648
+      snippet: a medium-chain (3S)-3-hydroxyacyl-CoA => a medium-chain (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:71648 declares side 71647_L as its substrates
+        (rh:substrates); the master reaction RHEA:71647 is undirected. This participant is CHEBI:191200
+        with coefficient 1. Rhea cites PMID:833142, PMID:4828315, PMID:20463021 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a medium-chain (2E)-enoyl-CoA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:71648
+      snippet: a medium-chain (3S)-3-hydroxyacyl-CoA => a medium-chain (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:71648 declares side 71647_R as its products
+        (rh:products); the master reaction RHEA:71647 is undirected. This participant is CHEBI:83726 with
+        coefficient 1. Rhea cites PMID:833142, PMID:4828315, PMID:20463021 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71648
+      snippet: a medium-chain (3S)-3-hydroxyacyl-CoA => a medium-chain (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:71648 declares side 71647_R as its products
+        (rh:products); the master reaction RHEA:71647 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:833142, PMID:4828315, PMID:20463021 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:71647
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0018812"/>
+      notes: The rdfs:seeAlso triple on RHEA:71647 in rhea.rdf. GO term GO:0018812 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.74; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:71647
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.74"/>
+      notes: The rh:ec triple on RHEA:71647 in rhea.rdf. EC 4.2.1.74 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

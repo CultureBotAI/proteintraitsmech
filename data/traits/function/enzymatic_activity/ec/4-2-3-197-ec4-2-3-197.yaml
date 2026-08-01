@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -32,4 +32,120 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate + 2 H2O = 7-epi-ent-eudesmane-5,11-diol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of eudesmane-5,11-diol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.197. EC 4.2.3.197 maps to
+    exactly one curated Rhea reaction (RHEA:58164), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate + 2 H2O = 7-epi-ent-eudesmane-5,11-diol + diphosphate". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: eudesmane-5,11-diol synthase
+    grounding: EC:4.2.3.197
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 7-epi-ent-eudesmane-5,11-diol
+    node_type: CHEMICAL
+    grounding: CHEBI:142536
+    description: Formula C15H28O2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A1D6EFT8
+    node_type: PROTEIN
+    label: EDSB_MAIZE
+    grounding: UniProtKB:A0A1D6EFT8
+  - node_id: prot_A0A3L6G2C1
+    node_type: PROTEIN
+    label: EDSM_MAIZE
+    grounding: UniProtKB:A0A3L6G2C1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:58164 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58165
+      snippet: (2E,6E)-farnesyl diphosphate + 2 H2O => 7-epi-ent-eudesmane-5,11-diol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58165 declares side 58164_L as its substrates
+        (rh:substrates); the master reaction RHEA:58164 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:29570233 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:58164 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:58165
+      snippet: (2E,6E)-farnesyl diphosphate + 2 H2O => 7-epi-ent-eudesmane-5,11-diol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58165 declares side 58164_L as its substrates
+        (rh:substrates); the master reaction RHEA:58164 is undirected. This participant is CHEBI:15377
+        with coefficient 2. Rhea cites PMID:29570233 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 7-epi-ent-eudesmane-5,11-diol is a product released by RHEA:58164 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58165
+      snippet: (2E,6E)-farnesyl diphosphate + 2 H2O => 7-epi-ent-eudesmane-5,11-diol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58165 declares side 58164_R as its products
+        (rh:products); the master reaction RHEA:58164 is undirected. This participant is CHEBI:142536
+        with coefficient 1. Rhea cites PMID:29570233 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:58164 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58165
+      snippet: (2E,6E)-farnesyl diphosphate + 2 H2O => 7-epi-ent-eudesmane-5,11-diol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58165 declares side 58164_R as its products
+        (rh:products); the master reaction RHEA:58164 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:29570233 for this reaction.
+  - subject: prot_A0A1D6EFT8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EDSB_MAIZE is an exemplar enzyme with EC 4.2.3.197 activity.
+    evidence:
+    - reference: EC:4.2.3.197
+      snippet: DR   A0A1D6EFT8, EDSB_MAIZE ;  A0A3L6G2C1, EDSM_MAIZE ;
+      notes: ExPASy ENZYME entry EC 4.2.3.197 cross-references UniProtKB:A0A1D6EFT8 (EDSB_MAIZE) as a
+        protein with this activity.
+  - subject: prot_A0A3L6G2C1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EDSM_MAIZE is an exemplar enzyme with EC 4.2.3.197 activity.
+    evidence:
+    - reference: EC:4.2.3.197
+      snippet: DR   A0A1D6EFT8, EDSB_MAIZE ;  A0A3L6G2C1, EDSM_MAIZE ;
+      notes: ExPASy ENZYME entry EC 4.2.3.197 cross-references UniProtKB:A0A3L6G2C1 (EDSM_MAIZE) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 mapped_xrefs:
@@ -28,4 +28,110 @@ definitions:
       Catalyses: 2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate + H(+) = 2-[(2-aminoethylcarbamoyl)methyl]-2-hydroxybutanedioate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.117. EC 4.1.1.117 maps to
+    exactly one curated Rhea reaction (RHEA:59120), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate
+    + H(+) = 2-[(2-aminoethylcarbamoyl)methyl]-2-hydroxybutanedioate + CO2". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate decarboxylase
+    grounding: EC:4.1.1.117
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:142969
+    description: Formula C9H12N2O8.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 2-[(2-aminoethylcarbamoyl)methyl]-2-hydroxybutanedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:142970
+    description: Formula C8H13N2O6.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prot_Q2G1M6
+    node_type: PROTEIN
+    label: SBNH_STAA8
+    grounding: UniProtKB:Q2G1M6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate is a substrate consumed by RHEA:59120
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59121
+      snippet: 2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate + H(+) => 2-[(2-aminoethylcarbamoyl)methyl]-2-hydroxybutanedioate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:59121 declares side 59120_L as its substrates
+        (rh:substrates); the master reaction RHEA:59120 is undirected. This participant is CHEBI:142969
+        with coefficient 1. Rhea cites PMID:19775248 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:59120 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59121
+      snippet: 2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate + H(+) => 2-[(2-aminoethylcarbamoyl)methyl]-2-hydroxybutanedioate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:59121 declares side 59120_L as its substrates
+        (rh:substrates); the master reaction RHEA:59120 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:19775248 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-[(2-aminoethylcarbamoyl)methyl]-2-hydroxybutanedioate is a product released by RHEA:59120
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59121
+      snippet: 2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate + H(+) => 2-[(2-aminoethylcarbamoyl)methyl]-2-hydroxybutanedioate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:59121 declares side 59120_R as its products
+        (rh:products); the master reaction RHEA:59120 is undirected. This participant is CHEBI:142970
+        with coefficient 1. Rhea cites PMID:19775248 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:59120 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59121
+      snippet: 2-[(L-alanin-3-ylcarbamoyl)methyl]-2-hydroxybutanedioate + H(+) => 2-[(2-aminoethylcarbamoyl)methyl]-2-hydroxybutanedioate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:59121 declares side 59120_R as its products
+        (rh:products); the master reaction RHEA:59120 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:19775248 for this reaction.
+  - subject: prot_Q2G1M6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SBNH_STAA8 is an exemplar enzyme with EC 4.1.1.117 activity.
+    evidence:
+    - reference: EC:4.1.1.117
+      snippet: DR   Q2G1M6, SBNH_STAA8 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.117 cross-references UniProtKB:Q2G1M6 (SBNH_STAA8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

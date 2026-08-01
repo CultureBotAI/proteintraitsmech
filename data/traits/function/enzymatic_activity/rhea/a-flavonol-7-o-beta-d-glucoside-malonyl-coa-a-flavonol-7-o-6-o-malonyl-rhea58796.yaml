@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:52144
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,97 @@ definitions:
       Catalyses the reaction: a flavonol 7-O-beta-D-glucoside + malonyl-CoA = a flavonol 7-O-(6-O-malonyl-beta-D-glucoside) + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a flavonol 7-O-beta-D-glucoside + malonyl-CoA = a flavonol 7-O-(6-O-malonyl-beta-D-gluc…
+  description: Substrate-to-product chemistry of RHEA:58796, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58797 (rh:substrates → 58796_L, rh:products → 58796_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a flavonol 7-O-beta-D-glucoside + malonyl-CoA = a flavonol 7-O-(6-O-malonyl-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58796
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a flavonol 7-O-beta-D-glucoside + malonyl-CoA = a flavonol 7-O-(6-O-malonyl-beta-D-glucoside)
+      + CoA'
+  - node_id: sub1
+    label: a flavonol 7-O-beta-D-glucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:52144
+    description: Formula C21H13O9R7.
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: prd1
+    label: a flavonol 7-O-(6-O-malonyl-beta-D-glucoside)
+    node_type: CHEMICAL
+    grounding: CHEBI:142805
+    description: Formula C24H14O12R7.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a flavonol 7-O-beta-D-glucoside is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:58797
+      snippet: a flavonol 7-O-beta-D-glucoside + malonyl-CoA => a flavonol 7-O-(6-O-malonyl-beta-D-glucoside)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58797 declares side 58796_L as its substrates
+        (rh:substrates); the master reaction RHEA:58796 is undirected. This participant is CHEBI:52144
+        with coefficient 1. Rhea cites PMID:15860007 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58797
+      snippet: a flavonol 7-O-beta-D-glucoside + malonyl-CoA => a flavonol 7-O-(6-O-malonyl-beta-D-glucoside)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58797 declares side 58796_L as its substrates
+        (rh:substrates); the master reaction RHEA:58796 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:15860007 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a flavonol 7-O-(6-O-malonyl-beta-D-glucoside) is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58797
+      snippet: a flavonol 7-O-beta-D-glucoside + malonyl-CoA => a flavonol 7-O-(6-O-malonyl-beta-D-glucoside)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58797 declares side 58796_R as its products
+        (rh:products); the master reaction RHEA:58796 is undirected. This participant is CHEBI:142805
+        with coefficient 1. Rhea cites PMID:15860007 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58797
+      snippet: a flavonol 7-O-beta-D-glucoside + malonyl-CoA => a flavonol 7-O-(6-O-malonyl-beta-D-glucoside)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58797 declares side 58796_R as its products
+        (rh:products); the master reaction RHEA:58796 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:15860007 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

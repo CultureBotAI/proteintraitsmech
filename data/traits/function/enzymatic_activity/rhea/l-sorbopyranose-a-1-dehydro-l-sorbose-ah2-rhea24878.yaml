@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.1.99.32
     mapping_source: rhea2ec
@@ -28,4 +28,127 @@ definitions:
       Catalyses the reaction: L-sorbopyranose + A = 1-dehydro-L-sorbose + AH2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-sorbopyranose + A = 1-dehydro-L-sorbose + AH2
+  description: Substrate-to-product chemistry of RHEA:24878, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24879 (rh:substrates → 24878_L, rh:products → 24878_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-sorbopyranose + A = 1-dehydro-L-sorbose + AH2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24878
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-sorbopyranose + A = 1-dehydro-L-sorbose + AH2'
+  - node_id: sub1
+    label: L-sorbopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:48649
+    description: Formula C6H12O6.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd1
+    label: 1-dehydro-L-sorbose
+    node_type: CHEMICAL
+    grounding: CHEBI:48657
+    description: Formula C6H10O6.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: L-sorbose 1-dehydrogenase
+    grounding: EC:1.1.99.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q47944
+    node_type: PROTEIN
+    label: SDH_GLUOY
+    grounding: UniProtKB:Q47944
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-sorbopyranose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24879
+      snippet: L-sorbopyranose + A => 1-dehydro-L-sorbose + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:24879 declares side 24878_L as its substrates
+        (rh:substrates); the master reaction RHEA:24878 is undirected. This participant is CHEBI:48649
+        with coefficient 1. Rhea cites PMID:27392874 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24879
+      snippet: L-sorbopyranose + A => 1-dehydro-L-sorbose + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:24879 declares side 24878_L as its substrates
+        (rh:substrates); the master reaction RHEA:24878 is undirected. This participant is CHEBI:13193
+        with coefficient 1. Rhea cites PMID:27392874 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-dehydro-L-sorbose is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24879
+      snippet: L-sorbopyranose + A => 1-dehydro-L-sorbose + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:24879 declares side 24878_R as its products
+        (rh:products); the master reaction RHEA:24878 is undirected. This participant is CHEBI:48657 with
+        coefficient 1. Rhea cites PMID:27392874 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24879
+      snippet: L-sorbopyranose + A => 1-dehydro-L-sorbose + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:24879 declares side 24878_R as its products
+        (rh:products); the master reaction RHEA:24878 is undirected. This participant is CHEBI:17499 with
+        coefficient 1. Rhea cites PMID:27392874 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.1.99.32; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24878
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.99.32"/>
+      notes: The rh:ec triple on RHEA:24878 in rhea.rdf. EC 1.1.99.32 is itself a record in this KB.
+  - subject: prot_Q47944
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SDH_GLUOY is an exemplar enzyme carrying EC 1.1.99.32, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.1.99.32
+      snippet: DR   Q47944, SDH_GLUOY  ;
+      notes: ExPASy ENZYME entry EC 1.1.99.32 cross-references UniProtKB:Q47944 (SDH_GLUOY) as a protein
+        with this activity.
+    - reference: RHEA:24878
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.99.32"/>
+      notes: Rhea assigns RHEA:24878 to EC 1.1.99.32, and EC 1.1.99.32 maps to exactly one Rhea master
+        reaction (RHEA:24878), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

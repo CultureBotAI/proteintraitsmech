@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64790
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,94 @@ definitions:
       Catalyses the reaction: tetrahydro-4-hydroxyphenylpyruvate + L-phenylalanine = tetrahydrotyrosine + 3-phenylpyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tetrahydro-4-hydroxyphenylpyruvate + L-phenylalanine = tetrahydrotyrosine
+    + 3-phenylpyr…
+  description: Substrate-to-product chemistry of RHEA:33131, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33132 (rh:substrates → 33131_L, rh:products → 33131_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tetrahydro-4-hydroxyphenylpyruvate + L-phenylalanine = tetrahydrotyrosine +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33131
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tetrahydro-4-hydroxyphenylpyruvate + L-phenylalanine = tetrahydrotyrosine + 3-phenylpyruvate'
+  - node_id: sub1
+    label: tetrahydro-4-hydroxyphenylpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:64790
+    description: Formula C9H11O4.
+  - node_id: sub2
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prd1
+    label: tetrahydrotyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:64791
+    description: Formula C9H15NO3.
+  - node_id: prd2
+    label: 3-phenylpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:18005
+    description: Formula C9H7O3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tetrahydro-4-hydroxyphenylpyruvate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33132
+      snippet: tetrahydro-4-hydroxyphenylpyruvate + L-phenylalanine => tetrahydrotyrosine + 3-phenylpyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:33132 declares side 33131_L as its substrates
+        (rh:substrates); the master reaction RHEA:33131 is undirected. This participant is CHEBI:64790
+        with coefficient 1. Rhea cites PMID:20052993 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-phenylalanine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33132
+      snippet: tetrahydro-4-hydroxyphenylpyruvate + L-phenylalanine => tetrahydrotyrosine + 3-phenylpyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:33132 declares side 33131_L as its substrates
+        (rh:substrates); the master reaction RHEA:33131 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:20052993 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tetrahydrotyrosine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33132
+      snippet: tetrahydro-4-hydroxyphenylpyruvate + L-phenylalanine => tetrahydrotyrosine + 3-phenylpyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:33132 declares side 33131_R as its products
+        (rh:products); the master reaction RHEA:33131 is undirected. This participant is CHEBI:64791 with
+        coefficient 1. Rhea cites PMID:20052993 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 3-phenylpyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33132
+      snippet: tetrahydro-4-hydroxyphenylpyruvate + L-phenylalanine => tetrahydrotyrosine + 3-phenylpyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:33132 declares side 33131_R as its products
+        (rh:products); the master reaction RHEA:33131 is undirected. This participant is CHEBI:18005 with
+        coefficient 1. Rhea cites PMID:20052993 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

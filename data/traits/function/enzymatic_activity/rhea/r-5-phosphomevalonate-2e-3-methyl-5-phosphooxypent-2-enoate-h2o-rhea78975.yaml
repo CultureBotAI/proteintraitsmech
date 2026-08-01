@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.182
     mapping_source: rhea2ec
@@ -30,4 +30,151 @@ definitions:
       Catalyses the reaction: (R)-5-phosphomevalonate = (2E)-3-methyl-5-phosphooxypent-2-enoate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (R)-5-phosphomevalonate = (2E)-3-methyl-5-phosphooxypent-2-enoate + H2O
+  description: Substrate-to-product chemistry of RHEA:78975, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78976 (rh:substrates → 78975_L, rh:products → 78975_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (R)-5-phosphomevalonate = (2E)-3-methyl-5-phosphooxypent-2-enoate + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78975
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (R)-5-phosphomevalonate = (2E)-3-methyl-5-phosphooxypent-2-enoate + H2O'
+  - node_id: sub1
+    label: (R)-5-phosphomevalonate
+    node_type: CHEMICAL
+    grounding: CHEBI:58146
+    description: Formula C6H10O7P.
+  - node_id: prd1
+    label: (2E)-3-methyl-5-phosphooxypent-2-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:229665
+    description: Formula C6H8O6P.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: phosphomevalonate dehydratase
+    grounding: EC:4.2.1.182
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9YA51
+    node_type: PROTEIN
+    label: PMDHL_AERPE
+    grounding: UniProtKB:Q9YA51
+  - node_id: prot_Q58709
+    node_type: PROTEIN
+    label: PMDHL_METJA
+    grounding: UniProtKB:Q58709
+  - node_id: prot_Q8PWQ1
+    node_type: PROTEIN
+    label: PMDHL_METMA
+    grounding: UniProtKB:Q8PWQ1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-5-phosphomevalonate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78976
+      snippet: (R)-5-phosphomevalonate => (2E)-3-methyl-5-phosphooxypent-2-enoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:78976 declares side 78975_L as its substrates
+        (rh:substrates); the master reaction RHEA:78975 is undirected. This participant is CHEBI:58146
+        with coefficient 1. Rhea cites PMID:31924615, PMID:36992929, PMID:30224495 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-3-methyl-5-phosphooxypent-2-enoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78976
+      snippet: (R)-5-phosphomevalonate => (2E)-3-methyl-5-phosphooxypent-2-enoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:78976 declares side 78975_R as its products
+        (rh:products); the master reaction RHEA:78975 is undirected. This participant is CHEBI:229665
+        with coefficient 1. Rhea cites PMID:31924615, PMID:36992929, PMID:30224495 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78976
+      snippet: (R)-5-phosphomevalonate => (2E)-3-methyl-5-phosphooxypent-2-enoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:78976 declares side 78975_R as its products
+        (rh:products); the master reaction RHEA:78975 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:31924615, PMID:36992929, PMID:30224495 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.182; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:78975
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.182"/>
+      notes: The rh:ec triple on RHEA:78975 in rhea.rdf. EC 4.2.1.182 is itself a record in this KB.
+  - subject: prot_Q9YA51
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PMDHL_AERPE is an exemplar enzyme carrying EC 4.2.1.182, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.182
+      snippet: DR   Q9YA51, PMDHL_AERPE;  Q58709, PMDHL_METJA;  Q8PWQ1, PMDHL_METMA;
+      notes: ExPASy ENZYME entry EC 4.2.1.182 cross-references UniProtKB:Q9YA51 (PMDHL_AERPE) as a protein
+        with this activity.
+    - reference: RHEA:78975
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.182"/>
+      notes: Rhea assigns RHEA:78975 to EC 4.2.1.182, and EC 4.2.1.182 maps to exactly one Rhea master
+        reaction (RHEA:78975), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q58709
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PMDHL_METJA is an exemplar enzyme carrying EC 4.2.1.182, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.182
+      snippet: DR   Q9YA51, PMDHL_AERPE;  Q58709, PMDHL_METJA;  Q8PWQ1, PMDHL_METMA;
+      notes: ExPASy ENZYME entry EC 4.2.1.182 cross-references UniProtKB:Q58709 (PMDHL_METJA) as a protein
+        with this activity.
+    - reference: RHEA:78975
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.182"/>
+      notes: Rhea assigns RHEA:78975 to EC 4.2.1.182, and EC 4.2.1.182 maps to exactly one Rhea master
+        reaction (RHEA:78975), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q8PWQ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PMDHL_METMA is an exemplar enzyme carrying EC 4.2.1.182, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.182
+      snippet: DR   Q9YA51, PMDHL_AERPE;  Q58709, PMDHL_METJA;  Q8PWQ1, PMDHL_METMA;
+      notes: ExPASy ENZYME entry EC 4.2.1.182 cross-references UniProtKB:Q8PWQ1 (PMDHL_METMA) as a protein
+        with this activity.
+    - reference: RHEA:78975
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.182"/>
+      notes: Rhea assigns RHEA:78975 to EC 4.2.1.182, and EC 4.2.1.182 maps to exactly one Rhea master
+        reaction (RHEA:78975), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

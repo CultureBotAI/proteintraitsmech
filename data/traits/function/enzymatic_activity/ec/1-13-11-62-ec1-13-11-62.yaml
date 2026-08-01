@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -43,4 +43,117 @@ definitions:
       Catalyses: (9Z,12Z)-octadecadienoate + O2 = (8E,10R,12Z)-10-hydroperoxyoctadeca- 8,12-dienoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of linoleate 10R-lipoxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.62. EC 1.13.11.62 maps to
+    exactly one curated Rhea reaction (RHEA:31695), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(9Z,12Z)-octadecadienoate
+    + O2 = (8E,10R,12Z)-10-hydroperoxyoctadeca- 8,12-dienoate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: linoleate 10R-lipoxygenase
+    grounding: EC:1.13.11.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (9Z,12Z)-octadecadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30245
+    description: Formula C18H31O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (8E,10R,12Z)-10-hydroperoxyoctadeca-8,12-dienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:63324
+    description: Formula C18H31O4.
+  - node_id: prot_F9FAJ9
+    node_type: PROTEIN
+    label: OXEAS_FUSOF
+    grounding: UniProtKB:F9FAJ9
+  - node_id: prot_G4N2X9
+    node_type: PROTEIN
+    label: OXEAS_PYRO7
+    grounding: UniProtKB:G4N2X9
+  - node_id: prot_Q4WY82
+    node_type: PROTEIN
+    label: PPOC_ASPFU
+    grounding: UniProtKB:Q4WY82
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (9Z,12Z)-octadecadienoate is a substrate consumed by RHEA:31695 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31696
+      snippet: (9Z,12Z)-octadecadienoate + O2 => (8E,10R,12Z)-10-hydroperoxyoctadeca-8,12-dienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31696 declares side 31695_L as its substrates
+        (rh:substrates); the master reaction RHEA:31695 is undirected. This participant is CHEBI:30245
+        with coefficient 1. Rhea cites PMID:20045744, PMID:19289462, PMID:25121983 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:31695 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31696
+      snippet: (9Z,12Z)-octadecadienoate + O2 => (8E,10R,12Z)-10-hydroperoxyoctadeca-8,12-dienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31696 declares side 31695_L as its substrates
+        (rh:substrates); the master reaction RHEA:31695 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:20045744, PMID:19289462, PMID:25121983 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (8E,10R,12Z)-10-hydroperoxyoctadeca-8,12-dienoate is a product released by RHEA:31695
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31696
+      snippet: (9Z,12Z)-octadecadienoate + O2 => (8E,10R,12Z)-10-hydroperoxyoctadeca-8,12-dienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31696 declares side 31695_R as its products
+        (rh:products); the master reaction RHEA:31695 is undirected. This participant is CHEBI:63324 with
+        coefficient 1. Rhea cites PMID:20045744, PMID:19289462, PMID:25121983 for this reaction.
+  - subject: prot_F9FAJ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OXEAS_FUSOF is an exemplar enzyme with EC 1.13.11.62 activity.
+    evidence:
+    - reference: EC:1.13.11.62
+      snippet: DR   F9FAJ9, OXEAS_FUSOF;  G4N2X9, OXEAS_PYRO7;  Q4WY82, PPOC_ASPFU ;
+      notes: ExPASy ENZYME entry EC 1.13.11.62 cross-references UniProtKB:F9FAJ9 (OXEAS_FUSOF) as a protein
+        with this activity.
+  - subject: prot_G4N2X9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OXEAS_PYRO7 is an exemplar enzyme with EC 1.13.11.62 activity.
+    evidence:
+    - reference: EC:1.13.11.62
+      snippet: DR   F9FAJ9, OXEAS_FUSOF;  G4N2X9, OXEAS_PYRO7;  Q4WY82, PPOC_ASPFU ;
+      notes: ExPASy ENZYME entry EC 1.13.11.62 cross-references UniProtKB:G4N2X9 (OXEAS_PYRO7) as a protein
+        with this activity.
+  - subject: prot_Q4WY82
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PPOC_ASPFU is an exemplar enzyme with EC 1.13.11.62 activity.
+    evidence:
+    - reference: EC:1.13.11.62
+      snippet: DR   F9FAJ9, OXEAS_FUSOF;  G4N2X9, OXEAS_PYRO7;  Q4WY82, PPOC_ASPFU ;
+      notes: ExPASy ENZYME entry EC 1.13.11.62 cross-references UniProtKB:Q4WY82 (PPOC_ASPFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.17.-
 synonyms:
@@ -46,4 +46,66 @@ definitions:
       Catalyses: Release of C-terminal Arg and Lys from a polypeptide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carboxypeptidase U
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.17.20. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of C-terminal Arg and Lys from a polypeptide".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: carboxypeptidase U
+    grounding: EC:3.4.17.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q2KIG3
+    node_type: PROTEIN
+    label: CBPB2_BOVIN
+    grounding: UniProtKB:Q2KIG3
+  - node_id: prot_Q96IY4
+    node_type: PROTEIN
+    label: CBPB2_HUMAN
+    grounding: UniProtKB:Q96IY4
+  - node_id: prot_Q9JHH6
+    node_type: PROTEIN
+    label: CBPB2_MOUSE
+    grounding: UniProtKB:Q9JHH6
+  edges:
+  - subject: prot_Q2KIG3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBPB2_BOVIN is an exemplar enzyme with EC 3.4.17.20 activity.
+    evidence:
+    - reference: EC:3.4.17.20
+      snippet: DR   Q2KIG3, CBPB2_BOVIN;  Q96IY4, CBPB2_HUMAN;  Q9JHH6, CBPB2_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.17.20 cross-references UniProtKB:Q2KIG3 (CBPB2_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q96IY4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBPB2_HUMAN is an exemplar enzyme with EC 3.4.17.20 activity.
+    evidence:
+    - reference: EC:3.4.17.20
+      snippet: DR   Q2KIG3, CBPB2_BOVIN;  Q96IY4, CBPB2_HUMAN;  Q9JHH6, CBPB2_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.17.20 cross-references UniProtKB:Q96IY4 (CBPB2_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9JHH6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBPB2_MOUSE is an exemplar enzyme with EC 3.4.17.20 activity.
+    evidence:
+    - reference: EC:3.4.17.20
+      snippet: DR   Q2KIG3, CBPB2_BOVIN;  Q96IY4, CBPB2_HUMAN;  Q9JHH6, CBPB2_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.17.20 cross-references UniProtKB:Q9JHH6 (CBPB2_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

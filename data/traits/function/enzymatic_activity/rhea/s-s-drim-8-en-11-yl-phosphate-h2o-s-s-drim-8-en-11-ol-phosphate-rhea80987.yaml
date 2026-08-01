@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:149666
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: (S,S)-drim-8-en-11-yl phosphate + H2O = (S,S)-drim-8-en-11-ol + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S,S)-drim-8-en-11-yl phosphate + H2O = (S,S)-drim-8-en-11-ol + phosphate
+  description: Substrate-to-product chemistry of RHEA:80987, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80988 (rh:substrates → 80987_L, rh:products → 80987_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (S,S)-drim-8-en-11-yl phosphate + H2O = (S,S)-drim-8-en-11-ol + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80987
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (S,S)-drim-8-en-11-yl phosphate + H2O = (S,S)-drim-8-en-11-ol + phosphate'
+  - node_id: sub1
+    label: (S,S)-drim-8-en-11-yl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:149666
+    description: Formula C15H25O4P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (S,S)-drim-8-en-11-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:231797
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S,S)-drim-8-en-11-yl phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:80988
+      snippet: (S,S)-drim-8-en-11-yl phosphate + H2O => (S,S)-drim-8-en-11-ol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:80988 declares side 80987_L as its substrates
+        (rh:substrates); the master reaction RHEA:80987 is undirected. This participant is CHEBI:149666
+        with coefficient 1. Rhea cites PMID:27628599 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80988
+      snippet: (S,S)-drim-8-en-11-yl phosphate + H2O => (S,S)-drim-8-en-11-ol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:80988 declares side 80987_L as its substrates
+        (rh:substrates); the master reaction RHEA:80987 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:27628599 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S,S)-drim-8-en-11-ol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80988
+      snippet: (S,S)-drim-8-en-11-yl phosphate + H2O => (S,S)-drim-8-en-11-ol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:80988 declares side 80987_R as its products
+        (rh:products); the master reaction RHEA:80987 is undirected. This participant is CHEBI:231797
+        with coefficient 1. Rhea cites PMID:27628599 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80988
+      snippet: (S,S)-drim-8-en-11-yl phosphate + H2O => (S,S)-drim-8-en-11-ol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:80988 declares side 80987_R as its products
+        (rh:products); the master reaction RHEA:80987 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:27628599 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 mapped_xrefs:
@@ -34,4 +34,102 @@ definitions:
       Catalyses: 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate = 2 5-dehydro-4- deoxy-D-glucuronate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of oligogalacturonide lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.6. EC 4.2.2.6 maps to exactly
+    one curated Rhea reaction (RHEA:20269), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate
+    = 2 5-dehydro-4- deoxy-D-glucuronate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: oligogalacturonide lyase
+    grounding: EC:4.2.2.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate
+    node_type: CHEMICAL
+    grounding: CHEBI:60189
+    description: Formula C12H14O12.
+  - node_id: prd1
+    label: 5-dehydro-4-deoxy-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:17117
+    description: Formula C6H7O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: oligogalacturonide lyase activity
+    grounding: GO:0047487
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P21258
+    node_type: PROTEIN
+    label: OGL_DICD3
+    grounding: UniProtKB:P21258
+  - node_id: prot_Q59418
+    node_type: PROTEIN
+    label: OGL_PECAS
+    grounding: UniProtKB:Q59418
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate is a substrate consumed by RHEA:20269
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20270
+      snippet: 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate => 2 5-dehydro-4-deoxy-D-glucuronate
+      notes: Rhea's left-to-right directional reaction RHEA:20270 declares side 20269_L as its substrates
+        (rh:substrates); the master reaction RHEA:20269 is undirected. This participant is CHEBI:60189
+        with coefficient 1. Rhea cites PMID:10601263, PMID:20851883 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-dehydro-4-deoxy-D-glucuronate is a product released by RHEA:20269 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:20270
+      snippet: 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate => 2 5-dehydro-4-deoxy-D-glucuronate
+      notes: Rhea's left-to-right directional reaction RHEA:20270 declares side 20269_R as its products
+        (rh:products); the master reaction RHEA:20269 is undirected. This participant is CHEBI:17117 with
+        coefficient 2. Rhea cites PMID:10601263, PMID:20851883 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.6
+      snippet: EC:4.2.2.6 > GO:oligogalacturonide lyase activity ; GO:0047487
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047487 is itself a record
+        in this KB.
+  - subject: prot_P21258
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OGL_DICD3 is an exemplar enzyme with EC 4.2.2.6 activity.
+    evidence:
+    - reference: EC:4.2.2.6
+      snippet: DR   P21258, OGL_DICD3  ;  Q59418, OGL_PECAS  ;
+      notes: ExPASy ENZYME entry EC 4.2.2.6 cross-references UniProtKB:P21258 (OGL_DICD3) as a protein
+        with this activity.
+  - subject: prot_Q59418
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OGL_PECAS is an exemplar enzyme with EC 4.2.2.6 activity.
+    evidence:
+    - reference: EC:4.2.2.6
+      snippet: DR   P21258, OGL_DICD3  ;  Q59418, OGL_PECAS  ;
+      notes: ExPASy ENZYME entry EC 4.2.2.6 cross-references UniProtKB:Q59418 (OGL_PECAS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

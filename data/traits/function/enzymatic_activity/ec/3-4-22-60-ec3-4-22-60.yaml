@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -46,4 +46,66 @@ definitions:
       Catalyses: Strict requirement for an Asp residue at position P1 and has a preferred cleavage sequence of Asp-Glu-Val-Asp-|-
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of caspase-7
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.60. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Strict
+    requirement for an Asp residue at position P1 and has a preferred cleavage sequence of Asp-Glu-Val-Asp-|-".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: caspase-7
+    grounding: EC:3.4.22.60
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_F1NV61
+    node_type: PROTEIN
+    label: CASP7_CHICK
+    grounding: UniProtKB:F1NV61
+  - node_id: prot_P55210
+    node_type: PROTEIN
+    label: CASP7_HUMAN
+    grounding: UniProtKB:P55210
+  - node_id: prot_P55214
+    node_type: PROTEIN
+    label: CASP7_MESAU
+    grounding: UniProtKB:P55214
+  edges:
+  - subject: prot_F1NV61
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASP7_CHICK is an exemplar enzyme with EC 3.4.22.60 activity.
+    evidence:
+    - reference: EC:3.4.22.60
+      snippet: DR   F1NV61, CASP7_CHICK;  P55210, CASP7_HUMAN;  P55214, CASP7_MESAU;
+      notes: ExPASy ENZYME entry EC 3.4.22.60 cross-references UniProtKB:F1NV61 (CASP7_CHICK) as a protein
+        with this activity.
+  - subject: prot_P55210
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASP7_HUMAN is an exemplar enzyme with EC 3.4.22.60 activity.
+    evidence:
+    - reference: EC:3.4.22.60
+      snippet: DR   F1NV61, CASP7_CHICK;  P55210, CASP7_HUMAN;  P55214, CASP7_MESAU;
+      notes: ExPASy ENZYME entry EC 3.4.22.60 cross-references UniProtKB:P55210 (CASP7_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P55214
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASP7_MESAU is an exemplar enzyme with EC 3.4.22.60 activity.
+    evidence:
+    - reference: EC:3.4.22.60
+      snippet: DR   F1NV61, CASP7_CHICK;  P55210, CASP7_HUMAN;  P55214, CASP7_MESAU;
+      notes: ExPASy ENZYME entry EC 3.4.22.60 cross-references UniProtKB:P55214 (CASP7_MESAU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

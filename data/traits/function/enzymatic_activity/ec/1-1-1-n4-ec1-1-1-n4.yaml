@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -32,4 +32,232 @@ definitions:
       Catalyses: (1) (1S,5R)-carveol + NAD(+) = (R)-carvone + NADH + H(+). (2) (1S,5S)-carveol + NAD(+) = (S)-carvone + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (-)-trans-carveol dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.n4. Rhea assigns 2 curated
+    reactions to EC 1.1.1.n4. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (1S,5R)-carveol + NAD(+) = (R)-carvone + NADH + H(+).
+    (2) (1S,5S)-carveol + NAD(+) = (S)-carvone + NADH + H(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-trans-carveol dehydrogenase
+    grounding: EC:1.1.1.n4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (1S,5R)-carveol + NAD(+) = (R)-carvone + NADH + H(+)
+    grounding: RHEA:25844
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (1S,5R)-carveol + NAD(+) = (R)-carvone + NADH + H(+)'
+  - node_id: rxn1_sub1
+    label: (1S,5R)-carveol
+    node_type: CHEMICAL
+    grounding: CHEBI:15389
+    description: Formula C10H16O.
+  - node_id: rxn1_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn1_prd1
+    label: (R)-carvone
+    node_type: CHEMICAL
+    grounding: CHEBI:15400
+    description: Formula C10H14O.
+  - node_id: rxn1_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (1S,5S)-carveol + NAD(+) = (S)-carvone + NADH + H(+)
+    grounding: RHEA:25848
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (1S,5S)-carveol + NAD(+) = (S)-carvone + NADH + H(+)'
+  - node_id: rxn2_sub1
+    label: (1S,5S)-carveol
+    node_type: CHEMICAL
+    grounding: CHEBI:232
+    description: Formula C10H16O.
+  - node_id: rxn2_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2_prd1
+    label: (S)-carvone
+    node_type: CHEMICAL
+    grounding: CHEBI:15399
+    description: Formula C10H14O.
+  - node_id: rxn2_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q9RA05
+    node_type: PROTEIN
+    label: LIMC_RHOER
+    grounding: UniProtKB:Q9RA05
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:25844 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.n4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25844
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.n4"/>
+      notes: The rh:ec triple on RHEA:25844 in rhea.rdf assigns that reaction to EC 1.1.1.n4.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (1S,5R)-carveol is a substrate consumed by RHEA:25844 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25845
+      snippet: (1S,5R)-carveol + NAD(+) => (R)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25845 declares side 25844_L as its substrates
+        (rh:substrates); the master reaction RHEA:25844 is undirected. This participant is CHEBI:15389
+        with coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NAD(+) is a substrate consumed by RHEA:25844 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25845
+      snippet: (1S,5R)-carveol + NAD(+) => (R)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25845 declares side 25844_L as its substrates
+        (rh:substrates); the master reaction RHEA:25844 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (R)-carvone is a product released by RHEA:25844 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25845
+      snippet: (1S,5R)-carveol + NAD(+) => (R)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25845 declares side 25844_R as its products
+        (rh:products); the master reaction RHEA:25844 is undirected. This participant is CHEBI:15400 with
+        coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADH is a product released by RHEA:25844 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25845
+      snippet: (1S,5R)-carveol + NAD(+) => (R)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25845 declares side 25844_R as its products
+        (rh:products); the master reaction RHEA:25844 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:25844 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25845
+      snippet: (1S,5R)-carveol + NAD(+) => (R)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25845 declares side 25844_R as its products
+        (rh:products); the master reaction RHEA:25844 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:25848 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.n4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25848
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.n4"/>
+      notes: The rh:ec triple on RHEA:25848 in rhea.rdf assigns that reaction to EC 1.1.1.n4.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (1S,5S)-carveol is a substrate consumed by RHEA:25848 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25849
+      snippet: (1S,5S)-carveol + NAD(+) => (S)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25849 declares side 25848_L as its substrates
+        (rh:substrates); the master reaction RHEA:25848 is undirected. This participant is CHEBI:232 with
+        coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NAD(+) is a substrate consumed by RHEA:25848 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25849
+      snippet: (1S,5S)-carveol + NAD(+) => (S)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25849 declares side 25848_L as its substrates
+        (rh:substrates); the master reaction RHEA:25848 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (S)-carvone is a product released by RHEA:25848 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25849
+      snippet: (1S,5S)-carveol + NAD(+) => (S)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25849 declares side 25848_R as its products
+        (rh:products); the master reaction RHEA:25848 is undirected. This participant is CHEBI:15399 with
+        coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADH is a product released by RHEA:25848 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25849
+      snippet: (1S,5S)-carveol + NAD(+) => (S)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25849 declares side 25848_R as its products
+        (rh:products); the master reaction RHEA:25848 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:25848 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25849
+      snippet: (1S,5S)-carveol + NAD(+) => (S)-carvone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25849 declares side 25848_R as its products
+        (rh:products); the master reaction RHEA:25848 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:10473585 for this reaction.
+  - subject: prot_Q9RA05
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LIMC_RHOER is an exemplar enzyme with EC 1.1.1.n4 activity.
+    evidence:
+    - reference: EC:1.1.1.n4
+      snippet: DR   Q9RA05, LIMC_RHOER ;
+      notes: ExPASy ENZYME entry EC 1.1.1.n4 cross-references UniProtKB:Q9RA05 (LIMC_RHOER) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

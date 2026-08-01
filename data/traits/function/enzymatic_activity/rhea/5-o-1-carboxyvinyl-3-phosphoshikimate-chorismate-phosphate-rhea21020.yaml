@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.5
     mapping_source: rhea2ec
@@ -36,4 +36,167 @@ definitions:
       Catalyses the reaction: 5-O-(1-carboxyvinyl)-3-phosphoshikimate = chorismate + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-O-(1-carboxyvinyl)-3-phosphoshikimate = chorismate + phosphate
+  description: Substrate-to-product chemistry of RHEA:21020, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:21021 (rh:substrates → 21020_L, rh:products → 21020_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-O-(1-carboxyvinyl)-3-phosphoshikimate = chorismate + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21020
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-O-(1-carboxyvinyl)-3-phosphoshikimate = chorismate + phosphate'
+  - node_id: sub1
+    label: 5-O-(1-carboxyvinyl)-3-phosphoshikimate
+    node_type: CHEMICAL
+    grounding: CHEBI:57701
+    description: Formula C10H9O10P.
+  - node_id: prd1
+    label: chorismate
+    node_type: CHEMICAL
+    grounding: CHEBI:29748
+    description: Formula C10H8O6.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: chorismate synthase activity
+    grounding: GO:0004107
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: chorismate synthase
+    grounding: EC:4.2.3.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0RBX0
+    node_type: PROTEIN
+    label: AROC1_BACAH
+    grounding: UniProtKB:A0RBX0
+  - node_id: prot_Q81P61
+    node_type: PROTEIN
+    label: AROC1_BACAN
+    grounding: UniProtKB:Q81P61
+  - node_id: prot_Q73AX9
+    node_type: PROTEIN
+    label: AROC1_BACC1
+    grounding: UniProtKB:Q73AX9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-O-(1-carboxyvinyl)-3-phosphoshikimate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21021
+      snippet: 5-O-(1-carboxyvinyl)-3-phosphoshikimate => chorismate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21021 declares side 21020_L as its substrates
+        (rh:substrates); the master reaction RHEA:21020 is undirected. This participant is CHEBI:57701
+        with coefficient 1. Rhea cites PMID:10956653, PMID:4146266, PMID:4289188, PMID:11034781 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: chorismate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21021
+      snippet: 5-O-(1-carboxyvinyl)-3-phosphoshikimate => chorismate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21021 declares side 21020_R as its products
+        (rh:products); the master reaction RHEA:21020 is undirected. This participant is CHEBI:29748 with
+        coefficient 1. Rhea cites PMID:10956653, PMID:4146266, PMID:4289188, PMID:11034781 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21021
+      snippet: 5-O-(1-carboxyvinyl)-3-phosphoshikimate => chorismate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21021 declares side 21020_R as its products
+        (rh:products); the master reaction RHEA:21020 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:10956653, PMID:4146266, PMID:4289188, PMID:11034781 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:21020
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004107"/>
+      notes: The rdfs:seeAlso triple on RHEA:21020 in rhea.rdf. GO term GO:0004107 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:21020
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.5"/>
+      notes: The rh:ec triple on RHEA:21020 in rhea.rdf. EC 4.2.3.5 is itself a record in this KB.
+  - subject: prot_A0RBX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AROC1_BACAH is an exemplar enzyme carrying EC 4.2.3.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.5
+      snippet: DR   A0RBX0, AROC1_BACAH;  Q81P61, AROC1_BACAN;  Q73AX9, AROC1_BACC1;
+      notes: ExPASy ENZYME entry EC 4.2.3.5 cross-references UniProtKB:A0RBX0 (AROC1_BACAH) as a protein
+        with this activity.
+    - reference: RHEA:21020
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.5"/>
+      notes: Rhea assigns RHEA:21020 to EC 4.2.3.5, and EC 4.2.3.5 maps to exactly one Rhea master reaction
+        (RHEA:21020), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q81P61
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AROC1_BACAN is an exemplar enzyme carrying EC 4.2.3.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.5
+      snippet: DR   A0RBX0, AROC1_BACAH;  Q81P61, AROC1_BACAN;  Q73AX9, AROC1_BACC1;
+      notes: ExPASy ENZYME entry EC 4.2.3.5 cross-references UniProtKB:Q81P61 (AROC1_BACAN) as a protein
+        with this activity.
+    - reference: RHEA:21020
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.5"/>
+      notes: Rhea assigns RHEA:21020 to EC 4.2.3.5, and EC 4.2.3.5 maps to exactly one Rhea master reaction
+        (RHEA:21020), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q73AX9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AROC1_BACC1 is an exemplar enzyme carrying EC 4.2.3.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.5
+      snippet: DR   A0RBX0, AROC1_BACAH;  Q81P61, AROC1_BACAN;  Q73AX9, AROC1_BACC1;
+      notes: ExPASy ENZYME entry EC 4.2.3.5 cross-references UniProtKB:Q73AX9 (AROC1_BACC1) as a protein
+        with this activity.
+    - reference: RHEA:21020
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.5"/>
+      notes: Rhea assigns RHEA:21020 to EC 4.2.3.5, and EC 4.2.3.5 maps to exactly one Rhea master reaction
+        (RHEA:21020), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

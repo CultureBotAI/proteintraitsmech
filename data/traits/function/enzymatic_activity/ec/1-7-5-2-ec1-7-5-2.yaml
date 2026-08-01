@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.7.5.-
 mapped_xrefs:
@@ -23,4 +23,109 @@ definitions:
       Catalyses: a menaquinol + 2 nitric oxide = nitrous oxide + a menaquinone + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nitric oxide reductase (menaquinol)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.7.5.2. EC 1.7.5.2 maps to exactly
+    one curated Rhea reaction (RHEA:30215), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a menaquinol
+    + 2 nitric oxide = nitrous oxide + a menaquinone + H2O". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nitric oxide reductase (menaquinol)
+    grounding: EC:1.7.5.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a menaquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:18151
+    xrefs:
+    - RHEA-COMP:9539
+    description: Rhea compound POLYMER:9539. Formula C11H10O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: nitric oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16480
+    description: Formula NO.
+  - node_id: prd1
+    label: nitrous oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:17045
+    description: Formula N2O.
+  - node_id: prd2
+    label: a menaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16374
+    xrefs:
+    - RHEA-COMP:9537
+    description: Rhea compound POLYMER:9537. Formula C11H8O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a menaquinol is a substrate consumed by RHEA:30215 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30216
+      snippet: a menaquinol + 2 nitric oxide => nitrous oxide + a menaquinone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:30216 declares side 30215_L as its substrates
+        (rh:substrates); the master reaction RHEA:30215 is undirected. This participant is POLYMER:9539
+        with coefficient 1. Rhea cites PMID:15491156, PMID:11327887, PMID:10571051 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: nitric oxide is a substrate consumed by RHEA:30215 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:30216
+      snippet: a menaquinol + 2 nitric oxide => nitrous oxide + a menaquinone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:30216 declares side 30215_L as its substrates
+        (rh:substrates); the master reaction RHEA:30215 is undirected. This participant is CHEBI:16480
+        with coefficient 2. Rhea cites PMID:15491156, PMID:11327887, PMID:10571051 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: nitrous oxide is a product released by RHEA:30215 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30216
+      snippet: a menaquinol + 2 nitric oxide => nitrous oxide + a menaquinone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:30216 declares side 30215_R as its products
+        (rh:products); the master reaction RHEA:30215 is undirected. This participant is CHEBI:17045 with
+        coefficient 1. Rhea cites PMID:15491156, PMID:11327887, PMID:10571051 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a menaquinone is a product released by RHEA:30215 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30216
+      snippet: a menaquinol + 2 nitric oxide => nitrous oxide + a menaquinone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:30216 declares side 30215_R as its products
+        (rh:products); the master reaction RHEA:30215 is undirected. This participant is POLYMER:9537
+        with coefficient 1. Rhea cites PMID:15491156, PMID:11327887, PMID:10571051 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:30215 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30216
+      snippet: a menaquinol + 2 nitric oxide => nitrous oxide + a menaquinone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:30216 declares side 30215_R as its products
+        (rh:products); the master reaction RHEA:30215 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:15491156, PMID:11327887, PMID:10571051 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17240
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,108 @@ definitions:
       Catalyses the reaction: itaconate + L-cysteinyl-[protein] = S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of itaconate + L-cysteinyl-[protein] = S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein]
+  description: Substrate-to-product chemistry of RHEA:61028, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:61029 (rh:substrates → 61028_L, rh:products → 61028_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of itaconate + L-cysteinyl-[protein] = S-(2,3-dicarboxypropyl)-L-cysteinyl-[pro…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:61028
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: itaconate + L-cysteinyl-[protein] = S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein]'
+  - node_id: sub1
+    label: itaconate
+    node_type: CHEMICAL
+    grounding: CHEBI:17240
+    description: Formula C5H4O4.
+  - node_id: sub2
+    label: L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10131
+    description: Rhea compound GENERIC:10131.
+  - node_id: sub2_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10131 (L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1
+    label: S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15737
+    description: Rhea compound GENERIC:15737.
+  - node_id: prd1_rp1
+    label: S-(2,3-dicarboxypropyl)-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15737 (S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:144095
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: itaconate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61029
+      snippet: itaconate + L-cysteinyl-[protein] => S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:61029 declares side 61028_L as its substrates
+        (rh:substrates); the master reaction RHEA:61028 is undirected. This participant is CHEBI:17240
+        with coefficient 1. Rhea cites PMID:29590092 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-cysteinyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61029
+      snippet: itaconate + L-cysteinyl-[protein] => S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:61029 declares side 61028_L as its substrates
+        (rh:substrates); the master reaction RHEA:61028 is undirected. This participant is GENERIC:10131
+        with coefficient 1. Rhea cites PMID:29590092 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:61028
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10131 (L-cysteinyl-[protein]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein] is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61029
+      snippet: itaconate + L-cysteinyl-[protein] => S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:61029 declares side 61028_R as its products
+        (rh:products); the master reaction RHEA:61028 is undirected. This participant is GENERIC:15737
+        with coefficient 1. Rhea cites PMID:29590092 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-(2,3-dicarboxypropyl)-L-cysteine residue is the reactive part of S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:61028
+      snippet: S-(2,3-dicarboxypropyl)-L-cysteine residue
+      notes: Rhea compound GENERIC:15737 (S-(2,3-dicarboxypropyl)-L-cysteinyl-[protein]) declares rh:reactivePart
+        = S-(2,3-dicarboxypropyl)-L-cysteine residue (CHEBI:144095), formula C8H9NO5S.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

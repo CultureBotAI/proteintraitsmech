@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -70,4 +70,67 @@ definitions:
       Catalyses: Processes precursors containing basic and hydrophobic/aliphatic residues at P4 and P2, respectively, with a relatively relaxed acceptance of amino acids at P1 and P3
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of site-1 protease
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.112. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "Processes precursors containing basic and hydrophobic/aliphatic residues at P4 and P2, respectively,
+    with a relatively relaxed acceptance of amino acids at P1 and P3".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: site-1 protease
+    grounding: EC:3.4.21.112
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9Z2A8
+    node_type: PROTEIN
+    label: MBTP1_CRIGR
+    grounding: UniProtKB:Q9Z2A8
+  - node_id: prot_Q14703
+    node_type: PROTEIN
+    label: MBTP1_HUMAN
+    grounding: UniProtKB:Q14703
+  - node_id: prot_Q9WTZ2
+    node_type: PROTEIN
+    label: MBTP1_MOUSE
+    grounding: UniProtKB:Q9WTZ2
+  edges:
+  - subject: prot_Q9Z2A8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MBTP1_CRIGR is an exemplar enzyme with EC 3.4.21.112 activity.
+    evidence:
+    - reference: EC:3.4.21.112
+      snippet: DR   Q9Z2A8, MBTP1_CRIGR;  Q14703, MBTP1_HUMAN;  Q9WTZ2, MBTP1_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.21.112 cross-references UniProtKB:Q9Z2A8 (MBTP1_CRIGR) as a protein
+        with this activity.
+  - subject: prot_Q14703
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MBTP1_HUMAN is an exemplar enzyme with EC 3.4.21.112 activity.
+    evidence:
+    - reference: EC:3.4.21.112
+      snippet: DR   Q9Z2A8, MBTP1_CRIGR;  Q14703, MBTP1_HUMAN;  Q9WTZ2, MBTP1_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.21.112 cross-references UniProtKB:Q14703 (MBTP1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9WTZ2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MBTP1_MOUSE is an exemplar enzyme with EC 3.4.21.112 activity.
+    evidence:
+    - reference: EC:3.4.21.112
+      snippet: DR   Q9Z2A8, MBTP1_CRIGR;  Q14703, MBTP1_HUMAN;  Q9WTZ2, MBTP1_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.21.112 cross-references UniProtKB:Q9WTZ2 (MBTP1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

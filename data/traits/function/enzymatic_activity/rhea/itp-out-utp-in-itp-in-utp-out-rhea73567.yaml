@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:61402
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,95 @@ definitions:
       Catalyses the reaction: ITP(out) + UTP(in) = ITP(in) + UTP(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ITP(out) + UTP(in) = ITP(in) + UTP(out)
+  description: 'Substrate-to-product chemistry of RHEA:73567, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:73568 (rh:substrates → 73567_L, rh:products → 73567_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of ITP(out) + UTP(in) = ITP(in) + UTP(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:73567
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: ITP(out) + UTP(in) = ITP(in) + UTP(out)'
+  - node_id: sub1
+    label: ITP (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:61402
+    description: Formula C10H11N4O14P3.
+  - node_id: sub2
+    label: UTP (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  - node_id: prd1
+    label: ITP (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:61402
+    description: Formula C10H11N4O14P3.
+  - node_id: prd2
+    label: UTP (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ITP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73568
+      snippet: ITP(out) + UTP(in) => ITP(in) + UTP(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73568 declares side 73567_L as its substrates
+        (rh:substrates); the master reaction RHEA:73567 is undirected. This participant is CHEBI:61402
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:25320081 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73568
+      snippet: ITP(out) + UTP(in) => ITP(in) + UTP(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73568 declares side 73567_L as its substrates
+        (rh:substrates); the master reaction RHEA:73567 is undirected. This participant is CHEBI:46398
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:25320081
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ITP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73568
+      snippet: ITP(out) + UTP(in) => ITP(in) + UTP(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73568 declares side 73567_R as its products
+        (rh:products); the master reaction RHEA:73567 is undirected. This participant is CHEBI:61402 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:25320081
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UTP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73568
+      snippet: ITP(out) + UTP(in) => ITP(in) + UTP(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73568 declares side 73567_R as its products
+        (rh:products); the master reaction RHEA:73567 is undirected. This participant is CHEBI:46398 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:25320081
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

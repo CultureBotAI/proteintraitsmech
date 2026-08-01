@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -31,4 +31,107 @@ definitions:
       Catalyses: (8S)-8-amino-7-oxononanoate + L-lysine = (7R,8S)-7,8-diammoniononanoate + (S)-2-amino-6-oxohexanoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lysine--8-amino-7-oxononanoate transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.105. EC 2.6.1.105 maps to
+    exactly one curated Rhea reaction (RHEA:26329), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(8S)-8-amino-7-oxononanoate
+    + L-lysine = (7R,8S)-7,8-diammoniononanoate + (S)-2-amino-6-oxohexanoate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lysine--8-amino-7-oxononanoate transaminase
+    grounding: EC:2.6.1.105
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (8S)-8-amino-7-oxononanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:149468
+    description: Formula C9H17NO3.
+  - node_id: sub2
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32551
+    description: Formula C6H15N2O2.
+  - node_id: prd1
+    label: (7R,8S)-7,8-diammoniononanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:149469
+    description: Formula C9H21N2O2.
+  - node_id: prd2
+    label: (S)-2-amino-6-oxohexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58321
+    description: Formula C6H11NO3.
+  - node_id: prot_P53555
+    node_type: PROTEIN
+    label: BIOK_BACSU
+    grounding: UniProtKB:P53555
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (8S)-8-amino-7-oxononanoate is a substrate consumed by RHEA:26329 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26330
+      snippet: (8S)-8-amino-7-oxononanoate + L-lysine => (7R,8S)-7,8-diammoniononanoate + (S)-2-amino-6-oxohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:26330 declares side 26329_L as its substrates
+        (rh:substrates); the master reaction RHEA:26329 is undirected. This participant is CHEBI:149468
+        with coefficient 1. Rhea cites PMID:15880481 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-lysine is a substrate consumed by RHEA:26329 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26330
+      snippet: (8S)-8-amino-7-oxononanoate + L-lysine => (7R,8S)-7,8-diammoniononanoate + (S)-2-amino-6-oxohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:26330 declares side 26329_L as its substrates
+        (rh:substrates); the master reaction RHEA:26329 is undirected. This participant is CHEBI:32551
+        with coefficient 1. Rhea cites PMID:15880481 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (7R,8S)-7,8-diammoniononanoate is a product released by RHEA:26329 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26330
+      snippet: (8S)-8-amino-7-oxononanoate + L-lysine => (7R,8S)-7,8-diammoniononanoate + (S)-2-amino-6-oxohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:26330 declares side 26329_R as its products
+        (rh:products); the master reaction RHEA:26329 is undirected. This participant is CHEBI:149469
+        with coefficient 1. Rhea cites PMID:15880481 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (S)-2-amino-6-oxohexanoate is a product released by RHEA:26329 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26330
+      snippet: (8S)-8-amino-7-oxononanoate + L-lysine => (7R,8S)-7,8-diammoniononanoate + (S)-2-amino-6-oxohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:26330 declares side 26329_R as its products
+        (rh:products); the master reaction RHEA:26329 is undirected. This participant is CHEBI:58321 with
+        coefficient 1. Rhea cites PMID:15880481 for this reaction.
+  - subject: prot_P53555
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIOK_BACSU is an exemplar enzyme with EC 2.6.1.105 activity.
+    evidence:
+    - reference: EC:2.6.1.105
+      snippet: DR   P53555, BIOK_BACSU ;
+      notes: ExPASy ENZYME entry EC 2.6.1.105 cross-references UniProtKB:P53555 (BIOK_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

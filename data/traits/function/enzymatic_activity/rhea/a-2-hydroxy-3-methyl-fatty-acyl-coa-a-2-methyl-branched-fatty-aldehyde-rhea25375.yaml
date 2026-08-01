@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.63
     mapping_source: rhea2ec
@@ -30,4 +30,108 @@ definitions:
       Catalyses the reaction: a 2-hydroxy-3-methyl fatty acyl-CoA = a 2-methyl-branched fatty aldehyde + formyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2-hydroxy-3-methyl fatty acyl-CoA = a 2-methyl-branched fatty aldehyde
+    + formyl-CoA
+  description: Substrate-to-product chemistry of RHEA:25375, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:25376 (rh:substrates → 25375_L, rh:products → 25375_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2-hydroxy-3-methyl fatty acyl-CoA = a 2-methyl-branched fatty aldehyde + f…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:25375
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2-hydroxy-3-methyl fatty acyl-CoA = a 2-methyl-branched fatty aldehyde + formyl-CoA'
+  - node_id: sub1
+    label: a 2-hydroxy-3-methyl fatty acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58783
+    description: Formula C25H37N7O18P3SR.
+  - node_id: prd1
+    label: a 2-methyl-branched fatty aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:49188
+    description: Formula C3H5OR.
+  - node_id: prd2
+    label: formyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57376
+    description: Formula C22H32N7O17P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-hydroxyacyl-CoA lyase activity
+    grounding: GO:0106359
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2-hydroxyacyl-CoA lyase
+    grounding: EC:4.1.2.63
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2-hydroxy-3-methyl fatty acyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:25376
+      snippet: a 2-hydroxy-3-methyl fatty acyl-CoA => a 2-methyl-branched fatty aldehyde + formyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:25376 declares side 25375_L as its substrates
+        (rh:substrates); the master reaction RHEA:25375 is undirected. This participant is CHEBI:58783
+        with coefficient 1. Rhea cites PMID:10468558, PMID:17956236, PMID:15644336 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 2-methyl-branched fatty aldehyde is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:25376
+      snippet: a 2-hydroxy-3-methyl fatty acyl-CoA => a 2-methyl-branched fatty aldehyde + formyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:25376 declares side 25375_R as its products
+        (rh:products); the master reaction RHEA:25375 is undirected. This participant is CHEBI:49188 with
+        coefficient 1. Rhea cites PMID:10468558, PMID:17956236, PMID:15644336 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: formyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25376
+      snippet: a 2-hydroxy-3-methyl fatty acyl-CoA => a 2-methyl-branched fatty aldehyde + formyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:25376 declares side 25375_R as its products
+        (rh:products); the master reaction RHEA:25375 is undirected. This participant is CHEBI:57376 with
+        coefficient 1. Rhea cites PMID:10468558, PMID:17956236, PMID:15644336 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:25375
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0106359"/>
+      notes: The rdfs:seeAlso triple on RHEA:25375 in rhea.rdf. GO term GO:0106359 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.63; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:25375
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.63"/>
+      notes: The rh:ec triple on RHEA:25375 in rhea.rdf. EC 4.1.2.63 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

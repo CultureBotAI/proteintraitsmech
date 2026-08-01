@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -41,4 +41,209 @@ definitions:
       Catalyses: (1) a sphingomyelin + H2O = sphing-4-enine-phosphocholine + a carboxylate. (2) a beta-D-glucosyl-(1<->1')-N-acylsphing-4-enine + H2O = beta-D- glucosyl-(1<->1)-sphing-4-enine + a fatty acid
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sphingomyelin deacylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.109. Rhea assigns 2 curated
+    reactions to EC 3.5.1.109. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) a sphingomyelin + H2O = sphing-4-enine-phosphocholine
+    + a carboxylate. (2) a beta-D-glucosyl-(1<->1'')-N-acylsphing-4-enine + H2O = beta-D- glucosyl-(1<->1)-sphing-4-enine
+    + a fatty acid". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sphingomyelin deacylase
+    grounding: EC:3.5.1.109
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a sphingomyelin + H2O = sphing-4-enine-phosphocholine + a carboxylate
+    grounding: RHEA:30911
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a sphingomyelin + H2O = sphing-4-enine-phosphocholine + a carboxylate'
+  - node_id: rxn1_sub1
+    label: a sphingomyelin
+    node_type: CHEMICAL
+    grounding: CHEBI:17636
+    description: Formula C24H48N2O6PR.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: sphing-4-enine-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:58906
+    description: Formula C23H50N2O5P.
+  - node_id: rxn1_prd2
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a beta-D-glucosyl-(1<->1')-N-acylsphing-4-enine + H2O = beta-D-glucosyl-(1<-…
+    grounding: RHEA:30915
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a beta-D-glucosyl-(1<->1'')-N-acylsphing-4-enine + H2O = beta-D-glucosyl-(1<->1)-sphing-4-enine
+      + a fatty acid'
+  - node_id: rxn2_sub1
+    label: a beta-D-glucosyl-(1<->1')-N-acylsphing-4-enine
+    node_type: CHEMICAL
+    grounding: CHEBI:22801
+    description: Formula C25H46NO8R.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: beta-D-glucosyl-(1<->1)-sphing-4-enine
+    node_type: CHEMICAL
+    grounding: CHEBI:83992
+    description: Formula C24H48NO7.
+  - node_id: rxn2_prd2
+    label: a fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+    description: Formula CO2R.
+  - node_id: prot_Q13510
+    node_type: PROTEIN
+    label: ASAH1_HUMAN
+    grounding: UniProtKB:Q13510
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:30911 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.109; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:30911
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.109"/>
+      notes: The rh:ec triple on RHEA:30911 in rhea.rdf assigns that reaction to EC 3.5.1.109.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a sphingomyelin is a substrate consumed by RHEA:30911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30912
+      snippet: a sphingomyelin + H2O => sphing-4-enine-phosphocholine + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:30912 declares side 30911_L as its substrates
+        (rh:substrates); the master reaction RHEA:30911 is undirected. This participant is CHEBI:17636
+        with coefficient 1. Rhea cites PMID:10951276, PMID:10970788 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:30911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30912
+      snippet: a sphingomyelin + H2O => sphing-4-enine-phosphocholine + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:30912 declares side 30911_L as its substrates
+        (rh:substrates); the master reaction RHEA:30911 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10951276, PMID:10970788 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: sphing-4-enine-phosphocholine is a product released by RHEA:30911 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30912
+      snippet: a sphingomyelin + H2O => sphing-4-enine-phosphocholine + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:30912 declares side 30911_R as its products
+        (rh:products); the master reaction RHEA:30911 is undirected. This participant is CHEBI:58906 with
+        coefficient 1. Rhea cites PMID:10951276, PMID:10970788 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: a carboxylate is a product released by RHEA:30911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30912
+      snippet: a sphingomyelin + H2O => sphing-4-enine-phosphocholine + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:30912 declares side 30911_R as its products
+        (rh:products); the master reaction RHEA:30911 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. Rhea cites PMID:10951276, PMID:10970788 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:30915 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.109; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:30915
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.109"/>
+      notes: The rh:ec triple on RHEA:30915 in rhea.rdf assigns that reaction to EC 3.5.1.109.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a beta-D-glucosyl-(1<->1')-N-acylsphing-4-enine is a substrate consumed by RHEA:30915
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30916
+      snippet: a beta-D-glucosyl-(1<->1')-N-acylsphing-4-enine + H2O => beta-D-glucosyl-(1<->1)-sphing-4-enine
+        + a fatty acid
+      notes: Rhea's left-to-right directional reaction RHEA:30916 declares side 30915_L as its substrates
+        (rh:substrates); the master reaction RHEA:30915 is undirected. This participant is CHEBI:22801
+        with coefficient 1. Rhea cites PMID:10951276, PMID:10970788 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:30915 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30916
+      snippet: a beta-D-glucosyl-(1<->1')-N-acylsphing-4-enine + H2O => beta-D-glucosyl-(1<->1)-sphing-4-enine
+        + a fatty acid
+      notes: Rhea's left-to-right directional reaction RHEA:30916 declares side 30915_L as its substrates
+        (rh:substrates); the master reaction RHEA:30915 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10951276, PMID:10970788 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: beta-D-glucosyl-(1<->1)-sphing-4-enine is a product released by RHEA:30915 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:30916
+      snippet: a beta-D-glucosyl-(1<->1')-N-acylsphing-4-enine + H2O => beta-D-glucosyl-(1<->1)-sphing-4-enine
+        + a fatty acid
+      notes: Rhea's left-to-right directional reaction RHEA:30916 declares side 30915_R as its products
+        (rh:products); the master reaction RHEA:30915 is undirected. This participant is CHEBI:83992 with
+        coefficient 1. Rhea cites PMID:10951276, PMID:10970788 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: a fatty acid is a product released by RHEA:30915 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30916
+      snippet: a beta-D-glucosyl-(1<->1')-N-acylsphing-4-enine + H2O => beta-D-glucosyl-(1<->1)-sphing-4-enine
+        + a fatty acid
+      notes: Rhea's left-to-right directional reaction RHEA:30916 declares side 30915_R as its products
+        (rh:products); the master reaction RHEA:30915 is undirected. This participant is CHEBI:28868 with
+        coefficient 1. Rhea cites PMID:10951276, PMID:10970788 for this reaction.
+  - subject: prot_Q13510
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASAH1_HUMAN is an exemplar enzyme with EC 3.5.1.109 activity.
+    evidence:
+    - reference: EC:3.5.1.109
+      snippet: DR   Q13510, ASAH1_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.5.1.109 cross-references UniProtKB:Q13510 (ASAH1_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

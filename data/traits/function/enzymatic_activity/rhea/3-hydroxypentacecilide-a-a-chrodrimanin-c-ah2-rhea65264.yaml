@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:156411
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: 3-hydroxypentacecilide A + A = chrodrimanin C + AH2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hydroxypentacecilide A + A = chrodrimanin C + AH2
+  description: Substrate-to-product chemistry of RHEA:65264, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:65265 (rh:substrates → 65264_L, rh:products → 65264_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-hydroxypentacecilide A + A = chrodrimanin C + AH2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:65264
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-hydroxypentacecilide A + A = chrodrimanin C + AH2'
+  - node_id: sub1
+    label: 3-hydroxypentacecilide A
+    node_type: CHEMICAL
+    grounding: CHEBI:156411
+    description: Formula C25H34O5.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd1
+    label: chrodrimanin C
+    node_type: CHEMICAL
+    grounding: CHEBI:156412
+    description: Formula C25H32O5.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxypentacecilide A is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:65265
+      snippet: 3-hydroxypentacecilide A + A => chrodrimanin C + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:65265 declares side 65264_L as its substrates
+        (rh:substrates); the master reaction RHEA:65264 is undirected. This participant is CHEBI:156411
+        with coefficient 1. Rhea cites PMID:30417647 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65265
+      snippet: 3-hydroxypentacecilide A + A => chrodrimanin C + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:65265 declares side 65264_L as its substrates
+        (rh:substrates); the master reaction RHEA:65264 is undirected. This participant is CHEBI:13193
+        with coefficient 1. Rhea cites PMID:30417647 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: chrodrimanin C is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65265
+      snippet: 3-hydroxypentacecilide A + A => chrodrimanin C + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:65265 declares side 65264_R as its products
+        (rh:products); the master reaction RHEA:65264 is undirected. This participant is CHEBI:156412
+        with coefficient 1. Rhea cites PMID:30417647 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65265
+      snippet: 3-hydroxypentacecilide A + A => chrodrimanin C + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:65265 declares side 65264_R as its products
+        (rh:products); the master reaction RHEA:65264 is undirected. This participant is CHEBI:17499 with
+        coefficient 1. Rhea cites PMID:30417647 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

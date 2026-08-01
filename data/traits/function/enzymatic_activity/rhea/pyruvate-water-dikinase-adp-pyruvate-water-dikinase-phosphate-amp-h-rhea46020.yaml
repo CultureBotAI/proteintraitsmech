@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.11.33
     mapping_source: rhea2ec
@@ -30,4 +30,216 @@ definitions:
       Catalyses the reaction: [pyruvate, water dikinase] + ADP = [pyruvate, water dikinase]-phosphate + AMP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [pyruvate, water dikinase] + ADP = [pyruvate, water dikinase]-phosphate
+    + AMP + H(+)
+  description: Substrate-to-product chemistry of RHEA:46020, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:46021 (rh:substrates → 46020_L, rh:products → 46020_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [pyruvate, water dikinase] + ADP = [pyruvate, water dikinase]-phosphate + AM…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:46020
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [pyruvate, water dikinase] + ADP = [pyruvate, water dikinase]-phosphate + AMP + H(+)'
+  - node_id: sub1
+    label: '[pyruvate, water dikinase]'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11425
+    description: Rhea compound GENERIC:11425.
+  - node_id: sub1_rp1
+    label: hydroxy group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11425 ([pyruvate,
+      water dikinase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:43176
+  - node_id: sub2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd1
+    label: '[pyruvate, water dikinase]-phosphate'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11426
+    description: Rhea compound GENERIC:11426.
+  - node_id: prd1_rp1
+    label: phosphate group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11426 ([pyruvate,
+      water dikinase]-phosphate); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:68546
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: '[pyruvate, water dikinase] kinase'
+    grounding: EC:2.7.11.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q6F9R8
+    node_type: PROTEIN
+    label: PSRP_ACIAD
+    grounding: UniProtKB:Q6F9R8
+  - node_id: prot_B7H0K8
+    node_type: PROTEIN
+    label: PSRP_ACIB3
+    grounding: UniProtKB:B7H0K8
+  - node_id: prot_B7IBB3
+    node_type: PROTEIN
+    label: PSRP_ACIB5
+    grounding: UniProtKB:B7IBB3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[pyruvate, water dikinase] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:46021
+      snippet: '[pyruvate, water dikinase] + ADP => [pyruvate, water dikinase]-phosphate + AMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:46021 declares side 46020_L as its substrates
+        (rh:substrates); the master reaction RHEA:46020 is undirected. This participant is GENERIC:11425
+        with coefficient 1. Rhea cites PMID:20044937 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: hydroxy group is the reactive part of [pyruvate, water dikinase].
+    evidence:
+    - reference: RHEA:46020
+      snippet: hydroxy group
+      notes: Rhea compound GENERIC:11425 ([pyruvate, water dikinase]) declares rh:reactivePart = hydroxy
+        group (CHEBI:43176), formula HO.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ADP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46021
+      snippet: '[pyruvate, water dikinase] + ADP => [pyruvate, water dikinase]-phosphate + AMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:46021 declares side 46020_L as its substrates
+        (rh:substrates); the master reaction RHEA:46020 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:20044937 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[pyruvate, water dikinase]-phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:46021
+      snippet: '[pyruvate, water dikinase] + ADP => [pyruvate, water dikinase]-phosphate + AMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:46021 declares side 46020_R as its products
+        (rh:products); the master reaction RHEA:46020 is undirected. This participant is GENERIC:11426
+        with coefficient 1. Rhea cites PMID:20044937 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: phosphate group is the reactive part of [pyruvate, water dikinase]-phosphate.
+    evidence:
+    - reference: RHEA:46020
+      snippet: phosphate group
+      notes: Rhea compound GENERIC:11426 ([pyruvate, water dikinase]-phosphate) declares rh:reactivePart
+        = phosphate group (CHEBI:68546), formula O4P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46021
+      snippet: '[pyruvate, water dikinase] + ADP => [pyruvate, water dikinase]-phosphate + AMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:46021 declares side 46020_R as its products
+        (rh:products); the master reaction RHEA:46020 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:20044937 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46021
+      snippet: '[pyruvate, water dikinase] + ADP => [pyruvate, water dikinase]-phosphate + AMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:46021 declares side 46020_R as its products
+        (rh:products); the master reaction RHEA:46020 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:20044937 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.11.33; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:46020
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.33"/>
+      notes: The rh:ec triple on RHEA:46020 in rhea.rdf. EC 2.7.11.33 is itself a record in this KB.
+  - subject: prot_Q6F9R8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSRP_ACIAD is an exemplar enzyme carrying EC 2.7.11.33, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.11.33
+      snippet: DR   Q6F9R8, PSRP_ACIAD ;  B7H0K8, PSRP_ACIB3 ;  B7IBB3, PSRP_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 2.7.11.33 cross-references UniProtKB:Q6F9R8 (PSRP_ACIAD) as a protein
+        with this activity.
+    - reference: RHEA:46020
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.33"/>
+      notes: Rhea assigns RHEA:46020 to EC 2.7.11.33, and EC 2.7.11.33 maps to exactly one Rhea master
+        reaction (RHEA:46020), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_B7H0K8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSRP_ACIB3 is an exemplar enzyme carrying EC 2.7.11.33, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.11.33
+      snippet: DR   Q6F9R8, PSRP_ACIAD ;  B7H0K8, PSRP_ACIB3 ;  B7IBB3, PSRP_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 2.7.11.33 cross-references UniProtKB:B7H0K8 (PSRP_ACIB3) as a protein
+        with this activity.
+    - reference: RHEA:46020
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.33"/>
+      notes: Rhea assigns RHEA:46020 to EC 2.7.11.33, and EC 2.7.11.33 maps to exactly one Rhea master
+        reaction (RHEA:46020), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_B7IBB3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSRP_ACIB5 is an exemplar enzyme carrying EC 2.7.11.33, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.11.33
+      snippet: DR   Q6F9R8, PSRP_ACIAD ;  B7H0K8, PSRP_ACIB3 ;  B7IBB3, PSRP_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 2.7.11.33 cross-references UniProtKB:B7IBB3 (PSRP_ACIB5) as a protein
+        with this activity.
+    - reference: RHEA:46020
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.33"/>
+      notes: Rhea assigns RHEA:46020 to EC 2.7.11.33, and EC 2.7.11.33 maps to exactly one Rhea master
+        reaction (RHEA:46020), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

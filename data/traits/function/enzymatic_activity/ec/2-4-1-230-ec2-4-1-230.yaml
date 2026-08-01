@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -38,4 +38,147 @@ definitions:
       Catalyses: kojibiose + phosphate = beta-D-glucose 1-phosphate + D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of kojibiose phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.230. EC 2.4.1.230 maps to
+    exactly one curated Rhea reaction (RHEA:11176), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "kojibiose
+    + phosphate = beta-D-glucose 1-phosphate + D-glucose". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: kojibiose phosphorylase
+    grounding: EC:2.4.1.230
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: kojibiose
+    node_type: CHEMICAL
+    grounding: CHEBI:142460
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: beta-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57684
+    description: Formula C6H11O9P.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: kojibiose phosphorylase activity
+    grounding: GO:0033831
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8RBL8
+    node_type: PROTEIN
+    label: KOJP_CALS4
+    grounding: UniProtKB:Q8RBL8
+  - node_id: prot_P77154
+    node_type: PROTEIN
+    label: KOJP_ECOLI
+    grounding: UniProtKB:P77154
+  - node_id: prot_B8D049
+    node_type: PROTEIN
+    label: KOJP_HALOH
+    grounding: UniProtKB:B8D049
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: kojibiose is a substrate consumed by RHEA:11176 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11177
+      snippet: kojibiose + phosphate => beta-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:11177 declares side 11176_L as its substrates
+        (rh:substrates); the master reaction RHEA:11176 is undirected. This participant is CHEBI:142460
+        with coefficient 1. Rhea cites PMID:16233080 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:11176 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11177
+      snippet: kojibiose + phosphate => beta-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:11177 declares side 11176_L as its substrates
+        (rh:substrates); the master reaction RHEA:11176 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:16233080 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-glucose 1-phosphate is a product released by RHEA:11176 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11177
+      snippet: kojibiose + phosphate => beta-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:11177 declares side 11176_R as its products
+        (rh:products); the master reaction RHEA:11176 is undirected. This participant is CHEBI:57684 with
+        coefficient 1. Rhea cites PMID:16233080 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by RHEA:11176 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11177
+      snippet: kojibiose + phosphate => beta-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:11177 declares side 11176_R as its products
+        (rh:products); the master reaction RHEA:11176 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:16233080 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.230
+      snippet: EC:2.4.1.230 > GO:kojibiose phosphorylase activity ; GO:0033831
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033831 is itself a record
+        in this KB.
+  - subject: prot_Q8RBL8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KOJP_CALS4 is an exemplar enzyme with EC 2.4.1.230 activity.
+    evidence:
+    - reference: EC:2.4.1.230
+      snippet: DR   Q8RBL8, KOJP_CALS4 ;  P77154, KOJP_ECOLI ;  B8D049, KOJP_HALOH ;
+      notes: ExPASy ENZYME entry EC 2.4.1.230 cross-references UniProtKB:Q8RBL8 (KOJP_CALS4) as a protein
+        with this activity.
+  - subject: prot_P77154
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KOJP_ECOLI is an exemplar enzyme with EC 2.4.1.230 activity.
+    evidence:
+    - reference: EC:2.4.1.230
+      snippet: DR   Q8RBL8, KOJP_CALS4 ;  P77154, KOJP_ECOLI ;  B8D049, KOJP_HALOH ;
+      notes: ExPASy ENZYME entry EC 2.4.1.230 cross-references UniProtKB:P77154 (KOJP_ECOLI) as a protein
+        with this activity.
+  - subject: prot_B8D049
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KOJP_HALOH is an exemplar enzyme with EC 2.4.1.230 activity.
+    evidence:
+    - reference: EC:2.4.1.230
+      snippet: DR   Q8RBL8, KOJP_CALS4 ;  P77154, KOJP_ECOLI ;  B8D049, KOJP_HALOH ;
+      notes: ExPASy ENZYME entry EC 2.4.1.230 cross-references UniProtKB:B8D049 (KOJP_HALOH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

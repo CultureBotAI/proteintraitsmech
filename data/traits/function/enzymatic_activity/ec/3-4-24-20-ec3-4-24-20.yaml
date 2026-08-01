@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -36,4 +36,66 @@ definitions:
       Catalyses: Preferential cleavage in proteins: -Xaa-|-Lys- (in which Xaa may be Pro)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidyl-Lys metalloendopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.20. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage in proteins: -Xaa-|-Lys- (in which Xaa may be Pro)".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-Lys metalloendopeptidase
+    grounding: EC:3.4.24.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9Y7F7
+    node_type: PROTEIN
+    label: PLMP_ARMME
+    grounding: UniProtKB:Q9Y7F7
+  - node_id: prot_P81054
+    node_type: PROTEIN
+    label: PLMP_GRIFR
+    grounding: UniProtKB:P81054
+  - node_id: prot_P81055
+    node_type: PROTEIN
+    label: PLMP_PLEOS
+    grounding: UniProtKB:P81055
+  edges:
+  - subject: prot_Q9Y7F7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLMP_ARMME is an exemplar enzyme with EC 3.4.24.20 activity.
+    evidence:
+    - reference: EC:3.4.24.20
+      snippet: DR   Q9Y7F7, PLMP_ARMME ;  P81054, PLMP_GRIFR ;  P81055, PLMP_PLEOS ;
+      notes: ExPASy ENZYME entry EC 3.4.24.20 cross-references UniProtKB:Q9Y7F7 (PLMP_ARMME) as a protein
+        with this activity.
+  - subject: prot_P81054
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLMP_GRIFR is an exemplar enzyme with EC 3.4.24.20 activity.
+    evidence:
+    - reference: EC:3.4.24.20
+      snippet: DR   Q9Y7F7, PLMP_ARMME ;  P81054, PLMP_GRIFR ;  P81055, PLMP_PLEOS ;
+      notes: ExPASy ENZYME entry EC 3.4.24.20 cross-references UniProtKB:P81054 (PLMP_GRIFR) as a protein
+        with this activity.
+  - subject: prot_P81055
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLMP_PLEOS is an exemplar enzyme with EC 3.4.24.20 activity.
+    evidence:
+    - reference: EC:3.4.24.20
+      snippet: DR   Q9Y7F7, PLMP_ARMME ;  P81054, PLMP_GRIFR ;  P81055, PLMP_PLEOS ;
+      notes: ExPASy ENZYME entry EC 3.4.24.20 cross-references UniProtKB:P81055 (PLMP_PLEOS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

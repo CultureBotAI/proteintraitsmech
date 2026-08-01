@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -55,4 +55,82 @@ definitions:
       Catalyses: Exolytic removal of Delta(4)-unsaturated disaccharide residues from the non-reducing ends of both polymeric chondroitin/dermatan sulfates and their oligosaccharide fragments
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chondroitin-sulfate-ABC exolyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.21. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Exolytic
+    removal of Delta(4)-unsaturated disaccharide residues from the non-reducing ends of both polymeric
+    chondroitin/dermatan sulfates and their oligosaccharide fragments".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: chondroitin-sulfate-ABC exolyase
+    grounding: EC:4.2.2.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: chondroitin-sulfate-ABC exolyase activity
+    grounding: GO:0034001
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_C5G6D7
+    node_type: PROTEIN
+    label: CABC2_BACT4
+    grounding: UniProtKB:C5G6D7
+  - node_id: prot_Q8A2I1
+    node_type: PROTEIN
+    label: CABC2_BACTN
+    grounding: UniProtKB:Q8A2I1
+  - node_id: prot_C7S340
+    node_type: PROTEIN
+    label: CABC2_PROVU
+    grounding: UniProtKB:C7S340
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.21
+      snippet: EC:4.2.2.21 > GO:chondroitin-sulfate-ABC exolyase activity ; GO:0034001
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034001 is itself a record
+        in this KB.
+  - subject: prot_C5G6D7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CABC2_BACT4 is an exemplar enzyme with EC 4.2.2.21 activity.
+    evidence:
+    - reference: EC:4.2.2.21
+      snippet: DR   C5G6D7, CABC2_BACT4;  Q8A2I1, CABC2_BACTN;  C7S340, CABC2_PROVU;
+      notes: ExPASy ENZYME entry EC 4.2.2.21 cross-references UniProtKB:C5G6D7 (CABC2_BACT4) as a protein
+        with this activity.
+  - subject: prot_Q8A2I1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CABC2_BACTN is an exemplar enzyme with EC 4.2.2.21 activity.
+    evidence:
+    - reference: EC:4.2.2.21
+      snippet: DR   C5G6D7, CABC2_BACT4;  Q8A2I1, CABC2_BACTN;  C7S340, CABC2_PROVU;
+      notes: ExPASy ENZYME entry EC 4.2.2.21 cross-references UniProtKB:Q8A2I1 (CABC2_BACTN) as a protein
+        with this activity.
+  - subject: prot_C7S340
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CABC2_PROVU is an exemplar enzyme with EC 4.2.2.21 activity.
+    evidence:
+    - reference: EC:4.2.2.21
+      snippet: DR   C5G6D7, CABC2_BACT4;  Q8A2I1, CABC2_BACTN;  C7S340, CABC2_PROVU;
+      notes: ExPASy ENZYME entry EC 4.2.2.21 cross-references UniProtKB:C7S340 (CABC2_PROVU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

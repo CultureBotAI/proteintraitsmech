@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.228
     mapping_source: rhea2ec
@@ -30,4 +30,150 @@ definitions:
       Catalyses the reaction: (2E)-geranyl diphosphate = (Z)-beta-ocimene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E)-geranyl diphosphate = (Z)-beta-ocimene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:68824, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:68825 (rh:substrates → 68824_L, rh:products → 68824_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E)-geranyl diphosphate = (Z)-beta-ocimene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:68824
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E)-geranyl diphosphate = (Z)-beta-ocimene + diphosphate'
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: (Z)-beta-ocimene
+    node_type: CHEMICAL
+    grounding: CHEBI:87574
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (Z)-beta-ocimene synthase
+    grounding: EC:4.2.3.228
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A8H7XP09
+    node_type: PROTEIN
+    label: CUBC_PSICU
+    grounding: UniProtKB:A0A8H7XP09
+  - node_id: prot_A0A1V0QSG1
+    node_type: PROTEIN
+    label: T13PK_CANSA
+    grounding: UniProtKB:A0A1V0QSG1
+  - node_id: prot_A0A1V0QSH1
+    node_type: PROTEIN
+    label: TS6FN_CANSA
+    grounding: UniProtKB:A0A1V0QSH1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68825
+      snippet: (2E)-geranyl diphosphate => (Z)-beta-ocimene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68825 declares side 68824_L as its substrates
+        (rh:substrates); the master reaction RHEA:68824 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:28355238, PMID:26936952, PMID:38470919 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (Z)-beta-ocimene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68825
+      snippet: (2E)-geranyl diphosphate => (Z)-beta-ocimene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68825 declares side 68824_R as its products
+        (rh:products); the master reaction RHEA:68824 is undirected. This participant is CHEBI:87574 with
+        coefficient 1. Rhea cites PMID:28355238, PMID:26936952, PMID:38470919 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68825
+      snippet: (2E)-geranyl diphosphate => (Z)-beta-ocimene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68825 declares side 68824_R as its products
+        (rh:products); the master reaction RHEA:68824 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:28355238, PMID:26936952, PMID:38470919 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.228; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:68824
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.228"/>
+      notes: The rh:ec triple on RHEA:68824 in rhea.rdf. EC 4.2.3.228 is itself a record in this KB.
+  - subject: prot_A0A8H7XP09
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CUBC_PSICU is an exemplar enzyme carrying EC 4.2.3.228, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.228
+      snippet: DR   A0A8H7XP09, CUBC_PSICU ;  A0A1V0QSG1, T13PK_CANSA;  A0A1V0QSH1, TS6FN_CANSA;
+      notes: ExPASy ENZYME entry EC 4.2.3.228 cross-references UniProtKB:A0A8H7XP09 (CUBC_PSICU) as a
+        protein with this activity.
+    - reference: RHEA:68824
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.228"/>
+      notes: Rhea assigns RHEA:68824 to EC 4.2.3.228, and EC 4.2.3.228 maps to exactly one Rhea master
+        reaction (RHEA:68824), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0A1V0QSG1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: T13PK_CANSA is an exemplar enzyme carrying EC 4.2.3.228, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.228
+      snippet: DR   A0A8H7XP09, CUBC_PSICU ;  A0A1V0QSG1, T13PK_CANSA;  A0A1V0QSH1, TS6FN_CANSA;
+      notes: ExPASy ENZYME entry EC 4.2.3.228 cross-references UniProtKB:A0A1V0QSG1 (T13PK_CANSA) as a
+        protein with this activity.
+    - reference: RHEA:68824
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.228"/>
+      notes: Rhea assigns RHEA:68824 to EC 4.2.3.228, and EC 4.2.3.228 maps to exactly one Rhea master
+        reaction (RHEA:68824), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0A1V0QSH1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TS6FN_CANSA is an exemplar enzyme carrying EC 4.2.3.228, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.228
+      snippet: DR   A0A8H7XP09, CUBC_PSICU ;  A0A1V0QSG1, T13PK_CANSA;  A0A1V0QSH1, TS6FN_CANSA;
+      notes: ExPASy ENZYME entry EC 4.2.3.228 cross-references UniProtKB:A0A1V0QSH1 (TS6FN_CANSA) as a
+        protein with this activity.
+    - reference: RHEA:68824
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.228"/>
+      notes: Rhea assigns RHEA:68824 to EC 4.2.3.228, and EC 4.2.3.228 maps to exactly one Rhea master
+        reaction (RHEA:68824), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

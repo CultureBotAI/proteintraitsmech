@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57378
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,157 @@ definitions:
       Catalyses the reaction: glutaryl-CoA + malonyl-[ACP] + H(+) = 3-oxo-6-carboxyhexanoyl-[ACP] + CO2 + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glutaryl-CoA + malonyl-[ACP] + H(+) = 3-oxo-6-carboxyhexanoyl-[ACP] + CO2
+    + CoA
+  description: Substrate-to-product chemistry of RHEA:67904, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67905 (rh:substrates → 67904_L, rh:products → 67904_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of glutaryl-CoA + malonyl-[ACP] + H(+) = 3-oxo-6-carboxyhexanoyl-[ACP] + CO2 +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67904
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: glutaryl-CoA + malonyl-[ACP] + H(+) = 3-oxo-6-carboxyhexanoyl-[ACP] + CO2 + CoA'
+  - node_id: sub1
+    label: glutaryl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57378
+    description: Formula C26H37N7O19P3S.
+  - node_id: sub2
+    label: malonyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9623
+    description: Rhea compound GENERIC:9623.
+  - node_id: sub2_rp1
+    label: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9623 (malonyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78449
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 3-oxo-6-carboxyhexanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17387
+    description: Rhea compound GENERIC:17387.
+  - node_id: prd1_rp1
+    label: O-[S-(3-oxo-6-carboxyhexanoyl)pantetheine-4'-phosphoryl]serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17387 (3-oxo-6-carboxyhexanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:176519
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: glutaryl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67905
+      snippet: glutaryl-CoA + malonyl-[ACP] + H(+) => 3-oxo-6-carboxyhexanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67905 declares side 67904_L as its substrates
+        (rh:substrates); the master reaction RHEA:67904 is undirected. This participant is CHEBI:57378
+        with coefficient 1. Rhea cites PMID:33824341, PMID:33154364 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67905
+      snippet: glutaryl-CoA + malonyl-[ACP] + H(+) => 3-oxo-6-carboxyhexanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67905 declares side 67904_L as its substrates
+        (rh:substrates); the master reaction RHEA:67904 is undirected. This participant is GENERIC:9623
+        with coefficient 1. Rhea cites PMID:33824341, PMID:33154364 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of malonyl-[ACP].
+    evidence:
+    - reference: RHEA:67904
+      snippet: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9623 (malonyl-[ACP]) declares rh:reactivePart = O-(S-malonylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78449), formula C17H26N3O11PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67905
+      snippet: glutaryl-CoA + malonyl-[ACP] + H(+) => 3-oxo-6-carboxyhexanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67905 declares side 67904_L as its substrates
+        (rh:substrates); the master reaction RHEA:67904 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:33824341, PMID:33154364 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-oxo-6-carboxyhexanoyl-[ACP] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67905
+      snippet: glutaryl-CoA + malonyl-[ACP] + H(+) => 3-oxo-6-carboxyhexanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67905 declares side 67904_R as its products
+        (rh:products); the master reaction RHEA:67904 is undirected. This participant is GENERIC:17387
+        with coefficient 1. Rhea cites PMID:33824341, PMID:33154364 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[S-(3-oxo-6-carboxyhexanoyl)pantetheine-4'-phosphoryl]serine residue is the reactive
+      part of 3-oxo-6-carboxyhexanoyl-[ACP].
+    evidence:
+    - reference: RHEA:67904
+      snippet: O-[S-(3-oxo-6-carboxyhexanoyl)pantetheine-4'-phosphoryl]serine residue
+      notes: Rhea compound GENERIC:17387 (3-oxo-6-carboxyhexanoyl-[ACP]) declares rh:reactivePart = O-[S-(3-oxo-6-carboxyhexanoyl)pantetheine-4'-phosphoryl]serine
+        residue (CHEBI:176519), formula C21H32N3O12PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67905
+      snippet: glutaryl-CoA + malonyl-[ACP] + H(+) => 3-oxo-6-carboxyhexanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67905 declares side 67904_R as its products
+        (rh:products); the master reaction RHEA:67904 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:33824341, PMID:33154364 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67905
+      snippet: glutaryl-CoA + malonyl-[ACP] + H(+) => 3-oxo-6-carboxyhexanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67905 declares side 67904_R as its products
+        (rh:products); the master reaction RHEA:67904 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:33824341, PMID:33154364 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

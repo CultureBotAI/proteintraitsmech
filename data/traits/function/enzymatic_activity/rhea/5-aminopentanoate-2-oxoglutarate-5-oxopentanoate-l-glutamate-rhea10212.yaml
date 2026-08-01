@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.48
     mapping_source: rhea2ec
@@ -30,4 +30,182 @@ definitions:
       Catalyses the reaction: 5-aminopentanoate + 2-oxoglutarate = 5-oxopentanoate + L-glutamate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-aminopentanoate + 2-oxoglutarate = 5-oxopentanoate + L-glutamate
+  description: Substrate-to-product chemistry of RHEA:10212, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10213 (rh:substrates → 10212_L, rh:products → 10212_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-aminopentanoate + 2-oxoglutarate = 5-oxopentanoate + L-glutamate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10212
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-aminopentanoate + 2-oxoglutarate = 5-oxopentanoate + L-glutamate'
+  - node_id: sub1
+    label: 5-aminopentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:356010
+    description: Formula C5H11NO2.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: 5-oxopentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16120
+    description: Formula C5H7O3.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 5-aminovalerate:2-oxoglutarate transaminase activity
+    grounding: GO:0047589
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 5-aminovalerate transaminase
+    grounding: EC:2.6.1.48
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9I6M4
+    node_type: PROTEIN
+    label: DAVT_PSEAE
+    grounding: UniProtKB:Q9I6M4
+  - node_id: prot_Q88RB9
+    node_type: PROTEIN
+    label: DAVT_PSEPK
+    grounding: UniProtKB:Q88RB9
+  - node_id: prot_P22256
+    node_type: PROTEIN
+    label: GABT_ECOLI
+    grounding: UniProtKB:P22256
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-aminopentanoate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10213
+      snippet: 5-aminopentanoate + 2-oxoglutarate => 5-oxopentanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:10213 declares side 10212_L as its substrates
+        (rh:substrates); the master reaction RHEA:10212 is undirected. This participant is CHEBI:356010
+        with coefficient 1. Rhea cites PMID:17388807, PMID:1682209 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10213
+      snippet: 5-aminopentanoate + 2-oxoglutarate => 5-oxopentanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:10213 declares side 10212_L as its substrates
+        (rh:substrates); the master reaction RHEA:10212 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:17388807, PMID:1682209 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-oxopentanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10213
+      snippet: 5-aminopentanoate + 2-oxoglutarate => 5-oxopentanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:10213 declares side 10212_R as its products
+        (rh:products); the master reaction RHEA:10212 is undirected. This participant is CHEBI:16120 with
+        coefficient 1. Rhea cites PMID:17388807, PMID:1682209 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10213
+      snippet: 5-aminopentanoate + 2-oxoglutarate => 5-oxopentanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:10213 declares side 10212_R as its products
+        (rh:products); the master reaction RHEA:10212 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:17388807, PMID:1682209 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10212
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047589"/>
+      notes: The rdfs:seeAlso triple on RHEA:10212 in rhea.rdf. GO term GO:0047589 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.48; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10212
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.48"/>
+      notes: The rh:ec triple on RHEA:10212 in rhea.rdf. EC 2.6.1.48 is itself a record in this KB.
+  - subject: prot_Q9I6M4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DAVT_PSEAE is an exemplar enzyme carrying EC 2.6.1.48, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.6.1.48
+      snippet: DR   Q9I6M4, DAVT_PSEAE ;  Q88RB9, DAVT_PSEPK ;  P22256, GABT_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.6.1.48 cross-references UniProtKB:Q9I6M4 (DAVT_PSEAE) as a protein
+        with this activity.
+    - reference: RHEA:10212
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.48"/>
+      notes: Rhea assigns RHEA:10212 to EC 2.6.1.48, and EC 2.6.1.48 maps to exactly one Rhea master reaction
+        (RHEA:10212), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q88RB9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DAVT_PSEPK is an exemplar enzyme carrying EC 2.6.1.48, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.6.1.48
+      snippet: DR   Q9I6M4, DAVT_PSEAE ;  Q88RB9, DAVT_PSEPK ;  P22256, GABT_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.6.1.48 cross-references UniProtKB:Q88RB9 (DAVT_PSEPK) as a protein
+        with this activity.
+    - reference: RHEA:10212
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.48"/>
+      notes: Rhea assigns RHEA:10212 to EC 2.6.1.48, and EC 2.6.1.48 maps to exactly one Rhea master reaction
+        (RHEA:10212), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P22256
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GABT_ECOLI is an exemplar enzyme carrying EC 2.6.1.48, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.6.1.48
+      snippet: DR   Q9I6M4, DAVT_PSEAE ;  Q88RB9, DAVT_PSEPK ;  P22256, GABT_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.6.1.48 cross-references UniProtKB:P22256 (GABT_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:10212
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.48"/>
+      notes: Rhea assigns RHEA:10212 to EC 2.6.1.48, and EC 2.6.1.48 maps to exactly one Rhea master reaction
+        (RHEA:10212), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

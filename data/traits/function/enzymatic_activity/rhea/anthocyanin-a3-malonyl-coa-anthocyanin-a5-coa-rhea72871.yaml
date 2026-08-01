@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:192536
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,107 @@ definitions:
       Catalyses the reaction: anthocyanin A3 + malonyl-CoA = anthocyanin A5 + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of anthocyanin A3 + malonyl-CoA = anthocyanin A5 + CoA
+  description: Substrate-to-product chemistry of RHEA:72871, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:72872 (rh:substrates → 72871_L, rh:products → 72871_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of anthocyanin A3 + malonyl-CoA = anthocyanin A5 + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:72871
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: anthocyanin A3 + malonyl-CoA = anthocyanin A5 + CoA'
+  - node_id: sub1
+    label: anthocyanin A3
+    node_type: CHEMICAL
+    grounding: CHEBI:192536
+    description: Formula C41H44O22.
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: prd1
+    label: anthocyanin A5
+    node_type: CHEMICAL
+    grounding: CHEBI:192537
+    description: Formula C44H45O25.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cyanidin 3-O-[2''-O-(xylosyl)-6''-O-(p-coumaroyl) glucoside] 5-O-glucoside malonyltransferase
+      activity
+    grounding: GO:0102585
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: anthocyanin A3 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72872
+      snippet: anthocyanin A3 + malonyl-CoA => anthocyanin A5 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:72872 declares side 72871_L as its substrates
+        (rh:substrates); the master reaction RHEA:72871 is undirected. This participant is CHEBI:192536
+        with coefficient 1. Rhea cites PMID:17425720 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72872
+      snippet: anthocyanin A3 + malonyl-CoA => anthocyanin A5 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:72872 declares side 72871_L as its substrates
+        (rh:substrates); the master reaction RHEA:72871 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:17425720 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: anthocyanin A5 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72872
+      snippet: anthocyanin A3 + malonyl-CoA => anthocyanin A5 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:72872 declares side 72871_R as its products
+        (rh:products); the master reaction RHEA:72871 is undirected. This participant is CHEBI:192537
+        with coefficient 1. Rhea cites PMID:17425720 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72872
+      snippet: anthocyanin A3 + malonyl-CoA => anthocyanin A5 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:72872 declares side 72871_R as its products
+        (rh:products); the master reaction RHEA:72871 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:17425720 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:72871
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102585"/>
+      notes: The rdfs:seeAlso triple on RHEA:72871 in rhea.rdf. GO term GO:0102585 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

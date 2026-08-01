@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 synonyms:
@@ -43,4 +43,173 @@ definitions:
       Catalyses: an N-terminal (5-L-glutamyl)-[peptide] + an alpha-amino acid = 5-L- glutamyl amino acid + an N-terminal L-alpha-aminoacyl-[peptide]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gamma-glutamyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.2. EC 2.3.2.2 maps to exactly
+    one curated Rhea reaction (RHEA:23904), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an N-terminal
+    (5-L-glutamyl)-[peptide] + an alpha-amino acid = 5-L- glutamyl amino acid + an N-terminal L-alpha-aminoacyl-[peptide]".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-glutamyltransferase
+    grounding: EC:2.3.2.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an N-terminal (5-L-glutamyl)-[peptide]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9795
+    description: Rhea compound GENERIC:9795.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: (gamma-L-glutamyl) N-terminal alpha-amino-acid residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9795 (an N-terminal
+      (5-L-glutamyl)-[peptide]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78599
+  - node_id: sub2
+    label: an alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:78608
+    description: Formula C2H4NO2R.
+  - node_id: prd1
+    label: 5-L-glutamyl amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:77644
+    description: Formula C7H10N2O5R.
+  - node_id: prd2
+    label: an N-terminal L-alpha-aminoacyl-[peptide]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9780
+    description: Rhea compound GENERIC:9780.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: N-terminal L-alpha-amino-acid residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9780 (an N-terminal
+      L-alpha-aminoacyl-[peptide]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78597
+  - node_id: prot_Q05902
+    node_type: PROTEIN
+    label: ECM38_YEAST
+    grounding: UniProtKB:Q05902
+  - node_id: prot_Q8VYW6
+    node_type: PROTEIN
+    label: GAGT1_ARATH
+    grounding: UniProtKB:Q8VYW6
+  - node_id: prot_Q680I5
+    node_type: PROTEIN
+    label: GAGT2_ARATH
+    grounding: UniProtKB:Q680I5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-terminal (5-L-glutamyl)-[peptide] is a substrate consumed by RHEA:23904 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23905
+      snippet: an N-terminal (5-L-glutamyl)-[peptide] + an alpha-amino acid => 5-L-glutamyl amino acid
+        + an N-terminal L-alpha-aminoacyl-[peptide]
+      notes: Rhea's left-to-right directional reaction RHEA:23905 declares side 23904_L as its substrates
+        (rh:substrates); the master reaction RHEA:23904 is undirected. This participant is GENERIC:9795
+        with coefficient 1. Rhea cites PMID:17107958, PMID:16618936 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: (gamma-L-glutamyl) N-terminal alpha-amino-acid residue is the reactive part of an N-terminal
+      (5-L-glutamyl)-[peptide].
+    evidence:
+    - reference: RHEA:23904
+      snippet: (gamma-L-glutamyl) N-terminal alpha-amino-acid residue
+      notes: Rhea compound GENERIC:9795 (an N-terminal (5-L-glutamyl)-[peptide]) declares rh:reactivePart
+        = (gamma-L-glutamyl) N-terminal alpha-amino-acid residue (CHEBI:78599).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: an alpha-amino acid is a substrate consumed by RHEA:23904 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23905
+      snippet: an N-terminal (5-L-glutamyl)-[peptide] + an alpha-amino acid => 5-L-glutamyl amino acid
+        + an N-terminal L-alpha-aminoacyl-[peptide]
+      notes: Rhea's left-to-right directional reaction RHEA:23905 declares side 23904_L as its substrates
+        (rh:substrates); the master reaction RHEA:23904 is undirected. This participant is CHEBI:78608
+        with coefficient 1. Rhea cites PMID:17107958, PMID:16618936 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-L-glutamyl amino acid is a product released by RHEA:23904 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23905
+      snippet: an N-terminal (5-L-glutamyl)-[peptide] + an alpha-amino acid => 5-L-glutamyl amino acid
+        + an N-terminal L-alpha-aminoacyl-[peptide]
+      notes: Rhea's left-to-right directional reaction RHEA:23905 declares side 23904_R as its products
+        (rh:products); the master reaction RHEA:23904 is undirected. This participant is CHEBI:77644 with
+        coefficient 1. Rhea cites PMID:17107958, PMID:16618936 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: an N-terminal L-alpha-aminoacyl-[peptide] is a product released by RHEA:23904 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23905
+      snippet: an N-terminal (5-L-glutamyl)-[peptide] + an alpha-amino acid => 5-L-glutamyl amino acid
+        + an N-terminal L-alpha-aminoacyl-[peptide]
+      notes: Rhea's left-to-right directional reaction RHEA:23905 declares side 23904_R as its products
+        (rh:products); the master reaction RHEA:23904 is undirected. This participant is GENERIC:9780
+        with coefficient 1. Rhea cites PMID:17107958, PMID:16618936 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: N-terminal L-alpha-amino-acid residue is the reactive part of an N-terminal L-alpha-aminoacyl-[peptide].
+    evidence:
+    - reference: RHEA:23904
+      snippet: N-terminal L-alpha-amino-acid residue
+      notes: Rhea compound GENERIC:9780 (an N-terminal L-alpha-aminoacyl-[peptide]) declares rh:reactivePart
+        = N-terminal L-alpha-amino-acid residue (CHEBI:78597).
+  - subject: prot_Q05902
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ECM38_YEAST is an exemplar enzyme with EC 2.3.2.2 activity.
+    evidence:
+    - reference: EC:2.3.2.2
+      snippet: DR   Q05902, ECM38_YEAST;  Q8VYW6, GAGT1_ARATH;  Q680I5, GAGT2_ARATH;
+      notes: ExPASy ENZYME entry EC 2.3.2.2 cross-references UniProtKB:Q05902 (ECM38_YEAST) as a protein
+        with this activity.
+  - subject: prot_Q8VYW6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GAGT1_ARATH is an exemplar enzyme with EC 2.3.2.2 activity.
+    evidence:
+    - reference: EC:2.3.2.2
+      snippet: DR   Q05902, ECM38_YEAST;  Q8VYW6, GAGT1_ARATH;  Q680I5, GAGT2_ARATH;
+      notes: ExPASy ENZYME entry EC 2.3.2.2 cross-references UniProtKB:Q8VYW6 (GAGT1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q680I5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GAGT2_ARATH is an exemplar enzyme with EC 2.3.2.2 activity.
+    evidence:
+    - reference: EC:2.3.2.2
+      snippet: DR   Q05902, ECM38_YEAST;  Q8VYW6, GAGT1_ARATH;  Q680I5, GAGT2_ARATH;
+      notes: ExPASy ENZYME entry EC 2.3.2.2 cross-references UniProtKB:Q680I5 (GAGT2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

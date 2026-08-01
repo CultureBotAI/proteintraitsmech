@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.1.197
     mapping_source: rhea2ec
@@ -30,4 +30,218 @@ definitions:
       Catalyses the reaction: malonyl-[ACP] + S-adenosyl-L-methionine = malonyl-[ACP] methyl ester + S-adenosyl-L-homocysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of malonyl-[ACP] + S-adenosyl-L-methionine = malonyl-[ACP] methyl ester +
+    S-adenosyl-L-hom…
+  description: Substrate-to-product chemistry of RHEA:17105, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17106 (rh:substrates → 17105_L, rh:products → 17105_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of malonyl-[ACP] + S-adenosyl-L-methionine = malonyl-[ACP] methyl ester + S-ade…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17105
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: malonyl-[ACP] + S-adenosyl-L-methionine = malonyl-[ACP] methyl ester + S-adenosyl-L-homocysteine'
+  - node_id: sub1
+    label: malonyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9623
+    description: Rhea compound GENERIC:9623.
+  - node_id: sub1_rp1
+    label: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9623 (malonyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78449
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: malonyl-[ACP] methyl ester
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9954
+    description: Rhea compound GENERIC:9954.
+  - node_id: prd1_rp1
+    label: malonyl-pantetheine-4-phosphorylserine methyl ester residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9954 (malonyl-[ACP]
+      methyl ester); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78845
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: malonyl-CoA methyltransferase activity
+    grounding: GO:0102130
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: malonyl-[acyl-carrier protein] O-methyltransferase
+    grounding: EC:2.1.1.197
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q83E64
+    node_type: PROTEIN
+    label: BIOC1_COXBU
+    grounding: UniProtKB:Q83E64
+  - node_id: prot_E3H9W1
+    node_type: PROTEIN
+    label: BIOC1_ILYPC
+    grounding: UniProtKB:E3H9W1
+  - node_id: prot_Q83CU8
+    node_type: PROTEIN
+    label: BIOC2_COXBU
+    grounding: UniProtKB:Q83CU8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: malonyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17106
+      snippet: malonyl-[ACP] + S-adenosyl-L-methionine => malonyl-[ACP] methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:17106 declares side 17105_L as its substrates
+        (rh:substrates); the master reaction RHEA:17105 is undirected. This participant is GENERIC:9623
+        with coefficient 1. Rhea cites PMID:22965231, PMID:20693992 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of malonyl-[ACP].
+    evidence:
+    - reference: RHEA:17105
+      snippet: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9623 (malonyl-[ACP]) declares rh:reactivePart = O-(S-malonylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78449), formula C17H26N3O11PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17106
+      snippet: malonyl-[ACP] + S-adenosyl-L-methionine => malonyl-[ACP] methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:17106 declares side 17105_L as its substrates
+        (rh:substrates); the master reaction RHEA:17105 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:22965231, PMID:20693992 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: malonyl-[ACP] methyl ester is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17106
+      snippet: malonyl-[ACP] + S-adenosyl-L-methionine => malonyl-[ACP] methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:17106 declares side 17105_R as its products
+        (rh:products); the master reaction RHEA:17105 is undirected. This participant is GENERIC:9954
+        with coefficient 1. Rhea cites PMID:22965231, PMID:20693992 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: malonyl-pantetheine-4-phosphorylserine methyl ester residue is the reactive part of malonyl-[ACP]
+      methyl ester.
+    evidence:
+    - reference: RHEA:17105
+      snippet: malonyl-pantetheine-4-phosphorylserine methyl ester residue
+      notes: Rhea compound GENERIC:9954 (malonyl-[ACP] methyl ester) declares rh:reactivePart = malonyl-pantetheine-4-phosphorylserine
+        methyl ester residue (CHEBI:78845), formula C18H29N3O11PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17106
+      snippet: malonyl-[ACP] + S-adenosyl-L-methionine => malonyl-[ACP] methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:17106 declares side 17105_R as its products
+        (rh:products); the master reaction RHEA:17105 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:22965231, PMID:20693992 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17105
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102130"/>
+      notes: The rdfs:seeAlso triple on RHEA:17105 in rhea.rdf. GO term GO:0102130 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.1.197; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17105
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.197"/>
+      notes: The rh:ec triple on RHEA:17105 in rhea.rdf. EC 2.1.1.197 is itself a record in this KB.
+  - subject: prot_Q83E64
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIOC1_COXBU is an exemplar enzyme carrying EC 2.1.1.197, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.1.1.197
+      snippet: DR   Q83E64, BIOC1_COXBU;  E3H9W1, BIOC1_ILYPC;  Q83CU8, BIOC2_COXBU;
+      notes: ExPASy ENZYME entry EC 2.1.1.197 cross-references UniProtKB:Q83E64 (BIOC1_COXBU) as a protein
+        with this activity.
+    - reference: RHEA:17105
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.197"/>
+      notes: Rhea assigns RHEA:17105 to EC 2.1.1.197, and EC 2.1.1.197 maps to exactly one Rhea master
+        reaction (RHEA:17105), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_E3H9W1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIOC1_ILYPC is an exemplar enzyme carrying EC 2.1.1.197, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.1.1.197
+      snippet: DR   Q83E64, BIOC1_COXBU;  E3H9W1, BIOC1_ILYPC;  Q83CU8, BIOC2_COXBU;
+      notes: ExPASy ENZYME entry EC 2.1.1.197 cross-references UniProtKB:E3H9W1 (BIOC1_ILYPC) as a protein
+        with this activity.
+    - reference: RHEA:17105
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.197"/>
+      notes: Rhea assigns RHEA:17105 to EC 2.1.1.197, and EC 2.1.1.197 maps to exactly one Rhea master
+        reaction (RHEA:17105), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q83CU8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIOC2_COXBU is an exemplar enzyme carrying EC 2.1.1.197, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.1.1.197
+      snippet: DR   Q83E64, BIOC1_COXBU;  E3H9W1, BIOC1_ILYPC;  Q83CU8, BIOC2_COXBU;
+      notes: ExPASy ENZYME entry EC 2.1.1.197 cross-references UniProtKB:Q83CU8 (BIOC2_COXBU) as a protein
+        with this activity.
+    - reference: RHEA:17105
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.197"/>
+      notes: Rhea assigns RHEA:17105 to EC 2.1.1.197, and EC 2.1.1.197 maps to exactly one Rhea master
+        reaction (RHEA:17105), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 synonyms:
@@ -43,4 +43,182 @@ definitions:
       Catalyses: a chalcone = a flavanone
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chalcone isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.6. Rhea assigns 2 curated
+    reactions to EC 5.5.1.6. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "a chalcone = a flavanone". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: chalcone isomerase
+    grounding: EC:5.5.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2',4,4',6'-tetrahydroxychalcone = (2S)-naringenin
+    grounding: RHEA:79891
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2'',4,4'',6''-tetrahydroxychalcone = (2S)-naringenin'
+  - node_id: rxn1_sub1
+    label: 2',4,4',6'-tetrahydroxychalcone
+    node_type: CHEMICAL
+    grounding: CHEBI:15413
+    description: Formula C15H12O5.
+  - node_id: rxn1_prd1
+    label: (2S)-naringenin
+    node_type: CHEMICAL
+    grounding: CHEBI:17846
+    description: Formula C15H12O5.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a (E)-2'-hydroxy-chalcone = a flavanone
+    grounding: RHEA:80007
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a (E)-2''-hydroxy-chalcone = a flavanone'
+  - node_id: rxn2_sub1
+    label: a (E)-2'-hydroxy-chalcone
+    node_type: CHEMICAL
+    grounding: CHEBI:231427
+    description: Formula C15H2O2R10.
+  - node_id: rxn2_prd1
+    label: a flavanone
+    node_type: CHEMICAL
+    grounding: CHEBI:28863
+    description: Formula C15H2O2R10.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: chalcone isomerase activity
+    grounding: GO:0045430
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q53B75
+    node_type: PROTEIN
+    label: CF1B1_SOYBN
+    grounding: UniProtKB:Q53B75
+  - node_id: prot_Q53B70
+    node_type: PROTEIN
+    label: CF1B2_SOYBN
+    grounding: UniProtKB:Q53B70
+  - node_id: prot_Q93XE6
+    node_type: PROTEIN
+    label: CFI1A_SOYBN
+    grounding: UniProtKB:Q93XE6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:79891 is one of the 2 curated reactions Rhea assigns to EC 5.5.1.6; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:79891
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.6"/>
+      notes: The rh:ec triple on RHEA:79891 in rhea.rdf assigns that reaction to EC 5.5.1.6.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 2',4,4',6'-tetrahydroxychalcone is a substrate consumed by RHEA:79891 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79892
+      snippet: 2',4,4',6'-tetrahydroxychalcone => (2S)-naringenin
+      notes: Rhea's left-to-right directional reaction RHEA:79892 declares side 79891_L as its substrates
+        (rh:substrates); the master reaction RHEA:79891 is undirected. This participant is CHEBI:15413
+        with coefficient 1. Rhea cites PMID:11698411, PMID:38474023, PMID:10966651, PMID:11955065 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (2S)-naringenin is a product released by RHEA:79891 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79892
+      snippet: 2',4,4',6'-tetrahydroxychalcone => (2S)-naringenin
+      notes: Rhea's left-to-right directional reaction RHEA:79892 declares side 79891_R as its products
+        (rh:products); the master reaction RHEA:79891 is undirected. This participant is CHEBI:17846 with
+        coefficient 1. Rhea cites PMID:11698411, PMID:38474023, PMID:10966651, PMID:11955065 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:80007 is one of the 2 curated reactions Rhea assigns to EC 5.5.1.6; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:80007
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.6"/>
+      notes: The rh:ec triple on RHEA:80007 in rhea.rdf assigns that reaction to EC 5.5.1.6.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a (E)-2'-hydroxy-chalcone is a substrate consumed by RHEA:80007 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80008
+      snippet: a (E)-2'-hydroxy-chalcone => a flavanone
+      notes: Rhea's left-to-right directional reaction RHEA:80008 declares side 80007_L as its substrates
+        (rh:substrates); the master reaction RHEA:80007 is undirected. This participant is CHEBI:231427
+        with coefficient 1.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a flavanone is a product released by RHEA:80007 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80008
+      snippet: a (E)-2'-hydroxy-chalcone => a flavanone
+      notes: Rhea's left-to-right directional reaction RHEA:80008 declares side 80007_R as its products
+        (rh:products); the master reaction RHEA:80007 is undirected. This participant is CHEBI:28863 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.5.1.6
+      snippet: EC:5.5.1.6 > GO:chalcone isomerase activity ; GO:0045430
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0045430 is itself a record
+        in this KB.
+  - subject: prot_Q53B75
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CF1B1_SOYBN is an exemplar enzyme with EC 5.5.1.6 activity.
+    evidence:
+    - reference: EC:5.5.1.6
+      snippet: DR   Q53B75, CF1B1_SOYBN;  Q53B70, CF1B2_SOYBN;  Q93XE6, CFI1A_SOYBN;
+      notes: ExPASy ENZYME entry EC 5.5.1.6 cross-references UniProtKB:Q53B75 (CF1B1_SOYBN) as a protein
+        with this activity.
+  - subject: prot_Q53B70
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CF1B2_SOYBN is an exemplar enzyme with EC 5.5.1.6 activity.
+    evidence:
+    - reference: EC:5.5.1.6
+      snippet: DR   Q53B75, CF1B1_SOYBN;  Q53B70, CF1B2_SOYBN;  Q93XE6, CFI1A_SOYBN;
+      notes: ExPASy ENZYME entry EC 5.5.1.6 cross-references UniProtKB:Q53B70 (CF1B2_SOYBN) as a protein
+        with this activity.
+  - subject: prot_Q93XE6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CFI1A_SOYBN is an exemplar enzyme with EC 5.5.1.6 activity.
+    evidence:
+    - reference: EC:5.5.1.6
+      snippet: DR   Q53B75, CF1B1_SOYBN;  Q53B70, CF1B2_SOYBN;  Q93XE6, CFI1A_SOYBN;
+      notes: ExPASy ENZYME entry EC 5.5.1.6 cross-references UniProtKB:Q93XE6 (CFI1A_SOYBN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

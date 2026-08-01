@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -38,4 +38,148 @@ definitions:
       Catalyses: uridine(65) in tRNA = pseudouridine(65) in tRNA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA pseudouridine(65) synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.26. EC 5.4.99.26 maps to
+    exactly one curated Rhea reaction (RHEA:42536), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "uridine(65)
+    in tRNA = pseudouridine(65) in tRNA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA pseudouridine(65) synthase
+    grounding: EC:5.4.99.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: uridine(65) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10103
+    description: Rhea compound GENERIC:10103.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: UMP residue at position 65
+    description: The reacting group Rhea names inside the generic participant GENERIC:10103 (uridine(65)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd1
+    label: pseudouridine(65) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10104
+    description: Rhea compound GENERIC:10104.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: psi-uridine residue at position 65
+    description: The reacting group Rhea names inside the generic participant GENERIC:10104 (pseudouridine(65)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65314
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA pseudouridine(65) synthase activity
+    grounding: GO:0160149
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8X6T6
+    node_type: PROTEIN
+    label: TRUC_ECO57
+    grounding: UniProtKB:Q8X6T6
+  - node_id: prot_Q8FEF9
+    node_type: PROTEIN
+    label: TRUC_ECOL6
+    grounding: UniProtKB:Q8FEF9
+  - node_id: prot_P0AA41
+    node_type: PROTEIN
+    label: TRUC_ECOLI
+    grounding: UniProtKB:P0AA41
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine(65) in tRNA is a substrate consumed by RHEA:42536 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42537
+      snippet: uridine(65) in tRNA => pseudouridine(65) in tRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42537 declares side 42536_L as its substrates
+        (rh:substrates); the master reaction RHEA:42536 is undirected. This participant is GENERIC:10103
+        with coefficient 1. Rhea cites PMID:11720289 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(65) in tRNA.
+    evidence:
+    - reference: RHEA:42536
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10103 (uridine(65) in tRNA) declares rh:reactivePart at position 65
+        = UMP residue (CHEBI:65315).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pseudouridine(65) in tRNA is a product released by RHEA:42536 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42537
+      snippet: uridine(65) in tRNA => pseudouridine(65) in tRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42537 declares side 42536_R as its products
+        (rh:products); the master reaction RHEA:42536 is undirected. This participant is GENERIC:10104
+        with coefficient 1. Rhea cites PMID:11720289 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: psi-uridine residue is the reactive part of pseudouridine(65) in tRNA.
+    evidence:
+    - reference: RHEA:42536
+      snippet: psi-uridine residue
+      notes: Rhea compound GENERIC:10104 (pseudouridine(65) in tRNA) declares rh:reactivePart at position
+        65 = psi-uridine residue (CHEBI:65314).
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.26
+      snippet: EC:5.4.99.26 > GO:tRNA pseudouridine(65) synthase activity ; GO:0160149
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0160149 is itself a record
+        in this KB.
+  - subject: prot_Q8X6T6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TRUC_ECO57 is an exemplar enzyme with EC 5.4.99.26 activity.
+    evidence:
+    - reference: EC:5.4.99.26
+      snippet: DR   Q8X6T6, TRUC_ECO57 ;  Q8FEF9, TRUC_ECOL6 ;  P0AA41, TRUC_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.4.99.26 cross-references UniProtKB:Q8X6T6 (TRUC_ECO57) as a protein
+        with this activity.
+  - subject: prot_Q8FEF9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TRUC_ECOL6 is an exemplar enzyme with EC 5.4.99.26 activity.
+    evidence:
+    - reference: EC:5.4.99.26
+      snippet: DR   Q8X6T6, TRUC_ECO57 ;  Q8FEF9, TRUC_ECOL6 ;  P0AA41, TRUC_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.4.99.26 cross-references UniProtKB:Q8FEF9 (TRUC_ECOL6) as a protein
+        with this activity.
+  - subject: prot_P0AA41
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TRUC_ECOLI is an exemplar enzyme with EC 5.4.99.26 activity.
+    evidence:
+    - reference: EC:5.4.99.26
+      snippet: DR   Q8X6T6, TRUC_ECO57 ;  Q8FEF9, TRUC_ECOL6 ;  P0AA41, TRUC_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.4.99.26 cross-references UniProtKB:P0AA41 (TRUC_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

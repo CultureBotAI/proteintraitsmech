@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -38,4 +38,149 @@ definitions:
       Catalyses: benzene-1,2,4-triol + O2 = maleylacetate + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydroxyquinol 1,2-dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.37. EC 1.13.11.37 maps to
+    exactly one curated Rhea reaction (RHEA:35595), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "benzene-1,2,4-triol
+    + O2 = maleylacetate + 2 H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxyquinol 1,2-dioxygenase
+    grounding: EC:1.13.11.37
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: benzene-1,2,4-triol
+    node_type: CHEMICAL
+    grounding: CHEBI:16971
+    description: Formula C6H6O3.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: maleylacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16468
+    description: Formula C6H4O5.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxyquinol 1,2-dioxygenase activity
+    grounding: GO:0047074
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5PXQ6
+    node_type: PROTEIN
+    label: CHQB_NOCSI
+    grounding: UniProtKB:Q5PXQ6
+  - node_id: prot_A1IIX3
+    node_type: PROTEIN
+    label: GRAB_RHIS5
+    grounding: UniProtKB:A1IIX3
+  - node_id: prot_A2QAP8
+    node_type: PROTEIN
+    label: HQDA_ASPNC
+    grounding: UniProtKB:A2QAP8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: benzene-1,2,4-triol is a substrate consumed by RHEA:35595 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35596
+      snippet: benzene-1,2,4-triol + O2 => maleylacetate + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35596 declares side 35595_L as its substrates
+        (rh:substrates); the master reaction RHEA:35595 is undirected. This participant is CHEBI:16971
+        with coefficient 1. Rhea cites PMID:15772073, PMID:6539772, PMID:16232466, PMID:16348446 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:35595 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35596
+      snippet: benzene-1,2,4-triol + O2 => maleylacetate + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35596 declares side 35595_L as its substrates
+        (rh:substrates); the master reaction RHEA:35595 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:15772073, PMID:6539772, PMID:16232466, PMID:16348446 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: maleylacetate is a product released by RHEA:35595 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35596
+      snippet: benzene-1,2,4-triol + O2 => maleylacetate + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35596 declares side 35595_R as its products
+        (rh:products); the master reaction RHEA:35595 is undirected. This participant is CHEBI:16468 with
+        coefficient 1. Rhea cites PMID:15772073, PMID:6539772, PMID:16232466, PMID:16348446 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:35595 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:35596
+      snippet: benzene-1,2,4-triol + O2 => maleylacetate + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35596 declares side 35595_R as its products
+        (rh:products); the master reaction RHEA:35595 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:15772073, PMID:6539772, PMID:16232466, PMID:16348446 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.37
+      snippet: EC:1.13.11.37 > GO:hydroxyquinol 1,2-dioxygenase activity ; GO:0047074
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047074 is itself a record
+        in this KB.
+  - subject: prot_Q5PXQ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHQB_NOCSI is an exemplar enzyme with EC 1.13.11.37 activity.
+    evidence:
+    - reference: EC:1.13.11.37
+      snippet: DR   Q5PXQ6, CHQB_NOCSI ;  A1IIX3, GRAB_RHIS5 ;  A2QAP8, HQDA_ASPNC ;
+      notes: ExPASy ENZYME entry EC 1.13.11.37 cross-references UniProtKB:Q5PXQ6 (CHQB_NOCSI) as a protein
+        with this activity.
+  - subject: prot_A1IIX3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRAB_RHIS5 is an exemplar enzyme with EC 1.13.11.37 activity.
+    evidence:
+    - reference: EC:1.13.11.37
+      snippet: DR   Q5PXQ6, CHQB_NOCSI ;  A1IIX3, GRAB_RHIS5 ;  A2QAP8, HQDA_ASPNC ;
+      notes: ExPASy ENZYME entry EC 1.13.11.37 cross-references UniProtKB:A1IIX3 (GRAB_RHIS5) as a protein
+        with this activity.
+  - subject: prot_A2QAP8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HQDA_ASPNC is an exemplar enzyme with EC 1.13.11.37 activity.
+    evidence:
+    - reference: EC:1.13.11.37
+      snippet: DR   Q5PXQ6, CHQB_NOCSI ;  A1IIX3, GRAB_RHIS5 ;  A2QAP8, HQDA_ASPNC ;
+      notes: ExPASy ENZYME entry EC 1.13.11.37 cross-references UniProtKB:A2QAP8 (HQDA_ASPNC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

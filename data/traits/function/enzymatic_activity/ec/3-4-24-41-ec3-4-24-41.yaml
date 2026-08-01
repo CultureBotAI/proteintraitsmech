@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -32,4 +32,40 @@ definitions:
       Catalyses: Cleavage of 5-His-|-Leu-6, 10-His-|-Leu-11, 14-Ala-|-Leu-15, 16-Tyr-|-Leu-17 and 23-Gly-|-Phe-24 of insulin B chain. Identical to the cleavage of insulin B chain by atrolysin C. Also cleaves Xaa-|-Ser bonds in glucagon
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of atrolysin B
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.41. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleavage
+    of 5-His-|-Leu-6, 10-His-|-Leu-11, 14-Ala-|-Leu-15, 16-Tyr-|-Leu-17 and 23-Gly-|-Phe-24 of insulin
+    B chain. Identical to the cleavage of insulin B chain by atrolysin C. Also cleaves Xaa-|-Ser bonds
+    in glucagon".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: atrolysin B
+    grounding: EC:3.4.24.41
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q90391
+    node_type: PROTEIN
+    label: VM1AB_CROAT
+    grounding: UniProtKB:Q90391
+  edges:
+  - subject: prot_Q90391
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VM1AB_CROAT is an exemplar enzyme with EC 3.4.24.41 activity.
+    evidence:
+    - reference: EC:3.4.24.41
+      snippet: DR   Q90391, VM1AB_CROAT;
+      notes: ExPASy ENZYME entry EC 3.4.24.41 cross-references UniProtKB:Q90391 (VM1AB_CROAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

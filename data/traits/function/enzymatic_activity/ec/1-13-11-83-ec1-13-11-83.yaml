@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: 3-dimethylallyl-4-hydroxyphenylpyruvate + O2 = 3-dimethylallyl-4- hydroxymandelate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-hydroxy-3-prenylphenylpyruvate oxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.83. EC 1.13.11.83 maps to
+    exactly one curated Rhea reaction (RHEA:52908), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-dimethylallyl-4-hydroxyphenylpyruvate
+    + O2 = 3-dimethylallyl-4- hydroxymandelate + CO2". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxy-3-prenylphenylpyruvate oxygenase
+    grounding: EC:1.13.11.83
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-dimethylallyl-4-hydroxyphenylpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:74408
+    description: Formula C14H15O4.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 3-dimethylallyl-4-hydroxymandelate
+    node_type: CHEMICAL
+    grounding: CHEBI:136890
+    description: Formula C13H15O4.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prot_Q8GHB1
+    node_type: PROTEIN
+    label: CLOR_STRRC
+    grounding: UniProtKB:Q8GHB1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-dimethylallyl-4-hydroxyphenylpyruvate is a substrate consumed by RHEA:52908 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:52909
+      snippet: 3-dimethylallyl-4-hydroxyphenylpyruvate + O2 => 3-dimethylallyl-4-hydroxymandelate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:52909 declares side 52908_L as its substrates
+        (rh:substrates); the master reaction RHEA:52908 is undirected. This participant is CHEBI:74408
+        with coefficient 1. Rhea cites PMID:12777382 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:52908 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52909
+      snippet: 3-dimethylallyl-4-hydroxyphenylpyruvate + O2 => 3-dimethylallyl-4-hydroxymandelate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:52909 declares side 52908_L as its substrates
+        (rh:substrates); the master reaction RHEA:52908 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:12777382 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-dimethylallyl-4-hydroxymandelate is a product released by RHEA:52908 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:52909
+      snippet: 3-dimethylallyl-4-hydroxyphenylpyruvate + O2 => 3-dimethylallyl-4-hydroxymandelate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:52909 declares side 52908_R as its products
+        (rh:products); the master reaction RHEA:52908 is undirected. This participant is CHEBI:136890
+        with coefficient 1. Rhea cites PMID:12777382 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:52908 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52909
+      snippet: 3-dimethylallyl-4-hydroxyphenylpyruvate + O2 => 3-dimethylallyl-4-hydroxymandelate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:52909 declares side 52908_R as its products
+        (rh:products); the master reaction RHEA:52908 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:12777382 for this reaction.
+  - subject: prot_Q8GHB1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLOR_STRRC is an exemplar enzyme with EC 1.13.11.83 activity.
+    evidence:
+    - reference: EC:1.13.11.83
+      snippet: DR   Q8GHB1, CLOR_STRRC ;
+      notes: ExPASy ENZYME entry EC 1.13.11.83 cross-references UniProtKB:Q8GHB1 (CLOR_STRRC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

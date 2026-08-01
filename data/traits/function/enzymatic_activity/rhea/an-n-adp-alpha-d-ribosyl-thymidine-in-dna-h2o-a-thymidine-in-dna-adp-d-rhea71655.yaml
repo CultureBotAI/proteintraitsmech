@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:191199
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,126 @@ definitions:
       Catalyses the reaction: an N-(ADP-alpha-D-ribosyl)-thymidine in DNA + H2O = a thymidine in DNA + ADP-D-ribose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an N-(ADP-alpha-D-ribosyl)-thymidine in DNA + H2O = a thymidine in DNA
+    + ADP-D-ribose
+  description: Substrate-to-product chemistry of RHEA:71655, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71656 (rh:substrates → 71655_L, rh:products → 71655_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an N-(ADP-alpha-D-ribosyl)-thymidine in DNA + H2O = a thymidine in DNA + ADP…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71655
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an N-(ADP-alpha-D-ribosyl)-thymidine in DNA + H2O = a thymidine in DNA + ADP-D-ribose'
+  - node_id: sub1
+    label: an N-(ADP-alpha-D-ribosyl)-thymidine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18051
+    description: Rhea compound GENERIC:18051.
+  - node_id: sub1_rp1
+    label: N-(ADP-alpha-D-ribosyl)-dTMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18051 (an N-(ADP-alpha-D-ribosyl)-thymidine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:191199
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a thymidine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13556
+    description: Rhea compound GENERIC:13556.
+  - node_id: prd1_rp1
+    label: dTMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13556 (a thymidine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:137386
+  - node_id: prd2
+    label: ADP-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:57967
+    description: Formula C15H21N5O14P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-(ADP-alpha-D-ribosyl)-thymidine in DNA is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71656
+      snippet: an N-(ADP-alpha-D-ribosyl)-thymidine in DNA + H2O => a thymidine in DNA + ADP-D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:71656 declares side 71655_L as its substrates
+        (rh:substrates); the master reaction RHEA:71655 is undirected. This participant is GENERIC:18051
+        with coefficient 1. Rhea cites PMID:27939941, PMID:32023456 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N-(ADP-alpha-D-ribosyl)-dTMP residue is the reactive part of an N-(ADP-alpha-D-ribosyl)-thymidine
+      in DNA.
+    evidence:
+    - reference: RHEA:71655
+      snippet: N-(ADP-alpha-D-ribosyl)-dTMP residue
+      notes: Rhea compound GENERIC:18051 (an N-(ADP-alpha-D-ribosyl)-thymidine in DNA) declares rh:reactivePart
+        = N-(ADP-alpha-D-ribosyl)-dTMP residue (CHEBI:191199), formula C25H31N7O20P3.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71656
+      snippet: an N-(ADP-alpha-D-ribosyl)-thymidine in DNA + H2O => a thymidine in DNA + ADP-D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:71656 declares side 71655_L as its substrates
+        (rh:substrates); the master reaction RHEA:71655 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:27939941, PMID:32023456 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a thymidine in DNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:71656
+      snippet: an N-(ADP-alpha-D-ribosyl)-thymidine in DNA + H2O => a thymidine in DNA + ADP-D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:71656 declares side 71655_R as its products
+        (rh:products); the master reaction RHEA:71655 is undirected. This participant is GENERIC:13556
+        with coefficient 1. Rhea cites PMID:27939941, PMID:32023456 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: dTMP residue is the reactive part of a thymidine in DNA.
+    evidence:
+    - reference: RHEA:71655
+      snippet: dTMP residue
+      notes: Rhea compound GENERIC:13556 (a thymidine in DNA) declares rh:reactivePart = dTMP residue
+        (CHEBI:137386), formula C10H12N2O7P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP-D-ribose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71656
+      snippet: an N-(ADP-alpha-D-ribosyl)-thymidine in DNA + H2O => a thymidine in DNA + ADP-D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:71656 declares side 71655_R as its products
+        (rh:products); the master reaction RHEA:71655 is undirected. This participant is CHEBI:57967 with
+        coefficient 1. Rhea cites PMID:27939941, PMID:32023456 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

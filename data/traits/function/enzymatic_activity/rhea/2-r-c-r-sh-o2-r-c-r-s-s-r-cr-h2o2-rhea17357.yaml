@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.8.3.2
     mapping_source: rhea2ec
@@ -46,4 +46,183 @@ definitions:
       Catalyses the reaction: 2 R'C(R)SH + O2 = R'C(R)S-S(R)CR' + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 R'C(R)SH + O2 = R'C(R)S-S(R)CR' + H2O2
+  description: Substrate-to-product chemistry of RHEA:17357, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17358 (rh:substrates → 17357_L, rh:products → 17357_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 R'C(R)SH + O2 = R'C(R)S-S(R)CR' + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17357
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 R''C(R)SH + O2 = R''C(R)S-S(R)CR'' + H2O2'
+  - node_id: sub1
+    label: R'C(R)SH
+    node_type: CHEMICAL
+    grounding: CHEBI:16520
+    description: Formula CH2SR2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: R'C(R)S-S(R)CR'
+    node_type: CHEMICAL
+    grounding: CHEBI:17412
+    description: Formula C2H2S2R4.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: thiol oxidase activity
+    grounding: GO:0016972
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: thiol oxidase
+    grounding: EC:1.8.3.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q6GZN7
+    node_type: PROTEIN
+    label: 088R_FRG3G
+    grounding: UniProtKB:Q6GZN7
+  - node_id: prot_P55789
+    node_type: PROTEIN
+    label: ALR_HUMAN
+    grounding: UniProtKB:P55789
+  - node_id: prot_P56213
+    node_type: PROTEIN
+    label: ALR_MOUSE
+    grounding: UniProtKB:P56213
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: R'C(R)SH is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:17358
+      snippet: 2 R'C(R)SH + O2 => R'C(R)S-S(R)CR' + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:17358 declares side 17357_L as its substrates
+        (rh:substrates); the master reaction RHEA:17357 is undirected. This participant is CHEBI:16520
+        with coefficient 2. Rhea cites PMID:17944490, PMID:13549489, PMID:19498160, PMID:7397095 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17358
+      snippet: 2 R'C(R)SH + O2 => R'C(R)S-S(R)CR' + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:17358 declares side 17357_L as its substrates
+        (rh:substrates); the master reaction RHEA:17357 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:17944490, PMID:13549489, PMID:19498160, PMID:7397095 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: R'C(R)S-S(R)CR' is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17358
+      snippet: 2 R'C(R)SH + O2 => R'C(R)S-S(R)CR' + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:17358 declares side 17357_R as its products
+        (rh:products); the master reaction RHEA:17357 is undirected. This participant is CHEBI:17412 with
+        coefficient 1. Rhea cites PMID:17944490, PMID:13549489, PMID:19498160, PMID:7397095 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17358
+      snippet: 2 R'C(R)SH + O2 => R'C(R)S-S(R)CR' + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:17358 declares side 17357_R as its products
+        (rh:products); the master reaction RHEA:17357 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:17944490, PMID:13549489, PMID:19498160, PMID:7397095 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17357
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0016972"/>
+      notes: The rdfs:seeAlso triple on RHEA:17357 in rhea.rdf. GO term GO:0016972 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.8.3.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17357
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.3.2"/>
+      notes: The rh:ec triple on RHEA:17357 in rhea.rdf. EC 1.8.3.2 is itself a record in this KB.
+  - subject: prot_Q6GZN7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 088R_FRG3G is an exemplar enzyme carrying EC 1.8.3.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.8.3.2
+      snippet: DR   Q6GZN7, 088R_FRG3G ;  P55789, ALR_HUMAN  ;  P56213, ALR_MOUSE  ;
+      notes: ExPASy ENZYME entry EC 1.8.3.2 cross-references UniProtKB:Q6GZN7 (088R_FRG3G) as a protein
+        with this activity.
+    - reference: RHEA:17357
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.3.2"/>
+      notes: Rhea assigns RHEA:17357 to EC 1.8.3.2, and EC 1.8.3.2 maps to exactly one Rhea master reaction
+        (RHEA:17357), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P55789
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALR_HUMAN is an exemplar enzyme carrying EC 1.8.3.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.8.3.2
+      snippet: DR   Q6GZN7, 088R_FRG3G ;  P55789, ALR_HUMAN  ;  P56213, ALR_MOUSE  ;
+      notes: ExPASy ENZYME entry EC 1.8.3.2 cross-references UniProtKB:P55789 (ALR_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:17357
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.3.2"/>
+      notes: Rhea assigns RHEA:17357 to EC 1.8.3.2, and EC 1.8.3.2 maps to exactly one Rhea master reaction
+        (RHEA:17357), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P56213
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALR_MOUSE is an exemplar enzyme carrying EC 1.8.3.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.8.3.2
+      snippet: DR   Q6GZN7, 088R_FRG3G ;  P55789, ALR_HUMAN  ;  P56213, ALR_MOUSE  ;
+      notes: ExPASy ENZYME entry EC 1.8.3.2 cross-references UniProtKB:P56213 (ALR_MOUSE) as a protein
+        with this activity.
+    - reference: RHEA:17357
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.3.2"/>
+      notes: Rhea assigns RHEA:17357 to EC 1.8.3.2, and EC 1.8.3.2 maps to exactly one Rhea master reaction
+        (RHEA:17357), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:7896
     role: SUBSTRATE_OR_PRODUCT
@@ -37,4 +37,111 @@ definitions:
       Catalyses the reaction: hexadecanoate + ATP + H(+) = hexadecanoyl-AMP + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hexadecanoate + ATP + H(+) = hexadecanoyl-AMP + diphosphate
+  description: Substrate-to-product chemistry of RHEA:43708, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:43709 (rh:substrates → 43708_L, rh:products → 43708_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of hexadecanoate + ATP + H(+) = hexadecanoyl-AMP + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:43708
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: hexadecanoate + ATP + H(+) = hexadecanoyl-AMP + diphosphate'
+  - node_id: sub1
+    label: hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:7896
+    description: Formula C16H31O2.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: hexadecanoyl-AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:83627
+    description: Formula C26H43N5O8P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hexadecanoate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43709
+      snippet: hexadecanoate + ATP + H(+) => hexadecanoyl-AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:43709 declares side 43708_L as its substrates
+        (rh:substrates); the master reaction RHEA:43708 is undirected. This participant is CHEBI:7896
+        with coefficient 1. Rhea cites PMID:23625916, PMID:19477415, PMID:19182784, PMID:22451903 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43709
+      snippet: hexadecanoate + ATP + H(+) => hexadecanoyl-AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:43709 declares side 43708_L as its substrates
+        (rh:substrates); the master reaction RHEA:43708 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:23625916, PMID:19477415, PMID:19182784, PMID:22451903 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43709
+      snippet: hexadecanoate + ATP + H(+) => hexadecanoyl-AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:43709 declares side 43708_L as its substrates
+        (rh:substrates); the master reaction RHEA:43708 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:23625916, PMID:19477415, PMID:19182784, PMID:22451903 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hexadecanoyl-AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43709
+      snippet: hexadecanoate + ATP + H(+) => hexadecanoyl-AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:43709 declares side 43708_R as its products
+        (rh:products); the master reaction RHEA:43708 is undirected. This participant is CHEBI:83627 with
+        coefficient 1. Rhea cites PMID:23625916, PMID:19477415, PMID:19182784, PMID:22451903 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43709
+      snippet: hexadecanoate + ATP + H(+) => hexadecanoyl-AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:43709 declares side 43708_R as its products
+        (rh:products); the master reaction RHEA:43708 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:23625916, PMID:19477415, PMID:19182784, PMID:22451903 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

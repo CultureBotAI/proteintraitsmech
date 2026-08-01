@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.129
     mapping_source: rhea2ec
@@ -30,4 +30,130 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate = (+)-sativene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate = (+)-sativene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:33119, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33120 (rh:substrates → 33119_L, rh:products → 33119_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate = (+)-sativene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33119
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate = (+)-sativene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (+)-sativene
+    node_type: CHEMICAL
+    grounding: CHEBI:231783
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-sativene synthase
+    grounding: EC:4.2.3.129
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A8NU13
+    node_type: PROTEIN
+    label: COP4_COPC7
+    grounding: UniProtKB:A8NU13
+  - node_id: prot_A0A8H8CMW1
+    node_type: PROTEIN
+    label: CUBA_PSICU
+    grounding: UniProtKB:A0A8H8CMW1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33120
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-sativene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33120 declares side 33119_L as its substrates
+        (rh:substrates); the master reaction RHEA:33119 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:20419721, PMID:19400802, PMID:20889795 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-sativene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33120
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-sativene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33120 declares side 33119_R as its products
+        (rh:products); the master reaction RHEA:33119 is undirected. This participant is CHEBI:231783
+        with coefficient 1. Rhea cites PMID:20419721, PMID:19400802, PMID:20889795 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33120
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-sativene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33120 declares side 33119_R as its products
+        (rh:products); the master reaction RHEA:33119 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20419721, PMID:19400802, PMID:20889795 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.129; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:33119
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.129"/>
+      notes: The rh:ec triple on RHEA:33119 in rhea.rdf. EC 4.2.3.129 is itself a record in this KB.
+  - subject: prot_A8NU13
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COP4_COPC7 is an exemplar enzyme carrying EC 4.2.3.129, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.129
+      snippet: DR   A8NU13, COP4_COPC7 ;  A0A8H8CMW1, CUBA_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.129 cross-references UniProtKB:A8NU13 (COP4_COPC7) as a protein
+        with this activity.
+    - reference: RHEA:33119
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.129"/>
+      notes: Rhea assigns RHEA:33119 to EC 4.2.3.129, and EC 4.2.3.129 maps to exactly one Rhea master
+        reaction (RHEA:33119), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0A8H8CMW1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CUBA_PSICU is an exemplar enzyme carrying EC 4.2.3.129, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.129
+      snippet: DR   A8NU13, COP4_COPC7 ;  A0A8H8CMW1, CUBA_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.129 cross-references UniProtKB:A0A8H8CMW1 (CUBA_PSICU) as a
+        protein with this activity.
+    - reference: RHEA:33119
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.129"/>
+      notes: Rhea assigns RHEA:33119 to EC 4.2.3.129, and EC 4.2.3.129 maps to exactly one Rhea master
+        reaction (RHEA:33119), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

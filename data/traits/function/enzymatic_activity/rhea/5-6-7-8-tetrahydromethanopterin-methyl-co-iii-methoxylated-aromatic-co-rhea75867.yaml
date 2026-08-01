@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.1.384
     mapping_source: rhea2ec
@@ -32,4 +32,172 @@ definitions:
       Catalyses the reaction: 5,6,7,8-tetrahydromethanopterin + methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein] = 5-methyl-5,6,7,8-tetrahydromethanopterin + Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein] + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5,6,7,8-tetrahydromethanopterin + methyl-Co(III)-[methoxylated-aromatic-compound-specif…
+  description: Substrate-to-product chemistry of RHEA:75867, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:75868 (rh:substrates → 75867_L, rh:products → 75867_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5,6,7,8-tetrahydromethanopterin + methyl-Co(III)-[methoxylated-aromatic-comp…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:75867
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5,6,7,8-tetrahydromethanopterin + methyl-Co(III)-[methoxylated-aromatic-compound-specific
+      corrinoid protein] = 5-methyl-5,6,7,8-tetrahydromethanopterin + Co(I)-[methoxylated-aromatic-compound-specific
+      corrinoid protein] + H(+)'
+  - node_id: sub1
+    label: 5,6,7,8-tetrahydromethanopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:58103
+    description: Formula C30H42N6O16P.
+  - node_id: sub2
+    label: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18102
+    description: Rhea compound GENERIC:18102.
+  - node_id: sub2_rp1
+    label: methyl-Co(III)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18102 (methyl-Co(III)-[methoxylated-aromatic-compound-specific
+      corrinoid protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85035
+  - node_id: prd1
+    label: 5-methyl-5,6,7,8-tetrahydromethanopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:58116
+    description: Formula C31H44N6O16P.
+  - node_id: prd2
+    label: Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18101
+    description: Rhea compound GENERIC:18101.
+  - node_id: prd2_rp1
+    label: Co(+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18101 (Co(I)-[methoxylated-aromatic-compound-specific
+      corrinoid protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85033
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: '[methyl-Co(III) methoxylated-aromatic-compound-specific corrinoid protein]--tetrahydromethanopterin
+      methyltransferase'
+    grounding: EC:2.1.1.384
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5,6,7,8-tetrahydromethanopterin is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:75868
+      snippet: 5,6,7,8-tetrahydromethanopterin + methyl-Co(III)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] => 5-methyl-5,6,7,8-tetrahydromethanopterin + Co(I)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75868 declares side 75867_L as its substrates
+        (rh:substrates); the master reaction RHEA:75867 is undirected. This participant is CHEBI:58103
+        with coefficient 1. Rhea cites PMID:33913565, PMID:34145392 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein] is a substrate
+      consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75868
+      snippet: 5,6,7,8-tetrahydromethanopterin + methyl-Co(III)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] => 5-methyl-5,6,7,8-tetrahydromethanopterin + Co(I)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75868 declares side 75867_L as its substrates
+        (rh:substrates); the master reaction RHEA:75867 is undirected. This participant is GENERIC:18102
+        with coefficient 1. Rhea cites PMID:33913565, PMID:34145392 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: methyl-Co(III) is the reactive part of methyl-Co(III)-[methoxylated-aromatic-compound-specific
+      corrinoid protein].
+    evidence:
+    - reference: RHEA:75867
+      snippet: methyl-Co(III)
+      notes: Rhea compound GENERIC:18102 (methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid
+        protein]) declares rh:reactivePart = methyl-Co(III) (CHEBI:85035), formula CH3Co.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-methyl-5,6,7,8-tetrahydromethanopterin is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:75868
+      snippet: 5,6,7,8-tetrahydromethanopterin + methyl-Co(III)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] => 5-methyl-5,6,7,8-tetrahydromethanopterin + Co(I)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75868 declares side 75867_R as its products
+        (rh:products); the master reaction RHEA:75867 is undirected. This participant is CHEBI:58116 with
+        coefficient 1. Rhea cites PMID:33913565, PMID:34145392 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein] is a product released
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75868
+      snippet: 5,6,7,8-tetrahydromethanopterin + methyl-Co(III)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] => 5-methyl-5,6,7,8-tetrahydromethanopterin + Co(I)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75868 declares side 75867_R as its products
+        (rh:products); the master reaction RHEA:75867 is undirected. This participant is GENERIC:18101
+        with coefficient 1. Rhea cites PMID:33913565, PMID:34145392 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: Co(+) is the reactive part of Co(I)-[methoxylated-aromatic-compound-specific corrinoid
+      protein].
+    evidence:
+    - reference: RHEA:75867
+      snippet: Co(+)
+      notes: Rhea compound GENERIC:18101 (Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein])
+        declares rh:reactivePart = Co(+) (CHEBI:85033), formula Co.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75868
+      snippet: 5,6,7,8-tetrahydromethanopterin + methyl-Co(III)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] => 5-methyl-5,6,7,8-tetrahydromethanopterin + Co(I)-[methoxylated-aromatic-compound-specific
+        corrinoid protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75868 declares side 75867_R as its products
+        (rh:products); the master reaction RHEA:75867 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:33913565, PMID:34145392 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.1.384; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:75867
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.384"/>
+      notes: The rh:ec triple on RHEA:75867 in rhea.rdf. EC 2.1.1.384 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

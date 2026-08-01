@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -38,4 +38,131 @@ definitions:
       Catalyses: dihydroxyacetone phosphate = methylglyoxal + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methylglyoxal synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.3. EC 4.2.3.3 maps to exactly
+    one curated Rhea reaction (RHEA:17937), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dihydroxyacetone
+    phosphate = methylglyoxal + phosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: methylglyoxal synthase
+    grounding: EC:4.2.3.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: prd1
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methylglyoxal synthase activity
+    grounding: GO:0008929
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A9NF94
+    node_type: PROTEIN
+    label: MGSA_ACHLI
+    grounding: UniProtKB:A9NF94
+  - node_id: prot_A3N2E6
+    node_type: PROTEIN
+    label: MGSA_ACTP2
+    grounding: UniProtKB:A3N2E6
+  - node_id: prot_B3H2I5
+    node_type: PROTEIN
+    label: MGSA_ACTP7
+    grounding: UniProtKB:B3H2I5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dihydroxyacetone phosphate is a substrate consumed by RHEA:17937 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17938
+      snippet: dihydroxyacetone phosphate => methylglyoxal + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17938 declares side 17937_L as its substrates
+        (rh:substrates); the master reaction RHEA:17937 is undirected. This participant is CHEBI:57642
+        with coefficient 1. Rhea cites PMID:11945670, PMID:7240200, PMID:11945504 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: methylglyoxal is a product released by RHEA:17937 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17938
+      snippet: dihydroxyacetone phosphate => methylglyoxal + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17938 declares side 17937_R as its products
+        (rh:products); the master reaction RHEA:17937 is undirected. This participant is CHEBI:17158 with
+        coefficient 1. Rhea cites PMID:11945670, PMID:7240200, PMID:11945504 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:17937 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17938
+      snippet: dihydroxyacetone phosphate => methylglyoxal + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17938 declares side 17937_R as its products
+        (rh:products); the master reaction RHEA:17937 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:11945670, PMID:7240200, PMID:11945504 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.3
+      snippet: EC:4.2.3.3 > GO:methylglyoxal synthase activity ; GO:0008929
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008929 is itself a record
+        in this KB.
+  - subject: prot_A9NF94
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MGSA_ACHLI is an exemplar enzyme with EC 4.2.3.3 activity.
+    evidence:
+    - reference: EC:4.2.3.3
+      snippet: DR   A9NF94, MGSA_ACHLI ;  A3N2E6, MGSA_ACTP2 ;  B3H2I5, MGSA_ACTP7 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.3 cross-references UniProtKB:A9NF94 (MGSA_ACHLI) as a protein
+        with this activity.
+  - subject: prot_A3N2E6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MGSA_ACTP2 is an exemplar enzyme with EC 4.2.3.3 activity.
+    evidence:
+    - reference: EC:4.2.3.3
+      snippet: DR   A9NF94, MGSA_ACHLI ;  A3N2E6, MGSA_ACTP2 ;  B3H2I5, MGSA_ACTP7 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.3 cross-references UniProtKB:A3N2E6 (MGSA_ACTP2) as a protein
+        with this activity.
+  - subject: prot_B3H2I5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MGSA_ACTP7 is an exemplar enzyme with EC 4.2.3.3 activity.
+    evidence:
+    - reference: EC:4.2.3.3
+      snippet: DR   A9NF94, MGSA_ACHLI ;  A3N2E6, MGSA_ACTP2 ;  B3H2I5, MGSA_ACTP7 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.3 cross-references UniProtKB:B3H2I5 (MGSA_ACTP7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

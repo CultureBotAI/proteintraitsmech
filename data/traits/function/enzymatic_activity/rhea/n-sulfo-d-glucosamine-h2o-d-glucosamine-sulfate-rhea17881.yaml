@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.10.1.1
     mapping_source: rhea2ec
@@ -28,4 +28,374 @@ definitions:
       Catalyses the reaction: N-sulfo-D-glucosamine + H2O = D-glucosamine + sulfate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-sulfo-D-glucosamine + H2O = D-glucosamine + sulfate
+  description: Substrate-to-product chemistry of RHEA:17881, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17882 (rh:substrates → 17881_L, rh:products → 17881_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-sulfo-D-glucosamine + H2O = D-glucosamine + sulfate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17881
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-sulfo-D-glucosamine + H2O = D-glucosamine + sulfate'
+  - node_id: sub1
+    label: N-sulfo-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57868
+    description: Formula C6H12NO8S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58723
+    description: Formula C6H14NO5.
+  - node_id: prd2
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-sulfoglucosamine sulfohydrolase activity
+    grounding: GO:0016250
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: N-sulfoglucosamine sulfohydrolase
+    grounding: EC:3.10.1.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P51688
+    node_type: PROTEIN
+    label: SPHM_HUMAN
+    grounding: UniProtKB:P51688
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-sulfo-D-glucosamine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17882
+      snippet: N-sulfo-D-glucosamine + H2O => D-glucosamine + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:17882 declares side 17881_L as its substrates
+        (rh:substrates); the master reaction RHEA:17881 is undirected. This participant is CHEBI:57868
+        with coefficient 1. Rhea cites PMID:6849981 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17882
+      snippet: N-sulfo-D-glucosamine + H2O => D-glucosamine + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:17882 declares side 17881_L as its substrates
+        (rh:substrates); the master reaction RHEA:17881 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:6849981 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-glucosamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17882
+      snippet: N-sulfo-D-glucosamine + H2O => D-glucosamine + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:17882 declares side 17881_R as its products
+        (rh:products); the master reaction RHEA:17881 is undirected. This participant is CHEBI:58723 with
+        coefficient 1. Rhea cites PMID:6849981 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17882
+      snippet: N-sulfo-D-glucosamine + H2O => D-glucosamine + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:17882 declares side 17881_R as its products
+        (rh:products); the master reaction RHEA:17881 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:6849981 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17881
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0016250"/>
+      notes: The rdfs:seeAlso triple on RHEA:17881 in rhea.rdf. GO term GO:0016250 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.10.1.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17881
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.10.1.1"/>
+      notes: The rh:ec triple on RHEA:17881 in rhea.rdf. EC 3.10.1.1 is itself a record in this KB.
+  - subject: prot_P51688
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SPHM_HUMAN is an exemplar enzyme carrying EC 3.10.1.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.10.1.1
+      snippet: DR   P51688, SPHM_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.10.1.1 cross-references UniProtKB:P51688 (SPHM_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:17881
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.10.1.1"/>
+      notes: Rhea assigns RHEA:17881 to EC 3.10.1.1, and EC 3.10.1.1 maps to exactly one Rhea master reaction
+        (RHEA:17881), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa951
+  title: Catalytic residues of RHEA:17881 (from MCSA:951)
+  description: 'The catalytic residues that carry out RHEA:17881, joined from M-CSA entry 951. 9 residues,
+    reused verbatim from the MCSA:951 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 951''s reactant set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly,
+    and its product set (CHEBI:16189, CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the
+    candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of N-sulfo-D-glucosamine + H2O = D-glucosamine + sulfate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17881
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: N-sulfo-D-glucosamine + H2O = D-glucosamine + sulfate'
+  - node_id: mcsa
+    label: N-sulfoglucosamine sulfohydrolase
+    node_type: MOTIF
+    grounding: MCSA:951
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: asp31
+    label: catalytic Asp31 (M-CSA/PDB numbering; UniProt residue 31)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51688
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:951 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: asp32
+    label: catalytic Asp32 (M-CSA/PDB numbering; UniProt residue 32)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51688
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:951 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: arg74
+    label: catalytic Arg74 (M-CSA/PDB numbering; UniProt residue 74)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51688
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:951 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: lys123
+    label: catalytic Lys123 (M-CSA/PDB numbering; UniProt residue 123)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51688
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:951 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: his125
+    label: catalytic His125 (M-CSA/PDB numbering; UniProt residue 125)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51688
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor. Reused verbatim
+      from the MCSA:951 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: his181
+    label: catalytic His181 (M-CSA/PDB numbering; UniProt residue 181)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51688
+    description: 'M-CSA roles: proton acceptor, proton donor. Reused verbatim from the MCSA:951 record''s
+      catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: asp273
+    label: catalytic Asp273 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51688
+    description: 'M-CSA roles: metal ligand, proton acceptor, proton donor. Reused verbatim from the MCSA:951
+      record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: asn274
+    label: catalytic Asn274 (M-CSA/PDB numbering; UniProt residue 274)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51688
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:951 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: arg282
+    label: catalytic Arg282 (M-CSA/PDB numbering; UniProt residue 282)
+    node_type: RESIDUE
+    grounding: UniProtKB:P51688
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:951 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 951 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: N-sulfo-D-glucosamine(1-) [reactant]; water [reactant]; 2-ammonio-2-deoxy-D-glucopyranose
+        [product]; sulfate [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 951, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: asp31
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: metal ligand
+      notes: 'M-CSA entry 951 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 20 interaction, 11 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: asp32
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: metal ligand
+      notes: 'M-CSA entry 951 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 20 interaction, 11 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: arg74
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 951 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 20 interaction, 11 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: lys123
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 951 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 20 interaction, 11 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: his125
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: 'M-CSA entry 951 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 20 interaction, 11 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: his181
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: proton acceptor, proton donor
+      notes: 'M-CSA entry 951 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 20 interaction, 11 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: asp273
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: metal ligand, proton acceptor, proton donor
+      notes: 'M-CSA entry 951 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 20 interaction, 11 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: asn274
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: metal ligand
+      notes: 'M-CSA entry 951 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 20 interaction, 11 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: arg282
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:951
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 951 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 20 interaction, 11 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 951''s reactant
+        set (CHEBI:15377, CHEBI:57868) equals Rhea side 17881_L exactly, and its product set (CHEBI:16189,
+        CHEBI:58723) equals side 17881_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa951' (10 evidence-backed edges) joining MCSA:951
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

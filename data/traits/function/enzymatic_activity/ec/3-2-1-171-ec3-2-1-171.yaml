@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -36,4 +36,67 @@ definitions:
       Catalyses: Endohydrolysis of alpha-D-GalA-(1->2)-alpha-L-Rha glycosidic bond in the rhamnogalacturonan I backbone with initial inversion of anomeric configuration releasing oligosaccharides with beta-D-GalA at the reducing end
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of rhamnogalacturonan hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.171. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endohydrolysis
+    of alpha-D-GalA-(1->2)-alpha-L-Rha glycosidic bond in the rhamnogalacturonan I backbone with initial
+    inversion of anomeric configuration releasing oligosaccharides with beta-D-GalA at the reducing end".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: rhamnogalacturonan hydrolase
+    grounding: EC:3.2.1.171
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q00001
+    node_type: PROTEIN
+    label: RHGA_ASPAC
+    grounding: UniProtKB:Q00001
+  - node_id: prot_B8NK45
+    node_type: PROTEIN
+    label: RHGA_ASPFN
+    grounding: UniProtKB:B8NK45
+  - node_id: prot_A2QYE5
+    node_type: PROTEIN
+    label: RHGA_ASPNC
+    grounding: UniProtKB:A2QYE5
+  edges:
+  - subject: prot_Q00001
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHGA_ASPAC is an exemplar enzyme with EC 3.2.1.171 activity.
+    evidence:
+    - reference: EC:3.2.1.171
+      snippet: DR   Q00001, RHGA_ASPAC ;  B8NK45, RHGA_ASPFN ;  A2QYE5, RHGA_ASPNC ;
+      notes: ExPASy ENZYME entry EC 3.2.1.171 cross-references UniProtKB:Q00001 (RHGA_ASPAC) as a protein
+        with this activity.
+  - subject: prot_B8NK45
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHGA_ASPFN is an exemplar enzyme with EC 3.2.1.171 activity.
+    evidence:
+    - reference: EC:3.2.1.171
+      snippet: DR   Q00001, RHGA_ASPAC ;  B8NK45, RHGA_ASPFN ;  A2QYE5, RHGA_ASPNC ;
+      notes: ExPASy ENZYME entry EC 3.2.1.171 cross-references UniProtKB:B8NK45 (RHGA_ASPFN) as a protein
+        with this activity.
+  - subject: prot_A2QYE5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHGA_ASPNC is an exemplar enzyme with EC 3.2.1.171 activity.
+    evidence:
+    - reference: EC:3.2.1.171
+      snippet: DR   Q00001, RHGA_ASPAC ;  B8NK45, RHGA_ASPFN ;  A2QYE5, RHGA_ASPNC ;
+      notes: ExPASy ENZYME entry EC 3.2.1.171 cross-references UniProtKB:A2QYE5 (RHGA_ASPNC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

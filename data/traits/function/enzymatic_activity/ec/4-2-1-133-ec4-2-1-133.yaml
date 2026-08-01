@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -38,4 +38,132 @@ definitions:
       Catalyses: (2E,6E,10E)-geranylgeranyl diphosphate + H2O = 8-hydroxycopalyl diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of copal-8-ol diphosphate hydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.133. EC 4.2.1.133 maps to
+    exactly one curated Rhea reaction (RHEA:32703), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E,10E)-geranylgeranyl
+    diphosphate + H2O = 8-hydroxycopalyl diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: copal-8-ol diphosphate hydratase
+    grounding: EC:4.2.1.133
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 8-hydroxycopalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:64283
+    description: Formula C20H35O8P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: copal-8-ol diphosphate synthase activity
+    grounding: GO:0102161
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_H8ZM73
+    node_type: PROTEIN
+    label: CAS_ABIBA
+    grounding: UniProtKB:H8ZM73
+  - node_id: prot_G8GJ95
+    node_type: PROTEIN
+    label: CLDS3_SALSC
+    grounding: UniProtKB:G8GJ95
+  - node_id: prot_G8GJ96
+    node_type: PROTEIN
+    label: CLDS9_SALSC
+    grounding: UniProtKB:G8GJ96
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by RHEA:32703 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32704
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate + H2O => 8-hydroxycopalyl diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32704 declares side 32703_L as its substrates
+        (rh:substrates); the master reaction RHEA:32703 is undirected. This participant is CHEBI:58756
+        with coefficient 1. Rhea cites PMID:20595348 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:32703 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32704
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate + H2O => 8-hydroxycopalyl diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32704 declares side 32703_L as its substrates
+        (rh:substrates); the master reaction RHEA:32703 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:20595348 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 8-hydroxycopalyl diphosphate is a product released by RHEA:32703 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32704
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate + H2O => 8-hydroxycopalyl diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32704 declares side 32703_R as its products
+        (rh:products); the master reaction RHEA:32703 is undirected. This participant is CHEBI:64283 with
+        coefficient 1. Rhea cites PMID:20595348 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.133
+      snippet: EC:4.2.1.133 > GO:copal-8-ol diphosphate synthase activity ; GO:0102161
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102161 is itself a record
+        in this KB.
+  - subject: prot_H8ZM73
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAS_ABIBA is an exemplar enzyme with EC 4.2.1.133 activity.
+    evidence:
+    - reference: EC:4.2.1.133
+      snippet: DR   H8ZM73, CAS_ABIBA  ;  G8GJ95, CLDS3_SALSC;  G8GJ96, CLDS9_SALSC;
+      notes: ExPASy ENZYME entry EC 4.2.1.133 cross-references UniProtKB:H8ZM73 (CAS_ABIBA) as a protein
+        with this activity.
+  - subject: prot_G8GJ95
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLDS3_SALSC is an exemplar enzyme with EC 4.2.1.133 activity.
+    evidence:
+    - reference: EC:4.2.1.133
+      snippet: DR   H8ZM73, CAS_ABIBA  ;  G8GJ95, CLDS3_SALSC;  G8GJ96, CLDS9_SALSC;
+      notes: ExPASy ENZYME entry EC 4.2.1.133 cross-references UniProtKB:G8GJ95 (CLDS3_SALSC) as a protein
+        with this activity.
+  - subject: prot_G8GJ96
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLDS9_SALSC is an exemplar enzyme with EC 4.2.1.133 activity.
+    evidence:
+    - reference: EC:4.2.1.133
+      snippet: DR   H8ZM73, CAS_ABIBA  ;  G8GJ95, CLDS3_SALSC;  G8GJ96, CLDS9_SALSC;
+      notes: ExPASy ENZYME entry EC 4.2.1.133 cross-references UniProtKB:G8GJ96 (CLDS9_SALSC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -39,4 +39,81 @@ definitions:
       Catalyses: GDP-mannose + (glucomannan)n = GDP + (glucomannan)n+1
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucomannan 4-beta-mannosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.32. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "GDP-mannose
+    + (glucomannan)n = GDP + (glucomannan)n+1".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucomannan 4-beta-mannosyltransferase
+    grounding: EC:2.4.1.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucomannan 4-beta-mannosyltransferase activity
+    grounding: GO:0047259
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q84W54
+    node_type: PROTEIN
+    label: CSLA1_ARATH
+    grounding: UniProtKB:Q84W54
+  - node_id: prot_Q6UDF0
+    node_type: PROTEIN
+    label: CSLA1_CYATE
+    grounding: UniProtKB:Q6UDF0
+  - node_id: prot_Q7PC76
+    node_type: PROTEIN
+    label: CSLA1_ORYSJ
+    grounding: UniProtKB:Q7PC76
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.32
+      snippet: EC:2.4.1.32 > GO:glucomannan 4-beta-mannosyltransferase activity ; GO:0047259
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047259 is itself a record
+        in this KB.
+  - subject: prot_Q84W54
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CSLA1_ARATH is an exemplar enzyme with EC 2.4.1.32 activity.
+    evidence:
+    - reference: EC:2.4.1.32
+      snippet: DR   Q84W54, CSLA1_ARATH;  Q6UDF0, CSLA1_CYATE;  Q7PC76, CSLA1_ORYSJ;
+      notes: ExPASy ENZYME entry EC 2.4.1.32 cross-references UniProtKB:Q84W54 (CSLA1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q6UDF0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CSLA1_CYATE is an exemplar enzyme with EC 2.4.1.32 activity.
+    evidence:
+    - reference: EC:2.4.1.32
+      snippet: DR   Q84W54, CSLA1_ARATH;  Q6UDF0, CSLA1_CYATE;  Q7PC76, CSLA1_ORYSJ;
+      notes: ExPASy ENZYME entry EC 2.4.1.32 cross-references UniProtKB:Q6UDF0 (CSLA1_CYATE) as a protein
+        with this activity.
+  - subject: prot_Q7PC76
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CSLA1_ORYSJ is an exemplar enzyme with EC 2.4.1.32 activity.
+    evidence:
+    - reference: EC:2.4.1.32
+      snippet: DR   Q84W54, CSLA1_ARATH;  Q6UDF0, CSLA1_CYATE;  Q7PC76, CSLA1_ORYSJ;
+      notes: ExPASy ENZYME entry EC 2.4.1.32 cross-references UniProtKB:Q7PC76 (CSLA1_ORYSJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

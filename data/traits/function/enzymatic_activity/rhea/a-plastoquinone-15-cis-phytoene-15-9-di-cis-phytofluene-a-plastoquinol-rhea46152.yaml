@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17757
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,99 @@ definitions:
       Catalyses the reaction: a plastoquinone + 15-cis-phytoene = 15,9'-di-cis-phytofluene + a plastoquinol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a plastoquinone + 15-cis-phytoene = 15,9'-di-cis-phytofluene + a plastoquinol
+  description: Substrate-to-product chemistry of RHEA:46152, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:46153 (rh:substrates → 46152_L, rh:products → 46152_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a plastoquinone + 15-cis-phytoene = 15,9'-di-cis-phytofluene + a plastoquinol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:46152
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a plastoquinone + 15-cis-phytoene = 15,9''-di-cis-phytofluene + a plastoquinol'
+  - node_id: sub1
+    label: a plastoquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:17757
+    xrefs:
+    - RHEA-COMP:9562
+    description: Rhea compound POLYMER:9562. Formula C8H8O2(C5H8)<i><sub>n</sub></i>. Polymerisation index
+      n.
+  - node_id: sub2
+    label: 15-cis-phytoene
+    node_type: CHEMICAL
+    grounding: CHEBI:27787
+    description: Formula C40H64.
+  - node_id: prd1
+    label: 15,9'-di-cis-phytofluene
+    node_type: CHEMICAL
+    grounding: CHEBI:61990
+    description: Formula C40H62.
+  - node_id: prd2
+    label: a plastoquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:62192
+    xrefs:
+    - RHEA-COMP:9561
+    description: Rhea compound POLYMER:9561. Formula C8H10O2(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a plastoquinone is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46153
+      snippet: a plastoquinone + 15-cis-phytoene => 15,9'-di-cis-phytofluene + a plastoquinol
+      notes: Rhea's left-to-right directional reaction RHEA:46153 declares side 46152_L as its substrates
+        (rh:substrates); the master reaction RHEA:46152 is undirected. This participant is POLYMER:9562
+        with coefficient 1. Rhea cites PMID:15503129 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 15-cis-phytoene is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46153
+      snippet: a plastoquinone + 15-cis-phytoene => 15,9'-di-cis-phytofluene + a plastoquinol
+      notes: Rhea's left-to-right directional reaction RHEA:46153 declares side 46152_L as its substrates
+        (rh:substrates); the master reaction RHEA:46152 is undirected. This participant is CHEBI:27787
+        with coefficient 1. Rhea cites PMID:15503129 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 15,9'-di-cis-phytofluene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46153
+      snippet: a plastoquinone + 15-cis-phytoene => 15,9'-di-cis-phytofluene + a plastoquinol
+      notes: Rhea's left-to-right directional reaction RHEA:46153 declares side 46152_R as its products
+        (rh:products); the master reaction RHEA:46152 is undirected. This participant is CHEBI:61990 with
+        coefficient 1. Rhea cites PMID:15503129 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a plastoquinol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46153
+      snippet: a plastoquinone + 15-cis-phytoene => 15,9'-di-cis-phytofluene + a plastoquinol
+      notes: Rhea's left-to-right directional reaction RHEA:46153 declares side 46152_R as its products
+        (rh:products); the master reaction RHEA:46152 is undirected. This participant is POLYMER:9561
+        with coefficient 1. Rhea cites PMID:15503129 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

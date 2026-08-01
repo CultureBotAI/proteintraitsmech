@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.5.-
 mapped_xrefs:
@@ -28,4 +28,103 @@ definitions:
       Catalyses: butan-1-ol + a quinone = butanal + a quinol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-butanol dehydrogenase (quinone)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.5.11. EC 1.1.5.11 maps to exactly
+    one curated Rhea reaction (RHEA:49808), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "butan-1-ol +
+    a quinone = butanal + a quinol". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1-butanol dehydrogenase (quinone)
+    grounding: EC:1.1.5.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: butan-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:28885
+    description: Formula C4H10O.
+  - node_id: sub2
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: prd1
+    label: butanal
+    node_type: CHEMICAL
+    grounding: CHEBI:15743
+    description: Formula C4H8O.
+  - node_id: prd2
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: prot_Q9AGW3
+    node_type: PROTEIN
+    label: BOH_THABB
+    grounding: UniProtKB:Q9AGW3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: butan-1-ol is a substrate consumed by RHEA:49808 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49809
+      snippet: butan-1-ol + a quinone => butanal + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:49809 declares side 49808_L as its substrates
+        (rh:substrates); the master reaction RHEA:49808 is undirected. This participant is CHEBI:28885
+        with coefficient 1. Rhea cites PMID:12142403, PMID:11889098 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a quinone is a substrate consumed by RHEA:49808 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49809
+      snippet: butan-1-ol + a quinone => butanal + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:49809 declares side 49808_L as its substrates
+        (rh:substrates); the master reaction RHEA:49808 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:12142403, PMID:11889098 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: butanal is a product released by RHEA:49808 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49809
+      snippet: butan-1-ol + a quinone => butanal + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:49809 declares side 49808_R as its products
+        (rh:products); the master reaction RHEA:49808 is undirected. This participant is CHEBI:15743 with
+        coefficient 1. Rhea cites PMID:12142403, PMID:11889098 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a quinol is a product released by RHEA:49808 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49809
+      snippet: butan-1-ol + a quinone => butanal + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:49809 declares side 49808_R as its products
+        (rh:products); the master reaction RHEA:49808 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:12142403, PMID:11889098 for this reaction.
+  - subject: prot_Q9AGW3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BOH_THABB is an exemplar enzyme with EC 1.1.5.11 activity.
+    evidence:
+    - reference: EC:1.1.5.11
+      snippet: DR   Q9AGW3, BOH_THABB  ;
+      notes: ExPASy ENZYME entry EC 1.1.5.11 cross-references UniProtKB:Q9AGW3 (BOH_THABB) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

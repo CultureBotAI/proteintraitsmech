@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -28,4 +28,89 @@ definitions:
       Catalyses: 3-deoxy-alpha-D-manno-oct-2-ulosonate = D-arabinose + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-deoxy-D-manno-octulosonate aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.23. EC 4.1.2.23 maps to exactly
+    one curated Rhea reaction (RHEA:23340), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-deoxy-alpha-D-manno-oct-2-ulosonate
+    = D-arabinose + pyruvate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-deoxy-D-manno-octulosonate aldolase
+    grounding: EC:4.1.2.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-deoxy-alpha-D-manno-oct-2-ulosonate
+    node_type: CHEMICAL
+    grounding: CHEBI:85986
+    description: Formula C8H13O8.
+  - node_id: prd1
+    label: D-arabinose
+    node_type: CHEMICAL
+    grounding: CHEBI:46994
+    description: Formula C5H10O5.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3-deoxy-D-manno-octulosonate aldolase activity
+    grounding: GO:0047439
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-deoxy-alpha-D-manno-oct-2-ulosonate is a substrate consumed by RHEA:23340 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23341
+      snippet: 3-deoxy-alpha-D-manno-oct-2-ulosonate => D-arabinose + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:23341 declares side 23340_L as its substrates
+        (rh:substrates); the master reaction RHEA:23340 is undirected. This participant is CHEBI:85986
+        with coefficient 1. Rhea cites PMID:5912115 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-arabinose is a product released by RHEA:23340 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23341
+      snippet: 3-deoxy-alpha-D-manno-oct-2-ulosonate => D-arabinose + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:23341 declares side 23340_R as its products
+        (rh:products); the master reaction RHEA:23340 is undirected. This participant is CHEBI:46994 with
+        coefficient 1. Rhea cites PMID:5912115 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:23340 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23341
+      snippet: 3-deoxy-alpha-D-manno-oct-2-ulosonate => D-arabinose + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:23341 declares side 23340_R as its products
+        (rh:products); the master reaction RHEA:23340 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:5912115 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.2.23
+      snippet: EC:4.1.2.23 > GO:3-deoxy-D-manno-octulosonate aldolase activity ; GO:0047439
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047439 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

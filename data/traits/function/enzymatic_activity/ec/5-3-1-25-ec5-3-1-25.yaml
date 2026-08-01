@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 mapped_xrefs:
@@ -38,4 +38,115 @@ definitions:
       Catalyses: L-fucose = L-fuculose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-fucose isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.25. EC 5.3.1.25 maps to exactly
+    one curated Rhea reaction (RHEA:17233), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-fucose = L-fuculose".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-fucose isomerase
+    grounding: EC:5.3.1.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-fucose
+    node_type: CHEMICAL
+    grounding: CHEBI:2181
+    description: Formula C6H12O5.
+  - node_id: prd1
+    label: L-fuculose
+    node_type: CHEMICAL
+    grounding: CHEBI:17617
+    description: Formula C6H12O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-fucose isomerase activity
+    grounding: GO:0008736
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5LIN8
+    node_type: PROTEIN
+    label: FUCI_BACFN
+    grounding: UniProtKB:Q5LIN8
+  - node_id: prot_Q64ZS4
+    node_type: PROTEIN
+    label: FUCI_BACFR
+    grounding: UniProtKB:Q64ZS4
+  - node_id: prot_Q9RQ13
+    node_type: PROTEIN
+    label: FUCI_BACTN
+    grounding: UniProtKB:Q9RQ13
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-fucose is a substrate consumed by RHEA:17233 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17234
+      snippet: L-fucose => L-fuculose
+      notes: Rhea's left-to-right directional reaction RHEA:17234 declares side 17233_L as its substrates
+        (rh:substrates); the master reaction RHEA:17233 is undirected. This participant is CHEBI:2181
+        with coefficient 1. Rhea cites PMID:20123133, PMID:9367760, PMID:4632320, PMID:4928018 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-fuculose is a product released by RHEA:17233 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17234
+      snippet: L-fucose => L-fuculose
+      notes: Rhea's left-to-right directional reaction RHEA:17234 declares side 17233_R as its products
+        (rh:products); the master reaction RHEA:17233 is undirected. This participant is CHEBI:17617 with
+        coefficient 1. Rhea cites PMID:20123133, PMID:9367760, PMID:4632320, PMID:4928018 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.25
+      snippet: EC:5.3.1.25 > GO:L-fucose isomerase activity ; GO:0008736
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008736 is itself a record
+        in this KB.
+  - subject: prot_Q5LIN8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUCI_BACFN is an exemplar enzyme with EC 5.3.1.25 activity.
+    evidence:
+    - reference: EC:5.3.1.25
+      snippet: DR   Q5LIN8, FUCI_BACFN ;  Q64ZS4, FUCI_BACFR ;  Q9RQ13, FUCI_BACTN ;
+      notes: ExPASy ENZYME entry EC 5.3.1.25 cross-references UniProtKB:Q5LIN8 (FUCI_BACFN) as a protein
+        with this activity.
+  - subject: prot_Q64ZS4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUCI_BACFR is an exemplar enzyme with EC 5.3.1.25 activity.
+    evidence:
+    - reference: EC:5.3.1.25
+      snippet: DR   Q5LIN8, FUCI_BACFN ;  Q64ZS4, FUCI_BACFR ;  Q9RQ13, FUCI_BACTN ;
+      notes: ExPASy ENZYME entry EC 5.3.1.25 cross-references UniProtKB:Q64ZS4 (FUCI_BACFR) as a protein
+        with this activity.
+  - subject: prot_Q9RQ13
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUCI_BACTN is an exemplar enzyme with EC 5.3.1.25 activity.
+    evidence:
+    - reference: EC:5.3.1.25
+      snippet: DR   Q5LIN8, FUCI_BACFN ;  Q64ZS4, FUCI_BACFR ;  Q9RQ13, FUCI_BACTN ;
+      notes: ExPASy ENZYME entry EC 5.3.1.25 cross-references UniProtKB:Q9RQ13 (FUCI_BACTN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.4.2.-
 synonyms:
@@ -35,4 +35,297 @@ definitions:
       Catalyses: (1) L-cystine(out) + ATP + H2O = L-cystine(in) + ADP + phosphate + H(+). (2) D-cystine(out) + ATP + H2O = D-cystine(in) + ADP + phosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ABC-type cystine transporter
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.4.2.12. Rhea assigns 2 curated
+    reactions to EC 7.4.2.12. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) L-cystine(out) + ATP + H2O = L-cystine(in) + ADP + phosphate
+    + H(+). (2) D-cystine(out) + ATP + H2O = D-cystine(in) + ADP + phosphate + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type cystine transporter
+    grounding: EC:7.4.2.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-cystine(out) + ATP + H2O = L-cystine(in) + ADP + phosphate + H(+)
+    grounding: RHEA:62576
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-cystine(out) + ATP + H2O = L-cystine(in) + ADP + phosphate + H(+)'
+  - node_id: rxn1_sub1
+    label: L-cystine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:35491
+    description: Formula C6H12N2O4S2.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: L-cystine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:35491
+    description: Formula C6H12N2O4S2.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd3
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn1_prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-cystine(out) + ATP + H2O = D-cystine(in) + ADP + phosphate + H(+)
+    grounding: RHEA:62580
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-cystine(out) + ATP + H2O = D-cystine(in) + ADP + phosphate + H(+)'
+  - node_id: rxn2_sub1
+    label: D-cystine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:145813
+    description: Formula C6H12N2O4S2.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: D-cystine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:145813
+    description: Formula C6H12N2O4S2.
+  - node_id: rxn2_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2_prd3
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn2_prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_P37774
+    node_type: PROTEIN
+    label: TCYN_ECOLI
+    grounding: UniProtKB:P37774
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:62576 is one of the 2 curated reactions Rhea assigns to EC 7.4.2.12; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:62576
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.4.2.12"/>
+      notes: The rh:ec triple on RHEA:62576 in rhea.rdf assigns that reaction to EC 7.4.2.12.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: L-cystine is a substrate consumed by RHEA:62576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62577
+      snippet: L-cystine(out) + ATP + H2O => L-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62577 declares side 62576_L as its substrates
+        (rh:substrates); the master reaction RHEA:62576 is undirected. This participant is CHEBI:35491
+        with coefficient 1. Rhea cites PMID:26350134, PMID:4564569 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:62576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62577
+      snippet: L-cystine(out) + ATP + H2O => L-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62577 declares side 62576_L as its substrates
+        (rh:substrates); the master reaction RHEA:62576 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:26350134, PMID:4564569 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: H2O is a substrate consumed by RHEA:62576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62577
+      snippet: L-cystine(out) + ATP + H2O => L-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62577 declares side 62576_L as its substrates
+        (rh:substrates); the master reaction RHEA:62576 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:26350134, PMID:4564569 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: L-cystine is a product released by RHEA:62576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62577
+      snippet: L-cystine(out) + ATP + H2O => L-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62577 declares side 62576_R as its products
+        (rh:products); the master reaction RHEA:62576 is undirected. This participant is CHEBI:35491 with
+        coefficient 1. Rhea cites PMID:26350134, PMID:4564569 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:62576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62577
+      snippet: L-cystine(out) + ATP + H2O => L-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62577 declares side 62576_R as its products
+        (rh:products); the master reaction RHEA:62576 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:26350134, PMID:4564569 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: phosphate is a product released by RHEA:62576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62577
+      snippet: L-cystine(out) + ATP + H2O => L-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62577 declares side 62576_R as its products
+        (rh:products); the master reaction RHEA:62576 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:26350134, PMID:4564569 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd4
+    description: H(+) is a product released by RHEA:62576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62577
+      snippet: L-cystine(out) + ATP + H2O => L-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62577 declares side 62576_R as its products
+        (rh:products); the master reaction RHEA:62576 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:26350134, PMID:4564569 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:62580 is one of the 2 curated reactions Rhea assigns to EC 7.4.2.12; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:62580
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.4.2.12"/>
+      notes: The rh:ec triple on RHEA:62580 in rhea.rdf assigns that reaction to EC 7.4.2.12.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: D-cystine is a substrate consumed by RHEA:62580 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62581
+      snippet: D-cystine(out) + ATP + H2O => D-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62581 declares side 62580_L as its substrates
+        (rh:substrates); the master reaction RHEA:62580 is undirected. This participant is CHEBI:145813
+        with coefficient 1. Rhea cites PMID:26350134 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:62580 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62581
+      snippet: D-cystine(out) + ATP + H2O => D-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62581 declares side 62580_L as its substrates
+        (rh:substrates); the master reaction RHEA:62580 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:26350134 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: H2O is a substrate consumed by RHEA:62580 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62581
+      snippet: D-cystine(out) + ATP + H2O => D-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62581 declares side 62580_L as its substrates
+        (rh:substrates); the master reaction RHEA:62580 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:26350134 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: D-cystine is a product released by RHEA:62580 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62581
+      snippet: D-cystine(out) + ATP + H2O => D-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62581 declares side 62580_R as its products
+        (rh:products); the master reaction RHEA:62580 is undirected. This participant is CHEBI:145813
+        with coefficient 1. Rhea cites PMID:26350134 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: ADP is a product released by RHEA:62580 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62581
+      snippet: D-cystine(out) + ATP + H2O => D-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62581 declares side 62580_R as its products
+        (rh:products); the master reaction RHEA:62580 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:26350134 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: phosphate is a product released by RHEA:62580 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62581
+      snippet: D-cystine(out) + ATP + H2O => D-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62581 declares side 62580_R as its products
+        (rh:products); the master reaction RHEA:62580 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:26350134 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd4
+    description: H(+) is a product released by RHEA:62580 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62581
+      snippet: D-cystine(out) + ATP + H2O => D-cystine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62581 declares side 62580_R as its products
+        (rh:products); the master reaction RHEA:62580 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:26350134 for this reaction.
+  - subject: prot_P37774
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TCYN_ECOLI is an exemplar enzyme with EC 7.4.2.12 activity.
+    evidence:
+    - reference: EC:7.4.2.12
+      snippet: DR   P37774, TCYN_ECOLI ;
+      notes: ExPASy ENZYME entry EC 7.4.2.12 cross-references UniProtKB:P37774 (TCYN_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (17 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

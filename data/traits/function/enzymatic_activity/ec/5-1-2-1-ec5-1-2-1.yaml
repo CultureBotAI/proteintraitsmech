@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.2.-
 synonyms:
@@ -41,4 +41,100 @@ definitions:
       Catalyses: (S)-lactate = (R)-lactate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lactate racemase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.2.1. EC 5.1.2.1 maps to exactly
+    one curated Rhea reaction (RHEA:10960), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-lactate =
+    (R)-lactate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lactate racemase
+    grounding: EC:5.1.2.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:16651
+    description: Formula C3H5O3.
+  - node_id: prd1
+    label: (R)-lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:16004
+    description: Formula C3H5O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: lactate racemase activity
+    grounding: GO:0050043
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_F9USS9
+    node_type: PROTEIN
+    label: LARA_LACPL
+    grounding: UniProtKB:F9USS9
+  - node_id: prot_D9TQ02
+    node_type: PROTEIN
+    label: LARA_THETC
+    grounding: UniProtKB:D9TQ02
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-lactate is a substrate consumed by RHEA:10960 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10961
+      snippet: (S)-lactate => (R)-lactate
+      notes: Rhea's left-to-right directional reaction RHEA:10961 declares side 10960_L as its substrates
+        (rh:substrates); the master reaction RHEA:10960 is undirected. This participant is CHEBI:16651
+        with coefficient 1. Rhea cites PMID:24710389, PMID:26138974 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-lactate is a product released by RHEA:10960 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10961
+      snippet: (S)-lactate => (R)-lactate
+      notes: Rhea's left-to-right directional reaction RHEA:10961 declares side 10960_R as its products
+        (rh:products); the master reaction RHEA:10960 is undirected. This participant is CHEBI:16004 with
+        coefficient 1. Rhea cites PMID:24710389, PMID:26138974 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.2.1
+      snippet: EC:5.1.2.1 > GO:lactate racemase activity ; GO:0050043
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050043 is itself a record
+        in this KB.
+  - subject: prot_F9USS9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LARA_LACPL is an exemplar enzyme with EC 5.1.2.1 activity.
+    evidence:
+    - reference: EC:5.1.2.1
+      snippet: DR   F9USS9, LARA_LACPL ;  D9TQ02, LARA_THETC ;
+      notes: ExPASy ENZYME entry EC 5.1.2.1 cross-references UniProtKB:F9USS9 (LARA_LACPL) as a protein
+        with this activity.
+  - subject: prot_D9TQ02
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LARA_THETC is an exemplar enzyme with EC 5.1.2.1 activity.
+    evidence:
+    - reference: EC:5.1.2.1
+      snippet: DR   F9USS9, LARA_LACPL ;  D9TQ02, LARA_THETC ;
+      notes: ExPASy ENZYME entry EC 5.1.2.1 cross-references UniProtKB:D9TQ02 (LARA_THETC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

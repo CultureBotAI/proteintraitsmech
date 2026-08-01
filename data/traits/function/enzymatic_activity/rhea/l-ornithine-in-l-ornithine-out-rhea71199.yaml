@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:46911
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,61 @@ definitions:
       Catalyses the reaction: L-ornithine(in) = L-ornithine(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-ornithine(in) = L-ornithine(out)
+  description: 'Substrate-to-product chemistry of RHEA:71199, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71200 (rh:substrates → 71199_L, rh:products → 71199_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of L-ornithine(in) = L-ornithine(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71199
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-ornithine(in) = L-ornithine(out)'
+  - node_id: sub1
+    label: L-ornithine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: prd1
+    label: L-ornithine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-ornithine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71200
+      snippet: L-ornithine(in) => L-ornithine(out)
+      notes: Rhea's left-to-right directional reaction RHEA:71200 declares side 71199_L as its substrates
+        (rh:substrates); the master reaction RHEA:71199 is undirected. This participant is CHEBI:46911
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:11591158,
+        PMID:1652100, PMID:26403849, PMID:24652292 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-ornithine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71200
+      snippet: L-ornithine(in) => L-ornithine(out)
+      notes: Rhea's left-to-right directional reaction RHEA:71200 declares side 71199_R as its products
+        (rh:products); the master reaction RHEA:71199 is undirected. This participant is CHEBI:46911 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:11591158,
+        PMID:1652100, PMID:26403849, PMID:24652292 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

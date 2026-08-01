@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.2.-
 synonyms:
@@ -43,4 +43,115 @@ definitions:
       Catalyses: oxaloacetate = enol-oxaloacetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of oxaloacetate tautomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.2.2. EC 5.3.2.2 maps to exactly
+    one curated Rhea reaction (RHEA:16021), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "oxaloacetate
+    = enol-oxaloacetate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: oxaloacetate tautomerase
+    grounding: EC:5.3.2.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+    description: Formula C4H2O5.
+  - node_id: prd1
+    label: enol-oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:17479
+    description: Formula C4H2O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: oxaloacetate tautomerase activity
+    grounding: GO:0050163
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_F1MLX0
+    node_type: PROTEIN
+    label: FAH2A_BOVIN
+    grounding: UniProtKB:F1MLX0
+  - node_id: prot_Q96GK7
+    node_type: PROTEIN
+    label: FAH2A_HUMAN
+    grounding: UniProtKB:Q96GK7
+  - node_id: prot_Q3TC72
+    node_type: PROTEIN
+    label: FAH2A_MOUSE
+    grounding: UniProtKB:Q3TC72
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxaloacetate is a substrate consumed by RHEA:16021 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16022
+      snippet: oxaloacetate => enol-oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:16022 declares side 16021_L as its substrates
+        (rh:substrates); the master reaction RHEA:16021 is undirected. This participant is CHEBI:16452
+        with coefficient 1. Rhea cites PMID:3179281, PMID:38287013, PMID:39395800, PMID:5781999 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: enol-oxaloacetate is a product released by RHEA:16021 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16022
+      snippet: oxaloacetate => enol-oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:16022 declares side 16021_R as its products
+        (rh:products); the master reaction RHEA:16021 is undirected. This participant is CHEBI:17479 with
+        coefficient 1. Rhea cites PMID:3179281, PMID:38287013, PMID:39395800, PMID:5781999 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.2.2
+      snippet: EC:5.3.2.2 > GO:oxaloacetate tautomerase activity ; GO:0050163
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050163 is itself a record
+        in this KB.
+  - subject: prot_F1MLX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAH2A_BOVIN is an exemplar enzyme with EC 5.3.2.2 activity.
+    evidence:
+    - reference: EC:5.3.2.2
+      snippet: DR   F1MLX0, FAH2A_BOVIN;  Q96GK7, FAH2A_HUMAN;  Q3TC72, FAH2A_MOUSE;
+      notes: ExPASy ENZYME entry EC 5.3.2.2 cross-references UniProtKB:F1MLX0 (FAH2A_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q96GK7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAH2A_HUMAN is an exemplar enzyme with EC 5.3.2.2 activity.
+    evidence:
+    - reference: EC:5.3.2.2
+      snippet: DR   F1MLX0, FAH2A_BOVIN;  Q96GK7, FAH2A_HUMAN;  Q3TC72, FAH2A_MOUSE;
+      notes: ExPASy ENZYME entry EC 5.3.2.2 cross-references UniProtKB:Q96GK7 (FAH2A_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q3TC72
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAH2A_MOUSE is an exemplar enzyme with EC 5.3.2.2 activity.
+    evidence:
+    - reference: EC:5.3.2.2
+      snippet: DR   F1MLX0, FAH2A_BOVIN;  Q96GK7, FAH2A_HUMAN;  Q3TC72, FAH2A_MOUSE;
+      notes: ExPASy ENZYME entry EC 5.3.2.2 cross-references UniProtKB:Q3TC72 (FAH2A_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

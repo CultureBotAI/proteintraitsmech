@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -32,4 +32,125 @@ definitions:
       Catalyses: a mycolipenoyl-CoA + a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose = a 2-O-(long-chain fatty acyl)-3-O-mycolipenoyl-trehalose + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mycolipenoyl-CoA--2-(long-chain-fatty acyl)-trehalose mycolipenoyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.278. EC 2.3.1.278 maps to
+    exactly one curated Rhea reaction (RHEA:38459), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a mycolipenoyl-CoA
+    + a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose = a 2-O-(long-chain fatty acyl)-3-O-mycolipenoyl-trehalose
+    + CoA". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mycolipenoyl-CoA--2-(long-chain-fatty acyl)-trehalose mycolipenoyltransferase
+    grounding: EC:2.3.1.278
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a mycolipenoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:142475
+    description: Formula C31H47N7O17P3SR.
+  - node_id: sub2
+    label: a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:142477
+    description: Formula C13H21O12R.
+  - node_id: prd1
+    label: a 2-O-(long-chain fatty acyl)-3-O-mycolipenoyl-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:142476
+    description: Formula C23H36O13R2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_P9WIK4
+    node_type: PROTEIN
+    label: PAPA3_MYCTO
+    grounding: UniProtKB:P9WIK4
+  - node_id: prot_P9WIK5
+    node_type: PROTEIN
+    label: PAPA3_MYCTU
+    grounding: UniProtKB:P9WIK5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a mycolipenoyl-CoA is a substrate consumed by RHEA:38459 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38460
+      snippet: a mycolipenoyl-CoA + a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose => a 2-O-(long-chain
+        fatty acyl)-3-O-mycolipenoyl-trehalose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38460 declares side 38459_L as its substrates
+        (rh:substrates); the master reaction RHEA:38459 is undirected. This participant is CHEBI:142475
+        with coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose is a substrate consumed by RHEA:38459
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38460
+      snippet: a mycolipenoyl-CoA + a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose => a 2-O-(long-chain
+        fatty acyl)-3-O-mycolipenoyl-trehalose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38460 declares side 38459_L as its substrates
+        (rh:substrates); the master reaction RHEA:38459 is undirected. This participant is CHEBI:142477
+        with coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 2-O-(long-chain fatty acyl)-3-O-mycolipenoyl-trehalose is a product released by RHEA:38459
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38460
+      snippet: a mycolipenoyl-CoA + a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose => a 2-O-(long-chain
+        fatty acyl)-3-O-mycolipenoyl-trehalose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38460 declares side 38459_R as its products
+        (rh:products); the master reaction RHEA:38459 is undirected. This participant is CHEBI:142476
+        with coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:38459 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38460
+      snippet: a mycolipenoyl-CoA + a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose => a 2-O-(long-chain
+        fatty acyl)-3-O-mycolipenoyl-trehalose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38460 declares side 38459_R as its products
+        (rh:products); the master reaction RHEA:38459 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: prot_P9WIK4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAPA3_MYCTO is an exemplar enzyme with EC 2.3.1.278 activity.
+    evidence:
+    - reference: EC:2.3.1.278
+      snippet: DR   P9WIK4, PAPA3_MYCTO;  P9WIK5, PAPA3_MYCTU;
+      notes: ExPASy ENZYME entry EC 2.3.1.278 cross-references UniProtKB:P9WIK4 (PAPA3_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WIK5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAPA3_MYCTU is an exemplar enzyme with EC 2.3.1.278 activity.
+    evidence:
+    - reference: EC:2.3.1.278
+      snippet: DR   P9WIK4, PAPA3_MYCTO;  P9WIK5, PAPA3_MYCTU;
+      notes: ExPASy ENZYME entry EC 2.3.1.278 cross-references UniProtKB:P9WIK5 (PAPA3_MYCTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

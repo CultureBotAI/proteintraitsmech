@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.2.1.-
 mapped_xrefs:
@@ -30,4 +30,265 @@ definitions:
       Catalyses: (1) ATP + a marinolic acid + CoA = AMP + diphosphate + a marinoloyl-CoA. (2) ATP + a pseudomonic acid + CoA = AMP + diphosphate + a pseudomonoyl- CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of marinolic acid--CoA ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.2.1.60. Rhea assigns 2 curated
+    reactions to EC 6.2.1.60. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) ATP + a marinolic acid + CoA = AMP + diphosphate + a
+    marinoloyl-CoA. (2) ATP + a pseudomonic acid + CoA = AMP + diphosphate + a pseudomonoyl- CoA". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: marinolic acid--CoA ligase
+    grounding: EC:6.2.1.60
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of marinolate C + ATP + CoA = marinoloyl-CoA C + AMP + diphosphate
+    grounding: RHEA:59148
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: marinolate C + ATP + CoA = marinoloyl-CoA C + AMP + diphosphate'
+  - node_id: rxn1_sub1
+    label: marinolate C
+    node_type: CHEMICAL
+    grounding: CHEBI:142975
+    description: Formula C25H41O8.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_sub3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: rxn1_prd1
+    label: marinoloyl-CoA C
+    node_type: CHEMICAL
+    grounding: CHEBI:142976
+    description: Formula C46H72N7O23P3S.
+  - node_id: rxn1_prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: rxn1_prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of pseudomonate C + ATP + CoA = pseudomonoyl-CoA C + AMP + diphosphate
+    grounding: RHEA:59152
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: pseudomonate C + ATP + CoA = pseudomonoyl-CoA C + AMP + diphosphate'
+  - node_id: rxn2_sub1
+    label: pseudomonate C
+    node_type: CHEMICAL
+    grounding: CHEBI:142974
+    description: Formula C26H43O8.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_sub3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: rxn2_prd1
+    label: pseudomonoyl-CoA C
+    node_type: CHEMICAL
+    grounding: CHEBI:142977
+    description: Formula C47H74N7O23P3S.
+  - node_id: rxn2_prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: rxn2_prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_F8J3D9
+    node_type: PROTEIN
+    label: TMLU_PSEX7
+    grounding: UniProtKB:F8J3D9
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:59148 is one of the 2 curated reactions Rhea assigns to EC 6.2.1.60; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:59148
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.2.1.60"/>
+      notes: The rh:ec triple on RHEA:59148 in rhea.rdf assigns that reaction to EC 6.2.1.60.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: marinolate C is a substrate consumed by RHEA:59148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59149
+      snippet: marinolate C + ATP + CoA => marinoloyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59149 declares side 59148_L as its substrates
+        (rh:substrates); the master reaction RHEA:59148 is undirected. This participant is CHEBI:142975
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:59148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59149
+      snippet: marinolate C + ATP + CoA => marinoloyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59149 declares side 59148_L as its substrates
+        (rh:substrates); the master reaction RHEA:59148 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: CoA is a substrate consumed by RHEA:59148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59149
+      snippet: marinolate C + ATP + CoA => marinoloyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59149 declares side 59148_L as its substrates
+        (rh:substrates); the master reaction RHEA:59148 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: marinoloyl-CoA C is a product released by RHEA:59148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59149
+      snippet: marinolate C + ATP + CoA => marinoloyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59149 declares side 59148_R as its products
+        (rh:products); the master reaction RHEA:59148 is undirected. This participant is CHEBI:142976
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: AMP is a product released by RHEA:59148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59149
+      snippet: marinolate C + ATP + CoA => marinoloyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59149 declares side 59148_R as its products
+        (rh:products); the master reaction RHEA:59148 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: diphosphate is a product released by RHEA:59148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59149
+      snippet: marinolate C + ATP + CoA => marinoloyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59149 declares side 59148_R as its products
+        (rh:products); the master reaction RHEA:59148 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:59152 is one of the 2 curated reactions Rhea assigns to EC 6.2.1.60; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:59152
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.2.1.60"/>
+      notes: The rh:ec triple on RHEA:59152 in rhea.rdf assigns that reaction to EC 6.2.1.60.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: pseudomonate C is a substrate consumed by RHEA:59152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59153
+      snippet: pseudomonate C + ATP + CoA => pseudomonoyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59153 declares side 59152_L as its substrates
+        (rh:substrates); the master reaction RHEA:59152 is undirected. This participant is CHEBI:142974
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:59152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59153
+      snippet: pseudomonate C + ATP + CoA => pseudomonoyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59153 declares side 59152_L as its substrates
+        (rh:substrates); the master reaction RHEA:59152 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: CoA is a substrate consumed by RHEA:59152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59153
+      snippet: pseudomonate C + ATP + CoA => pseudomonoyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59153 declares side 59152_L as its substrates
+        (rh:substrates); the master reaction RHEA:59152 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: pseudomonoyl-CoA C is a product released by RHEA:59152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59153
+      snippet: pseudomonate C + ATP + CoA => pseudomonoyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59153 declares side 59152_R as its products
+        (rh:products); the master reaction RHEA:59152 is undirected. This participant is CHEBI:142977
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: AMP is a product released by RHEA:59152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59153
+      snippet: pseudomonate C + ATP + CoA => pseudomonoyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59153 declares side 59152_R as its products
+        (rh:products); the master reaction RHEA:59152 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: diphosphate is a product released by RHEA:59152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59153
+      snippet: pseudomonate C + ATP + CoA => pseudomonoyl-CoA C + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:59153 declares side 59152_R as its products
+        (rh:products); the master reaction RHEA:59152 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25726835 for this reaction.
+  - subject: prot_F8J3D9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMLU_PSEX7 is an exemplar enzyme with EC 6.2.1.60 activity.
+    evidence:
+    - reference: EC:6.2.1.60
+      snippet: DR   F8J3D9, TMLU_PSEX7 ;
+      notes: ExPASy ENZYME entry EC 6.2.1.60 cross-references UniProtKB:F8J3D9 (TMLU_PSEX7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

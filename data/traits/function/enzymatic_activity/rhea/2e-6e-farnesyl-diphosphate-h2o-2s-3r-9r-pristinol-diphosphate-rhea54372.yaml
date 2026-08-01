@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.182
     mapping_source: rhea2ec
@@ -30,4 +30,147 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate + H2O = (+)-(2S,3R,9R)-pristinol + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate + H2O = (+)-(2S,3R,9R)-pristinol + diphosphate
+  description: Substrate-to-product chemistry of RHEA:54372, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:54373 (rh:substrates → 54372_L, rh:products → 54372_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate + H2O = (+)-(2S,3R,9R)-pristinol + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:54372
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate + H2O = (+)-(2S,3R,9R)-pristinol + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (+)-(2S,3R,9R)-pristinol
+    node_type: CHEMICAL
+    grounding: CHEBI:138165
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: pristinol synthase
+    grounding: EC:4.2.3.182
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_B5H7H3
+    node_type: PROTEIN
+    label: PRISS_STRE2
+    grounding: UniProtKB:B5H7H3
+  - node_id: prot_A0A5S9I252
+    node_type: PROTEIN
+    label: TATC6_TRIAV
+    grounding: UniProtKB:A0A5S9I252
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54373
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-(2S,3R,9R)-pristinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54373 declares side 54372_L as its substrates
+        (rh:substrates); the master reaction RHEA:54372 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:31418991, PMID:27403888 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54373
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-(2S,3R,9R)-pristinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54373 declares side 54372_L as its substrates
+        (rh:substrates); the master reaction RHEA:54372 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:31418991, PMID:27403888 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-(2S,3R,9R)-pristinol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54373
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-(2S,3R,9R)-pristinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54373 declares side 54372_R as its products
+        (rh:products); the master reaction RHEA:54372 is undirected. This participant is CHEBI:138165
+        with coefficient 1. Rhea cites PMID:31418991, PMID:27403888 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54373
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-(2S,3R,9R)-pristinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54373 declares side 54372_R as its products
+        (rh:products); the master reaction RHEA:54372 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:31418991, PMID:27403888 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.182; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:54372
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.182"/>
+      notes: The rh:ec triple on RHEA:54372 in rhea.rdf. EC 4.2.3.182 is itself a record in this KB.
+  - subject: prot_B5H7H3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRISS_STRE2 is an exemplar enzyme carrying EC 4.2.3.182, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.182
+      snippet: DR   B5H7H3, PRISS_STRE2;  A0A5S9I252, TATC6_TRIAV;
+      notes: ExPASy ENZYME entry EC 4.2.3.182 cross-references UniProtKB:B5H7H3 (PRISS_STRE2) as a protein
+        with this activity.
+    - reference: RHEA:54372
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.182"/>
+      notes: Rhea assigns RHEA:54372 to EC 4.2.3.182, and EC 4.2.3.182 maps to exactly one Rhea master
+        reaction (RHEA:54372), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0A5S9I252
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TATC6_TRIAV is an exemplar enzyme carrying EC 4.2.3.182, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.182
+      snippet: DR   B5H7H3, PRISS_STRE2;  A0A5S9I252, TATC6_TRIAV;
+      notes: ExPASy ENZYME entry EC 4.2.3.182 cross-references UniProtKB:A0A5S9I252 (TATC6_TRIAV) as a
+        protein with this activity.
+    - reference: RHEA:54372
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.182"/>
+      notes: Rhea assigns RHEA:54372 to EC 4.2.3.182, and EC 4.2.3.182 maps to exactly one Rhea master
+        reaction (RHEA:54372), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

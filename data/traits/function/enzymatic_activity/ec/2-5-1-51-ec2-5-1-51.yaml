@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -45,4 +45,135 @@ definitions:
       Catalyses: pyrazole + O-acetyl-L-serine = 3-(pyrazol-1-yl)-L-alanine + acetate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-pyrazolylalanine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.51. EC 2.5.1.51 maps to exactly
+    one curated Rhea reaction (RHEA:13117), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "pyrazole + O-acetyl-L-serine
+    = 3-(pyrazol-1-yl)-L-alanine + acetate + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-pyrazolylalanine synthase
+    grounding: EC:2.5.1.51
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: pyrazole
+    node_type: CHEMICAL
+    grounding: CHEBI:17241
+    description: Formula C3H4N2.
+  - node_id: sub2
+    label: O-acetyl-L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:58340
+    description: Formula C5H9NO4.
+  - node_id: prd1
+    label: 3-(pyrazol-1-yl)-L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57747
+    description: Formula C6H9N3O2.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-pyrazolylalanine synthase activity
+    grounding: GO:0047458
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q43317
+    node_type: PROTEIN
+    label: CYSK_CITLA
+    grounding: UniProtKB:Q43317
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: pyrazole is a substrate consumed by RHEA:13117 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13118
+      snippet: pyrazole + O-acetyl-L-serine => 3-(pyrazol-1-yl)-L-alanine + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13118 declares side 13117_L as its substrates
+        (rh:substrates); the master reaction RHEA:13117 is undirected. This participant is CHEBI:17241
+        with coefficient 1. Rhea cites PMID:8280125 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O-acetyl-L-serine is a substrate consumed by RHEA:13117 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13118
+      snippet: pyrazole + O-acetyl-L-serine => 3-(pyrazol-1-yl)-L-alanine + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13118 declares side 13117_L as its substrates
+        (rh:substrates); the master reaction RHEA:13117 is undirected. This participant is CHEBI:58340
+        with coefficient 1. Rhea cites PMID:8280125 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-(pyrazol-1-yl)-L-alanine is a product released by RHEA:13117 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13118
+      snippet: pyrazole + O-acetyl-L-serine => 3-(pyrazol-1-yl)-L-alanine + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13118 declares side 13117_R as its products
+        (rh:products); the master reaction RHEA:13117 is undirected. This participant is CHEBI:57747 with
+        coefficient 1. Rhea cites PMID:8280125 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:13117 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13118
+      snippet: pyrazole + O-acetyl-L-serine => 3-(pyrazol-1-yl)-L-alanine + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13118 declares side 13117_R as its products
+        (rh:products); the master reaction RHEA:13117 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:8280125 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:13117 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13118
+      snippet: pyrazole + O-acetyl-L-serine => 3-(pyrazol-1-yl)-L-alanine + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13118 declares side 13117_R as its products
+        (rh:products); the master reaction RHEA:13117 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8280125 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.51
+      snippet: EC:2.5.1.51 > GO:beta-pyrazolylalanine synthase activity ; GO:0047458
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047458 is itself a record
+        in this KB.
+  - subject: prot_Q43317
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYSK_CITLA is an exemplar enzyme with EC 2.5.1.51 activity.
+    evidence:
+    - reference: EC:2.5.1.51
+      snippet: DR   Q43317, CYSK_CITLA ;
+      notes: ExPASy ENZYME entry EC 2.5.1.51 cross-references UniProtKB:Q43317 (CYSK_CITLA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

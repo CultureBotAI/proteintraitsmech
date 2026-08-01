@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -38,4 +38,131 @@ definitions:
       Catalyses: D-gluconate = 2-dehydro-3-deoxy-D-gluconate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gluconate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.39. EC 4.2.1.39 maps to exactly
+    one curated Rhea reaction (RHEA:21612), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-gluconate =
+    2-dehydro-3-deoxy-D-gluconate + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gluconate dehydratase
+    grounding: EC:4.2.1.39
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:18391
+    description: Formula C6H11O7.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:57990
+    description: Formula C6H9O6.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: gluconate dehydratase activity
+    grounding: GO:0047929
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_D4GJ14
+    node_type: PROTEIN
+    label: DGD_PANAM
+    grounding: UniProtKB:D4GJ14
+  - node_id: prot_B5R541
+    node_type: PROTEIN
+    label: DGD_SALEP
+    grounding: UniProtKB:B5R541
+  - node_id: prot_B5QBD4
+    node_type: PROTEIN
+    label: DGD_SALV4
+    grounding: UniProtKB:B5QBD4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-gluconate is a substrate consumed by RHEA:21612 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21613
+      snippet: D-gluconate => 2-dehydro-3-deoxy-D-gluconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21613 declares side 21612_L as its substrates
+        (rh:substrates); the master reaction RHEA:21612 is undirected. This participant is CHEBI:18391
+        with coefficient 1. Rhea cites PMID:20023024, PMID:5383859, PMID:4772682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-D-gluconate is a product released by RHEA:21612 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21613
+      snippet: D-gluconate => 2-dehydro-3-deoxy-D-gluconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21613 declares side 21612_R as its products
+        (rh:products); the master reaction RHEA:21612 is undirected. This participant is CHEBI:57990 with
+        coefficient 1. Rhea cites PMID:20023024, PMID:5383859, PMID:4772682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:21612 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21613
+      snippet: D-gluconate => 2-dehydro-3-deoxy-D-gluconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21613 declares side 21612_R as its products
+        (rh:products); the master reaction RHEA:21612 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:20023024, PMID:5383859, PMID:4772682 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.39
+      snippet: EC:4.2.1.39 > GO:gluconate dehydratase activity ; GO:0047929
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047929 is itself a record
+        in this KB.
+  - subject: prot_D4GJ14
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DGD_PANAM is an exemplar enzyme with EC 4.2.1.39 activity.
+    evidence:
+    - reference: EC:4.2.1.39
+      snippet: DR   D4GJ14, DGD_PANAM  ;  B5R541, DGD_SALEP  ;  B5QBD4, DGD_SALV4  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.39 cross-references UniProtKB:D4GJ14 (DGD_PANAM) as a protein
+        with this activity.
+  - subject: prot_B5R541
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DGD_SALEP is an exemplar enzyme with EC 4.2.1.39 activity.
+    evidence:
+    - reference: EC:4.2.1.39
+      snippet: DR   D4GJ14, DGD_PANAM  ;  B5R541, DGD_SALEP  ;  B5QBD4, DGD_SALV4  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.39 cross-references UniProtKB:B5R541 (DGD_SALEP) as a protein
+        with this activity.
+  - subject: prot_B5QBD4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DGD_SALV4 is an exemplar enzyme with EC 4.2.1.39 activity.
+    evidence:
+    - reference: EC:4.2.1.39
+      snippet: DR   D4GJ14, DGD_PANAM  ;  B5R541, DGD_SALEP  ;  B5QBD4, DGD_SALV4  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.39 cross-references UniProtKB:B5QBD4 (DGD_SALV4) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

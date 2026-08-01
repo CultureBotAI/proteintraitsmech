@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -31,4 +31,89 @@ definitions:
       Catalyses: (2S)-3-sulfopropanediol = 3-oxopropane-1-sulfonate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2S)-3-sulfopropanediol dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.177. EC 4.2.1.177 maps to
+    exactly one curated Rhea reaction (RHEA:68600), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2S)-3-sulfopropanediol
+    = 3-oxopropane-1-sulfonate + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (2S)-3-sulfopropanediol dehydratase
+    grounding: EC:4.2.1.177
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2S)-3-sulfopropanediol
+    node_type: CHEMICAL
+    grounding: CHEBI:176527
+    description: Formula C3H7O5S.
+  - node_id: prd1
+    label: 3-oxopropane-1-sulfonate
+    node_type: CHEMICAL
+    grounding: CHEBI:176528
+    description: Formula C3H5O4S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_A0A318FL05
+    node_type: PROTEIN
+    label: HPFG_KLEOX
+    grounding: UniProtKB:A0A318FL05
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S)-3-sulfopropanediol is a substrate consumed by RHEA:68600 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68601
+      snippet: (2S)-3-sulfopropanediol => 3-oxopropane-1-sulfonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:68601 declares side 68600_L as its substrates
+        (rh:substrates); the master reaction RHEA:68600 is undirected. This participant is CHEBI:176527
+        with coefficient 1. Rhea cites PMID:32571930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-oxopropane-1-sulfonate is a product released by RHEA:68600 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68601
+      snippet: (2S)-3-sulfopropanediol => 3-oxopropane-1-sulfonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:68601 declares side 68600_R as its products
+        (rh:products); the master reaction RHEA:68600 is undirected. This participant is CHEBI:176528
+        with coefficient 1. Rhea cites PMID:32571930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:68600 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68601
+      snippet: (2S)-3-sulfopropanediol => 3-oxopropane-1-sulfonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:68601 declares side 68600_R as its products
+        (rh:products); the master reaction RHEA:68600 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:32571930 for this reaction.
+  - subject: prot_A0A318FL05
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPFG_KLEOX is an exemplar enzyme with EC 4.2.1.177 activity.
+    evidence:
+    - reference: EC:4.2.1.177
+      snippet: DR   A0A318FL05, HPFG_KLEOX ;
+      notes: ExPASy ENZYME entry EC 4.2.1.177 cross-references UniProtKB:A0A318FL05 (HPFG_KLEOX) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

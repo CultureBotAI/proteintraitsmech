@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -35,4 +35,120 @@ definitions:
       Catalyses: dimethylallyl diphosphate + L-tryptophan = 7-(3-methylbut-2-enyl)-L- tryptophan + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 7-dimethylallyltryptophan synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.80. EC 2.5.1.80 maps to exactly
+    one curated Rhea reaction (RHEA:30563), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dimethylallyl
+    diphosphate + L-tryptophan = 7-(3-methylbut-2-enyl)-L- tryptophan + diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 7-dimethylallyltryptophan synthase
+    grounding: EC:2.5.1.80
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: sub2
+    label: L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:57912
+    description: Formula C11H12N2O2.
+  - node_id: prd1
+    label: 7-(3-methylbut-2-enyl)-L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:62497
+    description: Formula C16H20N2O2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q4WYG3
+    node_type: PROTEIN
+    label: 7DMAW_ASPFU
+    grounding: UniProtKB:Q4WYG3
+  - node_id: prot_B0XWK7
+    node_type: PROTEIN
+    label: HASE_ASPFC
+    grounding: UniProtKB:B0XWK7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:30563 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30564
+      snippet: dimethylallyl diphosphate + L-tryptophan => 7-(3-methylbut-2-enyl)-L-tryptophan + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30564 declares side 30563_L as its substrates
+        (rh:substrates); the master reaction RHEA:30563 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:18481055, PMID:17906140 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-tryptophan is a substrate consumed by RHEA:30563 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30564
+      snippet: dimethylallyl diphosphate + L-tryptophan => 7-(3-methylbut-2-enyl)-L-tryptophan + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30564 declares side 30563_L as its substrates
+        (rh:substrates); the master reaction RHEA:30563 is undirected. This participant is CHEBI:57912
+        with coefficient 1. Rhea cites PMID:18481055, PMID:17906140 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 7-(3-methylbut-2-enyl)-L-tryptophan is a product released by RHEA:30563 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:30564
+      snippet: dimethylallyl diphosphate + L-tryptophan => 7-(3-methylbut-2-enyl)-L-tryptophan + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30564 declares side 30563_R as its products
+        (rh:products); the master reaction RHEA:30563 is undirected. This participant is CHEBI:62497 with
+        coefficient 1. Rhea cites PMID:18481055, PMID:17906140 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:30563 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30564
+      snippet: dimethylallyl diphosphate + L-tryptophan => 7-(3-methylbut-2-enyl)-L-tryptophan + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30564 declares side 30563_R as its products
+        (rh:products); the master reaction RHEA:30563 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18481055, PMID:17906140 for this reaction.
+  - subject: prot_Q4WYG3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 7DMAW_ASPFU is an exemplar enzyme with EC 2.5.1.80 activity.
+    evidence:
+    - reference: EC:2.5.1.80
+      snippet: DR   Q4WYG3, 7DMAW_ASPFU;  B0XWK7, HASE_ASPFC ;
+      notes: ExPASy ENZYME entry EC 2.5.1.80 cross-references UniProtKB:Q4WYG3 (7DMAW_ASPFU) as a protein
+        with this activity.
+  - subject: prot_B0XWK7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HASE_ASPFC is an exemplar enzyme with EC 2.5.1.80 activity.
+    evidence:
+    - reference: EC:2.5.1.80
+      snippet: DR   Q4WYG3, 7DMAW_ASPFU;  B0XWK7, HASE_ASPFC ;
+      notes: ExPASy ENZYME entry EC 2.5.1.80 cross-references UniProtKB:B0XWK7 (HASE_ASPFC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.1.-
 synonyms:
@@ -45,4 +45,130 @@ definitions:
       Catalyses: L-histidine = trans-urocanate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of histidine ammonia-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.1.3. EC 4.3.1.3 maps to exactly
+    one curated Rhea reaction (RHEA:21232), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-histidine =
+    trans-urocanate + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: histidine ammonia-lyase
+    grounding: EC:4.3.1.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57595
+    description: Formula C6H9N3O2.
+  - node_id: prd1
+    label: trans-urocanate
+    node_type: CHEMICAL
+    grounding: CHEBI:17771
+    description: Formula C6H5N2O2.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: histidine ammonia-lyase activity
+    grounding: GO:0004397
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q556V9
+    node_type: PROTEIN
+    label: HALL_DICDI
+    grounding: UniProtKB:Q556V9
+  - node_id: prot_Q20502
+    node_type: PROTEIN
+    label: HUTH1_CAEEL
+    grounding: UniProtKB:Q20502
+  - node_id: prot_Q8RFC2
+    node_type: PROTEIN
+    label: HUTH1_FUSNN
+    grounding: UniProtKB:Q8RFC2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-histidine is a substrate consumed by RHEA:21232 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21233
+      snippet: L-histidine => trans-urocanate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21233 declares side 21232_L as its substrates
+        (rh:substrates); the master reaction RHEA:21232 is undirected. This participant is CHEBI:57595
+        with coefficient 1. Rhea cites PMID:15906398, PMID:11732994, PMID:39337646 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: trans-urocanate is a product released by RHEA:21232 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21233
+      snippet: L-histidine => trans-urocanate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21233 declares side 21232_R as its products
+        (rh:products); the master reaction RHEA:21232 is undirected. This participant is CHEBI:17771 with
+        coefficient 1. Rhea cites PMID:15906398, PMID:11732994, PMID:39337646 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:21232 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21233
+      snippet: L-histidine => trans-urocanate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21233 declares side 21232_R as its products
+        (rh:products); the master reaction RHEA:21232 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:15906398, PMID:11732994, PMID:39337646 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.3.1.3
+      snippet: EC:4.3.1.3 > GO:histidine ammonia-lyase activity ; GO:0004397
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004397 is itself a record
+        in this KB.
+  - subject: prot_Q556V9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HALL_DICDI is an exemplar enzyme with EC 4.3.1.3 activity.
+    evidence:
+    - reference: EC:4.3.1.3
+      snippet: DR   Q556V9, HALL_DICDI ;  Q20502, HUTH1_CAEEL;  Q8RFC2, HUTH1_FUSNN;
+      notes: ExPASy ENZYME entry EC 4.3.1.3 cross-references UniProtKB:Q556V9 (HALL_DICDI) as a protein
+        with this activity.
+  - subject: prot_Q20502
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTH1_CAEEL is an exemplar enzyme with EC 4.3.1.3 activity.
+    evidence:
+    - reference: EC:4.3.1.3
+      snippet: DR   Q556V9, HALL_DICDI ;  Q20502, HUTH1_CAEEL;  Q8RFC2, HUTH1_FUSNN;
+      notes: ExPASy ENZYME entry EC 4.3.1.3 cross-references UniProtKB:Q20502 (HUTH1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_Q8RFC2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTH1_FUSNN is an exemplar enzyme with EC 4.3.1.3 activity.
+    evidence:
+    - reference: EC:4.3.1.3
+      snippet: DR   Q556V9, HALL_DICDI ;  Q20502, HUTH1_CAEEL;  Q8RFC2, HUTH1_FUSNN;
+      notes: ExPASy ENZYME entry EC 4.3.1.3 cross-references UniProtKB:Q8RFC2 (HUTH1_FUSNN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

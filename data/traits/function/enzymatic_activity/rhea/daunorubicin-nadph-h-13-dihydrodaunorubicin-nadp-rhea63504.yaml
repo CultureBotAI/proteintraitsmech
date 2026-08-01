@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64677
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,123 @@ definitions:
       Catalyses the reaction: daunorubicin + NADPH + H(+) = 13-dihydrodaunorubicin + NADP(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of daunorubicin + NADPH + H(+) = 13-dihydrodaunorubicin + NADP(+)
+  description: Substrate-to-product chemistry of RHEA:63504, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63505 (rh:substrates → 63504_L, rh:products → 63504_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of daunorubicin + NADPH + H(+) = 13-dihydrodaunorubicin + NADP(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63504
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: daunorubicin + NADPH + H(+) = 13-dihydrodaunorubicin + NADP(+)'
+  - node_id: sub1
+    label: daunorubicin
+    node_type: CHEMICAL
+    grounding: CHEBI:64677
+    description: Formula C27H30NO10.
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 13-dihydrodaunorubicin
+    node_type: CHEMICAL
+    grounding: CHEBI:75296
+    description: Formula C27H32NO10.
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: carbonyl reductase (NADPH) activity
+    grounding: GO:0004090
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: daunorubicin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63505
+      snippet: daunorubicin + NADPH + H(+) => 13-dihydrodaunorubicin + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63505 declares side 63504_L as its substrates
+        (rh:substrates); the master reaction RHEA:63504 is undirected. This participant is CHEBI:64677
+        with coefficient 1. Rhea cites PMID:17344335 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63505
+      snippet: daunorubicin + NADPH + H(+) => 13-dihydrodaunorubicin + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63505 declares side 63504_L as its substrates
+        (rh:substrates); the master reaction RHEA:63504 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:17344335 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63505
+      snippet: daunorubicin + NADPH + H(+) => 13-dihydrodaunorubicin + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63505 declares side 63504_L as its substrates
+        (rh:substrates); the master reaction RHEA:63504 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:17344335 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 13-dihydrodaunorubicin is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63505
+      snippet: daunorubicin + NADPH + H(+) => 13-dihydrodaunorubicin + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63505 declares side 63504_R as its products
+        (rh:products); the master reaction RHEA:63504 is undirected. This participant is CHEBI:75296 with
+        coefficient 1. Rhea cites PMID:17344335 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63505
+      snippet: daunorubicin + NADPH + H(+) => 13-dihydrodaunorubicin + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63505 declares side 63504_R as its products
+        (rh:products); the master reaction RHEA:63504 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:17344335 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:63504
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004090"/>
+      notes: The rdfs:seeAlso triple on RHEA:63504 in rhea.rdf. GO term GO:0004090 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

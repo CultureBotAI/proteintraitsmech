@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.6.1.-
 synonyms:
@@ -49,4 +49,291 @@ definitions:
       Catalyses: a ribonucleoside 5'-triphosphate + 2 H2O = a ribonucleoside 5'-phosphate + 2 phosphate + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of apyrase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.6.1.5. Rhea assigns 2 curated
+    reactions to EC 3.6.1.5. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "a ribonucleoside 5''-triphosphate + 2 H2O = a ribonucleoside 5''-phosphate
+    + 2 phosphate + 2 H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: apyrase
+    grounding: EC:3.6.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a ribonucleoside 5'-triphosphate + 2 H2O = a ribonucleoside 5'-phosphate + 2…
+    grounding: RHEA:36795
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a ribonucleoside 5''-triphosphate + 2 H2O = a ribonucleoside 5''-phosphate
+      + 2 phosphate + 2 H(+)'
+  - node_id: rxn1_sub1
+    label: a ribonucleoside 5'-triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61557
+    description: Formula C5H8O13P3R.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: a ribonucleoside 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58043
+    description: Formula C5H8O7PR.
+  - node_id: rxn1_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a 2'-deoxyribonucleoside 5'-triphosphate + 2 H2O = a 2'-deoxyribonucleoside…
+    grounding: RHEA:64912
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a 2''-deoxyribonucleoside 5''-triphosphate + 2 H2O = a 2''-deoxyribonucleoside
+      5''-phosphate + 2 phosphate + 2 H(+)'
+  - node_id: rxn2_sub1
+    label: a 2'-deoxyribonucleoside 5'-triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61560
+    description: Formula C5H8O12P3R.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: a 2'-deoxyribonucleoside 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:65317
+    description: Formula C5H8O6PR.
+  - node_id: rxn2_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: apyrase activity
+    grounding: GO:0004050
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9SQG2
+    node_type: PROTEIN
+    label: APY1_ARATH
+    grounding: UniProtKB:Q9SQG2
+  - node_id: prot_Q8H7L6
+    node_type: PROTEIN
+    label: APY1_ORYSJ
+    grounding: UniProtKB:Q8H7L6
+  - node_id: prot_Q9SPM5
+    node_type: PROTEIN
+    label: APY2_ARATH
+    grounding: UniProtKB:Q9SPM5
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:36795 is one of the 2 curated reactions Rhea assigns to EC 3.6.1.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:36795
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.6.1.5"/>
+      notes: The rh:ec triple on RHEA:36795 in rhea.rdf assigns that reaction to EC 3.6.1.5.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a ribonucleoside 5'-triphosphate is a substrate consumed by RHEA:36795 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36796
+      snippet: a ribonucleoside 5'-triphosphate + 2 H2O => a ribonucleoside 5'-phosphate + 2 phosphate
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36796 declares side 36795_L as its substrates
+        (rh:substrates); the master reaction RHEA:36795 is undirected. This participant is CHEBI:61557
+        with coefficient 1. Rhea cites PMID:15576788, PMID:8529670, PMID:10409709 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:36795 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:36796
+      snippet: a ribonucleoside 5'-triphosphate + 2 H2O => a ribonucleoside 5'-phosphate + 2 phosphate
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36796 declares side 36795_L as its substrates
+        (rh:substrates); the master reaction RHEA:36795 is undirected. This participant is CHEBI:15377
+        with coefficient 2. Rhea cites PMID:15576788, PMID:8529670, PMID:10409709 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a ribonucleoside 5'-phosphate is a product released by RHEA:36795 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36796
+      snippet: a ribonucleoside 5'-triphosphate + 2 H2O => a ribonucleoside 5'-phosphate + 2 phosphate
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36796 declares side 36795_R as its products
+        (rh:products); the master reaction RHEA:36795 is undirected. This participant is CHEBI:58043 with
+        coefficient 1. Rhea cites PMID:15576788, PMID:8529670, PMID:10409709 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: phosphate is a product released by RHEA:36795 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:36796
+      snippet: a ribonucleoside 5'-triphosphate + 2 H2O => a ribonucleoside 5'-phosphate + 2 phosphate
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36796 declares side 36795_R as its products
+        (rh:products); the master reaction RHEA:36795 is undirected. This participant is CHEBI:43474 with
+        coefficient 2. Rhea cites PMID:15576788, PMID:8529670, PMID:10409709 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:36795 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:36796
+      snippet: a ribonucleoside 5'-triphosphate + 2 H2O => a ribonucleoside 5'-phosphate + 2 phosphate
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36796 declares side 36795_R as its products
+        (rh:products); the master reaction RHEA:36795 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:15576788, PMID:8529670, PMID:10409709 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:64912 is one of the 2 curated reactions Rhea assigns to EC 3.6.1.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:64912
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.6.1.5"/>
+      notes: The rh:ec triple on RHEA:64912 in rhea.rdf assigns that reaction to EC 3.6.1.5.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a 2'-deoxyribonucleoside 5'-triphosphate is a substrate consumed by RHEA:64912 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:64913
+      snippet: a 2'-deoxyribonucleoside 5'-triphosphate + 2 H2O => a 2'-deoxyribonucleoside 5'-phosphate
+        + 2 phosphate + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64913 declares side 64912_L as its substrates
+        (rh:substrates); the master reaction RHEA:64912 is undirected. This participant is CHEBI:61560
+        with coefficient 1. Rhea cites PMID:15576788 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:64912 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:64913
+      snippet: a 2'-deoxyribonucleoside 5'-triphosphate + 2 H2O => a 2'-deoxyribonucleoside 5'-phosphate
+        + 2 phosphate + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64913 declares side 64912_L as its substrates
+        (rh:substrates); the master reaction RHEA:64912 is undirected. This participant is CHEBI:15377
+        with coefficient 2. Rhea cites PMID:15576788 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a 2'-deoxyribonucleoside 5'-phosphate is a product released by RHEA:64912 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:64913
+      snippet: a 2'-deoxyribonucleoside 5'-triphosphate + 2 H2O => a 2'-deoxyribonucleoside 5'-phosphate
+        + 2 phosphate + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64913 declares side 64912_R as its products
+        (rh:products); the master reaction RHEA:64912 is undirected. This participant is CHEBI:65317 with
+        coefficient 1. Rhea cites PMID:15576788 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: phosphate is a product released by RHEA:64912 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:64913
+      snippet: a 2'-deoxyribonucleoside 5'-triphosphate + 2 H2O => a 2'-deoxyribonucleoside 5'-phosphate
+        + 2 phosphate + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64913 declares side 64912_R as its products
+        (rh:products); the master reaction RHEA:64912 is undirected. This participant is CHEBI:43474 with
+        coefficient 2. Rhea cites PMID:15576788 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:64912 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:64913
+      snippet: a 2'-deoxyribonucleoside 5'-triphosphate + 2 H2O => a 2'-deoxyribonucleoside 5'-phosphate
+        + 2 phosphate + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64913 declares side 64912_R as its products
+        (rh:products); the master reaction RHEA:64912 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:15576788 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.6.1.5
+      snippet: EC:3.6.1.5 > GO:apyrase activity ; GO:0004050
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004050 is itself a record
+        in this KB.
+  - subject: prot_Q9SQG2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APY1_ARATH is an exemplar enzyme with EC 3.6.1.5 activity.
+    evidence:
+    - reference: EC:3.6.1.5
+      snippet: DR   Q9SQG2, APY1_ARATH ;  Q8H7L6, APY1_ORYSJ ;  Q9SPM5, APY2_ARATH ;
+      notes: ExPASy ENZYME entry EC 3.6.1.5 cross-references UniProtKB:Q9SQG2 (APY1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q8H7L6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APY1_ORYSJ is an exemplar enzyme with EC 3.6.1.5 activity.
+    evidence:
+    - reference: EC:3.6.1.5
+      snippet: DR   Q9SQG2, APY1_ARATH ;  Q8H7L6, APY1_ORYSJ ;  Q9SPM5, APY2_ARATH ;
+      notes: ExPASy ENZYME entry EC 3.6.1.5 cross-references UniProtKB:Q8H7L6 (APY1_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_Q9SPM5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APY2_ARATH is an exemplar enzyme with EC 3.6.1.5 activity.
+    evidence:
+    - reference: EC:3.6.1.5
+      snippet: DR   Q9SQG2, APY1_ARATH ;  Q8H7L6, APY1_ORYSJ ;  Q9SPM5, APY2_ARATH ;
+      notes: ExPASy ENZYME entry EC 3.6.1.5 cross-references UniProtKB:Q9SPM5 (APY2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 mapped_xrefs:
@@ -34,4 +34,133 @@ definitions:
       Catalyses: L-arabinono-1,4-lactone + H2O = L-arabinonate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-arabinonolactonase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.15. EC 3.1.1.15 maps to exactly
+    one curated Rhea reaction (RHEA:16217), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-arabinono-1,4-lactone
+    + H2O = L-arabinonate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-arabinonolactonase
+    grounding: EC:3.1.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-arabinono-1,4-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:17100
+    description: Formula C5H8O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-arabinonate
+    node_type: CHEMICAL
+    grounding: CHEBI:16501
+    description: Formula C5H9O6.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-arabinonolactonase activity
+    grounding: GO:0050021
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q1JUP5
+    node_type: PROTEIN
+    label: ARALA_AZOBR
+    grounding: UniProtKB:Q1JUP5
+  - node_id: prot_D4GP31
+    node_type: PROTEIN
+    label: XACC_HALVD
+    grounding: UniProtKB:D4GP31
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arabinono-1,4-lactone is a substrate consumed by RHEA:16217 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16218
+      snippet: L-arabinono-1,4-lactone + H2O => L-arabinonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16218 declares side 16217_L as its substrates
+        (rh:substrates); the master reaction RHEA:16217 is undirected. This participant is CHEBI:17100
+        with coefficient 1. Rhea cites PMID:16950779, PMID:13271422 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:16217 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16218
+      snippet: L-arabinono-1,4-lactone + H2O => L-arabinonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16218 declares side 16217_L as its substrates
+        (rh:substrates); the master reaction RHEA:16217 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16950779, PMID:13271422 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-arabinonate is a product released by RHEA:16217 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16218
+      snippet: L-arabinono-1,4-lactone + H2O => L-arabinonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16218 declares side 16217_R as its products
+        (rh:products); the master reaction RHEA:16217 is undirected. This participant is CHEBI:16501 with
+        coefficient 1. Rhea cites PMID:16950779, PMID:13271422 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:16217 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16218
+      snippet: L-arabinono-1,4-lactone + H2O => L-arabinonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16218 declares side 16217_R as its products
+        (rh:products); the master reaction RHEA:16217 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:16950779, PMID:13271422 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.15
+      snippet: EC:3.1.1.15 > GO:L-arabinonolactonase activity ; GO:0050021
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050021 is itself a record
+        in this KB.
+  - subject: prot_Q1JUP5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARALA_AZOBR is an exemplar enzyme with EC 3.1.1.15 activity.
+    evidence:
+    - reference: EC:3.1.1.15
+      snippet: DR   Q1JUP5, ARALA_AZOBR;  D4GP31, XACC_HALVD ;
+      notes: ExPASy ENZYME entry EC 3.1.1.15 cross-references UniProtKB:Q1JUP5 (ARALA_AZOBR) as a protein
+        with this activity.
+  - subject: prot_D4GP31
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XACC_HALVD is an exemplar enzyme with EC 3.1.1.15 activity.
+    evidence:
+    - reference: EC:3.1.1.15
+      snippet: DR   Q1JUP5, ARALA_AZOBR;  D4GP31, XACC_HALVD ;
+      notes: ExPASy ENZYME entry EC 3.1.1.15 cross-references UniProtKB:D4GP31 (XACC_HALVD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

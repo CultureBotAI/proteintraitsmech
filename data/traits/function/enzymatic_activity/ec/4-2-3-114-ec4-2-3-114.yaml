@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -38,4 +38,132 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate = gamma-terpinene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gamma-terpinene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.114. EC 4.2.3.114 maps to
+    exactly one curated Rhea reaction (RHEA:32559), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate = gamma-terpinene + diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-terpinene synthase
+    grounding: EC:4.2.3.114
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: gamma-terpinene
+    node_type: CHEMICAL
+    grounding: CHEBI:10577
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-terpinene synthase activity
+    grounding: GO:0102903
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A0M3Q1Q3
+    node_type: PROTEIN
+    label: GTPS1_THYVU
+    grounding: UniProtKB:A0A0M3Q1Q3
+  - node_id: prot_R4JND9
+    node_type: PROTEIN
+    label: GTPS3_THYCA
+    grounding: UniProtKB:R4JND9
+  - node_id: prot_R4JGL8
+    node_type: PROTEIN
+    label: GTPSB_THYCA
+    grounding: UniProtKB:R4JGL8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:32559 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32560
+      snippet: (2E)-geranyl diphosphate => gamma-terpinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32560 declares side 32559_L as its substrates
+        (rh:substrates); the master reaction RHEA:32559 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:12084056, PMID:15630174, PMID:20419468, PMID:9614092 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: gamma-terpinene is a product released by RHEA:32559 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32560
+      snippet: (2E)-geranyl diphosphate => gamma-terpinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32560 declares side 32559_R as its products
+        (rh:products); the master reaction RHEA:32559 is undirected. This participant is CHEBI:10577 with
+        coefficient 1. Rhea cites PMID:12084056, PMID:15630174, PMID:20419468, PMID:9614092 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:32559 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32560
+      snippet: (2E)-geranyl diphosphate => gamma-terpinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32560 declares side 32559_R as its products
+        (rh:products); the master reaction RHEA:32559 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:12084056, PMID:15630174, PMID:20419468, PMID:9614092 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.114
+      snippet: EC:4.2.3.114 > GO:gamma-terpinene synthase activity ; GO:0102903
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102903 is itself a record
+        in this KB.
+  - subject: prot_A0A0M3Q1Q3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GTPS1_THYVU is an exemplar enzyme with EC 4.2.3.114 activity.
+    evidence:
+    - reference: EC:4.2.3.114
+      snippet: DR   A0A0M3Q1Q3, GTPS1_THYVU;  R4JND9, GTPS3_THYCA;  R4JGL8, GTPSB_THYCA;
+      notes: ExPASy ENZYME entry EC 4.2.3.114 cross-references UniProtKB:A0A0M3Q1Q3 (GTPS1_THYVU) as a
+        protein with this activity.
+  - subject: prot_R4JND9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GTPS3_THYCA is an exemplar enzyme with EC 4.2.3.114 activity.
+    evidence:
+    - reference: EC:4.2.3.114
+      snippet: DR   A0A0M3Q1Q3, GTPS1_THYVU;  R4JND9, GTPS3_THYCA;  R4JGL8, GTPSB_THYCA;
+      notes: ExPASy ENZYME entry EC 4.2.3.114 cross-references UniProtKB:R4JND9 (GTPS3_THYCA) as a protein
+        with this activity.
+  - subject: prot_R4JGL8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GTPSB_THYCA is an exemplar enzyme with EC 4.2.3.114 activity.
+    evidence:
+    - reference: EC:4.2.3.114
+      snippet: DR   A0A0M3Q1Q3, GTPS1_THYVU;  R4JND9, GTPS3_THYCA;  R4JGL8, GTPSB_THYCA;
+      notes: ExPASy ENZYME entry EC 4.2.3.114 cross-references UniProtKB:R4JGL8 (GTPSB_THYCA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

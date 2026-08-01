@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.3.-
 mapped_xrefs:
@@ -36,4 +36,101 @@ definitions:
       Catalyses: D-glucosamine 6-phosphate = D-galactosamine 6-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-glucosamine-6-phosphate 4-epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.3.42. EC 5.1.3.42 maps to exactly
+    one curated Rhea reaction (RHEA:18789), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-glucosamine
+    6-phosphate = D-galactosamine 6-phosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-glucosamine-6-phosphate 4-epimerase
+    grounding: EC:5.1.3.42
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-glucosamine 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58725
+    description: Formula C6H13NO8P.
+  - node_id: prd1
+    label: D-galactosamine 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:71674
+    description: Formula C6H13NO8P.
+  - node_id: prot_Q97WE5
+    node_type: PROTEIN
+    label: GLCAE_SACS2
+    grounding: UniProtKB:Q97WE5
+  - node_id: prot_Q4JCA7
+    node_type: PROTEIN
+    label: GLCAE_SULAC
+    grounding: UniProtKB:Q4JCA7
+  - node_id: prot_Q96YC2
+    node_type: PROTEIN
+    label: GLCAE_SULTO
+    grounding: UniProtKB:Q96YC2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-glucosamine 6-phosphate is a substrate consumed by RHEA:18789 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18790
+      snippet: D-glucosamine 6-phosphate => D-galactosamine 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18790 declares side 18789_L as its substrates
+        (rh:substrates); the master reaction RHEA:18789 is undirected. This participant is CHEBI:58725
+        with coefficient 1. Rhea cites PMID:29507091 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-galactosamine 6-phosphate is a product released by RHEA:18789 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18790
+      snippet: D-glucosamine 6-phosphate => D-galactosamine 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18790 declares side 18789_R as its products
+        (rh:products); the master reaction RHEA:18789 is undirected. This participant is CHEBI:71674 with
+        coefficient 1. Rhea cites PMID:29507091 for this reaction.
+  - subject: prot_Q97WE5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLCAE_SACS2 is an exemplar enzyme with EC 5.1.3.42 activity.
+    evidence:
+    - reference: EC:5.1.3.42
+      snippet: DR   Q97WE5, GLCAE_SACS2;  Q4JCA7, GLCAE_SULAC;  Q96YC2, GLCAE_SULTO;
+      notes: ExPASy ENZYME entry EC 5.1.3.42 cross-references UniProtKB:Q97WE5 (GLCAE_SACS2) as a protein
+        with this activity.
+  - subject: prot_Q4JCA7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLCAE_SULAC is an exemplar enzyme with EC 5.1.3.42 activity.
+    evidence:
+    - reference: EC:5.1.3.42
+      snippet: DR   Q97WE5, GLCAE_SACS2;  Q4JCA7, GLCAE_SULAC;  Q96YC2, GLCAE_SULTO;
+      notes: ExPASy ENZYME entry EC 5.1.3.42 cross-references UniProtKB:Q4JCA7 (GLCAE_SULAC) as a protein
+        with this activity.
+  - subject: prot_Q96YC2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLCAE_SULTO is an exemplar enzyme with EC 5.1.3.42 activity.
+    evidence:
+    - reference: EC:5.1.3.42
+      snippet: DR   Q97WE5, GLCAE_SACS2;  Q4JCA7, GLCAE_SULAC;  Q96YC2, GLCAE_SULTO;
+      notes: ExPASy ENZYME entry EC 5.1.3.42 cross-references UniProtKB:Q96YC2 (GLCAE_SULTO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

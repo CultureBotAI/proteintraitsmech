@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:83064
     role: SUBSTRATE_OR_PRODUCT
@@ -33,4 +33,133 @@ definitions:
       Catalyses the reaction: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O = a 3'-end 3'-phospho-ribonucleotide-RNA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O = a 3'-end 3'-phospho-ribonucleoti…
+  description: Substrate-to-product chemistry of RHEA:68056, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:68057 (rh:substrates → 68056_L, rh:products → 68056_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O = a 3'-end 3'-phospho-r…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:68056
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 3''-end 2'',3''-cyclophospho-ribonucleotide-RNA + H2O = a 3''-end 3''-phospho-ribonucleotide-RNA
+      + H(+)'
+  - node_id: sub1
+    label: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10464
+    description: Rhea compound GENERIC:10464.
+  - node_id: sub1_rp1
+    label: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10464 (a 3'-end
+      2',3'-cyclophospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83064
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 3'-end 3'-phospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10463
+    description: Rhea compound GENERIC:10463.
+  - node_id: prd1_rp1
+    label: a 3'-terminal ribonucleotide 3'-phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10463 (a 3'-end
+      3'-phospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83062
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68057
+      snippet: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O => a 3'-end 3'-phospho-ribonucleotide-RNA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68057 declares side 68056_L as its substrates
+        (rh:substrates); the master reaction RHEA:68056 is undirected. This participant is GENERIC:10464
+        with coefficient 1. Rhea cites PMID:14338240, PMID:26858100, PMID:3732273, PMID:20189811 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue is the reactive part of a
+      3'-end 2',3'-cyclophospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:68056
+      snippet: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue
+      notes: Rhea compound GENERIC:10464 (a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA) declares rh:reactivePart
+        = a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue (CHEBI:83064), formula C5H6O8P2R.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68057
+      snippet: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O => a 3'-end 3'-phospho-ribonucleotide-RNA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68057 declares side 68056_L as its substrates
+        (rh:substrates); the master reaction RHEA:68056 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:14338240, PMID:26858100, PMID:3732273, PMID:20189811 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3'-end 3'-phospho-ribonucleotide-RNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68057
+      snippet: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O => a 3'-end 3'-phospho-ribonucleotide-RNA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68057 declares side 68056_R as its products
+        (rh:products); the master reaction RHEA:68056 is undirected. This participant is GENERIC:10463
+        with coefficient 1. Rhea cites PMID:14338240, PMID:26858100, PMID:3732273, PMID:20189811 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: a 3'-terminal ribonucleotide 3'-phosphate residue is the reactive part of a 3'-end 3'-phospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:68056
+      snippet: a 3'-terminal ribonucleotide 3'-phosphate residue
+      notes: Rhea compound GENERIC:10463 (a 3'-end 3'-phospho-ribonucleotide-RNA) declares rh:reactivePart
+        = a 3'-terminal ribonucleotide 3'-phosphate residue (CHEBI:83062), formula C5H7O9P2R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68057
+      snippet: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O => a 3'-end 3'-phospho-ribonucleotide-RNA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68057 declares side 68056_R as its products
+        (rh:products); the master reaction RHEA:68056 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:14338240, PMID:26858100, PMID:3732273, PMID:20189811 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 mapped_xrefs:
@@ -28,4 +28,139 @@ definitions:
       Catalyses: gamma-L-glutamyl-[BtrI ACP] + H(+) = 4-aminobutanoyl-[BtrI ACP] + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-glutamyl-[BtrI acyl-carrier protein] decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.95. EC 4.1.1.95 maps to exactly
+    one curated Rhea reaction (RHEA:53956), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "gamma-L-glutamyl-[BtrI
+    ACP] + H(+) = 4-aminobutanoyl-[BtrI ACP] + CO2". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-glutamyl-[BtrI acyl-carrier protein] decarboxylase
+    grounding: EC:4.1.1.95
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: gamma-L-glutamyl-[BtrI ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13742
+    description: Rhea compound GENERIC:13742.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-[S-gamma-L-glutamylpantetheine-4'-phosphoryl]serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13742 (gamma-L-glutamyl-[BtrI
+      ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:137996
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 4-aminobutanoyl-[BtrI ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13744
+    description: Rhea compound GENERIC:13744.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-[S-4-aminobutanoylpantetheine-4'-phosphoryl]serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13744 (4-aminobutanoyl-[BtrI
+      ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:137997
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prot_Q2L4H3
+    node_type: PROTEIN
+    label: BTRK_NIACI
+    grounding: UniProtKB:Q2L4H3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: gamma-L-glutamyl-[BtrI ACP] is a substrate consumed by RHEA:53956 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53957
+      snippet: gamma-L-glutamyl-[BtrI ACP] + H(+) => 4-aminobutanoyl-[BtrI ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:53957 declares side 53956_L as its substrates
+        (rh:substrates); the master reaction RHEA:53956 is undirected. This participant is GENERIC:13742
+        with coefficient 1. Rhea cites PMID:15975512, PMID:17462573 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-[S-gamma-L-glutamylpantetheine-4'-phosphoryl]serine residue is the reactive part of
+      gamma-L-glutamyl-[BtrI ACP].
+    evidence:
+    - reference: RHEA:53956
+      snippet: O-[S-gamma-L-glutamylpantetheine-4'-phosphoryl]serine residue
+      notes: Rhea compound GENERIC:13742 (gamma-L-glutamyl-[BtrI ACP]) declares rh:reactivePart = O-[S-gamma-L-glutamylpantetheine-4'-phosphoryl]serine
+        residue (CHEBI:137996).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:53956 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53957
+      snippet: gamma-L-glutamyl-[BtrI ACP] + H(+) => 4-aminobutanoyl-[BtrI ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:53957 declares side 53956_L as its substrates
+        (rh:substrates); the master reaction RHEA:53956 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:15975512, PMID:17462573 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-aminobutanoyl-[BtrI ACP] is a product released by RHEA:53956 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53957
+      snippet: gamma-L-glutamyl-[BtrI ACP] + H(+) => 4-aminobutanoyl-[BtrI ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:53957 declares side 53956_R as its products
+        (rh:products); the master reaction RHEA:53956 is undirected. This participant is GENERIC:13744
+        with coefficient 1. Rhea cites PMID:15975512, PMID:17462573 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[S-4-aminobutanoylpantetheine-4'-phosphoryl]serine residue is the reactive part of
+      4-aminobutanoyl-[BtrI ACP].
+    evidence:
+    - reference: RHEA:53956
+      snippet: O-[S-4-aminobutanoylpantetheine-4'-phosphoryl]serine residue
+      notes: Rhea compound GENERIC:13744 (4-aminobutanoyl-[BtrI ACP]) declares rh:reactivePart = O-[S-4-aminobutanoylpantetheine-4'-phosphoryl]serine
+        residue (CHEBI:137997).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:53956 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53957
+      snippet: gamma-L-glutamyl-[BtrI ACP] + H(+) => 4-aminobutanoyl-[BtrI ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:53957 declares side 53956_R as its products
+        (rh:products); the master reaction RHEA:53956 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:15975512, PMID:17462573 for this reaction.
+  - subject: prot_Q2L4H3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BTRK_NIACI is an exemplar enzyme with EC 4.1.1.95 activity.
+    evidence:
+    - reference: EC:4.1.1.95
+      snippet: DR   Q2L4H3, BTRK_NIACI ;
+      notes: ExPASy ENZYME entry EC 4.1.1.95 cross-references UniProtKB:Q2L4H3 (BTRK_NIACI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

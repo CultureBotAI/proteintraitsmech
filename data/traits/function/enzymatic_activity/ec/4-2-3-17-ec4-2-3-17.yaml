@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -43,4 +43,133 @@ definitions:
       Catalyses: (2E,6E,10E)-geranylgeranyl diphosphate = taxa-4(5),11(12)-diene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of taxadiene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.17. EC 4.2.3.17 maps to exactly
+    one curated Rhea reaction (RHEA:20912), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E,10E)-geranylgeranyl
+    diphosphate = taxa-4(5),11(12)-diene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: taxadiene synthase
+    grounding: EC:4.2.3.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: taxa-4(5),11(12)-diene
+    node_type: CHEMICAL
+    grounding: CHEBI:30037
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: taxadiene synthase activity
+    grounding: GO:0050553
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9FT37
+    node_type: PROTEIN
+    label: TASY1_TAXCH
+    grounding: UniProtKB:Q9FT37
+  - node_id: prot_A0AA38CJ97
+    node_type: PROTEIN
+    label: TASY2_TAXCH
+    grounding: UniProtKB:A0AA38CJ97
+  - node_id: prot_Q93YA3
+    node_type: PROTEIN
+    label: TASY_TAXBA
+    grounding: UniProtKB:Q93YA3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by RHEA:20912 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20913
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => taxa-4(5),11(12)-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:20913 declares side 20912_L as its substrates
+        (rh:substrates); the master reaction RHEA:20912 is undirected. This participant is CHEBI:58756
+        with coefficient 1. Rhea cites PMID:21160477, PMID:7574719, PMID:9016812, PMID:11137819 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: taxa-4(5),11(12)-diene is a product released by RHEA:20912 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20913
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => taxa-4(5),11(12)-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:20913 declares side 20912_R as its products
+        (rh:products); the master reaction RHEA:20912 is undirected. This participant is CHEBI:30037 with
+        coefficient 1. Rhea cites PMID:21160477, PMID:7574719, PMID:9016812, PMID:11137819 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:20912 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20913
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => taxa-4(5),11(12)-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:20913 declares side 20912_R as its products
+        (rh:products); the master reaction RHEA:20912 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21160477, PMID:7574719, PMID:9016812, PMID:11137819 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.17
+      snippet: EC:4.2.3.17 > GO:taxadiene synthase activity ; GO:0050553
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050553 is itself a record
+        in this KB.
+  - subject: prot_Q9FT37
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TASY1_TAXCH is an exemplar enzyme with EC 4.2.3.17 activity.
+    evidence:
+    - reference: EC:4.2.3.17
+      snippet: DR   Q9FT37, TASY1_TAXCH;  A0AA38CJ97, TASY2_TAXCH;  Q93YA3, TASY_TAXBA ;
+      notes: ExPASy ENZYME entry EC 4.2.3.17 cross-references UniProtKB:Q9FT37 (TASY1_TAXCH) as a protein
+        with this activity.
+  - subject: prot_A0AA38CJ97
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TASY2_TAXCH is an exemplar enzyme with EC 4.2.3.17 activity.
+    evidence:
+    - reference: EC:4.2.3.17
+      snippet: DR   Q9FT37, TASY1_TAXCH;  A0AA38CJ97, TASY2_TAXCH;  Q93YA3, TASY_TAXBA ;
+      notes: ExPASy ENZYME entry EC 4.2.3.17 cross-references UniProtKB:A0AA38CJ97 (TASY2_TAXCH) as a
+        protein with this activity.
+  - subject: prot_Q93YA3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TASY_TAXBA is an exemplar enzyme with EC 4.2.3.17 activity.
+    evidence:
+    - reference: EC:4.2.3.17
+      snippet: DR   Q9FT37, TASY1_TAXCH;  A0AA38CJ97, TASY2_TAXCH;  Q93YA3, TASY_TAXBA ;
+      notes: ExPASy ENZYME entry EC 4.2.3.17 cross-references UniProtKB:Q93YA3 (TASY_TAXBA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

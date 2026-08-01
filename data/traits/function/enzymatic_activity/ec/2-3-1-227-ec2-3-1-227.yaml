@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -31,4 +31,121 @@ definitions:
       Catalyses: GDP-alpha-D-perosamine + acetyl-CoA = GDP-N-acetyl-alpha-D-perosamine + CoA + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of GDP-perosamine N-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.227. EC 2.3.1.227 maps to
+    exactly one curated Rhea reaction (RHEA:36811), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "GDP-alpha-D-perosamine
+    + acetyl-CoA = GDP-N-acetyl-alpha-D-perosamine + CoA + H(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: GDP-perosamine N-acetyltransferase
+    grounding: EC:2.3.1.227
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: GDP-alpha-D-perosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:73996
+    description: Formula C16H25N6O14P2.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: GDP-N-acetyl-alpha-D-perosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:73997
+    description: Formula C18H26N6O15P2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q7DBF7
+    node_type: PROTEIN
+    label: PERB_ECO57
+    grounding: UniProtKB:Q7DBF7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: GDP-alpha-D-perosamine is a substrate consumed by RHEA:36811 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36812
+      snippet: GDP-alpha-D-perosamine + acetyl-CoA => GDP-N-acetyl-alpha-D-perosamine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36812 declares side 36811_L as its substrates
+        (rh:substrates); the master reaction RHEA:36811 is undirected. This participant is CHEBI:73996
+        with coefficient 1. Rhea cites PMID:11479276 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:36811 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36812
+      snippet: GDP-alpha-D-perosamine + acetyl-CoA => GDP-N-acetyl-alpha-D-perosamine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36812 declares side 36811_L as its substrates
+        (rh:substrates); the master reaction RHEA:36811 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:11479276 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: GDP-N-acetyl-alpha-D-perosamine is a product released by RHEA:36811 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36812
+      snippet: GDP-alpha-D-perosamine + acetyl-CoA => GDP-N-acetyl-alpha-D-perosamine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36812 declares side 36811_R as its products
+        (rh:products); the master reaction RHEA:36811 is undirected. This participant is CHEBI:73997 with
+        coefficient 1. Rhea cites PMID:11479276 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:36811 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36812
+      snippet: GDP-alpha-D-perosamine + acetyl-CoA => GDP-N-acetyl-alpha-D-perosamine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36812 declares side 36811_R as its products
+        (rh:products); the master reaction RHEA:36811 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:11479276 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:36811 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36812
+      snippet: GDP-alpha-D-perosamine + acetyl-CoA => GDP-N-acetyl-alpha-D-perosamine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36812 declares side 36811_R as its products
+        (rh:products); the master reaction RHEA:36811 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11479276 for this reaction.
+  - subject: prot_Q7DBF7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PERB_ECO57 is an exemplar enzyme with EC 2.3.1.227 activity.
+    evidence:
+    - reference: EC:2.3.1.227
+      snippet: DR   Q7DBF7, PERB_ECO57 ;
+      notes: ExPASy ENZYME entry EC 2.3.1.227 cross-references UniProtKB:Q7DBF7 (PERB_ECO57) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 mapped_xrefs:
@@ -36,4 +36,136 @@ definitions:
       Catalyses: 2,6-dihydroxybenzoate + H(+) = resorcinol + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gamma-resorcylate decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.103. EC 4.1.1.103 maps to
+    exactly one curated Rhea reaction (RHEA:49464), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2,6-dihydroxybenzoate
+    + H(+) = resorcinol + CO2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-resorcylate decarboxylase
+    grounding: EC:4.1.1.103
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2,6-dihydroxybenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:131450
+    description: Formula C7H5O4.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: resorcinol
+    node_type: CHEMICAL
+    grounding: CHEBI:27810
+    description: Formula C6H6O2.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prot_Q60FX6
+    node_type: PROTEIN
+    label: GRDC_AGRRD
+    grounding: UniProtKB:Q60FX6
+  - node_id: prot_Q12BV1
+    node_type: PROTEIN
+    label: GRDC_POLSJ
+    grounding: UniProtKB:Q12BV1
+  - node_id: prot_Q60GU1
+    node_type: PROTEIN
+    label: GRDC_RHIS5
+    grounding: UniProtKB:Q60GU1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2,6-dihydroxybenzoate is a substrate consumed by RHEA:49464 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49465
+      snippet: 2,6-dihydroxybenzoate + H(+) => resorcinol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:49465 declares side 49464_L as its substrates
+        (rh:substrates); the master reaction RHEA:49464 is undirected. This participant is CHEBI:131450
+        with coefficient 1. Rhea cites PMID:16963440, PMID:15466039, PMID:29283551, PMID:16683134 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:49464 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49465
+      snippet: 2,6-dihydroxybenzoate + H(+) => resorcinol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:49465 declares side 49464_L as its substrates
+        (rh:substrates); the master reaction RHEA:49464 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:16963440, PMID:15466039, PMID:29283551, PMID:16683134 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: resorcinol is a product released by RHEA:49464 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49465
+      snippet: 2,6-dihydroxybenzoate + H(+) => resorcinol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:49465 declares side 49464_R as its products
+        (rh:products); the master reaction RHEA:49464 is undirected. This participant is CHEBI:27810 with
+        coefficient 1. Rhea cites PMID:16963440, PMID:15466039, PMID:29283551, PMID:16683134 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:49464 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49465
+      snippet: 2,6-dihydroxybenzoate + H(+) => resorcinol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:49465 declares side 49464_R as its products
+        (rh:products); the master reaction RHEA:49464 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:16963440, PMID:15466039, PMID:29283551, PMID:16683134 for this
+        reaction.
+  - subject: prot_Q60FX6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRDC_AGRRD is an exemplar enzyme with EC 4.1.1.103 activity.
+    evidence:
+    - reference: EC:4.1.1.103
+      snippet: DR   Q60FX6, GRDC_AGRRD ;  Q12BV1, GRDC_POLSJ ;  Q60GU1, GRDC_RHIS5 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.103 cross-references UniProtKB:Q60FX6 (GRDC_AGRRD) as a protein
+        with this activity.
+  - subject: prot_Q12BV1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRDC_POLSJ is an exemplar enzyme with EC 4.1.1.103 activity.
+    evidence:
+    - reference: EC:4.1.1.103
+      snippet: DR   Q60FX6, GRDC_AGRRD ;  Q12BV1, GRDC_POLSJ ;  Q60GU1, GRDC_RHIS5 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.103 cross-references UniProtKB:Q12BV1 (GRDC_POLSJ) as a protein
+        with this activity.
+  - subject: prot_Q60GU1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRDC_RHIS5 is an exemplar enzyme with EC 4.1.1.103 activity.
+    evidence:
+    - reference: EC:4.1.1.103
+      snippet: DR   Q60FX6, GRDC_AGRRD ;  Q12BV1, GRDC_POLSJ ;  Q60GU1, GRDC_RHIS5 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.103 cross-references UniProtKB:Q60GU1 (GRDC_RHIS5) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

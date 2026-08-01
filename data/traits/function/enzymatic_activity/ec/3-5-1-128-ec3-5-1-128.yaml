@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -41,4 +41,147 @@ definitions:
       Catalyses: N-(4-oxoglutaryl)-L-cysteinylglycine + H2O = L-cysteinylglycine + 2-oxoglutarate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of deaminated glutathione amidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.128. EC 3.5.1.128 maps to
+    exactly one curated Rhea reaction (RHEA:54532), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-(4-oxoglutaryl)-L-cysteinylglycine
+    + H2O = L-cysteinylglycine + 2-oxoglutarate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: deaminated glutathione amidase
+    grounding: EC:3.5.1.128
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-(4-oxoglutaryl)-L-cysteinylglycine
+    node_type: CHEMICAL
+    grounding: CHEBI:138256
+    description: Formula C10H12N2O7S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-cysteinylglycine
+    node_type: CHEMICAL
+    grounding: CHEBI:61694
+    description: Formula C5H10N2O3S.
+  - node_id: prd2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: deaminated glutathione amidase activity
+    grounding: GO:0110050
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q94JV5
+    node_type: PROTEIN
+    label: NILP2_ARATH
+    grounding: UniProtKB:Q94JV5
+  - node_id: prot_Q32LH4
+    node_type: PROTEIN
+    label: NIT1_BOVIN
+    grounding: UniProtKB:Q32LH4
+  - node_id: prot_Q557J5
+    node_type: PROTEIN
+    label: NIT1_DICDI
+    grounding: UniProtKB:Q557J5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-(4-oxoglutaryl)-L-cysteinylglycine is a substrate consumed by RHEA:54532 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54533
+      snippet: N-(4-oxoglutaryl)-L-cysteinylglycine + H2O => L-cysteinylglycine + 2-oxoglutarate
+      notes: Rhea's left-to-right directional reaction RHEA:54533 declares side 54532_L as its substrates
+        (rh:substrates); the master reaction RHEA:54532 is undirected. This participant is CHEBI:138256
+        with coefficient 1. Rhea cites PMID:28373563 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:54532 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54533
+      snippet: N-(4-oxoglutaryl)-L-cysteinylglycine + H2O => L-cysteinylglycine + 2-oxoglutarate
+      notes: Rhea's left-to-right directional reaction RHEA:54533 declares side 54532_L as its substrates
+        (rh:substrates); the master reaction RHEA:54532 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:28373563 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-cysteinylglycine is a product released by RHEA:54532 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54533
+      snippet: N-(4-oxoglutaryl)-L-cysteinylglycine + H2O => L-cysteinylglycine + 2-oxoglutarate
+      notes: Rhea's left-to-right directional reaction RHEA:54533 declares side 54532_R as its products
+        (rh:products); the master reaction RHEA:54532 is undirected. This participant is CHEBI:61694 with
+        coefficient 1. Rhea cites PMID:28373563 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 2-oxoglutarate is a product released by RHEA:54532 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54533
+      snippet: N-(4-oxoglutaryl)-L-cysteinylglycine + H2O => L-cysteinylglycine + 2-oxoglutarate
+      notes: Rhea's left-to-right directional reaction RHEA:54533 declares side 54532_R as its products
+        (rh:products); the master reaction RHEA:54532 is undirected. This participant is CHEBI:16810 with
+        coefficient 1. Rhea cites PMID:28373563 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.128
+      snippet: EC:3.5.1.128 > GO:deaminated glutathione amidase activity ; GO:0110050
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0110050 is itself a record
+        in this KB.
+  - subject: prot_Q94JV5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NILP2_ARATH is an exemplar enzyme with EC 3.5.1.128 activity.
+    evidence:
+    - reference: EC:3.5.1.128
+      snippet: DR   Q94JV5, NILP2_ARATH;  Q32LH4, NIT1_BOVIN ;  Q557J5, NIT1_DICDI ;
+      notes: ExPASy ENZYME entry EC 3.5.1.128 cross-references UniProtKB:Q94JV5 (NILP2_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q32LH4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NIT1_BOVIN is an exemplar enzyme with EC 3.5.1.128 activity.
+    evidence:
+    - reference: EC:3.5.1.128
+      snippet: DR   Q94JV5, NILP2_ARATH;  Q32LH4, NIT1_BOVIN ;  Q557J5, NIT1_DICDI ;
+      notes: ExPASy ENZYME entry EC 3.5.1.128 cross-references UniProtKB:Q32LH4 (NIT1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q557J5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NIT1_DICDI is an exemplar enzyme with EC 3.5.1.128 activity.
+    evidence:
+    - reference: EC:3.5.1.128
+      snippet: DR   Q94JV5, NILP2_ARATH;  Q32LH4, NIT1_BOVIN ;  Q557J5, NIT1_DICDI ;
+      notes: ExPASy ENZYME entry EC 3.5.1.128 cross-references UniProtKB:Q557J5 (NIT1_DICDI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

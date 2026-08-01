@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 mapped_xrefs:
@@ -38,4 +38,151 @@ definitions:
       Catalyses: [(1->4)-N-acetyl-beta-D-glucosaminyl](n) + n H2O = chitosan + n acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chitin deacetylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.41. EC 3.5.1.41 maps to exactly
+    one curated Rhea reaction (RHEA:10464), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[(1->4)-N-acetyl-beta-D-glucosaminyl](n)
+    + n H2O = chitosan + n acetate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: chitin deacetylase
+    grounding: EC:3.5.1.41
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[(1->4)-N-acetyl-beta-D-glucosaminyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:17029
+    xrefs:
+    - RHEA-COMP:9593
+    description: Rhea compound POLYMER:9593. Formula H2O(C8H13NO5)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: chitosan
+    node_type: CHEMICAL
+    grounding: CHEBI:57704
+    xrefs:
+    - RHEA-COMP:9597
+    description: Rhea compound POLYMER:9597. Formula H2O(C6H12NO4)<i><sub>n</sub></i>.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: chitin deacetylase activity
+    grounding: GO:0004099
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_H9J9M0
+    node_type: PROTEIN
+    label: CDA1_BOMMO
+    grounding: UniProtKB:H9J9M0
+  - node_id: prot_J9VPD7
+    node_type: PROTEIN
+    label: CDA1_CRYN9
+    grounding: UniProtKB:J9VPD7
+  - node_id: prot_Q06702
+    node_type: PROTEIN
+    label: CDA1_YEAST
+    grounding: UniProtKB:Q06702
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[(1->4)-N-acetyl-beta-D-glucosaminyl](n) is a substrate consumed by RHEA:10464 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:10465
+      snippet: '[(1->4)-N-acetyl-beta-D-glucosaminyl](n) + n H2O => chitosan + n acetate'
+      notes: Rhea's left-to-right directional reaction RHEA:10465 declares side 10464_L as its substrates
+        (rh:substrates); the master reaction RHEA:10464 is undirected. This participant is POLYMER:9593
+        with coefficient 1. Rhea cites PMID:15862318 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:10464 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:10465
+      snippet: '[(1->4)-N-acetyl-beta-D-glucosaminyl](n) + n H2O => chitosan + n acetate'
+      notes: Rhea's left-to-right directional reaction RHEA:10465 declares side 10464_L as its substrates
+        (rh:substrates); the master reaction RHEA:10464 is undirected. This participant is CHEBI:15377
+        with coefficient n. Rhea cites PMID:15862318 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: chitosan is a product released by RHEA:10464 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10465
+      snippet: '[(1->4)-N-acetyl-beta-D-glucosaminyl](n) + n H2O => chitosan + n acetate'
+      notes: Rhea's left-to-right directional reaction RHEA:10465 declares side 10464_R as its products
+        (rh:products); the master reaction RHEA:10464 is undirected. This participant is POLYMER:9597
+        with coefficient 1. Rhea cites PMID:15862318 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:10464 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:10465
+      snippet: '[(1->4)-N-acetyl-beta-D-glucosaminyl](n) + n H2O => chitosan + n acetate'
+      notes: Rhea's left-to-right directional reaction RHEA:10465 declares side 10464_R as its products
+        (rh:products); the master reaction RHEA:10464 is undirected. This participant is CHEBI:30089 with
+        coefficient n. Rhea cites PMID:15862318 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.41
+      snippet: EC:3.5.1.41 > GO:chitin deacetylase activity ; GO:0004099
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004099 is itself a record
+        in this KB.
+  - subject: prot_H9J9M0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDA1_BOMMO is an exemplar enzyme with EC 3.5.1.41 activity.
+    evidence:
+    - reference: EC:3.5.1.41
+      snippet: DR   H9J9M0, CDA1_BOMMO ;  J9VPD7, CDA1_CRYN9 ;  Q06702, CDA1_YEAST ;
+      notes: ExPASy ENZYME entry EC 3.5.1.41 cross-references UniProtKB:H9J9M0 (CDA1_BOMMO) as a protein
+        with this activity.
+  - subject: prot_J9VPD7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDA1_CRYN9 is an exemplar enzyme with EC 3.5.1.41 activity.
+    evidence:
+    - reference: EC:3.5.1.41
+      snippet: DR   H9J9M0, CDA1_BOMMO ;  J9VPD7, CDA1_CRYN9 ;  Q06702, CDA1_YEAST ;
+      notes: ExPASy ENZYME entry EC 3.5.1.41 cross-references UniProtKB:J9VPD7 (CDA1_CRYN9) as a protein
+        with this activity.
+  - subject: prot_Q06702
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDA1_YEAST is an exemplar enzyme with EC 3.5.1.41 activity.
+    evidence:
+    - reference: EC:3.5.1.41
+      snippet: DR   H9J9M0, CDA1_BOMMO ;  J9VPD7, CDA1_CRYN9 ;  Q06702, CDA1_YEAST ;
+      notes: ExPASy ENZYME entry EC 3.5.1.41 cross-references UniProtKB:Q06702 (CDA1_YEAST) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

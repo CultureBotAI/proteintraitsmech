@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:50058
     role: SUBSTRATE_OR_PRODUCT
@@ -37,4 +37,215 @@ definitions:
       Catalyses the reaction: [protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O = [protein]-dithiol + sulfite + 2 AH2 + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O = [protein]-dithiol
+    + sulfite + 2…
+  description: Substrate-to-product chemistry of RHEA:51676, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:51677 (rh:substrates → 51676_L, rh:products → 51676_R), and Rhea
+    curates the reverse direction too. 4 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O = [protein]-dithiol + s…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:51676
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O = [protein]-dithiol + sulfite
+      + 2 AH2 + H(+)'
+  - node_id: sub1
+    label: '[protein]-disulfide'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10593
+    description: Rhea compound GENERIC:10593.
+  - node_id: sub1_rp1
+    label: L-cystine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10593 ([protein]-disulfide);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:50058
+  - node_id: sub2
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: sub3
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: sub4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: '[protein]-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10594
+    description: Rhea compound GENERIC:10594.
+  - node_id: prd1_rp1
+    label: L-cysteine residue at position C1
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10594 ([protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1_rp2
+    label: L-cysteine residue at position C2
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10594 ([protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd2
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: prd3
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[protein]-disulfide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:51677
+      snippet: '[protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O => [protein]-dithiol + sulfite +
+        2 AH2 + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:51677 declares side 51676_L as its substrates
+        (rh:substrates); the master reaction RHEA:51676 is undirected. This participant is GENERIC:10593
+        with coefficient 1. Rhea cites PMID:21199252, PMID:25642962, PMID:22040142 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cystine residue is the reactive part of [protein]-disulfide.
+    evidence:
+    - reference: RHEA:51676
+      snippet: L-cystine residue
+      notes: Rhea compound GENERIC:10593 ([protein]-disulfide) declares rh:reactivePart = L-cystine residue
+        (CHEBI:50058), formula C6H8N2O2S2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen sulfide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51677
+      snippet: '[protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O => [protein]-dithiol + sulfite +
+        2 AH2 + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:51677 declares side 51676_L as its substrates
+        (rh:substrates); the master reaction RHEA:51676 is undirected. This participant is CHEBI:29919
+        with coefficient 1. Rhea cites PMID:21199252, PMID:25642962, PMID:22040142 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: A is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:51677
+      snippet: '[protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O => [protein]-dithiol + sulfite +
+        2 AH2 + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:51677 declares side 51676_L as its substrates
+        (rh:substrates); the master reaction RHEA:51676 is undirected. This participant is CHEBI:13193
+        with coefficient 2. Rhea cites PMID:21199252, PMID:25642962, PMID:22040142 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:51677
+      snippet: '[protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O => [protein]-dithiol + sulfite +
+        2 AH2 + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:51677 declares side 51676_L as its substrates
+        (rh:substrates); the master reaction RHEA:51676 is undirected. This participant is CHEBI:15377
+        with coefficient 3. Rhea cites PMID:21199252, PMID:25642962, PMID:22040142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[protein]-dithiol is a product released by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:51677
+      snippet: '[protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O => [protein]-dithiol + sulfite +
+        2 AH2 + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:51677 declares side 51676_R as its products
+        (rh:products); the master reaction RHEA:51676 is undirected. This participant is GENERIC:10594
+        with coefficient 1. Rhea cites PMID:21199252, PMID:25642962, PMID:22040142 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of [protein]-dithiol.
+    evidence:
+    - reference: RHEA:51676
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10594 ([protein]-dithiol) declares rh:reactivePart at position C1 =
+        L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: prd1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of [protein]-dithiol.
+    evidence:
+    - reference: RHEA:51676
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10594 ([protein]-dithiol) declares rh:reactivePart at position C2 =
+        L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfite is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51677
+      snippet: '[protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O => [protein]-dithiol + sulfite +
+        2 AH2 + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:51677 declares side 51676_R as its products
+        (rh:products); the master reaction RHEA:51676 is undirected. This participant is CHEBI:17359 with
+        coefficient 1. Rhea cites PMID:21199252, PMID:25642962, PMID:22040142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: AH2 is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:51677
+      snippet: '[protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O => [protein]-dithiol + sulfite +
+        2 AH2 + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:51677 declares side 51676_R as its products
+        (rh:products); the master reaction RHEA:51676 is undirected. This participant is CHEBI:17499 with
+        coefficient 2. Rhea cites PMID:21199252, PMID:25642962, PMID:22040142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51677
+      snippet: '[protein]-disulfide + hydrogen sulfide + 2 A + 3 H2O => [protein]-dithiol + sulfite +
+        2 AH2 + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:51677 declares side 51676_R as its products
+        (rh:products); the master reaction RHEA:51676 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21199252, PMID:25642962, PMID:22040142 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

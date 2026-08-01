@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.6.5.-
 mapped_xrefs:
@@ -32,4 +32,135 @@ definitions:
       Catalyses: demethylphylloquinone + NADPH + H(+) = demethylphylloquinol + NADP(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of demethylphylloquinone reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.6.5.12. EC 1.6.5.12 maps to exactly
+    one curated Rhea reaction (RHEA:47744), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "demethylphylloquinone
+    + NADPH + H(+) = demethylphylloquinol + NADP(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: demethylphylloquinone reductase
+    grounding: EC:1.6.5.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: demethylphylloquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:31087
+    description: Formula C30H44O2.
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: demethylphylloquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:87844
+    description: Formula C30H46O2.
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prot_P73735
+    node_type: PROTEIN
+    label: NDBB_SYNY3
+    grounding: UniProtKB:P73735
+  - node_id: prot_Q8GXR9
+    node_type: PROTEIN
+    label: NDC1_ARATH
+    grounding: UniProtKB:Q8GXR9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: demethylphylloquinone is a substrate consumed by RHEA:47744 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47745
+      snippet: demethylphylloquinone + NADPH + H(+) => demethylphylloquinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47745 declares side 47744_L as its substrates
+        (rh:substrates); the master reaction RHEA:47744 is undirected. This participant is CHEBI:31087
+        with coefficient 1. Rhea cites PMID:26023160, PMID:21844348 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by RHEA:47744 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47745
+      snippet: demethylphylloquinone + NADPH + H(+) => demethylphylloquinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47745 declares side 47744_L as its substrates
+        (rh:substrates); the master reaction RHEA:47744 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:26023160, PMID:21844348 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:47744 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47745
+      snippet: demethylphylloquinone + NADPH + H(+) => demethylphylloquinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47745 declares side 47744_L as its substrates
+        (rh:substrates); the master reaction RHEA:47744 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:26023160, PMID:21844348 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: demethylphylloquinol is a product released by RHEA:47744 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47745
+      snippet: demethylphylloquinone + NADPH + H(+) => demethylphylloquinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47745 declares side 47744_R as its products
+        (rh:products); the master reaction RHEA:47744 is undirected. This participant is CHEBI:87844 with
+        coefficient 1. Rhea cites PMID:26023160, PMID:21844348 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by RHEA:47744 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47745
+      snippet: demethylphylloquinone + NADPH + H(+) => demethylphylloquinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47745 declares side 47744_R as its products
+        (rh:products); the master reaction RHEA:47744 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:26023160, PMID:21844348 for this reaction.
+  - subject: prot_P73735
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NDBB_SYNY3 is an exemplar enzyme with EC 1.6.5.12 activity.
+    evidence:
+    - reference: EC:1.6.5.12
+      snippet: DR   P73735, NDBB_SYNY3 ;  Q8GXR9, NDC1_ARATH ;
+      notes: ExPASy ENZYME entry EC 1.6.5.12 cross-references UniProtKB:P73735 (NDBB_SYNY3) as a protein
+        with this activity.
+  - subject: prot_Q8GXR9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NDC1_ARATH is an exemplar enzyme with EC 1.6.5.12 activity.
+    evidence:
+    - reference: EC:1.6.5.12
+      snippet: DR   P73735, NDBB_SYNY3 ;  Q8GXR9, NDC1_ARATH ;
+      notes: ExPASy ENZYME entry EC 1.6.5.12 cross-references UniProtKB:Q8GXR9 (NDC1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

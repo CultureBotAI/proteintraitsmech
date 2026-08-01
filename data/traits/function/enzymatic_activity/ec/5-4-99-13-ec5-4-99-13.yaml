@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -38,4 +38,115 @@ definitions:
       Catalyses: 2-methylpropanoyl-CoA = butanoyl-CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isobutyryl-CoA mutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.13. EC 5.4.99.13 maps to
+    exactly one curated Rhea reaction (RHEA:13141), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-methylpropanoyl-CoA
+    = butanoyl-CoA". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: isobutyryl-CoA mutase
+    grounding: EC:5.4.99.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-methylpropanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57338
+    description: Formula C25H38N7O17P3S.
+  - node_id: prd1
+    label: butanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57371
+    description: Formula C25H38N7O17P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: isobutyryl-CoA mutase activity
+    grounding: GO:0047727
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q1LRY0
+    node_type: PROTEIN
+    label: ICMF_CUPMC
+    grounding: UniProtKB:Q1LRY0
+  - node_id: prot_Q5KUG0
+    node_type: PROTEIN
+    label: ICMF_GEOKA
+    grounding: UniProtKB:Q5KUG0
+  - node_id: prot_Q5Z110
+    node_type: PROTEIN
+    label: ICMF_NOCFA
+    grounding: UniProtKB:Q5Z110
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-methylpropanoyl-CoA is a substrate consumed by RHEA:13141 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13142
+      snippet: 2-methylpropanoyl-CoA => butanoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:13142 declares side 13141_L as its substrates
+        (rh:substrates); the master reaction RHEA:13141 is undirected. This participant is CHEBI:57338
+        with coefficient 1. Rhea cites PMID:19864421, PMID:22167181 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: butanoyl-CoA is a product released by RHEA:13141 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13142
+      snippet: 2-methylpropanoyl-CoA => butanoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:13142 declares side 13141_R as its products
+        (rh:products); the master reaction RHEA:13141 is undirected. This participant is CHEBI:57371 with
+        coefficient 1. Rhea cites PMID:19864421, PMID:22167181 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.13
+      snippet: EC:5.4.99.13 > GO:isobutyryl-CoA mutase activity ; GO:0047727
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047727 is itself a record
+        in this KB.
+  - subject: prot_Q1LRY0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ICMF_CUPMC is an exemplar enzyme with EC 5.4.99.13 activity.
+    evidence:
+    - reference: EC:5.4.99.13
+      snippet: DR   Q1LRY0, ICMF_CUPMC ;  Q5KUG0, ICMF_GEOKA ;  Q5Z110, ICMF_NOCFA ;
+      notes: ExPASy ENZYME entry EC 5.4.99.13 cross-references UniProtKB:Q1LRY0 (ICMF_CUPMC) as a protein
+        with this activity.
+  - subject: prot_Q5KUG0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ICMF_GEOKA is an exemplar enzyme with EC 5.4.99.13 activity.
+    evidence:
+    - reference: EC:5.4.99.13
+      snippet: DR   Q1LRY0, ICMF_CUPMC ;  Q5KUG0, ICMF_GEOKA ;  Q5Z110, ICMF_NOCFA ;
+      notes: ExPASy ENZYME entry EC 5.4.99.13 cross-references UniProtKB:Q5KUG0 (ICMF_GEOKA) as a protein
+        with this activity.
+  - subject: prot_Q5Z110
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ICMF_NOCFA is an exemplar enzyme with EC 5.4.99.13 activity.
+    evidence:
+    - reference: EC:5.4.99.13
+      snippet: DR   Q1LRY0, ICMF_CUPMC ;  Q5KUG0, ICMF_GEOKA ;  Q5Z110, ICMF_NOCFA ;
+      notes: ExPASy ENZYME entry EC 5.4.99.13 cross-references UniProtKB:Q5Z110 (ICMF_NOCFA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

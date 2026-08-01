@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -38,4 +38,53 @@ definitions:
       Catalyses: Strict requirement for Asp at the P1 position. It has a preferred cleavage sequence of Tyr-Val-Ala-Asp-|- but also cleaves at Asp-Glu-Val- Asp-|-
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of caspase-5
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.58. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Strict
+    requirement for Asp at the P1 position. It has a preferred cleavage sequence of Tyr-Val-Ala-Asp-|-
+    but also cleaves at Asp-Glu-Val- Asp-|-".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: caspase-5
+    grounding: EC:3.4.22.58
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P51878
+    node_type: PROTEIN
+    label: CASP5_HUMAN
+    grounding: UniProtKB:P51878
+  - node_id: prot_Q504J1
+    node_type: PROTEIN
+    label: CASPB_DANRE
+    grounding: UniProtKB:Q504J1
+  edges:
+  - subject: prot_P51878
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASP5_HUMAN is an exemplar enzyme with EC 3.4.22.58 activity.
+    evidence:
+    - reference: EC:3.4.22.58
+      snippet: DR   P51878, CASP5_HUMAN;  Q504J1, CASPB_DANRE;
+      notes: ExPASy ENZYME entry EC 3.4.22.58 cross-references UniProtKB:P51878 (CASP5_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q504J1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASPB_DANRE is an exemplar enzyme with EC 3.4.22.58 activity.
+    evidence:
+    - reference: EC:3.4.22.58
+      snippet: DR   P51878, CASP5_HUMAN;  Q504J1, CASPB_DANRE;
+      notes: ExPASy ENZYME entry EC 3.4.22.58 cross-references UniProtKB:Q504J1 (CASPB_DANRE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

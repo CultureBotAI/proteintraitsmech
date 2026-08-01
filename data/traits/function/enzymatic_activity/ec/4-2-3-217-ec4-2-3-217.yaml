@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: (2E,6E,10E,14E)-geranylfarnesyl diphosphate = (-)-somaliensene B + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of somaliensene B synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.217. EC 4.2.3.217 maps to
+    exactly one curated Rhea reaction (RHEA:78283), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E,10E,14E)-geranylfarnesyl
+    diphosphate = (-)-somaliensene B + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: somaliensene B synthase
+    grounding: EC:4.2.3.217
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E,10E,14E)-geranylfarnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57907
+    description: Formula C25H41O7P2.
+  - node_id: prd1
+    label: (-)-somaliensene B
+    node_type: CHEMICAL
+    grounding: CHEBI:209277
+    description: Formula C25H40.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_P0DXD5
+    node_type: PROTEIN
+    label: STSC_STRE0
+    grounding: UniProtKB:P0DXD5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E,14E)-geranylfarnesyl diphosphate is a substrate consumed by RHEA:78283 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78284
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => (-)-somaliensene B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78284 declares side 78283_L as its substrates
+        (rh:substrates); the master reaction RHEA:78283 is undirected. This participant is CHEBI:57907
+        with coefficient 1. Rhea cites PMID:29553734 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-somaliensene B is a product released by RHEA:78283 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78284
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => (-)-somaliensene B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78284 declares side 78283_R as its products
+        (rh:products); the master reaction RHEA:78283 is undirected. This participant is CHEBI:209277
+        with coefficient 1. Rhea cites PMID:29553734 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:78283 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78284
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => (-)-somaliensene B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78284 declares side 78283_R as its products
+        (rh:products); the master reaction RHEA:78283 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:29553734 for this reaction.
+  - subject: prot_P0DXD5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STSC_STRE0 is an exemplar enzyme with EC 4.2.3.217 activity.
+    evidence:
+    - reference: EC:4.2.3.217
+      snippet: DR   P0DXD5, STSC_STRE0 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.217 cross-references UniProtKB:P0DXD5 (STSC_STRE0) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

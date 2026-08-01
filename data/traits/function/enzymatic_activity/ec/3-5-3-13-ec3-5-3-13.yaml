@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.3.-
 synonyms:
@@ -33,4 +33,120 @@ definitions:
       Catalyses: N-formimidoyl-L-glutamate + H2O = N-formyl-L-glutamate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of formimidoylglutamate deiminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.3.13. EC 3.5.3.13 maps to exactly
+    one curated Rhea reaction (RHEA:22832), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-formimidoyl-L-glutamate
+    + H2O = N-formyl-L-glutamate + NH4(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: formimidoylglutamate deiminase
+    grounding: EC:3.5.3.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-formimidoyl-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58928
+    description: Formula C6H9N2O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-formyl-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:17684
+    description: Formula C6H7NO5.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: formimidoylglutamate deiminase activity
+    grounding: GO:0050416
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9HU77
+    node_type: PROTEIN
+    label: HUTF_PSEAE
+    grounding: UniProtKB:Q9HU77
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-formimidoyl-L-glutamate is a substrate consumed by RHEA:22832 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22833
+      snippet: N-formimidoyl-L-glutamate + H2O => N-formyl-L-glutamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22833 declares side 22832_L as its substrates
+        (rh:substrates); the master reaction RHEA:22832 is undirected. This participant is CHEBI:58928
+        with coefficient 1. Rhea cites PMID:17128965 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:22832 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22833
+      snippet: N-formimidoyl-L-glutamate + H2O => N-formyl-L-glutamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22833 declares side 22832_L as its substrates
+        (rh:substrates); the master reaction RHEA:22832 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17128965 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-formyl-L-glutamate is a product released by RHEA:22832 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22833
+      snippet: N-formimidoyl-L-glutamate + H2O => N-formyl-L-glutamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22833 declares side 22832_R as its products
+        (rh:products); the master reaction RHEA:22832 is undirected. This participant is CHEBI:17684 with
+        coefficient 1. Rhea cites PMID:17128965 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:22832 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22833
+      snippet: N-formimidoyl-L-glutamate + H2O => N-formyl-L-glutamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22833 declares side 22832_R as its products
+        (rh:products); the master reaction RHEA:22832 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:17128965 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.3.13
+      snippet: EC:3.5.3.13 > GO:formimidoylglutamate deiminase activity ; GO:0050416
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050416 is itself a record
+        in this KB.
+  - subject: prot_Q9HU77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTF_PSEAE is an exemplar enzyme with EC 3.5.3.13 activity.
+    evidence:
+    - reference: EC:3.5.3.13
+      snippet: DR   Q9HU77, HUTF_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.5.3.13 cross-references UniProtKB:Q9HU77 (HUTF_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

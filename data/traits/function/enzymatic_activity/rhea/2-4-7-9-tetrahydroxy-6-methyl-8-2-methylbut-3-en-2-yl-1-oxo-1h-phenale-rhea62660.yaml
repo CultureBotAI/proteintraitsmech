@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:145870
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,62 @@ definitions:
       Catalyses the reaction: 2,4,7,9-tetrahydroxy-6-methyl-8-(2-methylbut-3-en-2-yl)-1-oxo-1H-phenalen-3-ol = (2'R)-atrovenetin
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2,4,7,9-tetrahydroxy-6-methyl-8-(2-methylbut-3-en-2-yl)-1-oxo-1H-phenalen-3-ol
+    = (2'R)-…
+  description: Substrate-to-product chemistry of RHEA:62660, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62661 (rh:substrates → 62660_L, rh:products → 62660_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2,4,7,9-tetrahydroxy-6-methyl-8-(2-methylbut-3-en-2-yl)-1-oxo-1H-phenalen-3-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62660
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2,4,7,9-tetrahydroxy-6-methyl-8-(2-methylbut-3-en-2-yl)-1-oxo-1H-phenalen-3-ol =
+      (2''R)-atrovenetin'
+  - node_id: sub1
+    label: 2,4,7,9-tetrahydroxy-6-methyl-8-(2-methylbut-3-en-2-yl)-1-oxo-1H-phenalen-3-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:145870
+    description: Formula C19H17O6.
+  - node_id: prd1
+    label: (2'R)-atrovenetin
+    node_type: CHEMICAL
+    grounding: CHEBI:145872
+    description: Formula C19H17O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2,4,7,9-tetrahydroxy-6-methyl-8-(2-methylbut-3-en-2-yl)-1-oxo-1H-phenalen-3-ol is a substrate
+      consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62661
+      snippet: 2,4,7,9-tetrahydroxy-6-methyl-8-(2-methylbut-3-en-2-yl)-1-oxo-1H-phenalen-3-ol => (2'R)-atrovenetin
+      notes: Rhea's left-to-right directional reaction RHEA:62661 declares side 62660_L as its substrates
+        (rh:substrates); the master reaction RHEA:62660 is undirected. This participant is CHEBI:145870
+        with coefficient 1. Rhea cites PMID:28240554, PMID:31256936 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2'R)-atrovenetin is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62661
+      snippet: 2,4,7,9-tetrahydroxy-6-methyl-8-(2-methylbut-3-en-2-yl)-1-oxo-1H-phenalen-3-ol => (2'R)-atrovenetin
+      notes: Rhea's left-to-right directional reaction RHEA:62661 declares side 62660_R as its products
+        (rh:products); the master reaction RHEA:62660 is undirected. This participant is CHEBI:145872
+        with coefficient 1. Rhea cites PMID:28240554, PMID:31256936 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

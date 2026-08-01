@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.15.-
 synonyms:
@@ -41,4 +41,243 @@ definitions:
       Catalyses: all-trans-zeaxanthin + 4 reduced [2Fe-2S]-[ferredoxin] + 2 O2 + 4 H(+) = all-trans-violaxanthin + 4 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of zeaxanthin epoxidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.15.21. EC 1.14.15.21 maps to
+    exactly one curated Rhea reaction (RHEA:32443), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-zeaxanthin
+    + 4 reduced [2Fe-2S]-[ferredoxin] + 2 O2 + 4 H(+) = all-trans-violaxanthin + 4 oxidized [2Fe-2S]-[ferredoxin]
+    + 2 H2O". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: zeaxanthin epoxidase
+    grounding: EC:1.14.15.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-zeaxanthin
+    node_type: CHEMICAL
+    grounding: CHEBI:27547
+    description: Formula C40H56O2.
+  - node_id: sub2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: all-trans-violaxanthin
+    node_type: CHEMICAL
+    grounding: CHEBI:35288
+    description: Formula C40H56O4.
+  - node_id: prd2
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: zeaxanthin epoxidase activity
+    grounding: GO:0052662
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q96375
+    node_type: PROTEIN
+    label: ABA2_CAPAN
+    grounding: UniProtKB:Q96375
+  - node_id: prot_Q40412
+    node_type: PROTEIN
+    label: ABA2_NICPL
+    grounding: UniProtKB:Q40412
+  - node_id: prot_O81360
+    node_type: PROTEIN
+    label: ABA2_PRUAR
+    grounding: UniProtKB:O81360
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-zeaxanthin is a substrate consumed by RHEA:32443 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32444
+      snippet: all-trans-zeaxanthin + 4 reduced [2Fe-2S]-[ferredoxin] + 2 O2 + 4 H(+) => all-trans-violaxanthin
+        + 4 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:32444 declares side 32443_L as its substrates
+        (rh:substrates); the master reaction RHEA:32443 is undirected. This participant is CHEBI:27547
+        with coefficient 1. Rhea cites PMID:9624110, PMID:11506368, PMID:11058750, PMID:10890531 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:32443 (stoichiometric coefficient
+      4).
+    evidence:
+    - reference: RHEA:32444
+      snippet: all-trans-zeaxanthin + 4 reduced [2Fe-2S]-[ferredoxin] + 2 O2 + 4 H(+) => all-trans-violaxanthin
+        + 4 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:32444 declares side 32443_L as its substrates
+        (rh:substrates); the master reaction RHEA:32443 is undirected. This participant is GENERIC:10001
+        with coefficient 4. Rhea cites PMID:9624110, PMID:11506368, PMID:11058750, PMID:10890531 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:32443
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:32443 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:32444
+      snippet: all-trans-zeaxanthin + 4 reduced [2Fe-2S]-[ferredoxin] + 2 O2 + 4 H(+) => all-trans-violaxanthin
+        + 4 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:32444 declares side 32443_L as its substrates
+        (rh:substrates); the master reaction RHEA:32443 is undirected. This participant is CHEBI:15379
+        with coefficient 2. Rhea cites PMID:9624110, PMID:11506368, PMID:11058750, PMID:10890531 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by RHEA:32443 (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:32444
+      snippet: all-trans-zeaxanthin + 4 reduced [2Fe-2S]-[ferredoxin] + 2 O2 + 4 H(+) => all-trans-violaxanthin
+        + 4 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:32444 declares side 32443_L as its substrates
+        (rh:substrates); the master reaction RHEA:32443 is undirected. This participant is CHEBI:15378
+        with coefficient 4. Rhea cites PMID:9624110, PMID:11506368, PMID:11058750, PMID:10890531 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: all-trans-violaxanthin is a product released by RHEA:32443 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32444
+      snippet: all-trans-zeaxanthin + 4 reduced [2Fe-2S]-[ferredoxin] + 2 O2 + 4 H(+) => all-trans-violaxanthin
+        + 4 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:32444 declares side 32443_R as its products
+        (rh:products); the master reaction RHEA:32443 is undirected. This participant is CHEBI:35288 with
+        coefficient 1. Rhea cites PMID:9624110, PMID:11506368, PMID:11058750, PMID:10890531 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [2Fe-2S]-[ferredoxin] is a product released by RHEA:32443 (stoichiometric coefficient
+      4).
+    evidence:
+    - reference: RHEA:32444
+      snippet: all-trans-zeaxanthin + 4 reduced [2Fe-2S]-[ferredoxin] + 2 O2 + 4 H(+) => all-trans-violaxanthin
+        + 4 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:32444 declares side 32443_R as its products
+        (rh:products); the master reaction RHEA:32443 is undirected. This participant is GENERIC:10000
+        with coefficient 4. Rhea cites PMID:9624110, PMID:11506368, PMID:11058750, PMID:10890531 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:32443
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:32443 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:32444
+      snippet: all-trans-zeaxanthin + 4 reduced [2Fe-2S]-[ferredoxin] + 2 O2 + 4 H(+) => all-trans-violaxanthin
+        + 4 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:32444 declares side 32443_R as its products
+        (rh:products); the master reaction RHEA:32443 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:9624110, PMID:11506368, PMID:11058750, PMID:10890531 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.14.15.21
+      snippet: EC:1.14.15.21 > GO:zeaxanthin epoxidase activity ; GO:0052662
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0052662 is itself a record
+        in this KB.
+  - subject: prot_Q96375
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABA2_CAPAN is an exemplar enzyme with EC 1.14.15.21 activity.
+    evidence:
+    - reference: EC:1.14.15.21
+      snippet: DR   Q96375, ABA2_CAPAN ;  Q40412, ABA2_NICPL ;  O81360, ABA2_PRUAR ;
+      notes: ExPASy ENZYME entry EC 1.14.15.21 cross-references UniProtKB:Q96375 (ABA2_CAPAN) as a protein
+        with this activity.
+  - subject: prot_Q40412
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABA2_NICPL is an exemplar enzyme with EC 1.14.15.21 activity.
+    evidence:
+    - reference: EC:1.14.15.21
+      snippet: DR   Q96375, ABA2_CAPAN ;  Q40412, ABA2_NICPL ;  O81360, ABA2_PRUAR ;
+      notes: ExPASy ENZYME entry EC 1.14.15.21 cross-references UniProtKB:Q40412 (ABA2_NICPL) as a protein
+        with this activity.
+  - subject: prot_O81360
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABA2_PRUAR is an exemplar enzyme with EC 1.14.15.21 activity.
+    evidence:
+    - reference: EC:1.14.15.21
+      snippet: DR   Q96375, ABA2_CAPAN ;  Q40412, ABA2_NICPL ;  O81360, ABA2_PRUAR ;
+      notes: ExPASy ENZYME entry EC 1.14.15.21 cross-references UniProtKB:O81360 (ABA2_PRUAR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:231692
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,109 @@ definitions:
       Catalyses the reaction: an Ac-O-9-sialoglycoconjugate + H2O = a sialoglycoconjugate + acetate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an Ac-O-9-sialoglycoconjugate + H2O = a sialoglycoconjugate + acetate +
+    H(+)
+  description: Substrate-to-product chemistry of RHEA:80763, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80764 (rh:substrates → 80763_L, rh:products → 80763_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an Ac-O-9-sialoglycoconjugate + H2O = a sialoglycoconjugate + acetate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80763
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an Ac-O-9-sialoglycoconjugate + H2O = a sialoglycoconjugate + acetate + H(+)'
+  - node_id: sub1
+    label: an Ac-O-9-sialoglycoconjugate
+    node_type: CHEMICAL
+    grounding: CHEBI:231692
+    description: Formula C13H19NO10R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a sialoglycoconjugate
+    node_type: CHEMICAL
+    grounding: CHEBI:231691
+    description: Formula C11H17NO9R.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an Ac-O-9-sialoglycoconjugate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:80764
+      snippet: an Ac-O-9-sialoglycoconjugate + H2O => a sialoglycoconjugate + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80764 declares side 80763_L as its substrates
+        (rh:substrates); the master reaction RHEA:80763 is undirected. This participant is CHEBI:231692
+        with coefficient 1. Rhea cites PMID:2808434 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80764
+      snippet: an Ac-O-9-sialoglycoconjugate + H2O => a sialoglycoconjugate + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80764 declares side 80763_L as its substrates
+        (rh:substrates); the master reaction RHEA:80763 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2808434 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a sialoglycoconjugate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80764
+      snippet: an Ac-O-9-sialoglycoconjugate + H2O => a sialoglycoconjugate + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80764 declares side 80763_R as its products
+        (rh:products); the master reaction RHEA:80763 is undirected. This participant is CHEBI:231691
+        with coefficient 1. Rhea cites PMID:2808434 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80764
+      snippet: an Ac-O-9-sialoglycoconjugate + H2O => a sialoglycoconjugate + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80764 declares side 80763_R as its products
+        (rh:products); the master reaction RHEA:80763 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:2808434 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80764
+      snippet: an Ac-O-9-sialoglycoconjugate + H2O => a sialoglycoconjugate + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80764 declares side 80763_R as its products
+        (rh:products); the master reaction RHEA:80763 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2808434 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

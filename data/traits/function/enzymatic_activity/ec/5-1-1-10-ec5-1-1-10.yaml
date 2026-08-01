@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.1.-
 mapped_xrefs:
@@ -38,4 +38,117 @@ definitions:
       Catalyses: an L-alpha-amino acid = a D-alpha-amino acid
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of amino-acid racemase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.1.10. EC 5.1.1.10 maps to exactly
+    one curated Rhea reaction (RHEA:18317), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an L-alpha-amino
+    acid = a D-alpha-amino acid". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: amino-acid racemase
+    grounding: EC:5.1.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+    description: Formula C2H4NO2R.
+  - node_id: prd1
+    label: a D-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59871
+    description: Formula C2H4NO2R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: amino-acid racemase activity
+    grounding: GO:0047661
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O57878
+    node_type: PROTEIN
+    label: BARAC_PYRHO
+    grounding: UniProtKB:O57878
+  - node_id: prot_A0KLG5
+    node_type: PROTEIN
+    label: BSR_AERHH
+    grounding: UniProtKB:A0KLG5
+  - node_id: prot_Q88GJ9
+    node_type: PROTEIN
+    label: BSR_PSEPK
+    grounding: UniProtKB:Q88GJ9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an L-alpha-amino acid is a substrate consumed by RHEA:18317 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18318
+      snippet: an L-alpha-amino acid => a D-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:18318 declares side 18317_L as its substrates
+        (rh:substrates); the master reaction RHEA:18317 is undirected. This participant is CHEBI:59869
+        with coefficient 1. Rhea cites PMID:24419381, PMID:19300994, PMID:23995642, PMID:5788493 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a D-alpha-amino acid is a product released by RHEA:18317 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18318
+      snippet: an L-alpha-amino acid => a D-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:18318 declares side 18317_R as its products
+        (rh:products); the master reaction RHEA:18317 is undirected. This participant is CHEBI:59871 with
+        coefficient 1. Rhea cites PMID:24419381, PMID:19300994, PMID:23995642, PMID:5788493 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.1.10
+      snippet: EC:5.1.1.10 > GO:amino-acid racemase activity ; GO:0047661
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047661 is itself a record
+        in this KB.
+  - subject: prot_O57878
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BARAC_PYRHO is an exemplar enzyme with EC 5.1.1.10 activity.
+    evidence:
+    - reference: EC:5.1.1.10
+      snippet: DR   O57878, BARAC_PYRHO;  A0KLG5, BSR_AERHH  ;  Q88GJ9, BSR_PSEPK  ;
+      notes: ExPASy ENZYME entry EC 5.1.1.10 cross-references UniProtKB:O57878 (BARAC_PYRHO) as a protein
+        with this activity.
+  - subject: prot_A0KLG5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BSR_AERHH is an exemplar enzyme with EC 5.1.1.10 activity.
+    evidence:
+    - reference: EC:5.1.1.10
+      snippet: DR   O57878, BARAC_PYRHO;  A0KLG5, BSR_AERHH  ;  Q88GJ9, BSR_PSEPK  ;
+      notes: ExPASy ENZYME entry EC 5.1.1.10 cross-references UniProtKB:A0KLG5 (BSR_AERHH) as a protein
+        with this activity.
+  - subject: prot_Q88GJ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BSR_PSEPK is an exemplar enzyme with EC 5.1.1.10 activity.
+    evidence:
+    - reference: EC:5.1.1.10
+      snippet: DR   O57878, BARAC_PYRHO;  A0KLG5, BSR_AERHH  ;  Q88GJ9, BSR_PSEPK  ;
+      notes: ExPASy ENZYME entry EC 5.1.1.10 cross-references UniProtKB:Q88GJ9 (BSR_PSEPK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

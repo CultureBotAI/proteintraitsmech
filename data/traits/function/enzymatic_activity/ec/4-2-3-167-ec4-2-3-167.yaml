@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -32,4 +32,120 @@ definitions:
       Catalyses: (2E,6E,10E)-geranylgeranyl diphosphate + H2O = (3E,7E)-dolabella-3,7- dien-18-ol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dolabella-3,7-dien-18-ol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.167. EC 4.2.3.167 maps to
+    exactly one curated Rhea reaction (RHEA:16345), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E,10E)-geranylgeranyl
+    diphosphate + H2O = (3E,7E)-dolabella-3,7- dien-18-ol + diphosphate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dolabella-3,7-dien-18-ol synthase
+    grounding: EC:4.2.3.167
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (3E,7E)-dolabella-3,7-dien-18-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:137565
+    description: Formula C20H34O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A178U9Y5
+    node_type: PROTEIN
+    label: TP20L_ARATH
+    grounding: UniProtKB:A0A178U9Y5
+  - node_id: prot_Q84UU9
+    node_type: PROTEIN
+    label: TPS06_ARATH
+    grounding: UniProtKB:Q84UU9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by RHEA:16345 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16346
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate + H2O => (3E,7E)-dolabella-3,7-dien-18-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:16346 declares side 16345_L as its substrates
+        (rh:substrates); the master reaction RHEA:16345 is undirected. This participant is CHEBI:58756
+        with coefficient 1. Rhea cites PMID:27933080 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:16345 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16346
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate + H2O => (3E,7E)-dolabella-3,7-dien-18-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:16346 declares side 16345_L as its substrates
+        (rh:substrates); the master reaction RHEA:16345 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:27933080 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3E,7E)-dolabella-3,7-dien-18-ol is a product released by RHEA:16345 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16346
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate + H2O => (3E,7E)-dolabella-3,7-dien-18-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:16346 declares side 16345_R as its products
+        (rh:products); the master reaction RHEA:16345 is undirected. This participant is CHEBI:137565
+        with coefficient 1. Rhea cites PMID:27933080 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:16345 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16346
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate + H2O => (3E,7E)-dolabella-3,7-dien-18-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:16346 declares side 16345_R as its products
+        (rh:products); the master reaction RHEA:16345 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:27933080 for this reaction.
+  - subject: prot_A0A178U9Y5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TP20L_ARATH is an exemplar enzyme with EC 4.2.3.167 activity.
+    evidence:
+    - reference: EC:4.2.3.167
+      snippet: DR   A0A178U9Y5, TP20L_ARATH;  Q84UU9, TPS06_ARATH;
+      notes: ExPASy ENZYME entry EC 4.2.3.167 cross-references UniProtKB:A0A178U9Y5 (TP20L_ARATH) as a
+        protein with this activity.
+  - subject: prot_Q84UU9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS06_ARATH is an exemplar enzyme with EC 4.2.3.167 activity.
+    evidence:
+    - reference: EC:4.2.3.167
+      snippet: DR   A0A178U9Y5, TP20L_ARATH;  Q84UU9, TPS06_ARATH;
+      notes: ExPASy ENZYME entry EC 4.2.3.167 cross-references UniProtKB:Q84UU9 (TPS06_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

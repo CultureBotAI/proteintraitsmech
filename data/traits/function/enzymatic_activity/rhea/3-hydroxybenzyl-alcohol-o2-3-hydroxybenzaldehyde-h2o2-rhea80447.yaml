@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17069
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,108 @@ definitions:
       Catalyses the reaction: 3-hydroxybenzyl alcohol + O2 = 3-hydroxybenzaldehyde + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hydroxybenzyl alcohol + O2 = 3-hydroxybenzaldehyde + H2O2
+  description: Substrate-to-product chemistry of RHEA:80447, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80448 (rh:substrates → 80447_L, rh:products → 80447_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-hydroxybenzyl alcohol + O2 = 3-hydroxybenzaldehyde + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80447
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-hydroxybenzyl alcohol + O2 = 3-hydroxybenzaldehyde + H2O2'
+  - node_id: sub1
+    label: 3-hydroxybenzyl alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:17069
+    description: Formula C7H8O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 3-hydroxybenzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:16207
+    description: Formula C7H6O2.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aryl-alcohol oxidase activity
+    grounding: GO:0047682
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxybenzyl alcohol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80448
+      snippet: 3-hydroxybenzyl alcohol + O2 => 3-hydroxybenzaldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:80448 declares side 80447_L as its substrates
+        (rh:substrates); the master reaction RHEA:80447 is undirected. This participant is CHEBI:17069
+        with coefficient 1. Rhea cites PMID:10809692 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80448
+      snippet: 3-hydroxybenzyl alcohol + O2 => 3-hydroxybenzaldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:80448 declares side 80447_L as its substrates
+        (rh:substrates); the master reaction RHEA:80447 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:10809692 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-hydroxybenzaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80448
+      snippet: 3-hydroxybenzyl alcohol + O2 => 3-hydroxybenzaldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:80448 declares side 80447_R as its products
+        (rh:products); the master reaction RHEA:80447 is undirected. This participant is CHEBI:16207 with
+        coefficient 1. Rhea cites PMID:10809692 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80448
+      snippet: 3-hydroxybenzyl alcohol + O2 => 3-hydroxybenzaldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:80448 declares side 80447_R as its products
+        (rh:products); the master reaction RHEA:80447 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:10809692 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:80447
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047682"/>
+      notes: The rdfs:seeAlso triple on RHEA:80447 in rhea.rdf. GO term GO:0047682 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

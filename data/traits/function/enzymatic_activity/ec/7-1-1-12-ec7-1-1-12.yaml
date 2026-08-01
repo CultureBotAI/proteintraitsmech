@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.1.1.-
 mapped_xrefs:
@@ -23,4 +23,132 @@ definitions:
       Catalyses: a menaquinone + succinate + 2 H(+)(out) = a menaquinol + fumarate + 2 H(+)(in)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of succinate dehydrogenase (electrogenic, proton-motive force generating)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.1.1.12. EC 7.1.1.12 maps to exactly
+    one curated Rhea reaction (RHEA:71663), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a menaquinone
+    + succinate + 2 H(+)(out) = a menaquinol + fumarate + 2 H(+)(in)". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: succinate dehydrogenase (electrogenic, proton-motive force generating)
+    grounding: EC:7.1.1.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a menaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16374
+    xrefs:
+    - RHEA-COMP:9537
+    description: Rhea compound POLYMER:9537. Formula C11H8O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: sub3
+    label: H(+) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: a menaquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:18151
+    xrefs:
+    - RHEA-COMP:9539
+    description: Rhea compound POLYMER:9539. Formula C11H10O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: prd2
+    label: fumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+    description: Formula C4H2O4.
+  - node_id: prd3
+    label: H(+) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a menaquinone is a substrate consumed by RHEA:71663 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71664
+      snippet: a menaquinone + succinate + 2 H(+)(out) => a menaquinol + fumarate + 2 H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:71664 declares side 71663_L as its substrates
+        (rh:substrates); the master reaction RHEA:71663 is undirected. This participant is POLYMER:9537
+        with coefficient 1. Rhea cites PMID:23466335, PMID:30297797, PMID:17154542, PMID:18793177 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: succinate is a substrate consumed by RHEA:71663 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71664
+      snippet: a menaquinone + succinate + 2 H(+)(out) => a menaquinol + fumarate + 2 H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:71664 declares side 71663_L as its substrates
+        (rh:substrates); the master reaction RHEA:71663 is undirected. This participant is CHEBI:30031
+        with coefficient 1. Rhea cites PMID:23466335, PMID:30297797, PMID:17154542, PMID:18793177 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:71663 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:71664
+      snippet: a menaquinone + succinate + 2 H(+)(out) => a menaquinol + fumarate + 2 H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:71664 declares side 71663_L as its substrates
+        (rh:substrates); the master reaction RHEA:71663 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:23466335, PMID:30297797, PMID:17154542, PMID:18793177 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a menaquinol is a product released by RHEA:71663 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71664
+      snippet: a menaquinone + succinate + 2 H(+)(out) => a menaquinol + fumarate + 2 H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:71664 declares side 71663_R as its products
+        (rh:products); the master reaction RHEA:71663 is undirected. This participant is POLYMER:9539
+        with coefficient 1. Rhea cites PMID:23466335, PMID:30297797, PMID:17154542, PMID:18793177 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: fumarate is a product released by RHEA:71663 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71664
+      snippet: a menaquinone + succinate + 2 H(+)(out) => a menaquinol + fumarate + 2 H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:71664 declares side 71663_R as its products
+        (rh:products); the master reaction RHEA:71663 is undirected. This participant is CHEBI:29806 with
+        coefficient 1. Rhea cites PMID:23466335, PMID:30297797, PMID:17154542, PMID:18793177 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:71663 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:71664
+      snippet: a menaquinone + succinate + 2 H(+)(out) => a menaquinol + fumarate + 2 H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:71664 declares side 71663_R as its products
+        (rh:products); the master reaction RHEA:71663 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:23466335, PMID:30297797, PMID:17154542, PMID:18793177 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

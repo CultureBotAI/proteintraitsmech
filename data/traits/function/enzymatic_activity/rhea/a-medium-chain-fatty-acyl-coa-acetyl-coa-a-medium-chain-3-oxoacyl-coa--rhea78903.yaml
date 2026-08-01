@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:90546
     role: SUBSTRATE_OR_PRODUCT
@@ -22,4 +22,109 @@ definitions:
       Catalyses the reaction: a medium-chain fatty acyl-CoA + acetyl-CoA = a medium-chain 3-oxoacyl-CoA + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a medium-chain fatty acyl-CoA + acetyl-CoA = a medium-chain 3-oxoacyl-CoA
+    + CoA
+  description: Substrate-to-product chemistry of RHEA:78903, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78904 (rh:substrates → 78903_L, rh:products → 78903_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a medium-chain fatty acyl-CoA + acetyl-CoA = a medium-chain 3-oxoacyl-CoA +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78903
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a medium-chain fatty acyl-CoA + acetyl-CoA = a medium-chain 3-oxoacyl-CoA + CoA'
+  - node_id: sub1
+    label: a medium-chain fatty acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:90546
+    description: Formula C22H31N7O17P3SR.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: a medium-chain 3-oxoacyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:229604
+    description: Formula C24H33N7O18P3SR.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acetyl-CoA C-acyltransferase activity
+    grounding: GO:0003988
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a medium-chain fatty acyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78904
+      snippet: a medium-chain fatty acyl-CoA + acetyl-CoA => a medium-chain 3-oxoacyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:78904 declares side 78903_L as its substrates
+        (rh:substrates); the master reaction RHEA:78903 is undirected. This participant is CHEBI:90546
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78904
+      snippet: a medium-chain fatty acyl-CoA + acetyl-CoA => a medium-chain 3-oxoacyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:78904 declares side 78903_L as its substrates
+        (rh:substrates); the master reaction RHEA:78903 is undirected. This participant is CHEBI:57288
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a medium-chain 3-oxoacyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78904
+      snippet: a medium-chain fatty acyl-CoA + acetyl-CoA => a medium-chain 3-oxoacyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:78904 declares side 78903_R as its products
+        (rh:products); the master reaction RHEA:78903 is undirected. This participant is CHEBI:229604
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78904
+      snippet: a medium-chain fatty acyl-CoA + acetyl-CoA => a medium-chain 3-oxoacyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:78904 declares side 78903_R as its products
+        (rh:products); the master reaction RHEA:78903 is undirected. This participant is CHEBI:57287 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:78903
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003988"/>
+      notes: The rdfs:seeAlso triple on RHEA:78903 in rhea.rdf. GO term GO:0003988 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

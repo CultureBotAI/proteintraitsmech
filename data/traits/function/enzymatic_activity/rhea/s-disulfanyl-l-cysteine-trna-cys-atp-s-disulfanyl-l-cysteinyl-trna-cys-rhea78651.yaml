@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:229465
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,164 @@ definitions:
       Catalyses the reaction: S-disulfanyl-L-cysteine + tRNA(Cys) + ATP = (S)-disulfanyl-L-cysteinyl-tRNA(Cys) + AMP + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-disulfanyl-L-cysteine + tRNA(Cys) + ATP = (S)-disulfanyl-L-cysteinyl-tRNA(Cys)
+    + AMP…
+  description: Substrate-to-product chemistry of RHEA:78651, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78652 (rh:substrates → 78651_L, rh:products → 78651_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of S-disulfanyl-L-cysteine + tRNA(Cys) + ATP = (S)-disulfanyl-L-cysteinyl-tRNA(…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78651
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: S-disulfanyl-L-cysteine + tRNA(Cys) + ATP = (S)-disulfanyl-L-cysteinyl-tRNA(Cys)
+      + AMP + diphosphate'
+  - node_id: sub1
+    label: S-disulfanyl-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:229465
+    description: Formula C3H7NO2S3.
+  - node_id: sub2
+    label: tRNA(Cys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9661
+    description: Rhea compound GENERIC:9661.
+  - node_id: sub2_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9661 (tRNA(Cys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: (S)-disulfanyl-L-cysteinyl-tRNA(Cys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19120
+    description: Rhea compound GENERIC:19120.
+  - node_id: prd1_rp1
+    label: 3'-[(S)-disulfanyl-L-cysteinyl]adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19120 ((S)-disulfanyl-L-cysteinyl-tRNA(Cys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:229521
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-disulfanyl-L-cysteine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78652
+      snippet: S-disulfanyl-L-cysteine + tRNA(Cys) + ATP => (S)-disulfanyl-L-cysteinyl-tRNA(Cys) + AMP
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78652 declares side 78651_L as its substrates
+        (rh:substrates); the master reaction RHEA:78651 is undirected. This participant is CHEBI:229465
+        with coefficient 1. Rhea cites PMID:29079736 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: tRNA(Cys) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78652
+      snippet: S-disulfanyl-L-cysteine + tRNA(Cys) + ATP => (S)-disulfanyl-L-cysteinyl-tRNA(Cys) + AMP
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78652 declares side 78651_L as its substrates
+        (rh:substrates); the master reaction RHEA:78651 is undirected. This participant is GENERIC:9661
+        with coefficient 1. Rhea cites PMID:29079736 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: AMP 3'-end residue is the reactive part of tRNA(Cys).
+    evidence:
+    - reference: RHEA:78651
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9661 (tRNA(Cys)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78652
+      snippet: S-disulfanyl-L-cysteine + tRNA(Cys) + ATP => (S)-disulfanyl-L-cysteinyl-tRNA(Cys) + AMP
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78652 declares side 78651_L as its substrates
+        (rh:substrates); the master reaction RHEA:78651 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:29079736 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-disulfanyl-L-cysteinyl-tRNA(Cys) is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78652
+      snippet: S-disulfanyl-L-cysteine + tRNA(Cys) + ATP => (S)-disulfanyl-L-cysteinyl-tRNA(Cys) + AMP
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78652 declares side 78651_R as its products
+        (rh:products); the master reaction RHEA:78651 is undirected. This participant is GENERIC:19120
+        with coefficient 1. Rhea cites PMID:29079736 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-[(S)-disulfanyl-L-cysteinyl]adenylyl group is the reactive part of (S)-disulfanyl-L-cysteinyl-tRNA(Cys).
+    evidence:
+    - reference: RHEA:78651
+      snippet: 3'-[(S)-disulfanyl-L-cysteinyl]adenylyl group
+      notes: Rhea compound GENERIC:19120 ((S)-disulfanyl-L-cysteinyl-tRNA(Cys)) declares rh:reactivePart
+        = 3'-[(S)-disulfanyl-L-cysteinyl]adenylyl group (CHEBI:229521), formula C13H18N6O7PS3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78652
+      snippet: S-disulfanyl-L-cysteine + tRNA(Cys) + ATP => (S)-disulfanyl-L-cysteinyl-tRNA(Cys) + AMP
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78652 declares side 78651_R as its products
+        (rh:products); the master reaction RHEA:78651 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:29079736 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78652
+      snippet: S-disulfanyl-L-cysteine + tRNA(Cys) + ATP => (S)-disulfanyl-L-cysteinyl-tRNA(Cys) + AMP
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78652 declares side 78651_R as its products
+        (rh:products); the master reaction RHEA:78651 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:29079736 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.157
     mapping_source: rhea2ec
@@ -32,4 +32,166 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate + H2O = (+)-isoafricanol + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate + H2O = (+)-isoafricanol + diphosphate
+  description: Substrate-to-product chemistry of RHEA:53616, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53617 (rh:substrates → 53616_L, rh:products → 53616_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate + H2O = (+)-isoafricanol + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53616
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate + H2O = (+)-isoafricanol + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (+)-isoafricanol
+    node_type: CHEMICAL
+    grounding: CHEBI:137522
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-isoafricanol synthase
+    grounding: EC:4.2.3.157
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A291SJC7
+    node_type: PROTEIN
+    label: IAFRS_STRMQ
+    grounding: UniProtKB:A0A291SJC7
+  - node_id: prot_G2P5T1
+    node_type: PROTEIN
+    label: IAFRS_STRV4
+    grounding: UniProtKB:G2P5T1
+  - node_id: prot_A0A5S9I252
+    node_type: PROTEIN
+    label: TATC6_TRIAV
+    grounding: UniProtKB:A0A5S9I252
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:53617
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-isoafricanol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53617 declares side 53616_L as its substrates
+        (rh:substrates); the master reaction RHEA:53616 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:28247907, PMID:31418991, PMID:24626486 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53617
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-isoafricanol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53617 declares side 53616_L as its substrates
+        (rh:substrates); the master reaction RHEA:53616 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:28247907, PMID:31418991, PMID:24626486 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-isoafricanol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53617
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-isoafricanol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53617 declares side 53616_R as its products
+        (rh:products); the master reaction RHEA:53616 is undirected. This participant is CHEBI:137522
+        with coefficient 1. Rhea cites PMID:28247907, PMID:31418991, PMID:24626486 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53617
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-isoafricanol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53617 declares side 53616_R as its products
+        (rh:products); the master reaction RHEA:53616 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:28247907, PMID:31418991, PMID:24626486 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.157; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:53616
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.157"/>
+      notes: The rh:ec triple on RHEA:53616 in rhea.rdf. EC 4.2.3.157 is itself a record in this KB.
+  - subject: prot_A0A291SJC7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IAFRS_STRMQ is an exemplar enzyme carrying EC 4.2.3.157, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.157
+      snippet: DR   A0A291SJC7, IAFRS_STRMQ;  G2P5T1, IAFRS_STRV4;  A0A5S9I252, TATC6_TRIAV;
+      notes: ExPASy ENZYME entry EC 4.2.3.157 cross-references UniProtKB:A0A291SJC7 (IAFRS_STRMQ) as a
+        protein with this activity.
+    - reference: RHEA:53616
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.157"/>
+      notes: Rhea assigns RHEA:53616 to EC 4.2.3.157, and EC 4.2.3.157 maps to exactly one Rhea master
+        reaction (RHEA:53616), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_G2P5T1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IAFRS_STRV4 is an exemplar enzyme carrying EC 4.2.3.157, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.157
+      snippet: DR   A0A291SJC7, IAFRS_STRMQ;  G2P5T1, IAFRS_STRV4;  A0A5S9I252, TATC6_TRIAV;
+      notes: ExPASy ENZYME entry EC 4.2.3.157 cross-references UniProtKB:G2P5T1 (IAFRS_STRV4) as a protein
+        with this activity.
+    - reference: RHEA:53616
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.157"/>
+      notes: Rhea assigns RHEA:53616 to EC 4.2.3.157, and EC 4.2.3.157 maps to exactly one Rhea master
+        reaction (RHEA:53616), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0A5S9I252
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TATC6_TRIAV is an exemplar enzyme carrying EC 4.2.3.157, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.157
+      snippet: DR   A0A291SJC7, IAFRS_STRMQ;  G2P5T1, IAFRS_STRV4;  A0A5S9I252, TATC6_TRIAV;
+      notes: ExPASy ENZYME entry EC 4.2.3.157 cross-references UniProtKB:A0A5S9I252 (TATC6_TRIAV) as a
+        protein with this activity.
+    - reference: RHEA:53616
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.157"/>
+      notes: Rhea assigns RHEA:53616 to EC 4.2.3.157, and EC 4.2.3.157 maps to exactly one Rhea master
+        reaction (RHEA:53616), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

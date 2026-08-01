@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.6
     mapping_source: rhea2ec
@@ -32,4 +32,181 @@ definitions:
       Catalyses the reaction: D-galactonate = 2-dehydro-3-deoxy-D-galactonate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-galactonate = 2-dehydro-3-deoxy-D-galactonate + H2O
+  description: Substrate-to-product chemistry of RHEA:18649, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:18650 (rh:substrates → 18649_L, rh:products → 18649_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-galactonate = 2-dehydro-3-deoxy-D-galactonate + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:18649
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-galactonate = 2-dehydro-3-deoxy-D-galactonate + H2O'
+  - node_id: sub1
+    label: D-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:12931
+    description: Formula C6H11O7.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-D-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57989
+    description: Formula C6H9O6.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: galactonate dehydratase activity
+    grounding: GO:0008869
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: gluconate/galactonate dehydratase
+    grounding: EC:4.2.1.140
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec2
+    node_type: MOLECULAR_FUNCTION
+    label: galactonate dehydratase
+    grounding: EC:4.2.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_B5ZZ34
+    node_type: PROTEIN
+    label: ARAD_RHILW
+    grounding: UniProtKB:B5ZZ34
+  - node_id: prot_B1LPS5
+    node_type: PROTEIN
+    label: DGOD1_ECOSM
+    grounding: UniProtKB:B1LPS5
+  - node_id: prot_B1LL17
+    node_type: PROTEIN
+    label: DGOD2_ECOSM
+    grounding: UniProtKB:B1LL17
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-galactonate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18650
+      snippet: D-galactonate => 2-dehydro-3-deoxy-D-galactonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18650 declares side 18649_L as its substrates
+        (rh:substrates); the master reaction RHEA:18649 is undirected. This participant is CHEBI:12931
+        with coefficient 1. Rhea cites PMID:20023024, PMID:15474024, PMID:15869466 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-D-galactonate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18650
+      snippet: D-galactonate => 2-dehydro-3-deoxy-D-galactonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18650 declares side 18649_R as its products
+        (rh:products); the master reaction RHEA:18649 is undirected. This participant is CHEBI:57989 with
+        coefficient 1. Rhea cites PMID:20023024, PMID:15474024, PMID:15869466 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18650
+      snippet: D-galactonate => 2-dehydro-3-deoxy-D-galactonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18650 declares side 18649_R as its products
+        (rh:products); the master reaction RHEA:18649 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:20023024, PMID:15474024, PMID:15869466 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:18649
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008869"/>
+      notes: The rdfs:seeAlso triple on RHEA:18649 in rhea.rdf. GO term GO:0008869 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.140; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:18649
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.140"/>
+      notes: The rh:ec triple on RHEA:18649 in rhea.rdf. EC 4.2.1.140 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec2
+    description: Rhea assigns this reaction to EC 4.2.1.6; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:18649
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.6"/>
+      notes: The rh:ec triple on RHEA:18649 in rhea.rdf. EC 4.2.1.6 is itself a record in this KB.
+  - subject: prot_B5ZZ34
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAD_RHILW is an exemplar enzyme carrying EC 4.2.1.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.6
+      snippet: DR   B5ZZ34, ARAD_RHILW ;  B1LPS5, DGOD1_ECOSM;  B1LL17, DGOD2_ECOSM;
+      notes: ExPASy ENZYME entry EC 4.2.1.6 cross-references UniProtKB:B5ZZ34 (ARAD_RHILW) as a protein
+        with this activity.
+    - reference: RHEA:18649
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.6"/>
+      notes: Rhea assigns RHEA:18649 to EC 4.2.1.6, and EC 4.2.1.6 maps to exactly one Rhea master reaction
+        (RHEA:18649), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B1LPS5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DGOD1_ECOSM is an exemplar enzyme carrying EC 4.2.1.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.6
+      snippet: DR   B5ZZ34, ARAD_RHILW ;  B1LPS5, DGOD1_ECOSM;  B1LL17, DGOD2_ECOSM;
+      notes: ExPASy ENZYME entry EC 4.2.1.6 cross-references UniProtKB:B1LPS5 (DGOD1_ECOSM) as a protein
+        with this activity.
+    - reference: RHEA:18649
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.6"/>
+      notes: Rhea assigns RHEA:18649 to EC 4.2.1.6, and EC 4.2.1.6 maps to exactly one Rhea master reaction
+        (RHEA:18649), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B1LL17
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DGOD2_ECOSM is an exemplar enzyme carrying EC 4.2.1.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.6
+      snippet: DR   B5ZZ34, ARAD_RHILW ;  B1LPS5, DGOD1_ECOSM;  B1LL17, DGOD2_ECOSM;
+      notes: ExPASy ENZYME entry EC 4.2.1.6 cross-references UniProtKB:B1LL17 (DGOD2_ECOSM) as a protein
+        with this activity.
+    - reference: RHEA:18649
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.6"/>
+      notes: Rhea assigns RHEA:18649 to EC 4.2.1.6, and EC 4.2.1.6 maps to exactly one Rhea master reaction
+        (RHEA:18649), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

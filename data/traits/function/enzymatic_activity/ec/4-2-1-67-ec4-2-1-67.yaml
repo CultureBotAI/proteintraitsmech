@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -30,4 +30,103 @@ definitions:
       Catalyses: D-fuconate = 2-dehydro-3-deoxy-D-fuconate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-fuconate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.67. EC 4.2.1.67 maps to exactly
+    one curated Rhea reaction (RHEA:12949), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-fuconate =
+    2-dehydro-3-deoxy-D-fuconate + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-fuconate dehydratase
+    grounding: EC:4.2.1.67
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-fuconate
+    node_type: CHEMICAL
+    grounding: CHEBI:35372
+    description: Formula C6H11O6.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-D-fuconate
+    node_type: CHEMICAL
+    grounding: CHEBI:58378
+    description: Formula C6H9O5.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: D-fuconate dehydratase activity
+    grounding: GO:0047818
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B5ZZ34
+    node_type: PROTEIN
+    label: ARAD_RHILW
+    grounding: UniProtKB:B5ZZ34
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-fuconate is a substrate consumed by RHEA:12949 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12950
+      snippet: D-fuconate => 2-dehydro-3-deoxy-D-fuconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12950 declares side 12949_L as its substrates
+        (rh:substrates); the master reaction RHEA:12949 is undirected. This participant is CHEBI:35372
+        with coefficient 1. Rhea cites PMID:4335868 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-D-fuconate is a product released by RHEA:12949 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12950
+      snippet: D-fuconate => 2-dehydro-3-deoxy-D-fuconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12950 declares side 12949_R as its products
+        (rh:products); the master reaction RHEA:12949 is undirected. This participant is CHEBI:58378 with
+        coefficient 1. Rhea cites PMID:4335868 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:12949 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12950
+      snippet: D-fuconate => 2-dehydro-3-deoxy-D-fuconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12950 declares side 12949_R as its products
+        (rh:products); the master reaction RHEA:12949 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:4335868 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.67
+      snippet: EC:4.2.1.67 > GO:D-fuconate dehydratase activity ; GO:0047818
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047818 is itself a record
+        in this KB.
+  - subject: prot_B5ZZ34
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAD_RHILW is an exemplar enzyme with EC 4.2.1.67 activity.
+    evidence:
+    - reference: EC:4.2.1.67
+      snippet: DR   B5ZZ34, ARAD_RHILW ;
+      notes: ExPASy ENZYME entry EC 4.2.1.67 cross-references UniProtKB:B5ZZ34 (ARAD_RHILW) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.99.-
 synonyms:
@@ -33,4 +33,104 @@ definitions:
       Catalyses: all-trans-zeta-carotene + 2 A = all-trans-lycopene + 2 AH2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of all-trans-zeta-carotene desaturase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.99.26. EC 1.3.99.26 maps to
+    exactly one curated Rhea reaction (RHEA:30619), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-zeta-carotene
+    + 2 A = all-trans-lycopene + 2 AH2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: all-trans-zeta-carotene desaturase
+    grounding: EC:1.3.99.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-zeta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:28068
+    description: Formula C40H60.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd1
+    label: all-trans-lycopene
+    node_type: CHEMICAL
+    grounding: CHEBI:15948
+    description: Formula C40H56.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: prot_Q02861
+    node_type: PROTEIN
+    label: CRTI_MYXXA
+    grounding: UniProtKB:Q02861
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-zeta-carotene is a substrate consumed by RHEA:30619 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30620
+      snippet: all-trans-zeta-carotene + 2 A => all-trans-lycopene + 2 AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30620 declares side 30619_L as its substrates
+        (rh:substrates); the master reaction RHEA:30619 is undirected. This participant is CHEBI:28068
+        with coefficient 1. Rhea cites PMID:17662111 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by RHEA:30619 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:30620
+      snippet: all-trans-zeta-carotene + 2 A => all-trans-lycopene + 2 AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30620 declares side 30619_L as its substrates
+        (rh:substrates); the master reaction RHEA:30619 is undirected. This participant is CHEBI:13193
+        with coefficient 2. Rhea cites PMID:17662111 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: all-trans-lycopene is a product released by RHEA:30619 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30620
+      snippet: all-trans-zeta-carotene + 2 A => all-trans-lycopene + 2 AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30620 declares side 30619_R as its products
+        (rh:products); the master reaction RHEA:30619 is undirected. This participant is CHEBI:15948 with
+        coefficient 1. Rhea cites PMID:17662111 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by RHEA:30619 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:30620
+      snippet: all-trans-zeta-carotene + 2 A => all-trans-lycopene + 2 AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30620 declares side 30619_R as its products
+        (rh:products); the master reaction RHEA:30619 is undirected. This participant is CHEBI:17499 with
+        coefficient 2. Rhea cites PMID:17662111 for this reaction.
+  - subject: prot_Q02861
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTI_MYXXA is an exemplar enzyme with EC 1.3.99.26 activity.
+    evidence:
+    - reference: EC:1.3.99.26
+      snippet: DR   Q02861, CRTI_MYXXA ;
+      notes: ExPASy ENZYME entry EC 1.3.99.26 cross-references UniProtKB:Q02861 (CRTI_MYXXA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

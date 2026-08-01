@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.6.1.-
 synonyms:
@@ -45,4 +45,81 @@ definitions:
       Catalyses: UDP-sugar + H2O = UMP + alpha-D-aldose 1-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-sugar diphosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.6.1.45. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "UDP-sugar
+    + H2O = UMP + alpha-D-aldose 1-phosphate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-sugar diphosphatase
+    grounding: EC:3.6.1.45
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-sugar diphosphatase activity
+    grounding: GO:0008768
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9XZ43
+    node_type: PROTEIN
+    label: 5NTD_LUTLO
+    grounding: UniProtKB:Q9XZ43
+  - node_id: prot_P52307
+    node_type: PROTEIN
+    label: 5NTD_RHIMP
+    grounding: UniProtKB:P52307
+  - node_id: prot_P07024
+    node_type: PROTEIN
+    label: USHA_ECOLI
+    grounding: UniProtKB:P07024
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.6.1.45
+      snippet: EC:3.6.1.45 > GO:UDP-sugar diphosphatase activity ; GO:0008768
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008768 is itself a record
+        in this KB.
+  - subject: prot_Q9XZ43
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5NTD_LUTLO is an exemplar enzyme with EC 3.6.1.45 activity.
+    evidence:
+    - reference: EC:3.6.1.45
+      snippet: DR   Q9XZ43, 5NTD_LUTLO ;  P52307, 5NTD_RHIMP ;  P07024, USHA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 3.6.1.45 cross-references UniProtKB:Q9XZ43 (5NTD_LUTLO) as a protein
+        with this activity.
+  - subject: prot_P52307
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5NTD_RHIMP is an exemplar enzyme with EC 3.6.1.45 activity.
+    evidence:
+    - reference: EC:3.6.1.45
+      snippet: DR   Q9XZ43, 5NTD_LUTLO ;  P52307, 5NTD_RHIMP ;  P07024, USHA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 3.6.1.45 cross-references UniProtKB:P52307 (5NTD_RHIMP) as a protein
+        with this activity.
+  - subject: prot_P07024
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: USHA_ECOLI is an exemplar enzyme with EC 3.6.1.45 activity.
+    evidence:
+    - reference: EC:3.6.1.45
+      snippet: DR   Q9XZ43, 5NTD_LUTLO ;  P52307, 5NTD_RHIMP ;  P07024, USHA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 3.6.1.45 cross-references UniProtKB:P07024 (USHA_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

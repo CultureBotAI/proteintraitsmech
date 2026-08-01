@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.14.-
 synonyms:
@@ -51,4 +51,241 @@ definitions:
       Catalyses: leukotriene B4 + reduced [NADPH--hemoprotein reductase] + O2 = 20-hydroxy-leukotriene B4 + oxidized [NADPH--hemoprotein reductase] + H2O + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of leukotriene-B4 20-monooxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.14.94. EC 1.14.14.94 maps to
+    exactly one curated Rhea reaction (RHEA:22176), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "leukotriene
+    B4 + reduced [NADPH--hemoprotein reductase] + O2 = 20-hydroxy-leukotriene B4 + oxidized [NADPH--hemoprotein
+    reductase] + H2O + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: leukotriene-B4 20-monooxygenase
+    grounding: EC:1.14.14.94
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: leukotriene B4
+    node_type: CHEMICAL
+    grounding: CHEBI:57461
+    description: Formula C20H31O4.
+  - node_id: sub2
+    label: reduced [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11964
+    description: Rhea compound GENERIC:11964.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: FMNH2
+    description: The reacting group Rhea names inside the generic participant GENERIC:11964 (reduced [NADPH--hemoprotein
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57618
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 20-hydroxy-leukotriene B4
+    node_type: CHEMICAL
+    grounding: CHEBI:57460
+    description: Formula C20H31O5.
+  - node_id: prd2
+    label: oxidized [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11965
+    description: Rhea compound GENERIC:11965.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: FMN
+    description: The reacting group Rhea names inside the generic participant GENERIC:11965 (oxidized
+      [NADPH--hemoprotein reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58210
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: leukotriene-B4 20-monooxygenase activity
+    grounding: GO:0050051
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P33274
+    node_type: PROTEIN
+    label: CP4F1_RAT
+    grounding: UniProtKB:P33274
+  - node_id: prot_P78329
+    node_type: PROTEIN
+    label: CP4F2_HUMAN
+    grounding: UniProtKB:P78329
+  - node_id: prot_Q08477
+    node_type: PROTEIN
+    label: CP4F3_HUMAN
+    grounding: UniProtKB:Q08477
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: leukotriene B4 is a substrate consumed by RHEA:22176 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22177
+      snippet: leukotriene B4 + reduced [NADPH--hemoprotein reductase] + O2 => 20-hydroxy-leukotriene
+        B4 + oxidized [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22177 declares side 22176_L as its substrates
+        (rh:substrates); the master reaction RHEA:22176 is undirected. This participant is CHEBI:57461
+        with coefficient 1. Rhea cites PMID:9675028, PMID:15364545, PMID:14634044, PMID:9344476 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [NADPH--hemoprotein reductase] is a substrate consumed by RHEA:22176 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:22177
+      snippet: leukotriene B4 + reduced [NADPH--hemoprotein reductase] + O2 => 20-hydroxy-leukotriene
+        B4 + oxidized [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22177 declares side 22176_L as its substrates
+        (rh:substrates); the master reaction RHEA:22176 is undirected. This participant is GENERIC:11964
+        with coefficient 1. Rhea cites PMID:9675028, PMID:15364545, PMID:14634044, PMID:9344476 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: FMNH2 is the reactive part of reduced [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:22176
+      snippet: FMNH2
+      notes: Rhea compound GENERIC:11964 (reduced [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMNH2 (CHEBI:57618).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:22176 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22177
+      snippet: leukotriene B4 + reduced [NADPH--hemoprotein reductase] + O2 => 20-hydroxy-leukotriene
+        B4 + oxidized [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22177 declares side 22176_L as its substrates
+        (rh:substrates); the master reaction RHEA:22176 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:9675028, PMID:15364545, PMID:14634044, PMID:9344476 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 20-hydroxy-leukotriene B4 is a product released by RHEA:22176 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22177
+      snippet: leukotriene B4 + reduced [NADPH--hemoprotein reductase] + O2 => 20-hydroxy-leukotriene
+        B4 + oxidized [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22177 declares side 22176_R as its products
+        (rh:products); the master reaction RHEA:22176 is undirected. This participant is CHEBI:57460 with
+        coefficient 1. Rhea cites PMID:9675028, PMID:15364545, PMID:14634044, PMID:9344476 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [NADPH--hemoprotein reductase] is a product released by RHEA:22176 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:22177
+      snippet: leukotriene B4 + reduced [NADPH--hemoprotein reductase] + O2 => 20-hydroxy-leukotriene
+        B4 + oxidized [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22177 declares side 22176_R as its products
+        (rh:products); the master reaction RHEA:22176 is undirected. This participant is GENERIC:11965
+        with coefficient 1. Rhea cites PMID:9675028, PMID:15364545, PMID:14634044, PMID:9344476 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: FMN is the reactive part of oxidized [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:22176
+      snippet: FMN
+      notes: Rhea compound GENERIC:11965 (oxidized [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMN (CHEBI:58210).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:22176 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22177
+      snippet: leukotriene B4 + reduced [NADPH--hemoprotein reductase] + O2 => 20-hydroxy-leukotriene
+        B4 + oxidized [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22177 declares side 22176_R as its products
+        (rh:products); the master reaction RHEA:22176 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:9675028, PMID:15364545, PMID:14634044, PMID:9344476 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:22176 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22177
+      snippet: leukotriene B4 + reduced [NADPH--hemoprotein reductase] + O2 => 20-hydroxy-leukotriene
+        B4 + oxidized [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22177 declares side 22176_R as its products
+        (rh:products); the master reaction RHEA:22176 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9675028, PMID:15364545, PMID:14634044, PMID:9344476 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.14.14.94
+      snippet: EC:1.14.14.94 > GO:leukotriene-B4 20-monooxygenase activity ; GO:0050051
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050051 is itself a record
+        in this KB.
+  - subject: prot_P33274
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP4F1_RAT is an exemplar enzyme with EC 1.14.14.94 activity.
+    evidence:
+    - reference: EC:1.14.14.94
+      snippet: DR   P33274, CP4F1_RAT  ;  P78329, CP4F2_HUMAN;  Q08477, CP4F3_HUMAN;
+      notes: ExPASy ENZYME entry EC 1.14.14.94 cross-references UniProtKB:P33274 (CP4F1_RAT) as a protein
+        with this activity.
+  - subject: prot_P78329
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP4F2_HUMAN is an exemplar enzyme with EC 1.14.14.94 activity.
+    evidence:
+    - reference: EC:1.14.14.94
+      snippet: DR   P33274, CP4F1_RAT  ;  P78329, CP4F2_HUMAN;  Q08477, CP4F3_HUMAN;
+      notes: ExPASy ENZYME entry EC 1.14.14.94 cross-references UniProtKB:P78329 (CP4F2_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q08477
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP4F3_HUMAN is an exemplar enzyme with EC 1.14.14.94 activity.
+    evidence:
+    - reference: EC:1.14.14.94
+      snippet: DR   P33274, CP4F1_RAT  ;  P78329, CP4F2_HUMAN;  Q08477, CP4F3_HUMAN;
+      notes: ExPASy ENZYME entry EC 1.14.14.94 cross-references UniProtKB:Q08477 (CP4F3_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

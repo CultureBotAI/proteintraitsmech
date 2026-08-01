@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:16114
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,91 @@ definitions:
       Catalyses the reaction: medicarpin + H2O = 4'-methoxyisoflavan-2',4,7-triol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of medicarpin + H2O = 4'-methoxyisoflavan-2',4,7-triol
+  description: Substrate-to-product chemistry of RHEA:35407, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35408 (rh:substrates → 35407_L, rh:products → 35407_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of medicarpin + H2O = 4'-methoxyisoflavan-2',4,7-triol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:35407
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: medicarpin + H2O = 4''-methoxyisoflavan-2'',4,7-triol'
+  - node_id: sub1
+    label: medicarpin
+    node_type: CHEMICAL
+    grounding: CHEBI:16114
+    description: Formula C16H14O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 4'-methoxyisoflavan-2',4,7-triol
+    node_type: CHEMICAL
+    grounding: CHEBI:71335
+    description: Formula C16H16O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: pterocarpan synthase activity
+    grounding: GO:0140859
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: medicarpin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35408
+      snippet: medicarpin + H2O => 4'-methoxyisoflavan-2',4,7-triol
+      notes: Rhea's left-to-right directional reaction RHEA:35408 declares side 35407_L as its substrates
+        (rh:substrates); the master reaction RHEA:35407 is undirected. This participant is CHEBI:16114
+        with coefficient 1. Rhea cites PMID:7625843, PMID:7805842, PMID:8071365 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35408
+      snippet: medicarpin + H2O => 4'-methoxyisoflavan-2',4,7-triol
+      notes: Rhea's left-to-right directional reaction RHEA:35408 declares side 35407_L as its substrates
+        (rh:substrates); the master reaction RHEA:35407 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7625843, PMID:7805842, PMID:8071365 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4'-methoxyisoflavan-2',4,7-triol is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:35408
+      snippet: medicarpin + H2O => 4'-methoxyisoflavan-2',4,7-triol
+      notes: Rhea's left-to-right directional reaction RHEA:35408 declares side 35407_R as its products
+        (rh:products); the master reaction RHEA:35407 is undirected. This participant is CHEBI:71335 with
+        coefficient 1. Rhea cites PMID:7625843, PMID:7805842, PMID:8071365 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:35407
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0140859"/>
+      notes: The rdfs:seeAlso triple on RHEA:35407 in rhea.rdf. GO term GO:0140859 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

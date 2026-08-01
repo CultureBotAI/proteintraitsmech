@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.6.-
 synonyms:
@@ -39,4 +39,81 @@ definitions:
       Catalyses: Hydrolysis of the 3-sulfate groups of the N-sulfo-D-glucosamine 3-O- sulfate units of heparin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-sulfoglucosamine-3-sulfatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.6.15. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of the 3-sulfate groups of the N-sulfo-D-glucosamine 3-O- sulfate units of heparin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-sulfoglucosamine-3-sulfatase
+    grounding: EC:3.1.6.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-sulfoglucosamine-3-sulfatase activity
+    grounding: GO:0033889
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q32KH9
+    node_type: PROTEIN
+    label: ARSG_CANLF
+    grounding: UniProtKB:Q32KH9
+  - node_id: prot_Q96EG1
+    node_type: PROTEIN
+    label: ARSG_HUMAN
+    grounding: UniProtKB:Q96EG1
+  - node_id: prot_Q3TYD4
+    node_type: PROTEIN
+    label: ARSG_MOUSE
+    grounding: UniProtKB:Q3TYD4
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.6.15
+      snippet: EC:3.1.6.15 > GO:N-sulfoglucosamine-3-sulfatase activity ; GO:0033889
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033889 is itself a record
+        in this KB.
+  - subject: prot_Q32KH9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSG_CANLF is an exemplar enzyme with EC 3.1.6.15 activity.
+    evidence:
+    - reference: EC:3.1.6.15
+      snippet: DR   Q32KH9, ARSG_CANLF ;  Q96EG1, ARSG_HUMAN ;  Q3TYD4, ARSG_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.1.6.15 cross-references UniProtKB:Q32KH9 (ARSG_CANLF) as a protein
+        with this activity.
+  - subject: prot_Q96EG1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSG_HUMAN is an exemplar enzyme with EC 3.1.6.15 activity.
+    evidence:
+    - reference: EC:3.1.6.15
+      snippet: DR   Q32KH9, ARSG_CANLF ;  Q96EG1, ARSG_HUMAN ;  Q3TYD4, ARSG_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.1.6.15 cross-references UniProtKB:Q96EG1 (ARSG_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q3TYD4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSG_MOUSE is an exemplar enzyme with EC 3.1.6.15 activity.
+    evidence:
+    - reference: EC:3.1.6.15
+      snippet: DR   Q32KH9, ARSG_CANLF ;  Q96EG1, ARSG_HUMAN ;  Q3TYD4, ARSG_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.1.6.15 cross-references UniProtKB:Q3TYD4 (ARSG_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.6.2.-
 synonyms:
@@ -55,4 +55,194 @@ definitions:
       Catalyses: ATP + H2O + xenobioticSide 1 = ADP + phosphate + xenobioticSide 2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ABC-type xenobiotic transporter
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.6.2.2. EC 7.6.2.2 maps to exactly
+    one curated Rhea reaction (RHEA:33147), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ATP + H2O + xenobioticSide
+    1 = ADP + phosphate + xenobioticSide 2". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type xenobiotic transporter
+    grounding: EC:7.6.2.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: daunorubicin (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:64677
+    description: Formula C27H30NO10.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: daunorubicin (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:64677
+    description: Formula C27H30NO10.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type xenobiotic transporter activity
+    grounding: GO:0008559
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9LYS2
+    node_type: PROTEIN
+    label: AB10C_ARATH
+    grounding: UniProtKB:Q9LYS2
+  - node_id: prot_Q9C8H1
+    node_type: PROTEIN
+    label: AB11C_ARATH
+    grounding: UniProtKB:Q9C8H1
+  - node_id: prot_Q9C8H0
+    node_type: PROTEIN
+    label: AB12C_ARATH
+    grounding: UniProtKB:Q9C8H0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: daunorubicin is a substrate consumed by RHEA:33147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33148
+      snippet: daunorubicin(in) + ATP + H2O => daunorubicin(out) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33148 declares side 33147_L as its substrates
+        (rh:substrates); the master reaction RHEA:33147 is undirected. This participant is CHEBI:64677
+        with coefficient 1. Rhea cites PMID:9281595 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:33147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33148
+      snippet: daunorubicin(in) + ATP + H2O => daunorubicin(out) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33148 declares side 33147_L as its substrates
+        (rh:substrates); the master reaction RHEA:33147 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:9281595 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:33147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33148
+      snippet: daunorubicin(in) + ATP + H2O => daunorubicin(out) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33148 declares side 33147_L as its substrates
+        (rh:substrates); the master reaction RHEA:33147 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:9281595 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: daunorubicin is a product released by RHEA:33147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33148
+      snippet: daunorubicin(in) + ATP + H2O => daunorubicin(out) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33148 declares side 33147_R as its products
+        (rh:products); the master reaction RHEA:33147 is undirected. This participant is CHEBI:64677 with
+        coefficient 1. Rhea cites PMID:9281595 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:33147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33148
+      snippet: daunorubicin(in) + ATP + H2O => daunorubicin(out) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33148 declares side 33147_R as its products
+        (rh:products); the master reaction RHEA:33147 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:9281595 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: phosphate is a product released by RHEA:33147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33148
+      snippet: daunorubicin(in) + ATP + H2O => daunorubicin(out) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33148 declares side 33147_R as its products
+        (rh:products); the master reaction RHEA:33147 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:9281595 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:33147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33148
+      snippet: daunorubicin(in) + ATP + H2O => daunorubicin(out) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33148 declares side 33147_R as its products
+        (rh:products); the master reaction RHEA:33147 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9281595 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:7.6.2.2
+      snippet: EC:7.6.2.2 > GO:ABC-type xenobiotic transporter activity ; GO:0008559
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008559 is itself a record
+        in this KB.
+  - subject: prot_Q9LYS2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AB10C_ARATH is an exemplar enzyme with EC 7.6.2.2 activity.
+    evidence:
+    - reference: EC:7.6.2.2
+      snippet: DR   Q9LYS2, AB10C_ARATH;  Q9C8H1, AB11C_ARATH;  Q9C8H0, AB12C_ARATH;
+      notes: ExPASy ENZYME entry EC 7.6.2.2 cross-references UniProtKB:Q9LYS2 (AB10C_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9C8H1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AB11C_ARATH is an exemplar enzyme with EC 7.6.2.2 activity.
+    evidence:
+    - reference: EC:7.6.2.2
+      snippet: DR   Q9LYS2, AB10C_ARATH;  Q9C8H1, AB11C_ARATH;  Q9C8H0, AB12C_ARATH;
+      notes: ExPASy ENZYME entry EC 7.6.2.2 cross-references UniProtKB:Q9C8H1 (AB11C_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9C8H0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AB12C_ARATH is an exemplar enzyme with EC 7.6.2.2 activity.
+    evidence:
+    - reference: EC:7.6.2.2
+      snippet: DR   Q9LYS2, AB10C_ARATH;  Q9C8H1, AB11C_ARATH;  Q9C8H0, AB12C_ARATH;
+      notes: ExPASy ENZYME entry EC 7.6.2.2 cross-references UniProtKB:Q9C8H0 (AB12C_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

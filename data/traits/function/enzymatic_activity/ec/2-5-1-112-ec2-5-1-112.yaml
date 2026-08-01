@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -47,4 +47,250 @@ definitions:
       Catalyses: (1) dimethylallyl diphosphate + ADP = N(6)-(dimethylallyl)adenosine 5'-diphosphate + diphosphate. (2) dimethylallyl diphosphate + ATP = N(6)-(dimethylallyl)adenosine 5'-triphosphate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of adenylate dimethylallyltransferase (ADP/ATP-dependent)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.112. Rhea assigns 2 curated
+    reactions to EC 2.5.1.112. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) dimethylallyl diphosphate + ADP = N(6)-(dimethylallyl)adenosine
+    5''-diphosphate + diphosphate. (2) dimethylallyl diphosphate + ATP = N(6)-(dimethylallyl)adenosine
+    5''-triphosphate + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: adenylate dimethylallyltransferase (ADP/ATP-dependent)
+    grounding: EC:2.5.1.112
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of dimethylallyl diphosphate + ADP = N(6)-(dimethylallyl)adenosine 5'-diphospha…
+    grounding: RHEA:36327
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: dimethylallyl diphosphate + ADP = N(6)-(dimethylallyl)adenosine 5''-diphosphate
+      + diphosphate'
+  - node_id: rxn1_sub1
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: rxn1_sub2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd1
+    label: N(6)-(dimethylallyl)adenosine 5'-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:73533
+    description: Formula C15H20N5O10P2.
+  - node_id: rxn1_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of dimethylallyl diphosphate + ATP = N(6)-(dimethylallyl)adenosine 5'-triphosph…
+    grounding: RHEA:36331
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: dimethylallyl diphosphate + ATP = N(6)-(dimethylallyl)adenosine 5''-triphosphate
+      + diphosphate'
+  - node_id: rxn2_sub1
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_prd1
+    label: N(6)-(dimethylallyl)adenosine 5'-triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:73532
+    description: Formula C15H20N5O13P3.
+  - node_id: rxn2_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ATP/ADP dimethylallyltransferase activity
+    grounding: GO:0052622
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q94ID3
+    node_type: PROTEIN
+    label: IPT1_ARATH
+    grounding: UniProtKB:Q94ID3
+  - node_id: prot_Q93WC9
+    node_type: PROTEIN
+    label: IPT3_ARATH
+    grounding: UniProtKB:Q93WC9
+  - node_id: prot_Q9SB60
+    node_type: PROTEIN
+    label: IPT4_ARATH
+    grounding: UniProtKB:Q9SB60
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:36327 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.112; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:36327
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.112"/>
+      notes: The rh:ec triple on RHEA:36327 in rhea.rdf assigns that reaction to EC 2.5.1.112.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:36327 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36328
+      snippet: dimethylallyl diphosphate + ADP => N(6)-(dimethylallyl)adenosine 5'-diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36328 declares side 36327_L as its substrates
+        (rh:substrates); the master reaction RHEA:36327 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:11479373, PMID:11313355, PMID:15381407 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ADP is a substrate consumed by RHEA:36327 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36328
+      snippet: dimethylallyl diphosphate + ADP => N(6)-(dimethylallyl)adenosine 5'-diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36328 declares side 36327_L as its substrates
+        (rh:substrates); the master reaction RHEA:36327 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:11479373, PMID:11313355, PMID:15381407 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: N(6)-(dimethylallyl)adenosine 5'-diphosphate is a product released by RHEA:36327 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36328
+      snippet: dimethylallyl diphosphate + ADP => N(6)-(dimethylallyl)adenosine 5'-diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36328 declares side 36327_R as its products
+        (rh:products); the master reaction RHEA:36327 is undirected. This participant is CHEBI:73533 with
+        coefficient 1. Rhea cites PMID:11479373, PMID:11313355, PMID:15381407 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: diphosphate is a product released by RHEA:36327 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36328
+      snippet: dimethylallyl diphosphate + ADP => N(6)-(dimethylallyl)adenosine 5'-diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36328 declares side 36327_R as its products
+        (rh:products); the master reaction RHEA:36327 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:11479373, PMID:11313355, PMID:15381407 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:36331 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.112; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:36331
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.112"/>
+      notes: The rh:ec triple on RHEA:36331 in rhea.rdf assigns that reaction to EC 2.5.1.112.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:36331 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36332
+      snippet: dimethylallyl diphosphate + ATP => N(6)-(dimethylallyl)adenosine 5'-triphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36332 declares side 36331_L as its substrates
+        (rh:substrates); the master reaction RHEA:36331 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:11479373, PMID:11313355, PMID:15381407 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:36331 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36332
+      snippet: dimethylallyl diphosphate + ATP => N(6)-(dimethylallyl)adenosine 5'-triphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36332 declares side 36331_L as its substrates
+        (rh:substrates); the master reaction RHEA:36331 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:11479373, PMID:11313355, PMID:15381407 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: N(6)-(dimethylallyl)adenosine 5'-triphosphate is a product released by RHEA:36331 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36332
+      snippet: dimethylallyl diphosphate + ATP => N(6)-(dimethylallyl)adenosine 5'-triphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36332 declares side 36331_R as its products
+        (rh:products); the master reaction RHEA:36331 is undirected. This participant is CHEBI:73532 with
+        coefficient 1. Rhea cites PMID:11479373, PMID:11313355, PMID:15381407 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: diphosphate is a product released by RHEA:36331 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36332
+      snippet: dimethylallyl diphosphate + ATP => N(6)-(dimethylallyl)adenosine 5'-triphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36332 declares side 36331_R as its products
+        (rh:products); the master reaction RHEA:36331 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:11479373, PMID:11313355, PMID:15381407 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.112
+      snippet: EC:2.5.1.112 > GO:ATP/ADP dimethylallyltransferase activity ; GO:0052622
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0052622 is itself a record
+        in this KB.
+  - subject: prot_Q94ID3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IPT1_ARATH is an exemplar enzyme with EC 2.5.1.112 activity.
+    evidence:
+    - reference: EC:2.5.1.112
+      snippet: DR   Q94ID3, IPT1_ARATH ;  Q93WC9, IPT3_ARATH ;  Q9SB60, IPT4_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.5.1.112 cross-references UniProtKB:Q94ID3 (IPT1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q93WC9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IPT3_ARATH is an exemplar enzyme with EC 2.5.1.112 activity.
+    evidence:
+    - reference: EC:2.5.1.112
+      snippet: DR   Q94ID3, IPT1_ARATH ;  Q93WC9, IPT3_ARATH ;  Q9SB60, IPT4_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.5.1.112 cross-references UniProtKB:Q93WC9 (IPT3_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9SB60
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IPT4_ARATH is an exemplar enzyme with EC 2.5.1.112 activity.
+    evidence:
+    - reference: EC:2.5.1.112
+      snippet: DR   Q94ID3, IPT1_ARATH ;  Q93WC9, IPT3_ARATH ;  Q9SB60, IPT4_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.5.1.112 cross-references UniProtKB:Q9SB60 (IPT4_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29748
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,91 @@ definitions:
       Catalyses the reaction: chorismate + inosine + phosphoenolpyruvate = futalosine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chorismate + inosine + phosphoenolpyruvate = futalosine
+  description: Substrate-to-product chemistry of RHEA:33095, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33096 (rh:substrates → 33095_L, rh:products → 33095_R), and Rhea
+    curates the reverse direction too. 3 substrates, 1 product. Participant structure was checked by re-rendering
+    Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of chorismate + inosine + phosphoenolpyruvate = futalosine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33095
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: chorismate + inosine + phosphoenolpyruvate = futalosine'
+  - node_id: sub1
+    label: chorismate
+    node_type: CHEMICAL
+    grounding: CHEBI:29748
+    description: Formula C10H8O6.
+  - node_id: sub2
+    label: inosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17596
+    description: Formula C10H12N4O5.
+  - node_id: sub3
+    label: phosphoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+    description: Formula C3H2O6P.
+  - node_id: prd1
+    label: futalosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58863
+    description: Formula C19H17N4O7.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: chorismate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33096
+      snippet: chorismate + inosine + phosphoenolpyruvate => futalosine
+      notes: Rhea's left-to-right directional reaction RHEA:33096 declares side 33095_L as its substrates
+        (rh:substrates); the master reaction RHEA:33095 is undirected. This participant is CHEBI:29748
+        with coefficient 1. Rhea cites PMID:21489995, PMID:21098241 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: inosine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33096
+      snippet: chorismate + inosine + phosphoenolpyruvate => futalosine
+      notes: Rhea's left-to-right directional reaction RHEA:33096 declares side 33095_L as its substrates
+        (rh:substrates); the master reaction RHEA:33095 is undirected. This participant is CHEBI:17596
+        with coefficient 1. Rhea cites PMID:21489995, PMID:21098241 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: phosphoenolpyruvate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33096
+      snippet: chorismate + inosine + phosphoenolpyruvate => futalosine
+      notes: Rhea's left-to-right directional reaction RHEA:33096 declares side 33095_L as its substrates
+        (rh:substrates); the master reaction RHEA:33095 is undirected. This participant is CHEBI:58702
+        with coefficient 1. Rhea cites PMID:21489995, PMID:21098241 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: futalosine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33096
+      snippet: chorismate + inosine + phosphoenolpyruvate => futalosine
+      notes: Rhea's left-to-right directional reaction RHEA:33096 declares side 33095_R as its products
+        (rh:products); the master reaction RHEA:33095 is undirected. This participant is CHEBI:58863 with
+        coefficient 1. Rhea cites PMID:21489995, PMID:21098241 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

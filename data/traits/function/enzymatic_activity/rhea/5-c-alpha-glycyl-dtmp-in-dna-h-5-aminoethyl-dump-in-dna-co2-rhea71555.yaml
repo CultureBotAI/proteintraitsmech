@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:190924
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,124 @@ definitions:
       Catalyses the reaction: 5-C(alpha)-glycyl-dTMP in DNA + H(+) = 5-aminoethyl-dUMP in DNA + CO2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-C(alpha)-glycyl-dTMP in DNA + H(+) = 5-aminoethyl-dUMP in DNA + CO2
+  description: Substrate-to-product chemistry of RHEA:71555, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71556 (rh:substrates → 71555_L, rh:products → 71555_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-C(alpha)-glycyl-dTMP in DNA + H(+) = 5-aminoethyl-dUMP in DNA + CO2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71555
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-C(alpha)-glycyl-dTMP in DNA + H(+) = 5-aminoethyl-dUMP in DNA + CO2'
+  - node_id: sub1
+    label: 5-C(alpha)-glycyl-dTMP in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18042
+    description: Rhea compound GENERIC:18042.
+  - node_id: sub1_rp1
+    label: 5-C(alpha)-glycyl-dTMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18042 (5-C(alpha)-glycyl-dTMP
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:190924
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 5-aminoethyl-dUMP in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18043
+    description: Rhea compound GENERIC:18043.
+  - node_id: prd1_rp1
+    label: 5-aminoethyl-dUMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18043 (5-aminoethyl-dUMP
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:190925
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-C(alpha)-glycyl-dTMP in DNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:71556
+      snippet: 5-C(alpha)-glycyl-dTMP in DNA + H(+) => 5-aminoethyl-dUMP in DNA + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71556 declares side 71555_L as its substrates
+        (rh:substrates); the master reaction RHEA:71555 is undirected. This participant is GENERIC:18042
+        with coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 5-C(alpha)-glycyl-dTMP residue is the reactive part of 5-C(alpha)-glycyl-dTMP in DNA.
+    evidence:
+    - reference: RHEA:71555
+      snippet: 5-C(alpha)-glycyl-dTMP residue
+      notes: Rhea compound GENERIC:18042 (5-C(alpha)-glycyl-dTMP in DNA) declares rh:reactivePart = 5-C(alpha)-glycyl-dTMP
+        residue (CHEBI:190924), formula C12H15N3O9P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71556
+      snippet: 5-C(alpha)-glycyl-dTMP in DNA + H(+) => 5-aminoethyl-dUMP in DNA + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71556 declares side 71555_L as its substrates
+        (rh:substrates); the master reaction RHEA:71555 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-aminoethyl-dUMP in DNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:71556
+      snippet: 5-C(alpha)-glycyl-dTMP in DNA + H(+) => 5-aminoethyl-dUMP in DNA + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71556 declares side 71555_R as its products
+        (rh:products); the master reaction RHEA:71555 is undirected. This participant is GENERIC:18043
+        with coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 5-aminoethyl-dUMP residue is the reactive part of 5-aminoethyl-dUMP in DNA.
+    evidence:
+    - reference: RHEA:71555
+      snippet: 5-aminoethyl-dUMP residue
+      notes: Rhea compound GENERIC:18043 (5-aminoethyl-dUMP in DNA) declares rh:reactivePart = 5-aminoethyl-dUMP
+        residue (CHEBI:190925), formula C11H16N3O7P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71556
+      snippet: 5-C(alpha)-glycyl-dTMP in DNA + H(+) => 5-aminoethyl-dUMP in DNA + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71556 declares side 71555_R as its products
+        (rh:products); the master reaction RHEA:71555 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:34522950 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

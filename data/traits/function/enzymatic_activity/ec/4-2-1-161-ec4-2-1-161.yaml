@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -31,4 +31,88 @@ definitions:
       Catalyses: bacterioruberin = bisanhydrobacterioruberin + 2 H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of bisanhydrobacterioruberin hydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.161. EC 4.2.1.161 maps to
+    exactly one curated Rhea reaction (RHEA:38375), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "bacterioruberin
+    = bisanhydrobacterioruberin + 2 H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: bisanhydrobacterioruberin hydratase
+    grounding: EC:4.2.1.161
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: bacterioruberin
+    node_type: CHEMICAL
+    grounding: CHEBI:49388
+    description: Formula C50H76O4.
+  - node_id: prd1
+    label: bisanhydrobacterioruberin
+    node_type: CHEMICAL
+    grounding: CHEBI:87121
+    description: Formula C50H72O2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_A0A0A1GNF2
+    node_type: PROTEIN
+    label: CRUF_HALJT
+    grounding: UniProtKB:A0A0A1GNF2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: bacterioruberin is a substrate consumed by RHEA:38375 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38376
+      snippet: bacterioruberin => bisanhydrobacterioruberin + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38376 declares side 38375_L as its substrates
+        (rh:substrates); the master reaction RHEA:38375 is undirected. This participant is CHEBI:49388
+        with coefficient 1. Rhea cites PMID:25712483 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: bisanhydrobacterioruberin is a product released by RHEA:38375 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38376
+      snippet: bacterioruberin => bisanhydrobacterioruberin + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38376 declares side 38375_R as its products
+        (rh:products); the master reaction RHEA:38375 is undirected. This participant is CHEBI:87121 with
+        coefficient 1. Rhea cites PMID:25712483 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:38375 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:38376
+      snippet: bacterioruberin => bisanhydrobacterioruberin + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38376 declares side 38375_R as its products
+        (rh:products); the master reaction RHEA:38375 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:25712483 for this reaction.
+  - subject: prot_A0A0A1GNF2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRUF_HALJT is an exemplar enzyme with EC 4.2.1.161 activity.
+    evidence:
+    - reference: EC:4.2.1.161
+      snippet: DR   A0A0A1GNF2, CRUF_HALJT ;
+      notes: ExPASy ENZYME entry EC 4.2.1.161 cross-references UniProtKB:A0A0A1GNF2 (CRUF_HALJT) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

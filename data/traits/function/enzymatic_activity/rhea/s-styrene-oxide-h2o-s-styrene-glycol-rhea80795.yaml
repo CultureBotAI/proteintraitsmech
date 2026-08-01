@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:51014
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,92 @@ definitions:
       Catalyses the reaction: (S)-styrene oxide + H2O = (S)-styrene glycol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-styrene oxide + H2O = (S)-styrene glycol
+  description: Substrate-to-product chemistry of RHEA:80795, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80796 (rh:substrates → 80795_L, rh:products → 80795_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (S)-styrene oxide + H2O = (S)-styrene glycol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80795
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (S)-styrene oxide + H2O = (S)-styrene glycol'
+  - node_id: sub1
+    label: (S)-styrene oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:51014
+    description: Formula C8H8O.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (S)-styrene glycol
+    node_type: CHEMICAL
+    grounding: CHEBI:231714
+    description: Formula C8H10O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: epoxide hydrolase activity
+    grounding: GO:0004301
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-styrene oxide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80796
+      snippet: (S)-styrene oxide + H2O => (S)-styrene glycol
+      notes: Rhea's left-to-right directional reaction RHEA:80796 declares side 80795_L as its substrates
+        (rh:substrates); the master reaction RHEA:80795 is undirected. This participant is CHEBI:51014
+        with coefficient 1. Rhea cites PMID:38423431 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80796
+      snippet: (S)-styrene oxide + H2O => (S)-styrene glycol
+      notes: Rhea's left-to-right directional reaction RHEA:80796 declares side 80795_L as its substrates
+        (rh:substrates); the master reaction RHEA:80795 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:38423431 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-styrene glycol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80796
+      snippet: (S)-styrene oxide + H2O => (S)-styrene glycol
+      notes: Rhea's left-to-right directional reaction RHEA:80796 declares side 80795_R as its products
+        (rh:products); the master reaction RHEA:80795 is undirected. This participant is CHEBI:231714
+        with coefficient 1. Rhea cites PMID:38423431 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:80795
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004301"/>
+      notes: The rdfs:seeAlso triple on RHEA:80795 in rhea.rdf. GO term GO:0004301 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

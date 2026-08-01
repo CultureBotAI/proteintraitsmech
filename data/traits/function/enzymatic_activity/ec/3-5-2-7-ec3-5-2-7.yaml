@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.2.-
 synonyms:
@@ -45,4 +45,132 @@ definitions:
       Catalyses: 4-imidazolone-5-propanoate + H2O = N-formimidoyl-L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of imidazolonepropionase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.2.7. EC 3.5.2.7 maps to exactly
+    one curated Rhea reaction (RHEA:23660), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-imidazolone-5-propanoate
+    + H2O = N-formimidoyl-L-glutamate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: imidazolonepropionase
+    grounding: EC:3.5.2.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-imidazolone-5-propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:77893
+    description: Formula C6H7N2O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-formimidoyl-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58928
+    description: Formula C6H9N2O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: imidazolonepropionase activity
+    grounding: GO:0050480
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8YD09
+    node_type: PROTEIN
+    label: HUTIH_BRUME
+    grounding: UniProtKB:Q8YD09
+  - node_id: prot_B7GUU8
+    node_type: PROTEIN
+    label: HUTI_ACIB3
+    grounding: UniProtKB:B7GUU8
+  - node_id: prot_B7I268
+    node_type: PROTEIN
+    label: HUTI_ACIB5
+    grounding: UniProtKB:B7I268
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-imidazolone-5-propanoate is a substrate consumed by RHEA:23660 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23661
+      snippet: 4-imidazolone-5-propanoate + H2O => N-formimidoyl-L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:23661 declares side 23660_L as its substrates
+        (rh:substrates); the master reaction RHEA:23660 is undirected. This participant is CHEBI:77893
+        with coefficient 1. Rhea cites PMID:16990261 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:23660 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23661
+      snippet: 4-imidazolone-5-propanoate + H2O => N-formimidoyl-L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:23661 declares side 23660_L as its substrates
+        (rh:substrates); the master reaction RHEA:23660 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16990261 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-formimidoyl-L-glutamate is a product released by RHEA:23660 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23661
+      snippet: 4-imidazolone-5-propanoate + H2O => N-formimidoyl-L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:23661 declares side 23660_R as its products
+        (rh:products); the master reaction RHEA:23660 is undirected. This participant is CHEBI:58928 with
+        coefficient 1. Rhea cites PMID:16990261 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.2.7
+      snippet: EC:3.5.2.7 > GO:imidazolonepropionase activity ; GO:0050480
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050480 is itself a record
+        in this KB.
+  - subject: prot_Q8YD09
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTIH_BRUME is an exemplar enzyme with EC 3.5.2.7 activity.
+    evidence:
+    - reference: EC:3.5.2.7
+      snippet: DR   Q8YD09, HUTIH_BRUME;  B7GUU8, HUTI_ACIB3 ;  B7I268, HUTI_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 3.5.2.7 cross-references UniProtKB:Q8YD09 (HUTIH_BRUME) as a protein
+        with this activity.
+  - subject: prot_B7GUU8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTI_ACIB3 is an exemplar enzyme with EC 3.5.2.7 activity.
+    evidence:
+    - reference: EC:3.5.2.7
+      snippet: DR   Q8YD09, HUTIH_BRUME;  B7GUU8, HUTI_ACIB3 ;  B7I268, HUTI_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 3.5.2.7 cross-references UniProtKB:B7GUU8 (HUTI_ACIB3) as a protein
+        with this activity.
+  - subject: prot_B7I268
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTI_ACIB5 is an exemplar enzyme with EC 3.5.2.7 activity.
+    evidence:
+    - reference: EC:3.5.2.7
+      snippet: DR   Q8YD09, HUTIH_BRUME;  B7GUU8, HUTI_ACIB3 ;  B7I268, HUTI_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 3.5.2.7 cross-references UniProtKB:B7I268 (HUTI_ACIB5) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

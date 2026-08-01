@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -47,4 +47,276 @@ definitions:
       Catalyses: a sterol ester + H2O = a sterol + a fatty acid + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sterol esterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.13. Rhea assigns 2 curated
+    reactions to EC 3.1.1.13. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "a sterol ester + H2O = a sterol + a fatty acid + H(+)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sterol esterase
+    grounding: EC:3.1.1.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a sterol ester + H2O = a sterol + a fatty acid + H(+)
+    grounding: RHEA:10100
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a sterol ester + H2O = a sterol + a fatty acid + H(+)'
+  - node_id: rxn1_sub1
+    label: a sterol ester
+    node_type: CHEMICAL
+    grounding: CHEBI:35915
+    description: Formula C20H30O2R2.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: a sterol
+    node_type: CHEMICAL
+    grounding: CHEBI:15889
+    description: Formula C19H31OR.
+  - node_id: rxn1_prd2
+    label: a fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+    description: Formula CO2R.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a cholesterol ester + H2O = cholesterol + a fatty acid + H(+)
+    grounding: RHEA:36403
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a cholesterol ester + H2O = cholesterol + a fatty acid + H(+)'
+  - node_id: rxn2_sub1
+    label: a cholesterol ester
+    node_type: CHEMICAL
+    grounding: CHEBI:17002
+    description: Formula C28H45O2R.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: cholesterol
+    node_type: CHEMICAL
+    grounding: CHEBI:16113
+    description: Formula C27H46O.
+  - node_id: rxn2_prd2
+    label: a fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+    description: Formula CO2R.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sterol ester esterase activity
+    grounding: GO:0004771
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P30122
+    node_type: PROTEIN
+    label: CEL_BOVIN
+    grounding: UniProtKB:P30122
+  - node_id: prot_P19835
+    node_type: PROTEIN
+    label: CEL_HUMAN
+    grounding: UniProtKB:P19835
+  - node_id: prot_Q64285
+    node_type: PROTEIN
+    label: CEL_MOUSE
+    grounding: UniProtKB:Q64285
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:10100 is one of the 2 curated reactions Rhea assigns to EC 3.1.1.13; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:10100
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.13"/>
+      notes: The rh:ec triple on RHEA:10100 in rhea.rdf assigns that reaction to EC 3.1.1.13.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a sterol ester is a substrate consumed by RHEA:10100 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10101
+      snippet: a sterol ester + H2O => a sterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10101 declares side 10100_L as its substrates
+        (rh:substrates); the master reaction RHEA:10100 is undirected. This participant is CHEBI:35915
+        with coefficient 1. Rhea cites PMID:5780846, PMID:4877146, PMID:19426, PMID:8471055 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:10100 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10101
+      snippet: a sterol ester + H2O => a sterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10101 declares side 10100_L as its substrates
+        (rh:substrates); the master reaction RHEA:10100 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:5780846, PMID:4877146, PMID:19426, PMID:8471055 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a sterol is a product released by RHEA:10100 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10101
+      snippet: a sterol ester + H2O => a sterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10101 declares side 10100_R as its products
+        (rh:products); the master reaction RHEA:10100 is undirected. This participant is CHEBI:15889 with
+        coefficient 1. Rhea cites PMID:5780846, PMID:4877146, PMID:19426, PMID:8471055 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: a fatty acid is a product released by RHEA:10100 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10101
+      snippet: a sterol ester + H2O => a sterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10101 declares side 10100_R as its products
+        (rh:products); the master reaction RHEA:10100 is undirected. This participant is CHEBI:28868 with
+        coefficient 1. Rhea cites PMID:5780846, PMID:4877146, PMID:19426, PMID:8471055 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:10100 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10101
+      snippet: a sterol ester + H2O => a sterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10101 declares side 10100_R as its products
+        (rh:products); the master reaction RHEA:10100 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:5780846, PMID:4877146, PMID:19426, PMID:8471055 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:36403 is one of the 2 curated reactions Rhea assigns to EC 3.1.1.13; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:36403
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.13"/>
+      notes: The rh:ec triple on RHEA:36403 in rhea.rdf assigns that reaction to EC 3.1.1.13.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a cholesterol ester is a substrate consumed by RHEA:36403 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36404
+      snippet: a cholesterol ester + H2O => cholesterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36404 declares side 36403_L as its substrates
+        (rh:substrates); the master reaction RHEA:36403 is undirected. This participant is CHEBI:17002
+        with coefficient 1. Rhea cites PMID:18762277, PMID:16971496 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:36403 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36404
+      snippet: a cholesterol ester + H2O => cholesterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36404 declares side 36403_L as its substrates
+        (rh:substrates); the master reaction RHEA:36403 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18762277, PMID:16971496 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: cholesterol is a product released by RHEA:36403 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36404
+      snippet: a cholesterol ester + H2O => cholesterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36404 declares side 36403_R as its products
+        (rh:products); the master reaction RHEA:36403 is undirected. This participant is CHEBI:16113 with
+        coefficient 1. Rhea cites PMID:18762277, PMID:16971496 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: a fatty acid is a product released by RHEA:36403 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36404
+      snippet: a cholesterol ester + H2O => cholesterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36404 declares side 36403_R as its products
+        (rh:products); the master reaction RHEA:36403 is undirected. This participant is CHEBI:28868 with
+        coefficient 1. Rhea cites PMID:18762277, PMID:16971496 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:36403 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36404
+      snippet: a cholesterol ester + H2O => cholesterol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36404 declares side 36403_R as its products
+        (rh:products); the master reaction RHEA:36403 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18762277, PMID:16971496 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.13
+      snippet: EC:3.1.1.13 > GO:sterol ester esterase activity ; GO:0004771
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004771 is itself a record
+        in this KB.
+  - subject: prot_P30122
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEL_BOVIN is an exemplar enzyme with EC 3.1.1.13 activity.
+    evidence:
+    - reference: EC:3.1.1.13
+      snippet: DR   P30122, CEL_BOVIN  ;  P19835, CEL_HUMAN  ;  Q64285, CEL_MOUSE  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.13 cross-references UniProtKB:P30122 (CEL_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P19835
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEL_HUMAN is an exemplar enzyme with EC 3.1.1.13 activity.
+    evidence:
+    - reference: EC:3.1.1.13
+      snippet: DR   P30122, CEL_BOVIN  ;  P19835, CEL_HUMAN  ;  Q64285, CEL_MOUSE  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.13 cross-references UniProtKB:P19835 (CEL_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q64285
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEL_MOUSE is an exemplar enzyme with EC 3.1.1.13 activity.
+    evidence:
+    - reference: EC:3.1.1.13
+      snippet: DR   P30122, CEL_BOVIN  ;  P19835, CEL_HUMAN  ;  Q64285, CEL_MOUSE  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.13 cross-references UniProtKB:Q64285 (CEL_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

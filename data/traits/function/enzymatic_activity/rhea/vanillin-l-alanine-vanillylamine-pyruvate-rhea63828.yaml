@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.119
     mapping_source: rhea2ec
@@ -34,4 +34,169 @@ definitions:
       Catalyses the reaction: vanillin + L-alanine = vanillylamine + pyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of vanillin + L-alanine = vanillylamine + pyruvate
+  description: Substrate-to-product chemistry of RHEA:63828, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63829 (rh:substrates → 63828_L, rh:products → 63828_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of vanillin + L-alanine = vanillylamine + pyruvate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63828
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: vanillin + L-alanine = vanillylamine + pyruvate'
+  - node_id: sub1
+    label: vanillin
+    node_type: CHEMICAL
+    grounding: CHEBI:18346
+    description: Formula C8H8O3.
+  - node_id: sub2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: prd1
+    label: vanillylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:149596
+    description: Formula C8H12NO2.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: vanillin aminotransferase
+    grounding: EC:2.6.1.119
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_E1AQY3
+    node_type: PROTEIN
+    label: PAMT_CAPAN
+    grounding: UniProtKB:E1AQY3
+  - node_id: prot_O82521
+    node_type: PROTEIN
+    label: PAMT_CAPCH
+    grounding: UniProtKB:O82521
+  - node_id: prot_D6R3B6
+    node_type: PROTEIN
+    label: PAMT_CAPFR
+    grounding: UniProtKB:D6R3B6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: vanillin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63829
+      snippet: vanillin + L-alanine => vanillylamine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:63829 declares side 63828_L as its substrates
+        (rh:substrates); the master reaction RHEA:63828 is undirected. This participant is CHEBI:18346
+        with coefficient 1. Rhea cites PMID:22921003, PMID:19473323, PMID:17999078, PMID:24712445 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-alanine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63829
+      snippet: vanillin + L-alanine => vanillylamine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:63829 declares side 63828_L as its substrates
+        (rh:substrates); the master reaction RHEA:63828 is undirected. This participant is CHEBI:57972
+        with coefficient 1. Rhea cites PMID:22921003, PMID:19473323, PMID:17999078, PMID:24712445 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: vanillylamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63829
+      snippet: vanillin + L-alanine => vanillylamine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:63829 declares side 63828_R as its products
+        (rh:products); the master reaction RHEA:63828 is undirected. This participant is CHEBI:149596
+        with coefficient 1. Rhea cites PMID:22921003, PMID:19473323, PMID:17999078, PMID:24712445 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63829
+      snippet: vanillin + L-alanine => vanillylamine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:63829 declares side 63828_R as its products
+        (rh:products); the master reaction RHEA:63828 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:22921003, PMID:19473323, PMID:17999078, PMID:24712445 for this
+        reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.119; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:63828
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.119"/>
+      notes: The rh:ec triple on RHEA:63828 in rhea.rdf. EC 2.6.1.119 is itself a record in this KB.
+  - subject: prot_E1AQY3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAMT_CAPAN is an exemplar enzyme carrying EC 2.6.1.119, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.6.1.119
+      snippet: DR   E1AQY3, PAMT_CAPAN ;  O82521, PAMT_CAPCH ;  D6R3B6, PAMT_CAPFR ;
+      notes: ExPASy ENZYME entry EC 2.6.1.119 cross-references UniProtKB:E1AQY3 (PAMT_CAPAN) as a protein
+        with this activity.
+    - reference: RHEA:63828
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.119"/>
+      notes: Rhea assigns RHEA:63828 to EC 2.6.1.119, and EC 2.6.1.119 maps to exactly one Rhea master
+        reaction (RHEA:63828), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_O82521
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAMT_CAPCH is an exemplar enzyme carrying EC 2.6.1.119, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.6.1.119
+      snippet: DR   E1AQY3, PAMT_CAPAN ;  O82521, PAMT_CAPCH ;  D6R3B6, PAMT_CAPFR ;
+      notes: ExPASy ENZYME entry EC 2.6.1.119 cross-references UniProtKB:O82521 (PAMT_CAPCH) as a protein
+        with this activity.
+    - reference: RHEA:63828
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.119"/>
+      notes: Rhea assigns RHEA:63828 to EC 2.6.1.119, and EC 2.6.1.119 maps to exactly one Rhea master
+        reaction (RHEA:63828), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_D6R3B6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAMT_CAPFR is an exemplar enzyme carrying EC 2.6.1.119, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.6.1.119
+      snippet: DR   E1AQY3, PAMT_CAPAN ;  O82521, PAMT_CAPCH ;  D6R3B6, PAMT_CAPFR ;
+      notes: ExPASy ENZYME entry EC 2.6.1.119 cross-references UniProtKB:D6R3B6 (PAMT_CAPFR) as a protein
+        with this activity.
+    - reference: RHEA:63828
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.119"/>
+      notes: Rhea assigns RHEA:63828 to EC 2.6.1.119, and EC 2.6.1.119 maps to exactly one Rhea master
+        reaction (RHEA:63828), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

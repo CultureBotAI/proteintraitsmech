@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:233514
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,78 @@ definitions:
       Catalyses the reaction: (9Z,11E)-12-(1'-hydroxy-3'Z-hexenyloxy)-dodecadienoate = 12-oxo-(9Z)-dodecenoate + (3Z)-hexenal
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (9Z,11E)-12-(1'-hydroxy-3'Z-hexenyloxy)-dodecadienoate = 12-oxo-(9Z)-dodecenoate
+    + (3Z)…
+  description: Substrate-to-product chemistry of RHEA:83923, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:83924 (rh:substrates → 83923_L, rh:products → 83923_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (9Z,11E)-12-(1'-hydroxy-3'Z-hexenyloxy)-dodecadienoate = 12-oxo-(9Z)-dodecen…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:83923
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (9Z,11E)-12-(1''-hydroxy-3''Z-hexenyloxy)-dodecadienoate = 12-oxo-(9Z)-dodecenoate
+      + (3Z)-hexenal'
+  - node_id: sub1
+    label: (9Z,11E)-12-(1'-hydroxy-3'Z-hexenyloxy)-dodecadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:233514
+    description: Formula C18H29O4.
+  - node_id: prd1
+    label: 12-oxo-(9Z)-dodecenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:233515
+    description: Formula C12H19O3.
+  - node_id: prd2
+    label: (3Z)-hexenal
+    node_type: CHEMICAL
+    grounding: CHEBI:23292
+    description: Formula C6H10O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (9Z,11E)-12-(1'-hydroxy-3'Z-hexenyloxy)-dodecadienoate is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83924
+      snippet: (9Z,11E)-12-(1'-hydroxy-3'Z-hexenyloxy)-dodecadienoate => 12-oxo-(9Z)-dodecenoate + (3Z)-hexenal
+      notes: Rhea's left-to-right directional reaction RHEA:83924 declares side 83923_L as its substrates
+        (rh:substrates); the master reaction RHEA:83923 is undirected. This participant is CHEBI:233514
+        with coefficient 1. Rhea cites PMID:14984738 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 12-oxo-(9Z)-dodecenoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83924
+      snippet: (9Z,11E)-12-(1'-hydroxy-3'Z-hexenyloxy)-dodecadienoate => 12-oxo-(9Z)-dodecenoate + (3Z)-hexenal
+      notes: Rhea's left-to-right directional reaction RHEA:83924 declares side 83923_R as its products
+        (rh:products); the master reaction RHEA:83923 is undirected. This participant is CHEBI:233515
+        with coefficient 1. Rhea cites PMID:14984738 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (3Z)-hexenal is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83924
+      snippet: (9Z,11E)-12-(1'-hydroxy-3'Z-hexenyloxy)-dodecadienoate => 12-oxo-(9Z)-dodecenoate + (3Z)-hexenal
+      notes: Rhea's left-to-right directional reaction RHEA:83924 declares side 83923_R as its products
+        (rh:products); the master reaction RHEA:83923 is undirected. This participant is CHEBI:23292 with
+        coefficient 1. Rhea cites PMID:14984738 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

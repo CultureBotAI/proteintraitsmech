@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:8113
     role: SUBSTRATE_OR_PRODUCT
@@ -35,4 +35,108 @@ definitions:
       Catalyses the reaction: phlorizin + H2O = phloretin + beta-D-glucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phlorizin + H2O = phloretin + beta-D-glucose
+  description: Substrate-to-product chemistry of RHEA:69639, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69640 (rh:substrates → 69639_L, rh:products → 69639_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of phlorizin + H2O = phloretin + beta-D-glucose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69639
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: phlorizin + H2O = phloretin + beta-D-glucose'
+  - node_id: sub1
+    label: phlorizin
+    node_type: CHEMICAL
+    grounding: CHEBI:8113
+    description: Formula C21H24O10.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: phloretin
+    node_type: CHEMICAL
+    grounding: CHEBI:17276
+    description: Formula C15H14O5.
+  - node_id: prd2
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phlorizin hydrolase activity
+    grounding: GO:0140749
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: phlorizin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69640
+      snippet: phlorizin + H2O => phloretin + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69640 declares side 69639_L as its substrates
+        (rh:substrates); the master reaction RHEA:69639 is undirected. This participant is CHEBI:8113
+        with coefficient 1. Rhea cites PMID:11106409, PMID:12594539, PMID:5774775, PMID:3929764 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69640
+      snippet: phlorizin + H2O => phloretin + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69640 declares side 69639_L as its substrates
+        (rh:substrates); the master reaction RHEA:69639 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11106409, PMID:12594539, PMID:5774775, PMID:3929764 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phloretin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69640
+      snippet: phlorizin + H2O => phloretin + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69640 declares side 69639_R as its products
+        (rh:products); the master reaction RHEA:69639 is undirected. This participant is CHEBI:17276 with
+        coefficient 1. Rhea cites PMID:11106409, PMID:12594539, PMID:5774775, PMID:3929764 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: beta-D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69640
+      snippet: phlorizin + H2O => phloretin + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69640 declares side 69639_R as its products
+        (rh:products); the master reaction RHEA:69639 is undirected. This participant is CHEBI:15903 with
+        coefficient 1. Rhea cites PMID:11106409, PMID:12594539, PMID:5774775, PMID:3929764 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:69639
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0140749"/>
+      notes: The rdfs:seeAlso triple on RHEA:69639 in rhea.rdf. GO term GO:0140749 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

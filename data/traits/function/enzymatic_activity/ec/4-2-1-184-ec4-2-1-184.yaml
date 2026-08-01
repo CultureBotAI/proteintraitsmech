@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: (3S)-3-hydroxy-D-aspartate = iminosuccinate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (3S)-3-hydroxy-D-aspartate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.184. EC 4.2.1.184 maps to
+    exactly one curated Rhea reaction (RHEA:62112), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(3S)-3-hydroxy-D-aspartate
+    = iminosuccinate + H2O". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (3S)-3-hydroxy-D-aspartate dehydratase
+    grounding: EC:4.2.1.184
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (3S)-3-hydroxy-D-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:60894
+    description: Formula C4H6NO5.
+  - node_id: prd1
+    label: iminosuccinate
+    node_type: CHEMICAL
+    grounding: CHEBI:77875
+    description: Formula C4H4NO4.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_A1B8Z2
+    node_type: PROTEIN
+    label: BHCB_PARDP
+    grounding: UniProtKB:A1B8Z2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3S)-3-hydroxy-D-aspartate is a substrate consumed by RHEA:62112 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62113
+      snippet: (3S)-3-hydroxy-D-aspartate => iminosuccinate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:62113 declares side 62112_L as its substrates
+        (rh:substrates); the master reaction RHEA:62112 is undirected. This participant is CHEBI:60894
+        with coefficient 1. Rhea cites PMID:31723261 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: iminosuccinate is a product released by RHEA:62112 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62113
+      snippet: (3S)-3-hydroxy-D-aspartate => iminosuccinate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:62113 declares side 62112_R as its products
+        (rh:products); the master reaction RHEA:62112 is undirected. This participant is CHEBI:77875 with
+        coefficient 1. Rhea cites PMID:31723261 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:62112 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62113
+      snippet: (3S)-3-hydroxy-D-aspartate => iminosuccinate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:62113 declares side 62112_R as its products
+        (rh:products); the master reaction RHEA:62112 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:31723261 for this reaction.
+  - subject: prot_A1B8Z2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BHCB_PARDP is an exemplar enzyme with EC 4.2.1.184 activity.
+    evidence:
+    - reference: EC:4.2.1.184
+      snippet: DR   A1B8Z2, BHCB_PARDP ;
+      notes: ExPASy ENZYME entry EC 4.2.1.184 cross-references UniProtKB:A1B8Z2 (BHCB_PARDP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

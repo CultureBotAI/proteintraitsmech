@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.3.-
 mapped_xrefs:
@@ -34,4 +34,149 @@ definitions:
       Catalyses: taurocyamine + ATP = N-phosphotaurocyamine + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of taurocyamine kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.3.4. EC 2.7.3.4 maps to exactly
+    one curated Rhea reaction (RHEA:22516), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "taurocyamine
+    + ATP = N-phosphotaurocyamine + ADP + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: taurocyamine kinase
+    grounding: EC:2.7.3.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: taurocyamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58064
+    description: Formula C3H9N3O3S.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: N-phosphotaurocyamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57838
+    description: Formula C3H8N3O6PS.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: taurocyamine kinase activity
+    grounding: GO:0050324
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P11917
+    node_type: PROTEIN
+    label: KTRC_AREMA
+    grounding: UniProtKB:P11917
+  - node_id: prot_P16641
+    node_type: PROTEIN
+    label: KTRC_SCHMA
+    grounding: UniProtKB:P16641
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: taurocyamine is a substrate consumed by RHEA:22516 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22517
+      snippet: taurocyamine + ATP => N-phosphotaurocyamine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22517 declares side 22516_L as its substrates
+        (rh:substrates); the master reaction RHEA:22516 is undirected. This participant is CHEBI:58064
+        with coefficient 1. Rhea cites PMID:18765922 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:22516 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22517
+      snippet: taurocyamine + ATP => N-phosphotaurocyamine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22517 declares side 22516_L as its substrates
+        (rh:substrates); the master reaction RHEA:22516 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:18765922 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-phosphotaurocyamine is a product released by RHEA:22516 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22517
+      snippet: taurocyamine + ATP => N-phosphotaurocyamine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22517 declares side 22516_R as its products
+        (rh:products); the master reaction RHEA:22516 is undirected. This participant is CHEBI:57838 with
+        coefficient 1. Rhea cites PMID:18765922 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:22516 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22517
+      snippet: taurocyamine + ATP => N-phosphotaurocyamine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22517 declares side 22516_R as its products
+        (rh:products); the master reaction RHEA:22516 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:18765922 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:22516 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22517
+      snippet: taurocyamine + ATP => N-phosphotaurocyamine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22517 declares side 22516_R as its products
+        (rh:products); the master reaction RHEA:22516 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18765922 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.3.4
+      snippet: EC:2.7.3.4 > GO:taurocyamine kinase activity ; GO:0050324
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050324 is itself a record
+        in this KB.
+  - subject: prot_P11917
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KTRC_AREMA is an exemplar enzyme with EC 2.7.3.4 activity.
+    evidence:
+    - reference: EC:2.7.3.4
+      snippet: DR   P11917, KTRC_AREMA ;  P16641, KTRC_SCHMA ;
+      notes: ExPASy ENZYME entry EC 2.7.3.4 cross-references UniProtKB:P11917 (KTRC_AREMA) as a protein
+        with this activity.
+  - subject: prot_P16641
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KTRC_SCHMA is an exemplar enzyme with EC 2.7.3.4 activity.
+    evidence:
+    - reference: EC:2.7.3.4
+      snippet: DR   P11917, KTRC_AREMA ;  P16641, KTRC_SCHMA ;
+      notes: ExPASy ENZYME entry EC 2.7.3.4 cross-references UniProtKB:P16641 (KTRC_SCHMA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

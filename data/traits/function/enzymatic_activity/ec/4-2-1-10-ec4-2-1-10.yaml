@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 xrefs:
@@ -40,4 +40,131 @@ definitions:
       Catalyses: 3-dehydroquinate = 3-dehydroshikimate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-dehydroquinate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.10. EC 4.2.1.10 maps to exactly
+    one curated Rhea reaction (RHEA:21096), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-dehydroquinate
+    = 3-dehydroshikimate + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-dehydroquinate dehydratase
+    grounding: EC:4.2.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-dehydroquinate
+    node_type: CHEMICAL
+    grounding: CHEBI:32364
+    description: Formula C7H9O6.
+  - node_id: prd1
+    label: 3-dehydroshikimate
+    node_type: CHEMICAL
+    grounding: CHEBI:16630
+    description: Formula C7H7O5.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3-dehydroquinate dehydratase activity
+    grounding: GO:0003855
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A1D2R0
+    node_type: PROTEIN
+    label: 3DHQ1_ASPF1
+    grounding: UniProtKB:A1D2R0
+  - node_id: prot_B0XQT1
+    node_type: PROTEIN
+    label: 3DHQ1_ASPFC
+    grounding: UniProtKB:B0XQT1
+  - node_id: prot_B8NIM4
+    node_type: PROTEIN
+    label: 3DHQ1_ASPFN
+    grounding: UniProtKB:B8NIM4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-dehydroquinate is a substrate consumed by RHEA:21096 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21097
+      snippet: 3-dehydroquinate => 3-dehydroshikimate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21097 declares side 21096_L as its substrates
+        (rh:substrates); the master reaction RHEA:21096 is undirected. This participant is CHEBI:32364
+        with coefficient 1. Rhea cites PMID:25072253, PMID:11937054, PMID:12387860, PMID:2306211 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-dehydroshikimate is a product released by RHEA:21096 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21097
+      snippet: 3-dehydroquinate => 3-dehydroshikimate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21097 declares side 21096_R as its products
+        (rh:products); the master reaction RHEA:21096 is undirected. This participant is CHEBI:16630 with
+        coefficient 1. Rhea cites PMID:25072253, PMID:11937054, PMID:12387860, PMID:2306211 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:21096 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21097
+      snippet: 3-dehydroquinate => 3-dehydroshikimate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21097 declares side 21096_R as its products
+        (rh:products); the master reaction RHEA:21096 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:25072253, PMID:11937054, PMID:12387860, PMID:2306211 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.10
+      snippet: EC:4.2.1.10 > GO:3-dehydroquinate dehydratase activity ; GO:0003855
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003855 is itself a record
+        in this KB.
+  - subject: prot_A1D2R0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3DHQ1_ASPF1 is an exemplar enzyme with EC 4.2.1.10 activity.
+    evidence:
+    - reference: EC:4.2.1.10
+      snippet: DR   A1D2R0, 3DHQ1_ASPF1;  B0XQT1, 3DHQ1_ASPFC;  B8NIM4, 3DHQ1_ASPFN;
+      notes: ExPASy ENZYME entry EC 4.2.1.10 cross-references UniProtKB:A1D2R0 (3DHQ1_ASPF1) as a protein
+        with this activity.
+  - subject: prot_B0XQT1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3DHQ1_ASPFC is an exemplar enzyme with EC 4.2.1.10 activity.
+    evidence:
+    - reference: EC:4.2.1.10
+      snippet: DR   A1D2R0, 3DHQ1_ASPF1;  B0XQT1, 3DHQ1_ASPFC;  B8NIM4, 3DHQ1_ASPFN;
+      notes: ExPASy ENZYME entry EC 4.2.1.10 cross-references UniProtKB:B0XQT1 (3DHQ1_ASPFC) as a protein
+        with this activity.
+  - subject: prot_B8NIM4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3DHQ1_ASPFN is an exemplar enzyme with EC 4.2.1.10 activity.
+    evidence:
+    - reference: EC:4.2.1.10
+      snippet: DR   A1D2R0, 3DHQ1_ASPF1;  B0XQT1, 3DHQ1_ASPFC;  B8NIM4, 3DHQ1_ASPFN;
+      notes: ExPASy ENZYME entry EC 4.2.1.10 cross-references UniProtKB:B8NIM4 (3DHQ1_ASPFN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

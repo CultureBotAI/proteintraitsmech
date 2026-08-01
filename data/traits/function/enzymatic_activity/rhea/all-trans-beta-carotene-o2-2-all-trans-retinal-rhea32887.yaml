@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.13.11.63
     mapping_source: rhea2ec
@@ -34,4 +34,170 @@ definitions:
       Catalyses the reaction: all-trans-beta-carotene + O2 = 2 all-trans-retinal
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of all-trans-beta-carotene + O2 = 2 all-trans-retinal
+  description: Substrate-to-product chemistry of RHEA:32887, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:32888 (rh:substrates → 32887_L, rh:products → 32887_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of all-trans-beta-carotene + O2 = 2 all-trans-retinal
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:32887
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: all-trans-beta-carotene + O2 = 2 all-trans-retinal'
+  - node_id: sub1
+    label: all-trans-beta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:17579
+    description: Formula C40H56.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: all-trans-retinal
+    node_type: CHEMICAL
+    grounding: CHEBI:17898
+    description: Formula C20H28O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-carotene 15,15'-dioxygenase activity
+    grounding: GO:0003834
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: beta-carotene 15,15'-dioxygenase
+    grounding: EC:1.13.11.63
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9I993
+    node_type: PROTEIN
+    label: BCDO1_CHICK
+    grounding: UniProtKB:Q9I993
+  - node_id: prot_Q9HAY6
+    node_type: PROTEIN
+    label: BCDO1_HUMAN
+    grounding: UniProtKB:Q9HAY6
+  - node_id: prot_Q9JJS6
+    node_type: PROTEIN
+    label: BCDO1_MOUSE
+    grounding: UniProtKB:Q9JJS6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-beta-carotene is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32888
+      snippet: all-trans-beta-carotene + O2 => 2 all-trans-retinal
+      notes: Rhea's left-to-right directional reaction RHEA:32888 declares side 32887_L as its substrates
+        (rh:substrates); the master reaction RHEA:32887 is undirected. This participant is CHEBI:17579
+        with coefficient 1. Rhea cites PMID:19366683, PMID:20229064, PMID:18979213, PMID:24187135 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32888
+      snippet: all-trans-beta-carotene + O2 => 2 all-trans-retinal
+      notes: Rhea's left-to-right directional reaction RHEA:32888 declares side 32887_L as its substrates
+        (rh:substrates); the master reaction RHEA:32887 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:19366683, PMID:20229064, PMID:18979213, PMID:24187135 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: all-trans-retinal is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:32888
+      snippet: all-trans-beta-carotene + O2 => 2 all-trans-retinal
+      notes: Rhea's left-to-right directional reaction RHEA:32888 declares side 32887_R as its products
+        (rh:products); the master reaction RHEA:32887 is undirected. This participant is CHEBI:17898 with
+        coefficient 2. Rhea cites PMID:19366683, PMID:20229064, PMID:18979213, PMID:24187135 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:32887
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003834"/>
+      notes: The rdfs:seeAlso triple on RHEA:32887 in rhea.rdf. GO term GO:0003834 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.13.11.63; the EC class covers the chemistry, this
+      reaction is one curated instance of it.
+    evidence:
+    - reference: RHEA:32887
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.63"/>
+      notes: The rh:ec triple on RHEA:32887 in rhea.rdf. EC 1.13.11.63 is itself a record in this KB.
+  - subject: prot_Q9I993
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BCDO1_CHICK is an exemplar enzyme carrying EC 1.13.11.63, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.63
+      snippet: DR   Q9I993, BCDO1_CHICK;  Q9HAY6, BCDO1_HUMAN;  Q9JJS6, BCDO1_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.13.11.63 cross-references UniProtKB:Q9I993 (BCDO1_CHICK) as a protein
+        with this activity.
+    - reference: RHEA:32887
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.63"/>
+      notes: Rhea assigns RHEA:32887 to EC 1.13.11.63, and EC 1.13.11.63 maps to exactly one Rhea master
+        reaction (RHEA:32887), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9HAY6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BCDO1_HUMAN is an exemplar enzyme carrying EC 1.13.11.63, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.63
+      snippet: DR   Q9I993, BCDO1_CHICK;  Q9HAY6, BCDO1_HUMAN;  Q9JJS6, BCDO1_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.13.11.63 cross-references UniProtKB:Q9HAY6 (BCDO1_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:32887
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.63"/>
+      notes: Rhea assigns RHEA:32887 to EC 1.13.11.63, and EC 1.13.11.63 maps to exactly one Rhea master
+        reaction (RHEA:32887), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9JJS6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BCDO1_MOUSE is an exemplar enzyme carrying EC 1.13.11.63, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.63
+      snippet: DR   Q9I993, BCDO1_CHICK;  Q9HAY6, BCDO1_HUMAN;  Q9JJS6, BCDO1_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.13.11.63 cross-references UniProtKB:Q9JJS6 (BCDO1_MOUSE) as a protein
+        with this activity.
+    - reference: RHEA:32887
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.63"/>
+      notes: Rhea assigns RHEA:32887 to EC 1.13.11.63, and EC 1.13.11.63 maps to exactly one Rhea master
+        reaction (RHEA:32887), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

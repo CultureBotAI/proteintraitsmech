@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 mapped_xrefs:
@@ -25,4 +25,74 @@ definitions:
       Catalyses: 21-hydroxyprogesterone = 20-hydroxy-3-oxopregn-4-en-21-al
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of corticosteroid side-chain-isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.21. EC 5.3.1.21 maps to exactly
+    one curated Rhea reaction (RHEA:17861), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "21-hydroxyprogesterone
+    = 20-hydroxy-3-oxopregn-4-en-21-al". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: corticosteroid side-chain-isomerase
+    grounding: EC:5.3.1.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 21-hydroxyprogesterone
+    node_type: CHEMICAL
+    grounding: CHEBI:16973
+    description: Formula C21H30O3.
+  - node_id: prd1
+    label: 20-hydroxy-3-oxopregn-4-en-21-al
+    node_type: CHEMICAL
+    grounding: CHEBI:15690
+    description: Formula C21H30O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: corticosteroid side-chain-isomerase activity
+    grounding: GO:0004110
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 21-hydroxyprogesterone is a substrate consumed by RHEA:17861 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17862
+      snippet: 21-hydroxyprogesterone => 20-hydroxy-3-oxopregn-4-en-21-al
+      notes: Rhea's left-to-right directional reaction RHEA:17862 declares side 17861_L as its substrates
+        (rh:substrates); the master reaction RHEA:17861 is undirected. This participant is CHEBI:16973
+        with coefficient 1. Rhea cites PMID:7391077, PMID:901753 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 20-hydroxy-3-oxopregn-4-en-21-al is a product released by RHEA:17861 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17862
+      snippet: 21-hydroxyprogesterone => 20-hydroxy-3-oxopregn-4-en-21-al
+      notes: Rhea's left-to-right directional reaction RHEA:17862 declares side 17861_R as its products
+        (rh:products); the master reaction RHEA:17861 is undirected. This participant is CHEBI:15690 with
+        coefficient 1. Rhea cites PMID:7391077, PMID:901753 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.21
+      snippet: EC:5.3.1.21 > GO:corticosteroid side-chain-isomerase activity ; GO:0004110
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004110 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

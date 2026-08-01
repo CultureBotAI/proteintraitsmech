@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:65052
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,123 @@ definitions:
       Catalyses the reaction: tetracosanoyl-CoA + H2O = tetracosanoate + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tetracosanoyl-CoA + H2O = tetracosanoate + CoA + H(+)
+  description: Substrate-to-product chemistry of RHEA:40787, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:40788 (rh:substrates → 40787_L, rh:products → 40787_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tetracosanoyl-CoA + H2O = tetracosanoate + CoA + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:40787
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tetracosanoyl-CoA + H2O = tetracosanoate + CoA + H(+)'
+  - node_id: sub1
+    label: tetracosanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:65052
+    description: Formula C45H78N7O17P3S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: tetracosanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:31014
+    description: Formula C24H47O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: very long-chain fatty acyl-CoA hydrolase activity
+    grounding: GO:0052817
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tetracosanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:40788
+      snippet: tetracosanoyl-CoA + H2O => tetracosanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:40788 declares side 40787_L as its substrates
+        (rh:substrates); the master reaction RHEA:40787 is undirected. This participant is CHEBI:65052
+        with coefficient 1. Rhea cites PMID:15007068, PMID:12810727 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40788
+      snippet: tetracosanoyl-CoA + H2O => tetracosanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:40788 declares side 40787_L as its substrates
+        (rh:substrates); the master reaction RHEA:40787 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15007068, PMID:12810727 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tetracosanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40788
+      snippet: tetracosanoyl-CoA + H2O => tetracosanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:40788 declares side 40787_R as its products
+        (rh:products); the master reaction RHEA:40787 is undirected. This participant is CHEBI:31014 with
+        coefficient 1. Rhea cites PMID:15007068, PMID:12810727 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40788
+      snippet: tetracosanoyl-CoA + H2O => tetracosanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:40788 declares side 40787_R as its products
+        (rh:products); the master reaction RHEA:40787 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:15007068, PMID:12810727 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40788
+      snippet: tetracosanoyl-CoA + H2O => tetracosanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:40788 declares side 40787_R as its products
+        (rh:products); the master reaction RHEA:40787 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15007068, PMID:12810727 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:40787
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052817"/>
+      notes: The rdfs:seeAlso triple on RHEA:40787 in rhea.rdf. GO term GO:0052817 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

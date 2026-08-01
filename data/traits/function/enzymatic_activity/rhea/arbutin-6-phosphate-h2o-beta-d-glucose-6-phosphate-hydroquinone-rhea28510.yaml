@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:60929
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: arbutin 6-phosphate + H2O = beta-D-glucose 6-phosphate + hydroquinone
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of arbutin 6-phosphate + H2O = beta-D-glucose 6-phosphate + hydroquinone
+  description: Substrate-to-product chemistry of RHEA:28510, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28511 (rh:substrates → 28510_L, rh:products → 28510_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of arbutin 6-phosphate + H2O = beta-D-glucose 6-phosphate + hydroquinone
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28510
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: arbutin 6-phosphate + H2O = beta-D-glucose 6-phosphate + hydroquinone'
+  - node_id: sub1
+    label: arbutin 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:60929
+    description: Formula C12H15O10P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: beta-D-glucose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58247
+    description: Formula C6H11O9P.
+  - node_id: prd2
+    label: hydroquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:17594
+    description: Formula C6H6O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: arbutin 6-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28511
+      snippet: arbutin 6-phosphate + H2O => beta-D-glucose 6-phosphate + hydroquinone
+      notes: Rhea's left-to-right directional reaction RHEA:28511 declares side 28510_L as its substrates
+        (rh:substrates); the master reaction RHEA:28510 is undirected. This participant is CHEBI:60929
+        with coefficient 1. Rhea cites PMID:10572139 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28511
+      snippet: arbutin 6-phosphate + H2O => beta-D-glucose 6-phosphate + hydroquinone
+      notes: Rhea's left-to-right directional reaction RHEA:28511 declares side 28510_L as its substrates
+        (rh:substrates); the master reaction RHEA:28510 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10572139 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-glucose 6-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28511
+      snippet: arbutin 6-phosphate + H2O => beta-D-glucose 6-phosphate + hydroquinone
+      notes: Rhea's left-to-right directional reaction RHEA:28511 declares side 28510_R as its products
+        (rh:products); the master reaction RHEA:28510 is undirected. This participant is CHEBI:58247 with
+        coefficient 1. Rhea cites PMID:10572139 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hydroquinone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28511
+      snippet: arbutin 6-phosphate + H2O => beta-D-glucose 6-phosphate + hydroquinone
+      notes: Rhea's left-to-right directional reaction RHEA:28511 declares side 28510_R as its products
+        (rh:products); the master reaction RHEA:28510 is undirected. This participant is CHEBI:17594 with
+        coefficient 1. Rhea cites PMID:10572139 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

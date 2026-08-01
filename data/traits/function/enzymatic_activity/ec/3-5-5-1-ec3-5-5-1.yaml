@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.5.-
 mapped_xrefs:
@@ -42,4 +42,325 @@ definitions:
       Catalyses: a nitrile + 2 H2O = a carboxylate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nitrilase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.5.1. Rhea assigns 3 curated
+    reactions to EC 3.5.5.1. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "a nitrile + 2 H2O = a carboxylate + NH4(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nitrilase
+    grounding: EC:3.5.5.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a nitrile + 2 H2O = a carboxylate + NH4(+)
+    grounding: RHEA:21724
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a nitrile + 2 H2O = a carboxylate + NH4(+)'
+  - node_id: rxn1_sub1
+    label: a nitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:18379
+    description: Formula CNR.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: rxn1_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (indol-3-yl)acetonitrile + 2 H2O = (indol-3-yl)acetate + NH4(+)
+    grounding: RHEA:45776
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (indol-3-yl)acetonitrile + 2 H2O = (indol-3-yl)acetate + NH4(+)'
+  - node_id: rxn2_sub1
+    label: (indol-3-yl)acetonitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:17566
+    description: Formula C10H8N2.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: (indol-3-yl)acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30854
+    description: Formula C10H8NO2.
+  - node_id: rxn2_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of phenylpropanonitrile + 2 H2O = 3-phenylpropanoate + NH4(+)
+    grounding: RHEA:45784
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: phenylpropanonitrile + 2 H2O = 3-phenylpropanoate + NH4(+)'
+  - node_id: rxn3_sub1
+    label: phenylpropanonitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:85426
+    description: Formula C9H9N.
+  - node_id: rxn3_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3_prd1
+    label: 3-phenylpropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:51057
+    description: Formula C9H9O2.
+  - node_id: rxn3_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: nitrilase activity
+    grounding: GO:0000257
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_G7XTA8
+    node_type: PROTEIN
+    label: NIT1_ASPKW
+    grounding: UniProtKB:G7XTA8
+  - node_id: prot_A2R6M7
+    node_type: PROTEIN
+    label: NIT1_ASPNC
+    grounding: UniProtKB:A2R6M7
+  - node_id: prot_G7X8S6
+    node_type: PROTEIN
+    label: NIT2_ASPKW
+    grounding: UniProtKB:G7X8S6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:21724 is one of the 3 curated reactions Rhea assigns to EC 3.5.5.1; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:21724
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.5.1"/>
+      notes: The rh:ec triple on RHEA:21724 in rhea.rdf assigns that reaction to EC 3.5.5.1.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a nitrile is a substrate consumed by RHEA:21724 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21725
+      snippet: a nitrile + 2 H2O => a carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21725 declares side 21724_L as its substrates
+        (rh:substrates); the master reaction RHEA:21724 is undirected. This participant is CHEBI:18379
+        with coefficient 1. Rhea cites PMID:11380987, PMID:12902216 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:21724 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:21725
+      snippet: a nitrile + 2 H2O => a carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21725 declares side 21724_L as its substrates
+        (rh:substrates); the master reaction RHEA:21724 is undirected. This participant is CHEBI:15377
+        with coefficient 2. Rhea cites PMID:11380987, PMID:12902216 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a carboxylate is a product released by RHEA:21724 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21725
+      snippet: a nitrile + 2 H2O => a carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21725 declares side 21724_R as its products
+        (rh:products); the master reaction RHEA:21724 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. Rhea cites PMID:11380987, PMID:12902216 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NH4(+) is a product released by RHEA:21724 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21725
+      snippet: a nitrile + 2 H2O => a carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21725 declares side 21724_R as its products
+        (rh:products); the master reaction RHEA:21724 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:11380987, PMID:12902216 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:45776 is one of the 3 curated reactions Rhea assigns to EC 3.5.5.1; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:45776
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.5.1"/>
+      notes: The rh:ec triple on RHEA:45776 in rhea.rdf assigns that reaction to EC 3.5.5.1.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (indol-3-yl)acetonitrile is a substrate consumed by RHEA:45776 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45777
+      snippet: (indol-3-yl)acetonitrile + 2 H2O => (indol-3-yl)acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45777 declares side 45776_L as its substrates
+        (rh:substrates); the master reaction RHEA:45776 is undirected. This participant is CHEBI:17566
+        with coefficient 1. Rhea cites PMID:24837382, PMID:19849791 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:45776 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:45777
+      snippet: (indol-3-yl)acetonitrile + 2 H2O => (indol-3-yl)acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45777 declares side 45776_L as its substrates
+        (rh:substrates); the master reaction RHEA:45776 is undirected. This participant is CHEBI:15377
+        with coefficient 2. Rhea cites PMID:24837382, PMID:19849791 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (indol-3-yl)acetate is a product released by RHEA:45776 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45777
+      snippet: (indol-3-yl)acetonitrile + 2 H2O => (indol-3-yl)acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45777 declares side 45776_R as its products
+        (rh:products); the master reaction RHEA:45776 is undirected. This participant is CHEBI:30854 with
+        coefficient 1. Rhea cites PMID:24837382, PMID:19849791 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NH4(+) is a product released by RHEA:45776 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45777
+      snippet: (indol-3-yl)acetonitrile + 2 H2O => (indol-3-yl)acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45777 declares side 45776_R as its products
+        (rh:products); the master reaction RHEA:45776 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:24837382, PMID:19849791 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:45784 is one of the 3 curated reactions Rhea assigns to EC 3.5.5.1; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:45784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.5.1"/>
+      notes: The rh:ec triple on RHEA:45784 in rhea.rdf assigns that reaction to EC 3.5.5.1.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: phenylpropanonitrile is a substrate consumed by RHEA:45784 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45785
+      snippet: phenylpropanonitrile + 2 H2O => 3-phenylpropanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45785 declares side 45784_L as its substrates
+        (rh:substrates); the master reaction RHEA:45784 is undirected. This participant is CHEBI:85426
+        with coefficient 1. Rhea cites PMID:19849791 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: H2O is a substrate consumed by RHEA:45784 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:45785
+      snippet: phenylpropanonitrile + 2 H2O => 3-phenylpropanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45785 declares side 45784_L as its substrates
+        (rh:substrates); the master reaction RHEA:45784 is undirected. This participant is CHEBI:15377
+        with coefficient 2. Rhea cites PMID:19849791 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: 3-phenylpropanoate is a product released by RHEA:45784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45785
+      snippet: phenylpropanonitrile + 2 H2O => 3-phenylpropanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45785 declares side 45784_R as its products
+        (rh:products); the master reaction RHEA:45784 is undirected. This participant is CHEBI:51057 with
+        coefficient 1. Rhea cites PMID:19849791 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: NH4(+) is a product released by RHEA:45784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45785
+      snippet: phenylpropanonitrile + 2 H2O => 3-phenylpropanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45785 declares side 45784_R as its products
+        (rh:products); the master reaction RHEA:45784 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:19849791 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.5.1
+      snippet: EC:3.5.5.1 > GO:nitrilase activity ; GO:0000257
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0000257 is itself a record
+        in this KB.
+  - subject: prot_G7XTA8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NIT1_ASPKW is an exemplar enzyme with EC 3.5.5.1 activity.
+    evidence:
+    - reference: EC:3.5.5.1
+      snippet: DR   G7XTA8, NIT1_ASPKW ;  A2R6M7, NIT1_ASPNC ;  G7X8S6, NIT2_ASPKW ;
+      notes: ExPASy ENZYME entry EC 3.5.5.1 cross-references UniProtKB:G7XTA8 (NIT1_ASPKW) as a protein
+        with this activity.
+  - subject: prot_A2R6M7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NIT1_ASPNC is an exemplar enzyme with EC 3.5.5.1 activity.
+    evidence:
+    - reference: EC:3.5.5.1
+      snippet: DR   G7XTA8, NIT1_ASPKW ;  A2R6M7, NIT1_ASPNC ;  G7X8S6, NIT2_ASPKW ;
+      notes: ExPASy ENZYME entry EC 3.5.5.1 cross-references UniProtKB:A2R6M7 (NIT1_ASPNC) as a protein
+        with this activity.
+  - subject: prot_G7X8S6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NIT2_ASPKW is an exemplar enzyme with EC 3.5.5.1 activity.
+    evidence:
+    - reference: EC:3.5.5.1
+      snippet: DR   G7XTA8, NIT1_ASPKW ;  A2R6M7, NIT1_ASPNC ;  G7X8S6, NIT2_ASPKW ;
+      notes: ExPASy ENZYME entry EC 3.5.5.1 cross-references UniProtKB:G7X8S6 (NIT2_ASPKW) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (19 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

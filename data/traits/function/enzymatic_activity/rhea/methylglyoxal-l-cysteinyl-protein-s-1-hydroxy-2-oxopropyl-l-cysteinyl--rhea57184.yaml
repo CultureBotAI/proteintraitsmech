@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17158
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,111 @@ definitions:
       Catalyses the reaction: methylglyoxal + L-cysteinyl-[protein] = S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methylglyoxal + L-cysteinyl-[protein] = S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein]
+  description: Substrate-to-product chemistry of RHEA:57184, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57185 (rh:substrates → 57184_L, rh:products → 57184_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of methylglyoxal + L-cysteinyl-[protein] = S-(1-hydroxy-2-oxopropyl)-L-cysteiny…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57184
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: methylglyoxal + L-cysteinyl-[protein] = S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein]'
+  - node_id: sub1
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: sub2
+    label: L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10131
+    description: Rhea compound GENERIC:10131.
+  - node_id: sub2_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10131 (L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1
+    label: S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12430
+    description: Rhea compound GENERIC:12430.
+  - node_id: prd1_rp1
+    label: S-(1-hydroxy-2-oxopropyl)-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12430 (S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:131710
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: methylglyoxal is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57185
+      snippet: methylglyoxal + L-cysteinyl-[protein] => S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:57185 declares side 57184_L as its substrates
+        (rh:substrates); the master reaction RHEA:57184 is undirected. This participant is CHEBI:17158
+        with coefficient 1. Rhea cites PMID:20963454, PMID:23334546, PMID:25416785, PMID:29231845 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-cysteinyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57185
+      snippet: methylglyoxal + L-cysteinyl-[protein] => S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:57185 declares side 57184_L as its substrates
+        (rh:substrates); the master reaction RHEA:57184 is undirected. This participant is GENERIC:10131
+        with coefficient 1. Rhea cites PMID:20963454, PMID:23334546, PMID:25416785, PMID:29231845 for
+        this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:57184
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10131 (L-cysteinyl-[protein]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein] is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57185
+      snippet: methylglyoxal + L-cysteinyl-[protein] => S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:57185 declares side 57184_R as its products
+        (rh:products); the master reaction RHEA:57184 is undirected. This participant is GENERIC:12430
+        with coefficient 1. Rhea cites PMID:20963454, PMID:23334546, PMID:25416785, PMID:29231845 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-(1-hydroxy-2-oxopropyl)-L-cysteine residue is the reactive part of S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:57184
+      snippet: S-(1-hydroxy-2-oxopropyl)-L-cysteine residue
+      notes: Rhea compound GENERIC:12430 (S-(1-hydroxy-2-oxopropyl)-L-cysteinyl-[protein]) declares rh:reactivePart
+        = S-(1-hydroxy-2-oxopropyl)-L-cysteine residue (CHEBI:131710), formula C6H9NO3S.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

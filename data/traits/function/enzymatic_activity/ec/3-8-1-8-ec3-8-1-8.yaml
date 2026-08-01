@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.8.1.-
 mapped_xrefs:
@@ -30,4 +30,136 @@ definitions:
       Catalyses: atrazine + H2O = hydroxyatrazine + chloride + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of atrazine chlorohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.8.1.8. EC 3.8.1.8 maps to exactly
+    one curated Rhea reaction (RHEA:11312), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "atrazine + H2O
+    = hydroxyatrazine + chloride + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: atrazine chlorohydrolase
+    grounding: EC:3.8.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: atrazine
+    node_type: CHEMICAL
+    grounding: CHEBI:15930
+    description: Formula C8H14ClN5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: hydroxyatrazine
+    node_type: CHEMICAL
+    grounding: CHEBI:18316
+    description: Formula C8H15N5O.
+  - node_id: prd2
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+    description: Formula Cl.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: atrazine chlorohydrolase activity
+    grounding: GO:0018788
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P72156
+    node_type: PROTEIN
+    label: ATZA_PSESD
+    grounding: UniProtKB:P72156
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: atrazine is a substrate consumed by RHEA:11312 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11313
+      snippet: atrazine + H2O => hydroxyatrazine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11313 declares side 11312_L as its substrates
+        (rh:substrates); the master reaction RHEA:11312 is undirected. This participant is CHEBI:15930
+        with coefficient 1. Rhea cites PMID:11274097, PMID:7574646, PMID:12450410, PMID:8759853 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:11312 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11313
+      snippet: atrazine + H2O => hydroxyatrazine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11313 declares side 11312_L as its substrates
+        (rh:substrates); the master reaction RHEA:11312 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11274097, PMID:7574646, PMID:12450410, PMID:8759853 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hydroxyatrazine is a product released by RHEA:11312 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11313
+      snippet: atrazine + H2O => hydroxyatrazine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11313 declares side 11312_R as its products
+        (rh:products); the master reaction RHEA:11312 is undirected. This participant is CHEBI:18316 with
+        coefficient 1. Rhea cites PMID:11274097, PMID:7574646, PMID:12450410, PMID:8759853 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: chloride is a product released by RHEA:11312 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11313
+      snippet: atrazine + H2O => hydroxyatrazine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11313 declares side 11312_R as its products
+        (rh:products); the master reaction RHEA:11312 is undirected. This participant is CHEBI:17996 with
+        coefficient 1. Rhea cites PMID:11274097, PMID:7574646, PMID:12450410, PMID:8759853 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:11312 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11313
+      snippet: atrazine + H2O => hydroxyatrazine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11313 declares side 11312_R as its products
+        (rh:products); the master reaction RHEA:11312 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11274097, PMID:7574646, PMID:12450410, PMID:8759853 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.8.1.8
+      snippet: EC:3.8.1.8 > GO:atrazine chlorohydrolase activity ; GO:0018788
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018788 is itself a record
+        in this KB.
+  - subject: prot_P72156
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATZA_PSESD is an exemplar enzyme with EC 3.8.1.8 activity.
+    evidence:
+    - reference: EC:3.8.1.8
+      snippet: DR   P72156, ATZA_PSESD ;
+      notes: ExPASy ENZYME entry EC 3.8.1.8 cross-references UniProtKB:P72156 (ATZA_PSESD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.13
     mapping_source: rhea2ec
@@ -30,4 +30,232 @@ definitions:
       Catalyses the reaction: a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-amino acid
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-amino
+    acid
+  description: Substrate-to-product chemistry of RHEA:13877, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:13878 (rh:substrates → 13877_L, rh:products → 13877_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-a…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13877
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-amino
+      acid'
+  - node_id: sub1
+    label: a 2-oxocarboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:35179
+    description: Formula C2O3R.
+  - node_id: sub2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: prd1
+    label: L-glutamate 5-semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58066
+    description: Formula C5H9NO3.
+  - node_id: prd2
+    label: an L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+    description: Formula C2H4NO2R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-ornithine transaminase activity
+    grounding: GO:0004587
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: ornithine aminotransferase
+    grounding: EC:2.6.1.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2-oxocarboxylate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13878
+      snippet: a 2-oxocarboxylate + L-ornithine => L-glutamate 5-semialdehyde + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:13878 declares side 13877_L as its substrates
+        (rh:substrates); the master reaction RHEA:13877 is undirected. This participant is CHEBI:35179
+        with coefficient 1. Rhea cites PMID:24912400, PMID:9576796 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-ornithine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13878
+      snippet: a 2-oxocarboxylate + L-ornithine => L-glutamate 5-semialdehyde + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:13878 declares side 13877_L as its substrates
+        (rh:substrates); the master reaction RHEA:13877 is undirected. This participant is CHEBI:46911
+        with coefficient 1. Rhea cites PMID:24912400, PMID:9576796 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-glutamate 5-semialdehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13878
+      snippet: a 2-oxocarboxylate + L-ornithine => L-glutamate 5-semialdehyde + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:13878 declares side 13877_R as its products
+        (rh:products); the master reaction RHEA:13877 is undirected. This participant is CHEBI:58066 with
+        coefficient 1. Rhea cites PMID:24912400, PMID:9576796 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: an L-alpha-amino acid is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13878
+      snippet: a 2-oxocarboxylate + L-ornithine => L-glutamate 5-semialdehyde + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:13878 declares side 13877_R as its products
+        (rh:products); the master reaction RHEA:13877 is undirected. This participant is CHEBI:59869 with
+        coefficient 1. Rhea cites PMID:24912400, PMID:9576796 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:13877
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004587"/>
+      notes: The rdfs:seeAlso triple on RHEA:13877 in rhea.rdf. GO term GO:0004587 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.13; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:13877
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.13"/>
+      notes: The rh:ec triple on RHEA:13877 in rhea.rdf. EC 2.6.1.13 is itself a record in this KB.
+- graph_id: catalytic_residues_mcsa929
+  title: Catalytic residues of RHEA:13877 (from MCSA:929)
+  description: 'The catalytic residues that carry out RHEA:13877, joined from M-CSA entry 929. 3 residues,
+    reused verbatim from the MCSA:929 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 929''s reactant set (CHEBI:35179, CHEBI:46911) equals Rhea side 13877_L exactly,
+    and its product set (CHEBI:58066, CHEBI:59869) equals side 13877_R exactly. EC agreement bounded the
+    candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-a…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13877
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-amino acid'
+  - node_id: mcsa
+    label: ornithine aminotransferase
+    node_type: MOTIF
+    grounding: MCSA:929
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: phe177
+    label: catalytic Phe177 (M-CSA/PDB numbering; UniProt residue 177)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04181
+    description: 'M-CSA roles: steric role. Reused verbatim from the MCSA:929 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: asp263
+    label: catalytic Asp263 (M-CSA/PDB numbering; UniProt residue 263)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04181
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:929 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: lys292
+    label: catalytic Lys292 (M-CSA/PDB numbering; UniProt residue 292)
+    node_type: RESIDUE
+    grounding: UniProtKB:P04181
+    description: 'M-CSA roles: covalent catalysis, proton shuttle (general acid/base). Reused verbatim
+      from the MCSA:929 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 929 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:929
+      snippet: 2-oxo monocarboxylic acid anion [reactant]; L-ornithinium(1+) [reactant]; L-glutamic 5-semialdehyde
+        zwitterion [product]; L-alpha-amino acid zwitterion [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 929, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 929''s reactant
+        set (CHEBI:35179, CHEBI:46911) equals Rhea side 13877_L exactly, and its product set (CHEBI:58066,
+        CHEBI:59869) equals side 13877_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: phe177
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:929
+      snippet: steric role
+      notes: 'M-CSA entry 929 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 2 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 929''s reactant set (CHEBI:35179,
+        CHEBI:46911) equals Rhea side 13877_L exactly, and its product set (CHEBI:58066, CHEBI:59869)
+        equals side 13877_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: asp263
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:929
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 929 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 2 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 929''s reactant set (CHEBI:35179,
+        CHEBI:46911) equals Rhea side 13877_L exactly, and its product set (CHEBI:58066, CHEBI:59869)
+        equals side 13877_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: lys292
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:929
+      snippet: covalent catalysis, proton shuttle (general acid/base)
+      notes: 'M-CSA entry 929 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 2 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 929''s reactant set (CHEBI:35179,
+        CHEBI:46911) equals Rhea side 13877_L exactly, and its product set (CHEBI:58066, CHEBI:59869)
+        equals side 13877_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa929' (4 evidence-backed edges) joining MCSA:929
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

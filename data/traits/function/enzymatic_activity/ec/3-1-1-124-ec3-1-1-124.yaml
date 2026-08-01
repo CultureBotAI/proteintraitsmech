@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -28,4 +28,73 @@ definitions:
       Catalyses: punicalagin = punicalin + ellagic acid
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ellagitannin acyl hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.124. EC 3.1.1.124 maps to
+    exactly one curated Rhea reaction (RHEA:86027), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "punicalagin
+    = punicalin + ellagic acid". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ellagitannin acyl hydrolase
+    grounding: EC:3.1.1.124
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: punicalagin
+    node_type: CHEMICAL
+    grounding: CHEBI:234435
+    description: Formula C48H24O30.
+  - node_id: prd1
+    label: punicalin
+    node_type: CHEMICAL
+    grounding: CHEBI:234446
+    description: Formula C34H20O22.
+  - node_id: prd2
+    label: ellagic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:235343
+    description: Formula C14H4O8.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: punicalagin is a substrate consumed by RHEA:86027 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86028
+      snippet: punicalagin => punicalin + ellagic acid
+      notes: Rhea's left-to-right directional reaction RHEA:86028 declares side 86027_L as its substrates
+        (rh:substrates); the master reaction RHEA:86027 is undirected. This participant is CHEBI:234435
+        with coefficient 1. Rhea cites PMID:26915983, PMID:33542933, PMID:34320742 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: punicalin is a product released by RHEA:86027 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86028
+      snippet: punicalagin => punicalin + ellagic acid
+      notes: Rhea's left-to-right directional reaction RHEA:86028 declares side 86027_R as its products
+        (rh:products); the master reaction RHEA:86027 is undirected. This participant is CHEBI:234446
+        with coefficient 1. Rhea cites PMID:26915983, PMID:33542933, PMID:34320742 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ellagic acid is a product released by RHEA:86027 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86028
+      snippet: punicalagin => punicalin + ellagic acid
+      notes: Rhea's left-to-right directional reaction RHEA:86028 declares side 86027_R as its products
+        (rh:products); the master reaction RHEA:86027 is undirected. This participant is CHEBI:235343
+        with coefficient 1. Rhea cites PMID:26915983, PMID:33542933, PMID:34320742 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

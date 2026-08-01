@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:59891
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,108 @@ definitions:
       Catalyses the reaction: (Z)-3-ureidoacrylate + H2O = (Z)-3-aminoacrylate + carbamate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (Z)-3-ureidoacrylate + H2O = (Z)-3-aminoacrylate + carbamate + H(+)
+  description: Substrate-to-product chemistry of RHEA:31603, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31604 (rh:substrates → 31603_L, rh:products → 31603_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (Z)-3-ureidoacrylate + H2O = (Z)-3-aminoacrylate + carbamate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31603
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (Z)-3-ureidoacrylate + H2O = (Z)-3-aminoacrylate + carbamate + H(+)'
+  - node_id: sub1
+    label: (Z)-3-ureidoacrylate
+    node_type: CHEMICAL
+    grounding: CHEBI:59891
+    description: Formula C4H5N2O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (Z)-3-aminoacrylate
+    node_type: CHEMICAL
+    grounding: CHEBI:59894
+    description: Formula C3H4NO2.
+  - node_id: prd2
+    label: carbamate
+    node_type: CHEMICAL
+    grounding: CHEBI:13941
+    description: Formula CH2NO2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (Z)-3-ureidoacrylate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31604
+      snippet: (Z)-3-ureidoacrylate + H2O => (Z)-3-aminoacrylate + carbamate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31604 declares side 31603_L as its substrates
+        (rh:substrates); the master reaction RHEA:31603 is undirected. This participant is CHEBI:59891
+        with coefficient 1. Rhea cites PMID:20400551 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31604
+      snippet: (Z)-3-ureidoacrylate + H2O => (Z)-3-aminoacrylate + carbamate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31604 declares side 31603_L as its substrates
+        (rh:substrates); the master reaction RHEA:31603 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:20400551 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (Z)-3-aminoacrylate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31604
+      snippet: (Z)-3-ureidoacrylate + H2O => (Z)-3-aminoacrylate + carbamate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31604 declares side 31603_R as its products
+        (rh:products); the master reaction RHEA:31603 is undirected. This participant is CHEBI:59894 with
+        coefficient 1. Rhea cites PMID:20400551 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: carbamate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31604
+      snippet: (Z)-3-ureidoacrylate + H2O => (Z)-3-aminoacrylate + carbamate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31604 declares side 31603_R as its products
+        (rh:products); the master reaction RHEA:31603 is undirected. This participant is CHEBI:13941 with
+        coefficient 1. Rhea cites PMID:20400551 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31604
+      snippet: (Z)-3-ureidoacrylate + H2O => (Z)-3-aminoacrylate + carbamate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31604 declares side 31603_R as its products
+        (rh:products); the master reaction RHEA:31603 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:20400551 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

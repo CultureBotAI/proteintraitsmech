@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.99.-
 synonyms:
@@ -43,4 +43,151 @@ definitions:
       Catalyses: 3alpha(S)-strictosidine + H2O = secologanin + tryptamine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of strictosidine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.99.13. EC 3.5.99.13 maps to
+    exactly one curated Rhea reaction (RHEA:15013), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3alpha(S)-strictosidine
+    + H2O = secologanin + tryptamine". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: strictosidine synthase
+    grounding: EC:3.5.99.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3alpha(S)-strictosidine
+    node_type: CHEMICAL
+    grounding: CHEBI:58193
+    description: Formula C27H35N2O9.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: secologanin
+    node_type: CHEMICAL
+    grounding: CHEBI:18002
+    description: Formula C17H24O10.
+  - node_id: prd2
+    label: tryptamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57887
+    description: Formula C10H13N2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: strictosidine synthase activity
+    grounding: GO:0016844
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P92976
+    node_type: PROTEIN
+    label: SSL11_ARATH
+    grounding: UniProtKB:P92976
+  - node_id: prot_P94111
+    node_type: PROTEIN
+    label: SSL12_ARATH
+    grounding: UniProtKB:P94111
+  - node_id: prot_P18417
+    node_type: PROTEIN
+    label: STSY_CATRO
+    grounding: UniProtKB:P18417
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3alpha(S)-strictosidine is a substrate consumed by RHEA:15013 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15014
+      snippet: 3alpha(S)-strictosidine + H2O => secologanin + tryptamine
+      notes: Rhea's left-to-right directional reaction RHEA:15014 declares side 15013_L as its substrates
+        (rh:substrates); the master reaction RHEA:15013 is undirected. This participant is CHEBI:58193
+        with coefficient 1. Rhea cites PMID:18280746, PMID:16133216, PMID:16481164, PMID:16531499 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:15013 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15014
+      snippet: 3alpha(S)-strictosidine + H2O => secologanin + tryptamine
+      notes: Rhea's left-to-right directional reaction RHEA:15014 declares side 15013_L as its substrates
+        (rh:substrates); the master reaction RHEA:15013 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18280746, PMID:16133216, PMID:16481164, PMID:16531499 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: secologanin is a product released by RHEA:15013 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15014
+      snippet: 3alpha(S)-strictosidine + H2O => secologanin + tryptamine
+      notes: Rhea's left-to-right directional reaction RHEA:15014 declares side 15013_R as its products
+        (rh:products); the master reaction RHEA:15013 is undirected. This participant is CHEBI:18002 with
+        coefficient 1. Rhea cites PMID:18280746, PMID:16133216, PMID:16481164, PMID:16531499 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: tryptamine is a product released by RHEA:15013 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15014
+      snippet: 3alpha(S)-strictosidine + H2O => secologanin + tryptamine
+      notes: Rhea's left-to-right directional reaction RHEA:15014 declares side 15013_R as its products
+        (rh:products); the master reaction RHEA:15013 is undirected. This participant is CHEBI:57887 with
+        coefficient 1. Rhea cites PMID:18280746, PMID:16133216, PMID:16481164, PMID:16531499 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.99.13
+      snippet: EC:3.5.99.13 > GO:strictosidine synthase activity ; GO:0016844
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016844 is itself a record
+        in this KB.
+  - subject: prot_P92976
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSL11_ARATH is an exemplar enzyme with EC 3.5.99.13 activity.
+    evidence:
+    - reference: EC:3.5.99.13
+      snippet: DR   P92976, SSL11_ARATH;  P94111, SSL12_ARATH;  P18417, STSY_CATRO ;
+      notes: ExPASy ENZYME entry EC 3.5.99.13 cross-references UniProtKB:P92976 (SSL11_ARATH) as a protein
+        with this activity.
+  - subject: prot_P94111
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSL12_ARATH is an exemplar enzyme with EC 3.5.99.13 activity.
+    evidence:
+    - reference: EC:3.5.99.13
+      snippet: DR   P92976, SSL11_ARATH;  P94111, SSL12_ARATH;  P18417, STSY_CATRO ;
+      notes: ExPASy ENZYME entry EC 3.5.99.13 cross-references UniProtKB:P94111 (SSL12_ARATH) as a protein
+        with this activity.
+  - subject: prot_P18417
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STSY_CATRO is an exemplar enzyme with EC 3.5.99.13 activity.
+    evidence:
+    - reference: EC:3.5.99.13
+      snippet: DR   P92976, SSL11_ARATH;  P94111, SSL12_ARATH;  P18417, STSY_CATRO ;
+      notes: ExPASy ENZYME entry EC 3.5.99.13 cross-references UniProtKB:P18417 (STSY_CATRO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

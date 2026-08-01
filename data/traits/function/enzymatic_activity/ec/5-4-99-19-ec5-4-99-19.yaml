@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 synonyms:
@@ -45,4 +45,148 @@ definitions:
       Catalyses: uridine(516) in 16S rRNA = pseudouridine(516) in 16S rRNA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 16S rRNA pseudouridine(516) synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.19. EC 5.4.99.19 maps to
+    exactly one curated Rhea reaction (RHEA:38867), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "uridine(516)
+    in 16S rRNA = pseudouridine(516) in 16S rRNA". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 16S rRNA pseudouridine(516) synthase
+    grounding: EC:5.4.99.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: uridine(516) in 16S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10089
+    description: Rhea compound GENERIC:10089.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: UMP residue at position 516
+    description: The reacting group Rhea names inside the generic participant GENERIC:10089 (uridine(516)
+      in 16S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd1
+    label: pseudouridine(516) in 16S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10090
+    description: Rhea compound GENERIC:10090.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: psi-uridine residue at position 516
+    description: The reacting group Rhea names inside the generic participant GENERIC:10090 (pseudouridine(516)
+      in 16S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65314
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 16S rRNA pseudouridine(516) synthase activity
+    grounding: GO:0160136
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0AA45
+    node_type: PROTEIN
+    label: RSUA_ECO57
+    grounding: UniProtKB:P0AA45
+  - node_id: prot_P0AA44
+    node_type: PROTEIN
+    label: RSUA_ECOL6
+    grounding: UniProtKB:P0AA44
+  - node_id: prot_P0AA43
+    node_type: PROTEIN
+    label: RSUA_ECOLI
+    grounding: UniProtKB:P0AA43
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine(516) in 16S rRNA is a substrate consumed by RHEA:38867 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38868
+      snippet: uridine(516) in 16S rRNA => pseudouridine(516) in 16S rRNA
+      notes: Rhea's left-to-right directional reaction RHEA:38868 declares side 38867_L as its substrates
+        (rh:substrates); the master reaction RHEA:38867 is undirected. This participant is GENERIC:10089
+        with coefficient 1. Rhea cites PMID:7612632, PMID:10376875 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(516) in 16S rRNA.
+    evidence:
+    - reference: RHEA:38867
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10089 (uridine(516) in 16S rRNA) declares rh:reactivePart at position
+        516 = UMP residue (CHEBI:65315).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pseudouridine(516) in 16S rRNA is a product released by RHEA:38867 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38868
+      snippet: uridine(516) in 16S rRNA => pseudouridine(516) in 16S rRNA
+      notes: Rhea's left-to-right directional reaction RHEA:38868 declares side 38867_R as its products
+        (rh:products); the master reaction RHEA:38867 is undirected. This participant is GENERIC:10090
+        with coefficient 1. Rhea cites PMID:7612632, PMID:10376875 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: psi-uridine residue is the reactive part of pseudouridine(516) in 16S rRNA.
+    evidence:
+    - reference: RHEA:38867
+      snippet: psi-uridine residue
+      notes: Rhea compound GENERIC:10090 (pseudouridine(516) in 16S rRNA) declares rh:reactivePart at
+        position 516 = psi-uridine residue (CHEBI:65314).
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.19
+      snippet: EC:5.4.99.19 > GO:16S rRNA pseudouridine(516) synthase activity ; GO:0160136
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0160136 is itself a record
+        in this KB.
+  - subject: prot_P0AA45
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSUA_ECO57 is an exemplar enzyme with EC 5.4.99.19 activity.
+    evidence:
+    - reference: EC:5.4.99.19
+      snippet: DR   P0AA45, RSUA_ECO57 ;  P0AA44, RSUA_ECOL6 ;  P0AA43, RSUA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.4.99.19 cross-references UniProtKB:P0AA45 (RSUA_ECO57) as a protein
+        with this activity.
+  - subject: prot_P0AA44
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSUA_ECOL6 is an exemplar enzyme with EC 5.4.99.19 activity.
+    evidence:
+    - reference: EC:5.4.99.19
+      snippet: DR   P0AA45, RSUA_ECO57 ;  P0AA44, RSUA_ECOL6 ;  P0AA43, RSUA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.4.99.19 cross-references UniProtKB:P0AA44 (RSUA_ECOL6) as a protein
+        with this activity.
+  - subject: prot_P0AA43
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSUA_ECOLI is an exemplar enzyme with EC 5.4.99.19 activity.
+    evidence:
+    - reference: EC:5.4.99.19
+      snippet: DR   P0AA45, RSUA_ECO57 ;  P0AA44, RSUA_ECOL6 ;  P0AA43, RSUA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.4.99.19 cross-references UniProtKB:P0AA43 (RSUA_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

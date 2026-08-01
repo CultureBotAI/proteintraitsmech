@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -33,4 +33,139 @@ definitions:
       Catalyses: acetyl-[ACP] + malonate = malonyl-[ACP] + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetyl-S-ACP:malonate ACP transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.187. EC 2.3.1.187 maps to
+    exactly one curated Rhea reaction (RHEA:17649), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "acetyl-[ACP]
+    + malonate = malonyl-[ACP] + acetate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acetyl-S-ACP:malonate ACP transferase
+    grounding: EC:2.3.1.187
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: acetyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9621
+    description: Rhea compound GENERIC:9621.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9621 (acetyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78446
+  - node_id: sub2
+    label: malonate
+    node_type: CHEMICAL
+    grounding: CHEBI:15792
+    description: Formula C3H2O4.
+  - node_id: prd1
+    label: malonyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9623
+    description: Rhea compound GENERIC:9623.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9623 (malonyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78449
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prot_O06924
+    node_type: PROTEIN
+    label: MADA_MALRU
+    grounding: UniProtKB:O06924
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetyl-[ACP] is a substrate consumed by RHEA:17649 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17650
+      snippet: acetyl-[ACP] + malonate => malonyl-[ACP] + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:17650 declares side 17649_L as its substrates
+        (rh:substrates); the master reaction RHEA:17649 is undirected. This participant is GENERIC:9621
+        with coefficient 1. Rhea cites PMID:10561613, PMID:11902724, PMID:18251085, PMID:12619701 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of acetyl-[ACP].
+    evidence:
+    - reference: RHEA:17649
+      snippet: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9621 (acetyl-[ACP]) declares rh:reactivePart = O-(S-acetylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78446).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonate is a substrate consumed by RHEA:17649 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17650
+      snippet: acetyl-[ACP] + malonate => malonyl-[ACP] + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:17650 declares side 17649_L as its substrates
+        (rh:substrates); the master reaction RHEA:17649 is undirected. This participant is CHEBI:15792
+        with coefficient 1. Rhea cites PMID:10561613, PMID:11902724, PMID:18251085, PMID:12619701 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: malonyl-[ACP] is a product released by RHEA:17649 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17650
+      snippet: acetyl-[ACP] + malonate => malonyl-[ACP] + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:17650 declares side 17649_R as its products
+        (rh:products); the master reaction RHEA:17649 is undirected. This participant is GENERIC:9623
+        with coefficient 1. Rhea cites PMID:10561613, PMID:11902724, PMID:18251085, PMID:12619701 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of malonyl-[ACP].
+    evidence:
+    - reference: RHEA:17649
+      snippet: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9623 (malonyl-[ACP]) declares rh:reactivePart = O-(S-malonylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78449).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:17649 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17650
+      snippet: acetyl-[ACP] + malonate => malonyl-[ACP] + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:17650 declares side 17649_R as its products
+        (rh:products); the master reaction RHEA:17649 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:10561613, PMID:11902724, PMID:18251085, PMID:12619701 for this
+        reaction.
+  - subject: prot_O06924
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MADA_MALRU is an exemplar enzyme with EC 2.3.1.187 activity.
+    evidence:
+    - reference: EC:2.3.1.187
+      snippet: DR   O06924, MADA_MALRU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.187 cross-references UniProtKB:O06924 (MADA_MALRU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

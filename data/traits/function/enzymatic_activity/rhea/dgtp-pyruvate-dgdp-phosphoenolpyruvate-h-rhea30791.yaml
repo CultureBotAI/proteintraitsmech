@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:61429
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,107 @@ definitions:
       Catalyses the reaction: dGTP + pyruvate = dGDP + phosphoenolpyruvate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dGTP + pyruvate = dGDP + phosphoenolpyruvate + H(+)
+  description: Substrate-to-product chemistry of RHEA:30791, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30792 (rh:substrates → 30791_L, rh:products → 30791_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dGTP + pyruvate = dGDP + phosphoenolpyruvate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30791
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dGTP + pyruvate = dGDP + phosphoenolpyruvate + H(+)'
+  - node_id: sub1
+    label: dGTP
+    node_type: CHEMICAL
+    grounding: CHEBI:61429
+    description: Formula C10H12N5O13P3.
+  - node_id: sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd1
+    label: dGDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58595
+    description: Formula C10H12N5O10P2.
+  - node_id: prd2
+    label: phosphoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+    description: Formula C3H2O6P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dGTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30792
+      snippet: dGTP + pyruvate => dGDP + phosphoenolpyruvate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30792 declares side 30791_L as its substrates
+        (rh:substrates); the master reaction RHEA:30791 is undirected. This participant is CHEBI:61429
+        with coefficient 1. Rhea cites PMID:23324382, PMID:39009072 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: pyruvate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30792
+      snippet: dGTP + pyruvate => dGDP + phosphoenolpyruvate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30792 declares side 30791_L as its substrates
+        (rh:substrates); the master reaction RHEA:30791 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:23324382, PMID:39009072 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dGDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30792
+      snippet: dGTP + pyruvate => dGDP + phosphoenolpyruvate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30792 declares side 30791_R as its products
+        (rh:products); the master reaction RHEA:30791 is undirected. This participant is CHEBI:58595 with
+        coefficient 1. Rhea cites PMID:23324382, PMID:39009072 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphoenolpyruvate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30792
+      snippet: dGTP + pyruvate => dGDP + phosphoenolpyruvate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30792 declares side 30791_R as its products
+        (rh:products); the master reaction RHEA:30791 is undirected. This participant is CHEBI:58702 with
+        coefficient 1. Rhea cites PMID:23324382, PMID:39009072 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30792
+      snippet: dGTP + pyruvate => dGDP + phosphoenolpyruvate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30792 declares side 30791_R as its products
+        (rh:products); the master reaction RHEA:30791 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:23324382, PMID:39009072 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

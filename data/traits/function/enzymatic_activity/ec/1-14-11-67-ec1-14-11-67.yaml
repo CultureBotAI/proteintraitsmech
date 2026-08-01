@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.11.-
 mapped_xrefs:
@@ -38,4 +38,244 @@ definitions:
       Catalyses: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3] + 3 2-oxoglutarate + 3 O2 = L-lysyl(4)-[histone H3] + 3 formaldehyde + 3 succinate + 3 CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [histone H3]-trimethyl-L-lysine(4) demethylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.11.67. EC 1.14.11.67 maps to
+    exactly one curated Rhea reaction (RHEA:60208), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone
+    H3] + 3 2-oxoglutarate + 3 O2 = L-lysyl(4)-[histone H3] + 3 formaldehyde + 3 succinate + 3 CO2". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[histone H3]-trimethyl-L-lysine(4) demethylase'
+    grounding: EC:1.14.11.67
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15537
+    description: Rhea compound GENERIC:15537.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: N(6),N(6),N(6)-trimethyl-L-lysine residue at position 4
+    description: The reacting group Rhea names inside the generic participant GENERIC:15537 (N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone
+      H3]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:61961
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: L-lysyl(4)-[histone H3]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15547
+    description: Rhea compound GENERIC:15547.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:15547 (L-lysyl(4)-[histone
+      H3]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29969
+  - node_id: prd2
+    label: formaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:16842
+    description: Formula CH2O.
+  - node_id: prd3
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: prd4
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: histone H3K4me/H3K4me2/H3K4me3 demethylase activity
+    grounding: GO:0034647
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P47156
+    node_type: PROTEIN
+    label: JHD2_YEAST
+    grounding: UniProtKB:P47156
+  - node_id: prot_Q53WJ1
+    node_type: PROTEIN
+    label: JM703_ORYSJ
+    grounding: UniProtKB:Q53WJ1
+  - node_id: prot_Q8GUI6
+    node_type: PROTEIN
+    label: JMJ14_ARATH
+    grounding: UniProtKB:Q8GUI6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3] is a substrate consumed by RHEA:60208
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60209
+      snippet: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3] + 3 2-oxoglutarate + 3 O2 => L-lysyl(4)-[histone
+        H3] + 3 formaldehyde + 3 succinate + 3 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:60209 declares side 60208_L as its substrates
+        (rh:substrates); the master reaction RHEA:60208 is undirected. This participant is GENERIC:15537
+        with coefficient 1. Rhea cites PMID:17310255, PMID:23357881, PMID:17320163, PMID:17320160 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(6),N(6),N(6)-trimethyl-L-lysine residue is the reactive part of N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone
+      H3].
+    evidence:
+    - reference: RHEA:60208
+      snippet: N(6),N(6),N(6)-trimethyl-L-lysine residue
+      notes: Rhea compound GENERIC:15537 (N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3]) declares rh:reactivePart
+        at position 4 = N(6),N(6),N(6)-trimethyl-L-lysine residue (CHEBI:61961).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:60208 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:60209
+      snippet: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3] + 3 2-oxoglutarate + 3 O2 => L-lysyl(4)-[histone
+        H3] + 3 formaldehyde + 3 succinate + 3 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:60209 declares side 60208_L as its substrates
+        (rh:substrates); the master reaction RHEA:60208 is undirected. This participant is CHEBI:16810
+        with coefficient 3. Rhea cites PMID:17310255, PMID:23357881, PMID:17320163, PMID:17320160 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:60208 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:60209
+      snippet: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3] + 3 2-oxoglutarate + 3 O2 => L-lysyl(4)-[histone
+        H3] + 3 formaldehyde + 3 succinate + 3 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:60209 declares side 60208_L as its substrates
+        (rh:substrates); the master reaction RHEA:60208 is undirected. This participant is CHEBI:15379
+        with coefficient 3. Rhea cites PMID:17310255, PMID:23357881, PMID:17320163, PMID:17320160 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-lysyl(4)-[histone H3] is a product released by RHEA:60208 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60209
+      snippet: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3] + 3 2-oxoglutarate + 3 O2 => L-lysyl(4)-[histone
+        H3] + 3 formaldehyde + 3 succinate + 3 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:60209 declares side 60208_R as its products
+        (rh:products); the master reaction RHEA:60208 is undirected. This participant is GENERIC:15547
+        with coefficient 1. Rhea cites PMID:17310255, PMID:23357881, PMID:17320163, PMID:17320160 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-lysine residue is the reactive part of L-lysyl(4)-[histone H3].
+    evidence:
+    - reference: RHEA:60208
+      snippet: L-lysine residue
+      notes: Rhea compound GENERIC:15547 (L-lysyl(4)-[histone H3]) declares rh:reactivePart = L-lysine
+        residue (CHEBI:29969).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: formaldehyde is a product released by RHEA:60208 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:60209
+      snippet: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3] + 3 2-oxoglutarate + 3 O2 => L-lysyl(4)-[histone
+        H3] + 3 formaldehyde + 3 succinate + 3 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:60209 declares side 60208_R as its products
+        (rh:products); the master reaction RHEA:60208 is undirected. This participant is CHEBI:16842 with
+        coefficient 3. Rhea cites PMID:17310255, PMID:23357881, PMID:17320163, PMID:17320160 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: succinate is a product released by RHEA:60208 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:60209
+      snippet: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3] + 3 2-oxoglutarate + 3 O2 => L-lysyl(4)-[histone
+        H3] + 3 formaldehyde + 3 succinate + 3 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:60209 declares side 60208_R as its products
+        (rh:products); the master reaction RHEA:60208 is undirected. This participant is CHEBI:30031 with
+        coefficient 3. Rhea cites PMID:17310255, PMID:23357881, PMID:17320163, PMID:17320160 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: CO2 is a product released by RHEA:60208 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:60209
+      snippet: N(6),N(6),N(6)-trimethyl-L-lysyl(4)-[histone H3] + 3 2-oxoglutarate + 3 O2 => L-lysyl(4)-[histone
+        H3] + 3 formaldehyde + 3 succinate + 3 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:60209 declares side 60208_R as its products
+        (rh:products); the master reaction RHEA:60208 is undirected. This participant is CHEBI:16526 with
+        coefficient 3. Rhea cites PMID:17310255, PMID:23357881, PMID:17320163, PMID:17320160 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.14.11.67
+      snippet: EC:1.14.11.67 > GO:histone H3K4me/H3K4me2/H3K4me3 demethylase activity ; GO:0034647
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034647 is itself a record
+        in this KB.
+  - subject: prot_P47156
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JHD2_YEAST is an exemplar enzyme with EC 1.14.11.67 activity.
+    evidence:
+    - reference: EC:1.14.11.67
+      snippet: DR   P47156, JHD2_YEAST ;  Q53WJ1, JM703_ORYSJ;  Q8GUI6, JMJ14_ARATH;
+      notes: ExPASy ENZYME entry EC 1.14.11.67 cross-references UniProtKB:P47156 (JHD2_YEAST) as a protein
+        with this activity.
+  - subject: prot_Q53WJ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JM703_ORYSJ is an exemplar enzyme with EC 1.14.11.67 activity.
+    evidence:
+    - reference: EC:1.14.11.67
+      snippet: DR   P47156, JHD2_YEAST ;  Q53WJ1, JM703_ORYSJ;  Q8GUI6, JMJ14_ARATH;
+      notes: ExPASy ENZYME entry EC 1.14.11.67 cross-references UniProtKB:Q53WJ1 (JM703_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_Q8GUI6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JMJ14_ARATH is an exemplar enzyme with EC 1.14.11.67 activity.
+    evidence:
+    - reference: EC:1.14.11.67
+      snippet: DR   P47156, JHD2_YEAST ;  Q53WJ1, JM703_ORYSJ;  Q8GUI6, JMJ14_ARATH;
+      notes: ExPASy ENZYME entry EC 1.14.11.67 cross-references UniProtKB:Q8GUI6 (JMJ14_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

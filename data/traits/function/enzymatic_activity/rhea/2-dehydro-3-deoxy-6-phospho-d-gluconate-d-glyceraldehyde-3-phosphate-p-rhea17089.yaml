@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.14
     mapping_source: rhea2ec
@@ -36,4 +36,186 @@ definitions:
       Catalyses the reaction: 2-dehydro-3-deoxy-6-phospho-D-gluconate = D-glyceraldehyde 3-phosphate + pyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-dehydro-3-deoxy-6-phospho-D-gluconate = D-glyceraldehyde 3-phosphate
+    + pyruvate
+  description: Substrate-to-product chemistry of RHEA:17089, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17090 (rh:substrates → 17089_L, rh:products → 17089_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-dehydro-3-deoxy-6-phospho-D-gluconate = D-glyceraldehyde 3-phosphate + pyr…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17089
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-dehydro-3-deoxy-6-phospho-D-gluconate = D-glyceraldehyde 3-phosphate + pyruvate'
+  - node_id: sub1
+    label: 2-dehydro-3-deoxy-6-phospho-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:57569
+    description: Formula C6H8O9P.
+  - node_id: prd1
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydro-3-deoxy-phosphogluconate aldolase activity
+    grounding: GO:0008675
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydro-3-deoxy-phosphogluconate aldolase
+    grounding: EC:4.1.2.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec2
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydro-3-deoxy-phosphogluconate/2-dehydro-3-deoxy-6-phosphogalactonate aldolase
+    grounding: EC:4.1.2.55
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P50846
+    node_type: PROTEIN
+    label: ALKD_BACSU
+    grounding: UniProtKB:P50846
+  - node_id: prot_P38448
+    node_type: PROTEIN
+    label: ALKD_DICD3
+    grounding: UniProtKB:P38448
+  - node_id: prot_P44480
+    node_type: PROTEIN
+    label: ALKD_HAEIN
+    grounding: UniProtKB:P44480
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-dehydro-3-deoxy-6-phospho-D-gluconate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17090
+      snippet: 2-dehydro-3-deoxy-6-phospho-D-gluconate => D-glyceraldehyde 3-phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:17090 declares side 17089_L as its substrates
+        (rh:substrates); the master reaction RHEA:17089 is undirected. This participant is CHEBI:57569
+        with coefficient 1. Rhea cites PMID:10527934, PMID:29377793, PMID:14245411, PMID:16330030 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-glyceraldehyde 3-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17090
+      snippet: 2-dehydro-3-deoxy-6-phospho-D-gluconate => D-glyceraldehyde 3-phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:17090 declares side 17089_R as its products
+        (rh:products); the master reaction RHEA:17089 is undirected. This participant is CHEBI:59776 with
+        coefficient 1. Rhea cites PMID:10527934, PMID:29377793, PMID:14245411, PMID:16330030 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17090
+      snippet: 2-dehydro-3-deoxy-6-phospho-D-gluconate => D-glyceraldehyde 3-phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:17090 declares side 17089_R as its products
+        (rh:products); the master reaction RHEA:17089 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:10527934, PMID:29377793, PMID:14245411, PMID:16330030 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17089
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008675"/>
+      notes: The rdfs:seeAlso triple on RHEA:17089 in rhea.rdf. GO term GO:0008675 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.14; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17089
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.14"/>
+      notes: The rh:ec triple on RHEA:17089 in rhea.rdf. EC 4.1.2.14 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec2
+    description: Rhea assigns this reaction to EC 4.1.2.55; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17089
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.55"/>
+      notes: The rh:ec triple on RHEA:17089 in rhea.rdf. EC 4.1.2.55 is itself a record in this KB.
+  - subject: prot_P50846
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALKD_BACSU is an exemplar enzyme carrying EC 4.1.2.14, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.14
+      snippet: DR   P50846, ALKD_BACSU ;  P38448, ALKD_DICD3 ;  P44480, ALKD_HAEIN ;
+      notes: ExPASy ENZYME entry EC 4.1.2.14 cross-references UniProtKB:P50846 (ALKD_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:17089
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.14"/>
+      notes: Rhea assigns RHEA:17089 to EC 4.1.2.14, and EC 4.1.2.14 maps to exactly one Rhea master reaction
+        (RHEA:17089), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P38448
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALKD_DICD3 is an exemplar enzyme carrying EC 4.1.2.14, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.14
+      snippet: DR   P50846, ALKD_BACSU ;  P38448, ALKD_DICD3 ;  P44480, ALKD_HAEIN ;
+      notes: ExPASy ENZYME entry EC 4.1.2.14 cross-references UniProtKB:P38448 (ALKD_DICD3) as a protein
+        with this activity.
+    - reference: RHEA:17089
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.14"/>
+      notes: Rhea assigns RHEA:17089 to EC 4.1.2.14, and EC 4.1.2.14 maps to exactly one Rhea master reaction
+        (RHEA:17089), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P44480
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALKD_HAEIN is an exemplar enzyme carrying EC 4.1.2.14, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.14
+      snippet: DR   P50846, ALKD_BACSU ;  P38448, ALKD_DICD3 ;  P44480, ALKD_HAEIN ;
+      notes: ExPASy ENZYME entry EC 4.1.2.14 cross-references UniProtKB:P44480 (ALKD_HAEIN) as a protein
+        with this activity.
+    - reference: RHEA:17089
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.14"/>
+      notes: Rhea assigns RHEA:17089 to EC 4.1.2.14, and EC 4.1.2.14 maps to exactly one Rhea master reaction
+        (RHEA:17089), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

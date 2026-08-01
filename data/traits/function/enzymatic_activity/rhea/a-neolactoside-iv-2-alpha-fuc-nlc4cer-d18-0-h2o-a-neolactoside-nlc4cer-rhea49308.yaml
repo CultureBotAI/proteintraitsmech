@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:91119
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,98 @@ definitions:
       Catalyses the reaction: a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0) + H2O = a neolactoside nLc4Cer(d18:0) + L-fucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0) + H2O = a neolactoside nLc4Cer(d18:0)
+    + L…
+  description: Substrate-to-product chemistry of RHEA:49308, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49309 (rh:substrates → 49308_L, rh:products → 49308_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0) + H2O = a neolactoside nLc4Cer…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49308
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0) + H2O = a neolactoside nLc4Cer(d18:0)
+      + L-fucose'
+  - node_id: sub1
+    label: a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0)
+    node_type: CHEMICAL
+    grounding: CHEBI:91119
+    description: Formula C51H91N2O27R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a neolactoside nLc4Cer(d18:0)
+    node_type: CHEMICAL
+    grounding: CHEBI:91121
+    description: Formula C45H81N2O23R.
+  - node_id: prd2
+    label: L-fucose
+    node_type: CHEMICAL
+    grounding: CHEBI:2181
+    description: Formula C6H12O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0) is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49309
+      snippet: a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0) + H2O => a neolactoside nLc4Cer(d18:0) +
+        L-fucose
+      notes: Rhea's left-to-right directional reaction RHEA:49309 declares side 49308_L as its substrates
+        (rh:substrates); the master reaction RHEA:49308 is undirected. This participant is CHEBI:91119
+        with coefficient 1. Rhea cites PMID:9741689 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49309
+      snippet: a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0) + H2O => a neolactoside nLc4Cer(d18:0) +
+        L-fucose
+      notes: Rhea's left-to-right directional reaction RHEA:49309 declares side 49308_L as its substrates
+        (rh:substrates); the master reaction RHEA:49308 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:9741689 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a neolactoside nLc4Cer(d18:0) is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49309
+      snippet: a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0) + H2O => a neolactoside nLc4Cer(d18:0) +
+        L-fucose
+      notes: Rhea's left-to-right directional reaction RHEA:49309 declares side 49308_R as its products
+        (rh:products); the master reaction RHEA:49308 is undirected. This participant is CHEBI:91121 with
+        coefficient 1. Rhea cites PMID:9741689 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-fucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49309
+      snippet: a neolactoside IV(2)-alpha-Fuc-nLc4Cer(d18:0) + H2O => a neolactoside nLc4Cer(d18:0) +
+        L-fucose
+      notes: Rhea's left-to-right directional reaction RHEA:49309 declares side 49308_R as its products
+        (rh:products); the master reaction RHEA:49308 is undirected. This participant is CHEBI:2181 with
+        coefficient 1. Rhea cites PMID:9741689 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

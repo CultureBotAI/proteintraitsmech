@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57692
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,95 @@ definitions:
       Catalyses the reaction: FAD(out) + NAD(+)(in) = FAD(in) + NAD(+)(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of FAD(out) + NAD(+)(in) = FAD(in) + NAD(+)(out)
+  description: 'Substrate-to-product chemistry of RHEA:73163, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:73164 (rh:substrates → 73163_L, rh:products → 73163_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of FAD(out) + NAD(+)(in) = FAD(in) + NAD(+)(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:73163
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: FAD(out) + NAD(+)(in) = FAD(in) + NAD(+)(out)'
+  - node_id: sub1
+    label: FAD (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57692
+    description: Formula C27H30N9O15P2.
+  - node_id: sub2
+    label: NAD(+) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: FAD (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57692
+    description: Formula C27H30N9O15P2.
+  - node_id: prd2
+    label: NAD(+) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: FAD is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73164
+      snippet: FAD(out) + NAD(+)(in) => FAD(in) + NAD(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73164 declares side 73163_L as its substrates
+        (rh:substrates); the master reaction RHEA:73163 is undirected. This participant is CHEBI:57692
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:22185573 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73164
+      snippet: FAD(out) + NAD(+)(in) => FAD(in) + NAD(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73164 declares side 73163_L as its substrates
+        (rh:substrates); the master reaction RHEA:73163 is undirected. This participant is CHEBI:57540
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:22185573
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: FAD is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73164
+      snippet: FAD(out) + NAD(+)(in) => FAD(in) + NAD(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73164 declares side 73163_R as its products
+        (rh:products); the master reaction RHEA:73163 is undirected. This participant is CHEBI:57692 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:22185573
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NAD(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73164
+      snippet: FAD(out) + NAD(+)(in) => FAD(in) + NAD(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73164 declares side 73163_R as its products
+        (rh:products); the master reaction RHEA:73163 is undirected. This participant is CHEBI:57540 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:22185573
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 synonyms:
@@ -43,4 +43,179 @@ definitions:
       Catalyses: holo-[cytochrome c] = apo-[cytochrome c] + heme b
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of holocytochrome-c synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.17. EC 4.4.1.17 maps to exactly
+    one curated Rhea reaction (RHEA:22648), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "holo-[cytochrome
+    c] = apo-[cytochrome c] + heme b". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: holocytochrome-c synthase
+    grounding: EC:4.4.1.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: holo-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10726
+    description: Rhea compound GENERIC:10726.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: holocytochrome c residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10726 (holo-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83739
+  - node_id: prd1
+    label: apo-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10725
+    description: Rhea compound GENERIC:10725.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue at position n
+    description: The reacting group Rhea names inside the generic participant GENERIC:10725 (apo-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1_rp2
+    node_type: RESIDUE
+    label: L-cysteine residue at position n+3
+    description: The reacting group Rhea names inside the generic participant GENERIC:10725 (apo-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd2
+    label: heme b
+    node_type: CHEMICAL
+    grounding: CHEBI:60344
+    description: Formula C34H30FeN4O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: holocytochrome-c synthase activity
+    grounding: GO:0004408
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A5PJG7
+    node_type: PROTEIN
+    label: CCHL_BOVIN
+    grounding: UniProtKB:A5PJG7
+  - node_id: prot_P53703
+    node_type: PROTEIN
+    label: CCHL_CAEEL
+    grounding: UniProtKB:P53703
+  - node_id: prot_P53700
+    node_type: PROTEIN
+    label: CCHL_CANAW
+    grounding: UniProtKB:P53700
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: holo-[cytochrome c] is a substrate consumed by RHEA:22648 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22649
+      snippet: holo-[cytochrome c] => apo-[cytochrome c] + heme b
+      notes: Rhea's left-to-right directional reaction RHEA:22649 declares side 22648_L as its substrates
+        (rh:substrates); the master reaction RHEA:22648 is undirected. This participant is GENERIC:10726
+        with coefficient 1. Rhea cites PMID:3034577 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: holocytochrome c residue is the reactive part of holo-[cytochrome c].
+    evidence:
+    - reference: RHEA:22648
+      snippet: holocytochrome c residue
+      notes: Rhea compound GENERIC:10726 (holo-[cytochrome c]) declares rh:reactivePart = holocytochrome
+        c residue (CHEBI:83739).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: apo-[cytochrome c] is a product released by RHEA:22648 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22649
+      snippet: holo-[cytochrome c] => apo-[cytochrome c] + heme b
+      notes: Rhea's left-to-right directional reaction RHEA:22649 declares side 22648_R as its products
+        (rh:products); the master reaction RHEA:22648 is undirected. This participant is GENERIC:10725
+        with coefficient 1. Rhea cites PMID:3034577 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of apo-[cytochrome c].
+    evidence:
+    - reference: RHEA:22648
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10725 (apo-[cytochrome c]) declares rh:reactivePart at position n =
+        L-cysteine residue (CHEBI:29950).
+  - subject: prd1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of apo-[cytochrome c].
+    evidence:
+    - reference: RHEA:22648
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10725 (apo-[cytochrome c]) declares rh:reactivePart at position n+3
+        = L-cysteine residue (CHEBI:29950).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: heme b is a product released by RHEA:22648 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22649
+      snippet: holo-[cytochrome c] => apo-[cytochrome c] + heme b
+      notes: Rhea's left-to-right directional reaction RHEA:22649 declares side 22648_R as its products
+        (rh:products); the master reaction RHEA:22648 is undirected. This participant is CHEBI:60344 with
+        coefficient 1. Rhea cites PMID:3034577 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.4.1.17
+      snippet: EC:4.4.1.17 > GO:holocytochrome-c synthase activity ; GO:0004408
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004408 is itself a record
+        in this KB.
+  - subject: prot_A5PJG7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCHL_BOVIN is an exemplar enzyme with EC 4.4.1.17 activity.
+    evidence:
+    - reference: EC:4.4.1.17
+      snippet: DR   A5PJG7, CCHL_BOVIN ;  P53703, CCHL_CAEEL ;  P53700, CCHL_CANAW ;
+      notes: ExPASy ENZYME entry EC 4.4.1.17 cross-references UniProtKB:A5PJG7 (CCHL_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P53703
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCHL_CAEEL is an exemplar enzyme with EC 4.4.1.17 activity.
+    evidence:
+    - reference: EC:4.4.1.17
+      snippet: DR   A5PJG7, CCHL_BOVIN ;  P53703, CCHL_CAEEL ;  P53700, CCHL_CANAW ;
+      notes: ExPASy ENZYME entry EC 4.4.1.17 cross-references UniProtKB:P53703 (CCHL_CAEEL) as a protein
+        with this activity.
+  - subject: prot_P53700
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCHL_CANAW is an exemplar enzyme with EC 4.4.1.17 activity.
+    evidence:
+    - reference: EC:4.4.1.17
+      snippet: DR   A5PJG7, CCHL_BOVIN ;  P53703, CCHL_CAEEL ;  P53700, CCHL_CANAW ;
+      notes: ExPASy ENZYME entry EC 4.4.1.17 cross-references UniProtKB:P53700 (CCHL_CANAW) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

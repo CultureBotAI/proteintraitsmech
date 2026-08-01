@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 mapped_xrefs:
@@ -34,4 +34,218 @@ definitions:
       Catalyses: (1) umbelliferone + (2E)-geranyl diphosphate = 8-geranylumbelliferone + diphosphate. (2) esculetin + (2E)-geranyl diphosphate = 8-geranylesculetin + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of coumarin 8-geranyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.138. Rhea assigns 2 curated
+    reactions to EC 2.5.1.138. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) umbelliferone + (2E)-geranyl diphosphate = 8-geranylumbelliferone
+    + diphosphate. (2) esculetin + (2E)-geranyl diphosphate = 8-geranylesculetin + diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: coumarin 8-geranyltransferase
+    grounding: EC:2.5.1.138
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of umbelliferone + (2E)-geranyl diphosphate = 8-geranylumbelliferone + diphosph…
+    grounding: RHEA:51860
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: umbelliferone + (2E)-geranyl diphosphate = 8-geranylumbelliferone + diphosphate'
+  - node_id: rxn1_sub1
+    label: umbelliferone
+    node_type: CHEMICAL
+    grounding: CHEBI:27510
+    description: Formula C9H6O3.
+  - node_id: rxn1_sub2
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: rxn1_prd1
+    label: 8-geranylumbelliferone
+    node_type: CHEMICAL
+    grounding: CHEBI:134358
+    description: Formula C19H22O3.
+  - node_id: rxn1_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of esculetin + (2E)-geranyl diphosphate = 8-geranylesculetin + diphosphate
+    grounding: RHEA:51864
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: esculetin + (2E)-geranyl diphosphate = 8-geranylesculetin + diphosphate'
+  - node_id: rxn2_sub1
+    label: esculetin
+    node_type: CHEMICAL
+    grounding: CHEBI:490095
+    description: Formula C9H6O4.
+  - node_id: rxn2_sub2
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: rxn2_prd1
+    label: 8-geranylesculetin
+    node_type: CHEMICAL
+    grounding: CHEBI:134359
+    description: Formula C19H22O4.
+  - node_id: rxn2_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A077K8G3
+    node_type: PROTEIN
+    label: CGT1A_CITLI
+    grounding: UniProtKB:A0A077K8G3
+  - node_id: prot_A0A077K9K6
+    node_type: PROTEIN
+    label: CGT1B_CITLI
+    grounding: UniProtKB:A0A077K9K6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:51860 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.138; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:51860
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.138"/>
+      notes: The rh:ec triple on RHEA:51860 in rhea.rdf assigns that reaction to EC 2.5.1.138.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: umbelliferone is a substrate consumed by RHEA:51860 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51861
+      snippet: umbelliferone + (2E)-geranyl diphosphate => 8-geranylumbelliferone + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:51861 declares side 51860_L as its substrates
+        (rh:substrates); the master reaction RHEA:51860 is undirected. This participant is CHEBI:27510
+        with coefficient 1. Rhea cites PMID:25077796 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:51860 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51861
+      snippet: umbelliferone + (2E)-geranyl diphosphate => 8-geranylumbelliferone + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:51861 declares side 51860_L as its substrates
+        (rh:substrates); the master reaction RHEA:51860 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:25077796 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 8-geranylumbelliferone is a product released by RHEA:51860 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51861
+      snippet: umbelliferone + (2E)-geranyl diphosphate => 8-geranylumbelliferone + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:51861 declares side 51860_R as its products
+        (rh:products); the master reaction RHEA:51860 is undirected. This participant is CHEBI:134358
+        with coefficient 1. Rhea cites PMID:25077796 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: diphosphate is a product released by RHEA:51860 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51861
+      snippet: umbelliferone + (2E)-geranyl diphosphate => 8-geranylumbelliferone + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:51861 declares side 51860_R as its products
+        (rh:products); the master reaction RHEA:51860 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25077796 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:51864 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.138; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:51864
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.138"/>
+      notes: The rh:ec triple on RHEA:51864 in rhea.rdf assigns that reaction to EC 2.5.1.138.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: esculetin is a substrate consumed by RHEA:51864 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51865
+      snippet: esculetin + (2E)-geranyl diphosphate => 8-geranylesculetin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:51865 declares side 51864_L as its substrates
+        (rh:substrates); the master reaction RHEA:51864 is undirected. This participant is CHEBI:490095
+        with coefficient 1. Rhea cites PMID:25077796 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:51864 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51865
+      snippet: esculetin + (2E)-geranyl diphosphate => 8-geranylesculetin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:51865 declares side 51864_L as its substrates
+        (rh:substrates); the master reaction RHEA:51864 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:25077796 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 8-geranylesculetin is a product released by RHEA:51864 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51865
+      snippet: esculetin + (2E)-geranyl diphosphate => 8-geranylesculetin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:51865 declares side 51864_R as its products
+        (rh:products); the master reaction RHEA:51864 is undirected. This participant is CHEBI:134359
+        with coefficient 1. Rhea cites PMID:25077796 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: diphosphate is a product released by RHEA:51864 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51865
+      snippet: esculetin + (2E)-geranyl diphosphate => 8-geranylesculetin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:51865 declares side 51864_R as its products
+        (rh:products); the master reaction RHEA:51864 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25077796 for this reaction.
+  - subject: prot_A0A077K8G3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGT1A_CITLI is an exemplar enzyme with EC 2.5.1.138 activity.
+    evidence:
+    - reference: EC:2.5.1.138
+      snippet: DR   A0A077K8G3, CGT1A_CITLI;  A0A077K9K6, CGT1B_CITLI;
+      notes: ExPASy ENZYME entry EC 2.5.1.138 cross-references UniProtKB:A0A077K8G3 (CGT1A_CITLI) as a
+        protein with this activity.
+  - subject: prot_A0A077K9K6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGT1B_CITLI is an exemplar enzyme with EC 2.5.1.138 activity.
+    evidence:
+    - reference: EC:2.5.1.138
+      snippet: DR   A0A077K8G3, CGT1A_CITLI;  A0A077K9K6, CGT1B_CITLI;
+      notes: ExPASy ENZYME entry EC 2.5.1.138 cross-references UniProtKB:A0A077K9K6 (CGT1B_CITLI) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

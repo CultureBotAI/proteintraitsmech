@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -41,4 +41,151 @@ definitions:
       Catalyses: dimethylallyl diphosphate + L-tryptophan = 4-(3-methylbut-2-enyl)-L- tryptophan + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-dimethylallyltryptophan synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.34. EC 2.5.1.34 maps to exactly
+    one curated Rhea reaction (RHEA:14173), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dimethylallyl
+    diphosphate + L-tryptophan = 4-(3-methylbut-2-enyl)-L- tryptophan + diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-dimethylallyltryptophan synthase
+    grounding: EC:2.5.1.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: sub2
+    label: L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:57912
+    description: Formula C11H12N2O2.
+  - node_id: prd1
+    label: 4-(3-methylbut-2-enyl)-L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:58209
+    description: Formula C16H20N2O2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tryptophan dimethylallyltransferase activity
+    grounding: GO:0050364
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A0A2JWD0
+    node_type: PROTEIN
+    label: CNSF_PENEN
+    grounding: UniProtKB:A0A0A2JWD0
+  - node_id: prot_Q6X2E2
+    node_type: PROTEIN
+    label: DMAW1_EPICN
+    grounding: UniProtKB:Q6X2E2
+  - node_id: prot_Q9C141
+    node_type: PROTEIN
+    label: DMAW2_CLAP2
+    grounding: UniProtKB:Q9C141
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:14173 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14174
+      snippet: dimethylallyl diphosphate + L-tryptophan => 4-(3-methylbut-2-enyl)-L-tryptophan + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14174 declares side 14173_L as its substrates
+        (rh:substrates); the master reaction RHEA:14173 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:14732265, PMID:15870460, PMID:7488077, PMID:999297 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-tryptophan is a substrate consumed by RHEA:14173 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14174
+      snippet: dimethylallyl diphosphate + L-tryptophan => 4-(3-methylbut-2-enyl)-L-tryptophan + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14174 declares side 14173_L as its substrates
+        (rh:substrates); the master reaction RHEA:14173 is undirected. This participant is CHEBI:57912
+        with coefficient 1. Rhea cites PMID:14732265, PMID:15870460, PMID:7488077, PMID:999297 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-(3-methylbut-2-enyl)-L-tryptophan is a product released by RHEA:14173 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14174
+      snippet: dimethylallyl diphosphate + L-tryptophan => 4-(3-methylbut-2-enyl)-L-tryptophan + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14174 declares side 14173_R as its products
+        (rh:products); the master reaction RHEA:14173 is undirected. This participant is CHEBI:58209 with
+        coefficient 1. Rhea cites PMID:14732265, PMID:15870460, PMID:7488077, PMID:999297 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:14173 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14174
+      snippet: dimethylallyl diphosphate + L-tryptophan => 4-(3-methylbut-2-enyl)-L-tryptophan + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14174 declares side 14173_R as its products
+        (rh:products); the master reaction RHEA:14173 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:14732265, PMID:15870460, PMID:7488077, PMID:999297 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.34
+      snippet: EC:2.5.1.34 > GO:tryptophan dimethylallyltransferase activity ; GO:0050364
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050364 is itself a record
+        in this KB.
+  - subject: prot_A0A0A2JWD0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CNSF_PENEN is an exemplar enzyme with EC 2.5.1.34 activity.
+    evidence:
+    - reference: EC:2.5.1.34
+      snippet: DR   A0A0A2JWD0, CNSF_PENEN ;  Q6X2E2, DMAW1_EPICN;  Q9C141, DMAW2_CLAP2;
+      notes: ExPASy ENZYME entry EC 2.5.1.34 cross-references UniProtKB:A0A0A2JWD0 (CNSF_PENEN) as a protein
+        with this activity.
+  - subject: prot_Q6X2E2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DMAW1_EPICN is an exemplar enzyme with EC 2.5.1.34 activity.
+    evidence:
+    - reference: EC:2.5.1.34
+      snippet: DR   A0A0A2JWD0, CNSF_PENEN ;  Q6X2E2, DMAW1_EPICN;  Q9C141, DMAW2_CLAP2;
+      notes: ExPASy ENZYME entry EC 2.5.1.34 cross-references UniProtKB:Q6X2E2 (DMAW1_EPICN) as a protein
+        with this activity.
+  - subject: prot_Q9C141
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DMAW2_CLAP2 is an exemplar enzyme with EC 2.5.1.34 activity.
+    evidence:
+    - reference: EC:2.5.1.34
+      snippet: DR   A0A0A2JWD0, CNSF_PENEN ;  Q6X2E2, DMAW1_EPICN;  Q9C141, DMAW2_CLAP2;
+      notes: ExPASy ENZYME entry EC 2.5.1.34 cross-references UniProtKB:Q9C141 (DMAW2_CLAP2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

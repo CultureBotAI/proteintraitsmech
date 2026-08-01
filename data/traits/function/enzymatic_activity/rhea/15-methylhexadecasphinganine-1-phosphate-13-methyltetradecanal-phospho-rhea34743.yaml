@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:71030
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,77 @@ definitions:
       Catalyses the reaction: 15-methylhexadecasphinganine 1-phosphate = 13-methyltetradecanal + phosphoethanolamine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 15-methylhexadecasphinganine 1-phosphate = 13-methyltetradecanal + phosphoethanolamine
+  description: Substrate-to-product chemistry of RHEA:34743, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34744 (rh:substrates → 34743_L, rh:products → 34743_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 15-methylhexadecasphinganine 1-phosphate = 13-methyltetradecanal + phosphoet…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34743
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 15-methylhexadecasphinganine 1-phosphate = 13-methyltetradecanal + phosphoethanolamine'
+  - node_id: sub1
+    label: 15-methylhexadecasphinganine 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:71030
+    description: Formula C17H37NO5P.
+  - node_id: prd1
+    label: 13-methyltetradecanal
+    node_type: CHEMICAL
+    grounding: CHEBI:71034
+    description: Formula C15H30O.
+  - node_id: prd2
+    label: phosphoethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58190
+    description: Formula C2H7NO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 15-methylhexadecasphinganine 1-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34744
+      snippet: 15-methylhexadecasphinganine 1-phosphate => 13-methyltetradecanal + phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:34744 declares side 34743_L as its substrates
+        (rh:substrates); the master reaction RHEA:34743 is undirected. This participant is CHEBI:71030
+        with coefficient 1. Rhea cites PMID:9334171 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 13-methyltetradecanal is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34744
+      snippet: 15-methylhexadecasphinganine 1-phosphate => 13-methyltetradecanal + phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:34744 declares side 34743_R as its products
+        (rh:products); the master reaction RHEA:34743 is undirected. This participant is CHEBI:71034 with
+        coefficient 1. Rhea cites PMID:9334171 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphoethanolamine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34744
+      snippet: 15-methylhexadecasphinganine 1-phosphate => 13-methyltetradecanal + phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:34744 declares side 34743_R as its products
+        (rh:products); the master reaction RHEA:34743 is undirected. This participant is CHEBI:58190 with
+        coefficient 1. Rhea cites PMID:9334171 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

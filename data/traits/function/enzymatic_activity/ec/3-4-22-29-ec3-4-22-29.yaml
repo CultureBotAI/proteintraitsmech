@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -40,4 +40,66 @@ definitions:
       Catalyses: Selective cleavage of Tyr-|-Gly bond in the picornavirus polyprotein
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of picornain 2A
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.29. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Selective
+    cleavage of Tyr-|-Gly bond in the picornavirus polyprotein".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: picornain 2A
+    grounding: EC:3.4.22.29
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P12915
+    node_type: PROTEIN
+    label: POLG_BOVEV
+    grounding: UniProtKB:P12915
+  - node_id: prot_Q65900
+    node_type: PROTEIN
+    label: POLG_CX16G
+    grounding: UniProtKB:Q65900
+  - node_id: prot_Q9QF31
+    node_type: PROTEIN
+    label: POLG_CX16T
+    grounding: UniProtKB:Q9QF31
+  edges:
+  - subject: prot_P12915
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_BOVEV is an exemplar enzyme with EC 3.4.22.29 activity.
+    evidence:
+    - reference: EC:3.4.22.29
+      snippet: DR   P12915, POLG_BOVEV ;  Q65900, POLG_CX16G ;  Q9QF31, POLG_CX16T ;
+      notes: ExPASy ENZYME entry EC 3.4.22.29 cross-references UniProtKB:P12915 (POLG_BOVEV) as a protein
+        with this activity.
+  - subject: prot_Q65900
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_CX16G is an exemplar enzyme with EC 3.4.22.29 activity.
+    evidence:
+    - reference: EC:3.4.22.29
+      snippet: DR   P12915, POLG_BOVEV ;  Q65900, POLG_CX16G ;  Q9QF31, POLG_CX16T ;
+      notes: ExPASy ENZYME entry EC 3.4.22.29 cross-references UniProtKB:Q65900 (POLG_CX16G) as a protein
+        with this activity.
+  - subject: prot_Q9QF31
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_CX16T is an exemplar enzyme with EC 3.4.22.29 activity.
+    evidence:
+    - reference: EC:3.4.22.29
+      snippet: DR   P12915, POLG_BOVEV ;  Q65900, POLG_CX16G ;  Q9QF31, POLG_CX16T ;
+      notes: ExPASy ENZYME entry EC 3.4.22.29 cross-references UniProtKB:Q9QF31 (POLG_CX16T) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

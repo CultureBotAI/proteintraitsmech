@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 mapped_xrefs:
@@ -36,4 +36,82 @@ definitions:
       Catalyses: Typically cleaves a -Gly-|-Phe- bond to release an N-terminal, basic peptide of 5-8 residues from type IV prepilin, and then N-methylates the new N-terminal amino group, the methyl donor being S-adenosyl-L- methionine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of prepilin peptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.43. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Typically
+    cleaves a -Gly-|-Phe- bond to release an N-terminal, basic peptide of 5-8 residues from type IV prepilin,
+    and then N-methylates the new N-terminal amino group, the methyl donor being S-adenosyl-L- methionine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: prepilin peptidase
+    grounding: EC:3.4.23.43
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aspartic-type endopeptidase activity
+    grounding: GO:0004190
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P45794
+    node_type: PROTEIN
+    label: LEP4_AERHY
+    grounding: UniProtKB:P45794
+  - node_id: prot_A2T195
+    node_type: PROTEIN
+    label: LEP4_AERS4
+    grounding: UniProtKB:A2T195
+  - node_id: prot_P0C423
+    node_type: PROTEIN
+    label: LEP4_AERSA
+    grounding: UniProtKB:P0C423
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.23.43
+      snippet: EC:3.4.23.43 > GO:aspartic-type endopeptidase activity ; GO:0004190
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004190 is itself a record
+        in this KB.
+  - subject: prot_P45794
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LEP4_AERHY is an exemplar enzyme with EC 3.4.23.43 activity.
+    evidence:
+    - reference: EC:3.4.23.43
+      snippet: DR   P45794, LEP4_AERHY ;  A2T195, LEP4_AERS4 ;  P0C423, LEP4_AERSA ;
+      notes: ExPASy ENZYME entry EC 3.4.23.43 cross-references UniProtKB:P45794 (LEP4_AERHY) as a protein
+        with this activity.
+  - subject: prot_A2T195
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LEP4_AERS4 is an exemplar enzyme with EC 3.4.23.43 activity.
+    evidence:
+    - reference: EC:3.4.23.43
+      snippet: DR   P45794, LEP4_AERHY ;  A2T195, LEP4_AERS4 ;  P0C423, LEP4_AERSA ;
+      notes: ExPASy ENZYME entry EC 3.4.23.43 cross-references UniProtKB:A2T195 (LEP4_AERS4) as a protein
+        with this activity.
+  - subject: prot_P0C423
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LEP4_AERSA is an exemplar enzyme with EC 3.4.23.43 activity.
+    evidence:
+    - reference: EC:3.4.23.43
+      snippet: DR   P45794, LEP4_AERHY ;  A2T195, LEP4_AERS4 ;  P0C423, LEP4_AERSA ;
+      notes: ExPASy ENZYME entry EC 3.4.23.43 cross-references UniProtKB:P0C423 (LEP4_AERSA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

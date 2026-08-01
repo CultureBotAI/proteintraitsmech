@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.3.4.-
 synonyms:
@@ -43,4 +43,243 @@ definitions:
       Catalyses: cytidine(34) in tRNA(Ile2) + L-lysine + ATP = lysidine(34) in tRNA(Ile2) + AMP + diphosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(Ile)-lysidine synthetase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.3.4.19. EC 6.3.4.19 maps to exactly
+    one curated Rhea reaction (RHEA:43744), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "cytidine(34)
+    in tRNA(Ile2) + L-lysine + ATP = lysidine(34) in tRNA(Ile2) + AMP + diphosphate + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA(Ile)-lysidine synthetase
+    grounding: EC:6.3.4.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: cytidine(34) in tRNA(Ile2)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10625
+    description: Rhea compound GENERIC:10625.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: CMP residue at position 34
+    description: The reacting group Rhea names inside the generic participant GENERIC:10625 (cytidine(34)
+      in tRNA(Ile2)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82748
+  - node_id: sub2
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32551
+    description: Formula C6H15N2O2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: lysidine(34) in tRNA(Ile2)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10670
+    description: Rhea compound GENERIC:10670.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: lysidine monophosphate residue at position 34
+    description: The reacting group Rhea names inside the generic participant GENERIC:10670 (lysidine(34)
+      in tRNA(Ile2)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83665
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA(Ile)-lysidine synthase activity
+    grounding: GO:0032267
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q6F880
+    node_type: PROTEIN
+    label: TILS_ACIAD
+    grounding: UniProtKB:Q6F880
+  - node_id: prot_A3N2I9
+    node_type: PROTEIN
+    label: TILS_ACTP2
+    grounding: UniProtKB:A3N2I9
+  - node_id: prot_B3GYM3
+    node_type: PROTEIN
+    label: TILS_ACTP7
+    grounding: UniProtKB:B3GYM3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cytidine(34) in tRNA(Ile2) is a substrate consumed by RHEA:43744 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43745
+      snippet: cytidine(34) in tRNA(Ile2) + L-lysine + ATP => lysidine(34) in tRNA(Ile2) + AMP + diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43745 declares side 43744_L as its substrates
+        (rh:substrates); the master reaction RHEA:43744 is undirected. This participant is GENERIC:10625
+        with coefficient 1. Rhea cites PMID:19847269, PMID:16039592, PMID:15894617, PMID:14527414 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: CMP residue is the reactive part of cytidine(34) in tRNA(Ile2).
+    evidence:
+    - reference: RHEA:43744
+      snippet: CMP residue
+      notes: Rhea compound GENERIC:10625 (cytidine(34) in tRNA(Ile2)) declares rh:reactivePart at position
+        34 = CMP residue (CHEBI:82748).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-lysine is a substrate consumed by RHEA:43744 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43745
+      snippet: cytidine(34) in tRNA(Ile2) + L-lysine + ATP => lysidine(34) in tRNA(Ile2) + AMP + diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43745 declares side 43744_L as its substrates
+        (rh:substrates); the master reaction RHEA:43744 is undirected. This participant is CHEBI:32551
+        with coefficient 1. Rhea cites PMID:19847269, PMID:16039592, PMID:15894617, PMID:14527414 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:43744 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43745
+      snippet: cytidine(34) in tRNA(Ile2) + L-lysine + ATP => lysidine(34) in tRNA(Ile2) + AMP + diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43745 declares side 43744_L as its substrates
+        (rh:substrates); the master reaction RHEA:43744 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:19847269, PMID:16039592, PMID:15894617, PMID:14527414 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: lysidine(34) in tRNA(Ile2) is a product released by RHEA:43744 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43745
+      snippet: cytidine(34) in tRNA(Ile2) + L-lysine + ATP => lysidine(34) in tRNA(Ile2) + AMP + diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43745 declares side 43744_R as its products
+        (rh:products); the master reaction RHEA:43744 is undirected. This participant is GENERIC:10670
+        with coefficient 1. Rhea cites PMID:19847269, PMID:16039592, PMID:15894617, PMID:14527414 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: lysidine monophosphate residue is the reactive part of lysidine(34) in tRNA(Ile2).
+    evidence:
+    - reference: RHEA:43744
+      snippet: lysidine monophosphate residue
+      notes: Rhea compound GENERIC:10670 (lysidine(34) in tRNA(Ile2)) declares rh:reactivePart at position
+        34 = lysidine monophosphate residue (CHEBI:83665).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:43744 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43745
+      snippet: cytidine(34) in tRNA(Ile2) + L-lysine + ATP => lysidine(34) in tRNA(Ile2) + AMP + diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43745 declares side 43744_R as its products
+        (rh:products); the master reaction RHEA:43744 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:19847269, PMID:16039592, PMID:15894617, PMID:14527414 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:43744 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43745
+      snippet: cytidine(34) in tRNA(Ile2) + L-lysine + ATP => lysidine(34) in tRNA(Ile2) + AMP + diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43745 declares side 43744_R as its products
+        (rh:products); the master reaction RHEA:43744 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:19847269, PMID:16039592, PMID:15894617, PMID:14527414 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:43744 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43745
+      snippet: cytidine(34) in tRNA(Ile2) + L-lysine + ATP => lysidine(34) in tRNA(Ile2) + AMP + diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43745 declares side 43744_R as its products
+        (rh:products); the master reaction RHEA:43744 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19847269, PMID:16039592, PMID:15894617, PMID:14527414 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.3.4.19
+      snippet: EC:6.3.4.19 > GO:tRNA(Ile)-lysidine synthase activity ; GO:0032267
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0032267 is itself a record
+        in this KB.
+  - subject: prot_Q6F880
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TILS_ACIAD is an exemplar enzyme with EC 6.3.4.19 activity.
+    evidence:
+    - reference: EC:6.3.4.19
+      snippet: DR   Q6F880, TILS_ACIAD ;  A3N2I9, TILS_ACTP2 ;  B3GYM3, TILS_ACTP7 ;
+      notes: ExPASy ENZYME entry EC 6.3.4.19 cross-references UniProtKB:Q6F880 (TILS_ACIAD) as a protein
+        with this activity.
+  - subject: prot_A3N2I9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TILS_ACTP2 is an exemplar enzyme with EC 6.3.4.19 activity.
+    evidence:
+    - reference: EC:6.3.4.19
+      snippet: DR   Q6F880, TILS_ACIAD ;  A3N2I9, TILS_ACTP2 ;  B3GYM3, TILS_ACTP7 ;
+      notes: ExPASy ENZYME entry EC 6.3.4.19 cross-references UniProtKB:A3N2I9 (TILS_ACTP2) as a protein
+        with this activity.
+  - subject: prot_B3GYM3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TILS_ACTP7 is an exemplar enzyme with EC 6.3.4.19 activity.
+    evidence:
+    - reference: EC:6.3.4.19
+      snippet: DR   Q6F880, TILS_ACIAD ;  A3N2I9, TILS_ACTP2 ;  B3GYM3, TILS_ACTP7 ;
+      notes: ExPASy ENZYME entry EC 6.3.4.19 cross-references UniProtKB:B3GYM3 (TILS_ACTP7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

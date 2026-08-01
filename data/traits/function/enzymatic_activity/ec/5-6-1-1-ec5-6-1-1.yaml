@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.6.1.-
 synonyms:
@@ -39,4 +39,81 @@ definitions:
       Catalyses: n ATP + n H2O + a microtubule = n ADP + n phosphate + (n+1) alpha/beta tubulin heterodimers
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of microtubule-severing ATPase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.6.1.1. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "n ATP +
+    n H2O + a microtubule = n ADP + n phosphate + (n+1) alpha/beta tubulin heterodimers".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: microtubule-severing ATPase
+    grounding: EC:5.6.1.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: microtubule severing ATPase activity
+    grounding: GO:0008568
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5U3S1
+    node_type: PROTEIN
+    label: KATL1_DANRE
+    grounding: UniProtKB:Q5U3S1
+  - node_id: prot_Q9BW62
+    node_type: PROTEIN
+    label: KATL1_HUMAN
+    grounding: UniProtKB:Q9BW62
+  - node_id: prot_Q8K0T4
+    node_type: PROTEIN
+    label: KATL1_MOUSE
+    grounding: UniProtKB:Q8K0T4
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.6.1.1
+      snippet: EC:5.6.1.1 > GO:microtubule severing ATPase activity ; GO:0008568
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008568 is itself a record
+        in this KB.
+  - subject: prot_Q5U3S1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KATL1_DANRE is an exemplar enzyme with EC 5.6.1.1 activity.
+    evidence:
+    - reference: EC:5.6.1.1
+      snippet: DR   Q5U3S1, KATL1_DANRE;  Q9BW62, KATL1_HUMAN;  Q8K0T4, KATL1_MOUSE;
+      notes: ExPASy ENZYME entry EC 5.6.1.1 cross-references UniProtKB:Q5U3S1 (KATL1_DANRE) as a protein
+        with this activity.
+  - subject: prot_Q9BW62
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KATL1_HUMAN is an exemplar enzyme with EC 5.6.1.1 activity.
+    evidence:
+    - reference: EC:5.6.1.1
+      snippet: DR   Q5U3S1, KATL1_DANRE;  Q9BW62, KATL1_HUMAN;  Q8K0T4, KATL1_MOUSE;
+      notes: ExPASy ENZYME entry EC 5.6.1.1 cross-references UniProtKB:Q9BW62 (KATL1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q8K0T4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KATL1_MOUSE is an exemplar enzyme with EC 5.6.1.1 activity.
+    evidence:
+    - reference: EC:5.6.1.1
+      snippet: DR   Q5U3S1, KATL1_DANRE;  Q9BW62, KATL1_HUMAN;  Q8K0T4, KATL1_MOUSE;
+      notes: ExPASy ENZYME entry EC 5.6.1.1 cross-references UniProtKB:Q8K0T4 (KATL1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

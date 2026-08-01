@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,116 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = (+)-gamma-cadinene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (+)-gamma-cadinene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.92. EC 4.2.3.92 maps to exactly
+    one curated Rhea reaction (RHEA:31827), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = (+)-gamma-cadinene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-gamma-cadinene synthase
+    grounding: EC:4.2.3.92
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (+)-gamma-cadinene
+    node_type: CHEMICAL
+    grounding: CHEBI:63205
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_U3LW50
+    node_type: PROTEIN
+    label: CADS_LAVAN
+    grounding: UniProtKB:U3LW50
+  - node_id: prot_Q5SBP5
+    node_type: PROTEIN
+    label: GCS1_OCIBA
+    grounding: UniProtKB:Q5SBP5
+  - node_id: prot_B2KSJ5
+    node_type: PROTEIN
+    label: GCSY1_CUCME
+    grounding: UniProtKB:B2KSJ5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:31827 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31828
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-gamma-cadinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31828 declares side 31827_L as its substrates
+        (rh:substrates); the master reaction RHEA:31827 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:18264780, PMID:15516500 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-gamma-cadinene is a product released by RHEA:31827 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31828
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-gamma-cadinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31828 declares side 31827_R as its products
+        (rh:products); the master reaction RHEA:31827 is undirected. This participant is CHEBI:63205 with
+        coefficient 1. Rhea cites PMID:18264780, PMID:15516500 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:31827 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31828
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-gamma-cadinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31828 declares side 31827_R as its products
+        (rh:products); the master reaction RHEA:31827 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18264780, PMID:15516500 for this reaction.
+  - subject: prot_U3LW50
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CADS_LAVAN is an exemplar enzyme with EC 4.2.3.92 activity.
+    evidence:
+    - reference: EC:4.2.3.92
+      snippet: DR   U3LW50, CADS_LAVAN ;  Q5SBP5, GCS1_OCIBA ;  B2KSJ5, GCSY1_CUCME;
+      notes: ExPASy ENZYME entry EC 4.2.3.92 cross-references UniProtKB:U3LW50 (CADS_LAVAN) as a protein
+        with this activity.
+  - subject: prot_Q5SBP5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCS1_OCIBA is an exemplar enzyme with EC 4.2.3.92 activity.
+    evidence:
+    - reference: EC:4.2.3.92
+      snippet: DR   U3LW50, CADS_LAVAN ;  Q5SBP5, GCS1_OCIBA ;  B2KSJ5, GCSY1_CUCME;
+      notes: ExPASy ENZYME entry EC 4.2.3.92 cross-references UniProtKB:Q5SBP5 (GCS1_OCIBA) as a protein
+        with this activity.
+  - subject: prot_B2KSJ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCSY1_CUCME is an exemplar enzyme with EC 4.2.3.92 activity.
+    evidence:
+    - reference: EC:4.2.3.92
+      snippet: DR   U3LW50, CADS_LAVAN ;  Q5SBP5, GCS1_OCIBA ;  B2KSJ5, GCSY1_CUCME;
+      notes: ExPASy ENZYME entry EC 4.2.3.92 cross-references UniProtKB:B2KSJ5 (GCSY1_CUCME) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,132 @@ definitions:
       Catalyses: presqualene diphosphate + H2O = hydroxysqualene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydroxysqualene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.156. EC 4.2.3.156 maps to
+    exactly one curated Rhea reaction (RHEA:47984), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "presqualene
+    diphosphate + H2O = hydroxysqualene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxysqualene synthase
+    grounding: EC:4.2.3.156
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: presqualene diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57310
+    description: Formula C30H49O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: hydroxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:88123
+    description: Formula C30H50O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q6N3F1
+    node_type: PROTEIN
+    label: HPNC_RHOPA
+    grounding: UniProtKB:Q6N3F1
+  - node_id: prot_P55351
+    node_type: PROTEIN
+    label: HPNC_SINFN
+    grounding: UniProtKB:P55351
+  - node_id: prot_Q5NP67
+    node_type: PROTEIN
+    label: HPNC_ZYMMO
+    grounding: UniProtKB:Q5NP67
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: presqualene diphosphate is a substrate consumed by RHEA:47984 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47985
+      snippet: presqualene diphosphate + H2O => hydroxysqualene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:47985 declares side 47984_L as its substrates
+        (rh:substrates); the master reaction RHEA:47984 is undirected. This participant is CHEBI:57310
+        with coefficient 1. Rhea cites PMID:26258173 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:47984 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47985
+      snippet: presqualene diphosphate + H2O => hydroxysqualene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:47985 declares side 47984_L as its substrates
+        (rh:substrates); the master reaction RHEA:47984 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:26258173 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hydroxysqualene is a product released by RHEA:47984 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47985
+      snippet: presqualene diphosphate + H2O => hydroxysqualene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:47985 declares side 47984_R as its products
+        (rh:products); the master reaction RHEA:47984 is undirected. This participant is CHEBI:88123 with
+        coefficient 1. Rhea cites PMID:26258173 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:47984 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47985
+      snippet: presqualene diphosphate + H2O => hydroxysqualene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:47985 declares side 47984_R as its products
+        (rh:products); the master reaction RHEA:47984 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:26258173 for this reaction.
+  - subject: prot_Q6N3F1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPNC_RHOPA is an exemplar enzyme with EC 4.2.3.156 activity.
+    evidence:
+    - reference: EC:4.2.3.156
+      snippet: DR   Q6N3F1, HPNC_RHOPA ;  P55351, HPNC_SINFN ;  Q5NP67, HPNC_ZYMMO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.156 cross-references UniProtKB:Q6N3F1 (HPNC_RHOPA) as a protein
+        with this activity.
+  - subject: prot_P55351
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPNC_SINFN is an exemplar enzyme with EC 4.2.3.156 activity.
+    evidence:
+    - reference: EC:4.2.3.156
+      snippet: DR   Q6N3F1, HPNC_RHOPA ;  P55351, HPNC_SINFN ;  Q5NP67, HPNC_ZYMMO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.156 cross-references UniProtKB:P55351 (HPNC_SINFN) as a protein
+        with this activity.
+  - subject: prot_Q5NP67
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPNC_ZYMMO is an exemplar enzyme with EC 4.2.3.156 activity.
+    evidence:
+    - reference: EC:4.2.3.156
+      snippet: DR   Q6N3F1, HPNC_RHOPA ;  P55351, HPNC_SINFN ;  Q5NP67, HPNC_ZYMMO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.156 cross-references UniProtKB:Q5NP67 (HPNC_ZYMMO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

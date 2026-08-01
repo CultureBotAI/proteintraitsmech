@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -32,4 +32,118 @@ definitions:
       Catalyses: questin hydroquinone + O2 = demethylsulochrin + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of questin hydroquinone dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.96. EC 1.13.11.96 maps to
+    exactly one curated Rhea reaction (RHEA:86143), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "questin
+    hydroquinone + O2 = demethylsulochrin + 2 H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: questin hydroquinone dioxygenase
+    grounding: EC:1.13.11.96
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: questin hydroquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:235408
+    description: Formula C16H14O5.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: demethylsulochrin
+    node_type: CHEMICAL
+    grounding: CHEBI:77886
+    description: Formula C16H12O7.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q0CCX5
+    node_type: PROTEIN
+    label: GEDK_ASPTN
+    grounding: UniProtKB:Q0CCX5
+  - node_id: prot_Q4WQY9
+    node_type: PROTEIN
+    label: TPCI_ASPFU
+    grounding: UniProtKB:Q4WQY9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: questin hydroquinone is a substrate consumed by RHEA:86143 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:86144
+      snippet: questin hydroquinone + O2 => demethylsulochrin + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:86144 declares side 86143_L as its substrates
+        (rh:substrates); the master reaction RHEA:86143 is undirected. This participant is CHEBI:235408
+        with coefficient 1. Rhea cites PMID:34586791 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:86143 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86144
+      snippet: questin hydroquinone + O2 => demethylsulochrin + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:86144 declares side 86143_L as its substrates
+        (rh:substrates); the master reaction RHEA:86143 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:34586791 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: demethylsulochrin is a product released by RHEA:86143 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86144
+      snippet: questin hydroquinone + O2 => demethylsulochrin + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:86144 declares side 86143_R as its products
+        (rh:products); the master reaction RHEA:86143 is undirected. This participant is CHEBI:77886 with
+        coefficient 1. Rhea cites PMID:34586791 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:86143 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:86144
+      snippet: questin hydroquinone + O2 => demethylsulochrin + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:86144 declares side 86143_R as its products
+        (rh:products); the master reaction RHEA:86143 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:34586791 for this reaction.
+  - subject: prot_Q0CCX5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GEDK_ASPTN is an exemplar enzyme with EC 1.13.11.96 activity.
+    evidence:
+    - reference: EC:1.13.11.96
+      snippet: DR   Q0CCX5, GEDK_ASPTN ;  Q4WQY9, TPCI_ASPFU ;
+      notes: ExPASy ENZYME entry EC 1.13.11.96 cross-references UniProtKB:Q0CCX5 (GEDK_ASPTN) as a protein
+        with this activity.
+  - subject: prot_Q4WQY9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPCI_ASPFU is an exemplar enzyme with EC 1.13.11.96 activity.
+    evidence:
+    - reference: EC:1.13.11.96
+      snippet: DR   Q0CCX5, GEDK_ASPTN ;  Q4WQY9, TPCI_ASPFU ;
+      notes: ExPASy ENZYME entry EC 1.13.11.96 cross-references UniProtKB:Q4WQY9 (TPCI_ASPFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

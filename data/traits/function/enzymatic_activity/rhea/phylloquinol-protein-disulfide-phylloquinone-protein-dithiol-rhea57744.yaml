@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.17.4.4
     mapping_source: rhea2ec
@@ -46,4 +46,175 @@ definitions:
       Catalyses the reaction: phylloquinol + [protein]-disulfide = phylloquinone + [protein]-dithiol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phylloquinol + [protein]-disulfide = phylloquinone + [protein]-dithiol
+  description: Substrate-to-product chemistry of RHEA:57744, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57745 (rh:substrates → 57744_L, rh:products → 57744_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of phylloquinol + [protein]-disulfide = phylloquinone + [protein]-dithiol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57744
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: phylloquinol + [protein]-disulfide = phylloquinone + [protein]-dithiol'
+  - node_id: sub1
+    label: phylloquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:28433
+    description: Formula C31H48O2.
+  - node_id: sub2
+    label: '[protein]-disulfide'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10593
+    description: Rhea compound GENERIC:10593.
+  - node_id: sub2_rp1
+    label: L-cystine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10593 ([protein]-disulfide);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:50058
+  - node_id: prd1
+    label: phylloquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:18067
+    description: Formula C31H46O2.
+  - node_id: prd2
+    label: '[protein]-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10594
+    description: Rhea compound GENERIC:10594.
+  - node_id: prd2_rp1
+    label: L-cysteine residue at position C1
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10594 ([protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd2_rp2
+    label: L-cysteine residue at position C2
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10594 ([protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: vitamin-K-epoxide reductase (warfarin-sensitive) activity
+    grounding: GO:0047057
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: vitamin-K-epoxide reductase (warfarin-sensitive)
+    grounding: EC:1.17.4.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: phylloquinol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57745
+      snippet: phylloquinol + [protein]-disulfide => phylloquinone + [protein]-dithiol
+      notes: Rhea's left-to-right directional reaction RHEA:57745 declares side 57744_L as its substrates
+        (rh:substrates); the master reaction RHEA:57744 is undirected. This participant is CHEBI:28433
+        with coefficient 1. Rhea cites PMID:16677080, PMID:24532791, PMID:23928358, PMID:23772386 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: '[protein]-disulfide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:57745
+      snippet: phylloquinol + [protein]-disulfide => phylloquinone + [protein]-dithiol
+      notes: Rhea's left-to-right directional reaction RHEA:57745 declares side 57744_L as its substrates
+        (rh:substrates); the master reaction RHEA:57744 is undirected. This participant is GENERIC:10593
+        with coefficient 1. Rhea cites PMID:16677080, PMID:24532791, PMID:23928358, PMID:23772386 for
+        this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-cystine residue is the reactive part of [protein]-disulfide.
+    evidence:
+    - reference: RHEA:57744
+      snippet: L-cystine residue
+      notes: Rhea compound GENERIC:10593 ([protein]-disulfide) declares rh:reactivePart = L-cystine residue
+        (CHEBI:50058), formula C6H8N2O2S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phylloquinone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57745
+      snippet: phylloquinol + [protein]-disulfide => phylloquinone + [protein]-dithiol
+      notes: Rhea's left-to-right directional reaction RHEA:57745 declares side 57744_R as its products
+        (rh:products); the master reaction RHEA:57744 is undirected. This participant is CHEBI:18067 with
+        coefficient 1. Rhea cites PMID:16677080, PMID:24532791, PMID:23928358, PMID:23772386 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: '[protein]-dithiol is a product released by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:57745
+      snippet: phylloquinol + [protein]-disulfide => phylloquinone + [protein]-dithiol
+      notes: Rhea's left-to-right directional reaction RHEA:57745 declares side 57744_R as its products
+        (rh:products); the master reaction RHEA:57744 is undirected. This participant is GENERIC:10594
+        with coefficient 1. Rhea cites PMID:16677080, PMID:24532791, PMID:23928358, PMID:23772386 for
+        this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-cysteine residue is the reactive part of [protein]-dithiol.
+    evidence:
+    - reference: RHEA:57744
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10594 ([protein]-dithiol) declares rh:reactivePart at position C1 =
+        L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: prd2_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-cysteine residue is the reactive part of [protein]-dithiol.
+    evidence:
+    - reference: RHEA:57744
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10594 ([protein]-dithiol) declares rh:reactivePart at position C2 =
+        L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:57744
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047057"/>
+      notes: The rdfs:seeAlso triple on RHEA:57744 in rhea.rdf. GO term GO:0047057 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.17.4.4; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:57744
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.17.4.4"/>
+      notes: The rh:ec triple on RHEA:57744 in rhea.rdf. EC 1.17.4.4 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

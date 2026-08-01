@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -41,4 +41,132 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate = (4R)-limonene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (R)-limonene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.20. EC 4.2.3.20 maps to exactly
+    one curated Rhea reaction (RHEA:10940), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate = (4R)-limonene + diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (R)-limonene synthase
+    grounding: EC:4.2.3.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: (4R)-limonene
+    node_type: CHEMICAL
+    grounding: CHEBI:15382
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (R)-limonene synthase activity
+    grounding: GO:0034002
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_E2E2N7
+    node_type: PROTEIN
+    label: BCGS_ORIVU
+    grounding: UniProtKB:E2E2N7
+  - node_id: prot_Q2XSC6
+    node_type: PROTEIN
+    label: LALIM_LAVAN
+    grounding: UniProtKB:Q2XSC6
+  - node_id: prot_Q8L5K3
+    node_type: PROTEIN
+    label: RLC1_CITLI
+    grounding: UniProtKB:Q8L5K3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:10940 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10941
+      snippet: (2E)-geranyl diphosphate => (4R)-limonene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10941 declares side 10940_L as its substrates
+        (rh:substrates); the master reaction RHEA:10940 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:12084056, PMID:9662532, PMID:11305598, PMID:20657015 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (4R)-limonene is a product released by RHEA:10940 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10941
+      snippet: (2E)-geranyl diphosphate => (4R)-limonene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10941 declares side 10940_R as its products
+        (rh:products); the master reaction RHEA:10940 is undirected. This participant is CHEBI:15382 with
+        coefficient 1. Rhea cites PMID:12084056, PMID:9662532, PMID:11305598, PMID:20657015 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:10940 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10941
+      snippet: (2E)-geranyl diphosphate => (4R)-limonene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10941 declares side 10940_R as its products
+        (rh:products); the master reaction RHEA:10940 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:12084056, PMID:9662532, PMID:11305598, PMID:20657015 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.20
+      snippet: EC:4.2.3.20 > GO:(R)-limonene synthase activity ; GO:0034002
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034002 is itself a record
+        in this KB.
+  - subject: prot_E2E2N7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BCGS_ORIVU is an exemplar enzyme with EC 4.2.3.20 activity.
+    evidence:
+    - reference: EC:4.2.3.20
+      snippet: DR   E2E2N7, BCGS_ORIVU ;  Q2XSC6, LALIM_LAVAN;  Q8L5K3, RLC1_CITLI ;
+      notes: ExPASy ENZYME entry EC 4.2.3.20 cross-references UniProtKB:E2E2N7 (BCGS_ORIVU) as a protein
+        with this activity.
+  - subject: prot_Q2XSC6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LALIM_LAVAN is an exemplar enzyme with EC 4.2.3.20 activity.
+    evidence:
+    - reference: EC:4.2.3.20
+      snippet: DR   E2E2N7, BCGS_ORIVU ;  Q2XSC6, LALIM_LAVAN;  Q8L5K3, RLC1_CITLI ;
+      notes: ExPASy ENZYME entry EC 4.2.3.20 cross-references UniProtKB:Q2XSC6 (LALIM_LAVAN) as a protein
+        with this activity.
+  - subject: prot_Q8L5K3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RLC1_CITLI is an exemplar enzyme with EC 4.2.3.20 activity.
+    evidence:
+    - reference: EC:4.2.3.20
+      snippet: DR   E2E2N7, BCGS_ORIVU ;  Q2XSC6, LALIM_LAVAN;  Q8L5K3, RLC1_CITLI ;
+      notes: ExPASy ENZYME entry EC 4.2.3.20 cross-references UniProtKB:Q8L5K3 (RLC1_CITLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

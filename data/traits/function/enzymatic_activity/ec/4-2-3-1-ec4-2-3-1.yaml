@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -38,4 +38,149 @@ definitions:
       Catalyses: O-phospho-L-homoserine + H2O = L-threonine + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of threonine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.1. EC 4.2.3.1 maps to exactly
+    one curated Rhea reaction (RHEA:10840), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "O-phospho-L-homoserine
+    + H2O = L-threonine + phosphate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: threonine synthase
+    grounding: EC:4.2.3.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: O-phospho-L-homoserine
+    node_type: CHEMICAL
+    grounding: CHEBI:57590
+    description: Formula C4H8NO6P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-threonine
+    node_type: CHEMICAL
+    grounding: CHEBI:57926
+    description: Formula C4H9NO3.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: threonine synthase activity
+    grounding: GO:0004795
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9S7B5
+    node_type: PROTEIN
+    label: THRC1_ARATH
+    grounding: UniProtKB:Q9S7B5
+  - node_id: prot_Q9SSP5
+    node_type: PROTEIN
+    label: THRC2_ARATH
+    grounding: UniProtKB:Q9SSP5
+  - node_id: prot_P09123
+    node_type: PROTEIN
+    label: THRC_BACSL
+    grounding: UniProtKB:P09123
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: O-phospho-L-homoserine is a substrate consumed by RHEA:10840 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10841
+      snippet: O-phospho-L-homoserine + H2O => L-threonine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10841 declares side 10840_L as its substrates
+        (rh:substrates); the master reaction RHEA:10840 is undirected. This participant is CHEBI:57590
+        with coefficient 1. Rhea cites PMID:8074505, PMID:18621388, PMID:7907888, PMID:10429206 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:10840 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10841
+      snippet: O-phospho-L-homoserine + H2O => L-threonine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10841 declares side 10840_L as its substrates
+        (rh:substrates); the master reaction RHEA:10840 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8074505, PMID:18621388, PMID:7907888, PMID:10429206 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-threonine is a product released by RHEA:10840 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10841
+      snippet: O-phospho-L-homoserine + H2O => L-threonine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10841 declares side 10840_R as its products
+        (rh:products); the master reaction RHEA:10840 is undirected. This participant is CHEBI:57926 with
+        coefficient 1. Rhea cites PMID:8074505, PMID:18621388, PMID:7907888, PMID:10429206 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:10840 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10841
+      snippet: O-phospho-L-homoserine + H2O => L-threonine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10841 declares side 10840_R as its products
+        (rh:products); the master reaction RHEA:10840 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:8074505, PMID:18621388, PMID:7907888, PMID:10429206 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.1
+      snippet: EC:4.2.3.1 > GO:threonine synthase activity ; GO:0004795
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004795 is itself a record
+        in this KB.
+  - subject: prot_Q9S7B5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THRC1_ARATH is an exemplar enzyme with EC 4.2.3.1 activity.
+    evidence:
+    - reference: EC:4.2.3.1
+      snippet: DR   Q9S7B5, THRC1_ARATH;  Q9SSP5, THRC2_ARATH;  P09123, THRC_BACSL ;
+      notes: ExPASy ENZYME entry EC 4.2.3.1 cross-references UniProtKB:Q9S7B5 (THRC1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9SSP5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THRC2_ARATH is an exemplar enzyme with EC 4.2.3.1 activity.
+    evidence:
+    - reference: EC:4.2.3.1
+      snippet: DR   Q9S7B5, THRC1_ARATH;  Q9SSP5, THRC2_ARATH;  P09123, THRC_BACSL ;
+      notes: ExPASy ENZYME entry EC 4.2.3.1 cross-references UniProtKB:Q9SSP5 (THRC2_ARATH) as a protein
+        with this activity.
+  - subject: prot_P09123
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THRC_BACSL is an exemplar enzyme with EC 4.2.3.1 activity.
+    evidence:
+    - reference: EC:4.2.3.1
+      snippet: DR   Q9S7B5, THRC1_ARATH;  Q9SSP5, THRC2_ARATH;  P09123, THRC_BACSL ;
+      notes: ExPASy ENZYME entry EC 4.2.3.1 cross-references UniProtKB:P09123 (THRC_BACSL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

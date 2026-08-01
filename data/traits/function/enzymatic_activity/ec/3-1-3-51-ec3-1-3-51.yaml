@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.3.-
 synonyms:
@@ -28,4 +28,110 @@ definitions:
       Catalyses: a di-trans,poly-cis-dolichyl phosphate + H2O = a di-trans,poly- cis-dolichol + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dolichyl-phosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.3.51. EC 3.1.3.51 maps to exactly
+    one curated Rhea reaction (RHEA:13797), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a di-trans,poly-cis-dolichyl
+    phosphate + H2O = a di-trans,poly- cis-dolichol + phosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dolichyl-phosphatase
+    grounding: EC:3.1.3.51
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a di-trans,poly-cis-dolichyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57683
+    xrefs:
+    - RHEA-COMP:19498
+    description: Rhea compound POLYMER:19498. Formula C20H35O4P(C5H8)<i><sub>n-1</sub></i>.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a di-trans,poly-cis-dolichol
+    node_type: CHEMICAL
+    grounding: CHEBI:16091
+    xrefs:
+    - RHEA-COMP:19495
+    description: Rhea compound POLYMER:19495. Formula C20H36O(C5H8)<i><sub>n-1</sub></i>.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dolichyl-phosphatase activity
+    grounding: GO:0047873
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a di-trans,poly-cis-dolichyl phosphate is a substrate consumed by RHEA:13797 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:13798
+      snippet: a di-trans,poly-cis-dolichyl phosphate + H2O => a di-trans,poly-cis-dolichol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13798 declares side 13797_L as its substrates
+        (rh:substrates); the master reaction RHEA:13797 is undirected. This participant is POLYMER:19498
+        with coefficient 1. Rhea cites PMID:229909, PMID:6257694, PMID:6243292 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:13797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13798
+      snippet: a di-trans,poly-cis-dolichyl phosphate + H2O => a di-trans,poly-cis-dolichol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13798 declares side 13797_L as its substrates
+        (rh:substrates); the master reaction RHEA:13797 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:229909, PMID:6257694, PMID:6243292 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a di-trans,poly-cis-dolichol is a product released by RHEA:13797 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13798
+      snippet: a di-trans,poly-cis-dolichyl phosphate + H2O => a di-trans,poly-cis-dolichol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13798 declares side 13797_R as its products
+        (rh:products); the master reaction RHEA:13797 is undirected. This participant is POLYMER:19495
+        with coefficient 1. Rhea cites PMID:229909, PMID:6257694, PMID:6243292 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:13797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13798
+      snippet: a di-trans,poly-cis-dolichyl phosphate + H2O => a di-trans,poly-cis-dolichol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13798 declares side 13797_R as its products
+        (rh:products); the master reaction RHEA:13797 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:229909, PMID:6257694, PMID:6243292 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.3.51
+      snippet: EC:3.1.3.51 > GO:dolichyl-phosphatase activity ; GO:0047873
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047873 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

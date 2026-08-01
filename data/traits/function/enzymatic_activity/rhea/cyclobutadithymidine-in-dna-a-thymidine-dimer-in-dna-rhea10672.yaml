@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.99.3
     mapping_source: rhea2ec
@@ -28,4 +28,183 @@ definitions:
       Catalyses the reaction: cyclobutadithymidine in DNA = a thymidine dimer in DNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclobutadithymidine in DNA = a thymidine dimer in DNA
+  description: Substrate-to-product chemistry of RHEA:10672, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10673 (rh:substrates → 10672_L, rh:products → 10672_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cyclobutadithymidine in DNA = a thymidine dimer in DNA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10672
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cyclobutadithymidine in DNA = a thymidine dimer in DNA'
+  - node_id: sub1
+    label: cyclobutadithymidine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:14585
+    description: Rhea compound GENERIC:14585.
+  - node_id: sub1_rp1
+    label: cyclobutadithymidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14585 (cyclobutadithymidine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65263
+  - node_id: prd1
+    label: a thymidine dimer in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:14449
+    description: Rhea compound GENERIC:14449.
+  - node_id: prd1_rp1
+    label: thymidine dimer residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14449 (a thymidine
+      dimer in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:139519
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: deoxyribodipyrimidine photo-lyase activity
+    grounding: GO:0003904
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: deoxyribodipyrimidine photo-lyase
+    grounding: EC:4.1.99.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_J4KQS2
+    node_type: PROTEIN
+    label: PHR1_BEAB2
+    grounding: UniProtKB:J4KQS2
+  - node_id: prot_E9EYW7
+    node_type: PROTEIN
+    label: PHR1_METRA
+    grounding: UniProtKB:E9EYW7
+  - node_id: prot_A9CJC9
+    node_type: PROTEIN
+    label: PHRA_AGRFC
+    grounding: UniProtKB:A9CJC9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cyclobutadithymidine in DNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:10673
+      snippet: cyclobutadithymidine in DNA => a thymidine dimer in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:10673 declares side 10672_L as its substrates
+        (rh:substrates); the master reaction RHEA:10672 is undirected. This participant is GENERIC:14585
+        with coefficient 1. Rhea cites PMID:16169906, PMID:804322, PMID:3539939 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: cyclobutadithymidine residue is the reactive part of cyclobutadithymidine in DNA.
+    evidence:
+    - reference: RHEA:10672
+      snippet: cyclobutadithymidine residue
+      notes: Rhea compound GENERIC:14585 (cyclobutadithymidine in DNA) declares rh:reactivePart = cyclobutadithymidine
+        residue (CHEBI:65263), formula C20H24N4O14P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a thymidine dimer in DNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10673
+      snippet: cyclobutadithymidine in DNA => a thymidine dimer in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:10673 declares side 10672_R as its products
+        (rh:products); the master reaction RHEA:10672 is undirected. This participant is GENERIC:14449
+        with coefficient 1. Rhea cites PMID:16169906, PMID:804322, PMID:3539939 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: thymidine dimer residue is the reactive part of a thymidine dimer in DNA.
+    evidence:
+    - reference: RHEA:10672
+      snippet: thymidine dimer residue
+      notes: Rhea compound GENERIC:14449 (a thymidine dimer in DNA) declares rh:reactivePart = thymidine
+        dimer residue (CHEBI:139519), formula C20H24N4O14P2.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10672
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003904"/>
+      notes: The rdfs:seeAlso triple on RHEA:10672 in rhea.rdf. GO term GO:0003904 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.99.3; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10672
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.3"/>
+      notes: The rh:ec triple on RHEA:10672 in rhea.rdf. EC 4.1.99.3 is itself a record in this KB.
+  - subject: prot_J4KQS2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHR1_BEAB2 is an exemplar enzyme carrying EC 4.1.99.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.99.3
+      snippet: DR   J4KQS2, PHR1_BEAB2 ;  E9EYW7, PHR1_METRA ;  A9CJC9, PHRA_AGRFC ;
+      notes: ExPASy ENZYME entry EC 4.1.99.3 cross-references UniProtKB:J4KQS2 (PHR1_BEAB2) as a protein
+        with this activity.
+    - reference: RHEA:10672
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.3"/>
+      notes: Rhea assigns RHEA:10672 to EC 4.1.99.3, and EC 4.1.99.3 maps to exactly one Rhea master reaction
+        (RHEA:10672), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_E9EYW7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHR1_METRA is an exemplar enzyme carrying EC 4.1.99.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.99.3
+      snippet: DR   J4KQS2, PHR1_BEAB2 ;  E9EYW7, PHR1_METRA ;  A9CJC9, PHRA_AGRFC ;
+      notes: ExPASy ENZYME entry EC 4.1.99.3 cross-references UniProtKB:E9EYW7 (PHR1_METRA) as a protein
+        with this activity.
+    - reference: RHEA:10672
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.3"/>
+      notes: Rhea assigns RHEA:10672 to EC 4.1.99.3, and EC 4.1.99.3 maps to exactly one Rhea master reaction
+        (RHEA:10672), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A9CJC9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHRA_AGRFC is an exemplar enzyme carrying EC 4.1.99.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.99.3
+      snippet: DR   J4KQS2, PHR1_BEAB2 ;  E9EYW7, PHR1_METRA ;  A9CJC9, PHRA_AGRFC ;
+      notes: ExPASy ENZYME entry EC 4.1.99.3 cross-references UniProtKB:A9CJC9 (PHRA_AGRFC) as a protein
+        with this activity.
+    - reference: RHEA:10672
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.3"/>
+      notes: Rhea assigns RHEA:10672 to EC 4.1.99.3, and EC 4.1.99.3 maps to exactly one Rhea master reaction
+        (RHEA:10672), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

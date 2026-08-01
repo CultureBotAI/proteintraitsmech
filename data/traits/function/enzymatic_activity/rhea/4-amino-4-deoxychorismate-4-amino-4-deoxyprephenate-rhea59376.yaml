@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.99.67
     mapping_source: rhea2ec
@@ -28,4 +28,115 @@ definitions:
       Catalyses the reaction: 4-amino-4-deoxychorismate = 4-amino-4-deoxyprephenate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-amino-4-deoxychorismate = 4-amino-4-deoxyprephenate
+  description: Substrate-to-product chemistry of RHEA:59376, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59377 (rh:substrates → 59376_L, rh:products → 59376_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-amino-4-deoxychorismate = 4-amino-4-deoxyprephenate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59376
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-amino-4-deoxychorismate = 4-amino-4-deoxyprephenate'
+  - node_id: sub1
+    label: 4-amino-4-deoxychorismate
+    node_type: CHEMICAL
+    grounding: CHEBI:58406
+    description: Formula C10H10NO5.
+  - node_id: prd1
+    label: 4-amino-4-deoxyprephenate
+    node_type: CHEMICAL
+    grounding: CHEBI:143070
+    description: Formula C10H10NO5.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 4-amino-4-deoxychorismate mutase
+    grounding: EC:5.4.99.67
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_F2RB77
+    node_type: PROTEIN
+    label: CMLD_STRVP
+    grounding: UniProtKB:F2RB77
+  - node_id: prot_P72541
+    node_type: PROTEIN
+    label: PAPB_STRPR
+    grounding: UniProtKB:P72541
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-amino-4-deoxychorismate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59377
+      snippet: 4-amino-4-deoxychorismate => 4-amino-4-deoxyprephenate
+      notes: Rhea's left-to-right directional reaction RHEA:59377 declares side 59376_L as its substrates
+        (rh:substrates); the master reaction RHEA:59376 is undirected. This participant is CHEBI:58406
+        with coefficient 1. Rhea cites PMID:9044253, PMID:11577160, PMID:25267678 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-amino-4-deoxyprephenate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59377
+      snippet: 4-amino-4-deoxychorismate => 4-amino-4-deoxyprephenate
+      notes: Rhea's left-to-right directional reaction RHEA:59377 declares side 59376_R as its products
+        (rh:products); the master reaction RHEA:59376 is undirected. This participant is CHEBI:143070
+        with coefficient 1. Rhea cites PMID:9044253, PMID:11577160, PMID:25267678 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.99.67; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:59376
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.67"/>
+      notes: The rh:ec triple on RHEA:59376 in rhea.rdf. EC 5.4.99.67 is itself a record in this KB.
+  - subject: prot_F2RB77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CMLD_STRVP is an exemplar enzyme carrying EC 5.4.99.67, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.67
+      snippet: DR   F2RB77, CMLD_STRVP ;  P72541, PAPB_STRPR ;
+      notes: ExPASy ENZYME entry EC 5.4.99.67 cross-references UniProtKB:F2RB77 (CMLD_STRVP) as a protein
+        with this activity.
+    - reference: RHEA:59376
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.67"/>
+      notes: Rhea assigns RHEA:59376 to EC 5.4.99.67, and EC 5.4.99.67 maps to exactly one Rhea master
+        reaction (RHEA:59376), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P72541
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAPB_STRPR is an exemplar enzyme carrying EC 5.4.99.67, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.67
+      snippet: DR   F2RB77, CMLD_STRVP ;  P72541, PAPB_STRPR ;
+      notes: ExPASy ENZYME entry EC 5.4.99.67 cross-references UniProtKB:P72541 (PAPB_STRPR) as a protein
+        with this activity.
+    - reference: RHEA:59376
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.67"/>
+      notes: Rhea assigns RHEA:59376 to EC 5.4.99.67, and EC 5.4.99.67 maps to exactly one Rhea master
+        reaction (RHEA:59376), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

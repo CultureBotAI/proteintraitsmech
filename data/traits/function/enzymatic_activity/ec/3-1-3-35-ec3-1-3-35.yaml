@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.3.-
 synonyms:
@@ -39,4 +39,131 @@ definitions:
       Catalyses: dTMP + H2O = thymidine + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thymidylate 5'-phosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.3.35. EC 3.1.3.35 maps to exactly
+    one curated Rhea reaction (RHEA:11080), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dTMP + H2O =
+    thymidine + phosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thymidylate 5'-phosphatase
+    grounding: EC:3.1.3.35
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dTMP
+    node_type: CHEMICAL
+    grounding: CHEBI:63528
+    description: Formula C10H13N2O8P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: thymidine
+    node_type: CHEMICAL
+    grounding: CHEBI:17748
+    description: Formula C10H14N2O5.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prot_Q05927
+    node_type: PROTEIN
+    label: 5NTD_BOVIN
+    grounding: UniProtKB:Q05927
+  - node_id: prot_P21589
+    node_type: PROTEIN
+    label: 5NTD_HUMAN
+    grounding: UniProtKB:P21589
+  - node_id: prot_Q61503
+    node_type: PROTEIN
+    label: 5NTD_MOUSE
+    grounding: UniProtKB:Q61503
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTMP is a substrate consumed by RHEA:11080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11081
+      snippet: dTMP + H2O => thymidine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11081 declares side 11080_L as its substrates
+        (rh:substrates); the master reaction RHEA:11080 is undirected. This participant is CHEBI:63528
+        with coefficient 1. Rhea cites PMID:958986 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:11080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11081
+      snippet: dTMP + H2O => thymidine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11081 declares side 11080_L as its substrates
+        (rh:substrates); the master reaction RHEA:11080 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:958986 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: thymidine is a product released by RHEA:11080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11081
+      snippet: dTMP + H2O => thymidine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11081 declares side 11080_R as its products
+        (rh:products); the master reaction RHEA:11080 is undirected. This participant is CHEBI:17748 with
+        coefficient 1. Rhea cites PMID:958986 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:11080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11081
+      snippet: dTMP + H2O => thymidine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11081 declares side 11080_R as its products
+        (rh:products); the master reaction RHEA:11080 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:958986 for this reaction.
+  - subject: prot_Q05927
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5NTD_BOVIN is an exemplar enzyme with EC 3.1.3.35 activity.
+    evidence:
+    - reference: EC:3.1.3.35
+      snippet: DR   Q05927, 5NTD_BOVIN ;  P21589, 5NTD_HUMAN ;  Q61503, 5NTD_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.1.3.35 cross-references UniProtKB:Q05927 (5NTD_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P21589
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5NTD_HUMAN is an exemplar enzyme with EC 3.1.3.35 activity.
+    evidence:
+    - reference: EC:3.1.3.35
+      snippet: DR   Q05927, 5NTD_BOVIN ;  P21589, 5NTD_HUMAN ;  Q61503, 5NTD_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.1.3.35 cross-references UniProtKB:P21589 (5NTD_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q61503
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5NTD_MOUSE is an exemplar enzyme with EC 3.1.3.35 activity.
+    evidence:
+    - reference: EC:3.1.3.35
+      snippet: DR   Q05927, 5NTD_BOVIN ;  P21589, 5NTD_HUMAN ;  Q61503, 5NTD_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.1.3.35 cross-references UniProtKB:Q61503 (5NTD_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:147351
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,93 @@ definitions:
       Catalyses the reaction: angiotensin-(1-9) + H2O = L-phenylalanyl-L-histidine + angiotensin-(1-7)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of angiotensin-(1-9) + H2O = L-phenylalanyl-L-histidine + angiotensin-(1-7)
+  description: Substrate-to-product chemistry of RHEA:63548, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63549 (rh:substrates → 63548_L, rh:products → 63548_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of angiotensin-(1-9) + H2O = L-phenylalanyl-L-histidine + angiotensin-(1-7)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63548
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: angiotensin-(1-9) + H2O = L-phenylalanyl-L-histidine + angiotensin-(1-7)'
+  - node_id: sub1
+    label: angiotensin-(1-9)
+    node_type: CHEMICAL
+    grounding: CHEBI:147351
+    description: Formula C56H78N16O13.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-phenylalanyl-L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:147377
+    description: Formula C15H18N4O3.
+  - node_id: prd2
+    label: angiotensin-(1-7)
+    node_type: CHEMICAL
+    grounding: CHEBI:58922
+    description: Formula C41H62N12O11.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: angiotensin-(1-9) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63549
+      snippet: angiotensin-(1-9) + H2O => L-phenylalanyl-L-histidine + angiotensin-(1-7)
+      notes: Rhea's left-to-right directional reaction RHEA:63549 declares side 63548_L as its substrates
+        (rh:substrates); the master reaction RHEA:63548 is undirected. This participant is CHEBI:147351
+        with coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63549
+      snippet: angiotensin-(1-9) + H2O => L-phenylalanyl-L-histidine + angiotensin-(1-7)
+      notes: Rhea's left-to-right directional reaction RHEA:63549 declares side 63548_L as its substrates
+        (rh:substrates); the master reaction RHEA:63548 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-phenylalanyl-L-histidine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63549
+      snippet: angiotensin-(1-9) + H2O => L-phenylalanyl-L-histidine + angiotensin-(1-7)
+      notes: Rhea's left-to-right directional reaction RHEA:63549 declares side 63548_R as its products
+        (rh:products); the master reaction RHEA:63548 is undirected. This participant is CHEBI:147377
+        with coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: angiotensin-(1-7) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63549
+      snippet: angiotensin-(1-9) + H2O => L-phenylalanyl-L-histidine + angiotensin-(1-7)
+      notes: Rhea's left-to-right directional reaction RHEA:63549 declares side 63548_R as its products
+        (rh:products); the master reaction RHEA:63548 is undirected. This participant is CHEBI:58922 with
+        coefficient 1. Rhea cites PMID:10969042 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

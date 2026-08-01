@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29999
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,147 @@ definitions:
       Catalyses the reaction: [Rab1 protein]-L-serine + CDP-choline = [Rab1 protein]-O-phosphocholine-L-serine + CMP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [Rab1 protein]-L-serine + CDP-choline = [Rab1 protein]-O-phosphocholine-L-serine
+    + CMP…
+  description: Substrate-to-product chemistry of RHEA:56080, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:56081 (rh:substrates → 56080_L, rh:products → 56080_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [Rab1 protein]-L-serine + CDP-choline = [Rab1 protein]-O-phosphocholine-L-se…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:56080
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [Rab1 protein]-L-serine + CDP-choline = [Rab1 protein]-O-phosphocholine-L-serine
+      + CMP + H(+)'
+  - node_id: sub1
+    label: '[Rab1 protein]-L-serine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14376
+    description: Rhea compound GENERIC:14376.
+  - node_id: sub1_rp1
+    label: L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14376 ([Rab1 protein]-L-serine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: CDP-choline
+    node_type: CHEMICAL
+    grounding: CHEBI:58779
+    description: Formula C14H25N4O11P2.
+  - node_id: prd1
+    label: '[Rab1 protein]-O-phosphocholine-L-serine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14085
+    description: Rhea compound GENERIC:14085.
+  - node_id: prd1_rp1
+    label: O-phosphocholine-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14085 ([Rab1 protein]-O-phosphocholine-L-serine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138595
+  - node_id: prd2
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[Rab1 protein]-L-serine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:56081
+      snippet: '[Rab1 protein]-L-serine + CDP-choline => [Rab1 protein]-O-phosphocholine-L-serine + CMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56081 declares side 56080_L as its substrates
+        (rh:substrates); the master reaction RHEA:56080 is undirected. This participant is GENERIC:14376
+        with coefficient 1. Rhea cites PMID:21822290 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of [Rab1 protein]-L-serine.
+    evidence:
+    - reference: RHEA:56080
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:14376 ([Rab1 protein]-L-serine) declares rh:reactivePart = L-serine
+        residue (CHEBI:29999), formula C3H5NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CDP-choline is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56081
+      snippet: '[Rab1 protein]-L-serine + CDP-choline => [Rab1 protein]-O-phosphocholine-L-serine + CMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56081 declares side 56080_L as its substrates
+        (rh:substrates); the master reaction RHEA:56080 is undirected. This participant is CHEBI:58779
+        with coefficient 1. Rhea cites PMID:21822290 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[Rab1 protein]-O-phosphocholine-L-serine is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:56081
+      snippet: '[Rab1 protein]-L-serine + CDP-choline => [Rab1 protein]-O-phosphocholine-L-serine + CMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56081 declares side 56080_R as its products
+        (rh:products); the master reaction RHEA:56080 is undirected. This participant is GENERIC:14085
+        with coefficient 1. Rhea cites PMID:21822290 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-phosphocholine-L-serine residue is the reactive part of [Rab1 protein]-O-phosphocholine-L-serine.
+    evidence:
+    - reference: RHEA:56080
+      snippet: O-phosphocholine-L-serine residue
+      notes: Rhea compound GENERIC:14085 ([Rab1 protein]-O-phosphocholine-L-serine) declares rh:reactivePart
+        = O-phosphocholine-L-serine residue (CHEBI:138595), formula C8H17N2O5P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56081
+      snippet: '[Rab1 protein]-L-serine + CDP-choline => [Rab1 protein]-O-phosphocholine-L-serine + CMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56081 declares side 56080_R as its products
+        (rh:products); the master reaction RHEA:56080 is undirected. This participant is CHEBI:60377 with
+        coefficient 1. Rhea cites PMID:21822290 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56081
+      snippet: '[Rab1 protein]-L-serine + CDP-choline => [Rab1 protein]-O-phosphocholine-L-serine + CMP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56081 declares side 56080_R as its products
+        (rh:products); the master reaction RHEA:56080 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21822290 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

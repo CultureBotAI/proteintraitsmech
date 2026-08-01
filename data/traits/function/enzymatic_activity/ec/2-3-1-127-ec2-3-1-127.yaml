@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -25,4 +25,122 @@ definitions:
       Catalyses: 2 benzoyl-CoA + L-ornithine = N(2),N(5)-dibenzoyl-L-ornithine + 2 CoA + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ornithine N-benzoyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.127. EC 2.3.1.127 maps to
+    exactly one curated Rhea reaction (RHEA:16929), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 benzoyl-CoA
+    + L-ornithine = N(2),N(5)-dibenzoyl-L-ornithine + 2 CoA + 2 H(+)". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ornithine N-benzoyltransferase
+    grounding: EC:2.3.1.127
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: benzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57369
+    description: Formula C28H36N7O17P3S.
+  - node_id: sub2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: prd1
+    label: N(2),N(5)-dibenzoyl-L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:57722
+    description: Formula C19H19N2O4.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ornithine N-benzoyltransferase activity
+    grounding: GO:0050156
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: benzoyl-CoA is a substrate consumed by RHEA:16929 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:16930
+      snippet: 2 benzoyl-CoA + L-ornithine => N(2),N(5)-dibenzoyl-L-ornithine + 2 CoA + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16930 declares side 16929_L as its substrates
+        (rh:substrates); the master reaction RHEA:16929 is undirected. This participant is CHEBI:57369
+        with coefficient 2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-ornithine is a substrate consumed by RHEA:16929 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16930
+      snippet: 2 benzoyl-CoA + L-ornithine => N(2),N(5)-dibenzoyl-L-ornithine + 2 CoA + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16930 declares side 16929_L as its substrates
+        (rh:substrates); the master reaction RHEA:16929 is undirected. This participant is CHEBI:46911
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(2),N(5)-dibenzoyl-L-ornithine is a product released by RHEA:16929 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16930
+      snippet: 2 benzoyl-CoA + L-ornithine => N(2),N(5)-dibenzoyl-L-ornithine + 2 CoA + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16930 declares side 16929_R as its products
+        (rh:products); the master reaction RHEA:16929 is undirected. This participant is CHEBI:57722 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:16929 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:16930
+      snippet: 2 benzoyl-CoA + L-ornithine => N(2),N(5)-dibenzoyl-L-ornithine + 2 CoA + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16930 declares side 16929_R as its products
+        (rh:products); the master reaction RHEA:16929 is undirected. This participant is CHEBI:57287 with
+        coefficient 2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:16929 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:16930
+      snippet: 2 benzoyl-CoA + L-ornithine => N(2),N(5)-dibenzoyl-L-ornithine + 2 CoA + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16930 declares side 16929_R as its products
+        (rh:products); the master reaction RHEA:16929 is undirected. This participant is CHEBI:15378 with
+        coefficient 2.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.127
+      snippet: EC:2.3.1.127 > GO:ornithine N-benzoyltransferase activity ; GO:0050156
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050156 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

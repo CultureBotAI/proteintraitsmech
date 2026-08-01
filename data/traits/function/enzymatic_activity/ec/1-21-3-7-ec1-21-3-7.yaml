@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.21.3.-
 synonyms:
@@ -37,4 +37,221 @@ definitions:
       Catalyses: cannabigerolate + O2 = Delta(9)-tetrahydrocannabinolate + H2O2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tetrahydrocannabinolic acid synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.21.3.7. Rhea assigns 2 curated
+    reactions to EC 1.21.3.7. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "cannabigerolate + O2 = Delta(9)-tetrahydrocannabinolate
+    + H2O2". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tetrahydrocannabinolic acid synthase
+    grounding: EC:1.21.3.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of cannabigerolate + O2 = Delta(9)-tetrahydrocannabinolate + H2O2
+    grounding: RHEA:34135
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: cannabigerolate + O2 = Delta(9)-tetrahydrocannabinolate + H2O2'
+  - node_id: rxn1_sub1
+    label: cannabigerolate
+    node_type: CHEMICAL
+    grounding: CHEBI:66962
+    description: Formula C22H31O4.
+  - node_id: rxn1_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn1_prd1
+    label: Delta(9)-tetrahydrocannabinolate
+    node_type: CHEMICAL
+    grounding: CHEBI:66963
+    description: Formula C22H29O4.
+  - node_id: rxn1_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of cannabinerolate + O2 = Delta(9)-tetrahydrocannabinolate + H2O2
+    grounding: RHEA:34143
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: cannabinerolate + O2 = Delta(9)-tetrahydrocannabinolate + H2O2'
+  - node_id: rxn2_sub1
+    label: cannabinerolate
+    node_type: CHEMICAL
+    grounding: CHEBI:66961
+    description: Formula C22H31O4.
+  - node_id: rxn2_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn2_prd1
+    label: Delta(9)-tetrahydrocannabinolate
+    node_type: CHEMICAL
+    grounding: CHEBI:66963
+    description: Formula C22H29O4.
+  - node_id: rxn2_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: delta9-tetrahydrocannabinolate synthase activity
+    grounding: GO:0102778
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8GTB6
+    node_type: PROTEIN
+    label: THCAS_CANSA
+    grounding: UniProtKB:Q8GTB6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:34135 is one of the 2 curated reactions Rhea assigns to EC 1.21.3.7; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:34135
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.21.3.7"/>
+      notes: The rh:ec triple on RHEA:34135 in rhea.rdf assigns that reaction to EC 1.21.3.7.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: cannabigerolate is a substrate consumed by RHEA:34135 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34136
+      snippet: cannabigerolate + O2 => Delta(9)-tetrahydrocannabinolate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34136 declares side 34135_L as its substrates
+        (rh:substrates); the master reaction RHEA:34135 is undirected. This participant is CHEBI:66962
+        with coefficient 1. Rhea cites PMID:15190053, PMID:22766313, PMID:17669365, PMID:16511162 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: O2 is a substrate consumed by RHEA:34135 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34136
+      snippet: cannabigerolate + O2 => Delta(9)-tetrahydrocannabinolate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34136 declares side 34135_L as its substrates
+        (rh:substrates); the master reaction RHEA:34135 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:15190053, PMID:22766313, PMID:17669365, PMID:16511162 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: Delta(9)-tetrahydrocannabinolate is a product released by RHEA:34135 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34136
+      snippet: cannabigerolate + O2 => Delta(9)-tetrahydrocannabinolate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34136 declares side 34135_R as its products
+        (rh:products); the master reaction RHEA:34135 is undirected. This participant is CHEBI:66963 with
+        coefficient 1. Rhea cites PMID:15190053, PMID:22766313, PMID:17669365, PMID:16511162 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O2 is a product released by RHEA:34135 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34136
+      snippet: cannabigerolate + O2 => Delta(9)-tetrahydrocannabinolate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34136 declares side 34135_R as its products
+        (rh:products); the master reaction RHEA:34135 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:15190053, PMID:22766313, PMID:17669365, PMID:16511162 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:34143 is one of the 2 curated reactions Rhea assigns to EC 1.21.3.7; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:34143
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.21.3.7"/>
+      notes: The rh:ec triple on RHEA:34143 in rhea.rdf assigns that reaction to EC 1.21.3.7.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: cannabinerolate is a substrate consumed by RHEA:34143 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34144
+      snippet: cannabinerolate + O2 => Delta(9)-tetrahydrocannabinolate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34144 declares side 34143_L as its substrates
+        (rh:substrates); the master reaction RHEA:34143 is undirected. This participant is CHEBI:66961
+        with coefficient 1. Rhea cites PMID:15190053 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: O2 is a substrate consumed by RHEA:34143 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34144
+      snippet: cannabinerolate + O2 => Delta(9)-tetrahydrocannabinolate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34144 declares side 34143_L as its substrates
+        (rh:substrates); the master reaction RHEA:34143 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:15190053 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: Delta(9)-tetrahydrocannabinolate is a product released by RHEA:34143 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34144
+      snippet: cannabinerolate + O2 => Delta(9)-tetrahydrocannabinolate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34144 declares side 34143_R as its products
+        (rh:products); the master reaction RHEA:34143 is undirected. This participant is CHEBI:66963 with
+        coefficient 1. Rhea cites PMID:15190053 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O2 is a product released by RHEA:34143 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34144
+      snippet: cannabinerolate + O2 => Delta(9)-tetrahydrocannabinolate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34144 declares side 34143_R as its products
+        (rh:products); the master reaction RHEA:34143 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:15190053 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.21.3.7
+      snippet: EC:1.21.3.7 > GO:delta9-tetrahydrocannabinolate synthase activity ; GO:0102778
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102778 is itself a record
+        in this KB.
+  - subject: prot_Q8GTB6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THCAS_CANSA is an exemplar enzyme with EC 1.21.3.7 activity.
+    evidence:
+    - reference: EC:1.21.3.7
+      snippet: DR   Q8GTB6, THCAS_CANSA;
+      notes: ExPASy ENZYME entry EC 1.21.3.7 cross-references UniProtKB:Q8GTB6 (THCAS_CANSA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

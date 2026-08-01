@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.2.1.-
 synonyms:
@@ -39,4 +39,82 @@ definitions:
       Catalyses: ATP + [NEDD8 protein] + [E1 NEDD8-activating enzyme]-L-cysteine = AMP + diphosphate + [E1 NEDD8-activating enzyme]-S-[NEDD8 protein]-yl-L- cysteine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of E1 NEDD8-activating enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.2.1.64. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + [NEDD8
+    protein] + [E1 NEDD8-activating enzyme]-L-cysteine = AMP + diphosphate + [E1 NEDD8-activating enzyme]-S-[NEDD8
+    protein]-yl-L- cysteine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: E1 NEDD8-activating enzyme
+    grounding: EC:6.2.1.64
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: NEDD8 activating enzyme activity
+    grounding: GO:0019781
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O65041
+    node_type: PROTEIN
+    label: UBA3_ARATH
+    grounding: UniProtKB:O65041
+  - node_id: prot_Q19360
+    node_type: PROTEIN
+    label: UBA3_CAEEL
+    grounding: UniProtKB:Q19360
+  - node_id: prot_Q7ZVX6
+    node_type: PROTEIN
+    label: UBA3_DANRE
+    grounding: UniProtKB:Q7ZVX6
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.2.1.64
+      snippet: EC:6.2.1.64 > GO:NEDD8 activating enzyme activity ; GO:0019781
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0019781 is itself a record
+        in this KB.
+  - subject: prot_O65041
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UBA3_ARATH is an exemplar enzyme with EC 6.2.1.64 activity.
+    evidence:
+    - reference: EC:6.2.1.64
+      snippet: DR   O65041, UBA3_ARATH ;  Q19360, UBA3_CAEEL ;  Q7ZVX6, UBA3_DANRE ;
+      notes: ExPASy ENZYME entry EC 6.2.1.64 cross-references UniProtKB:O65041 (UBA3_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q19360
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UBA3_CAEEL is an exemplar enzyme with EC 6.2.1.64 activity.
+    evidence:
+    - reference: EC:6.2.1.64
+      snippet: DR   O65041, UBA3_ARATH ;  Q19360, UBA3_CAEEL ;  Q7ZVX6, UBA3_DANRE ;
+      notes: ExPASy ENZYME entry EC 6.2.1.64 cross-references UniProtKB:Q19360 (UBA3_CAEEL) as a protein
+        with this activity.
+  - subject: prot_Q7ZVX6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UBA3_DANRE is an exemplar enzyme with EC 6.2.1.64 activity.
+    evidence:
+    - reference: EC:6.2.1.64
+      snippet: DR   O65041, UBA3_ARATH ;  Q19360, UBA3_CAEEL ;  Q7ZVX6, UBA3_DANRE ;
+      notes: ExPASy ENZYME entry EC 6.2.1.64 cross-references UniProtKB:Q7ZVX6 (UBA3_DANRE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

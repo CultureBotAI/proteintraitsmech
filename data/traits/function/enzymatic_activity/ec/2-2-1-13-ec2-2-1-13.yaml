@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.2.1.-
 mapped_xrefs:
@@ -36,4 +36,140 @@ definitions:
       Catalyses: apulose 4-phosphate + D-glyceraldehyde 3-phosphate = D-xylulose 5-phosphate + dihydroxyacetone phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of apulose-4-phosphate transketolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.2.1.13. EC 2.2.1.13 maps to exactly
+    one curated Rhea reaction (RHEA:57024), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "apulose 4-phosphate
+    + D-glyceraldehyde 3-phosphate = D-xylulose 5-phosphate + dihydroxyacetone phosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: apulose-4-phosphate transketolase
+    grounding: EC:2.2.1.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: apulose 4-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:141351
+    description: Formula C5H9O8P.
+  - node_id: sub2
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: prd1
+    label: D-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57737
+    description: Formula C5H9O8P.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: prot_A6VKQ4
+    node_type: PROTEIN
+    label: APTA_ACTSZ
+    grounding: UniProtKB:A6VKQ4
+  - node_id: prot_A6KXB4
+    node_type: PROTEIN
+    label: APTA_PHOV8
+    grounding: UniProtKB:A6KXB4
+  - node_id: prot_A6VKQ3
+    node_type: PROTEIN
+    label: APTB_ACTSZ
+    grounding: UniProtKB:A6VKQ3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: apulose 4-phosphate is a substrate consumed by RHEA:57024 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57025
+      snippet: apulose 4-phosphate + D-glyceraldehyde 3-phosphate => D-xylulose 5-phosphate + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57025 declares side 57024_L as its substrates
+        (rh:substrates); the master reaction RHEA:57024 is undirected. This participant is CHEBI:141351
+        with coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: D-glyceraldehyde 3-phosphate is a substrate consumed by RHEA:57024 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57025
+      snippet: apulose 4-phosphate + D-glyceraldehyde 3-phosphate => D-xylulose 5-phosphate + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57025 declares side 57024_L as its substrates
+        (rh:substrates); the master reaction RHEA:57024 is undirected. This participant is CHEBI:59776
+        with coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-xylulose 5-phosphate is a product released by RHEA:57024 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57025
+      snippet: apulose 4-phosphate + D-glyceraldehyde 3-phosphate => D-xylulose 5-phosphate + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57025 declares side 57024_R as its products
+        (rh:products); the master reaction RHEA:57024 is undirected. This participant is CHEBI:57737 with
+        coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by RHEA:57024 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57025
+      snippet: apulose 4-phosphate + D-glyceraldehyde 3-phosphate => D-xylulose 5-phosphate + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57025 declares side 57024_R as its products
+        (rh:products); the master reaction RHEA:57024 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: prot_A6VKQ4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APTA_ACTSZ is an exemplar enzyme with EC 2.2.1.13 activity.
+    evidence:
+    - reference: EC:2.2.1.13
+      snippet: DR   A6VKQ4, APTA_ACTSZ ;  A6KXB4, APTA_PHOV8 ;  A6VKQ3, APTB_ACTSZ ;
+      notes: ExPASy ENZYME entry EC 2.2.1.13 cross-references UniProtKB:A6VKQ4 (APTA_ACTSZ) as a protein
+        with this activity.
+  - subject: prot_A6KXB4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APTA_PHOV8 is an exemplar enzyme with EC 2.2.1.13 activity.
+    evidence:
+    - reference: EC:2.2.1.13
+      snippet: DR   A6VKQ4, APTA_ACTSZ ;  A6KXB4, APTA_PHOV8 ;  A6VKQ3, APTB_ACTSZ ;
+      notes: ExPASy ENZYME entry EC 2.2.1.13 cross-references UniProtKB:A6KXB4 (APTA_PHOV8) as a protein
+        with this activity.
+  - subject: prot_A6VKQ3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APTB_ACTSZ is an exemplar enzyme with EC 2.2.1.13 activity.
+    evidence:
+    - reference: EC:2.2.1.13
+      snippet: DR   A6VKQ4, APTA_ACTSZ ;  A6KXB4, APTA_PHOV8 ;  A6VKQ3, APTB_ACTSZ ;
+      notes: ExPASy ENZYME entry EC 2.2.1.13 cross-references UniProtKB:A6VKQ3 (APTB_ACTSZ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

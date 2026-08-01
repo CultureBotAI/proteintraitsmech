@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 synonyms:
@@ -36,4 +36,66 @@ definitions:
       Catalyses: Specific for a P1 residue that is hydrophobic, and P1' variable, but often Pro
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of HIV-1 retropepsin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.16. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Specific
+    for a P1 residue that is hydrophobic, and P1'' variable, but often Pro".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: HIV-1 retropepsin
+    grounding: EC:3.4.23.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_O93215
+    node_type: PROTEIN
+    label: POL_HV190
+    grounding: UniProtKB:O93215
+  - node_id: prot_O12158
+    node_type: PROTEIN
+    label: POL_HV192
+    grounding: UniProtKB:O12158
+  - node_id: prot_O89290
+    node_type: PROTEIN
+    label: POL_HV193
+    grounding: UniProtKB:O89290
+  edges:
+  - subject: prot_O93215
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL_HV190 is an exemplar enzyme with EC 3.4.23.16 activity.
+    evidence:
+    - reference: EC:3.4.23.16
+      snippet: DR   O93215, POL_HV190  ;  O12158, POL_HV192  ;  O89290, POL_HV193  ;
+      notes: ExPASy ENZYME entry EC 3.4.23.16 cross-references UniProtKB:O93215 (POL_HV190) as a protein
+        with this activity.
+  - subject: prot_O12158
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL_HV192 is an exemplar enzyme with EC 3.4.23.16 activity.
+    evidence:
+    - reference: EC:3.4.23.16
+      snippet: DR   O93215, POL_HV190  ;  O12158, POL_HV192  ;  O89290, POL_HV193  ;
+      notes: ExPASy ENZYME entry EC 3.4.23.16 cross-references UniProtKB:O12158 (POL_HV192) as a protein
+        with this activity.
+  - subject: prot_O89290
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL_HV193 is an exemplar enzyme with EC 3.4.23.16 activity.
+    evidence:
+    - reference: EC:3.4.23.16
+      snippet: DR   O93215, POL_HV190  ;  O12158, POL_HV192  ;  O89290, POL_HV193  ;
+      notes: ExPASy ENZYME entry EC 3.4.23.16 cross-references UniProtKB:O89290 (POL_HV193) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

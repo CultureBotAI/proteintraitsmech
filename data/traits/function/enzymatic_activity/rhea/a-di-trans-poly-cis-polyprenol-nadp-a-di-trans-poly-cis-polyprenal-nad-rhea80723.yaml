@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.1.1.441
     mapping_source: rhea2ec
@@ -30,4 +30,131 @@ definitions:
       Catalyses the reaction: a di-trans,poly-cis-polyprenol + NADP(+) = a di-trans,poly-cis-polyprenal + NADPH + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a di-trans,poly-cis-polyprenol + NADP(+) = a di-trans,poly-cis-polyprenal
+    + NADPH + H(+)
+  description: Substrate-to-product chemistry of RHEA:80723, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80724 (rh:substrates → 80723_L, rh:products → 80723_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a di-trans,poly-cis-polyprenol + NADP(+) = a di-trans,poly-cis-polyprenal +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80723
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a di-trans,poly-cis-polyprenol + NADP(+) = a di-trans,poly-cis-polyprenal + NADPH
+      + H(+)'
+  - node_id: sub1
+    label: a di-trans,poly-cis-polyprenol
+    node_type: CHEMICAL
+    grounding: CHEBI:67132
+    xrefs:
+    - RHEA-COMP:19496
+    description: Rhea compound POLYMER:19496. Formula C20H34O(C5H8)<i><sub>n-1</sub></i>. Polymerisation
+      index n-1.
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: a di-trans,poly-cis-polyprenal
+    node_type: CHEMICAL
+    grounding: CHEBI:231623
+    xrefs:
+    - RHEA-COMP:19536
+    description: Rhea compound POLYMER:19536. Formula C20H32O(C5H8)<i><sub>n-1</sub></i>. Polymerisation
+      index n-1.
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: polyprenol dehydrogenase [NAD(P)H]
+    grounding: EC:1.1.1.441
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a di-trans,poly-cis-polyprenol is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:80724
+      snippet: a di-trans,poly-cis-polyprenol + NADP(+) => a di-trans,poly-cis-polyprenal + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80724 declares side 80723_L as its substrates
+        (rh:substrates); the master reaction RHEA:80723 is undirected. This participant is POLYMER:19496
+        with coefficient 1. Rhea cites PMID:38821050 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80724
+      snippet: a di-trans,poly-cis-polyprenol + NADP(+) => a di-trans,poly-cis-polyprenal + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80724 declares side 80723_L as its substrates
+        (rh:substrates); the master reaction RHEA:80723 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:38821050 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a di-trans,poly-cis-polyprenal is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:80724
+      snippet: a di-trans,poly-cis-polyprenol + NADP(+) => a di-trans,poly-cis-polyprenal + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80724 declares side 80723_R as its products
+        (rh:products); the master reaction RHEA:80723 is undirected. This participant is POLYMER:19536
+        with coefficient 1. Rhea cites PMID:38821050 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80724
+      snippet: a di-trans,poly-cis-polyprenol + NADP(+) => a di-trans,poly-cis-polyprenal + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80724 declares side 80723_R as its products
+        (rh:products); the master reaction RHEA:80723 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:38821050 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80724
+      snippet: a di-trans,poly-cis-polyprenol + NADP(+) => a di-trans,poly-cis-polyprenal + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80724 declares side 80723_R as its products
+        (rh:products); the master reaction RHEA:80723 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:38821050 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.1.1.441; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:80723
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.441"/>
+      notes: The rh:ec triple on RHEA:80723 in rhea.rdf. EC 1.1.1.441 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

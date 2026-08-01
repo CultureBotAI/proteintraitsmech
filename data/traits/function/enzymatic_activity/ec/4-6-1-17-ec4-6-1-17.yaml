@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.6.1.-
 xrefs:
@@ -40,4 +40,137 @@ definitions:
       Catalyses: (8S)-3',8-cyclo-7,8-dihydroguanosine 5'-triphosphate = cyclic pyranopterin phosphate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclic pyranopterin monophosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.6.1.17. EC 4.6.1.17 maps to exactly
+    one curated Rhea reaction (RHEA:49580), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(8S)-3'',8-cyclo-7,8-dihydroguanosine
+    5''-triphosphate = cyclic pyranopterin phosphate + diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cyclic pyranopterin monophosphate synthase
+    grounding: EC:4.6.1.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (8S)-3',8-cyclo-7,8-dihydroguanosine 5'-triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:131766
+    description: Formula C10H12N5O14P3.
+  - node_id: prd1
+    label: cyclic pyranopterin phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59648
+    description: Formula C10H11N5O7P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cyclic pyranopterin monophosphate synthase activity
+    grounding: GO:0061799
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0A5K5
+    node_type: PROTEIN
+    label: MOAC1_MYCBO
+    grounding: UniProtKB:P0A5K5
+  - node_id: prot_P9WJR8
+    node_type: PROTEIN
+    label: MOAC1_MYCTO
+    grounding: UniProtKB:P9WJR8
+  - node_id: prot_P9WJR9
+    node_type: PROTEIN
+    label: MOAC1_MYCTU
+    grounding: UniProtKB:P9WJR9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (8S)-3',8-cyclo-7,8-dihydroguanosine 5'-triphosphate is a substrate consumed by RHEA:49580
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49581
+      snippet: (8S)-3',8-cyclo-7,8-dihydroguanosine 5'-triphosphate => cyclic pyranopterin phosphate +
+        diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49581 declares side 49580_L as its substrates
+        (rh:substrates); the master reaction RHEA:49580 is undirected. This participant is CHEBI:131766
+        with coefficient 1. Rhea cites PMID:14761975, PMID:25941396, PMID:7836363, PMID:25697423 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cyclic pyranopterin phosphate is a product released by RHEA:49580 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49581
+      snippet: (8S)-3',8-cyclo-7,8-dihydroguanosine 5'-triphosphate => cyclic pyranopterin phosphate +
+        diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49581 declares side 49580_R as its products
+        (rh:products); the master reaction RHEA:49580 is undirected. This participant is CHEBI:59648 with
+        coefficient 1. Rhea cites PMID:14761975, PMID:25941396, PMID:7836363, PMID:25697423 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:49580 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49581
+      snippet: (8S)-3',8-cyclo-7,8-dihydroguanosine 5'-triphosphate => cyclic pyranopterin phosphate +
+        diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49581 declares side 49580_R as its products
+        (rh:products); the master reaction RHEA:49580 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:14761975, PMID:25941396, PMID:7836363, PMID:25697423 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.6.1.17
+      snippet: EC:4.6.1.17 > GO:cyclic pyranopterin monophosphate synthase activity ; GO:0061799
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0061799 is itself a record
+        in this KB.
+  - subject: prot_P0A5K5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MOAC1_MYCBO is an exemplar enzyme with EC 4.6.1.17 activity.
+    evidence:
+    - reference: EC:4.6.1.17
+      snippet: DR   P0A5K5, MOAC1_MYCBO;  P9WJR8, MOAC1_MYCTO;  P9WJR9, MOAC1_MYCTU;
+      notes: ExPASy ENZYME entry EC 4.6.1.17 cross-references UniProtKB:P0A5K5 (MOAC1_MYCBO) as a protein
+        with this activity.
+  - subject: prot_P9WJR8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MOAC1_MYCTO is an exemplar enzyme with EC 4.6.1.17 activity.
+    evidence:
+    - reference: EC:4.6.1.17
+      snippet: DR   P0A5K5, MOAC1_MYCBO;  P9WJR8, MOAC1_MYCTO;  P9WJR9, MOAC1_MYCTU;
+      notes: ExPASy ENZYME entry EC 4.6.1.17 cross-references UniProtKB:P9WJR8 (MOAC1_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WJR9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MOAC1_MYCTU is an exemplar enzyme with EC 4.6.1.17 activity.
+    evidence:
+    - reference: EC:4.6.1.17
+      snippet: DR   P0A5K5, MOAC1_MYCBO;  P9WJR8, MOAC1_MYCTO;  P9WJR9, MOAC1_MYCTU;
+      notes: ExPASy ENZYME entry EC 4.6.1.17 cross-references UniProtKB:P9WJR9 (MOAC1_MYCTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

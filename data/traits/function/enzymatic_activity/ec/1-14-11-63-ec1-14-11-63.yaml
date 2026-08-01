@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.11.-
 synonyms:
@@ -43,4 +43,218 @@ definitions:
       Catalyses: L-lysyl-[protein] + 2-oxoglutarate + O2 = (3S)-3-hydroxy-L-lysyl- [protein] + succinate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidyl-lysine (3S)-dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.11.63. EC 1.14.11.63 maps to
+    exactly one curated Rhea reaction (RHEA:57152), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-lysyl-[protein]
+    + 2-oxoglutarate + O2 = (3S)-3-hydroxy-L-lysyl- [protein] + succinate + CO2". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-lysine (3S)-dioxygenase
+    grounding: EC:1.14.11.63
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9752
+    description: Rhea compound GENERIC:9752.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9752 (L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29969
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (3S)-3-hydroxy-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15133
+    description: Rhea compound GENERIC:15133.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: (3S)-3-hydroxy-L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:15133 ((3S)-3-hydroxy-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:141492
+  - node_id: prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: prd3
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-lysine 3-dioxygenase activity
+    grounding: GO:0106155
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9VU77
+    node_type: PROTEIN
+    label: JMJD7_DROME
+    grounding: UniProtKB:Q9VU77
+  - node_id: prot_P0C870
+    node_type: PROTEIN
+    label: JMJD7_HUMAN
+    grounding: UniProtKB:P0C870
+  - node_id: prot_P0C872
+    node_type: PROTEIN
+    label: JMJD7_MOUSE
+    grounding: UniProtKB:P0C872
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-lysyl-[protein] is a substrate consumed by RHEA:57152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57153
+      snippet: L-lysyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-lysyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:57153 declares side 57152_L as its substrates
+        (rh:substrates); the master reaction RHEA:57152 is undirected. This participant is GENERIC:9752
+        with coefficient 1. Rhea cites PMID:29915238 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-lysine residue is the reactive part of L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:57152
+      snippet: L-lysine residue
+      notes: Rhea compound GENERIC:9752 (L-lysyl-[protein]) declares rh:reactivePart = L-lysine residue
+        (CHEBI:29969).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:57152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57153
+      snippet: L-lysyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-lysyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:57153 declares side 57152_L as its substrates
+        (rh:substrates); the master reaction RHEA:57152 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:29915238 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:57152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57153
+      snippet: L-lysyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-lysyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:57153 declares side 57152_L as its substrates
+        (rh:substrates); the master reaction RHEA:57152 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:29915238 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3S)-3-hydroxy-L-lysyl-[protein] is a product released by RHEA:57152 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57153
+      snippet: L-lysyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-lysyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:57153 declares side 57152_R as its products
+        (rh:products); the master reaction RHEA:57152 is undirected. This participant is GENERIC:15133
+        with coefficient 1. Rhea cites PMID:29915238 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: (3S)-3-hydroxy-L-lysine residue is the reactive part of (3S)-3-hydroxy-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:57152
+      snippet: (3S)-3-hydroxy-L-lysine residue
+      notes: Rhea compound GENERIC:15133 ((3S)-3-hydroxy-L-lysyl-[protein]) declares rh:reactivePart =
+        (3S)-3-hydroxy-L-lysine residue (CHEBI:141492).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinate is a product released by RHEA:57152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57153
+      snippet: L-lysyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-lysyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:57153 declares side 57152_R as its products
+        (rh:products); the master reaction RHEA:57152 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:29915238 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CO2 is a product released by RHEA:57152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57153
+      snippet: L-lysyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-lysyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:57153 declares side 57152_R as its products
+        (rh:products); the master reaction RHEA:57152 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:29915238 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.14.11.63
+      snippet: EC:1.14.11.63 > GO:peptidyl-lysine 3-dioxygenase activity ; GO:0106155
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0106155 is itself a record
+        in this KB.
+  - subject: prot_Q9VU77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JMJD7_DROME is an exemplar enzyme with EC 1.14.11.63 activity.
+    evidence:
+    - reference: EC:1.14.11.63
+      snippet: DR   Q9VU77, JMJD7_DROME;  P0C870, JMJD7_HUMAN;  P0C872, JMJD7_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.14.11.63 cross-references UniProtKB:Q9VU77 (JMJD7_DROME) as a protein
+        with this activity.
+  - subject: prot_P0C870
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JMJD7_HUMAN is an exemplar enzyme with EC 1.14.11.63 activity.
+    evidence:
+    - reference: EC:1.14.11.63
+      snippet: DR   Q9VU77, JMJD7_DROME;  P0C870, JMJD7_HUMAN;  P0C872, JMJD7_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.14.11.63 cross-references UniProtKB:P0C870 (JMJD7_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P0C872
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JMJD7_MOUSE is an exemplar enzyme with EC 1.14.11.63 activity.
+    evidence:
+    - reference: EC:1.14.11.63
+      snippet: DR   Q9VU77, JMJD7_DROME;  P0C870, JMJD7_HUMAN;  P0C872, JMJD7_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.14.11.63 cross-references UniProtKB:P0C872 (JMJD7_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

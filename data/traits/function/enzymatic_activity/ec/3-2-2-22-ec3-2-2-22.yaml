@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 synonyms:
@@ -39,4 +39,81 @@ definitions:
       Catalyses: Endohydrolysis of the N-glycosidic bond at one specific adenosine on the 28S rRNA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of rRNA N-glycosylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.22. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endohydrolysis
+    of the N-glycosidic bond at one specific adenosine on the 28S rRNA".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: rRNA N-glycosylase
+    grounding: EC:3.2.2.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: rRNA N-glycosylase activity
+    grounding: GO:0030598
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P11140
+    node_type: PROTEIN
+    label: ABRA_ABRPR
+    grounding: UniProtKB:P11140
+  - node_id: prot_Q06077
+    node_type: PROTEIN
+    label: ABRB_ABRPR
+    grounding: UniProtKB:Q06077
+  - node_id: prot_P28590
+    node_type: PROTEIN
+    label: ABRC_ABRPR
+    grounding: UniProtKB:P28590
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.22
+      snippet: EC:3.2.2.22 > GO:rRNA N-glycosylase activity ; GO:0030598
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0030598 is itself a record
+        in this KB.
+  - subject: prot_P11140
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABRA_ABRPR is an exemplar enzyme with EC 3.2.2.22 activity.
+    evidence:
+    - reference: EC:3.2.2.22
+      snippet: DR   P11140, ABRA_ABRPR ;  Q06077, ABRB_ABRPR ;  P28590, ABRC_ABRPR ;
+      notes: ExPASy ENZYME entry EC 3.2.2.22 cross-references UniProtKB:P11140 (ABRA_ABRPR) as a protein
+        with this activity.
+  - subject: prot_Q06077
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABRB_ABRPR is an exemplar enzyme with EC 3.2.2.22 activity.
+    evidence:
+    - reference: EC:3.2.2.22
+      snippet: DR   P11140, ABRA_ABRPR ;  Q06077, ABRB_ABRPR ;  P28590, ABRC_ABRPR ;
+      notes: ExPASy ENZYME entry EC 3.2.2.22 cross-references UniProtKB:Q06077 (ABRB_ABRPR) as a protein
+        with this activity.
+  - subject: prot_P28590
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABRC_ABRPR is an exemplar enzyme with EC 3.2.2.22 activity.
+    evidence:
+    - reference: EC:3.2.2.22
+      snippet: DR   P11140, ABRA_ABRPR ;  Q06077, ABRB_ABRPR ;  P28590, ABRC_ABRPR ;
+      notes: ExPASy ENZYME entry EC 3.2.2.22 cross-references UniProtKB:P28590 (ABRC_ABRPR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

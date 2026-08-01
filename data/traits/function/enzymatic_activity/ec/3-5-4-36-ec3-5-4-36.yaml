@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.4.-
 synonyms:
@@ -39,4 +39,186 @@ definitions:
       Catalyses: cytidine(6666) in apoB mRNA + H2O + H(+) = uridine(6666) in apoB mRNA + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mRNA(cytosine(6666)) deaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.4.36. EC 3.5.4.36 maps to exactly
+    one curated Rhea reaction (RHEA:21772), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "cytidine(6666)
+    in apoB mRNA + H2O + H(+) = uridine(6666) in apoB mRNA + NH4(+)". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mRNA(cytosine(6666)) deaminase
+    grounding: EC:3.5.4.36
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: cytidine(6666) in apoB mRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13888
+    description: Rhea compound GENERIC:13888.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: CMP residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13888 (cytidine(6666)
+      in apoB mRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82748
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: uridine(6666) in apoB mRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13889
+    description: Rhea compound GENERIC:13889.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: UMP residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13889 (uridine(6666)
+      in apoB mRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prot_P41238
+    node_type: PROTEIN
+    label: ABEC1_HUMAN
+    grounding: UniProtKB:P41238
+  - node_id: prot_Q9EQP0
+    node_type: PROTEIN
+    label: ABEC1_MESAU
+    grounding: UniProtKB:Q9EQP0
+  - node_id: prot_Q9TUI7
+    node_type: PROTEIN
+    label: ABEC1_MONDO
+    grounding: UniProtKB:Q9TUI7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cytidine(6666) in apoB mRNA is a substrate consumed by RHEA:21772 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21773
+      snippet: cytidine(6666) in apoB mRNA + H2O + H(+) => uridine(6666) in apoB mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21773 declares side 21772_L as its substrates
+        (rh:substrates); the master reaction RHEA:21772 is undirected. This participant is GENERIC:13888
+        with coefficient 1. Rhea cites PMID:30844405, PMID:15273326, PMID:8280158, PMID:17187054 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: CMP residue is the reactive part of cytidine(6666) in apoB mRNA.
+    evidence:
+    - reference: RHEA:21772
+      snippet: CMP residue
+      notes: Rhea compound GENERIC:13888 (cytidine(6666) in apoB mRNA) declares rh:reactivePart = CMP
+        residue (CHEBI:82748).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:21772 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21773
+      snippet: cytidine(6666) in apoB mRNA + H2O + H(+) => uridine(6666) in apoB mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21773 declares side 21772_L as its substrates
+        (rh:substrates); the master reaction RHEA:21772 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:30844405, PMID:15273326, PMID:8280158, PMID:17187054 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:21772 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21773
+      snippet: cytidine(6666) in apoB mRNA + H2O + H(+) => uridine(6666) in apoB mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21773 declares side 21772_L as its substrates
+        (rh:substrates); the master reaction RHEA:21772 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:30844405, PMID:15273326, PMID:8280158, PMID:17187054 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: uridine(6666) in apoB mRNA is a product released by RHEA:21772 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21773
+      snippet: cytidine(6666) in apoB mRNA + H2O + H(+) => uridine(6666) in apoB mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21773 declares side 21772_R as its products
+        (rh:products); the master reaction RHEA:21772 is undirected. This participant is GENERIC:13889
+        with coefficient 1. Rhea cites PMID:30844405, PMID:15273326, PMID:8280158, PMID:17187054 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: UMP residue is the reactive part of uridine(6666) in apoB mRNA.
+    evidence:
+    - reference: RHEA:21772
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:13889 (uridine(6666) in apoB mRNA) declares rh:reactivePart = UMP residue
+        (CHEBI:65315).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:21772 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21773
+      snippet: cytidine(6666) in apoB mRNA + H2O + H(+) => uridine(6666) in apoB mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21773 declares side 21772_R as its products
+        (rh:products); the master reaction RHEA:21772 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:30844405, PMID:15273326, PMID:8280158, PMID:17187054 for this reaction.
+  - subject: prot_P41238
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABEC1_HUMAN is an exemplar enzyme with EC 3.5.4.36 activity.
+    evidence:
+    - reference: EC:3.5.4.36
+      snippet: DR   P41238, ABEC1_HUMAN;  Q9EQP0, ABEC1_MESAU;  Q9TUI7, ABEC1_MONDO;
+      notes: ExPASy ENZYME entry EC 3.5.4.36 cross-references UniProtKB:P41238 (ABEC1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9EQP0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABEC1_MESAU is an exemplar enzyme with EC 3.5.4.36 activity.
+    evidence:
+    - reference: EC:3.5.4.36
+      snippet: DR   P41238, ABEC1_HUMAN;  Q9EQP0, ABEC1_MESAU;  Q9TUI7, ABEC1_MONDO;
+      notes: ExPASy ENZYME entry EC 3.5.4.36 cross-references UniProtKB:Q9EQP0 (ABEC1_MESAU) as a protein
+        with this activity.
+  - subject: prot_Q9TUI7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABEC1_MONDO is an exemplar enzyme with EC 3.5.4.36 activity.
+    evidence:
+    - reference: EC:3.5.4.36
+      snippet: DR   P41238, ABEC1_HUMAN;  Q9EQP0, ABEC1_MESAU;  Q9TUI7, ABEC1_MONDO;
+      notes: ExPASy ENZYME entry EC 3.5.4.36 cross-references UniProtKB:Q9TUI7 (ABEC1_MONDO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

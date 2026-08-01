@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.6.2.-
 synonyms:
@@ -40,4 +40,67 @@ definitions:
       Catalyses: ATP + H2O + aliphatic sulfonate-[sulfonate-binding protein]Side 1 = ADP + phosphate + aliphatic sulfonateSide 2 + [sulfonate-binding protein]Side 1
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ABC-type aliphatic sulfonate transporter
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.6.2.14. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + H2O
+    + aliphatic sulfonate-[sulfonate-binding protein]Side 1 = ADP + phosphate + aliphatic sulfonateSide
+    2 + [sulfonate-binding protein]Side 1".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type aliphatic sulfonate transporter
+    grounding: EC:7.6.2.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q8U8D6
+    node_type: PROTEIN
+    label: SSUB1_AGRFC
+    grounding: UniProtKB:Q8U8D6
+  - node_id: prot_A0K739
+    node_type: PROTEIN
+    label: SSUB1_BURCH
+    grounding: UniProtKB:A0K739
+  - node_id: prot_Q39GW5
+    node_type: PROTEIN
+    label: SSUB1_BURL3
+    grounding: UniProtKB:Q39GW5
+  edges:
+  - subject: prot_Q8U8D6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSUB1_AGRFC is an exemplar enzyme with EC 7.6.2.14 activity.
+    evidence:
+    - reference: EC:7.6.2.14
+      snippet: DR   Q8U8D6, SSUB1_AGRFC;  A0K739, SSUB1_BURCH;  Q39GW5, SSUB1_BURL3;
+      notes: ExPASy ENZYME entry EC 7.6.2.14 cross-references UniProtKB:Q8U8D6 (SSUB1_AGRFC) as a protein
+        with this activity.
+  - subject: prot_A0K739
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSUB1_BURCH is an exemplar enzyme with EC 7.6.2.14 activity.
+    evidence:
+    - reference: EC:7.6.2.14
+      snippet: DR   Q8U8D6, SSUB1_AGRFC;  A0K739, SSUB1_BURCH;  Q39GW5, SSUB1_BURL3;
+      notes: ExPASy ENZYME entry EC 7.6.2.14 cross-references UniProtKB:A0K739 (SSUB1_BURCH) as a protein
+        with this activity.
+  - subject: prot_Q39GW5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSUB1_BURL3 is an exemplar enzyme with EC 7.6.2.14 activity.
+    evidence:
+    - reference: EC:7.6.2.14
+      snippet: DR   Q8U8D6, SSUB1_AGRFC;  A0K739, SSUB1_BURCH;  Q39GW5, SSUB1_BURL3;
+      notes: ExPASy ENZYME entry EC 7.6.2.14 cross-references UniProtKB:Q39GW5 (SSUB1_BURL3) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

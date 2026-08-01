@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -41,4 +41,82 @@ definitions:
       Catalyses: Hydrolysis of peptide bonds in substrates containing five or more amino acids, preferentially with Ala in P1', and Pro in P2'
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of astacin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.21. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of peptide bonds in substrates containing five or more amino acids, preferentially with Ala in P1'',
+    and Pro in P2''".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: astacin
+    grounding: EC:3.4.24.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: metalloendopeptidase activity
+    grounding: GO:0004222
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P07584
+    node_type: PROTEIN
+    label: ASTA_ASTAS
+    grounding: UniProtKB:P07584
+  - node_id: prot_Q21179
+    node_type: PROTEIN
+    label: NAS18_CAEEL
+    grounding: UniProtKB:Q21179
+  - node_id: prot_Q18439
+    node_type: PROTEIN
+    label: NAS8_CAEEL
+    grounding: UniProtKB:Q18439
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.24.21
+      snippet: EC:3.4.24.21 > GO:metalloendopeptidase activity ; GO:0004222
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004222 is itself a record
+        in this KB.
+  - subject: prot_P07584
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASTA_ASTAS is an exemplar enzyme with EC 3.4.24.21 activity.
+    evidence:
+    - reference: EC:3.4.24.21
+      snippet: DR   P07584, ASTA_ASTAS ;  Q21179, NAS18_CAEEL;  Q18439, NAS8_CAEEL ;
+      notes: ExPASy ENZYME entry EC 3.4.24.21 cross-references UniProtKB:P07584 (ASTA_ASTAS) as a protein
+        with this activity.
+  - subject: prot_Q21179
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NAS18_CAEEL is an exemplar enzyme with EC 3.4.24.21 activity.
+    evidence:
+    - reference: EC:3.4.24.21
+      snippet: DR   P07584, ASTA_ASTAS ;  Q21179, NAS18_CAEEL;  Q18439, NAS8_CAEEL ;
+      notes: ExPASy ENZYME entry EC 3.4.24.21 cross-references UniProtKB:Q21179 (NAS18_CAEEL) as a protein
+        with this activity.
+  - subject: prot_Q18439
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NAS8_CAEEL is an exemplar enzyme with EC 3.4.24.21 activity.
+    evidence:
+    - reference: EC:3.4.24.21
+      snippet: DR   P07584, ASTA_ASTAS ;  Q21179, NAS18_CAEEL;  Q18439, NAS8_CAEEL ;
+      notes: ExPASy ENZYME entry EC 3.4.24.21 cross-references UniProtKB:Q18439 (NAS8_CAEEL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

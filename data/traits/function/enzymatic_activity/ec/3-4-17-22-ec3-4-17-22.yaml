@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.17.-
 synonyms:
@@ -39,4 +39,81 @@ definitions:
       Catalyses: Releases C-terminal Arg and Lys from polypeptides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of metallocarboxypeptidase D
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.17.22. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Releases
+    C-terminal Arg and Lys from polypeptides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: metallocarboxypeptidase D
+    grounding: EC:3.4.17.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: metallocarboxypeptidase activity
+    grounding: GO:0004181
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q90240
+    node_type: PROTEIN
+    label: CBPD_ANAPL
+    grounding: UniProtKB:Q90240
+  - node_id: prot_P42787
+    node_type: PROTEIN
+    label: CBPD_DROME
+    grounding: UniProtKB:P42787
+  - node_id: prot_O75976
+    node_type: PROTEIN
+    label: CBPD_HUMAN
+    grounding: UniProtKB:O75976
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.17.22
+      snippet: EC:3.4.17.22 > GO:metallocarboxypeptidase activity ; GO:0004181
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004181 is itself a record
+        in this KB.
+  - subject: prot_Q90240
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBPD_ANAPL is an exemplar enzyme with EC 3.4.17.22 activity.
+    evidence:
+    - reference: EC:3.4.17.22
+      snippet: DR   Q90240, CBPD_ANAPL ;  P42787, CBPD_DROME ;  O75976, CBPD_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.17.22 cross-references UniProtKB:Q90240 (CBPD_ANAPL) as a protein
+        with this activity.
+  - subject: prot_P42787
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBPD_DROME is an exemplar enzyme with EC 3.4.17.22 activity.
+    evidence:
+    - reference: EC:3.4.17.22
+      snippet: DR   Q90240, CBPD_ANAPL ;  P42787, CBPD_DROME ;  O75976, CBPD_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.17.22 cross-references UniProtKB:P42787 (CBPD_DROME) as a protein
+        with this activity.
+  - subject: prot_O75976
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBPD_HUMAN is an exemplar enzyme with EC 3.4.17.22 activity.
+    evidence:
+    - reference: EC:3.4.17.22
+      snippet: DR   Q90240, CBPD_ANAPL ;  P42787, CBPD_DROME ;  O75976, CBPD_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.17.22 cross-references UniProtKB:O75976 (CBPD_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

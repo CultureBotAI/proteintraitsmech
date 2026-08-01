@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58451
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: pyridoxamine 5'-phosphate + 2-oxoglutarate = pyridoxal 5'-phosphate + L-glutamate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pyridoxamine 5'-phosphate + 2-oxoglutarate = pyridoxal 5'-phosphate + L-glutamate
+  description: Substrate-to-product chemistry of RHEA:59824, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59825 (rh:substrates → 59824_L, rh:products → 59824_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of pyridoxamine 5'-phosphate + 2-oxoglutarate = pyridoxal 5'-phosphate + L-glut…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59824
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: pyridoxamine 5''-phosphate + 2-oxoglutarate = pyridoxal 5''-phosphate + L-glutamate'
+  - node_id: sub1
+    label: pyridoxamine 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58451
+    description: Formula C8H12N2O5P.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: pyridoxal 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:597326
+    description: Formula C8H8NO6P.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: pyridoxamine 5'-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59825
+      snippet: pyridoxamine 5'-phosphate + 2-oxoglutarate => pyridoxal 5'-phosphate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:59825 declares side 59824_L as its substrates
+        (rh:substrates); the master reaction RHEA:59824 is undirected. This participant is CHEBI:58451
+        with coefficient 1. Rhea cites PMID:15610039 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59825
+      snippet: pyridoxamine 5'-phosphate + 2-oxoglutarate => pyridoxal 5'-phosphate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:59825 declares side 59824_L as its substrates
+        (rh:substrates); the master reaction RHEA:59824 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:15610039 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pyridoxal 5'-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59825
+      snippet: pyridoxamine 5'-phosphate + 2-oxoglutarate => pyridoxal 5'-phosphate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:59825 declares side 59824_R as its products
+        (rh:products); the master reaction RHEA:59824 is undirected. This participant is CHEBI:597326
+        with coefficient 1. Rhea cites PMID:15610039 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59825
+      snippet: pyridoxamine 5'-phosphate + 2-oxoglutarate => pyridoxal 5'-phosphate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:59825 declares side 59824_R as its products
+        (rh:products); the master reaction RHEA:59824 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:15610039 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

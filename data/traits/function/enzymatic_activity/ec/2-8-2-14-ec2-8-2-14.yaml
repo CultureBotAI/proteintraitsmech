@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.2.-
 synonyms:
@@ -51,4 +51,299 @@ definitions:
       Catalyses: (1) glycolithocholate + 3'-phosphoadenylyl sulfate = glycolithocholate 3-sulfate + adenosine 3',5'-bisphosphate + H(+). (2) taurolithocholate + 3'-phosphoadenylyl sulfate = taurolithocholate 3-sulfate + adenosine 3',5'-bisphosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of bile-salt sulfotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.2.14. Rhea assigns 2 curated
+    reactions to EC 2.8.2.14. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) glycolithocholate + 3''-phosphoadenylyl sulfate = glycolithocholate
+    3-sulfate + adenosine 3'',5''-bisphosphate + H(+). (2) taurolithocholate + 3''-phosphoadenylyl sulfate
+    = taurolithocholate 3-sulfate + adenosine 3'',5''-bisphosphate + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: bile-salt sulfotransferase
+    grounding: EC:2.8.2.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of glycolithocholate + 3'-phosphoadenylyl sulfate = glycolithocholate 3-sulfate…
+    grounding: RHEA:10908
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: glycolithocholate + 3''-phosphoadenylyl sulfate = glycolithocholate 3-sulfate
+      + adenosine 3'',5''-bisphosphate + H(+)'
+  - node_id: rxn1_sub1
+    label: glycolithocholate
+    node_type: CHEMICAL
+    grounding: CHEBI:60008
+    description: Formula C26H42NO4.
+  - node_id: rxn1_sub2
+    label: 3'-phosphoadenylyl sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:58339
+    description: Formula C10H11N5O13P2S.
+  - node_id: rxn1_prd1
+    label: glycolithocholate 3-sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:60007
+    description: Formula C26H41NO7S.
+  - node_id: rxn1_prd2
+    label: adenosine 3',5'-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58343
+    description: Formula C10H11N5O10P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of taurolithocholate + 3'-phosphoadenylyl sulfate = taurolithocholate 3-sulfate…
+    grounding: RHEA:14013
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: taurolithocholate + 3''-phosphoadenylyl sulfate = taurolithocholate 3-sulfate
+      + adenosine 3'',5''-bisphosphate + H(+)'
+  - node_id: rxn2_sub1
+    label: taurolithocholate
+    node_type: CHEMICAL
+    grounding: CHEBI:17179
+    description: Formula C26H44NO5S.
+  - node_id: rxn2_sub2
+    label: 3'-phosphoadenylyl sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:58339
+    description: Formula C10H11N5O13P2S.
+  - node_id: rxn2_prd1
+    label: taurolithocholate 3-sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:58301
+    description: Formula C26H43NO8S2.
+  - node_id: rxn2_prd2
+    label: adenosine 3',5'-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58343
+    description: Formula C10H11N5O10P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: bile-salt sulfotransferase activity
+    grounding: GO:0047704
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q06520
+    node_type: PROTEIN
+    label: ST2A1_HUMAN
+    grounding: UniProtKB:Q06520
+  - node_id: prot_P52842
+    node_type: PROTEIN
+    label: ST2A1_MACFA
+    grounding: UniProtKB:P52842
+  - node_id: prot_P52843
+    node_type: PROTEIN
+    label: ST2A1_MOUSE
+    grounding: UniProtKB:P52843
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:10908 is one of the 2 curated reactions Rhea assigns to EC 2.8.2.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:10908
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.2.14"/>
+      notes: The rh:ec triple on RHEA:10908 in rhea.rdf assigns that reaction to EC 2.8.2.14.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: glycolithocholate is a substrate consumed by RHEA:10908 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10909
+      snippet: glycolithocholate + 3'-phosphoadenylyl sulfate => glycolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10909 declares side 10908_L as its substrates
+        (rh:substrates); the master reaction RHEA:10908 is undirected. This participant is CHEBI:60008
+        with coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: 3'-phosphoadenylyl sulfate is a substrate consumed by RHEA:10908 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10909
+      snippet: glycolithocholate + 3'-phosphoadenylyl sulfate => glycolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10909 declares side 10908_L as its substrates
+        (rh:substrates); the master reaction RHEA:10908 is undirected. This participant is CHEBI:58339
+        with coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: glycolithocholate 3-sulfate is a product released by RHEA:10908 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10909
+      snippet: glycolithocholate + 3'-phosphoadenylyl sulfate => glycolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10909 declares side 10908_R as its products
+        (rh:products); the master reaction RHEA:10908 is undirected. This participant is CHEBI:60007 with
+        coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: adenosine 3',5'-bisphosphate is a product released by RHEA:10908 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10909
+      snippet: glycolithocholate + 3'-phosphoadenylyl sulfate => glycolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10909 declares side 10908_R as its products
+        (rh:products); the master reaction RHEA:10908 is undirected. This participant is CHEBI:58343 with
+        coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:10908 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10909
+      snippet: glycolithocholate + 3'-phosphoadenylyl sulfate => glycolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10909 declares side 10908_R as its products
+        (rh:products); the master reaction RHEA:10908 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:14013 is one of the 2 curated reactions Rhea assigns to EC 2.8.2.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:14013
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.2.14"/>
+      notes: The rh:ec triple on RHEA:14013 in rhea.rdf assigns that reaction to EC 2.8.2.14.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: taurolithocholate is a substrate consumed by RHEA:14013 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14014
+      snippet: taurolithocholate + 3'-phosphoadenylyl sulfate => taurolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14014 declares side 14013_L as its substrates
+        (rh:substrates); the master reaction RHEA:14013 is undirected. This participant is CHEBI:17179
+        with coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: 3'-phosphoadenylyl sulfate is a substrate consumed by RHEA:14013 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14014
+      snippet: taurolithocholate + 3'-phosphoadenylyl sulfate => taurolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14014 declares side 14013_L as its substrates
+        (rh:substrates); the master reaction RHEA:14013 is undirected. This participant is CHEBI:58339
+        with coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: taurolithocholate 3-sulfate is a product released by RHEA:14013 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14014
+      snippet: taurolithocholate + 3'-phosphoadenylyl sulfate => taurolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14014 declares side 14013_R as its products
+        (rh:products); the master reaction RHEA:14013 is undirected. This participant is CHEBI:58301 with
+        coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: adenosine 3',5'-bisphosphate is a product released by RHEA:14013 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14014
+      snippet: taurolithocholate + 3'-phosphoadenylyl sulfate => taurolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14014 declares side 14013_R as its products
+        (rh:products); the master reaction RHEA:14013 is undirected. This participant is CHEBI:58343 with
+        coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:14013 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14014
+      snippet: taurolithocholate + 3'-phosphoadenylyl sulfate => taurolithocholate 3-sulfate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14014 declares side 14013_R as its products
+        (rh:products); the master reaction RHEA:14013 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2754334, PMID:20102295, PMID:12543708, PMID:3470420 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.2.14
+      snippet: EC:2.8.2.14 > GO:bile-salt sulfotransferase activity ; GO:0047704
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047704 is itself a record
+        in this KB.
+  - subject: prot_Q06520
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ST2A1_HUMAN is an exemplar enzyme with EC 2.8.2.14 activity.
+    evidence:
+    - reference: EC:2.8.2.14
+      snippet: DR   Q06520, ST2A1_HUMAN;  P52842, ST2A1_MACFA;  P52843, ST2A1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.8.2.14 cross-references UniProtKB:Q06520 (ST2A1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P52842
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ST2A1_MACFA is an exemplar enzyme with EC 2.8.2.14 activity.
+    evidence:
+    - reference: EC:2.8.2.14
+      snippet: DR   Q06520, ST2A1_HUMAN;  P52842, ST2A1_MACFA;  P52843, ST2A1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.8.2.14 cross-references UniProtKB:P52842 (ST2A1_MACFA) as a protein
+        with this activity.
+  - subject: prot_P52843
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ST2A1_MOUSE is an exemplar enzyme with EC 2.8.2.14 activity.
+    evidence:
+    - reference: EC:2.8.2.14
+      snippet: DR   Q06520, ST2A1_HUMAN;  P52842, ST2A1_MACFA;  P52843, ST2A1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.8.2.14 cross-references UniProtKB:P52843 (ST2A1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:190926
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,143 @@ definitions:
       Catalyses the reaction: 5-aminomethyl-dUMP in DNA + acetyl-CoA = 5-acetylaminomethyl-dUMP in DNA + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-aminomethyl-dUMP in DNA + acetyl-CoA = 5-acetylaminomethyl-dUMP in DNA
+    + CoA + H(+)
+  description: Substrate-to-product chemistry of RHEA:71563, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71564 (rh:substrates → 71563_L, rh:products → 71563_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-aminomethyl-dUMP in DNA + acetyl-CoA = 5-acetylaminomethyl-dUMP in DNA + C…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71563
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-aminomethyl-dUMP in DNA + acetyl-CoA = 5-acetylaminomethyl-dUMP in DNA + CoA +
+      H(+)'
+  - node_id: sub1
+    label: 5-aminomethyl-dUMP in DNA
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18044
+    description: Rhea compound GENERIC:18044.
+  - node_id: sub1_rp1
+    label: 5-aminomethyl-dUMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18044 (5-aminomethyl-dUMP
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:190926
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: 5-acetylaminomethyl-dUMP in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18048
+    description: Rhea compound GENERIC:18048.
+  - node_id: prd1_rp1
+    label: 5-acetylaminomethyl-dUMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18048 (5-acetylaminomethyl-dUMP
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:190928
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-aminomethyl-dUMP in DNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:71564
+      snippet: 5-aminomethyl-dUMP in DNA + acetyl-CoA => 5-acetylaminomethyl-dUMP in DNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71564 declares side 71563_L as its substrates
+        (rh:substrates); the master reaction RHEA:71563 is undirected. This participant is GENERIC:18044
+        with coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 5-aminomethyl-dUMP residue is the reactive part of 5-aminomethyl-dUMP in DNA.
+    evidence:
+    - reference: RHEA:71563
+      snippet: 5-aminomethyl-dUMP residue
+      notes: Rhea compound GENERIC:18044 (5-aminomethyl-dUMP in DNA) declares rh:reactivePart = 5-aminomethyl-dUMP
+        residue (CHEBI:190926), formula C10H14N3O7P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71564
+      snippet: 5-aminomethyl-dUMP in DNA + acetyl-CoA => 5-acetylaminomethyl-dUMP in DNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71564 declares side 71563_L as its substrates
+        (rh:substrates); the master reaction RHEA:71563 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-acetylaminomethyl-dUMP in DNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:71564
+      snippet: 5-aminomethyl-dUMP in DNA + acetyl-CoA => 5-acetylaminomethyl-dUMP in DNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71564 declares side 71563_R as its products
+        (rh:products); the master reaction RHEA:71563 is undirected. This participant is GENERIC:18048
+        with coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 5-acetylaminomethyl-dUMP residue is the reactive part of 5-acetylaminomethyl-dUMP in
+      DNA.
+    evidence:
+    - reference: RHEA:71563
+      snippet: 5-acetylaminomethyl-dUMP residue
+      notes: Rhea compound GENERIC:18048 (5-acetylaminomethyl-dUMP in DNA) declares rh:reactivePart =
+        5-acetylaminomethyl-dUMP residue (CHEBI:190928), formula C12H15N3O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71564
+      snippet: 5-aminomethyl-dUMP in DNA + acetyl-CoA => 5-acetylaminomethyl-dUMP in DNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71564 declares side 71563_R as its products
+        (rh:products); the master reaction RHEA:71563 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71564
+      snippet: 5-aminomethyl-dUMP in DNA + acetyl-CoA => 5-acetylaminomethyl-dUMP in DNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71564 declares side 71563_R as its products
+        (rh:products); the master reaction RHEA:71563 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:34522950 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

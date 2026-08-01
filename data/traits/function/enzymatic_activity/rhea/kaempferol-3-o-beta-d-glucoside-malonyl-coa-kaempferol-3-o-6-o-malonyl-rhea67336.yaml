@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:169942
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,113 @@ definitions:
       Catalyses the reaction: kaempferol 3-O-beta-D-glucoside + malonyl-CoA = kaempferol 3-O-(6-O-malonyl-beta-D-glucoside) + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of kaempferol 3-O-beta-D-glucoside + malonyl-CoA = kaempferol 3-O-(6-O-malonyl-beta-D-gluc…
+  description: Substrate-to-product chemistry of RHEA:67336, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67337 (rh:substrates → 67336_L, rh:products → 67336_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of kaempferol 3-O-beta-D-glucoside + malonyl-CoA = kaempferol 3-O-(6-O-malonyl-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67336
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: kaempferol 3-O-beta-D-glucoside + malonyl-CoA = kaempferol 3-O-(6-O-malonyl-beta-D-glucoside)
+      + CoA'
+  - node_id: sub1
+    label: kaempferol 3-O-beta-D-glucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:169942
+    description: Formula C21H19O11.
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: prd1
+    label: kaempferol 3-O-(6-O-malonyl-beta-D-glucoside)
+    node_type: CHEMICAL
+    grounding: CHEBI:169943
+    description: Formula C24H20O14.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: flavonol-3-O-beta-glucoside O-malonyltransferase activity
+    grounding: GO:0047165
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: kaempferol 3-O-beta-D-glucoside is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67337
+      snippet: kaempferol 3-O-beta-D-glucoside + malonyl-CoA => kaempferol 3-O-(6-O-malonyl-beta-D-glucoside)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67337 declares side 67336_L as its substrates
+        (rh:substrates); the master reaction RHEA:67336 is undirected. This participant is CHEBI:169942
+        with coefficient 1. Rhea cites PMID:33770502, PMID:15860007 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67337
+      snippet: kaempferol 3-O-beta-D-glucoside + malonyl-CoA => kaempferol 3-O-(6-O-malonyl-beta-D-glucoside)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67337 declares side 67336_L as its substrates
+        (rh:substrates); the master reaction RHEA:67336 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:33770502, PMID:15860007 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: kaempferol 3-O-(6-O-malonyl-beta-D-glucoside) is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67337
+      snippet: kaempferol 3-O-beta-D-glucoside + malonyl-CoA => kaempferol 3-O-(6-O-malonyl-beta-D-glucoside)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67337 declares side 67336_R as its products
+        (rh:products); the master reaction RHEA:67336 is undirected. This participant is CHEBI:169943
+        with coefficient 1. Rhea cites PMID:33770502, PMID:15860007 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67337
+      snippet: kaempferol 3-O-beta-D-glucoside + malonyl-CoA => kaempferol 3-O-(6-O-malonyl-beta-D-glucoside)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67337 declares side 67336_R as its products
+        (rh:products); the master reaction RHEA:67336 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:33770502, PMID:15860007 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:67336
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047165"/>
+      notes: The rdfs:seeAlso triple on RHEA:67336 in rhea.rdf. GO term GO:0047165 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

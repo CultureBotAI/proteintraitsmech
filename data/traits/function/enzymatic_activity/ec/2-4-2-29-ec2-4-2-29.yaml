@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 synonyms:
@@ -47,4 +47,172 @@ definitions:
       Catalyses: 7-aminomethyl-7-carbaguanine + guanosine(34) in tRNA = 7-aminomethyl-7- carbaguanosine(34) in tRNA + guanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA-guanosine(34) preQ1 transglycosylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.29. EC 2.4.2.29 maps to exactly
+    one curated Rhea reaction (RHEA:24104), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "7-aminomethyl-7-carbaguanine
+    + guanosine(34) in tRNA = 7-aminomethyl-7- carbaguanosine(34) in tRNA + guanine". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA-guanosine(34) preQ1 transglycosylase
+    grounding: EC:2.4.2.29
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 7-aminomethyl-7-carbaguanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58703
+    description: Formula C7H10N5O.
+  - node_id: sub2
+    label: guanosine(34) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10341
+    description: Rhea compound GENERIC:10341.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: GMP residue at position 34
+    description: The reacting group Rhea names inside the generic participant GENERIC:10341 (guanosine(34)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74269
+  - node_id: prd1
+    label: 7-aminomethyl-7-carbaguanosine(34) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10342
+    description: Rhea compound GENERIC:10342.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 7-aminomethyl-7-carbaguanine 5'-phosphate residue at position 34
+    description: The reacting group Rhea names inside the generic participant GENERIC:10342 (7-aminomethyl-7-carbaguanosine(34)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82833
+  - node_id: prd2
+    label: guanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16235
+    description: Formula C5H5N5O.
+  - node_id: prot_A3DE13
+    node_type: PROTEIN
+    label: TGT_ACET2
+    grounding: UniProtKB:A3DE13
+  - node_id: prot_Q6FEJ4
+    node_type: PROTEIN
+    label: TGT_ACIAD
+    grounding: UniProtKB:Q6FEJ4
+  - node_id: prot_B7GWL4
+    node_type: PROTEIN
+    label: TGT_ACIB3
+    grounding: UniProtKB:B7GWL4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 7-aminomethyl-7-carbaguanine is a substrate consumed by RHEA:24104 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24105
+      snippet: 7-aminomethyl-7-carbaguanine + guanosine(34) in tRNA => 7-aminomethyl-7-carbaguanosine(34)
+        in tRNA + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:24105 declares side 24104_L as its substrates
+        (rh:substrates); the master reaction RHEA:24104 is undirected. This participant is CHEBI:58703
+        with coefficient 1. Rhea cites PMID:372186, PMID:16401090, PMID:19414587 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: guanosine(34) in tRNA is a substrate consumed by RHEA:24104 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24105
+      snippet: 7-aminomethyl-7-carbaguanine + guanosine(34) in tRNA => 7-aminomethyl-7-carbaguanosine(34)
+        in tRNA + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:24105 declares side 24104_L as its substrates
+        (rh:substrates); the master reaction RHEA:24104 is undirected. This participant is GENERIC:10341
+        with coefficient 1. Rhea cites PMID:372186, PMID:16401090, PMID:19414587 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: GMP residue is the reactive part of guanosine(34) in tRNA.
+    evidence:
+    - reference: RHEA:24104
+      snippet: GMP residue
+      notes: Rhea compound GENERIC:10341 (guanosine(34) in tRNA) declares rh:reactivePart at position
+        34 = GMP residue (CHEBI:74269).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 7-aminomethyl-7-carbaguanosine(34) in tRNA is a product released by RHEA:24104 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24105
+      snippet: 7-aminomethyl-7-carbaguanine + guanosine(34) in tRNA => 7-aminomethyl-7-carbaguanosine(34)
+        in tRNA + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:24105 declares side 24104_R as its products
+        (rh:products); the master reaction RHEA:24104 is undirected. This participant is GENERIC:10342
+        with coefficient 1. Rhea cites PMID:372186, PMID:16401090, PMID:19414587 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 7-aminomethyl-7-carbaguanine 5'-phosphate residue is the reactive part of 7-aminomethyl-7-carbaguanosine(34)
+      in tRNA.
+    evidence:
+    - reference: RHEA:24104
+      snippet: 7-aminomethyl-7-carbaguanine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10342 (7-aminomethyl-7-carbaguanosine(34) in tRNA) declares rh:reactivePart
+        at position 34 = 7-aminomethyl-7-carbaguanine 5'-phosphate residue (CHEBI:82833).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: guanine is a product released by RHEA:24104 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24105
+      snippet: 7-aminomethyl-7-carbaguanine + guanosine(34) in tRNA => 7-aminomethyl-7-carbaguanosine(34)
+        in tRNA + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:24105 declares side 24104_R as its products
+        (rh:products); the master reaction RHEA:24104 is undirected. This participant is CHEBI:16235 with
+        coefficient 1. Rhea cites PMID:372186, PMID:16401090, PMID:19414587 for this reaction.
+  - subject: prot_A3DE13
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TGT_ACET2 is an exemplar enzyme with EC 2.4.2.29 activity.
+    evidence:
+    - reference: EC:2.4.2.29
+      snippet: DR   A3DE13, TGT_ACET2  ;  Q6FEJ4, TGT_ACIAD  ;  B7GWL4, TGT_ACIB3  ;
+      notes: ExPASy ENZYME entry EC 2.4.2.29 cross-references UniProtKB:A3DE13 (TGT_ACET2) as a protein
+        with this activity.
+  - subject: prot_Q6FEJ4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TGT_ACIAD is an exemplar enzyme with EC 2.4.2.29 activity.
+    evidence:
+    - reference: EC:2.4.2.29
+      snippet: DR   A3DE13, TGT_ACET2  ;  Q6FEJ4, TGT_ACIAD  ;  B7GWL4, TGT_ACIB3  ;
+      notes: ExPASy ENZYME entry EC 2.4.2.29 cross-references UniProtKB:Q6FEJ4 (TGT_ACIAD) as a protein
+        with this activity.
+  - subject: prot_B7GWL4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TGT_ACIB3 is an exemplar enzyme with EC 2.4.2.29 activity.
+    evidence:
+    - reference: EC:2.4.2.29
+      snippet: DR   A3DE13, TGT_ACET2  ;  Q6FEJ4, TGT_ACIAD  ;  B7GWL4, TGT_ACIB3  ;
+      notes: ExPASy ENZYME entry EC 2.4.2.29 cross-references UniProtKB:B7GWL4 (TGT_ACIB3) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

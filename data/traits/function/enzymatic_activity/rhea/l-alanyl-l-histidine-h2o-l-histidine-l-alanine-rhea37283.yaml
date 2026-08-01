@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:74388
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: L-alanyl-L-histidine + H2O = L-histidine + L-alanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-alanyl-L-histidine + H2O = L-histidine + L-alanine
+  description: Substrate-to-product chemistry of RHEA:37283, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:37284 (rh:substrates → 37283_L, rh:products → 37283_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-alanyl-L-histidine + H2O = L-histidine + L-alanine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:37283
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-alanyl-L-histidine + H2O = L-histidine + L-alanine'
+  - node_id: sub1
+    label: L-alanyl-L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:74388
+    description: Formula C9H14N4O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57595
+    description: Formula C6H9N3O2.
+  - node_id: prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-alanyl-L-histidine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:37284
+      snippet: L-alanyl-L-histidine + H2O => L-histidine + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:37284 declares side 37283_L as its substrates
+        (rh:substrates); the master reaction RHEA:37283 is undirected. This participant is CHEBI:74388
+        with coefficient 1. Rhea cites PMID:12473676 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37284
+      snippet: L-alanyl-L-histidine + H2O => L-histidine + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:37284 declares side 37283_L as its substrates
+        (rh:substrates); the master reaction RHEA:37283 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12473676 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-histidine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37284
+      snippet: L-alanyl-L-histidine + H2O => L-histidine + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:37284 declares side 37283_R as its products
+        (rh:products); the master reaction RHEA:37283 is undirected. This participant is CHEBI:57595 with
+        coefficient 1. Rhea cites PMID:12473676 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-alanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37284
+      snippet: L-alanyl-L-histidine + H2O => L-histidine + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:37284 declares side 37283_R as its products
+        (rh:products); the master reaction RHEA:37283 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:12473676 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

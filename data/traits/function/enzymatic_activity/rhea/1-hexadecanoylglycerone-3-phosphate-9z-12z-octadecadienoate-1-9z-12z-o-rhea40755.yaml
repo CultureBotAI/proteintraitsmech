@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58303
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,98 @@ definitions:
       Catalyses the reaction: 1-hexadecanoylglycerone 3-phosphate + (9Z,12Z)-octadecadienoate = 1-(9Z,12Z)-octadecadienoylglycerone 3-phosphate + hexadecanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-hexadecanoylglycerone 3-phosphate + (9Z,12Z)-octadecadienoate = 1-(9Z,12Z)-octadecadi…
+  description: Substrate-to-product chemistry of RHEA:40755, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:40756 (rh:substrates → 40755_L, rh:products → 40755_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1-hexadecanoylglycerone 3-phosphate + (9Z,12Z)-octadecadienoate = 1-(9Z,12Z)…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:40755
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1-hexadecanoylglycerone 3-phosphate + (9Z,12Z)-octadecadienoate = 1-(9Z,12Z)-octadecadienoylglycerone
+      3-phosphate + hexadecanoate'
+  - node_id: sub1
+    label: 1-hexadecanoylglycerone 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58303
+    description: Formula C19H35O7P.
+  - node_id: sub2
+    label: (9Z,12Z)-octadecadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30245
+    description: Formula C18H31O2.
+  - node_id: prd1
+    label: 1-(9Z,12Z)-octadecadienoylglycerone 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:77493
+    description: Formula C21H35O7P.
+  - node_id: prd2
+    label: hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:7896
+    description: Formula C16H31O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-hexadecanoylglycerone 3-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:40756
+      snippet: 1-hexadecanoylglycerone 3-phosphate + (9Z,12Z)-octadecadienoate => 1-(9Z,12Z)-octadecadienoylglycerone
+        3-phosphate + hexadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:40756 declares side 40755_L as its substrates
+        (rh:substrates); the master reaction RHEA:40755 is undirected. This participant is CHEBI:58303
+        with coefficient 1. Rhea cites PMID:836271 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (9Z,12Z)-octadecadienoate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:40756
+      snippet: 1-hexadecanoylglycerone 3-phosphate + (9Z,12Z)-octadecadienoate => 1-(9Z,12Z)-octadecadienoylglycerone
+        3-phosphate + hexadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:40756 declares side 40755_L as its substrates
+        (rh:substrates); the master reaction RHEA:40755 is undirected. This participant is CHEBI:30245
+        with coefficient 1. Rhea cites PMID:836271 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-(9Z,12Z)-octadecadienoylglycerone 3-phosphate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40756
+      snippet: 1-hexadecanoylglycerone 3-phosphate + (9Z,12Z)-octadecadienoate => 1-(9Z,12Z)-octadecadienoylglycerone
+        3-phosphate + hexadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:40756 declares side 40755_R as its products
+        (rh:products); the master reaction RHEA:40755 is undirected. This participant is CHEBI:77493 with
+        coefficient 1. Rhea cites PMID:836271 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hexadecanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40756
+      snippet: 1-hexadecanoylglycerone 3-phosphate + (9Z,12Z)-octadecadienoate => 1-(9Z,12Z)-octadecadienoylglycerone
+        3-phosphate + hexadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:40756 declares side 40755_R as its products
+        (rh:products); the master reaction RHEA:40755 is undirected. This participant is CHEBI:7896 with
+        coefficient 1. Rhea cites PMID:836271 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -38,4 +38,134 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate = (1S,4R)-camphene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (-)-camphene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.117. EC 4.2.3.117 maps to
+    exactly one curated Rhea reaction (RHEA:25484), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate = (1S,4R)-camphene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-camphene synthase
+    grounding: EC:4.2.3.117
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: (1S,4R)-camphene
+    node_type: CHEMICAL
+    grounding: CHEBI:89
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: camphene synthase activity
+    grounding: GO:0102703
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_R9QMY8
+    node_type: PROTEIN
+    label: CAMPS_PINCO
+    grounding: UniProtKB:R9QMY8
+  - node_id: prot_G1JUH1
+    node_type: PROTEIN
+    label: TPS3_SOLLC
+    grounding: UniProtKB:G1JUH1
+  - node_id: prot_Q948Z0
+    node_type: PROTEIN
+    label: TPSD6_ABIGR
+    grounding: UniProtKB:Q948Z0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:25484 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25485
+      snippet: (2E)-geranyl diphosphate => (1S,4R)-camphene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25485 declares side 25484_L as its substrates
+        (rh:substrates); the master reaction RHEA:25484 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:15978541, PMID:10441373, PMID:15921711, PMID:21813655 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1S,4R)-camphene is a product released by RHEA:25484 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25485
+      snippet: (2E)-geranyl diphosphate => (1S,4R)-camphene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25485 declares side 25484_R as its products
+        (rh:products); the master reaction RHEA:25484 is undirected. This participant is CHEBI:89 with
+        coefficient 1. Rhea cites PMID:15978541, PMID:10441373, PMID:15921711, PMID:21813655 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:25484 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25485
+      snippet: (2E)-geranyl diphosphate => (1S,4R)-camphene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25485 declares side 25484_R as its products
+        (rh:products); the master reaction RHEA:25484 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:15978541, PMID:10441373, PMID:15921711, PMID:21813655 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.117
+      snippet: EC:4.2.3.117 > GO:camphene synthase activity ; GO:0102703
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102703 is itself a record
+        in this KB.
+  - subject: prot_R9QMY8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAMPS_PINCO is an exemplar enzyme with EC 4.2.3.117 activity.
+    evidence:
+    - reference: EC:4.2.3.117
+      snippet: DR   R9QMY8, CAMPS_PINCO;  G1JUH1, TPS3_SOLLC ;  Q948Z0, TPSD6_ABIGR;
+      notes: ExPASy ENZYME entry EC 4.2.3.117 cross-references UniProtKB:R9QMY8 (CAMPS_PINCO) as a protein
+        with this activity.
+  - subject: prot_G1JUH1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS3_SOLLC is an exemplar enzyme with EC 4.2.3.117 activity.
+    evidence:
+    - reference: EC:4.2.3.117
+      snippet: DR   R9QMY8, CAMPS_PINCO;  G1JUH1, TPS3_SOLLC ;  Q948Z0, TPSD6_ABIGR;
+      notes: ExPASy ENZYME entry EC 4.2.3.117 cross-references UniProtKB:G1JUH1 (TPS3_SOLLC) as a protein
+        with this activity.
+  - subject: prot_Q948Z0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPSD6_ABIGR is an exemplar enzyme with EC 4.2.3.117 activity.
+    evidence:
+    - reference: EC:4.2.3.117
+      snippet: DR   R9QMY8, CAMPS_PINCO;  G1JUH1, TPS3_SOLLC ;  Q948Z0, TPSD6_ABIGR;
+      notes: ExPASy ENZYME entry EC 4.2.3.117 cross-references UniProtKB:Q948Z0 (TPSD6_ABIGR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

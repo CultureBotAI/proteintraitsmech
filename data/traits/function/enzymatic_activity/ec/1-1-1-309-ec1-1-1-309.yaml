@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 mapped_xrefs:
@@ -28,4 +28,121 @@ definitions:
       Catalyses: 2-hydroxyethylphosphonate + NAD(+) = phosphonoacetaldehyde + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphonoacetaldehyde reductase (NADH)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.309. EC 1.1.1.309 maps to
+    exactly one curated Rhea reaction (RHEA:28078), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-hydroxyethylphosphonate
+    + NAD(+) = phosphonoacetaldehyde + NADH + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphonoacetaldehyde reductase (NADH)
+    grounding: EC:1.1.1.309
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-hydroxyethylphosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:60991
+    description: Formula C2H6O4P.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: phosphonoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58383
+    description: Formula C2H4O4P.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_D9XF45
+    node_type: PROTEIN
+    label: PHPC_STRVT
+    grounding: UniProtKB:D9XF45
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-hydroxyethylphosphonate is a substrate consumed by RHEA:28078 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28079
+      snippet: 2-hydroxyethylphosphonate + NAD(+) => phosphonoacetaldehyde + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28079 declares side 28078_L as its substrates
+        (rh:substrates); the master reaction RHEA:28078 is undirected. This participant is CHEBI:60991
+        with coefficient 1. Rhea cites PMID:17632514 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:28078 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28079
+      snippet: 2-hydroxyethylphosphonate + NAD(+) => phosphonoacetaldehyde + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28079 declares side 28078_L as its substrates
+        (rh:substrates); the master reaction RHEA:28078 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:17632514 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phosphonoacetaldehyde is a product released by RHEA:28078 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28079
+      snippet: 2-hydroxyethylphosphonate + NAD(+) => phosphonoacetaldehyde + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28079 declares side 28078_R as its products
+        (rh:products); the master reaction RHEA:28078 is undirected. This participant is CHEBI:58383 with
+        coefficient 1. Rhea cites PMID:17632514 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by RHEA:28078 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28079
+      snippet: 2-hydroxyethylphosphonate + NAD(+) => phosphonoacetaldehyde + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28079 declares side 28078_R as its products
+        (rh:products); the master reaction RHEA:28078 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:17632514 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:28078 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28079
+      snippet: 2-hydroxyethylphosphonate + NAD(+) => phosphonoacetaldehyde + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28079 declares side 28078_R as its products
+        (rh:products); the master reaction RHEA:28078 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:17632514 for this reaction.
+  - subject: prot_D9XF45
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHPC_STRVT is an exemplar enzyme with EC 1.1.1.309 activity.
+    evidence:
+    - reference: EC:1.1.1.309
+      snippet: DR   D9XF45, PHPC_STRVT ;
+      notes: ExPASy ENZYME entry EC 1.1.1.309 cross-references UniProtKB:D9XF45 (PHPC_STRVT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

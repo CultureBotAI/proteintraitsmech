@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.99.-
 mapped_xrefs:
@@ -28,4 +28,103 @@ definitions:
       Catalyses: glutaryl-CoA + A = (2E)-glutaconyl-CoA + AH2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glutaryl-CoA dehydrogenase (acceptor)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.99.32. EC 1.3.99.32 maps to
+    exactly one curated Rhea reaction (RHEA:47420), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "glutaryl-CoA
+    + A = (2E)-glutaconyl-CoA + AH2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glutaryl-CoA dehydrogenase (acceptor)
+    grounding: EC:1.3.99.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: glutaryl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57378
+    description: Formula C26H37N7O19P3S.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd1
+    label: (2E)-glutaconyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57353
+    description: Formula C26H35N7O19P3S.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: prot_C3UVB0
+    node_type: PROTEIN
+    label: ACD_DESML
+    grounding: UniProtKB:C3UVB0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: glutaryl-CoA is a substrate consumed by RHEA:47420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47421
+      snippet: glutaryl-CoA + A => (2E)-glutaconyl-CoA + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:47421 declares side 47420_L as its substrates
+        (rh:substrates); the master reaction RHEA:47420 is undirected. This participant is CHEBI:57378
+        with coefficient 1. Rhea cites PMID:20486657, PMID:19395484 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by RHEA:47420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47421
+      snippet: glutaryl-CoA + A => (2E)-glutaconyl-CoA + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:47421 declares side 47420_L as its substrates
+        (rh:substrates); the master reaction RHEA:47420 is undirected. This participant is CHEBI:13193
+        with coefficient 1. Rhea cites PMID:20486657, PMID:19395484 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-glutaconyl-CoA is a product released by RHEA:47420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47421
+      snippet: glutaryl-CoA + A => (2E)-glutaconyl-CoA + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:47421 declares side 47420_R as its products
+        (rh:products); the master reaction RHEA:47420 is undirected. This participant is CHEBI:57353 with
+        coefficient 1. Rhea cites PMID:20486657, PMID:19395484 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by RHEA:47420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47421
+      snippet: glutaryl-CoA + A => (2E)-glutaconyl-CoA + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:47421 declares side 47420_R as its products
+        (rh:products); the master reaction RHEA:47420 is undirected. This participant is CHEBI:17499 with
+        coefficient 1. Rhea cites PMID:20486657, PMID:19395484 for this reaction.
+  - subject: prot_C3UVB0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACD_DESML is an exemplar enzyme with EC 1.3.99.32 activity.
+    evidence:
+    - reference: EC:1.3.99.32
+      snippet: DR   C3UVB0, ACD_DESML  ;
+      notes: ExPASy ENZYME entry EC 1.3.99.32 cross-references UniProtKB:C3UVB0 (ACD_DESML) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

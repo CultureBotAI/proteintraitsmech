@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64884
     role: SUBSTRATE_OR_PRODUCT
@@ -20,4 +20,77 @@ definitions:
       Catalyses the reaction: 4-hydroxyeicosasphinganine 1-phosphate = 2-hydroxyoctadecanal + phosphoethanolamine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-hydroxyeicosasphinganine 1-phosphate = 2-hydroxyoctadecanal + phosphoethanolamine
+  description: Substrate-to-product chemistry of RHEA:33715, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33716 (rh:substrates → 33715_L, rh:products → 33715_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-hydroxyeicosasphinganine 1-phosphate = 2-hydroxyoctadecanal + phosphoethan…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33715
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-hydroxyeicosasphinganine 1-phosphate = 2-hydroxyoctadecanal + phosphoethanolamine'
+  - node_id: sub1
+    label: 4-hydroxyeicosasphinganine 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:64884
+    description: Formula C20H43NO6P.
+  - node_id: prd1
+    label: 2-hydroxyoctadecanal
+    node_type: CHEMICAL
+    grounding: CHEBI:65084
+    description: Formula C18H36O2.
+  - node_id: prd2
+    label: phosphoethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58190
+    description: Formula C2H7NO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-hydroxyeicosasphinganine 1-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33716
+      snippet: 4-hydroxyeicosasphinganine 1-phosphate => 2-hydroxyoctadecanal + phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:33716 declares side 33715_L as its substrates
+        (rh:substrates); the master reaction RHEA:33715 is undirected. This participant is CHEBI:64884
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-hydroxyoctadecanal is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33716
+      snippet: 4-hydroxyeicosasphinganine 1-phosphate => 2-hydroxyoctadecanal + phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:33716 declares side 33715_R as its products
+        (rh:products); the master reaction RHEA:33715 is undirected. This participant is CHEBI:65084 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphoethanolamine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33716
+      snippet: 4-hydroxyeicosasphinganine 1-phosphate => 2-hydroxyoctadecanal + phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:33716 declares side 33715_R as its products
+        (rh:products); the master reaction RHEA:33715 is undirected. This participant is CHEBI:58190 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

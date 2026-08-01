@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.3.2.-
 synonyms:
@@ -51,4 +51,133 @@ definitions:
       Catalyses: an epoxide + H2O = an ethanediol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of soluble epoxide hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.3.2.10. EC 3.3.2.10 maps to exactly
+    one curated Rhea reaction (RHEA:19037), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an epoxide +
+    H2O = an ethanediol". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: soluble epoxide hydrolase
+    grounding: EC:3.3.2.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an epoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:32955
+    description: Formula C2OR4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an ethanediol
+    node_type: CHEMICAL
+    grounding: CHEBI:140594
+    description: Formula C2H2O2R4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: epoxide hydrolase activity
+    grounding: GO:0004301
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_G5EBI4
+    node_type: PROTEIN
+    label: CEEH1_CAEEL
+    grounding: UniProtKB:G5EBI4
+  - node_id: prot_G5EDL5
+    node_type: PROTEIN
+    label: CEEH2_CAEEL
+    grounding: UniProtKB:G5EDL5
+  - node_id: prot_P0DY66
+    node_type: PROTEIN
+    label: CIF_ACIX2
+    grounding: UniProtKB:P0DY66
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an epoxide is a substrate consumed by RHEA:19037 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19038
+      snippet: an epoxide + H2O => an ethanediol
+      notes: Rhea's left-to-right directional reaction RHEA:19038 declares side 19037_L as its substrates
+        (rh:substrates); the master reaction RHEA:19037 is undirected. This participant is CHEBI:32955
+        with coefficient 1. Rhea cites PMID:11090543, PMID:12574510, PMID:11154734, PMID:7840649 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:19037 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19038
+      snippet: an epoxide + H2O => an ethanediol
+      notes: Rhea's left-to-right directional reaction RHEA:19038 declares side 19037_L as its substrates
+        (rh:substrates); the master reaction RHEA:19037 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11090543, PMID:12574510, PMID:11154734, PMID:7840649 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an ethanediol is a product released by RHEA:19037 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19038
+      snippet: an epoxide + H2O => an ethanediol
+      notes: Rhea's left-to-right directional reaction RHEA:19038 declares side 19037_R as its products
+        (rh:products); the master reaction RHEA:19037 is undirected. This participant is CHEBI:140594
+        with coefficient 1. Rhea cites PMID:11090543, PMID:12574510, PMID:11154734, PMID:7840649 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.3.2.10
+      snippet: EC:3.3.2.10 > GO:epoxide hydrolase activity ; GO:0004301
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004301 is itself a record
+        in this KB.
+  - subject: prot_G5EBI4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEEH1_CAEEL is an exemplar enzyme with EC 3.3.2.10 activity.
+    evidence:
+    - reference: EC:3.3.2.10
+      snippet: DR   G5EBI4, CEEH1_CAEEL;  G5EDL5, CEEH2_CAEEL;  P0DY66, CIF_ACIX2  ;
+      notes: ExPASy ENZYME entry EC 3.3.2.10 cross-references UniProtKB:G5EBI4 (CEEH1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_G5EDL5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEEH2_CAEEL is an exemplar enzyme with EC 3.3.2.10 activity.
+    evidence:
+    - reference: EC:3.3.2.10
+      snippet: DR   G5EBI4, CEEH1_CAEEL;  G5EDL5, CEEH2_CAEEL;  P0DY66, CIF_ACIX2  ;
+      notes: ExPASy ENZYME entry EC 3.3.2.10 cross-references UniProtKB:G5EDL5 (CEEH2_CAEEL) as a protein
+        with this activity.
+  - subject: prot_P0DY66
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CIF_ACIX2 is an exemplar enzyme with EC 3.3.2.10 activity.
+    evidence:
+    - reference: EC:3.3.2.10
+      snippet: DR   G5EBI4, CEEH1_CAEEL;  G5EDL5, CEEH2_CAEEL;  P0DY66, CIF_ACIX2  ;
+      notes: ExPASy ENZYME entry EC 3.3.2.10 cross-references UniProtKB:P0DY66 (CIF_ACIX2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

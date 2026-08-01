@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.83
     mapping_source: rhea2ec
@@ -26,4 +26,151 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate = (-)-beta-santalene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate = (-)-beta-santalene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:31431, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31432 (rh:substrates → 31431_L, rh:products → 31431_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate = (-)-beta-santalene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31431
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate = (-)-beta-santalene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (-)-beta-santalene
+    node_type: CHEMICAL
+    grounding: CHEBI:10440
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: beta-santalene synthase
+    grounding: EC:4.2.3.83
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_E3W202
+    node_type: PROTEIN
+    label: SASY_SANAL
+    grounding: UniProtKB:E3W202
+  - node_id: prot_E3W203
+    node_type: PROTEIN
+    label: SAUSY_SANAS
+    grounding: UniProtKB:E3W203
+  - node_id: prot_E3W204
+    node_type: PROTEIN
+    label: SPISY_SANSP
+    grounding: UniProtKB:E3W204
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31432
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-beta-santalene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31432 declares side 31431_L as its substrates
+        (rh:substrates); the master reaction RHEA:31431 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:21454632 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-beta-santalene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31432
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-beta-santalene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31432 declares side 31431_R as its products
+        (rh:products); the master reaction RHEA:31431 is undirected. This participant is CHEBI:10440 with
+        coefficient 1. Rhea cites PMID:21454632 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31432
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-beta-santalene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31432 declares side 31431_R as its products
+        (rh:products); the master reaction RHEA:31431 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21454632 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.83; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:31431
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.83"/>
+      notes: The rh:ec triple on RHEA:31431 in rhea.rdf. EC 4.2.3.83 is itself a record in this KB.
+  - subject: prot_E3W202
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SASY_SANAL is an exemplar enzyme carrying EC 4.2.3.83, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.83
+      snippet: DR   E3W202, SASY_SANAL ;  E3W203, SAUSY_SANAS;  E3W204, SPISY_SANSP;
+      notes: ExPASy ENZYME entry EC 4.2.3.83 cross-references UniProtKB:E3W202 (SASY_SANAL) as a protein
+        with this activity.
+    - reference: RHEA:31431
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.83"/>
+      notes: Rhea assigns RHEA:31431 to EC 4.2.3.83, and EC 4.2.3.83 maps to exactly one Rhea master reaction
+        (RHEA:31431), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_E3W203
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SAUSY_SANAS is an exemplar enzyme carrying EC 4.2.3.83, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.83
+      snippet: DR   E3W202, SASY_SANAL ;  E3W203, SAUSY_SANAS;  E3W204, SPISY_SANSP;
+      notes: ExPASy ENZYME entry EC 4.2.3.83 cross-references UniProtKB:E3W203 (SAUSY_SANAS) as a protein
+        with this activity.
+    - reference: RHEA:31431
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.83"/>
+      notes: Rhea assigns RHEA:31431 to EC 4.2.3.83, and EC 4.2.3.83 maps to exactly one Rhea master reaction
+        (RHEA:31431), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_E3W204
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SPISY_SANSP is an exemplar enzyme carrying EC 4.2.3.83, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.83
+      snippet: DR   E3W202, SASY_SANAL ;  E3W203, SAUSY_SANAS;  E3W204, SPISY_SANSP;
+      notes: ExPASy ENZYME entry EC 4.2.3.83 cross-references UniProtKB:E3W204 (SPISY_SANSP) as a protein
+        with this activity.
+    - reference: RHEA:31431
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.83"/>
+      notes: Rhea assigns RHEA:31431 to EC 4.2.3.83, and EC 4.2.3.83 maps to exactly one Rhea master reaction
+        (RHEA:31431), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

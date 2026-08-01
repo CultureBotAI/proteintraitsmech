@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.8.1.-
 synonyms:
@@ -33,4 +33,88 @@ definitions:
       Catalyses: a (Z)-N-(sulfonatooxy)alkenimidothioate = an epithionitrile + sulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-(sulfonatooxy)alkenimidothioic acid sulfate-lyase (epithionitrile- forming)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.8.1.6. EC 4.8.1.6 maps to exactly
+    one curated Rhea reaction (RHEA:69228), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a (Z)-N-(sulfonatooxy)alkenimidothioate
+    = an epithionitrile + sulfate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-(sulfonatooxy)alkenimidothioic acid sulfate-lyase (epithionitrile- forming)
+    grounding: EC:4.8.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a (Z)-N-(sulfonatooxy)alkenimidothioate
+    node_type: CHEMICAL
+    grounding: CHEBI:183084
+    description: Formula C3H3NO4S2R.
+  - node_id: prd1
+    label: an epithionitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:183085
+    description: Formula C3H3NSR.
+  - node_id: prd2
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: prot_Q8RY71
+    node_type: PROTEIN
+    label: ESP_ARATH
+    grounding: UniProtKB:Q8RY71
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a (Z)-N-(sulfonatooxy)alkenimidothioate is a substrate consumed by RHEA:69228 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69229
+      snippet: a (Z)-N-(sulfonatooxy)alkenimidothioate => an epithionitrile + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69229 declares side 69228_L as its substrates
+        (rh:substrates); the master reaction RHEA:69228 is undirected. This participant is CHEBI:183084
+        with coefficient 1. Rhea cites PMID:11752388, PMID:15845404 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an epithionitrile is a product released by RHEA:69228 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69229
+      snippet: a (Z)-N-(sulfonatooxy)alkenimidothioate => an epithionitrile + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69229 declares side 69228_R as its products
+        (rh:products); the master reaction RHEA:69228 is undirected. This participant is CHEBI:183085
+        with coefficient 1. Rhea cites PMID:11752388, PMID:15845404 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfate is a product released by RHEA:69228 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69229
+      snippet: a (Z)-N-(sulfonatooxy)alkenimidothioate => an epithionitrile + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69229 declares side 69228_R as its products
+        (rh:products); the master reaction RHEA:69228 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:11752388, PMID:15845404 for this reaction.
+  - subject: prot_Q8RY71
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ESP_ARATH is an exemplar enzyme with EC 4.8.1.6 activity.
+    evidence:
+    - reference: EC:4.8.1.6
+      snippet: DR   Q8RY71, ESP_ARATH  ;
+      notes: ExPASy ENZYME entry EC 4.8.1.6 cross-references UniProtKB:Q8RY71 (ESP_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

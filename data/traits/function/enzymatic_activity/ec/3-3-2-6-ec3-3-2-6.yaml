@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.3.2.-
 synonyms:
@@ -43,4 +43,132 @@ definitions:
       Catalyses: leukotriene A4 + H2O = leukotriene B4
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of leukotriene-A4 hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.3.2.6. EC 3.3.2.6 maps to exactly
+    one curated Rhea reaction (RHEA:22324), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "leukotriene A4
+    + H2O = leukotriene B4". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: leukotriene-A4 hydrolase
+    grounding: EC:3.3.2.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: leukotriene A4
+    node_type: CHEMICAL
+    grounding: CHEBI:57463
+    description: Formula C20H29O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: leukotriene B4
+    node_type: CHEMICAL
+    grounding: CHEBI:57461
+    description: Formula C20H31O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: leukotriene-A4 hydrolase activity
+    grounding: GO:0004463
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A6SAG8
+    node_type: PROTEIN
+    label: LKHA4_BOTFB
+    grounding: UniProtKB:A6SAG8
+  - node_id: prot_Q3SZH7
+    node_type: PROTEIN
+    label: LKHA4_BOVIN
+    grounding: UniProtKB:Q3SZH7
+  - node_id: prot_P19602
+    node_type: PROTEIN
+    label: LKHA4_CAVPO
+    grounding: UniProtKB:P19602
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: leukotriene A4 is a substrate consumed by RHEA:22324 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22325
+      snippet: leukotriene A4 + H2O => leukotriene B4
+      notes: Rhea's left-to-right directional reaction RHEA:22325 declares side 22324_L as its substrates
+        (rh:substrates); the master reaction RHEA:22324 is undirected. This participant is CHEBI:57463
+        with coefficient 1. Rhea cites PMID:35328561, PMID:15078870, PMID:1897988, PMID:23504711 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:22324 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22325
+      snippet: leukotriene A4 + H2O => leukotriene B4
+      notes: Rhea's left-to-right directional reaction RHEA:22325 declares side 22324_L as its substrates
+        (rh:substrates); the master reaction RHEA:22324 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:35328561, PMID:15078870, PMID:1897988, PMID:23504711 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: leukotriene B4 is a product released by RHEA:22324 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22325
+      snippet: leukotriene A4 + H2O => leukotriene B4
+      notes: Rhea's left-to-right directional reaction RHEA:22325 declares side 22324_R as its products
+        (rh:products); the master reaction RHEA:22324 is undirected. This participant is CHEBI:57461 with
+        coefficient 1. Rhea cites PMID:35328561, PMID:15078870, PMID:1897988, PMID:23504711 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.3.2.6
+      snippet: EC:3.3.2.6 > GO:leukotriene-A4 hydrolase activity ; GO:0004463
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004463 is itself a record
+        in this KB.
+  - subject: prot_A6SAG8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LKHA4_BOTFB is an exemplar enzyme with EC 3.3.2.6 activity.
+    evidence:
+    - reference: EC:3.3.2.6
+      snippet: DR   A6SAG8, LKHA4_BOTFB;  Q3SZH7, LKHA4_BOVIN;  P19602, LKHA4_CAVPO;
+      notes: ExPASy ENZYME entry EC 3.3.2.6 cross-references UniProtKB:A6SAG8 (LKHA4_BOTFB) as a protein
+        with this activity.
+  - subject: prot_Q3SZH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LKHA4_BOVIN is an exemplar enzyme with EC 3.3.2.6 activity.
+    evidence:
+    - reference: EC:3.3.2.6
+      snippet: DR   A6SAG8, LKHA4_BOTFB;  Q3SZH7, LKHA4_BOVIN;  P19602, LKHA4_CAVPO;
+      notes: ExPASy ENZYME entry EC 3.3.2.6 cross-references UniProtKB:Q3SZH7 (LKHA4_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P19602
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LKHA4_CAVPO is an exemplar enzyme with EC 3.3.2.6 activity.
+    evidence:
+    - reference: EC:3.3.2.6
+      snippet: DR   A6SAG8, LKHA4_BOTFB;  Q3SZH7, LKHA4_BOVIN;  P19602, LKHA4_CAVPO;
+      notes: ExPASy ENZYME entry EC 3.3.2.6 cross-references UniProtKB:P19602 (LKHA4_CAVPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

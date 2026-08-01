@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -37,4 +37,117 @@ definitions:
       Catalyses: L-arabinonate = 2-dehydro-3-deoxy-L-arabinonate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-arabinonate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.25. EC 4.2.1.25 maps to exactly
+    one curated Rhea reaction (RHEA:20968), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-arabinonate
+    = 2-dehydro-3-deoxy-L-arabinonate + H2O". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-arabinonate dehydratase
+    grounding: EC:4.2.1.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-arabinonate
+    node_type: CHEMICAL
+    grounding: CHEBI:16501
+    description: Formula C5H9O6.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-L-arabinonate
+    node_type: CHEMICAL
+    grounding: CHEBI:35173
+    description: Formula C5H7O5.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-arabinonate dehydratase activity
+    grounding: GO:0050020
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q1JUQ1
+    node_type: PROTEIN
+    label: ARADA_AZOBR
+    grounding: UniProtKB:Q1JUQ1
+  - node_id: prot_B5ZZ34
+    node_type: PROTEIN
+    label: ARAD_RHILW
+    grounding: UniProtKB:B5ZZ34
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arabinonate is a substrate consumed by RHEA:20968 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20969
+      snippet: L-arabinonate => 2-dehydro-3-deoxy-L-arabinonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20969 declares side 20968_L as its substrates
+        (rh:substrates); the master reaction RHEA:20968 is undirected. This participant is CHEBI:16501
+        with coefficient 1. Rhea cites PMID:16950779 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-L-arabinonate is a product released by RHEA:20968 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20969
+      snippet: L-arabinonate => 2-dehydro-3-deoxy-L-arabinonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20969 declares side 20968_R as its products
+        (rh:products); the master reaction RHEA:20968 is undirected. This participant is CHEBI:35173 with
+        coefficient 1. Rhea cites PMID:16950779 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:20968 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20969
+      snippet: L-arabinonate => 2-dehydro-3-deoxy-L-arabinonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20969 declares side 20968_R as its products
+        (rh:products); the master reaction RHEA:20968 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:16950779 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.25
+      snippet: EC:4.2.1.25 > GO:L-arabinonate dehydratase activity ; GO:0050020
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050020 is itself a record
+        in this KB.
+  - subject: prot_Q1JUQ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARADA_AZOBR is an exemplar enzyme with EC 4.2.1.25 activity.
+    evidence:
+    - reference: EC:4.2.1.25
+      snippet: DR   Q1JUQ1, ARADA_AZOBR;  B5ZZ34, ARAD_RHILW ;
+      notes: ExPASy ENZYME entry EC 4.2.1.25 cross-references UniProtKB:Q1JUQ1 (ARADA_AZOBR) as a protein
+        with this activity.
+  - subject: prot_B5ZZ34
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAD_RHILW is an exemplar enzyme with EC 4.2.1.25 activity.
+    evidence:
+    - reference: EC:4.2.1.25
+      snippet: DR   Q1JUQ1, ARADA_AZOBR;  B5ZZ34, ARAD_RHILW ;
+      notes: ExPASy ENZYME entry EC 4.2.1.25 cross-references UniProtKB:B5ZZ34 (ARAD_RHILW) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

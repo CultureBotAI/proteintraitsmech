@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.99.13
     mapping_source: rhea2ec
@@ -26,4 +26,108 @@ definitions:
       Catalyses the reaction: a thymidine(6-4)thymidine in DNA = a thymidine dimer in DNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a thymidine(6-4)thymidine in DNA = a thymidine dimer in DNA
+  description: Substrate-to-product chemistry of RHEA:62232, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62233 (rh:substrates → 62232_L, rh:products → 62232_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a thymidine(6-4)thymidine in DNA = a thymidine dimer in DNA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62232
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a thymidine(6-4)thymidine in DNA = a thymidine dimer in DNA'
+  - node_id: sub1
+    label: a thymidine(6-4)thymidine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:16050
+    description: Rhea compound GENERIC:16050.
+  - node_id: sub1_rp1
+    label: thymidine(6-4)thymidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:16050 (a thymidine(6-4)thymidine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:145571
+  - node_id: prd1
+    label: a thymidine dimer in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:14449
+    description: Rhea compound GENERIC:14449.
+  - node_id: prd1_rp1
+    label: thymidine dimer residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14449 (a thymidine
+      dimer in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:139519
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (6-4)DNA photolyase
+    grounding: EC:4.1.99.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a thymidine(6-4)thymidine in DNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:62233
+      snippet: a thymidine(6-4)thymidine in DNA => a thymidine dimer in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:62233 declares side 62232_L as its substrates
+        (rh:substrates); the master reaction RHEA:62232 is undirected. This participant is GENERIC:16050
+        with coefficient 1. Rhea cites PMID:17164245, PMID:19359474 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: thymidine(6-4)thymidine residue is the reactive part of a thymidine(6-4)thymidine in
+      DNA.
+    evidence:
+    - reference: RHEA:62232
+      snippet: thymidine(6-4)thymidine residue
+      notes: Rhea compound GENERIC:16050 (a thymidine(6-4)thymidine in DNA) declares rh:reactivePart =
+        thymidine(6-4)thymidine residue (CHEBI:145571), formula C20H24N4O14P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a thymidine dimer in DNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62233
+      snippet: a thymidine(6-4)thymidine in DNA => a thymidine dimer in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:62233 declares side 62232_R as its products
+        (rh:products); the master reaction RHEA:62232 is undirected. This participant is GENERIC:14449
+        with coefficient 1. Rhea cites PMID:17164245, PMID:19359474 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: thymidine dimer residue is the reactive part of a thymidine dimer in DNA.
+    evidence:
+    - reference: RHEA:62232
+      snippet: thymidine dimer residue
+      notes: Rhea compound GENERIC:14449 (a thymidine dimer in DNA) declares rh:reactivePart = thymidine
+        dimer residue (CHEBI:139519), formula C20H24N4O14P2.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.99.13; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:62232
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.13"/>
+      notes: The rh:ec triple on RHEA:62232 in rhea.rdf. EC 4.1.99.13 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

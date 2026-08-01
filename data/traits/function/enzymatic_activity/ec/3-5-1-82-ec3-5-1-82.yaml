@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -33,4 +33,119 @@ definitions:
       Catalyses: an N-acyl-D-glutamate + H2O = D-glutamate + a carboxylate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acyl-D-glutamate deacylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.82. EC 3.5.1.82 maps to exactly
+    one curated Rhea reaction (RHEA:12833), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an N-acyl-D-glutamate
+    + H2O = D-glutamate + a carboxylate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-acyl-D-glutamate deacylase
+    grounding: EC:3.5.1.82
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an N-acyl-D-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:17503
+    description: Formula C6H6NO5R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29986
+    description: Formula C5H8NO4.
+  - node_id: prd2
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-acyl-D-glutamate deacylase activity
+    grounding: GO:0047421
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P94211
+    node_type: PROTEIN
+    label: NDED_ALCXX
+    grounding: UniProtKB:P94211
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-acyl-D-glutamate is a substrate consumed by RHEA:12833 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12834
+      snippet: an N-acyl-D-glutamate + H2O => D-glutamate + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:12834 declares side 12833_L as its substrates
+        (rh:substrates); the master reaction RHEA:12833 is undirected. This participant is CHEBI:17503
+        with coefficient 1. Rhea cites PMID:7549100, PMID:8537313, PMID:8829533 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:12833 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12834
+      snippet: an N-acyl-D-glutamate + H2O => D-glutamate + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:12834 declares side 12833_L as its substrates
+        (rh:substrates); the master reaction RHEA:12833 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7549100, PMID:8537313, PMID:8829533 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-glutamate is a product released by RHEA:12833 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12834
+      snippet: an N-acyl-D-glutamate + H2O => D-glutamate + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:12834 declares side 12833_R as its products
+        (rh:products); the master reaction RHEA:12833 is undirected. This participant is CHEBI:29986 with
+        coefficient 1. Rhea cites PMID:7549100, PMID:8537313, PMID:8829533 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a carboxylate is a product released by RHEA:12833 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12834
+      snippet: an N-acyl-D-glutamate + H2O => D-glutamate + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:12834 declares side 12833_R as its products
+        (rh:products); the master reaction RHEA:12833 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. Rhea cites PMID:7549100, PMID:8537313, PMID:8829533 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.82
+      snippet: EC:3.5.1.82 > GO:N-acyl-D-glutamate deacylase activity ; GO:0047421
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047421 is itself a record
+        in this KB.
+  - subject: prot_P94211
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NDED_ALCXX is an exemplar enzyme with EC 3.5.1.82 activity.
+    evidence:
+    - reference: EC:3.5.1.82
+      snippet: DR   P94211, NDED_ALCXX ;
+      notes: ExPASy ENZYME entry EC 3.5.1.82 cross-references UniProtKB:P94211 (NDED_ALCXX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

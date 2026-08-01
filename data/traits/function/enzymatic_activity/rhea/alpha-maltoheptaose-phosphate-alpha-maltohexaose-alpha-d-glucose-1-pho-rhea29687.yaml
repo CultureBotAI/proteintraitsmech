@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:61954
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,94 @@ definitions:
       Catalyses the reaction: alpha-maltoheptaose + phosphate = alpha-maltohexaose + alpha-D-glucose 1-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha-maltoheptaose + phosphate = alpha-maltohexaose + alpha-D-glucose
+    1-phosphate
+  description: Substrate-to-product chemistry of RHEA:29687, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:29688 (rh:substrates → 29687_L, rh:products → 29687_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of alpha-maltoheptaose + phosphate = alpha-maltohexaose + alpha-D-glucose 1-pho…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:29687
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: alpha-maltoheptaose + phosphate = alpha-maltohexaose + alpha-D-glucose 1-phosphate'
+  - node_id: sub1
+    label: alpha-maltoheptaose
+    node_type: CHEMICAL
+    grounding: CHEBI:61954
+    description: Formula C42H72O36.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: alpha-maltohexaose
+    node_type: CHEMICAL
+    grounding: CHEBI:61953
+    description: Formula C36H62O31.
+  - node_id: prd2
+    label: alpha-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58601
+    description: Formula C6H11O9P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha-maltoheptaose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29688
+      snippet: alpha-maltoheptaose + phosphate => alpha-maltohexaose + alpha-D-glucose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29688 declares side 29687_L as its substrates
+        (rh:substrates); the master reaction RHEA:29687 is undirected. This participant is CHEBI:61954
+        with coefficient 1. Rhea cites PMID:9529892 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29688
+      snippet: alpha-maltoheptaose + phosphate => alpha-maltohexaose + alpha-D-glucose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29688 declares side 29687_L as its substrates
+        (rh:substrates); the master reaction RHEA:29687 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:9529892 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-maltohexaose is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29688
+      snippet: alpha-maltoheptaose + phosphate => alpha-maltohexaose + alpha-D-glucose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29688 declares side 29687_R as its products
+        (rh:products); the master reaction RHEA:29687 is undirected. This participant is CHEBI:61953 with
+        coefficient 1. Rhea cites PMID:9529892 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: alpha-D-glucose 1-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29688
+      snippet: alpha-maltoheptaose + phosphate => alpha-maltohexaose + alpha-D-glucose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29688 declares side 29687_R as its products
+        (rh:products); the master reaction RHEA:29687 is undirected. This participant is CHEBI:58601 with
+        coefficient 1. Rhea cites PMID:9529892 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

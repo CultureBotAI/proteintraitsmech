@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,116 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = bicyclogermacrene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of bicyclogermacrene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.100. EC 4.2.3.100 maps to
+    exactly one curated Rhea reaction (RHEA:31999), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = bicyclogermacrene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: bicyclogermacrene synthase
+    grounding: EC:4.2.3.100
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: bicyclogermacrene
+    node_type: CHEMICAL
+    grounding: CHEBI:63709
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_E2E2N7
+    node_type: PROTEIN
+    label: BCGS_ORIVU
+    grounding: UniProtKB:E2E2N7
+  - node_id: prot_U3LVL5
+    node_type: PROTEIN
+    label: GERDS_LAVAN
+    grounding: UniProtKB:U3LVL5
+  - node_id: prot_A0A348B782
+    node_type: PROTEIN
+    label: STS6_POSPM
+    grounding: UniProtKB:A0A348B782
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:31999 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32000
+      snippet: (2E,6E)-farnesyl diphosphate => bicyclogermacrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32000 declares side 31999_L as its substrates
+        (rh:substrates); the master reaction RHEA:31999 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:20419468, PMID:22867794 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: bicyclogermacrene is a product released by RHEA:31999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32000
+      snippet: (2E,6E)-farnesyl diphosphate => bicyclogermacrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32000 declares side 31999_R as its products
+        (rh:products); the master reaction RHEA:31999 is undirected. This participant is CHEBI:63709 with
+        coefficient 1. Rhea cites PMID:20419468, PMID:22867794 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:31999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32000
+      snippet: (2E,6E)-farnesyl diphosphate => bicyclogermacrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32000 declares side 31999_R as its products
+        (rh:products); the master reaction RHEA:31999 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20419468, PMID:22867794 for this reaction.
+  - subject: prot_E2E2N7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BCGS_ORIVU is an exemplar enzyme with EC 4.2.3.100 activity.
+    evidence:
+    - reference: EC:4.2.3.100
+      snippet: DR   E2E2N7, BCGS_ORIVU ;  U3LVL5, GERDS_LAVAN;  A0A348B782, STS6_POSPM ;
+      notes: ExPASy ENZYME entry EC 4.2.3.100 cross-references UniProtKB:E2E2N7 (BCGS_ORIVU) as a protein
+        with this activity.
+  - subject: prot_U3LVL5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GERDS_LAVAN is an exemplar enzyme with EC 4.2.3.100 activity.
+    evidence:
+    - reference: EC:4.2.3.100
+      snippet: DR   E2E2N7, BCGS_ORIVU ;  U3LVL5, GERDS_LAVAN;  A0A348B782, STS6_POSPM ;
+      notes: ExPASy ENZYME entry EC 4.2.3.100 cross-references UniProtKB:U3LVL5 (GERDS_LAVAN) as a protein
+        with this activity.
+  - subject: prot_A0A348B782
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STS6_POSPM is an exemplar enzyme with EC 4.2.3.100 activity.
+    evidence:
+    - reference: EC:4.2.3.100
+      snippet: DR   E2E2N7, BCGS_ORIVU ;  U3LVL5, GERDS_LAVAN;  A0A348B782, STS6_POSPM ;
+      notes: ExPASy ENZYME entry EC 4.2.3.100 cross-references UniProtKB:A0A348B782 (STS6_POSPM) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -35,4 +35,133 @@ definitions:
       Catalyses: D-glucose + NADP(+) = 6-dehydro-D-glucose + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-dehydroglucose reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.432. EC 1.1.1.432 maps to
+    exactly one curated Rhea reaction (RHEA:70779), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-glucose
+    + NADP(+) = 6-dehydro-D-glucose + NADPH + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6-dehydroglucose reductase
+    grounding: EC:1.1.1.432
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: 6-dehydro-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:190013
+    description: Formula C6H10O6.
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A9CEY6
+    node_type: PROTEIN
+    label: DHGRD_AGRFC
+    grounding: UniProtKB:A9CEY6
+  - node_id: prot_Q2G5J3
+    node_type: PROTEIN
+    label: DHGRD_NOVAD
+    grounding: UniProtKB:Q2G5J3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-glucose is a substrate consumed by RHEA:70779 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70780
+      snippet: D-glucose + NADP(+) => 6-dehydro-D-glucose + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70780 declares side 70779_L as its substrates
+        (rh:substrates); the master reaction RHEA:70779 is undirected. This participant is CHEBI:4167
+        with coefficient 1. Rhea cites PMID:35074914 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by RHEA:70779 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70780
+      snippet: D-glucose + NADP(+) => 6-dehydro-D-glucose + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70780 declares side 70779_L as its substrates
+        (rh:substrates); the master reaction RHEA:70779 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:35074914 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 6-dehydro-D-glucose is a product released by RHEA:70779 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70780
+      snippet: D-glucose + NADP(+) => 6-dehydro-D-glucose + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70780 declares side 70779_R as its products
+        (rh:products); the master reaction RHEA:70779 is undirected. This participant is CHEBI:190013
+        with coefficient 1. Rhea cites PMID:35074914 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by RHEA:70779 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70780
+      snippet: D-glucose + NADP(+) => 6-dehydro-D-glucose + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70780 declares side 70779_R as its products
+        (rh:products); the master reaction RHEA:70779 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:35074914 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:70779 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70780
+      snippet: D-glucose + NADP(+) => 6-dehydro-D-glucose + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70780 declares side 70779_R as its products
+        (rh:products); the master reaction RHEA:70779 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:35074914 for this reaction.
+  - subject: prot_A9CEY6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHGRD_AGRFC is an exemplar enzyme with EC 1.1.1.432 activity.
+    evidence:
+    - reference: EC:1.1.1.432
+      snippet: DR   A9CEY6, DHGRD_AGRFC;  Q2G5J3, DHGRD_NOVAD;
+      notes: ExPASy ENZYME entry EC 1.1.1.432 cross-references UniProtKB:A9CEY6 (DHGRD_AGRFC) as a protein
+        with this activity.
+  - subject: prot_Q2G5J3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHGRD_NOVAD is an exemplar enzyme with EC 1.1.1.432 activity.
+    evidence:
+    - reference: EC:1.1.1.432
+      snippet: DR   A9CEY6, DHGRD_AGRFC;  Q2G5J3, DHGRD_NOVAD;
+      notes: ExPASy ENZYME entry EC 1.1.1.432 cross-references UniProtKB:Q2G5J3 (DHGRD_NOVAD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

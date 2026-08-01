@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 synonyms:
@@ -45,4 +45,120 @@ definitions:
       Catalyses: 4-[(1->4)-alpha-D-glucosyl](n-1)-D-glucose = 1-[(1->4)-alpha-D- glucosyl](n-1)-alpha-D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (1->4)-alpha-D-glucan 1-alpha-D-glucosylmutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.15. EC 5.4.99.15 maps to
+    exactly one curated Rhea reaction (RHEA:13621), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-[(1->4)-alpha-D-glucosyl](n-1)-D-glucose
+    = 1-[(1->4)-alpha-D- glucosyl](n-1)-alpha-D-glucose". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (1->4)-alpha-D-glucan 1-alpha-D-glucosylmutase
+    grounding: EC:5.4.99.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-[(1->4)-alpha-D-glucosyl](n-1)-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:140774
+    xrefs:
+    - RHEA-COMP:14708
+    description: Rhea compound POLYMER:14708. Formula C6H12O6(C6H10O5)<i><sub>n-1</sub></i>.
+  - node_id: prd1
+    label: 1-[(1->4)-alpha-D-glucosyl](n-1)-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:140775
+    xrefs:
+    - RHEA-COMP:14709
+    description: Rhea compound POLYMER:14709. Formula C6H12O6(C6H10O5)<i><sub>n-1</sub></i>.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (1,4)-alpha-D-glucan 1-alpha-D-glucosylmutase activity
+    grounding: GO:0047470
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q44315
+    node_type: PROTEIN
+    label: TREY_ARTSQ
+    grounding: UniProtKB:Q44315
+  - node_id: prot_P9WQ20
+    node_type: PROTEIN
+    label: TREY_MYCTO
+    grounding: UniProtKB:P9WQ20
+  - node_id: prot_P9WQ21
+    node_type: PROTEIN
+    label: TREY_MYCTU
+    grounding: UniProtKB:P9WQ21
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-[(1->4)-alpha-D-glucosyl](n-1)-D-glucose is a substrate consumed by RHEA:13621 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:13622
+      snippet: 4-[(1->4)-alpha-D-glucosyl](n-1)-D-glucose => 1-[(1->4)-alpha-D-glucosyl](n-1)-alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:13622 declares side 13621_L as its substrates
+        (rh:substrates); the master reaction RHEA:13621 is undirected. This participant is POLYMER:14708
+        with coefficient 1. Rhea cites PMID:8534970, PMID:8611744, PMID:9063973 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-[(1->4)-alpha-D-glucosyl](n-1)-alpha-D-glucose is a product released by RHEA:13621
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13622
+      snippet: 4-[(1->4)-alpha-D-glucosyl](n-1)-D-glucose => 1-[(1->4)-alpha-D-glucosyl](n-1)-alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:13622 declares side 13621_R as its products
+        (rh:products); the master reaction RHEA:13621 is undirected. This participant is POLYMER:14709
+        with coefficient 1. Rhea cites PMID:8534970, PMID:8611744, PMID:9063973 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.15
+      snippet: EC:5.4.99.15 > GO:(1,4)-alpha-D-glucan 1-alpha-D-glucosylmutase activity ; GO:0047470
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047470 is itself a record
+        in this KB.
+  - subject: prot_Q44315
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TREY_ARTSQ is an exemplar enzyme with EC 5.4.99.15 activity.
+    evidence:
+    - reference: EC:5.4.99.15
+      snippet: DR   Q44315, TREY_ARTSQ ;  P9WQ20, TREY_MYCTO ;  P9WQ21, TREY_MYCTU ;
+      notes: ExPASy ENZYME entry EC 5.4.99.15 cross-references UniProtKB:Q44315 (TREY_ARTSQ) as a protein
+        with this activity.
+  - subject: prot_P9WQ20
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TREY_MYCTO is an exemplar enzyme with EC 5.4.99.15 activity.
+    evidence:
+    - reference: EC:5.4.99.15
+      snippet: DR   Q44315, TREY_ARTSQ ;  P9WQ20, TREY_MYCTO ;  P9WQ21, TREY_MYCTU ;
+      notes: ExPASy ENZYME entry EC 5.4.99.15 cross-references UniProtKB:P9WQ20 (TREY_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WQ21
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TREY_MYCTU is an exemplar enzyme with EC 5.4.99.15 activity.
+    evidence:
+    - reference: EC:5.4.99.15
+      snippet: DR   Q44315, TREY_ARTSQ ;  P9WQ20, TREY_MYCTO ;  P9WQ21, TREY_MYCTU ;
+      notes: ExPASy ENZYME entry EC 5.4.99.15 cross-references UniProtKB:P9WQ21 (TREY_MYCTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.131
     mapping_source: rhea2ec
@@ -28,4 +28,127 @@ definitions:
       Catalyses the reaction: 1-carboxybiuret + H2O = urea-1,3-dicarboxylate + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-carboxybiuret + H2O = urea-1,3-dicarboxylate + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:58900, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58901 (rh:substrates → 58900_L, rh:products → 58900_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1-carboxybiuret + H2O = urea-1,3-dicarboxylate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58900
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1-carboxybiuret + H2O = urea-1,3-dicarboxylate + NH4(+)'
+  - node_id: sub1
+    label: 1-carboxybiuret
+    node_type: CHEMICAL
+    grounding: CHEBI:142864
+    description: Formula C3H4N3O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: urea-1,3-dicarboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:142865
+    description: Formula C3H2N2O5.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 1-carboxybiuret hydrolase
+    grounding: EC:3.5.1.131
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q936X3
+    node_type: PROTEIN
+    label: ATZE_PSESD
+    grounding: UniProtKB:Q936X3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-carboxybiuret is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58901
+      snippet: 1-carboxybiuret + H2O => urea-1,3-dicarboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58901 declares side 58900_L as its substrates
+        (rh:substrates); the master reaction RHEA:58900 is undirected. This participant is CHEBI:142864
+        with coefficient 1. Rhea cites PMID:29523689 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58901
+      snippet: 1-carboxybiuret + H2O => urea-1,3-dicarboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58901 declares side 58900_L as its substrates
+        (rh:substrates); the master reaction RHEA:58900 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:29523689 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: urea-1,3-dicarboxylate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58901
+      snippet: 1-carboxybiuret + H2O => urea-1,3-dicarboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58901 declares side 58900_R as its products
+        (rh:products); the master reaction RHEA:58900 is undirected. This participant is CHEBI:142865
+        with coefficient 1. Rhea cites PMID:29523689 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58901
+      snippet: 1-carboxybiuret + H2O => urea-1,3-dicarboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58901 declares side 58900_R as its products
+        (rh:products); the master reaction RHEA:58900 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:29523689 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.131; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:58900
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.131"/>
+      notes: The rh:ec triple on RHEA:58900 in rhea.rdf. EC 3.5.1.131 is itself a record in this KB.
+  - subject: prot_Q936X3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATZE_PSESD is an exemplar enzyme carrying EC 3.5.1.131, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.131
+      snippet: DR   Q936X3, ATZE_PSESD ;
+      notes: ExPASy ENZYME entry EC 3.5.1.131 cross-references UniProtKB:Q936X3 (ATZE_PSESD) as a protein
+        with this activity.
+    - reference: RHEA:58900
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.131"/>
+      notes: Rhea assigns RHEA:58900 to EC 3.5.1.131, and EC 3.5.1.131 maps to exactly one Rhea master
+        reaction (RHEA:58900), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

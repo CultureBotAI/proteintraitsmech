@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.3.1.23
     mapping_source: rhea2ec
@@ -44,4 +44,181 @@ definitions:
       Catalyses the reaction: L-tyrosine = (E)-4-coumarate + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-tyrosine = (E)-4-coumarate + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:24906, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24907 (rh:substrates → 24906_L, rh:products → 24906_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-tyrosine = (E)-4-coumarate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24906
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-tyrosine = (E)-4-coumarate + NH4(+)'
+  - node_id: sub1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: prd1
+    label: (E)-4-coumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:12876
+    description: Formula C9H7O3.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tyrosine ammonia-lyase activity
+    grounding: GO:0052883
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: tyrosine ammonia-lyase
+    grounding: EC:4.3.1.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec2
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine/tyrosine ammonia-lyase
+    grounding: EC:4.3.1.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q3IWB0
+    node_type: PROTEIN
+    label: TALY_CERS4
+    grounding: UniProtKB:Q3IWB0
+  - node_id: prot_Q1LRV9
+    node_type: PROTEIN
+    label: TALY_CUPMC
+    grounding: UniProtKB:Q1LRV9
+  - node_id: prot_Q0VZ68
+    node_type: PROTEIN
+    label: TAM_CHOCO
+    grounding: UniProtKB:Q0VZ68
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tyrosine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24907
+      snippet: L-tyrosine => (E)-4-coumarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24907 declares side 24906_L as its substrates
+        (rh:substrates); the master reaction RHEA:24906 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:38474023, PMID:7185228, PMID:17185227, PMID:9008393 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (E)-4-coumarate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24907
+      snippet: L-tyrosine => (E)-4-coumarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24907 declares side 24906_R as its products
+        (rh:products); the master reaction RHEA:24906 is undirected. This participant is CHEBI:12876 with
+        coefficient 1. Rhea cites PMID:38474023, PMID:7185228, PMID:17185227, PMID:9008393 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24907
+      snippet: L-tyrosine => (E)-4-coumarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24907 declares side 24906_R as its products
+        (rh:products); the master reaction RHEA:24906 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:38474023, PMID:7185228, PMID:17185227, PMID:9008393 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:24906
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052883"/>
+      notes: The rdfs:seeAlso triple on RHEA:24906 in rhea.rdf. GO term GO:0052883 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.3.1.23; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24906
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.23"/>
+      notes: The rh:ec triple on RHEA:24906 in rhea.rdf. EC 4.3.1.23 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec2
+    description: Rhea assigns this reaction to EC 4.3.1.25; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24906
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.25"/>
+      notes: The rh:ec triple on RHEA:24906 in rhea.rdf. EC 4.3.1.25 is itself a record in this KB.
+  - subject: prot_Q3IWB0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TALY_CERS4 is an exemplar enzyme carrying EC 4.3.1.23, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.23
+      snippet: DR   Q3IWB0, TALY_CERS4 ;  Q1LRV9, TALY_CUPMC ;  Q0VZ68, TAM_CHOCO  ;
+      notes: ExPASy ENZYME entry EC 4.3.1.23 cross-references UniProtKB:Q3IWB0 (TALY_CERS4) as a protein
+        with this activity.
+    - reference: RHEA:24906
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.23"/>
+      notes: Rhea assigns RHEA:24906 to EC 4.3.1.23, and EC 4.3.1.23 maps to exactly one Rhea master reaction
+        (RHEA:24906), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q1LRV9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TALY_CUPMC is an exemplar enzyme carrying EC 4.3.1.23, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.23
+      snippet: DR   Q3IWB0, TALY_CERS4 ;  Q1LRV9, TALY_CUPMC ;  Q0VZ68, TAM_CHOCO  ;
+      notes: ExPASy ENZYME entry EC 4.3.1.23 cross-references UniProtKB:Q1LRV9 (TALY_CUPMC) as a protein
+        with this activity.
+    - reference: RHEA:24906
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.23"/>
+      notes: Rhea assigns RHEA:24906 to EC 4.3.1.23, and EC 4.3.1.23 maps to exactly one Rhea master reaction
+        (RHEA:24906), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q0VZ68
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAM_CHOCO is an exemplar enzyme carrying EC 4.3.1.23, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.23
+      snippet: DR   Q3IWB0, TALY_CERS4 ;  Q1LRV9, TALY_CUPMC ;  Q0VZ68, TAM_CHOCO  ;
+      notes: ExPASy ENZYME entry EC 4.3.1.23 cross-references UniProtKB:Q0VZ68 (TAM_CHOCO) as a protein
+        with this activity.
+    - reference: RHEA:24906
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.23"/>
+      notes: Rhea assigns RHEA:24906 to EC 4.3.1.23, and EC 4.3.1.23 maps to exactly one Rhea master reaction
+        (RHEA:24906), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

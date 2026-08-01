@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:27632
     role: SUBSTRATE_OR_PRODUCT
@@ -20,4 +20,76 @@ definitions:
       Catalyses the reaction: acetophenone + hydrogen cyanide = (2S)-2-hydroxy-2-phenylpropanenitrile
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetophenone + hydrogen cyanide = (2S)-2-hydroxy-2-phenylpropanenitrile
+  description: Substrate-to-product chemistry of RHEA:77495, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77496 (rh:substrates → 77495_L, rh:products → 77495_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of acetophenone + hydrogen cyanide = (2S)-2-hydroxy-2-phenylpropanenitrile
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77495
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: acetophenone + hydrogen cyanide = (2S)-2-hydroxy-2-phenylpropanenitrile'
+  - node_id: sub1
+    label: acetophenone
+    node_type: CHEMICAL
+    grounding: CHEBI:27632
+    description: Formula C8H8O.
+  - node_id: sub2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: prd1
+    label: (2S)-2-hydroxy-2-phenylpropanenitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:197351
+    description: Formula C9H9NO.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetophenone is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77496
+      snippet: acetophenone + hydrogen cyanide => (2S)-2-hydroxy-2-phenylpropanenitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77496 declares side 77495_L as its substrates
+        (rh:substrates); the master reaction RHEA:77495 is undirected. This participant is CHEBI:27632
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen cyanide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77496
+      snippet: acetophenone + hydrogen cyanide => (2S)-2-hydroxy-2-phenylpropanenitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77496 declares side 77495_L as its substrates
+        (rh:substrates); the master reaction RHEA:77495 is undirected. This participant is CHEBI:18407
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-2-hydroxy-2-phenylpropanenitrile is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77496
+      snippet: acetophenone + hydrogen cyanide => (2S)-2-hydroxy-2-phenylpropanenitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77496 declares side 77495_R as its products
+        (rh:products); the master reaction RHEA:77495 is undirected. This participant is CHEBI:197351
+        with coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

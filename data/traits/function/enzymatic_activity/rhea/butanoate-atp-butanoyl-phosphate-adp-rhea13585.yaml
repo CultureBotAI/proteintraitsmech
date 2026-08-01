@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.2.7
     mapping_source: rhea2ec
@@ -34,4 +34,185 @@ definitions:
       Catalyses the reaction: butanoate + ATP = butanoyl phosphate + ADP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of butanoate + ATP = butanoyl phosphate + ADP
+  description: Substrate-to-product chemistry of RHEA:13585, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:13586 (rh:substrates → 13585_L, rh:products → 13585_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of butanoate + ATP = butanoyl phosphate + ADP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13585
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: butanoate + ATP = butanoyl phosphate + ADP'
+  - node_id: sub1
+    label: butanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17968
+    description: Formula C4H7O2.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: butanoyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58079
+    description: Formula C4H7O5P.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: butyrate kinase activity
+    grounding: GO:0047761
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: butyrate kinase
+    grounding: EC:2.7.2.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8R832
+    node_type: PROTEIN
+    label: BUK1_CALS4
+    grounding: UniProtKB:Q8R832
+  - node_id: prot_Q45829
+    node_type: PROTEIN
+    label: BUK1_CLOAB
+    grounding: UniProtKB:Q45829
+  - node_id: prot_Q9X276
+    node_type: PROTEIN
+    label: BUK1_THEMA
+    grounding: UniProtKB:Q9X276
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: butanoate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13586
+      snippet: butanoate + ATP => butanoyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:13586 declares side 13585_L as its substrates
+        (rh:substrates); the master reaction RHEA:13585 is undirected. This participant is CHEBI:17968
+        with coefficient 1. Rhea cites PMID:3027059, PMID:27320015, PMID:27940001, PMID:13923331 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13586
+      snippet: butanoate + ATP => butanoyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:13586 declares side 13585_L as its substrates
+        (rh:substrates); the master reaction RHEA:13585 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:3027059, PMID:27320015, PMID:27940001, PMID:13923331 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: butanoyl phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13586
+      snippet: butanoate + ATP => butanoyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:13586 declares side 13585_R as its products
+        (rh:products); the master reaction RHEA:13585 is undirected. This participant is CHEBI:58079 with
+        coefficient 1. Rhea cites PMID:3027059, PMID:27320015, PMID:27940001, PMID:13923331 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13586
+      snippet: butanoate + ATP => butanoyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:13586 declares side 13585_R as its products
+        (rh:products); the master reaction RHEA:13585 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:3027059, PMID:27320015, PMID:27940001, PMID:13923331 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:13585
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047761"/>
+      notes: The rdfs:seeAlso triple on RHEA:13585 in rhea.rdf. GO term GO:0047761 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.2.7; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:13585
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.2.7"/>
+      notes: The rh:ec triple on RHEA:13585 in rhea.rdf. EC 2.7.2.7 is itself a record in this KB.
+  - subject: prot_Q8R832
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BUK1_CALS4 is an exemplar enzyme carrying EC 2.7.2.7, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.2.7
+      snippet: DR   Q8R832, BUK1_CALS4 ;  Q45829, BUK1_CLOAB ;  Q9X276, BUK1_THEMA ;
+      notes: ExPASy ENZYME entry EC 2.7.2.7 cross-references UniProtKB:Q8R832 (BUK1_CALS4) as a protein
+        with this activity.
+    - reference: RHEA:13585
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.2.7"/>
+      notes: Rhea assigns RHEA:13585 to EC 2.7.2.7, and EC 2.7.2.7 maps to exactly one Rhea master reaction
+        (RHEA:13585), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q45829
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BUK1_CLOAB is an exemplar enzyme carrying EC 2.7.2.7, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.2.7
+      snippet: DR   Q8R832, BUK1_CALS4 ;  Q45829, BUK1_CLOAB ;  Q9X276, BUK1_THEMA ;
+      notes: ExPASy ENZYME entry EC 2.7.2.7 cross-references UniProtKB:Q45829 (BUK1_CLOAB) as a protein
+        with this activity.
+    - reference: RHEA:13585
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.2.7"/>
+      notes: Rhea assigns RHEA:13585 to EC 2.7.2.7, and EC 2.7.2.7 maps to exactly one Rhea master reaction
+        (RHEA:13585), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9X276
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BUK1_THEMA is an exemplar enzyme carrying EC 2.7.2.7, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.2.7
+      snippet: DR   Q8R832, BUK1_CALS4 ;  Q45829, BUK1_CLOAB ;  Q9X276, BUK1_THEMA ;
+      notes: ExPASy ENZYME entry EC 2.7.2.7 cross-references UniProtKB:Q9X276 (BUK1_THEMA) as a protein
+        with this activity.
+    - reference: RHEA:13585
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.2.7"/>
+      notes: Rhea assigns RHEA:13585 to EC 2.7.2.7, and EC 2.7.2.7 maps to exactly one Rhea master reaction
+        (RHEA:13585), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

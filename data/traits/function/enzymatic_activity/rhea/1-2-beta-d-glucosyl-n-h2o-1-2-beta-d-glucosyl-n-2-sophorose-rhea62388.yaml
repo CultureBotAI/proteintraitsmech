@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.214
     mapping_source: rhea2ec
@@ -26,4 +26,133 @@ definitions:
       Catalyses the reaction: [(1->2)-beta-D-glucosyl](n) + H2O = [(1->2)-beta-D-glucosyl](n-2) + sophorose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [(1->2)-beta-D-glucosyl](n) + H2O = [(1->2)-beta-D-glucosyl](n-2) + sophorose
+  description: Substrate-to-product chemistry of RHEA:62388, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62389 (rh:substrates → 62388_L, rh:products → 62388_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [(1->2)-beta-D-glucosyl](n) + H2O = [(1->2)-beta-D-glucosyl](n-2) + sophorose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62388
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [(1->2)-beta-D-glucosyl](n) + H2O = [(1->2)-beta-D-glucosyl](n-2) + sophorose'
+  - node_id: sub1
+    label: '[(1->2)-beta-D-glucosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:27517
+    xrefs:
+    - RHEA-COMP:11881
+    description: Rhea compound POLYMER:11881. Formula H2O(C6H10O5)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: '[(1->2)-beta-D-glucosyl](n-2)'
+    node_type: CHEMICAL
+    grounding: CHEBI:27517
+    xrefs:
+    - RHEA-COMP:16082
+    description: Rhea compound POLYMER:16082. Formula H2O(C6H10O5)<i><sub>n-2</sub></i>. Polymerisation
+      index n-2.
+  - node_id: prd2
+    label: sophorose
+    node_type: CHEMICAL
+    grounding: CHEBI:1230
+    description: Formula C12H22O11.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: exo beta-1,2-glucooligosaccharide sophorohydrolase (non-reducing end)
+    grounding: EC:3.2.1.214
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A6LGF6
+    node_type: PROTEIN
+    label: SOPH_PARD8
+    grounding: UniProtKB:A6LGF6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[(1->2)-beta-D-glucosyl](n) is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:62389
+      snippet: '[(1->2)-beta-D-glucosyl](n) + H2O => [(1->2)-beta-D-glucosyl](n-2) + sophorose'
+      notes: Rhea's left-to-right directional reaction RHEA:62389 declares side 62388_L as its substrates
+        (rh:substrates); the master reaction RHEA:62388 is undirected. This participant is POLYMER:11881
+        with coefficient 1. Rhea cites PMID:29763309 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62389
+      snippet: '[(1->2)-beta-D-glucosyl](n) + H2O => [(1->2)-beta-D-glucosyl](n-2) + sophorose'
+      notes: Rhea's left-to-right directional reaction RHEA:62389 declares side 62388_L as its substrates
+        (rh:substrates); the master reaction RHEA:62388 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:29763309 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[(1->2)-beta-D-glucosyl](n-2) is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:62389
+      snippet: '[(1->2)-beta-D-glucosyl](n) + H2O => [(1->2)-beta-D-glucosyl](n-2) + sophorose'
+      notes: Rhea's left-to-right directional reaction RHEA:62389 declares side 62388_R as its products
+        (rh:products); the master reaction RHEA:62388 is undirected. This participant is POLYMER:16082
+        with coefficient 1. Rhea cites PMID:29763309 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sophorose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62389
+      snippet: '[(1->2)-beta-D-glucosyl](n) + H2O => [(1->2)-beta-D-glucosyl](n-2) + sophorose'
+      notes: Rhea's left-to-right directional reaction RHEA:62389 declares side 62388_R as its products
+        (rh:products); the master reaction RHEA:62388 is undirected. This participant is CHEBI:1230 with
+        coefficient 1. Rhea cites PMID:29763309 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.214; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:62388
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.214"/>
+      notes: The rh:ec triple on RHEA:62388 in rhea.rdf. EC 3.2.1.214 is itself a record in this KB.
+  - subject: prot_A6LGF6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SOPH_PARD8 is an exemplar enzyme carrying EC 3.2.1.214, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.214
+      snippet: DR   A6LGF6, SOPH_PARD8 ;
+      notes: ExPASy ENZYME entry EC 3.2.1.214 cross-references UniProtKB:A6LGF6 (SOPH_PARD8) as a protein
+        with this activity.
+    - reference: RHEA:62388
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.214"/>
+      notes: Rhea assigns RHEA:62388 to EC 3.2.1.214, and EC 3.2.1.214 maps to exactly one Rhea master
+        reaction (RHEA:62388), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

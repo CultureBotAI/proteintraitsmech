@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57555
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,108 @@ definitions:
       Catalyses the reaction: L-2-amino-4-chloropent-4-enoate = L-propargylglycine + chloride + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-2-amino-4-chloropent-4-enoate = L-propargylglycine + chloride + H(+)
+  description: Substrate-to-product chemistry of RHEA:59892, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59893 (rh:substrates → 59892_L, rh:products → 59892_R), and Rhea
+    curates the reverse direction too. 1 substrate, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-2-amino-4-chloropent-4-enoate = L-propargylglycine + chloride + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59892
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-2-amino-4-chloropent-4-enoate = L-propargylglycine + chloride + H(+)'
+  - node_id: sub1
+    label: L-2-amino-4-chloropent-4-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57555
+    description: Formula C5H8ClNO2.
+  - node_id: prd1
+    label: L-propargylglycine
+    node_type: CHEMICAL
+    grounding: CHEBI:143285
+    description: Formula C5H7NO2.
+  - node_id: prd2
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+    description: Formula Cl.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-propargylglycine synthase activity
+    grounding: GO:0062144
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-2-amino-4-chloropent-4-enoate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59893
+      snippet: L-2-amino-4-chloropent-4-enoate => L-propargylglycine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59893 declares side 59892_L as its substrates
+        (rh:substrates); the master reaction RHEA:59892 is undirected. This participant is CHEBI:57555
+        with coefficient 1. Rhea cites PMID:30867596 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-propargylglycine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59893
+      snippet: L-2-amino-4-chloropent-4-enoate => L-propargylglycine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59893 declares side 59892_R as its products
+        (rh:products); the master reaction RHEA:59892 is undirected. This participant is CHEBI:143285
+        with coefficient 1. Rhea cites PMID:30867596 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: chloride is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59893
+      snippet: L-2-amino-4-chloropent-4-enoate => L-propargylglycine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59893 declares side 59892_R as its products
+        (rh:products); the master reaction RHEA:59892 is undirected. This participant is CHEBI:17996 with
+        coefficient 1. Rhea cites PMID:30867596 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59893
+      snippet: L-2-amino-4-chloropent-4-enoate => L-propargylglycine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59893 declares side 59892_R as its products
+        (rh:products); the master reaction RHEA:59892 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:30867596 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:59892
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0062144"/>
+      notes: The rdfs:seeAlso triple on RHEA:59892 in rhea.rdf. GO term GO:0062144 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

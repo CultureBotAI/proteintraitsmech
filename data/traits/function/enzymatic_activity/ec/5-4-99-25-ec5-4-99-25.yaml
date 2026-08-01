@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 synonyms:
@@ -47,4 +47,148 @@ definitions:
       Catalyses: uridine(55) in tRNA = pseudouridine(55) in tRNA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA pseudouridine(55) synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.25. EC 5.4.99.25 maps to
+    exactly one curated Rhea reaction (RHEA:42532), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "uridine(55)
+    in tRNA = pseudouridine(55) in tRNA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA pseudouridine(55) synthase
+    grounding: EC:5.4.99.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: uridine(55) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10101
+    description: Rhea compound GENERIC:10101.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: UMP residue at position 55
+    description: The reacting group Rhea names inside the generic participant GENERIC:10101 (uridine(55)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd1
+    label: pseudouridine(55) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10102
+    description: Rhea compound GENERIC:10102.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: psi-uridine residue at position 55
+    description: The reacting group Rhea names inside the generic participant GENERIC:10102 (pseudouridine(55)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65314
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA pseudouridine(55) synthase activity
+    grounding: GO:0160148
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_D9PZU4
+    node_type: PROTEIN
+    label: PUS10_ACIS3
+    grounding: UniProtKB:D9PZU4
+  - node_id: prot_Q9YEN2
+    node_type: PROTEIN
+    label: PUS10_AERPE
+    grounding: UniProtKB:Q9YEN2
+  - node_id: prot_O29113
+    node_type: PROTEIN
+    label: PUS10_ARCFU
+    grounding: UniProtKB:O29113
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine(55) in tRNA is a substrate consumed by RHEA:42532 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42533
+      snippet: uridine(55) in tRNA => pseudouridine(55) in tRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42533 declares side 42532_L as its substrates
+        (rh:substrates); the master reaction RHEA:42532 is undirected. This participant is GENERIC:10101
+        with coefficient 1. Rhea cites PMID:7489483, PMID:9358157 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(55) in tRNA.
+    evidence:
+    - reference: RHEA:42532
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10101 (uridine(55) in tRNA) declares rh:reactivePart at position 55
+        = UMP residue (CHEBI:65315).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pseudouridine(55) in tRNA is a product released by RHEA:42532 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42533
+      snippet: uridine(55) in tRNA => pseudouridine(55) in tRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42533 declares side 42532_R as its products
+        (rh:products); the master reaction RHEA:42532 is undirected. This participant is GENERIC:10102
+        with coefficient 1. Rhea cites PMID:7489483, PMID:9358157 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: psi-uridine residue is the reactive part of pseudouridine(55) in tRNA.
+    evidence:
+    - reference: RHEA:42532
+      snippet: psi-uridine residue
+      notes: Rhea compound GENERIC:10102 (pseudouridine(55) in tRNA) declares rh:reactivePart at position
+        55 = psi-uridine residue (CHEBI:65314).
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.25
+      snippet: EC:5.4.99.25 > GO:tRNA pseudouridine(55) synthase activity ; GO:0160148
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0160148 is itself a record
+        in this KB.
+  - subject: prot_D9PZU4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PUS10_ACIS3 is an exemplar enzyme with EC 5.4.99.25 activity.
+    evidence:
+    - reference: EC:5.4.99.25
+      snippet: DR   D9PZU4, PUS10_ACIS3;  Q9YEN2, PUS10_AERPE;  O29113, PUS10_ARCFU;
+      notes: ExPASy ENZYME entry EC 5.4.99.25 cross-references UniProtKB:D9PZU4 (PUS10_ACIS3) as a protein
+        with this activity.
+  - subject: prot_Q9YEN2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PUS10_AERPE is an exemplar enzyme with EC 5.4.99.25 activity.
+    evidence:
+    - reference: EC:5.4.99.25
+      snippet: DR   D9PZU4, PUS10_ACIS3;  Q9YEN2, PUS10_AERPE;  O29113, PUS10_ARCFU;
+      notes: ExPASy ENZYME entry EC 5.4.99.25 cross-references UniProtKB:Q9YEN2 (PUS10_AERPE) as a protein
+        with this activity.
+  - subject: prot_O29113
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PUS10_ARCFU is an exemplar enzyme with EC 5.4.99.25 activity.
+    evidence:
+    - reference: EC:5.4.99.25
+      snippet: DR   D9PZU4, PUS10_ACIS3;  Q9YEN2, PUS10_AERPE;  O29113, PUS10_ARCFU;
+      notes: ExPASy ENZYME entry EC 5.4.99.25 cross-references UniProtKB:O29113 (PUS10_ARCFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

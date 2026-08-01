@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:84041
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,98 @@ definitions:
       Catalyses the reaction: 2-O-hexadecanoyl-alpha,alpha-trehalose + hexadecanoyl-CoA = 2-O,3-O-dihexadecanoyl-alpha,alpha-trehalose + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-O-hexadecanoyl-alpha,alpha-trehalose + hexadecanoyl-CoA = 2-O,3-O-dihexadecanoyl-alph…
+  description: Substrate-to-product chemistry of RHEA:44056, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:44057 (rh:substrates → 44056_L, rh:products → 44056_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-O-hexadecanoyl-alpha,alpha-trehalose + hexadecanoyl-CoA = 2-O,3-O-dihexade…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:44056
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-O-hexadecanoyl-alpha,alpha-trehalose + hexadecanoyl-CoA = 2-O,3-O-dihexadecanoyl-alpha,alpha-trehalose
+      + CoA'
+  - node_id: sub1
+    label: 2-O-hexadecanoyl-alpha,alpha-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:84041
+    description: Formula C28H52O12.
+  - node_id: sub2
+    label: hexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57379
+    description: Formula C37H62N7O17P3S.
+  - node_id: prd1
+    label: 2-O,3-O-dihexadecanoyl-alpha,alpha-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:84042
+    description: Formula C44H82O13.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-O-hexadecanoyl-alpha,alpha-trehalose is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:44057
+      snippet: 2-O-hexadecanoyl-alpha,alpha-trehalose + hexadecanoyl-CoA => 2-O,3-O-dihexadecanoyl-alpha,alpha-trehalose
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44057 declares side 44056_L as its substrates
+        (rh:substrates); the master reaction RHEA:44056 is undirected. This participant is CHEBI:84041
+        with coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hexadecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44057
+      snippet: 2-O-hexadecanoyl-alpha,alpha-trehalose + hexadecanoyl-CoA => 2-O,3-O-dihexadecanoyl-alpha,alpha-trehalose
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44057 declares side 44056_L as its substrates
+        (rh:substrates); the master reaction RHEA:44056 is undirected. This participant is CHEBI:57379
+        with coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-O,3-O-dihexadecanoyl-alpha,alpha-trehalose is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:44057
+      snippet: 2-O-hexadecanoyl-alpha,alpha-trehalose + hexadecanoyl-CoA => 2-O,3-O-dihexadecanoyl-alpha,alpha-trehalose
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44057 declares side 44056_R as its products
+        (rh:products); the master reaction RHEA:44056 is undirected. This participant is CHEBI:84042 with
+        coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44057
+      snippet: 2-O-hexadecanoyl-alpha,alpha-trehalose + hexadecanoyl-CoA => 2-O,3-O-dihexadecanoyl-alpha,alpha-trehalose
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44057 declares side 44056_R as its products
+        (rh:products); the master reaction RHEA:44056 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:19276083 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

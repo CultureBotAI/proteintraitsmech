@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 synonyms:
@@ -45,4 +45,147 @@ definitions:
       Catalyses: uridine + phosphate = alpha-D-ribose 1-phosphate + uracil
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of uridine phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.3. EC 2.4.2.3 maps to exactly
+    one curated Rhea reaction (RHEA:24388), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "uridine + phosphate
+    = alpha-D-ribose 1-phosphate + uracil". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: uridine phosphorylase
+    grounding: EC:2.4.2.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: uridine
+    node_type: CHEMICAL
+    grounding: CHEBI:16704
+    description: Formula C9H12N2O6.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: alpha-D-ribose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57720
+    description: Formula C5H9O8P.
+  - node_id: prd2
+    label: uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:17568
+    description: Formula C4H4N2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: uridine phosphorylase activity
+    grounding: GO:0004850
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P12758
+    node_type: PROTEIN
+    label: UDP_ECOLI
+    grounding: UniProtKB:P12758
+  - node_id: prot_P43770
+    node_type: PROTEIN
+    label: UDP_HAEIN
+    grounding: UniProtKB:P43770
+  - node_id: prot_O08444
+    node_type: PROTEIN
+    label: UDP_KLEAE
+    grounding: UniProtKB:O08444
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine is a substrate consumed by RHEA:24388 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24389
+      snippet: uridine + phosphate => alpha-D-ribose 1-phosphate + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:24389 declares side 24388_L as its substrates
+        (rh:substrates); the master reaction RHEA:24388 is undirected. This participant is CHEBI:16704
+        with coefficient 1. Rhea cites PMID:15003451, PMID:27941785, PMID:12499542 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:24388 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24389
+      snippet: uridine + phosphate => alpha-D-ribose 1-phosphate + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:24389 declares side 24388_L as its substrates
+        (rh:substrates); the master reaction RHEA:24388 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:15003451, PMID:27941785, PMID:12499542 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-ribose 1-phosphate is a product released by RHEA:24388 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24389
+      snippet: uridine + phosphate => alpha-D-ribose 1-phosphate + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:24389 declares side 24388_R as its products
+        (rh:products); the master reaction RHEA:24388 is undirected. This participant is CHEBI:57720 with
+        coefficient 1. Rhea cites PMID:15003451, PMID:27941785, PMID:12499542 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: uracil is a product released by RHEA:24388 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24389
+      snippet: uridine + phosphate => alpha-D-ribose 1-phosphate + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:24389 declares side 24388_R as its products
+        (rh:products); the master reaction RHEA:24388 is undirected. This participant is CHEBI:17568 with
+        coefficient 1. Rhea cites PMID:15003451, PMID:27941785, PMID:12499542 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.2.3
+      snippet: EC:2.4.2.3 > GO:uridine phosphorylase activity ; GO:0004850
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004850 is itself a record
+        in this KB.
+  - subject: prot_P12758
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UDP_ECOLI is an exemplar enzyme with EC 2.4.2.3 activity.
+    evidence:
+    - reference: EC:2.4.2.3
+      snippet: DR   P12758, UDP_ECOLI  ;  P43770, UDP_HAEIN  ;  O08444, UDP_KLEAE  ;
+      notes: ExPASy ENZYME entry EC 2.4.2.3 cross-references UniProtKB:P12758 (UDP_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P43770
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UDP_HAEIN is an exemplar enzyme with EC 2.4.2.3 activity.
+    evidence:
+    - reference: EC:2.4.2.3
+      snippet: DR   P12758, UDP_ECOLI  ;  P43770, UDP_HAEIN  ;  O08444, UDP_KLEAE  ;
+      notes: ExPASy ENZYME entry EC 2.4.2.3 cross-references UniProtKB:P43770 (UDP_HAEIN) as a protein
+        with this activity.
+  - subject: prot_O08444
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UDP_KLEAE is an exemplar enzyme with EC 2.4.2.3 activity.
+    evidence:
+    - reference: EC:2.4.2.3
+      snippet: DR   P12758, UDP_ECOLI  ;  P43770, UDP_HAEIN  ;  O08444, UDP_KLEAE  ;
+      notes: ExPASy ENZYME entry EC 2.4.2.3 cross-references UniProtKB:O08444 (UDP_KLEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

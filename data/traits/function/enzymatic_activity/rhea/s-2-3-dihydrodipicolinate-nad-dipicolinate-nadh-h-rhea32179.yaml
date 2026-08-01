@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:30620
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,107 @@ definitions:
       Catalyses the reaction: (S)-2,3-dihydrodipicolinate + NAD(+) = dipicolinate + NADH + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-2,3-dihydrodipicolinate + NAD(+) = dipicolinate + NADH + H(+)
+  description: Substrate-to-product chemistry of RHEA:32179, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:32180 (rh:substrates → 32179_L, rh:products → 32179_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (S)-2,3-dihydrodipicolinate + NAD(+) = dipicolinate + NADH + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:32179
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (S)-2,3-dihydrodipicolinate + NAD(+) = dipicolinate + NADH + H(+)'
+  - node_id: sub1
+    label: (S)-2,3-dihydrodipicolinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30620
+    description: Formula C7H5NO4.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: dipicolinate
+    node_type: CHEMICAL
+    grounding: CHEBI:36167
+    description: Formula C7H3NO4.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-2,3-dihydrodipicolinate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32180
+      snippet: (S)-2,3-dihydrodipicolinate + NAD(+) => dipicolinate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32180 declares side 32179_L as its substrates
+        (rh:substrates); the master reaction RHEA:32179 is undirected. This participant is CHEBI:30620
+        with coefficient 1. Rhea cites PMID:8345520 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32180
+      snippet: (S)-2,3-dihydrodipicolinate + NAD(+) => dipicolinate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32180 declares side 32179_L as its substrates
+        (rh:substrates); the master reaction RHEA:32179 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:8345520 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dipicolinate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32180
+      snippet: (S)-2,3-dihydrodipicolinate + NAD(+) => dipicolinate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32180 declares side 32179_R as its products
+        (rh:products); the master reaction RHEA:32179 is undirected. This participant is CHEBI:36167 with
+        coefficient 1. Rhea cites PMID:8345520 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32180
+      snippet: (S)-2,3-dihydrodipicolinate + NAD(+) => dipicolinate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32180 declares side 32179_R as its products
+        (rh:products); the master reaction RHEA:32179 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:8345520 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32180
+      snippet: (S)-2,3-dihydrodipicolinate + NAD(+) => dipicolinate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32180 declares side 32179_R as its products
+        (rh:products); the master reaction RHEA:32179 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8345520 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

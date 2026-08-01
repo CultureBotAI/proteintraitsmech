@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.3.-
 synonyms:
@@ -32,4 +32,105 @@ definitions:
       Catalyses: 2-(hydroxyimino)propanoate + acetone = acetone oxime + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of oximinotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.3.1. EC 2.6.3.1 maps to exactly
+    one curated Rhea reaction (RHEA:11624), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-(hydroxyimino)propanoate
+    + acetone = acetone oxime + pyruvate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: oximinotransferase
+    grounding: EC:2.6.3.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-(hydroxyimino)propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57487
+    description: Formula C3H4NO3.
+  - node_id: sub2
+    label: acetone
+    node_type: CHEMICAL
+    grounding: CHEBI:15347
+    description: Formula C3H6O.
+  - node_id: prd1
+    label: acetone oxime
+    node_type: CHEMICAL
+    grounding: CHEBI:15349
+    description: Formula C3H7NO.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: oximinotransferase activity
+    grounding: GO:0050206
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-(hydroxyimino)propanoate is a substrate consumed by RHEA:11624 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11625
+      snippet: 2-(hydroxyimino)propanoate + acetone => acetone oxime + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:11625 declares side 11624_L as its substrates
+        (rh:substrates); the master reaction RHEA:11624 is undirected. This participant is CHEBI:57487
+        with coefficient 1. Rhea cites PMID:13107638, PMID:13397521 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetone is a substrate consumed by RHEA:11624 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11625
+      snippet: 2-(hydroxyimino)propanoate + acetone => acetone oxime + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:11625 declares side 11624_L as its substrates
+        (rh:substrates); the master reaction RHEA:11624 is undirected. This participant is CHEBI:15347
+        with coefficient 1. Rhea cites PMID:13107638, PMID:13397521 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: acetone oxime is a product released by RHEA:11624 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11625
+      snippet: 2-(hydroxyimino)propanoate + acetone => acetone oxime + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:11625 declares side 11624_R as its products
+        (rh:products); the master reaction RHEA:11624 is undirected. This participant is CHEBI:15349 with
+        coefficient 1. Rhea cites PMID:13107638, PMID:13397521 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:11624 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11625
+      snippet: 2-(hydroxyimino)propanoate + acetone => acetone oxime + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:11625 declares side 11624_R as its products
+        (rh:products); the master reaction RHEA:11624 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:13107638, PMID:13397521 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.6.3.1
+      snippet: EC:2.6.3.1 > GO:oximinotransferase activity ; GO:0050206
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050206 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

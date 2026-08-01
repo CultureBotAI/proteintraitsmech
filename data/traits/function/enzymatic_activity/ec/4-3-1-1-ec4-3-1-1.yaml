@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.1.-
 synonyms:
@@ -43,4 +43,130 @@ definitions:
       Catalyses: L-aspartate = fumarate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aspartate ammonia-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.1.1. EC 4.3.1.1 maps to exactly
+    one curated Rhea reaction (RHEA:16601), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-aspartate =
+    fumarate + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aspartate ammonia-lyase
+    grounding: EC:4.3.1.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+    description: Formula C4H6NO4.
+  - node_id: prd1
+    label: fumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+    description: Formula C4H2O4.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aspartate ammonia-lyase activity
+    grounding: GO:0008797
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9LCC6
+    node_type: PROTEIN
+    label: ASPA_BACSP
+    grounding: UniProtKB:Q9LCC6
+  - node_id: prot_P26899
+    node_type: PROTEIN
+    label: ASPA_BACSU
+    grounding: UniProtKB:P26899
+  - node_id: prot_Q59200
+    node_type: PROTEIN
+    label: ASPA_CORGL
+    grounding: UniProtKB:Q59200
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-aspartate is a substrate consumed by RHEA:16601 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16602
+      snippet: L-aspartate => fumarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16602 declares side 16601_L as its substrates
+        (rh:substrates); the master reaction RHEA:16601 is undirected. This participant is CHEBI:29991
+        with coefficient 1. Rhea cites PMID:4584395, PMID:2853974, PMID:1897995 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: fumarate is a product released by RHEA:16601 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16602
+      snippet: L-aspartate => fumarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16602 declares side 16601_R as its products
+        (rh:products); the master reaction RHEA:16601 is undirected. This participant is CHEBI:29806 with
+        coefficient 1. Rhea cites PMID:4584395, PMID:2853974, PMID:1897995 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:16601 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16602
+      snippet: L-aspartate => fumarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16602 declares side 16601_R as its products
+        (rh:products); the master reaction RHEA:16601 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:4584395, PMID:2853974, PMID:1897995 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.3.1.1
+      snippet: EC:4.3.1.1 > GO:aspartate ammonia-lyase activity ; GO:0008797
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008797 is itself a record
+        in this KB.
+  - subject: prot_Q9LCC6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASPA_BACSP is an exemplar enzyme with EC 4.3.1.1 activity.
+    evidence:
+    - reference: EC:4.3.1.1
+      snippet: DR   Q9LCC6, ASPA_BACSP ;  P26899, ASPA_BACSU ;  Q59200, ASPA_CORGL ;
+      notes: ExPASy ENZYME entry EC 4.3.1.1 cross-references UniProtKB:Q9LCC6 (ASPA_BACSP) as a protein
+        with this activity.
+  - subject: prot_P26899
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASPA_BACSU is an exemplar enzyme with EC 4.3.1.1 activity.
+    evidence:
+    - reference: EC:4.3.1.1
+      snippet: DR   Q9LCC6, ASPA_BACSP ;  P26899, ASPA_BACSU ;  Q59200, ASPA_CORGL ;
+      notes: ExPASy ENZYME entry EC 4.3.1.1 cross-references UniProtKB:P26899 (ASPA_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q59200
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASPA_CORGL is an exemplar enzyme with EC 4.3.1.1 activity.
+    evidence:
+    - reference: EC:4.3.1.1
+      snippet: DR   Q9LCC6, ASPA_BACSP ;  P26899, ASPA_BACSU ;  Q59200, ASPA_CORGL ;
+      notes: ExPASy ENZYME entry EC 4.3.1.1 cross-references UniProtKB:Q59200 (ASPA_CORGL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

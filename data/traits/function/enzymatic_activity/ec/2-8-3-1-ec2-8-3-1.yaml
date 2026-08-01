@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.3.-
 mapped_xrefs:
@@ -25,4 +25,104 @@ definitions:
       Catalyses: propanoate + acetyl-CoA = propanoyl-CoA + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of propionate CoA-transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.3.1. EC 2.8.3.1 maps to exactly
+    one curated Rhea reaction (RHEA:23520), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "propanoate +
+    acetyl-CoA = propanoyl-CoA + acetate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: propionate CoA-transferase
+    grounding: EC:2.8.3.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17272
+    description: Formula C3H5O2.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: propanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57392
+    description: Formula C24H36N7O17P3S.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: propionate CoA-transferase activity
+    grounding: GO:0018729
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: propanoate is a substrate consumed by RHEA:23520 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23521
+      snippet: propanoate + acetyl-CoA => propanoyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23521 declares side 23520_L as its substrates
+        (rh:substrates); the master reaction RHEA:23520 is undirected. This participant is CHEBI:17272
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:23520 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23521
+      snippet: propanoate + acetyl-CoA => propanoyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23521 declares side 23520_L as its substrates
+        (rh:substrates); the master reaction RHEA:23520 is undirected. This participant is CHEBI:57288
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: propanoyl-CoA is a product released by RHEA:23520 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23521
+      snippet: propanoate + acetyl-CoA => propanoyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23521 declares side 23520_R as its products
+        (rh:products); the master reaction RHEA:23520 is undirected. This participant is CHEBI:57392 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:23520 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23521
+      snippet: propanoate + acetyl-CoA => propanoyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23521 declares side 23520_R as its products
+        (rh:products); the master reaction RHEA:23520 is undirected. This participant is CHEBI:30089 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.3.1
+      snippet: EC:2.8.3.1 > GO:propionate CoA-transferase activity ; GO:0018729
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018729 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

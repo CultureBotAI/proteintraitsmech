@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.54
     mapping_source: rhea2ec
@@ -26,4 +26,167 @@ definitions:
       Catalyses the reaction: (2Z,6Z)-farnesyl diphosphate = (1S,5S,6S)-alpha-bergamotene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2Z,6Z)-farnesyl diphosphate = (1S,5S,6S)-alpha-bergamotene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:30471, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30472 (rh:substrates → 30471_L, rh:products → 30471_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2Z,6Z)-farnesyl diphosphate = (1S,5S,6S)-alpha-bergamotene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30471
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2Z,6Z)-farnesyl diphosphate = (1S,5S,6S)-alpha-bergamotene + diphosphate'
+  - node_id: sub1
+    label: (2Z,6Z)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:60374
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (1S,5S,6S)-alpha-bergamotene
+    node_type: CHEMICAL
+    grounding: CHEBI:61679
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: endo-alpha-bergamotene synthase activity
+    grounding: GO:0102060
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-endo-alpha-bergamotene synthase [(2Z,6Z)-farnesyl diphosphate cyclizing]
+    grounding: EC:4.2.3.54
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_B8XA41
+    node_type: PROTEIN
+    label: SBS_SOLHA
+    grounding: UniProtKB:B8XA41
+  - node_id: prot_G8H5N0
+    node_type: PROTEIN
+    label: TPS17_SOLHA
+    grounding: UniProtKB:G8H5N0
+  - node_id: prot_G5CV52
+    node_type: PROTEIN
+    label: TPS17_SOLLC
+    grounding: UniProtKB:G5CV52
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2Z,6Z)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:30472
+      snippet: (2Z,6Z)-farnesyl diphosphate => (1S,5S,6S)-alpha-bergamotene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30472 declares side 30471_L as its substrates
+        (rh:substrates); the master reaction RHEA:30471 is undirected. This participant is CHEBI:60374
+        with coefficient 1. Rhea cites PMID:19155349 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1S,5S,6S)-alpha-bergamotene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30472
+      snippet: (2Z,6Z)-farnesyl diphosphate => (1S,5S,6S)-alpha-bergamotene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30472 declares side 30471_R as its products
+        (rh:products); the master reaction RHEA:30471 is undirected. This participant is CHEBI:61679 with
+        coefficient 1. Rhea cites PMID:19155349 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30472
+      snippet: (2Z,6Z)-farnesyl diphosphate => (1S,5S,6S)-alpha-bergamotene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30472 declares side 30471_R as its products
+        (rh:products); the master reaction RHEA:30471 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:19155349 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:30471
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102060"/>
+      notes: The rdfs:seeAlso triple on RHEA:30471 in rhea.rdf. GO term GO:0102060 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.54; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:30471
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.54"/>
+      notes: The rh:ec triple on RHEA:30471 in rhea.rdf. EC 4.2.3.54 is itself a record in this KB.
+  - subject: prot_B8XA41
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SBS_SOLHA is an exemplar enzyme carrying EC 4.2.3.54, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.54
+      snippet: DR   B8XA41, SBS_SOLHA  ;  G8H5N0, TPS17_SOLHA;  G5CV52, TPS17_SOLLC;
+      notes: ExPASy ENZYME entry EC 4.2.3.54 cross-references UniProtKB:B8XA41 (SBS_SOLHA) as a protein
+        with this activity.
+    - reference: RHEA:30471
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.54"/>
+      notes: Rhea assigns RHEA:30471 to EC 4.2.3.54, and EC 4.2.3.54 maps to exactly one Rhea master reaction
+        (RHEA:30471), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_G8H5N0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS17_SOLHA is an exemplar enzyme carrying EC 4.2.3.54, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.54
+      snippet: DR   B8XA41, SBS_SOLHA  ;  G8H5N0, TPS17_SOLHA;  G5CV52, TPS17_SOLLC;
+      notes: ExPASy ENZYME entry EC 4.2.3.54 cross-references UniProtKB:G8H5N0 (TPS17_SOLHA) as a protein
+        with this activity.
+    - reference: RHEA:30471
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.54"/>
+      notes: Rhea assigns RHEA:30471 to EC 4.2.3.54, and EC 4.2.3.54 maps to exactly one Rhea master reaction
+        (RHEA:30471), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_G5CV52
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS17_SOLLC is an exemplar enzyme carrying EC 4.2.3.54, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.54
+      snippet: DR   B8XA41, SBS_SOLHA  ;  G8H5N0, TPS17_SOLHA;  G5CV52, TPS17_SOLLC;
+      notes: ExPASy ENZYME entry EC 4.2.3.54 cross-references UniProtKB:G5CV52 (TPS17_SOLLC) as a protein
+        with this activity.
+    - reference: RHEA:30471
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.54"/>
+      notes: Rhea assigns RHEA:30471 to EC 4.2.3.54, and EC 4.2.3.54 maps to exactly one Rhea master reaction
+        (RHEA:30471), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

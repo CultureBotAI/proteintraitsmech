@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.99.-
 synonyms:
@@ -45,4 +45,284 @@ definitions:
       Catalyses: (1) 4-amino-5-aminomethyl-2-methylpyrimidine + H2O = 4-amino-5- hydroxymethyl-2-methylpyrimidine + NH4(+). (2) thiamine + H2O = 5-(2-hydroxyethyl)-4-methylthiazole + 4-amino-5- hydroxymethyl-2-methylpyrimidine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aminopyrimidine aminohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.99.2. Rhea assigns 2 curated
+    reactions to EC 3.5.99.2. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 4-amino-5-aminomethyl-2-methylpyrimidine + H2O = 4-amino-5-
+    hydroxymethyl-2-methylpyrimidine + NH4(+). (2) thiamine + H2O = 5-(2-hydroxyethyl)-4-methylthiazole
+    + 4-amino-5- hydroxymethyl-2-methylpyrimidine + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aminopyrimidine aminohydrolase
+    grounding: EC:3.5.99.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of thiamine + H2O = 5-(2-hydroxyethyl)-4-methylthiazole + 4-amino-5-hydroxymeth…
+    grounding: RHEA:17509
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: thiamine + H2O = 5-(2-hydroxyethyl)-4-methylthiazole + 4-amino-5-hydroxymethyl-2-methylpyrimidine
+      + H(+)'
+  - node_id: rxn1_sub1
+    label: thiamine
+    node_type: CHEMICAL
+    grounding: CHEBI:18385
+    description: Formula C12H17N4OS.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: 5-(2-hydroxyethyl)-4-methylthiazole
+    node_type: CHEMICAL
+    grounding: CHEBI:17957
+    description: Formula C6H9NOS.
+  - node_id: rxn1_prd2
+    label: 4-amino-5-hydroxymethyl-2-methylpyrimidine
+    node_type: CHEMICAL
+    grounding: CHEBI:16892
+    description: Formula C6H9N3O.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 4-amino-5-aminomethyl-2-methylpyrimidine + H2O = 4-amino-5-hydroxymethyl-2-m…
+    grounding: RHEA:31799
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 4-amino-5-aminomethyl-2-methylpyrimidine + H2O = 4-amino-5-hydroxymethyl-2-methylpyrimidine
+      + NH4(+)'
+  - node_id: rxn2_sub1
+    label: 4-amino-5-aminomethyl-2-methylpyrimidine
+    node_type: CHEMICAL
+    grounding: CHEBI:63416
+    description: Formula C6H11N4.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: 4-amino-5-hydroxymethyl-2-methylpyrimidine
+    node_type: CHEMICAL
+    grounding: CHEBI:16892
+    description: Formula C6H9N3O.
+  - node_id: rxn2_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: thiaminase activity
+    grounding: GO:0050334
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B6TPF2
+    node_type: PROTEIN
+    label: TENA2_MAIZE
+    grounding: UniProtKB:B6TPF2
+  - node_id: prot_F4KFT7
+    node_type: PROTEIN
+    label: TENAC_ARATH
+    grounding: UniProtKB:F4KFT7
+  - node_id: prot_Q9ASY9
+    node_type: PROTEIN
+    label: TENAE_ARATH
+    grounding: UniProtKB:Q9ASY9
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:17509 is one of the 2 curated reactions Rhea assigns to EC 3.5.99.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:17509
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.99.2"/>
+      notes: The rh:ec triple on RHEA:17509 in rhea.rdf assigns that reaction to EC 3.5.99.2.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: thiamine is a substrate consumed by RHEA:17509 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17510
+      snippet: thiamine + H2O => 5-(2-hydroxyethyl)-4-methylthiazole + 4-amino-5-hydroxymethyl-2-methylpyrimidine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17510 declares side 17509_L as its substrates
+        (rh:substrates); the master reaction RHEA:17509 is undirected. This participant is CHEBI:18385
+        with coefficient 1. Rhea cites PMID:25014715, PMID:18054064, PMID:15709744, PMID:15858269 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:17509 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17510
+      snippet: thiamine + H2O => 5-(2-hydroxyethyl)-4-methylthiazole + 4-amino-5-hydroxymethyl-2-methylpyrimidine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17510 declares side 17509_L as its substrates
+        (rh:substrates); the master reaction RHEA:17509 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25014715, PMID:18054064, PMID:15709744, PMID:15858269 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 5-(2-hydroxyethyl)-4-methylthiazole is a product released by RHEA:17509 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17510
+      snippet: thiamine + H2O => 5-(2-hydroxyethyl)-4-methylthiazole + 4-amino-5-hydroxymethyl-2-methylpyrimidine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17510 declares side 17509_R as its products
+        (rh:products); the master reaction RHEA:17509 is undirected. This participant is CHEBI:17957 with
+        coefficient 1. Rhea cites PMID:25014715, PMID:18054064, PMID:15709744, PMID:15858269 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: 4-amino-5-hydroxymethyl-2-methylpyrimidine is a product released by RHEA:17509 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17510
+      snippet: thiamine + H2O => 5-(2-hydroxyethyl)-4-methylthiazole + 4-amino-5-hydroxymethyl-2-methylpyrimidine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17510 declares side 17509_R as its products
+        (rh:products); the master reaction RHEA:17509 is undirected. This participant is CHEBI:16892 with
+        coefficient 1. Rhea cites PMID:25014715, PMID:18054064, PMID:15709744, PMID:15858269 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:17509 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17510
+      snippet: thiamine + H2O => 5-(2-hydroxyethyl)-4-methylthiazole + 4-amino-5-hydroxymethyl-2-methylpyrimidine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17510 declares side 17509_R as its products
+        (rh:products); the master reaction RHEA:17509 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25014715, PMID:18054064, PMID:15709744, PMID:15858269 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:31799 is one of the 2 curated reactions Rhea assigns to EC 3.5.99.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31799
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.99.2"/>
+      notes: The rh:ec triple on RHEA:31799 in rhea.rdf assigns that reaction to EC 3.5.99.2.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 4-amino-5-aminomethyl-2-methylpyrimidine is a substrate consumed by RHEA:31799 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31800
+      snippet: 4-amino-5-aminomethyl-2-methylpyrimidine + H2O => 4-amino-5-hydroxymethyl-2-methylpyrimidine
+        + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31800 declares side 31799_L as its substrates
+        (rh:substrates); the master reaction RHEA:31799 is undirected. This participant is CHEBI:63416
+        with coefficient 1. Rhea cites PMID:25014715, PMID:18054064, PMID:15709744, PMID:15858269 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:31799 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31800
+      snippet: 4-amino-5-aminomethyl-2-methylpyrimidine + H2O => 4-amino-5-hydroxymethyl-2-methylpyrimidine
+        + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31800 declares side 31799_L as its substrates
+        (rh:substrates); the master reaction RHEA:31799 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25014715, PMID:18054064, PMID:15709744, PMID:15858269 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 4-amino-5-hydroxymethyl-2-methylpyrimidine is a product released by RHEA:31799 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31800
+      snippet: 4-amino-5-aminomethyl-2-methylpyrimidine + H2O => 4-amino-5-hydroxymethyl-2-methylpyrimidine
+        + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31800 declares side 31799_R as its products
+        (rh:products); the master reaction RHEA:31799 is undirected. This participant is CHEBI:16892 with
+        coefficient 1. Rhea cites PMID:25014715, PMID:18054064, PMID:15709744, PMID:15858269 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NH4(+) is a product released by RHEA:31799 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31800
+      snippet: 4-amino-5-aminomethyl-2-methylpyrimidine + H2O => 4-amino-5-hydroxymethyl-2-methylpyrimidine
+        + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31800 declares side 31799_R as its products
+        (rh:products); the master reaction RHEA:31799 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:25014715, PMID:18054064, PMID:15709744, PMID:15858269 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.99.2
+      snippet: EC:3.5.99.2 > GO:thiaminase activity ; GO:0050334
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050334 is itself a record
+        in this KB.
+  - subject: prot_B6TPF2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TENA2_MAIZE is an exemplar enzyme with EC 3.5.99.2 activity.
+    evidence:
+    - reference: EC:3.5.99.2
+      snippet: DR   B6TPF2, TENA2_MAIZE;  F4KFT7, TENAC_ARATH;  Q9ASY9, TENAE_ARATH;
+      notes: ExPASy ENZYME entry EC 3.5.99.2 cross-references UniProtKB:B6TPF2 (TENA2_MAIZE) as a protein
+        with this activity.
+  - subject: prot_F4KFT7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TENAC_ARATH is an exemplar enzyme with EC 3.5.99.2 activity.
+    evidence:
+    - reference: EC:3.5.99.2
+      snippet: DR   B6TPF2, TENA2_MAIZE;  F4KFT7, TENAC_ARATH;  Q9ASY9, TENAE_ARATH;
+      notes: ExPASy ENZYME entry EC 3.5.99.2 cross-references UniProtKB:F4KFT7 (TENAC_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9ASY9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TENAE_ARATH is an exemplar enzyme with EC 3.5.99.2 activity.
+    evidence:
+    - reference: EC:3.5.99.2
+      snippet: DR   B6TPF2, TENA2_MAIZE;  F4KFT7, TENAC_ARATH;  Q9ASY9, TENAE_ARATH;
+      notes: ExPASy ENZYME entry EC 3.5.99.2 cross-references UniProtKB:Q9ASY9 (TENAE_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:231271
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,77 @@ definitions:
       Catalyses the reaction: 5-hydroxy-L-arginine = guanidine + L-glutamate 5-semialdehyde
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-hydroxy-L-arginine = guanidine + L-glutamate 5-semialdehyde
+  description: Substrate-to-product chemistry of RHEA:31527, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31528 (rh:substrates → 31527_L, rh:products → 31527_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-hydroxy-L-arginine = guanidine + L-glutamate 5-semialdehyde
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31527
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-hydroxy-L-arginine = guanidine + L-glutamate 5-semialdehyde'
+  - node_id: sub1
+    label: 5-hydroxy-L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:231271
+    description: Formula C6H15N4O3.
+  - node_id: prd1
+    label: guanidine
+    node_type: CHEMICAL
+    grounding: CHEBI:30087
+    description: Formula CH6N3.
+  - node_id: prd2
+    label: L-glutamate 5-semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58066
+    description: Formula C5H9NO3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-hydroxy-L-arginine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31528
+      snippet: 5-hydroxy-L-arginine => guanidine + L-glutamate 5-semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:31528 declares side 31527_L as its substrates
+        (rh:substrates); the master reaction RHEA:31527 is undirected. This participant is CHEBI:231271
+        with coefficient 1. Rhea cites PMID:1445325, PMID:1445291, PMID:38619227, PMID:1770346 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: guanidine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31528
+      snippet: 5-hydroxy-L-arginine => guanidine + L-glutamate 5-semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:31528 declares side 31527_R as its products
+        (rh:products); the master reaction RHEA:31527 is undirected. This participant is CHEBI:30087 with
+        coefficient 1. Rhea cites PMID:1445325, PMID:1445291, PMID:38619227, PMID:1770346 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate 5-semialdehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31528
+      snippet: 5-hydroxy-L-arginine => guanidine + L-glutamate 5-semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:31528 declares side 31527_R as its products
+        (rh:products); the master reaction RHEA:31527 is undirected. This participant is CHEBI:58066 with
+        coefficient 1. Rhea cites PMID:1445325, PMID:1445291, PMID:38619227, PMID:1770346 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

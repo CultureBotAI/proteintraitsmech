@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.3.-
 mapped_xrefs:
@@ -40,4 +40,246 @@ definitions:
       Catalyses: a long-chain primary fatty alcohol + O2 = a long-chain fatty aldehyde + H2O2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of long-chain-alcohol oxidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.3.20. Rhea assigns 2 curated
+    reactions to EC 1.1.3.20. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "a long-chain primary fatty alcohol + O2 = a long-chain fatty
+    aldehyde + H2O2". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: long-chain-alcohol oxidase
+    grounding: EC:1.1.3.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a long-chain primary fatty alcohol + O2 = a long-chain fatty aldehyde + H2O2
+    grounding: RHEA:22756
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a long-chain primary fatty alcohol + O2 = a long-chain fatty aldehyde +
+      H2O2'
+  - node_id: rxn1_sub1
+    label: a long-chain primary fatty alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:77396
+    description: Formula CH3OR.
+  - node_id: rxn1_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn1_prd1
+    label: a long-chain fatty aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17176
+    description: Formula CHOR.
+  - node_id: rxn1_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of dodecan-1-ol + O2 = dodecanal + H2O2
+    grounding: RHEA:69484
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: dodecan-1-ol + O2 = dodecanal + H2O2'
+  - node_id: rxn2_sub1
+    label: dodecan-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:28878
+    description: Formula C12H26O.
+  - node_id: rxn2_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn2_prd1
+    label: dodecanal
+    node_type: CHEMICAL
+    grounding: CHEBI:27836
+    description: Formula C12H24O.
+  - node_id: rxn2_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: long-chain-alcohol oxidase activity
+    grounding: GO:0046577
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9ZWB9
+    node_type: PROTEIN
+    label: FAO1_ARATH
+    grounding: UniProtKB:Q9ZWB9
+  - node_id: prot_B5WWZ8
+    node_type: PROTEIN
+    label: FAO1_LOTJA
+    grounding: UniProtKB:B5WWZ8
+  - node_id: prot_B5WWZ9
+    node_type: PROTEIN
+    label: FAO2_LOTJA
+    grounding: UniProtKB:B5WWZ9
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:22756 is one of the 2 curated reactions Rhea assigns to EC 1.1.3.20; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:22756
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.3.20"/>
+      notes: The rh:ec triple on RHEA:22756 in rhea.rdf assigns that reaction to EC 1.1.3.20.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a long-chain primary fatty alcohol is a substrate consumed by RHEA:22756 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:22757
+      snippet: a long-chain primary fatty alcohol + O2 => a long-chain fatty aldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:22757 declares side 22756_L as its substrates
+        (rh:substrates); the master reaction RHEA:22756 is undirected. This participant is CHEBI:77396
+        with coefficient 1. Rhea cites PMID:16046182, PMID:15358540 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: O2 is a substrate consumed by RHEA:22756 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22757
+      snippet: a long-chain primary fatty alcohol + O2 => a long-chain fatty aldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:22757 declares side 22756_L as its substrates
+        (rh:substrates); the master reaction RHEA:22756 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:16046182, PMID:15358540 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a long-chain fatty aldehyde is a product released by RHEA:22756 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22757
+      snippet: a long-chain primary fatty alcohol + O2 => a long-chain fatty aldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:22757 declares side 22756_R as its products
+        (rh:products); the master reaction RHEA:22756 is undirected. This participant is CHEBI:17176 with
+        coefficient 1. Rhea cites PMID:16046182, PMID:15358540 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O2 is a product released by RHEA:22756 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22757
+      snippet: a long-chain primary fatty alcohol + O2 => a long-chain fatty aldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:22757 declares side 22756_R as its products
+        (rh:products); the master reaction RHEA:22756 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:16046182, PMID:15358540 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:69484 is one of the 2 curated reactions Rhea assigns to EC 1.1.3.20; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:69484
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.3.20"/>
+      notes: The rh:ec triple on RHEA:69484 in rhea.rdf assigns that reaction to EC 1.1.3.20.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: dodecan-1-ol is a substrate consumed by RHEA:69484 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69485
+      snippet: dodecan-1-ol + O2 => dodecanal + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:69485 declares side 69484_L as its substrates
+        (rh:substrates); the master reaction RHEA:69484 is undirected. This participant is CHEBI:28878
+        with coefficient 1. Rhea cites PMID:34709726, PMID:18396913 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: O2 is a substrate consumed by RHEA:69484 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69485
+      snippet: dodecan-1-ol + O2 => dodecanal + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:69485 declares side 69484_L as its substrates
+        (rh:substrates); the master reaction RHEA:69484 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:34709726, PMID:18396913 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: dodecanal is a product released by RHEA:69484 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69485
+      snippet: dodecan-1-ol + O2 => dodecanal + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:69485 declares side 69484_R as its products
+        (rh:products); the master reaction RHEA:69484 is undirected. This participant is CHEBI:27836 with
+        coefficient 1. Rhea cites PMID:34709726, PMID:18396913 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O2 is a product released by RHEA:69484 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69485
+      snippet: dodecan-1-ol + O2 => dodecanal + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:69485 declares side 69484_R as its products
+        (rh:products); the master reaction RHEA:69484 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:34709726, PMID:18396913 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.3.20
+      snippet: EC:1.1.3.20 > GO:long-chain-alcohol oxidase activity ; GO:0046577
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0046577 is itself a record
+        in this KB.
+  - subject: prot_Q9ZWB9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAO1_ARATH is an exemplar enzyme with EC 1.1.3.20 activity.
+    evidence:
+    - reference: EC:1.1.3.20
+      snippet: DR   Q9ZWB9, FAO1_ARATH ;  B5WWZ8, FAO1_LOTJA ;  B5WWZ9, FAO2_LOTJA ;
+      notes: ExPASy ENZYME entry EC 1.1.3.20 cross-references UniProtKB:Q9ZWB9 (FAO1_ARATH) as a protein
+        with this activity.
+  - subject: prot_B5WWZ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAO1_LOTJA is an exemplar enzyme with EC 1.1.3.20 activity.
+    evidence:
+    - reference: EC:1.1.3.20
+      snippet: DR   Q9ZWB9, FAO1_ARATH ;  B5WWZ8, FAO1_LOTJA ;  B5WWZ9, FAO2_LOTJA ;
+      notes: ExPASy ENZYME entry EC 1.1.3.20 cross-references UniProtKB:B5WWZ8 (FAO1_LOTJA) as a protein
+        with this activity.
+  - subject: prot_B5WWZ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAO2_LOTJA is an exemplar enzyme with EC 1.1.3.20 activity.
+    evidence:
+    - reference: EC:1.1.3.20
+      snippet: DR   Q9ZWB9, FAO1_ARATH ;  B5WWZ8, FAO1_LOTJA ;  B5WWZ9, FAO2_LOTJA ;
+      notes: ExPASy ENZYME entry EC 1.1.3.20 cross-references UniProtKB:B5WWZ9 (FAO2_LOTJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

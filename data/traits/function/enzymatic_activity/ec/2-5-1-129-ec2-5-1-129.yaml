@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 mapped_xrefs:
@@ -38,4 +38,147 @@ definitions:
       Catalyses: dimethylallyl phosphate + FMNH2 = prenylated FMNH2 + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of flavin prenyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.129. EC 2.5.1.129 maps to
+    exactly one curated Rhea reaction (RHEA:37743), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dimethylallyl
+    phosphate + FMNH2 = prenylated FMNH2 + phosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: flavin prenyltransferase
+    grounding: EC:2.5.1.129
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dimethylallyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:88052
+    description: Formula C5H9O4P.
+  - node_id: sub2
+    label: FMNH2
+    node_type: CHEMICAL
+    grounding: CHEBI:57618
+    description: Formula C17H21N4O9P.
+  - node_id: prd1
+    label: prenylated FMNH2
+    node_type: CHEMICAL
+    grounding: CHEBI:87467
+    description: Formula C22H29N4O9P.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: flavin prenyltransferase activity
+    grounding: GO:0106141
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_F9UT67
+    node_type: PROTEIN
+    label: LPDB_LACPL
+    grounding: UniProtKB:F9UT67
+  - node_id: prot_P33751
+    node_type: PROTEIN
+    label: PAD1_YEAST
+    grounding: UniProtKB:P33751
+  - node_id: prot_P94404
+    node_type: PROTEIN
+    label: PADL_BACSU
+    grounding: UniProtKB:P94404
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dimethylallyl phosphate is a substrate consumed by RHEA:37743 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:37744
+      snippet: dimethylallyl phosphate + FMNH2 => prenylated FMNH2 + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:37744 declares side 37743_L as its substrates
+        (rh:substrates); the master reaction RHEA:37743 is undirected. This participant is CHEBI:88052
+        with coefficient 1. Rhea cites PMID:39231435, PMID:26083743 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: FMNH2 is a substrate consumed by RHEA:37743 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37744
+      snippet: dimethylallyl phosphate + FMNH2 => prenylated FMNH2 + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:37744 declares side 37743_L as its substrates
+        (rh:substrates); the master reaction RHEA:37743 is undirected. This participant is CHEBI:57618
+        with coefficient 1. Rhea cites PMID:39231435, PMID:26083743 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: prenylated FMNH2 is a product released by RHEA:37743 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37744
+      snippet: dimethylallyl phosphate + FMNH2 => prenylated FMNH2 + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:37744 declares side 37743_R as its products
+        (rh:products); the master reaction RHEA:37743 is undirected. This participant is CHEBI:87467 with
+        coefficient 1. Rhea cites PMID:39231435, PMID:26083743 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:37743 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37744
+      snippet: dimethylallyl phosphate + FMNH2 => prenylated FMNH2 + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:37744 declares side 37743_R as its products
+        (rh:products); the master reaction RHEA:37743 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:39231435, PMID:26083743 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.129
+      snippet: EC:2.5.1.129 > GO:flavin prenyltransferase activity ; GO:0106141
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0106141 is itself a record
+        in this KB.
+  - subject: prot_F9UT67
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LPDB_LACPL is an exemplar enzyme with EC 2.5.1.129 activity.
+    evidence:
+    - reference: EC:2.5.1.129
+      snippet: DR   F9UT67, LPDB_LACPL ;  P33751, PAD1_YEAST ;  P94404, PADL_BACSU ;
+      notes: ExPASy ENZYME entry EC 2.5.1.129 cross-references UniProtKB:F9UT67 (LPDB_LACPL) as a protein
+        with this activity.
+  - subject: prot_P33751
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAD1_YEAST is an exemplar enzyme with EC 2.5.1.129 activity.
+    evidence:
+    - reference: EC:2.5.1.129
+      snippet: DR   F9UT67, LPDB_LACPL ;  P33751, PAD1_YEAST ;  P94404, PADL_BACSU ;
+      notes: ExPASy ENZYME entry EC 2.5.1.129 cross-references UniProtKB:P33751 (PAD1_YEAST) as a protein
+        with this activity.
+  - subject: prot_P94404
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PADL_BACSU is an exemplar enzyme with EC 2.5.1.129 activity.
+    evidence:
+    - reference: EC:2.5.1.129
+      snippet: DR   F9UT67, LPDB_LACPL ;  P33751, PAD1_YEAST ;  P94404, PADL_BACSU ;
+      notes: ExPASy ENZYME entry EC 2.5.1.129 cross-references UniProtKB:P94404 (PADL_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

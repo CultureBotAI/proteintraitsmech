@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 synonyms:
@@ -43,4 +43,118 @@ definitions:
       Catalyses: alpha-D-ribose 1,5-bisphosphate = D-ribulose 1,5-bisphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ribose-1,5-bisphosphate isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.29. EC 5.3.1.29 maps to exactly
+    one curated Rhea reaction (RHEA:32243), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "alpha-D-ribose
+    1,5-bisphosphate = D-ribulose 1,5-bisphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ribose-1,5-bisphosphate isomerase
+    grounding: EC:5.3.1.29
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: alpha-D-ribose 1,5-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:68688
+    description: Formula C5H8O11P2.
+  - node_id: prd1
+    label: D-ribulose 1,5-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57870
+    description: Formula C5H8O11P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ribose 1,5-bisphosphate isomerase activity
+    grounding: GO:0043917
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O28242
+    node_type: PROTEIN
+    label: R15PI_ARCFU
+    grounding: UniProtKB:O28242
+  - node_id: prot_D2RW80
+    node_type: PROTEIN
+    label: R15PI_HALTV
+    grounding: UniProtKB:D2RW80
+  - node_id: prot_D4GV73
+    node_type: PROTEIN
+    label: R15PI_HALVD
+    grounding: UniProtKB:D4GV73
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha-D-ribose 1,5-bisphosphate is a substrate consumed by RHEA:32243 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32244
+      snippet: alpha-D-ribose 1,5-bisphosphate => D-ribulose 1,5-bisphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32244 declares side 32243_L as its substrates
+        (rh:substrates); the master reaction RHEA:32243 is undirected. This participant is CHEBI:68688
+        with coefficient 1. Rhea cites PMID:15375115, PMID:17303759, PMID:23065974, PMID:22511789 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-ribulose 1,5-bisphosphate is a product released by RHEA:32243 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32244
+      snippet: alpha-D-ribose 1,5-bisphosphate => D-ribulose 1,5-bisphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32244 declares side 32243_R as its products
+        (rh:products); the master reaction RHEA:32243 is undirected. This participant is CHEBI:57870 with
+        coefficient 1. Rhea cites PMID:15375115, PMID:17303759, PMID:23065974, PMID:22511789 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.29
+      snippet: EC:5.3.1.29 > GO:ribose 1,5-bisphosphate isomerase activity ; GO:0043917
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043917 is itself a record
+        in this KB.
+  - subject: prot_O28242
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: R15PI_ARCFU is an exemplar enzyme with EC 5.3.1.29 activity.
+    evidence:
+    - reference: EC:5.3.1.29
+      snippet: DR   O28242, R15PI_ARCFU;  D2RW80, R15PI_HALTV;  D4GV73, R15PI_HALVD;
+      notes: ExPASy ENZYME entry EC 5.3.1.29 cross-references UniProtKB:O28242 (R15PI_ARCFU) as a protein
+        with this activity.
+  - subject: prot_D2RW80
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: R15PI_HALTV is an exemplar enzyme with EC 5.3.1.29 activity.
+    evidence:
+    - reference: EC:5.3.1.29
+      snippet: DR   O28242, R15PI_ARCFU;  D2RW80, R15PI_HALTV;  D4GV73, R15PI_HALVD;
+      notes: ExPASy ENZYME entry EC 5.3.1.29 cross-references UniProtKB:D2RW80 (R15PI_HALTV) as a protein
+        with this activity.
+  - subject: prot_D4GV73
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: R15PI_HALVD is an exemplar enzyme with EC 5.3.1.29 activity.
+    evidence:
+    - reference: EC:5.3.1.29
+      snippet: DR   O28242, R15PI_ARCFU;  D2RW80, R15PI_HALTV;  D4GV73, R15PI_HALVD;
+      notes: ExPASy ENZYME entry EC 5.3.1.29 cross-references UniProtKB:D4GV73 (R15PI_HALVD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

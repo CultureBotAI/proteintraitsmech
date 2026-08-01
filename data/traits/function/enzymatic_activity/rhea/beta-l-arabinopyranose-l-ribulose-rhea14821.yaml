@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.1.4
     mapping_source: rhea2ec
@@ -26,4 +26,150 @@ definitions:
       Catalyses the reaction: beta-L-arabinopyranose = L-ribulose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-L-arabinopyranose = L-ribulose
+  description: Substrate-to-product chemistry of RHEA:14821, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:14822 (rh:substrates → 14821_L, rh:products → 14821_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of beta-L-arabinopyranose = L-ribulose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14821
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: beta-L-arabinopyranose = L-ribulose'
+  - node_id: sub1
+    label: beta-L-arabinopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:40886
+    description: Formula C5H10O5.
+  - node_id: prd1
+    label: L-ribulose
+    node_type: CHEMICAL
+    grounding: CHEBI:16880
+    description: Formula C5H10O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-arabinose isomerase activity
+    grounding: GO:0008733
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: L-arabinose isomerase
+    grounding: EC:5.3.1.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q65GC0
+    node_type: PROTEIN
+    label: ARAA1_BACLD
+    grounding: UniProtKB:Q65GC0
+  - node_id: prot_Q97JE4
+    node_type: PROTEIN
+    label: ARAA1_CLOAB
+    grounding: UniProtKB:Q97JE4
+  - node_id: prot_Q65J10
+    node_type: PROTEIN
+    label: ARAA2_BACLD
+    grounding: UniProtKB:Q65J10
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: beta-L-arabinopyranose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14822
+      snippet: beta-L-arabinopyranose => L-ribulose
+      notes: Rhea's left-to-right directional reaction RHEA:14822 declares side 14821_L as its substrates
+        (rh:substrates); the master reaction RHEA:14821 is undirected. This participant is CHEBI:40886
+        with coefficient 1. Rhea cites PMID:5550812, PMID:16756997 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-ribulose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14822
+      snippet: beta-L-arabinopyranose => L-ribulose
+      notes: Rhea's left-to-right directional reaction RHEA:14822 declares side 14821_R as its products
+        (rh:products); the master reaction RHEA:14821 is undirected. This participant is CHEBI:16880 with
+        coefficient 1. Rhea cites PMID:5550812, PMID:16756997 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:14821
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008733"/>
+      notes: The rdfs:seeAlso triple on RHEA:14821 in rhea.rdf. GO term GO:0008733 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.1.4; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:14821
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.4"/>
+      notes: The rh:ec triple on RHEA:14821 in rhea.rdf. EC 5.3.1.4 is itself a record in this KB.
+  - subject: prot_Q65GC0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAA1_BACLD is an exemplar enzyme carrying EC 5.3.1.4, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.4
+      snippet: DR   Q65GC0, ARAA1_BACLD;  Q97JE4, ARAA1_CLOAB;  Q65J10, ARAA2_BACLD;
+      notes: ExPASy ENZYME entry EC 5.3.1.4 cross-references UniProtKB:Q65GC0 (ARAA1_BACLD) as a protein
+        with this activity.
+    - reference: RHEA:14821
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.4"/>
+      notes: Rhea assigns RHEA:14821 to EC 5.3.1.4, and EC 5.3.1.4 maps to exactly one Rhea master reaction
+        (RHEA:14821), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q97JE4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAA1_CLOAB is an exemplar enzyme carrying EC 5.3.1.4, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.4
+      snippet: DR   Q65GC0, ARAA1_BACLD;  Q97JE4, ARAA1_CLOAB;  Q65J10, ARAA2_BACLD;
+      notes: ExPASy ENZYME entry EC 5.3.1.4 cross-references UniProtKB:Q97JE4 (ARAA1_CLOAB) as a protein
+        with this activity.
+    - reference: RHEA:14821
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.4"/>
+      notes: Rhea assigns RHEA:14821 to EC 5.3.1.4, and EC 5.3.1.4 maps to exactly one Rhea master reaction
+        (RHEA:14821), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q65J10
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAA2_BACLD is an exemplar enzyme carrying EC 5.3.1.4, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.4
+      snippet: DR   Q65GC0, ARAA1_BACLD;  Q97JE4, ARAA1_CLOAB;  Q65J10, ARAA2_BACLD;
+      notes: ExPASy ENZYME entry EC 5.3.1.4 cross-references UniProtKB:Q65J10 (ARAA2_BACLD) as a protein
+        with this activity.
+    - reference: RHEA:14821
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.4"/>
+      notes: Rhea assigns RHEA:14821 to EC 5.3.1.4, and EC 5.3.1.4 maps to exactly one Rhea master reaction
+        (RHEA:14821), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

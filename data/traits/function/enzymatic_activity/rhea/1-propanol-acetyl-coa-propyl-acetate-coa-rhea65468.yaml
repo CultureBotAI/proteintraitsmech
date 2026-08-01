@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:28831
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,106 @@ definitions:
       Catalyses the reaction: 1-propanol + acetyl-CoA = propyl acetate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-propanol + acetyl-CoA = propyl acetate + CoA
+  description: Substrate-to-product chemistry of RHEA:65468, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:65469 (rh:substrates → 65468_L, rh:products → 65468_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1-propanol + acetyl-CoA = propyl acetate + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:65468
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1-propanol + acetyl-CoA = propyl acetate + CoA'
+  - node_id: sub1
+    label: 1-propanol
+    node_type: CHEMICAL
+    grounding: CHEBI:28831
+    description: Formula C3H8O.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: propyl acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:40116
+    description: Formula C5H10O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alcohol O-acetyltransferase activity
+    grounding: GO:0004026
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-propanol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65469
+      snippet: 1-propanol + acetyl-CoA => propyl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:65469 declares side 65468_L as its substrates
+        (rh:substrates); the master reaction RHEA:65468 is undirected. This participant is CHEBI:28831
+        with coefficient 1. Rhea cites PMID:24661745, PMID:15955071 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65469
+      snippet: 1-propanol + acetyl-CoA => propyl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:65469 declares side 65468_L as its substrates
+        (rh:substrates); the master reaction RHEA:65468 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:24661745, PMID:15955071 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: propyl acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65469
+      snippet: 1-propanol + acetyl-CoA => propyl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:65469 declares side 65468_R as its products
+        (rh:products); the master reaction RHEA:65468 is undirected. This participant is CHEBI:40116 with
+        coefficient 1. Rhea cites PMID:24661745, PMID:15955071 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65469
+      snippet: 1-propanol + acetyl-CoA => propyl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:65469 declares side 65468_R as its products
+        (rh:products); the master reaction RHEA:65468 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:24661745, PMID:15955071 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:65468
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004026"/>
+      notes: The rdfs:seeAlso triple on RHEA:65468 in rhea.rdf. GO term GO:0004026 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

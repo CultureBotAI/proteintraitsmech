@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.13.-
 synonyms:
@@ -41,4 +41,133 @@ definitions:
       Catalyses: D-alanyl-D-alanine + H2O = 2 D-alanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-Ala-D-Ala dipeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.13.22. EC 3.4.13.22 maps to
+    exactly one curated Rhea reaction (RHEA:20661), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-alanyl-D-alanine
+    + H2O = 2 D-alanine". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-Ala-D-Ala dipeptidase
+    grounding: EC:3.4.13.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-alanyl-D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57822
+    description: Formula C6H12N2O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57416
+    description: Formula C3H7NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: D-Ala-D-Ala dipeptidase activity
+    grounding: GO:0160237
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P77790
+    node_type: PROTEIN
+    label: DDPX_ECOLI
+    grounding: UniProtKB:P77790
+  - node_id: prot_P74268
+    node_type: PROTEIN
+    label: DDPX_SYNY3
+    grounding: UniProtKB:P74268
+  - node_id: prot_Q9JN36
+    node_type: PROTEIN
+    label: VANXY_ENTGA
+    grounding: UniProtKB:Q9JN36
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-alanyl-D-alanine is a substrate consumed by RHEA:20661 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20662
+      snippet: D-alanyl-D-alanine + H2O => 2 D-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:20662 declares side 20661_L as its substrates
+        (rh:substrates); the master reaction RHEA:20661 is undirected. This participant is CHEBI:57822
+        with coefficient 1. Rhea cites PMID:17017774, PMID:9702193, PMID:9751644, PMID:11881895 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:20661 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20662
+      snippet: D-alanyl-D-alanine + H2O => 2 D-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:20662 declares side 20661_L as its substrates
+        (rh:substrates); the master reaction RHEA:20661 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17017774, PMID:9702193, PMID:9751644, PMID:11881895 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-alanine is a product released by RHEA:20661 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:20662
+      snippet: D-alanyl-D-alanine + H2O => 2 D-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:20662 declares side 20661_R as its products
+        (rh:products); the master reaction RHEA:20661 is undirected. This participant is CHEBI:57416 with
+        coefficient 2. Rhea cites PMID:17017774, PMID:9702193, PMID:9751644, PMID:11881895 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.13.22
+      snippet: EC:3.4.13.22 > GO:D-Ala-D-Ala dipeptidase activity ; GO:0160237
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0160237 is itself a record
+        in this KB.
+  - subject: prot_P77790
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DDPX_ECOLI is an exemplar enzyme with EC 3.4.13.22 activity.
+    evidence:
+    - reference: EC:3.4.13.22
+      snippet: DR   P77790, DDPX_ECOLI ;  P74268, DDPX_SYNY3 ;  Q9JN36, VANXY_ENTGA;
+      notes: ExPASy ENZYME entry EC 3.4.13.22 cross-references UniProtKB:P77790 (DDPX_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P74268
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DDPX_SYNY3 is an exemplar enzyme with EC 3.4.13.22 activity.
+    evidence:
+    - reference: EC:3.4.13.22
+      snippet: DR   P77790, DDPX_ECOLI ;  P74268, DDPX_SYNY3 ;  Q9JN36, VANXY_ENTGA;
+      notes: ExPASy ENZYME entry EC 3.4.13.22 cross-references UniProtKB:P74268 (DDPX_SYNY3) as a protein
+        with this activity.
+  - subject: prot_Q9JN36
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VANXY_ENTGA is an exemplar enzyme with EC 3.4.13.22 activity.
+    evidence:
+    - reference: EC:3.4.13.22
+      snippet: DR   P77790, DDPX_ECOLI ;  P74268, DDPX_SYNY3 ;  Q9JN36, VANXY_ENTGA;
+      notes: ExPASy ENZYME entry EC 3.4.13.22 cross-references UniProtKB:Q9JN36 (VANXY_ENTGA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

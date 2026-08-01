@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.6.1.-
 mapped_xrefs:
@@ -28,4 +28,54 @@ definitions:
       Catalyses: RNA containing adenosine-cytidine + H2O = an [RNA fragment]-3'-cytidine- 3'-phosphate + a 5'-a hydroxy-adenosine -3'-[RNA fragment]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Enterobacter ribonuclease
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.6.1.21. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "RNA containing
+    adenosine-cytidine + H2O = an [RNA fragment]-3''-cytidine- 3''-phosphate + a 5''-a hydroxy-adenosine
+    -3''-[RNA fragment]".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Enterobacter ribonuclease
+    grounding: EC:4.6.1.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: Enterobacter ribonuclease activity
+    grounding: GO:0008847
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P21338
+    node_type: PROTEIN
+    label: RNI_ECOLI
+    grounding: UniProtKB:P21338
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.6.1.21
+      snippet: EC:4.6.1.21 > GO:Enterobacter ribonuclease activity ; GO:0008847
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008847 is itself a record
+        in this KB.
+  - subject: prot_P21338
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RNI_ECOLI is an exemplar enzyme with EC 4.6.1.21 activity.
+    evidence:
+    - reference: EC:4.6.1.21
+      snippet: DR   P21338, RNI_ECOLI  ;
+      notes: ExPASy ENZYME entry EC 4.6.1.21 cross-references UniProtKB:P21338 (RNI_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

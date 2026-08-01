@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.99.-
 mapped_xrefs:
@@ -32,4 +32,118 @@ definitions:
       Catalyses: 2-nitrobutanedioate = fumarate + nitrite + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nitrosuccinate lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.99.5. EC 4.3.99.5 maps to exactly
+    one curated Rhea reaction (RHEA:69044), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-nitrobutanedioate
+    = fumarate + nitrite + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nitrosuccinate lyase
+    grounding: EC:4.3.99.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-nitrobutanedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:180682
+    description: Formula C4H3NO6.
+  - node_id: prd1
+    label: fumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+    description: Formula C4H2O4.
+  - node_id: prd2
+    label: nitrite
+    node_type: CHEMICAL
+    grounding: CHEBI:16301
+    description: Formula NO2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_K4R6W4
+    node_type: PROTEIN
+    label: CREDH_STRDJ
+    grounding: UniProtKB:K4R6W4
+  - node_id: prot_A0A0K2JL82
+    node_type: PROTEIN
+    label: CRED_STRCM
+    grounding: UniProtKB:A0A0K2JL82
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-nitrobutanedioate is a substrate consumed by RHEA:69044 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69045
+      snippet: 2-nitrobutanedioate => fumarate + nitrite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69045 declares side 69044_L as its substrates
+        (rh:substrates); the master reaction RHEA:69044 is undirected. This participant is CHEBI:180682
+        with coefficient 1. Rhea cites PMID:26689788, PMID:30120394 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: fumarate is a product released by RHEA:69044 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69045
+      snippet: 2-nitrobutanedioate => fumarate + nitrite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69045 declares side 69044_R as its products
+        (rh:products); the master reaction RHEA:69044 is undirected. This participant is CHEBI:29806 with
+        coefficient 1. Rhea cites PMID:26689788, PMID:30120394 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nitrite is a product released by RHEA:69044 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69045
+      snippet: 2-nitrobutanedioate => fumarate + nitrite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69045 declares side 69044_R as its products
+        (rh:products); the master reaction RHEA:69044 is undirected. This participant is CHEBI:16301 with
+        coefficient 1. Rhea cites PMID:26689788, PMID:30120394 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:69044 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69045
+      snippet: 2-nitrobutanedioate => fumarate + nitrite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69045 declares side 69044_R as its products
+        (rh:products); the master reaction RHEA:69044 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:26689788, PMID:30120394 for this reaction.
+  - subject: prot_K4R6W4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CREDH_STRDJ is an exemplar enzyme with EC 4.3.99.5 activity.
+    evidence:
+    - reference: EC:4.3.99.5
+      snippet: DR   K4R6W4, CREDH_STRDJ;  A0A0K2JL82, CRED_STRCM ;
+      notes: ExPASy ENZYME entry EC 4.3.99.5 cross-references UniProtKB:K4R6W4 (CREDH_STRDJ) as a protein
+        with this activity.
+  - subject: prot_A0A0K2JL82
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRED_STRCM is an exemplar enzyme with EC 4.3.99.5 activity.
+    evidence:
+    - reference: EC:4.3.99.5
+      snippet: DR   K4R6W4, CREDH_STRDJ;  A0A0K2JL82, CRED_STRCM ;
+      notes: ExPASy ENZYME entry EC 4.3.99.5 cross-references UniProtKB:A0A0K2JL82 (CRED_STRCM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

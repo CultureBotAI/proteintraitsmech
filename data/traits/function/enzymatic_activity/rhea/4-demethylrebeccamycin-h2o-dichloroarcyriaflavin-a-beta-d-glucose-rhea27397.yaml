@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.3.3.5
     mapping_source: rhea2ec
@@ -30,4 +30,127 @@ definitions:
       Catalyses the reaction: 4'-demethylrebeccamycin + H2O = dichloroarcyriaflavin A + beta-D-glucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4'-demethylrebeccamycin + H2O = dichloroarcyriaflavin A + beta-D-glucose
+  description: Substrate-to-product chemistry of RHEA:27397, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27398 (rh:substrates → 27397_L, rh:products → 27397_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4'-demethylrebeccamycin + H2O = dichloroarcyriaflavin A + beta-D-glucose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27397
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4''-demethylrebeccamycin + H2O = dichloroarcyriaflavin A + beta-D-glucose'
+  - node_id: sub1
+    label: 4'-demethylrebeccamycin
+    node_type: CHEMICAL
+    grounding: CHEBI:595389
+    description: Formula C26H19Cl2N3O7.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: dichloroarcyriaflavin A
+    node_type: CHEMICAL
+    grounding: CHEBI:330772
+    description: Formula C20H9Cl2N3O2.
+  - node_id: prd2
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+    description: Formula C6H12O6.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 4'-demethylrebeccamycin synthase
+    grounding: EC:4.3.3.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8KHE4
+    node_type: PROTEIN
+    label: REBG_LENAE
+    grounding: UniProtKB:Q8KHE4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4'-demethylrebeccamycin is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27398
+      snippet: 4'-demethylrebeccamycin + H2O => dichloroarcyriaflavin A + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:27398 declares side 27397_L as its substrates
+        (rh:substrates); the master reaction RHEA:27397 is undirected. This participant is CHEBI:595389
+        with coefficient 1. Rhea cites PMID:16575939, PMID:10866221 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27398
+      snippet: 4'-demethylrebeccamycin + H2O => dichloroarcyriaflavin A + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:27398 declares side 27397_L as its substrates
+        (rh:substrates); the master reaction RHEA:27397 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16575939, PMID:10866221 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dichloroarcyriaflavin A is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27398
+      snippet: 4'-demethylrebeccamycin + H2O => dichloroarcyriaflavin A + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:27398 declares side 27397_R as its products
+        (rh:products); the master reaction RHEA:27397 is undirected. This participant is CHEBI:330772
+        with coefficient 1. Rhea cites PMID:16575939, PMID:10866221 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: beta-D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27398
+      snippet: 4'-demethylrebeccamycin + H2O => dichloroarcyriaflavin A + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:27398 declares side 27397_R as its products
+        (rh:products); the master reaction RHEA:27397 is undirected. This participant is CHEBI:15903 with
+        coefficient 1. Rhea cites PMID:16575939, PMID:10866221 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.3.3.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:27397
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.3.5"/>
+      notes: The rh:ec triple on RHEA:27397 in rhea.rdf. EC 4.3.3.5 is itself a record in this KB.
+  - subject: prot_Q8KHE4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: REBG_LENAE is an exemplar enzyme carrying EC 4.3.3.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.3.5
+      snippet: DR   Q8KHE4, REBG_LENAE ;
+      notes: ExPASy ENZYME entry EC 4.3.3.5 cross-references UniProtKB:Q8KHE4 (REBG_LENAE) as a protein
+        with this activity.
+    - reference: RHEA:27397
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.3.5"/>
+      notes: Rhea assigns RHEA:27397 to EC 4.3.3.5, and EC 4.3.3.5 maps to exactly one Rhea master reaction
+        (RHEA:27397), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

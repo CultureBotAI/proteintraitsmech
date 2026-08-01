@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 synonyms:
@@ -47,4 +47,248 @@ definitions:
       Catalyses: GMP + ATP = GDP + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of guanylate kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.8. Rhea assigns 2 curated
+    reactions to EC 2.7.4.8. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "GMP + ATP = GDP + ADP". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: guanylate kinase
+    grounding: EC:2.7.4.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of dGMP + ATP = dGDP + ADP
+    grounding: RHEA:12697
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: dGMP + ATP = dGDP + ADP'
+  - node_id: rxn1_sub1
+    label: dGMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57673
+    description: Formula C10H12N5O7P.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_prd1
+    label: dGDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58595
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of GMP + ATP = GDP + ADP
+    grounding: RHEA:20780
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: GMP + ATP = GDP + ADP'
+  - node_id: rxn2_sub1
+    label: GMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58115
+    description: Formula C10H12N5O8P.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_prd1
+    label: GDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  - node_id: rxn2_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: GMP kinase activity
+    grounding: GO:0004385
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P93757
+    node_type: PROTEIN
+    label: GMK1_ARATH
+    grounding: UniProtKB:P93757
+  - node_id: prot_Q2QPW1
+    node_type: PROTEIN
+    label: GMK1_ORYSJ
+    grounding: UniProtKB:Q2QPW1
+  - node_id: prot_Q9M682
+    node_type: PROTEIN
+    label: GMK2_ARATH
+    grounding: UniProtKB:Q9M682
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:12697 is one of the 2 curated reactions Rhea assigns to EC 2.7.4.8; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:12697
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.4.8"/>
+      notes: The rh:ec triple on RHEA:12697 in rhea.rdf assigns that reaction to EC 2.7.4.8.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: dGMP is a substrate consumed by RHEA:12697 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12698
+      snippet: dGMP + ATP => dGDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:12698 declares side 12697_L as its substrates
+        (rh:substrates); the master reaction RHEA:12697 is undirected. This participant is CHEBI:57673
+        with coefficient 1. Rhea cites PMID:10632732, PMID:17727616, PMID:5333666, PMID:16690197 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:12697 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12698
+      snippet: dGMP + ATP => dGDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:12698 declares side 12697_L as its substrates
+        (rh:substrates); the master reaction RHEA:12697 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:10632732, PMID:17727616, PMID:5333666, PMID:16690197 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: dGDP is a product released by RHEA:12697 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12698
+      snippet: dGMP + ATP => dGDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:12698 declares side 12697_R as its products
+        (rh:products); the master reaction RHEA:12697 is undirected. This participant is CHEBI:58595 with
+        coefficient 1. Rhea cites PMID:10632732, PMID:17727616, PMID:5333666, PMID:16690197 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:12697 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12698
+      snippet: dGMP + ATP => dGDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:12698 declares side 12697_R as its products
+        (rh:products); the master reaction RHEA:12697 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:10632732, PMID:17727616, PMID:5333666, PMID:16690197 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:20780 is one of the 2 curated reactions Rhea assigns to EC 2.7.4.8; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:20780
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.4.8"/>
+      notes: The rh:ec triple on RHEA:20780 in rhea.rdf assigns that reaction to EC 2.7.4.8.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: GMP is a substrate consumed by RHEA:20780 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20781
+      snippet: GMP + ATP => GDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:20781 declares side 20780_L as its substrates
+        (rh:substrates); the master reaction RHEA:20780 is undirected. This participant is CHEBI:58115
+        with coefficient 1. Rhea cites PMID:5333666, PMID:31201273, PMID:211390, PMID:211389 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:20780 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20781
+      snippet: GMP + ATP => GDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:20781 declares side 20780_L as its substrates
+        (rh:substrates); the master reaction RHEA:20780 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:5333666, PMID:31201273, PMID:211390, PMID:211389 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: GDP is a product released by RHEA:20780 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20781
+      snippet: GMP + ATP => GDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:20781 declares side 20780_R as its products
+        (rh:products); the master reaction RHEA:20780 is undirected. This participant is CHEBI:58189 with
+        coefficient 1. Rhea cites PMID:5333666, PMID:31201273, PMID:211390, PMID:211389 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: ADP is a product released by RHEA:20780 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20781
+      snippet: GMP + ATP => GDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:20781 declares side 20780_R as its products
+        (rh:products); the master reaction RHEA:20780 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:5333666, PMID:31201273, PMID:211390, PMID:211389 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.4.8
+      snippet: EC:2.7.4.8 > GO:GMP kinase activity ; GO:0004385
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004385 is itself a record
+        in this KB.
+  - subject: prot_P93757
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GMK1_ARATH is an exemplar enzyme with EC 2.7.4.8 activity.
+    evidence:
+    - reference: EC:2.7.4.8
+      snippet: DR   P93757, GMK1_ARATH ;  Q2QPW1, GMK1_ORYSJ ;  Q9M682, GMK2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.7.4.8 cross-references UniProtKB:P93757 (GMK1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q2QPW1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GMK1_ORYSJ is an exemplar enzyme with EC 2.7.4.8 activity.
+    evidence:
+    - reference: EC:2.7.4.8
+      snippet: DR   P93757, GMK1_ARATH ;  Q2QPW1, GMK1_ORYSJ ;  Q9M682, GMK2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.7.4.8 cross-references UniProtKB:Q2QPW1 (GMK1_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_Q9M682
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GMK2_ARATH is an exemplar enzyme with EC 2.7.4.8 activity.
+    evidence:
+    - reference: EC:2.7.4.8
+      snippet: DR   P93757, GMK1_ARATH ;  Q2QPW1, GMK1_ORYSJ ;  Q9M682, GMK2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.7.4.8 cross-references UniProtKB:Q9M682 (GMK2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 mapped_xrefs:
@@ -30,4 +30,120 @@ definitions:
       Catalyses: aspulvinone E + 2 dimethylallyl diphosphate = aspulvinone H + 2 diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aspulvinone dimethylallyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.35. EC 2.5.1.35 maps to exactly
+    one curated Rhea reaction (RHEA:13809), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "aspulvinone E
+    + 2 dimethylallyl diphosphate = aspulvinone H + 2 diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aspulvinone dimethylallyltransferase
+    grounding: EC:2.5.1.35
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: aspulvinone E
+    node_type: CHEMICAL
+    grounding: CHEBI:58240
+    description: Formula C17H11O5.
+  - node_id: sub2
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: aspulvinone H
+    node_type: CHEMICAL
+    grounding: CHEBI:58013
+    description: Formula C27H27O5.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aspulvinone dimethylallyltransferase activity
+    grounding: GO:0047691
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q0CX54
+    node_type: PROTEIN
+    label: ABPB_ASPTN
+    grounding: UniProtKB:Q0CX54
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: aspulvinone E is a substrate consumed by RHEA:13809 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13810
+      snippet: aspulvinone E + 2 dimethylallyl diphosphate => aspulvinone H + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13810 declares side 13809_L as its substrates
+        (rh:substrates); the master reaction RHEA:13809 is undirected. This participant is CHEBI:58240
+        with coefficient 1. Rhea cites PMID:28791090, PMID:678538 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:13809 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:13810
+      snippet: aspulvinone E + 2 dimethylallyl diphosphate => aspulvinone H + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13810 declares side 13809_L as its substrates
+        (rh:substrates); the master reaction RHEA:13809 is undirected. This participant is CHEBI:57623
+        with coefficient 2. Rhea cites PMID:28791090, PMID:678538 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: aspulvinone H is a product released by RHEA:13809 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13810
+      snippet: aspulvinone E + 2 dimethylallyl diphosphate => aspulvinone H + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13810 declares side 13809_R as its products
+        (rh:products); the master reaction RHEA:13809 is undirected. This participant is CHEBI:58013 with
+        coefficient 1. Rhea cites PMID:28791090, PMID:678538 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:13809 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:13810
+      snippet: aspulvinone E + 2 dimethylallyl diphosphate => aspulvinone H + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13810 declares side 13809_R as its products
+        (rh:products); the master reaction RHEA:13809 is undirected. This participant is CHEBI:33019 with
+        coefficient 2. Rhea cites PMID:28791090, PMID:678538 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.35
+      snippet: EC:2.5.1.35 > GO:aspulvinone dimethylallyltransferase activity ; GO:0047691
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047691 is itself a record
+        in this KB.
+  - subject: prot_Q0CX54
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABPB_ASPTN is an exemplar enzyme with EC 2.5.1.35 activity.
+    evidence:
+    - reference: EC:2.5.1.35
+      snippet: DR   Q0CX54, ABPB_ASPTN ;
+      notes: ExPASy ENZYME entry EC 2.5.1.35 cross-references UniProtKB:Q0CX54 (ABPB_ASPTN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

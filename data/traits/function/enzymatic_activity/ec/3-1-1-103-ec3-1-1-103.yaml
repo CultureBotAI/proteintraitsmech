@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 canonical_examples:
@@ -33,4 +33,67 @@ definitions:
       Catalyses: [(4-D-Ala)-(2-GlcNAc)-Rib-ol-P]n-[Gro-P]m-beta-D-ManNAc-(1->4)-alpha-D- GlcNAc-P-peptidoglycan + n H2O = [(2-GlcNAc)-Rib-ol-P]n-[Gro-P]m-beta-D- ManNAc-(1->4)-alpha-D-GlcNAc-P-peptidoglycan + n D-alanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of teichoic acid D-alanine hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.103. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "[(4-D-Ala)-(2-GlcNAc)-Rib-ol-P]n-[Gro-P]m-beta-D-ManNAc-(1->4)-alpha-D-
+    GlcNAc-P-peptidoglycan + n H2O = [(2-GlcNAc)-Rib-ol-P]n-[Gro-P]m-beta-D- ManNAc-(1->4)-alpha-D-GlcNAc-P-peptidoglycan
+    + n D-alanine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: teichoic acid D-alanine hydrolase
+    grounding: EC:3.1.1.103
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q2FZK3
+    node_type: PROTEIN
+    label: FMTA_STAA8
+    grounding: UniProtKB:Q2FZK3
+  - node_id: prot_Q5HH27
+    node_type: PROTEIN
+    label: FMTA_STAAC
+    grounding: UniProtKB:Q5HH27
+  - node_id: prot_Q7A2T0
+    node_type: PROTEIN
+    label: FMTA_STAAM
+    grounding: UniProtKB:Q7A2T0
+  edges:
+  - subject: prot_Q2FZK3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FMTA_STAA8 is an exemplar enzyme with EC 3.1.1.103 activity.
+    evidence:
+    - reference: EC:3.1.1.103
+      snippet: DR   Q2FZK3, FMTA_STAA8 ;  Q5HH27, FMTA_STAAC ;  Q7A2T0, FMTA_STAAM ;
+      notes: ExPASy ENZYME entry EC 3.1.1.103 cross-references UniProtKB:Q2FZK3 (FMTA_STAA8) as a protein
+        with this activity.
+  - subject: prot_Q5HH27
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FMTA_STAAC is an exemplar enzyme with EC 3.1.1.103 activity.
+    evidence:
+    - reference: EC:3.1.1.103
+      snippet: DR   Q2FZK3, FMTA_STAA8 ;  Q5HH27, FMTA_STAAC ;  Q7A2T0, FMTA_STAAM ;
+      notes: ExPASy ENZYME entry EC 3.1.1.103 cross-references UniProtKB:Q5HH27 (FMTA_STAAC) as a protein
+        with this activity.
+  - subject: prot_Q7A2T0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FMTA_STAAM is an exemplar enzyme with EC 3.1.1.103 activity.
+    evidence:
+    - reference: EC:3.1.1.103
+      snippet: DR   Q2FZK3, FMTA_STAA8 ;  Q5HH27, FMTA_STAAC ;  Q7A2T0, FMTA_STAAM ;
+      notes: ExPASy ENZYME entry EC 3.1.1.103 cross-references UniProtKB:Q7A2T0 (FMTA_STAAM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

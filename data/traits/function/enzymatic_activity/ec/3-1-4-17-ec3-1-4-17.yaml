@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.4.-
 synonyms:
@@ -47,4 +47,335 @@ definitions:
       Catalyses: a nucleoside 3',5'-cyclic phosphate + H2O = a nucleoside 5'-phosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3',5'-cyclic-nucleotide phosphodiesterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.4.17. Rhea assigns 4 curated
+    reactions to EC 3.1.4.17 (the first 3 are shown). No one substrate set is the class''s chemistry,
+    so each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "a nucleoside 3'',5''-cyclic phosphate
+    + H2O = a nucleoside 5''-phosphate + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3',5'-cyclic-nucleotide phosphodiesterase
+    grounding: EC:3.1.4.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a nucleoside 3',5'-cyclic phosphate + H2O = a nucleoside 5'-phosphate + H(+)
+    grounding: RHEA:14653
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a nucleoside 3'',5''-cyclic phosphate + H2O = a nucleoside 5''-phosphate
+      + H(+)'
+  - node_id: rxn1_sub1
+    label: a nucleoside 3',5'-cyclic phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58464
+    description: Formula C5H6O5PR2.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: a nucleoside 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57867
+    description: Formula C5H7O6PR2.
+  - node_id: rxn1_prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 3',5'-cyclic GMP + H2O = GMP + H(+)
+    grounding: RHEA:16957
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 3'',5''-cyclic GMP + H2O = GMP + H(+)'
+  - node_id: rxn2_sub1
+    label: 3',5'-cyclic GMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57746
+    description: Formula C10H11N5O7P.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: GMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58115
+    description: Formula C10H12N5O8P.
+  - node_id: rxn2_prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 3',5'-cyclic AMP + H2O = AMP + H(+)
+    grounding: RHEA:25277
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 3'',5''-cyclic AMP + H2O = AMP + H(+)'
+  - node_id: rxn3_sub1
+    label: 3',5'-cyclic AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58165
+    description: Formula C10H11N5O6P.
+  - node_id: rxn3_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3_prd1
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: rxn3_prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3',5'-cyclic-nucleotide phosphodiesterase activity
+    grounding: GO:0004114
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P9WP64
+    node_type: PROTEIN
+    label: CNPD3_MYCTO
+    grounding: UniProtKB:P9WP64
+  - node_id: prot_P9WP65
+    node_type: PROTEIN
+    label: CNPD3_MYCTU
+    grounding: UniProtKB:P9WP65
+  - node_id: prot_Q8YLG0
+    node_type: PROTEIN
+    label: CNPD3_NOSS1
+    grounding: UniProtKB:Q8YLG0
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:14653 is one of the 4 curated reactions Rhea assigns to EC 3.1.4.17; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:14653
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.4.17"/>
+      notes: The rh:ec triple on RHEA:14653 in rhea.rdf assigns that reaction to EC 3.1.4.17.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a nucleoside 3',5'-cyclic phosphate is a substrate consumed by RHEA:14653 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14654
+      snippet: a nucleoside 3',5'-cyclic phosphate + H2O => a nucleoside 5'-phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14654 declares side 14653_L as its substrates
+        (rh:substrates); the master reaction RHEA:14653 is undirected. This participant is CHEBI:58464
+        with coefficient 1. Rhea cites PMID:4365506, PMID:19801656, PMID:16313172, PMID:19828435 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:14653 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14654
+      snippet: a nucleoside 3',5'-cyclic phosphate + H2O => a nucleoside 5'-phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14654 declares side 14653_L as its substrates
+        (rh:substrates); the master reaction RHEA:14653 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4365506, PMID:19801656, PMID:16313172, PMID:19828435 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a nucleoside 5'-phosphate is a product released by RHEA:14653 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14654
+      snippet: a nucleoside 3',5'-cyclic phosphate + H2O => a nucleoside 5'-phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14654 declares side 14653_R as its products
+        (rh:products); the master reaction RHEA:14653 is undirected. This participant is CHEBI:57867 with
+        coefficient 1. Rhea cites PMID:4365506, PMID:19801656, PMID:16313172, PMID:19828435 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H(+) is a product released by RHEA:14653 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14654
+      snippet: a nucleoside 3',5'-cyclic phosphate + H2O => a nucleoside 5'-phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14654 declares side 14653_R as its products
+        (rh:products); the master reaction RHEA:14653 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4365506, PMID:19801656, PMID:16313172, PMID:19828435 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:16957 is one of the 4 curated reactions Rhea assigns to EC 3.1.4.17; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:16957
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.4.17"/>
+      notes: The rh:ec triple on RHEA:16957 in rhea.rdf assigns that reaction to EC 3.1.4.17.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 3',5'-cyclic GMP is a substrate consumed by RHEA:16957 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16958
+      snippet: 3',5'-cyclic GMP + H2O => GMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16958 declares side 16957_L as its substrates
+        (rh:substrates); the master reaction RHEA:16957 is undirected. This participant is CHEBI:57746
+        with coefficient 1. Rhea cites PMID:18757755, PMID:16232123, PMID:12429832, PMID:18503409 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:16957 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16958
+      snippet: 3',5'-cyclic GMP + H2O => GMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16958 declares side 16957_L as its substrates
+        (rh:substrates); the master reaction RHEA:16957 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18757755, PMID:16232123, PMID:12429832, PMID:18503409 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: GMP is a product released by RHEA:16957 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16958
+      snippet: 3',5'-cyclic GMP + H2O => GMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16958 declares side 16957_R as its products
+        (rh:products); the master reaction RHEA:16957 is undirected. This participant is CHEBI:58115 with
+        coefficient 1. Rhea cites PMID:18757755, PMID:16232123, PMID:12429832, PMID:18503409 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H(+) is a product released by RHEA:16957 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16958
+      snippet: 3',5'-cyclic GMP + H2O => GMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16958 declares side 16957_R as its products
+        (rh:products); the master reaction RHEA:16957 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18757755, PMID:16232123, PMID:12429832, PMID:18503409 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:25277 is one of the 4 curated reactions Rhea assigns to EC 3.1.4.17; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25277
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.4.17"/>
+      notes: The rh:ec triple on RHEA:25277 in rhea.rdf assigns that reaction to EC 3.1.4.17.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: 3',5'-cyclic AMP is a substrate consumed by RHEA:25277 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25278
+      snippet: 3',5'-cyclic AMP + H2O => AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25278 declares side 25277_L as its substrates
+        (rh:substrates); the master reaction RHEA:25277 is undirected. This participant is CHEBI:58165
+        with coefficient 1. Rhea cites PMID:19801656, PMID:8810311, PMID:12681444, PMID:16313172 for this
+        reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: H2O is a substrate consumed by RHEA:25277 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25278
+      snippet: 3',5'-cyclic AMP + H2O => AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25278 declares side 25277_L as its substrates
+        (rh:substrates); the master reaction RHEA:25277 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19801656, PMID:8810311, PMID:12681444, PMID:16313172 for this
+        reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: AMP is a product released by RHEA:25277 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25278
+      snippet: 3',5'-cyclic AMP + H2O => AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25278 declares side 25277_R as its products
+        (rh:products); the master reaction RHEA:25277 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:19801656, PMID:8810311, PMID:12681444, PMID:16313172 for this
+        reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: H(+) is a product released by RHEA:25277 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25278
+      snippet: 3',5'-cyclic AMP + H2O => AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25278 declares side 25277_R as its products
+        (rh:products); the master reaction RHEA:25277 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19801656, PMID:8810311, PMID:12681444, PMID:16313172 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.4.17
+      snippet: EC:3.1.4.17 > GO:3',5'-cyclic-nucleotide phosphodiesterase activity ; GO:0004114
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004114 is itself a record
+        in this KB.
+  - subject: prot_P9WP64
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CNPD3_MYCTO is an exemplar enzyme with EC 3.1.4.17 activity.
+    evidence:
+    - reference: EC:3.1.4.17
+      snippet: DR   P9WP64, CNPD3_MYCTO;  P9WP65, CNPD3_MYCTU;  Q8YLG0, CNPD3_NOSS1;
+      notes: ExPASy ENZYME entry EC 3.1.4.17 cross-references UniProtKB:P9WP64 (CNPD3_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WP65
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CNPD3_MYCTU is an exemplar enzyme with EC 3.1.4.17 activity.
+    evidence:
+    - reference: EC:3.1.4.17
+      snippet: DR   P9WP64, CNPD3_MYCTO;  P9WP65, CNPD3_MYCTU;  Q8YLG0, CNPD3_NOSS1;
+      notes: ExPASy ENZYME entry EC 3.1.4.17 cross-references UniProtKB:P9WP65 (CNPD3_MYCTU) as a protein
+        with this activity.
+  - subject: prot_Q8YLG0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CNPD3_NOSS1 is an exemplar enzyme with EC 3.1.4.17 activity.
+    evidence:
+    - reference: EC:3.1.4.17
+      snippet: DR   P9WP64, CNPD3_MYCTO;  P9WP65, CNPD3_MYCTU;  Q8YLG0, CNPD3_NOSS1;
+      notes: ExPASy ENZYME entry EC 3.1.4.17 cross-references UniProtKB:Q8YLG0 (CNPD3_NOSS1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (19 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

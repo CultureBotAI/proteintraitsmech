@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -51,4 +51,152 @@ definitions:
       Catalyses: an N-acylneuraminate + CTP = a CMP-N-acyl-beta-neuraminate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acylneuraminate cytidylyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.43. EC 2.7.7.43 maps to exactly
+    one curated Rhea reaction (RHEA:11344), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an N-acylneuraminate
+    + CTP = a CMP-N-acyl-beta-neuraminate + diphosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-acylneuraminate cytidylyltransferase
+    grounding: EC:2.7.7.43
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an N-acylneuraminate
+    node_type: CHEMICAL
+    grounding: CHEBI:60073
+    description: Formula C10H15NO9R.
+  - node_id: sub2
+    label: CTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+    description: Formula C9H12N3O14P3.
+  - node_id: prd1
+    label: a CMP-N-acyl-beta-neuraminate
+    node_type: CHEMICAL
+    grounding: CHEBI:68671
+    description: Formula C19H26N4O16PR.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-acylneuraminate cytidylyltransferase activity
+    grounding: GO:0008781
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q0E671
+    node_type: PROTEIN
+    label: NEUAA_DANRE
+    grounding: UniProtKB:Q0E671
+  - node_id: prot_H9BFW7
+    node_type: PROTEIN
+    label: NEUAB_DANRE
+    grounding: UniProtKB:H9BFW7
+  - node_id: prot_P0DY07
+    node_type: PROTEIN
+    label: NEUAC_CAMJ8
+    grounding: UniProtKB:P0DY07
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-acylneuraminate is a substrate consumed by RHEA:11344 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11345
+      snippet: an N-acylneuraminate + CTP => a CMP-N-acyl-beta-neuraminate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11345 declares side 11344_L as its substrates
+        (rh:substrates); the master reaction RHEA:11344 is undirected. This participant is CHEBI:60073
+        with coefficient 1. Rhea cites PMID:20491913, PMID:11893746, PMID:10320348, PMID:11479279 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CTP is a substrate consumed by RHEA:11344 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11345
+      snippet: an N-acylneuraminate + CTP => a CMP-N-acyl-beta-neuraminate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11345 declares side 11344_L as its substrates
+        (rh:substrates); the master reaction RHEA:11344 is undirected. This participant is CHEBI:37563
+        with coefficient 1. Rhea cites PMID:20491913, PMID:11893746, PMID:10320348, PMID:11479279 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a CMP-N-acyl-beta-neuraminate is a product released by RHEA:11344 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11345
+      snippet: an N-acylneuraminate + CTP => a CMP-N-acyl-beta-neuraminate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11345 declares side 11344_R as its products
+        (rh:products); the master reaction RHEA:11344 is undirected. This participant is CHEBI:68671 with
+        coefficient 1. Rhea cites PMID:20491913, PMID:11893746, PMID:10320348, PMID:11479279 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:11344 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11345
+      snippet: an N-acylneuraminate + CTP => a CMP-N-acyl-beta-neuraminate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11345 declares side 11344_R as its products
+        (rh:products); the master reaction RHEA:11344 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20491913, PMID:11893746, PMID:10320348, PMID:11479279 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.7.43
+      snippet: EC:2.7.7.43 > GO:N-acylneuraminate cytidylyltransferase activity ; GO:0008781
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008781 is itself a record
+        in this KB.
+  - subject: prot_Q0E671
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEUAA_DANRE is an exemplar enzyme with EC 2.7.7.43 activity.
+    evidence:
+    - reference: EC:2.7.7.43
+      snippet: DR   Q0E671, NEUAA_DANRE;  H9BFW7, NEUAB_DANRE;  P0DY07, NEUAC_CAMJ8;
+      notes: ExPASy ENZYME entry EC 2.7.7.43 cross-references UniProtKB:Q0E671 (NEUAA_DANRE) as a protein
+        with this activity.
+  - subject: prot_H9BFW7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEUAB_DANRE is an exemplar enzyme with EC 2.7.7.43 activity.
+    evidence:
+    - reference: EC:2.7.7.43
+      snippet: DR   Q0E671, NEUAA_DANRE;  H9BFW7, NEUAB_DANRE;  P0DY07, NEUAC_CAMJ8;
+      notes: ExPASy ENZYME entry EC 2.7.7.43 cross-references UniProtKB:H9BFW7 (NEUAB_DANRE) as a protein
+        with this activity.
+  - subject: prot_P0DY07
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEUAC_CAMJ8 is an exemplar enzyme with EC 2.7.7.43 activity.
+    evidence:
+    - reference: EC:2.7.7.43
+      snippet: DR   Q0E671, NEUAA_DANRE;  H9BFW7, NEUAB_DANRE;  P0DY07, NEUAC_CAMJ8;
+      notes: ExPASy ENZYME entry EC 2.7.7.43 cross-references UniProtKB:P0DY07 (NEUAC_CAMJ8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

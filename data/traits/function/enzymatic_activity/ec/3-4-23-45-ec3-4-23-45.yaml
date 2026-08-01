@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 synonyms:
@@ -48,4 +48,67 @@ definitions:
       Catalyses: Broad endopeptidase specificity. Cleaves Glu-Val-Asn-Leu-|-Asp-Ala-Glu- Phe in the Swedish variant of Alzheimer's amyloid precursor protein
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of memapsin 1
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.45. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Broad endopeptidase
+    specificity. Cleaves Glu-Val-Asn-Leu-|-Asp-Ala-Glu- Phe in the Swedish variant of Alzheimer''s amyloid
+    precursor protein".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: memapsin 1
+    grounding: EC:3.4.23.45
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9Y5Z0
+    node_type: PROTEIN
+    label: BACE2_HUMAN
+    grounding: UniProtKB:Q9Y5Z0
+  - node_id: prot_Q9JL18
+    node_type: PROTEIN
+    label: BACE2_MOUSE
+    grounding: UniProtKB:Q9JL18
+  - node_id: prot_Q6IE75
+    node_type: PROTEIN
+    label: BACE2_RAT
+    grounding: UniProtKB:Q6IE75
+  edges:
+  - subject: prot_Q9Y5Z0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACE2_HUMAN is an exemplar enzyme with EC 3.4.23.45 activity.
+    evidence:
+    - reference: EC:3.4.23.45
+      snippet: DR   Q9Y5Z0, BACE2_HUMAN;  Q9JL18, BACE2_MOUSE;  Q6IE75, BACE2_RAT  ;
+      notes: ExPASy ENZYME entry EC 3.4.23.45 cross-references UniProtKB:Q9Y5Z0 (BACE2_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9JL18
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACE2_MOUSE is an exemplar enzyme with EC 3.4.23.45 activity.
+    evidence:
+    - reference: EC:3.4.23.45
+      snippet: DR   Q9Y5Z0, BACE2_HUMAN;  Q9JL18, BACE2_MOUSE;  Q6IE75, BACE2_RAT  ;
+      notes: ExPASy ENZYME entry EC 3.4.23.45 cross-references UniProtKB:Q9JL18 (BACE2_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q6IE75
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACE2_RAT is an exemplar enzyme with EC 3.4.23.45 activity.
+    evidence:
+    - reference: EC:3.4.23.45
+      snippet: DR   Q9Y5Z0, BACE2_HUMAN;  Q9JL18, BACE2_MOUSE;  Q6IE75, BACE2_RAT  ;
+      notes: ExPASy ENZYME entry EC 3.4.23.45 cross-references UniProtKB:Q6IE75 (BACE2_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

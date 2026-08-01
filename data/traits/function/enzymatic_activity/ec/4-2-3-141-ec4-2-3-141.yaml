@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: 8-hydroxycopalyl diphosphate + H2O = sclareol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sclareol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.141. EC 4.2.3.141 maps to
+    exactly one curated Rhea reaction (RHEA:34459), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "8-hydroxycopalyl
+    diphosphate + H2O = sclareol + diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sclareol synthase
+    grounding: EC:4.2.3.141
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 8-hydroxycopalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:64283
+    description: Formula C20H35O8P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: sclareol
+    node_type: CHEMICAL
+    grounding: CHEBI:9053
+    description: Formula C20H36O2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_G8GJ94
+    node_type: PROTEIN
+    label: SCLS_SALSC
+    grounding: UniProtKB:G8GJ94
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 8-hydroxycopalyl diphosphate is a substrate consumed by RHEA:34459 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34460
+      snippet: 8-hydroxycopalyl diphosphate + H2O => sclareol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34460 declares side 34459_L as its substrates
+        (rh:substrates); the master reaction RHEA:34459 is undirected. This participant is CHEBI:64283
+        with coefficient 1. Rhea cites PMID:22834731 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:34459 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34460
+      snippet: 8-hydroxycopalyl diphosphate + H2O => sclareol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34460 declares side 34459_L as its substrates
+        (rh:substrates); the master reaction RHEA:34459 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:22834731 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sclareol is a product released by RHEA:34459 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34460
+      snippet: 8-hydroxycopalyl diphosphate + H2O => sclareol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34460 declares side 34459_R as its products
+        (rh:products); the master reaction RHEA:34459 is undirected. This participant is CHEBI:9053 with
+        coefficient 1. Rhea cites PMID:22834731 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:34459 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34460
+      snippet: 8-hydroxycopalyl diphosphate + H2O => sclareol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34460 declares side 34459_R as its products
+        (rh:products); the master reaction RHEA:34459 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:22834731 for this reaction.
+  - subject: prot_G8GJ94
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SCLS_SALSC is an exemplar enzyme with EC 4.2.3.141 activity.
+    evidence:
+    - reference: EC:4.2.3.141
+      snippet: DR   G8GJ94, SCLS_SALSC ;
+      notes: ExPASy ENZYME entry EC 4.2.3.141 cross-references UniProtKB:G8GJ94 (SCLS_SALSC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

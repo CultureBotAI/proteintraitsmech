@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:62989
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,108 @@ definitions:
       Catalyses the reaction: chenodeoxycholoyl-CoA + taurine = taurochenodeoxycholate + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chenodeoxycholoyl-CoA + taurine = taurochenodeoxycholate + CoA + H(+)
+  description: Substrate-to-product chemistry of RHEA:49784, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49785 (rh:substrates → 49784_L, rh:products → 49784_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of chenodeoxycholoyl-CoA + taurine = taurochenodeoxycholate + CoA + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49784
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: chenodeoxycholoyl-CoA + taurine = taurochenodeoxycholate + CoA + H(+)'
+  - node_id: sub1
+    label: chenodeoxycholoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:62989
+    description: Formula C45H70N7O19P3S.
+  - node_id: sub2
+    label: taurine
+    node_type: CHEMICAL
+    grounding: CHEBI:507393
+    description: Formula C2H7NO3S.
+  - node_id: prd1
+    label: taurochenodeoxycholate
+    node_type: CHEMICAL
+    grounding: CHEBI:9407
+    description: Formula C26H44NO6S.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: chenodeoxycholoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49785
+      snippet: chenodeoxycholoyl-CoA + taurine => taurochenodeoxycholate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49785 declares side 49784_L as its substrates
+        (rh:substrates); the master reaction RHEA:49784 is undirected. This participant is CHEBI:62989
+        with coefficient 1. Rhea cites PMID:12810727, PMID:624713 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: taurine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49785
+      snippet: chenodeoxycholoyl-CoA + taurine => taurochenodeoxycholate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49785 declares side 49784_L as its substrates
+        (rh:substrates); the master reaction RHEA:49784 is undirected. This participant is CHEBI:507393
+        with coefficient 1. Rhea cites PMID:12810727, PMID:624713 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: taurochenodeoxycholate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49785
+      snippet: chenodeoxycholoyl-CoA + taurine => taurochenodeoxycholate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49785 declares side 49784_R as its products
+        (rh:products); the master reaction RHEA:49784 is undirected. This participant is CHEBI:9407 with
+        coefficient 1. Rhea cites PMID:12810727, PMID:624713 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49785
+      snippet: chenodeoxycholoyl-CoA + taurine => taurochenodeoxycholate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49785 declares side 49784_R as its products
+        (rh:products); the master reaction RHEA:49784 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:12810727, PMID:624713 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49785
+      snippet: chenodeoxycholoyl-CoA + taurine => taurochenodeoxycholate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49785 declares side 49784_R as its products
+        (rh:products); the master reaction RHEA:49784 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12810727, PMID:624713 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

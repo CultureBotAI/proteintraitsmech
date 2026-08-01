@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,116 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = alpha-muurolene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha-muurolene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.125. EC 4.2.3.125 maps to
+    exactly one curated Rhea reaction (RHEA:33103), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = alpha-muurolene + diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-muurolene synthase
+    grounding: EC:4.2.3.125
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: alpha-muurolene
+    node_type: CHEMICAL
+    grounding: CHEBI:64797
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A5Q0QRJ3
+    node_type: PROTEIN
+    label: AGR1_CYCAE
+    grounding: UniProtKB:A0A5Q0QRJ3
+  - node_id: prot_A0A5Q0QU70
+    node_type: PROTEIN
+    label: AGR3_CYCAE
+    grounding: UniProtKB:A0A5Q0QU70
+  - node_id: prot_A8NE23
+    node_type: PROTEIN
+    label: COP3_COPC7
+    grounding: UniProtKB:A8NE23
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:33103 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33104
+      snippet: (2E,6E)-farnesyl diphosphate => alpha-muurolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33104 declares side 33103_L as its substrates
+        (rh:substrates); the master reaction RHEA:33103 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:19580670, PMID:19400802, PMID:20889795 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-muurolene is a product released by RHEA:33103 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33104
+      snippet: (2E,6E)-farnesyl diphosphate => alpha-muurolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33104 declares side 33103_R as its products
+        (rh:products); the master reaction RHEA:33103 is undirected. This participant is CHEBI:64797 with
+        coefficient 1. Rhea cites PMID:19580670, PMID:19400802, PMID:20889795 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:33103 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33104
+      snippet: (2E,6E)-farnesyl diphosphate => alpha-muurolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33104 declares side 33103_R as its products
+        (rh:products); the master reaction RHEA:33103 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:19580670, PMID:19400802, PMID:20889795 for this reaction.
+  - subject: prot_A0A5Q0QRJ3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGR1_CYCAE is an exemplar enzyme with EC 4.2.3.125 activity.
+    evidence:
+    - reference: EC:4.2.3.125
+      snippet: DR   A0A5Q0QRJ3, AGR1_CYCAE ;  A0A5Q0QU70, AGR3_CYCAE ;  A8NE23, COP3_COPC7 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.125 cross-references UniProtKB:A0A5Q0QRJ3 (AGR1_CYCAE) as a
+        protein with this activity.
+  - subject: prot_A0A5Q0QU70
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGR3_CYCAE is an exemplar enzyme with EC 4.2.3.125 activity.
+    evidence:
+    - reference: EC:4.2.3.125
+      snippet: DR   A0A5Q0QRJ3, AGR1_CYCAE ;  A0A5Q0QU70, AGR3_CYCAE ;  A8NE23, COP3_COPC7 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.125 cross-references UniProtKB:A0A5Q0QU70 (AGR3_CYCAE) as a
+        protein with this activity.
+  - subject: prot_A8NE23
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COP3_COPC7 is an exemplar enzyme with EC 4.2.3.125 activity.
+    evidence:
+    - reference: EC:4.2.3.125
+      snippet: DR   A0A5Q0QRJ3, AGR1_CYCAE ;  A0A5Q0QU70, AGR3_CYCAE ;  A8NE23, COP3_COPC7 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.125 cross-references UniProtKB:A8NE23 (COP3_COPC7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

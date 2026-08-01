@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:16870
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,110 @@ definitions:
       Catalyses the reaction: sn-glycerol 3-phosphocholine + an acyl-CoA = a 1-acyl-sn-glycero-3-phosphocholine + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sn-glycerol 3-phosphocholine + an acyl-CoA = a 1-acyl-sn-glycero-3-phosphocholine
+    + CoA
+  description: Substrate-to-product chemistry of RHEA:58476, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58477 (rh:substrates → 58476_L, rh:products → 58476_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of sn-glycerol 3-phosphocholine + an acyl-CoA = a 1-acyl-sn-glycero-3-phosphoch…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58476
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: sn-glycerol 3-phosphocholine + an acyl-CoA = a 1-acyl-sn-glycero-3-phosphocholine
+      + CoA'
+  - node_id: sub1
+    label: sn-glycerol 3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:16870
+    description: Formula C8H20NO6P.
+  - node_id: sub2
+    label: an acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58342
+    description: Formula C22H31N7O17P3SR.
+  - node_id: prd1
+    label: a 1-acyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:58168
+    description: Formula C9H19NO7PR.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glycero-3-phosphocholine acyltransferase activity
+    grounding: GO:0106158
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sn-glycerol 3-phosphocholine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:58477
+      snippet: sn-glycerol 3-phosphocholine + an acyl-CoA => a 1-acyl-sn-glycero-3-phosphocholine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58477 declares side 58476_L as its substrates
+        (rh:substrates); the master reaction RHEA:58476 is undirected. This participant is CHEBI:16870
+        with coefficient 1. Rhea cites PMID:24329598 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: an acyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58477
+      snippet: sn-glycerol 3-phosphocholine + an acyl-CoA => a 1-acyl-sn-glycero-3-phosphocholine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58477 declares side 58476_L as its substrates
+        (rh:substrates); the master reaction RHEA:58476 is undirected. This participant is CHEBI:58342
+        with coefficient 1. Rhea cites PMID:24329598 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 1-acyl-sn-glycero-3-phosphocholine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:58477
+      snippet: sn-glycerol 3-phosphocholine + an acyl-CoA => a 1-acyl-sn-glycero-3-phosphocholine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58477 declares side 58476_R as its products
+        (rh:products); the master reaction RHEA:58476 is undirected. This participant is CHEBI:58168 with
+        coefficient 1. Rhea cites PMID:24329598 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58477
+      snippet: sn-glycerol 3-phosphocholine + an acyl-CoA => a 1-acyl-sn-glycero-3-phosphocholine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58477 declares side 58476_R as its products
+        (rh:products); the master reaction RHEA:58476 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:24329598 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:58476
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0106158"/>
+      notes: The rdfs:seeAlso triple on RHEA:58476 in rhea.rdf. GO term GO:0106158 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

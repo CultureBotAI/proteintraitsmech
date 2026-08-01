@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57392
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: propanoyl-CoA + tetradecanoyl-CoA = 3-oxo-2-methylhexadecanoyl-CoA + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of propanoyl-CoA + tetradecanoyl-CoA = 3-oxo-2-methylhexadecanoyl-CoA + CoA
+  description: Substrate-to-product chemistry of RHEA:46344, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:46345 (rh:substrates → 46344_L, rh:products → 46344_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of propanoyl-CoA + tetradecanoyl-CoA = 3-oxo-2-methylhexadecanoyl-CoA + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:46344
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: propanoyl-CoA + tetradecanoyl-CoA = 3-oxo-2-methylhexadecanoyl-CoA + CoA'
+  - node_id: sub1
+    label: propanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57392
+    description: Formula C24H36N7O17P3S.
+  - node_id: sub2
+    label: tetradecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57385
+    description: Formula C35H58N7O17P3S.
+  - node_id: prd1
+    label: 3-oxo-2-methylhexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:86042
+    description: Formula C38H62N7O18P3S.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: propanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46345
+      snippet: propanoyl-CoA + tetradecanoyl-CoA => 3-oxo-2-methylhexadecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:46345 declares side 46344_L as its substrates
+        (rh:substrates); the master reaction RHEA:46344 is undirected. This participant is CHEBI:57392
+        with coefficient 1. Rhea cites PMID:9325339 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: tetradecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46345
+      snippet: propanoyl-CoA + tetradecanoyl-CoA => 3-oxo-2-methylhexadecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:46345 declares side 46344_L as its substrates
+        (rh:substrates); the master reaction RHEA:46344 is undirected. This participant is CHEBI:57385
+        with coefficient 1. Rhea cites PMID:9325339 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-oxo-2-methylhexadecanoyl-CoA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:46345
+      snippet: propanoyl-CoA + tetradecanoyl-CoA => 3-oxo-2-methylhexadecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:46345 declares side 46344_R as its products
+        (rh:products); the master reaction RHEA:46344 is undirected. This participant is CHEBI:86042 with
+        coefficient 1. Rhea cites PMID:9325339 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46345
+      snippet: propanoyl-CoA + tetradecanoyl-CoA => 3-oxo-2-methylhexadecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:46345 declares side 46344_R as its products
+        (rh:products); the master reaction RHEA:46344 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:9325339 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

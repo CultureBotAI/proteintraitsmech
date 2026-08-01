@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.3.2.13
     mapping_source: rhea2ec
@@ -30,4 +30,146 @@ definitions:
       Catalyses the reaction: chorismate + H2O = (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate + pyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chorismate + H2O = (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate + pyruvate
+  description: Substrate-to-product chemistry of RHEA:38319, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:38320 (rh:substrates → 38319_L, rh:products → 38319_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of chorismate + H2O = (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate + pyruvate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:38319
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: chorismate + H2O = (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate + pyruvate'
+  - node_id: sub1
+    label: chorismate
+    node_type: CHEMICAL
+    grounding: CHEBI:29748
+    description: Formula C10H8O6.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:75717
+    description: Formula C7H7O4.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: chorismatase
+    grounding: EC:3.3.2.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9KID9
+    node_type: PROTEIN
+    label: FKBO_STRHY
+    grounding: UniProtKB:Q9KID9
+  - node_id: prot_Q54305
+    node_type: PROTEIN
+    label: RAPK_STRRN
+    grounding: UniProtKB:Q54305
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: chorismate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38320
+      snippet: chorismate + H2O => (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:38320 declares side 38319_L as its substrates
+        (rh:substrates); the master reaction RHEA:38319 is undirected. This participant is CHEBI:29748
+        with coefficient 1. Rhea cites PMID:21383123, PMID:24036425 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38320
+      snippet: chorismate + H2O => (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:38320 declares side 38319_L as its substrates
+        (rh:substrates); the master reaction RHEA:38319 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21383123, PMID:24036425 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:38320
+      snippet: chorismate + H2O => (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:38320 declares side 38319_R as its products
+        (rh:products); the master reaction RHEA:38319 is undirected. This participant is CHEBI:75717 with
+        coefficient 1. Rhea cites PMID:21383123, PMID:24036425 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38320
+      snippet: chorismate + H2O => (3R,4R)-3,4-dihydroxy-3,4-dihydrobenzoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:38320 declares side 38319_R as its products
+        (rh:products); the master reaction RHEA:38319 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:21383123, PMID:24036425 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.3.2.13; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:38319
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.3.2.13"/>
+      notes: The rh:ec triple on RHEA:38319 in rhea.rdf. EC 3.3.2.13 is itself a record in this KB.
+  - subject: prot_Q9KID9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FKBO_STRHY is an exemplar enzyme carrying EC 3.3.2.13, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.3.2.13
+      snippet: DR   Q9KID9, FKBO_STRHY ;  Q54305, RAPK_STRRN ;
+      notes: ExPASy ENZYME entry EC 3.3.2.13 cross-references UniProtKB:Q9KID9 (FKBO_STRHY) as a protein
+        with this activity.
+    - reference: RHEA:38319
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.3.2.13"/>
+      notes: Rhea assigns RHEA:38319 to EC 3.3.2.13, and EC 3.3.2.13 maps to exactly one Rhea master reaction
+        (RHEA:38319), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q54305
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RAPK_STRRN is an exemplar enzyme carrying EC 3.3.2.13, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.3.2.13
+      snippet: DR   Q9KID9, FKBO_STRHY ;  Q54305, RAPK_STRRN ;
+      notes: ExPASy ENZYME entry EC 3.3.2.13 cross-references UniProtKB:Q54305 (RAPK_STRRN) as a protein
+        with this activity.
+    - reference: RHEA:38319
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.3.2.13"/>
+      notes: Rhea assigns RHEA:38319 to EC 3.3.2.13, and EC 3.3.2.13 maps to exactly one Rhea master reaction
+        (RHEA:38319), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

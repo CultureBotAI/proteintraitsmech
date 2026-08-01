@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.3.99.27
     mapping_source: rhea2ec
@@ -32,4 +32,166 @@ definitions:
       Catalyses the reaction: rhodopin + A = (3E)-3,4-didehydrorhodopin + AH2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of rhodopin + A = (3E)-3,4-didehydrorhodopin + AH2
+  description: Substrate-to-product chemistry of RHEA:30919, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30920 (rh:substrates → 30919_L, rh:products → 30919_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of rhodopin + A = (3E)-3,4-didehydrorhodopin + AH2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30919
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: rhodopin + A = (3E)-3,4-didehydrorhodopin + AH2'
+  - node_id: sub1
+    label: rhodopin
+    node_type: CHEMICAL
+    grounding: CHEBI:35331
+    description: Formula C40H58O.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd1
+    label: (3E)-3,4-didehydrorhodopin
+    node_type: CHEMICAL
+    grounding: CHEBI:62481
+    description: Formula C40H56O.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 1-hydroxycarotenoid 3,4-desaturase
+    grounding: EC:1.3.99.27
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q7WT72
+    node_type: PROTEIN
+    label: CRTDH_FLAS9
+    grounding: UniProtKB:Q7WT72
+  - node_id: prot_L7WC64
+    node_type: PROTEIN
+    label: CRTDH_NONDD
+    grounding: UniProtKB:L7WC64
+  - node_id: prot_Q01671
+    node_type: PROTEIN
+    label: CRTD_CERS4
+    grounding: UniProtKB:Q01671
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: rhodopin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30920
+      snippet: rhodopin + A => (3E)-3,4-didehydrorhodopin + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30920 declares side 30919_L as its substrates
+        (rh:substrates); the master reaction RHEA:30919 is undirected. This participant is CHEBI:35331
+        with coefficient 1. Rhea cites PMID:9393712, PMID:15251462, PMID:10880364 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30920
+      snippet: rhodopin + A => (3E)-3,4-didehydrorhodopin + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30920 declares side 30919_L as its substrates
+        (rh:substrates); the master reaction RHEA:30919 is undirected. This participant is CHEBI:13193
+        with coefficient 1. Rhea cites PMID:9393712, PMID:15251462, PMID:10880364 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3E)-3,4-didehydrorhodopin is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30920
+      snippet: rhodopin + A => (3E)-3,4-didehydrorhodopin + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30920 declares side 30919_R as its products
+        (rh:products); the master reaction RHEA:30919 is undirected. This participant is CHEBI:62481 with
+        coefficient 1. Rhea cites PMID:9393712, PMID:15251462, PMID:10880364 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30920
+      snippet: rhodopin + A => (3E)-3,4-didehydrorhodopin + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30920 declares side 30919_R as its products
+        (rh:products); the master reaction RHEA:30919 is undirected. This participant is CHEBI:17499 with
+        coefficient 1. Rhea cites PMID:9393712, PMID:15251462, PMID:10880364 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.3.99.27; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:30919
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.99.27"/>
+      notes: The rh:ec triple on RHEA:30919 in rhea.rdf. EC 1.3.99.27 is itself a record in this KB.
+  - subject: prot_Q7WT72
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTDH_FLAS9 is an exemplar enzyme carrying EC 1.3.99.27, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.3.99.27
+      snippet: DR   Q7WT72, CRTDH_FLAS9;  L7WC64, CRTDH_NONDD;  Q01671, CRTD_CERS4 ;
+      notes: ExPASy ENZYME entry EC 1.3.99.27 cross-references UniProtKB:Q7WT72 (CRTDH_FLAS9) as a protein
+        with this activity.
+    - reference: RHEA:30919
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.99.27"/>
+      notes: Rhea assigns RHEA:30919 to EC 1.3.99.27, and EC 1.3.99.27 maps to exactly one Rhea master
+        reaction (RHEA:30919), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_L7WC64
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTDH_NONDD is an exemplar enzyme carrying EC 1.3.99.27, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.3.99.27
+      snippet: DR   Q7WT72, CRTDH_FLAS9;  L7WC64, CRTDH_NONDD;  Q01671, CRTD_CERS4 ;
+      notes: ExPASy ENZYME entry EC 1.3.99.27 cross-references UniProtKB:L7WC64 (CRTDH_NONDD) as a protein
+        with this activity.
+    - reference: RHEA:30919
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.99.27"/>
+      notes: Rhea assigns RHEA:30919 to EC 1.3.99.27, and EC 1.3.99.27 maps to exactly one Rhea master
+        reaction (RHEA:30919), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q01671
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTD_CERS4 is an exemplar enzyme carrying EC 1.3.99.27, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.3.99.27
+      snippet: DR   Q7WT72, CRTDH_FLAS9;  L7WC64, CRTDH_NONDD;  Q01671, CRTD_CERS4 ;
+      notes: ExPASy ENZYME entry EC 1.3.99.27 cross-references UniProtKB:Q01671 (CRTD_CERS4) as a protein
+        with this activity.
+    - reference: RHEA:30919
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.99.27"/>
+      notes: Rhea assigns RHEA:30919 to EC 1.3.99.27, and EC 1.3.99.27 maps to exactly one Rhea master
+        reaction (RHEA:30919), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

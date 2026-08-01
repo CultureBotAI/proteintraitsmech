@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.3.-
 synonyms:
@@ -33,4 +33,120 @@ definitions:
       Catalyses: a 2'-deoxyribonucleoside 3'-phosphate + H2O = a 2'-deoxyribonucleoside + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of deoxynucleotide 3'-phosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.3.34. EC 3.1.3.34 maps to exactly
+    one curated Rhea reaction (RHEA:10092), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 2''-deoxyribonucleoside
+    3''-phosphate + H2O = a 2''-deoxyribonucleoside + phosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: deoxynucleotide 3'-phosphatase
+    grounding: EC:3.1.3.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 2'-deoxyribonucleoside 3'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:131705
+    description: Formula C5H8O6PR.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 2'-deoxyribonucleoside
+    node_type: CHEMICAL
+    grounding: CHEBI:18274
+    description: Formula C5H9O3R.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: deoxynucleotide 3'-phosphatase activity
+    grounding: GO:0047846
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P06855
+    node_type: PROTEIN
+    label: KIPN_BPT4
+    grounding: UniProtKB:P06855
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2'-deoxyribonucleoside 3'-phosphate is a substrate consumed by RHEA:10092 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:10093
+      snippet: a 2'-deoxyribonucleoside 3'-phosphate + H2O => a 2'-deoxyribonucleoside + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10093 declares side 10092_L as its substrates
+        (rh:substrates); the master reaction RHEA:10092 is undirected. This participant is CHEBI:131705
+        with coefficient 1. Rhea cites PMID:4289819, PMID:199248 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:10092 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10093
+      snippet: a 2'-deoxyribonucleoside 3'-phosphate + H2O => a 2'-deoxyribonucleoside + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10093 declares side 10092_L as its substrates
+        (rh:substrates); the master reaction RHEA:10092 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4289819, PMID:199248 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 2'-deoxyribonucleoside is a product released by RHEA:10092 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10093
+      snippet: a 2'-deoxyribonucleoside 3'-phosphate + H2O => a 2'-deoxyribonucleoside + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10093 declares side 10092_R as its products
+        (rh:products); the master reaction RHEA:10092 is undirected. This participant is CHEBI:18274 with
+        coefficient 1. Rhea cites PMID:4289819, PMID:199248 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:10092 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10093
+      snippet: a 2'-deoxyribonucleoside 3'-phosphate + H2O => a 2'-deoxyribonucleoside + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10093 declares side 10092_R as its products
+        (rh:products); the master reaction RHEA:10092 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:4289819, PMID:199248 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.3.34
+      snippet: EC:3.1.3.34 > GO:deoxynucleotide 3'-phosphatase activity ; GO:0047846
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047846 is itself a record
+        in this KB.
+  - subject: prot_P06855
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KIPN_BPT4 is an exemplar enzyme with EC 3.1.3.34 activity.
+    evidence:
+    - reference: EC:3.1.3.34
+      snippet: DR   P06855, KIPN_BPT4  ;
+      notes: ExPASy ENZYME entry EC 3.1.3.34 cross-references UniProtKB:P06855 (KIPN_BPT4) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

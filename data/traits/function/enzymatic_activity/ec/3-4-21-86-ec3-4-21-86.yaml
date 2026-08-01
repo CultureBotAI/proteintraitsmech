@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 canonical_examples:
@@ -25,4 +25,38 @@ definitions:
       Catalyses: Selective cleavage of 18-Arg-|- and 47-Arg-|- bonds in coagulogen to form coagulin and fragments
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of limulus clotting enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.86. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Selective
+    cleavage of 18-Arg-|- and 47-Arg-|- bonds in coagulogen to form coagulin and fragments".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: limulus clotting enzyme
+    grounding: EC:3.4.21.86
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P21902
+    node_type: PROTEIN
+    label: PCE_TACTR
+    grounding: UniProtKB:P21902
+  edges:
+  - subject: prot_P21902
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PCE_TACTR is an exemplar enzyme with EC 3.4.21.86 activity.
+    evidence:
+    - reference: EC:3.4.21.86
+      snippet: DR   P21902, PCE_TACTR  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.86 cross-references UniProtKB:P21902 (PCE_TACTR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

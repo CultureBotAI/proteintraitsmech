@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 mapped_xrefs:
@@ -34,4 +34,248 @@ definitions:
       Catalyses: (1) valienone + ATP = valienone 7-phosphate + ADP + H(+). (2) validone + ATP = validone 7-phosphate + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of C7-cyclitol 7-kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.214. Rhea assigns 2 curated
+    reactions to EC 2.7.1.214. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) valienone + ATP = valienone 7-phosphate + ADP + H(+).
+    (2) validone + ATP = validone 7-phosphate + ADP + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: C7-cyclitol 7-kinase
+    grounding: EC:2.7.1.214
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of valienone + ATP = valienone 7-phosphate + ADP + H(+)
+    grounding: RHEA:49420
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: valienone + ATP = valienone 7-phosphate + ADP + H(+)'
+  - node_id: rxn1_sub1
+    label: valienone
+    node_type: CHEMICAL
+    grounding: CHEBI:111521
+    description: Formula C7H10O5.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_prd1
+    label: valienone 7-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:111522
+    description: Formula C7H9O8P.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of validone + ATP = validone 7-phosphate + ADP + H(+)
+    grounding: RHEA:49424
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: validone + ATP = validone 7-phosphate + ADP + H(+)'
+  - node_id: rxn2_sub1
+    label: validone
+    node_type: CHEMICAL
+    grounding: CHEBI:111542
+    description: Formula C7H12O5.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_prd1
+    label: validone 7-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:111523
+    description: Formula C7H11O8P.
+  - node_id: rxn2_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q3T6E2
+    node_type: PROTEIN
+    label: VALC_STRHJ
+    grounding: UniProtKB:Q3T6E2
+  - node_id: prot_Q15JG5
+    node_type: PROTEIN
+    label: VLDC_STRHL
+    grounding: UniProtKB:Q15JG5
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:49420 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.214; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:49420
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.214"/>
+      notes: The rh:ec triple on RHEA:49420 in rhea.rdf assigns that reaction to EC 2.7.1.214.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: valienone is a substrate consumed by RHEA:49420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49421
+      snippet: valienone + ATP => valienone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49421 declares side 49420_L as its substrates
+        (rh:substrates); the master reaction RHEA:49420 is undirected. This participant is CHEBI:111521
+        with coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:49420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49421
+      snippet: valienone + ATP => valienone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49421 declares side 49420_L as its substrates
+        (rh:substrates); the master reaction RHEA:49420 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: valienone 7-phosphate is a product released by RHEA:49420 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49421
+      snippet: valienone + ATP => valienone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49421 declares side 49420_R as its products
+        (rh:products); the master reaction RHEA:49420 is undirected. This participant is CHEBI:111522
+        with coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:49420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49421
+      snippet: valienone + ATP => valienone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49421 declares side 49420_R as its products
+        (rh:products); the master reaction RHEA:49420 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:49420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49421
+      snippet: valienone + ATP => valienone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49421 declares side 49420_R as its products
+        (rh:products); the master reaction RHEA:49420 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:49424 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.214; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:49424
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.214"/>
+      notes: The rh:ec triple on RHEA:49424 in rhea.rdf assigns that reaction to EC 2.7.1.214.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: validone is a substrate consumed by RHEA:49424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49425
+      snippet: validone + ATP => validone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49425 declares side 49424_L as its substrates
+        (rh:substrates); the master reaction RHEA:49424 is undirected. This participant is CHEBI:111542
+        with coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:49424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49425
+      snippet: validone + ATP => validone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49425 declares side 49424_L as its substrates
+        (rh:substrates); the master reaction RHEA:49424 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: validone 7-phosphate is a product released by RHEA:49424 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49425
+      snippet: validone + ATP => validone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49425 declares side 49424_R as its products
+        (rh:products); the master reaction RHEA:49424 is undirected. This participant is CHEBI:111523
+        with coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: ADP is a product released by RHEA:49424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49425
+      snippet: validone + ATP => validone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49425 declares side 49424_R as its products
+        (rh:products); the master reaction RHEA:49424 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:49424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49425
+      snippet: validone + ATP => validone 7-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49425 declares side 49424_R as its products
+        (rh:products); the master reaction RHEA:49424 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:17335096 for this reaction.
+  - subject: prot_Q3T6E2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VALC_STRHJ is an exemplar enzyme with EC 2.7.1.214 activity.
+    evidence:
+    - reference: EC:2.7.1.214
+      snippet: DR   Q3T6E2, VALC_STRHJ ;  Q15JG5, VLDC_STRHL ;
+      notes: ExPASy ENZYME entry EC 2.7.1.214 cross-references UniProtKB:Q3T6E2 (VALC_STRHJ) as a protein
+        with this activity.
+  - subject: prot_Q15JG5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VLDC_STRHL is an exemplar enzyme with EC 2.7.1.214 activity.
+    evidence:
+    - reference: EC:2.7.1.214
+      snippet: DR   Q3T6E2, VALC_STRHJ ;  Q15JG5, VLDC_STRHL ;
+      notes: ExPASy ENZYME entry EC 2.7.1.214 cross-references UniProtKB:Q15JG5 (VLDC_STRHL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

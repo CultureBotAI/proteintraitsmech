@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.2.-
 mapped_xrefs:
@@ -28,4 +28,174 @@ definitions:
       Catalyses: 2 Fe(III)-[cytochrome c2] + dimethyl sulfide + H2O = 2 Fe(II)-[cytochrome c2] + dimethyl sulfoxide + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dimethyl sulfide:cytochrome c2 reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.2.4. EC 1.8.2.4 maps to exactly
+    one curated Rhea reaction (RHEA:30227), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 Fe(III)-[cytochrome
+    c2] + dimethyl sulfide + H2O = 2 Fe(II)-[cytochrome c2] + dimethyl sulfoxide + 2 H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dimethyl sulfide:cytochrome c2 reductase
+    grounding: EC:1.8.2.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: Fe(III)-[cytochrome c2]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10429
+    description: Rhea compound GENERIC:10429.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: Fe(3+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:10429 (Fe(III)-[cytochrome
+      c2]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: sub2
+    label: dimethyl sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:17437
+    description: Formula C2H6S.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: Fe(II)-[cytochrome c2]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10430
+    description: Rhea compound GENERIC:10430.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: Fe(2+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:10430 (Fe(II)-[cytochrome
+      c2]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd2
+    label: dimethyl sulfoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:28262
+    description: Formula C2H6OS.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q8GPG4
+    node_type: PROTEIN
+    label: DDHA_RHOSU
+    grounding: UniProtKB:Q8GPG4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(III)-[cytochrome c2] is a substrate consumed by RHEA:30227 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:30228
+      snippet: 2 Fe(III)-[cytochrome c2] + dimethyl sulfide + H2O => 2 Fe(II)-[cytochrome c2] + dimethyl
+        sulfoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30228 declares side 30227_L as its substrates
+        (rh:substrates); the master reaction RHEA:30227 is undirected. This participant is GENERIC:10429
+        with coefficient 2. Rhea cites PMID:8706745, PMID:12067345 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c2].
+    evidence:
+    - reference: RHEA:30227
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:10429 (Fe(III)-[cytochrome c2]) declares rh:reactivePart = Fe(3+) (CHEBI:29034).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethyl sulfide is a substrate consumed by RHEA:30227 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30228
+      snippet: 2 Fe(III)-[cytochrome c2] + dimethyl sulfide + H2O => 2 Fe(II)-[cytochrome c2] + dimethyl
+        sulfoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30228 declares side 30227_L as its substrates
+        (rh:substrates); the master reaction RHEA:30227 is undirected. This participant is CHEBI:17437
+        with coefficient 1. Rhea cites PMID:8706745, PMID:12067345 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:30227 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30228
+      snippet: 2 Fe(III)-[cytochrome c2] + dimethyl sulfide + H2O => 2 Fe(II)-[cytochrome c2] + dimethyl
+        sulfoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30228 declares side 30227_L as its substrates
+        (rh:substrates); the master reaction RHEA:30227 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8706745, PMID:12067345 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(II)-[cytochrome c2] is a product released by RHEA:30227 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:30228
+      snippet: 2 Fe(III)-[cytochrome c2] + dimethyl sulfide + H2O => 2 Fe(II)-[cytochrome c2] + dimethyl
+        sulfoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30228 declares side 30227_R as its products
+        (rh:products); the master reaction RHEA:30227 is undirected. This participant is GENERIC:10430
+        with coefficient 2. Rhea cites PMID:8706745, PMID:12067345 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome c2].
+    evidence:
+    - reference: RHEA:30227
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:10430 (Fe(II)-[cytochrome c2]) declares rh:reactivePart = Fe(2+) (CHEBI:29033).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dimethyl sulfoxide is a product released by RHEA:30227 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30228
+      snippet: 2 Fe(III)-[cytochrome c2] + dimethyl sulfide + H2O => 2 Fe(II)-[cytochrome c2] + dimethyl
+        sulfoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30228 declares side 30227_R as its products
+        (rh:products); the master reaction RHEA:30227 is undirected. This participant is CHEBI:28262 with
+        coefficient 1. Rhea cites PMID:8706745, PMID:12067345 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:30227 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:30228
+      snippet: 2 Fe(III)-[cytochrome c2] + dimethyl sulfide + H2O => 2 Fe(II)-[cytochrome c2] + dimethyl
+        sulfoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30228 declares side 30227_R as its products
+        (rh:products); the master reaction RHEA:30227 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:8706745, PMID:12067345 for this reaction.
+  - subject: prot_Q8GPG4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DDHA_RHOSU is an exemplar enzyme with EC 1.8.2.4 activity.
+    evidence:
+    - reference: EC:1.8.2.4
+      snippet: DR   Q8GPG4, DDHA_RHOSU ;
+      notes: ExPASy ENZYME entry EC 1.8.2.4 cross-references UniProtKB:Q8GPG4 (DDHA_RHOSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

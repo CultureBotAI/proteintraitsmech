@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:167476
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,134 @@ definitions:
       Catalyses the reaction: N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(out) + N(pros)-phospho-L-histidyl-[protein] = 6-phospho-N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(in) + L-histidyl-[protein]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(out) + N(pros)-phospho-L-histidy…
+  description: 'Substrate-to-product chemistry of RHEA:66784, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:66785 (rh:substrates → 66784_L, rh:products → 66784_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(out) + N(pros)-phosph…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:66784
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(out) + N(pros)-phospho-L-histidyl-[protein]
+      = 6-phospho-N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(in) + L-histidyl-[protein]'
+  - node_id: sub1
+    label: N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:167476
+    description: Formula C19H31N2O13.
+  - node_id: sub2
+    label: N(pros)-phospho-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9746
+    description: Rhea compound GENERIC:9746.
+  - node_id: sub2_rp1
+    label: N(pros)-phospho-L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64837
+  - node_id: prd1
+    label: 6-phospho-N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:167477
+    description: Formula C19H30N2O16P.
+  - node_id: prd2
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: prd2_rp1
+    label: L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66785
+      snippet: N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(out) + N(pros)-phospho-L-histidyl-[protein]
+        => 6-phospho-N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(in) + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:66785 declares side 66784_L as its substrates
+        (rh:substrates); the master reaction RHEA:66784 is undirected. This participant is CHEBI:167476
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:30524387 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: N(pros)-phospho-L-histidyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:66785
+      snippet: N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(out) + N(pros)-phospho-L-histidyl-[protein]
+        => 6-phospho-N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(in) + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:66785 declares side 66784_L as its substrates
+        (rh:substrates); the master reaction RHEA:66784 is undirected. This participant is GENERIC:9746
+        with coefficient 1. Rhea cites PMID:30524387 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: N(pros)-phospho-L-histidine residue is the reactive part of N(pros)-phospho-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:66784
+      snippet: N(pros)-phospho-L-histidine residue
+      notes: Rhea compound GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]) declares rh:reactivePart
+        = N(pros)-phospho-L-histidine residue (CHEBI:64837), formula C6H6N3O4P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 6-phospho-N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine is a product released
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66785
+      snippet: N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(out) + N(pros)-phospho-L-histidyl-[protein]
+        => 6-phospho-N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(in) + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:66785 declares side 66784_R as its products
+        (rh:products); the master reaction RHEA:66784 is undirected. This participant is CHEBI:167477
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:30524387
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-histidyl-[protein] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66785
+      snippet: N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(out) + N(pros)-phospho-L-histidyl-[protein]
+        => 6-phospho-N-acetyl-beta-D-muramate-(1->4)-N-acetyl-D-glucosamine(in) + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:66785 declares side 66784_R as its products
+        (rh:products); the master reaction RHEA:66784 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:30524387 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:66784
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979), formula C6H7N3O.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

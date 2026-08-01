@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.8.1.-
 synonyms:
@@ -37,4 +37,190 @@ definitions:
       Catalyses: (1) (Z)-N-(sulfonatooxy)prop-2-enimidothioate = allyl thiocyanate + sulfate. (2) (Z)-N-(sulfonatooxy)prop-2-enimidothioate = 2-(thiiran-2- yl)acetonitrile + sulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-(sulfonatooxy)prop-2-enimidothioate sulfolyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.8.1.8. Rhea assigns 2 curated
+    reactions to EC 4.8.1.8. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "(1) (Z)-N-(sulfonatooxy)prop-2-enimidothioate = allyl thiocyanate
+    + sulfate. (2) (Z)-N-(sulfonatooxy)prop-2-enimidothioate = 2-(thiiran-2- yl)acetonitrile + sulfate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-(sulfonatooxy)prop-2-enimidothioate sulfolyase
+    grounding: EC:4.8.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (Z)-N-(sulfonatooxy)prop-2-enimidothioate = 2-(thiiran-2-yl)acetonitrile + s…
+    grounding: RHEA:69252
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (Z)-N-(sulfonatooxy)prop-2-enimidothioate = 2-(thiiran-2-yl)acetonitrile
+      + sulfate'
+  - node_id: rxn1_sub1
+    label: (Z)-N-(sulfonatooxy)prop-2-enimidothioate
+    node_type: CHEMICAL
+    grounding: CHEBI:183062
+    description: Formula C4H5NO4S2.
+  - node_id: rxn1_prd1
+    label: 2-(thiiran-2-yl)acetonitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:183064
+    description: Formula C4H5NS.
+  - node_id: rxn1_prd2
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (Z)-N-(sulfonatooxy)prop-2-enimidothioate = allyl thiocyanate + sulfate
+    grounding: RHEA:69316
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (Z)-N-(sulfonatooxy)prop-2-enimidothioate = allyl thiocyanate + sulfate'
+  - node_id: rxn2_sub1
+    label: (Z)-N-(sulfonatooxy)prop-2-enimidothioate
+    node_type: CHEMICAL
+    grounding: CHEBI:183062
+    description: Formula C4H5NO4S2.
+  - node_id: rxn2_prd1
+    label: allyl thiocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:183082
+    description: Formula C4H5NS.
+  - node_id: rxn2_prd2
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: prot_A1XLE2
+    node_type: PROTEIN
+    label: TFP_LEPSV
+    grounding: UniProtKB:A1XLE2
+  - node_id: prot_G1FNI6
+    node_type: PROTEIN
+    label: TFP_THLAR
+    grounding: UniProtKB:G1FNI6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:69252 is one of the 2 curated reactions Rhea assigns to EC 4.8.1.8; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:69252
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.8.1.8"/>
+      notes: The rh:ec triple on RHEA:69252 in rhea.rdf assigns that reaction to EC 4.8.1.8.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (Z)-N-(sulfonatooxy)prop-2-enimidothioate is a substrate consumed by RHEA:69252 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69253
+      snippet: (Z)-N-(sulfonatooxy)prop-2-enimidothioate => 2-(thiiran-2-yl)acetonitrile + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69253 declares side 69252_L as its substrates
+        (rh:substrates); the master reaction RHEA:69252 is undirected. This participant is CHEBI:183062
+        with coefficient 1. Rhea cites PMID:21783213, PMID:11752388, PMID:18987211, PMID:17139450 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 2-(thiiran-2-yl)acetonitrile is a product released by RHEA:69252 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69253
+      snippet: (Z)-N-(sulfonatooxy)prop-2-enimidothioate => 2-(thiiran-2-yl)acetonitrile + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69253 declares side 69252_R as its products
+        (rh:products); the master reaction RHEA:69252 is undirected. This participant is CHEBI:183064
+        with coefficient 1. Rhea cites PMID:21783213, PMID:11752388, PMID:18987211, PMID:17139450 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: sulfate is a product released by RHEA:69252 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69253
+      snippet: (Z)-N-(sulfonatooxy)prop-2-enimidothioate => 2-(thiiran-2-yl)acetonitrile + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69253 declares side 69252_R as its products
+        (rh:products); the master reaction RHEA:69252 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:21783213, PMID:11752388, PMID:18987211, PMID:17139450 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:69316 is one of the 2 curated reactions Rhea assigns to EC 4.8.1.8; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:69316
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.8.1.8"/>
+      notes: The rh:ec triple on RHEA:69316 in rhea.rdf assigns that reaction to EC 4.8.1.8.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (Z)-N-(sulfonatooxy)prop-2-enimidothioate is a substrate consumed by RHEA:69316 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69317
+      snippet: (Z)-N-(sulfonatooxy)prop-2-enimidothioate => allyl thiocyanate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69317 declares side 69316_L as its substrates
+        (rh:substrates); the master reaction RHEA:69316 is undirected. This participant is CHEBI:183062
+        with coefficient 1. Rhea cites PMID:21783213 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: allyl thiocyanate is a product released by RHEA:69316 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69317
+      snippet: (Z)-N-(sulfonatooxy)prop-2-enimidothioate => allyl thiocyanate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69317 declares side 69316_R as its products
+        (rh:products); the master reaction RHEA:69316 is undirected. This participant is CHEBI:183082
+        with coefficient 1. Rhea cites PMID:21783213 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: sulfate is a product released by RHEA:69316 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69317
+      snippet: (Z)-N-(sulfonatooxy)prop-2-enimidothioate => allyl thiocyanate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69317 declares side 69316_R as its products
+        (rh:products); the master reaction RHEA:69316 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:21783213 for this reaction.
+  - subject: prot_A1XLE2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TFP_LEPSV is an exemplar enzyme with EC 4.8.1.8 activity.
+    evidence:
+    - reference: EC:4.8.1.8
+      snippet: DR   A1XLE2, TFP_LEPSV  ;  G1FNI6, TFP_THLAR  ;
+      notes: ExPASy ENZYME entry EC 4.8.1.8 cross-references UniProtKB:A1XLE2 (TFP_LEPSV) as a protein
+        with this activity.
+  - subject: prot_G1FNI6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TFP_THLAR is an exemplar enzyme with EC 4.8.1.8 activity.
+    evidence:
+    - reference: EC:4.8.1.8
+      snippet: DR   A1XLE2, TFP_LEPSV  ;  G1FNI6, TFP_THLAR  ;
+      notes: ExPASy ENZYME entry EC 4.8.1.8 cross-references UniProtKB:G1FNI6 (TFP_THLAR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -41,4 +41,69 @@ definitions:
       Catalyses: [1-beta-D-fructofuranosyl-(2->1)-]m+1 alpha-D-glucopyranoside + [1-beta- D-fructofuranosyl-(2->1)-]n+1 alpha-D-glucopyranoside = [1-beta-D- fructofuranosyl-(2->1)-]m alpha-D-glucopyranoside + [1-beta-D- fructofuranosyl-(2->1)-]n+1 beta-D-fructofuranosyl-(2->6)-alpha-D- glucopyranoside (m > 0, n >= 0)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6(G)-fructosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.243. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "[1-beta-D-fructofuranosyl-(2->1)-]m+1
+    alpha-D-glucopyranoside + [1-beta- D-fructofuranosyl-(2->1)-]n+1 alpha-D-glucopyranoside = [1-beta-D-
+    fructofuranosyl-(2->1)-]m alpha-D-glucopyranoside + [1-beta-D- fructofuranosyl-(2->1)-]n+1 beta-D-fructofuranosyl-(2->6)-alpha-D-
+    glucopyranoside (m > 0, n >= 0)".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6(G)-fructosyltransferase
+    grounding: EC:2.4.1.243
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 6G-fructosyltransferase activity
+    grounding: GO:0033841
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P92916
+    node_type: PROTEIN
+    label: GFT_ALLCE
+    grounding: UniProtKB:P92916
+  - node_id: prot_Q5FC15
+    node_type: PROTEIN
+    label: GFT_ASPOF
+    grounding: UniProtKB:Q5FC15
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.243
+      snippet: EC:2.4.1.243 > GO:6G-fructosyltransferase activity ; GO:0033841
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033841 is itself a record
+        in this KB.
+  - subject: prot_P92916
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GFT_ALLCE is an exemplar enzyme with EC 2.4.1.243 activity.
+    evidence:
+    - reference: EC:2.4.1.243
+      snippet: DR   P92916, GFT_ALLCE  ;  Q5FC15, GFT_ASPOF  ;
+      notes: ExPASy ENZYME entry EC 2.4.1.243 cross-references UniProtKB:P92916 (GFT_ALLCE) as a protein
+        with this activity.
+  - subject: prot_Q5FC15
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GFT_ASPOF is an exemplar enzyme with EC 2.4.1.243 activity.
+    evidence:
+    - reference: EC:2.4.1.243
+      snippet: DR   P92916, GFT_ALLCE  ;  Q5FC15, GFT_ASPOF  ;
+      notes: ExPASy ENZYME entry EC 2.4.1.243 cross-references UniProtKB:Q5FC15 (GFT_ASPOF) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:177335
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,74 @@ definitions:
       Catalyses the reaction: pppA(2'-5')pG = 3',2'-cGAMP + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pppA(2'-5')pG = 3',2'-cGAMP + diphosphate
+  description: Substrate-to-product chemistry of RHEA:68352, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:68353 (rh:substrates → 68352_L, rh:products → 68352_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of pppA(2'-5')pG = 3',2'-cGAMP + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:68352
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: pppA(2''-5'')pG = 3'',2''-cGAMP + diphosphate'
+  - node_id: sub1
+    label: pppA(2'-5')pG
+    node_type: CHEMICAL
+    grounding: CHEBI:177335
+    description: Formula C20H23N10O20P4.
+  - node_id: prd1
+    label: 3',2'-cGAMP
+    node_type: CHEMICAL
+    grounding: CHEBI:177334
+    description: Formula C20H22N10O13P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: pppA(2'-5')pG is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68353
+      snippet: pppA(2'-5')pG => 3',2'-cGAMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68353 declares side 68352_L as its substrates
+        (rh:substrates); the master reaction RHEA:68352 is undirected. This participant is CHEBI:177335
+        with coefficient 1. Rhea cites PMID:34261127, PMID:34261128 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3',2'-cGAMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68353
+      snippet: pppA(2'-5')pG => 3',2'-cGAMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68353 declares side 68352_R as its products
+        (rh:products); the master reaction RHEA:68352 is undirected. This participant is CHEBI:177334
+        with coefficient 1. Rhea cites PMID:34261127, PMID:34261128 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68353
+      snippet: pppA(2'-5')pG => 3',2'-cGAMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68353 declares side 68352_R as its products
+        (rh:products); the master reaction RHEA:68352 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:34261127, PMID:34261128 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

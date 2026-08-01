@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -46,4 +46,68 @@ definitions:
       Catalyses: Leu is conserved at position P1 for all four cleavage sites. Alanine is found at position P1' of the NS4A-NS4B cleavage site, whereas serine is found at position P1' of the NS3-NS4A, NS4B-NS5A and NS5A-NS5B cleavage sites
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pestivirus NS3 polyprotein peptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.113. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "Leu is conserved at position P1 for all four cleavage sites. Alanine is found at position P1'' of
+    the NS4A-NS4B cleavage site, whereas serine is found at position P1'' of the NS3-NS4A, NS4B-NS5A and
+    NS5A-NS5B cleavage sites".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: pestivirus NS3 polyprotein peptidase
+    grounding: EC:3.4.21.113
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q96662
+    node_type: PROTEIN
+    label: POLG_BVDVC
+    grounding: UniProtKB:Q96662
+  - node_id: prot_P19711
+    node_type: PROTEIN
+    label: POLG_BVDVN
+    grounding: UniProtKB:P19711
+  - node_id: prot_Q01499
+    node_type: PROTEIN
+    label: POLG_BVDVS
+    grounding: UniProtKB:Q01499
+  edges:
+  - subject: prot_Q96662
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_BVDVC is an exemplar enzyme with EC 3.4.21.113 activity.
+    evidence:
+    - reference: EC:3.4.21.113
+      snippet: DR   Q96662, POLG_BVDVC ;  P19711, POLG_BVDVN ;  Q01499, POLG_BVDVS ;
+      notes: ExPASy ENZYME entry EC 3.4.21.113 cross-references UniProtKB:Q96662 (POLG_BVDVC) as a protein
+        with this activity.
+  - subject: prot_P19711
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_BVDVN is an exemplar enzyme with EC 3.4.21.113 activity.
+    evidence:
+    - reference: EC:3.4.21.113
+      snippet: DR   Q96662, POLG_BVDVC ;  P19711, POLG_BVDVN ;  Q01499, POLG_BVDVS ;
+      notes: ExPASy ENZYME entry EC 3.4.21.113 cross-references UniProtKB:P19711 (POLG_BVDVN) as a protein
+        with this activity.
+  - subject: prot_Q01499
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_BVDVS is an exemplar enzyme with EC 3.4.21.113 activity.
+    evidence:
+    - reference: EC:3.4.21.113
+      snippet: DR   Q96662, POLG_BVDVC ;  P19711, POLG_BVDVN ;  Q01499, POLG_BVDVS ;
+      notes: ExPASy ENZYME entry EC 3.4.21.113 cross-references UniProtKB:Q01499 (POLG_BVDVS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

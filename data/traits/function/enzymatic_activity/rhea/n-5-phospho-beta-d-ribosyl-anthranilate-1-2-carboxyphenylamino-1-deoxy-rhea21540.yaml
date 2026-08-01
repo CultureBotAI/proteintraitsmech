@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.1.24
     mapping_source: rhea2ec
@@ -30,4 +30,240 @@ definitions:
       Catalyses the reaction: N-(5-phospho-beta-D-ribosyl)anthranilate = 1-(2-carboxyphenylamino)-1-deoxy-D-ribulose 5-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-(5-phospho-beta-D-ribosyl)anthranilate = 1-(2-carboxyphenylamino)-1-deoxy-D-ribulose…
+  description: Substrate-to-product chemistry of RHEA:21540, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:21541 (rh:substrates → 21540_L, rh:products → 21540_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-(5-phospho-beta-D-ribosyl)anthranilate = 1-(2-carboxyphenylamino)-1-deoxy-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21540
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-(5-phospho-beta-D-ribosyl)anthranilate = 1-(2-carboxyphenylamino)-1-deoxy-D-ribulose
+      5-phosphate'
+  - node_id: sub1
+    label: N-(5-phospho-beta-D-ribosyl)anthranilate
+    node_type: CHEMICAL
+    grounding: CHEBI:18277
+    description: Formula C12H13NO9P.
+  - node_id: prd1
+    label: 1-(2-carboxyphenylamino)-1-deoxy-D-ribulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58613
+    description: Formula C12H13NO9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoribosylanthranilate isomerase activity
+    grounding: GO:0004640
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoribosylanthranilate isomerase
+    grounding: EC:5.3.1.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0QHH8
+    node_type: PROTEIN
+    label: HIS4_MYCA1
+    grounding: UniProtKB:A0QHH8
+  - node_id: prot_B1MBX5
+    node_type: PROTEIN
+    label: HIS4_MYCA9
+    grounding: UniProtKB:B1MBX5
+  - node_id: prot_P60579
+    node_type: PROTEIN
+    label: HIS4_MYCBO
+    grounding: UniProtKB:P60579
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-(5-phospho-beta-D-ribosyl)anthranilate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21541
+      snippet: N-(5-phospho-beta-D-ribosyl)anthranilate => 1-(2-carboxyphenylamino)-1-deoxy-D-ribulose
+        5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21541 declares side 21540_L as its substrates
+        (rh:substrates); the master reaction RHEA:21540 is undirected. This participant is CHEBI:18277
+        with coefficient 1. Rhea cites PMID:8897600, PMID:15654319, PMID:3286643, PMID:3535653 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-(2-carboxyphenylamino)-1-deoxy-D-ribulose 5-phosphate is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21541
+      snippet: N-(5-phospho-beta-D-ribosyl)anthranilate => 1-(2-carboxyphenylamino)-1-deoxy-D-ribulose
+        5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21541 declares side 21540_R as its products
+        (rh:products); the master reaction RHEA:21540 is undirected. This participant is CHEBI:58613 with
+        coefficient 1. Rhea cites PMID:8897600, PMID:15654319, PMID:3286643, PMID:3535653 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:21540
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004640"/>
+      notes: The rdfs:seeAlso triple on RHEA:21540 in rhea.rdf. GO term GO:0004640 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.1.24; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:21540
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.24"/>
+      notes: The rh:ec triple on RHEA:21540 in rhea.rdf. EC 5.3.1.24 is itself a record in this KB.
+  - subject: prot_A0QHH8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS4_MYCA1 is an exemplar enzyme carrying EC 5.3.1.24, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.24
+      snippet: DR   A0QHH8, HIS4_MYCA1 ;  B1MBX5, HIS4_MYCA9 ;  P60579, HIS4_MYCBO ;
+      notes: ExPASy ENZYME entry EC 5.3.1.24 cross-references UniProtKB:A0QHH8 (HIS4_MYCA1) as a protein
+        with this activity.
+    - reference: RHEA:21540
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.24"/>
+      notes: Rhea assigns RHEA:21540 to EC 5.3.1.24, and EC 5.3.1.24 maps to exactly one Rhea master reaction
+        (RHEA:21540), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B1MBX5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS4_MYCA9 is an exemplar enzyme carrying EC 5.3.1.24, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.24
+      snippet: DR   A0QHH8, HIS4_MYCA1 ;  B1MBX5, HIS4_MYCA9 ;  P60579, HIS4_MYCBO ;
+      notes: ExPASy ENZYME entry EC 5.3.1.24 cross-references UniProtKB:B1MBX5 (HIS4_MYCA9) as a protein
+        with this activity.
+    - reference: RHEA:21540
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.24"/>
+      notes: Rhea assigns RHEA:21540 to EC 5.3.1.24, and EC 5.3.1.24 maps to exactly one Rhea master reaction
+        (RHEA:21540), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P60579
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS4_MYCBO is an exemplar enzyme carrying EC 5.3.1.24, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.24
+      snippet: DR   A0QHH8, HIS4_MYCA1 ;  B1MBX5, HIS4_MYCA9 ;  P60579, HIS4_MYCBO ;
+      notes: ExPASy ENZYME entry EC 5.3.1.24 cross-references UniProtKB:P60579 (HIS4_MYCBO) as a protein
+        with this activity.
+    - reference: RHEA:21540
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.24"/>
+      notes: Rhea assigns RHEA:21540 to EC 5.3.1.24, and EC 5.3.1.24 maps to exactly one Rhea master reaction
+        (RHEA:21540), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa328
+  title: Catalytic residues of RHEA:21540 (from MCSA:328)
+  description: 'The catalytic residues that carry out RHEA:21540, joined from M-CSA entry 328. 2 residues,
+    reused verbatim from the MCSA:328 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 328''s reactant set (CHEBI:18277) equals Rhea side 21540_L exactly, and its product
+    set (CHEBI:58613) equals side 21540_R exactly. EC agreement bounded the candidates but was not sufficient
+    on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of N-(5-phospho-beta-D-ribosyl)anthranilate = 1-(2-carboxyphenylamino)-1-deoxy-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21540
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: N-(5-phospho-beta-D-ribosyl)anthranilate = 1-(2-carboxyphenylamino)-1-deoxy-D-ribulose
+      5-phosphate'
+  - node_id: mcsa
+    label: phosphoribosylanthranilate isomerase
+    node_type: MOTIF
+    grounding: MCSA:328
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: cys7
+    label: catalytic Cys7 (M-CSA/PDB numbering; UniProt residue 7)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q56320
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+      proton donor. Reused verbatim from the MCSA:328 record''s catalysis graph, where the UniProt position
+      was resolved through SIFTS.'
+  - node_id: asp126
+    label: catalytic Asp126 (M-CSA/PDB numbering; UniProt residue 126)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q56320
+    description: 'M-CSA roles: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+      proton donor. Reused verbatim from the MCSA:328 record''s catalysis graph, where the UniProt position
+      was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 328 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:328
+      snippet: N-(5-phosphonato-beta-D-ribosyl)anthranilate [reactant]; 1-(2-carboxylatophenylamino)-1-deoxy-D-ribulose
+        5-phosphate(3-) [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 328, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 328''s reactant
+        set (CHEBI:18277) equals Rhea side 21540_L exactly, and its product set (CHEBI:58613) equals side
+        21540_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: cys7
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:328
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: 'M-CSA entry 328 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 interaction, 4 spectator, 4 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 328''s reactant
+        set (CHEBI:18277) equals Rhea side 21540_L exactly, and its product set (CHEBI:58613) equals side
+        21540_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: asp126
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:328
+      snippet: activator, hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: 'M-CSA entry 328 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 interaction, 4 spectator, 4 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 328''s reactant
+        set (CHEBI:18277) equals Rhea side 21540_L exactly, and its product set (CHEBI:58613) equals side
+        21540_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa328' (3 evidence-backed edges) joining MCSA:328
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

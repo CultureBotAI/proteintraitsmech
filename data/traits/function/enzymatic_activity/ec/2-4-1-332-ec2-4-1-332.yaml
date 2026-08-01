@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -31,4 +31,105 @@ definitions:
       Catalyses: 2-O-(alpha-D-glucopyranosyl)glycerol + phosphate = beta-D-glucose 1-phosphate + glycerol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1,2-alpha-glucosylglycerol phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.332. EC 2.4.1.332 maps to
+    exactly one curated Rhea reaction (RHEA:43060), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-O-(alpha-D-glucopyranosyl)glycerol
+    + phosphate = beta-D-glucose 1-phosphate + glycerol". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1,2-alpha-glucosylglycerol phosphorylase
+    grounding: EC:2.4.1.332
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-O-(alpha-D-glucopyranosyl)glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:82766
+    description: Formula C9H18O8.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: beta-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57684
+    description: Formula C6H11O9P.
+  - node_id: prd2
+    label: glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17754
+    description: Formula C3H8O3.
+  - node_id: prot_D6XZ22
+    node_type: PROTEIN
+    label: GGP_BACIE
+    grounding: UniProtKB:D6XZ22
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-O-(alpha-D-glucopyranosyl)glycerol is a substrate consumed by RHEA:43060 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43061
+      snippet: 2-O-(alpha-D-glucopyranosyl)glycerol + phosphate => beta-D-glucose 1-phosphate + glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:43061 declares side 43060_L as its substrates
+        (rh:substrates); the master reaction RHEA:43060 is undirected. This participant is CHEBI:82766
+        with coefficient 1. Rhea cites PMID:24828502, PMID:24466148 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:43060 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43061
+      snippet: 2-O-(alpha-D-glucopyranosyl)glycerol + phosphate => beta-D-glucose 1-phosphate + glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:43061 declares side 43060_L as its substrates
+        (rh:substrates); the master reaction RHEA:43060 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:24828502, PMID:24466148 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-glucose 1-phosphate is a product released by RHEA:43060 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43061
+      snippet: 2-O-(alpha-D-glucopyranosyl)glycerol + phosphate => beta-D-glucose 1-phosphate + glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:43061 declares side 43060_R as its products
+        (rh:products); the master reaction RHEA:43060 is undirected. This participant is CHEBI:57684 with
+        coefficient 1. Rhea cites PMID:24828502, PMID:24466148 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glycerol is a product released by RHEA:43060 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43061
+      snippet: 2-O-(alpha-D-glucopyranosyl)glycerol + phosphate => beta-D-glucose 1-phosphate + glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:43061 declares side 43060_R as its products
+        (rh:products); the master reaction RHEA:43060 is undirected. This participant is CHEBI:17754 with
+        coefficient 1. Rhea cites PMID:24828502, PMID:24466148 for this reaction.
+  - subject: prot_D6XZ22
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GGP_BACIE is an exemplar enzyme with EC 2.4.1.332 activity.
+    evidence:
+    - reference: EC:2.4.1.332
+      snippet: DR   D6XZ22, GGP_BACIE  ;
+      notes: ExPASy ENZYME entry EC 2.4.1.332 cross-references UniProtKB:D6XZ22 (GGP_BACIE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

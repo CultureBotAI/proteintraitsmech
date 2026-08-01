@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 synonyms:
@@ -47,4 +47,151 @@ definitions:
       Catalyses: orotidine 5'-phosphate + diphosphate = orotate + 5-phospho-alpha-D-ribose 1-diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of orotate phosphoribosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.10. EC 2.4.2.10 maps to exactly
+    one curated Rhea reaction (RHEA:10380), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "orotidine 5''-phosphate
+    + diphosphate = orotate + 5-phospho-alpha-D-ribose 1-diphosphate". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: orotate phosphoribosyltransferase
+    grounding: EC:2.4.2.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: orotidine 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57538
+    description: Formula C10H10N2O11P.
+  - node_id: sub2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd1
+    label: orotate
+    node_type: CHEMICAL
+    grounding: CHEBI:30839
+    description: Formula C5H3N2O4.
+  - node_id: prd2
+    label: 5-phospho-alpha-D-ribose 1-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58017
+    description: Formula C5H8O14P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: orotate phosphoribosyltransferase activity
+    grounding: GO:0004588
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q98AN7
+    node_type: PROTEIN
+    label: PYRE1_RHILO
+    grounding: UniProtKB:Q98AN7
+  - node_id: prot_Q985B1
+    node_type: PROTEIN
+    label: PYRE2_RHILO
+    grounding: UniProtKB:Q985B1
+  - node_id: prot_Q6F6Z6
+    node_type: PROTEIN
+    label: PYRE_ACIAD
+    grounding: UniProtKB:Q6F6Z6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: orotidine 5'-phosphate is a substrate consumed by RHEA:10380 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10381
+      snippet: orotidine 5'-phosphate + diphosphate => orotate + 5-phospho-alpha-D-ribose 1-diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10381 declares side 10380_L as its substrates
+        (rh:substrates); the master reaction RHEA:10380 is undirected. This participant is CHEBI:57538
+        with coefficient 1. Rhea cites PMID:6893554, PMID:19645718, PMID:14392174, PMID:692383 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: diphosphate is a substrate consumed by RHEA:10380 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10381
+      snippet: orotidine 5'-phosphate + diphosphate => orotate + 5-phospho-alpha-D-ribose 1-diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10381 declares side 10380_L as its substrates
+        (rh:substrates); the master reaction RHEA:10380 is undirected. This participant is CHEBI:33019
+        with coefficient 1. Rhea cites PMID:6893554, PMID:19645718, PMID:14392174, PMID:692383 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: orotate is a product released by RHEA:10380 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10381
+      snippet: orotidine 5'-phosphate + diphosphate => orotate + 5-phospho-alpha-D-ribose 1-diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10381 declares side 10380_R as its products
+        (rh:products); the master reaction RHEA:10380 is undirected. This participant is CHEBI:30839 with
+        coefficient 1. Rhea cites PMID:6893554, PMID:19645718, PMID:14392174, PMID:692383 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 5-phospho-alpha-D-ribose 1-diphosphate is a product released by RHEA:10380 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:10381
+      snippet: orotidine 5'-phosphate + diphosphate => orotate + 5-phospho-alpha-D-ribose 1-diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10381 declares side 10380_R as its products
+        (rh:products); the master reaction RHEA:10380 is undirected. This participant is CHEBI:58017 with
+        coefficient 1. Rhea cites PMID:6893554, PMID:19645718, PMID:14392174, PMID:692383 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.2.10
+      snippet: EC:2.4.2.10 > GO:orotate phosphoribosyltransferase activity ; GO:0004588
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004588 is itself a record
+        in this KB.
+  - subject: prot_Q98AN7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYRE1_RHILO is an exemplar enzyme with EC 2.4.2.10 activity.
+    evidence:
+    - reference: EC:2.4.2.10
+      snippet: DR   Q98AN7, PYRE1_RHILO;  Q985B1, PYRE2_RHILO;  Q6F6Z6, PYRE_ACIAD ;
+      notes: ExPASy ENZYME entry EC 2.4.2.10 cross-references UniProtKB:Q98AN7 (PYRE1_RHILO) as a protein
+        with this activity.
+  - subject: prot_Q985B1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYRE2_RHILO is an exemplar enzyme with EC 2.4.2.10 activity.
+    evidence:
+    - reference: EC:2.4.2.10
+      snippet: DR   Q98AN7, PYRE1_RHILO;  Q985B1, PYRE2_RHILO;  Q6F6Z6, PYRE_ACIAD ;
+      notes: ExPASy ENZYME entry EC 2.4.2.10 cross-references UniProtKB:Q985B1 (PYRE2_RHILO) as a protein
+        with this activity.
+  - subject: prot_Q6F6Z6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYRE_ACIAD is an exemplar enzyme with EC 2.4.2.10 activity.
+    evidence:
+    - reference: EC:2.4.2.10
+      snippet: DR   Q98AN7, PYRE1_RHILO;  Q985B1, PYRE2_RHILO;  Q6F6Z6, PYRE_ACIAD ;
+      notes: ExPASy ENZYME entry EC 2.4.2.10 cross-references UniProtKB:Q6F6Z6 (PYRE_ACIAD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

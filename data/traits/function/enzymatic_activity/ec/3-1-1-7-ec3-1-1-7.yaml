@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -45,4 +45,164 @@ definitions:
       Catalyses: acetylcholine + H2O = choline + acetate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetylcholinesterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.7. EC 3.1.1.7 maps to exactly
+    one curated Rhea reaction (RHEA:17561), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "acetylcholine
+    + H2O = choline + acetate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acetylcholinesterase
+    grounding: EC:3.1.1.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: acetylcholine
+    node_type: CHEMICAL
+    grounding: CHEBI:15355
+    description: Formula C7H16NO2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: choline
+    node_type: CHEMICAL
+    grounding: CHEBI:15354
+    description: Formula C5H14NO.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acetylcholinesterase activity
+    grounding: GO:0003990
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q27459
+    node_type: PROTEIN
+    label: ACE1_CAEBR
+    grounding: UniProtKB:Q27459
+  - node_id: prot_P38433
+    node_type: PROTEIN
+    label: ACE1_CAEEL
+    grounding: UniProtKB:P38433
+  - node_id: prot_Q9NDG8
+    node_type: PROTEIN
+    label: ACE4_CAEBR
+    grounding: UniProtKB:Q9NDG8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetylcholine is a substrate consumed by RHEA:17561 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17562
+      snippet: acetylcholine + H2O => choline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17562 declares side 17561_L as its substrates
+        (rh:substrates); the master reaction RHEA:17561 is undirected. This participant is CHEBI:15355
+        with coefficient 1. Rhea cites PMID:5073758, PMID:14885021, PMID:18586019, PMID:25411244 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:17561 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17562
+      snippet: acetylcholine + H2O => choline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17562 declares side 17561_L as its substrates
+        (rh:substrates); the master reaction RHEA:17561 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:5073758, PMID:14885021, PMID:18586019, PMID:25411244 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: choline is a product released by RHEA:17561 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17562
+      snippet: acetylcholine + H2O => choline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17562 declares side 17561_R as its products
+        (rh:products); the master reaction RHEA:17561 is undirected. This participant is CHEBI:15354 with
+        coefficient 1. Rhea cites PMID:5073758, PMID:14885021, PMID:18586019, PMID:25411244 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:17561 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17562
+      snippet: acetylcholine + H2O => choline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17562 declares side 17561_R as its products
+        (rh:products); the master reaction RHEA:17561 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:5073758, PMID:14885021, PMID:18586019, PMID:25411244 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:17561 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17562
+      snippet: acetylcholine + H2O => choline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17562 declares side 17561_R as its products
+        (rh:products); the master reaction RHEA:17561 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:5073758, PMID:14885021, PMID:18586019, PMID:25411244 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.7
+      snippet: EC:3.1.1.7 > GO:acetylcholinesterase activity ; GO:0003990
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003990 is itself a record
+        in this KB.
+  - subject: prot_Q27459
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE1_CAEBR is an exemplar enzyme with EC 3.1.1.7 activity.
+    evidence:
+    - reference: EC:3.1.1.7
+      snippet: DR   Q27459, ACE1_CAEBR ;  P38433, ACE1_CAEEL ;  Q9NDG8, ACE4_CAEBR ;
+      notes: ExPASy ENZYME entry EC 3.1.1.7 cross-references UniProtKB:Q27459 (ACE1_CAEBR) as a protein
+        with this activity.
+  - subject: prot_P38433
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE1_CAEEL is an exemplar enzyme with EC 3.1.1.7 activity.
+    evidence:
+    - reference: EC:3.1.1.7
+      snippet: DR   Q27459, ACE1_CAEBR ;  P38433, ACE1_CAEEL ;  Q9NDG8, ACE4_CAEBR ;
+      notes: ExPASy ENZYME entry EC 3.1.1.7 cross-references UniProtKB:P38433 (ACE1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_Q9NDG8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE4_CAEBR is an exemplar enzyme with EC 3.1.1.7 activity.
+    evidence:
+    - reference: EC:3.1.1.7
+      snippet: DR   Q27459, ACE1_CAEBR ;  P38433, ACE1_CAEEL ;  Q9NDG8, ACE4_CAEBR ;
+      notes: ExPASy ENZYME entry EC 3.1.1.7 cross-references UniProtKB:Q9NDG8 (ACE4_CAEBR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

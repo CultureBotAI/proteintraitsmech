@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.6.1.-
 synonyms:
@@ -35,4 +35,232 @@ definitions:
       Catalyses: (1) CTP + H2O = CMP + diphosphate + H(+). (2) dCTP + H2O = dCMP + diphosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (d)CTP diphosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.6.1.65. Rhea assigns 2 curated
+    reactions to EC 3.6.1.65. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) CTP + H2O = CMP + diphosphate + H(+). (2) dCTP + H2O
+    = dCMP + diphosphate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (d)CTP diphosphatase
+    grounding: EC:3.6.1.65
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of dCTP + H2O = dCMP + diphosphate + H(+)
+    grounding: RHEA:22636
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: dCTP + H2O = dCMP + diphosphate + H(+)'
+  - node_id: rxn1_sub1
+    label: dCTP
+    node_type: CHEMICAL
+    grounding: CHEBI:61481
+    description: Formula C9H12N3O13P3.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: dCMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57566
+    description: Formula C9H12N3O7P.
+  - node_id: rxn1_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of CTP + H2O = CMP + diphosphate + H(+)
+    grounding: RHEA:27762
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: CTP + H2O = CMP + diphosphate + H(+)'
+  - node_id: rxn2_sub1
+    label: CTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+    description: Formula C9H12N3O14P3.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: rxn2_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_P77788
+    node_type: PROTEIN
+    label: NUDG_ECOLI
+    grounding: UniProtKB:P77788
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:22636 is one of the 2 curated reactions Rhea assigns to EC 3.6.1.65; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:22636
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.6.1.65"/>
+      notes: The rh:ec triple on RHEA:22636 in rhea.rdf assigns that reaction to EC 3.6.1.65.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: dCTP is a substrate consumed by RHEA:22636 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22637
+      snippet: dCTP + H2O => dCMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22637 declares side 22636_L as its substrates
+        (rh:substrates); the master reaction RHEA:22636 is undirected. This participant is CHEBI:61481
+        with coefficient 1. Rhea cites PMID:11053429, PMID:12218018 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:22636 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22637
+      snippet: dCTP + H2O => dCMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22637 declares side 22636_L as its substrates
+        (rh:substrates); the master reaction RHEA:22636 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11053429, PMID:12218018 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: dCMP is a product released by RHEA:22636 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22637
+      snippet: dCTP + H2O => dCMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22637 declares side 22636_R as its products
+        (rh:products); the master reaction RHEA:22636 is undirected. This participant is CHEBI:57566 with
+        coefficient 1. Rhea cites PMID:11053429, PMID:12218018 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: diphosphate is a product released by RHEA:22636 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22637
+      snippet: dCTP + H2O => dCMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22637 declares side 22636_R as its products
+        (rh:products); the master reaction RHEA:22636 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:11053429, PMID:12218018 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:22636 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22637
+      snippet: dCTP + H2O => dCMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22637 declares side 22636_R as its products
+        (rh:products); the master reaction RHEA:22636 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11053429, PMID:12218018 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:27762 is one of the 2 curated reactions Rhea assigns to EC 3.6.1.65; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:27762
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.6.1.65"/>
+      notes: The rh:ec triple on RHEA:27762 in rhea.rdf assigns that reaction to EC 3.6.1.65.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: CTP is a substrate consumed by RHEA:27762 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27763
+      snippet: CTP + H2O => CMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27763 declares side 27762_L as its substrates
+        (rh:substrates); the master reaction RHEA:27762 is undirected. This participant is CHEBI:37563
+        with coefficient 1. Rhea cites PMID:24210219, PMID:11053429, PMID:12218018 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:27762 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27763
+      snippet: CTP + H2O => CMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27763 declares side 27762_L as its substrates
+        (rh:substrates); the master reaction RHEA:27762 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24210219, PMID:11053429, PMID:12218018 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: CMP is a product released by RHEA:27762 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27763
+      snippet: CTP + H2O => CMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27763 declares side 27762_R as its products
+        (rh:products); the master reaction RHEA:27762 is undirected. This participant is CHEBI:60377 with
+        coefficient 1. Rhea cites PMID:24210219, PMID:11053429, PMID:12218018 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: diphosphate is a product released by RHEA:27762 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27763
+      snippet: CTP + H2O => CMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27763 declares side 27762_R as its products
+        (rh:products); the master reaction RHEA:27762 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:24210219, PMID:11053429, PMID:12218018 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:27762 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27763
+      snippet: CTP + H2O => CMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27763 declares side 27762_R as its products
+        (rh:products); the master reaction RHEA:27762 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:24210219, PMID:11053429, PMID:12218018 for this reaction.
+  - subject: prot_P77788
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUDG_ECOLI is an exemplar enzyme with EC 3.6.1.65 activity.
+    evidence:
+    - reference: EC:3.6.1.65
+      snippet: DR   P77788, NUDG_ECOLI ;
+      notes: ExPASy ENZYME entry EC 3.6.1.65 cross-references UniProtKB:P77788 (NUDG_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

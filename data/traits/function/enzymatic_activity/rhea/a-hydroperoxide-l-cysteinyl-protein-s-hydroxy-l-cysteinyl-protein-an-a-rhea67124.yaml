@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:35924
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,126 @@ definitions:
       Catalyses the reaction: a hydroperoxide + L-cysteinyl-[protein] = S-hydroxy-L-cysteinyl-[protein] + an alcohol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a hydroperoxide + L-cysteinyl-[protein] = S-hydroxy-L-cysteinyl-[protein]
+    + an alcohol
+  description: Substrate-to-product chemistry of RHEA:67124, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67125 (rh:substrates → 67124_L, rh:products → 67124_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a hydroperoxide + L-cysteinyl-[protein] = S-hydroxy-L-cysteinyl-[protein] +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67124
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a hydroperoxide + L-cysteinyl-[protein] = S-hydroxy-L-cysteinyl-[protein] + an alcohol'
+  - node_id: sub1
+    label: a hydroperoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:35924
+    description: Formula HO2R.
+  - node_id: sub2
+    label: L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10131
+    description: Rhea compound GENERIC:10131.
+  - node_id: sub2_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10131 (L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1
+    label: S-hydroxy-L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17193
+    description: Rhea compound GENERIC:17193.
+  - node_id: prd1_rp1
+    label: S-hydroxy-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17193 (S-hydroxy-L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:61973
+  - node_id: prd2
+    label: an alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+    description: Formula HOR.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a hydroperoxide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:67125
+      snippet: a hydroperoxide + L-cysteinyl-[protein] => S-hydroxy-L-cysteinyl-[protein] + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:67125 declares side 67124_L as its substrates
+        (rh:substrates); the master reaction RHEA:67124 is undirected. This participant is CHEBI:35924
+        with coefficient 1. Rhea cites PMID:26612684 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-cysteinyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:67125
+      snippet: a hydroperoxide + L-cysteinyl-[protein] => S-hydroxy-L-cysteinyl-[protein] + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:67125 declares side 67124_L as its substrates
+        (rh:substrates); the master reaction RHEA:67124 is undirected. This participant is GENERIC:10131
+        with coefficient 1. Rhea cites PMID:26612684 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:67124
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10131 (L-cysteinyl-[protein]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-hydroxy-L-cysteinyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67125
+      snippet: a hydroperoxide + L-cysteinyl-[protein] => S-hydroxy-L-cysteinyl-[protein] + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:67125 declares side 67124_R as its products
+        (rh:products); the master reaction RHEA:67124 is undirected. This participant is GENERIC:17193
+        with coefficient 1. Rhea cites PMID:26612684 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-hydroxy-L-cysteine residue is the reactive part of S-hydroxy-L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:67124
+      snippet: S-hydroxy-L-cysteine residue
+      notes: Rhea compound GENERIC:17193 (S-hydroxy-L-cysteinyl-[protein]) declares rh:reactivePart =
+        S-hydroxy-L-cysteine residue (CHEBI:61973), formula C3H5NO2S.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: an alcohol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67125
+      snippet: a hydroperoxide + L-cysteinyl-[protein] => S-hydroxy-L-cysteinyl-[protein] + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:67125 declares side 67124_R as its products
+        (rh:products); the master reaction RHEA:67124 is undirected. This participant is CHEBI:30879 with
+        coefficient 1. Rhea cites PMID:26612684 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

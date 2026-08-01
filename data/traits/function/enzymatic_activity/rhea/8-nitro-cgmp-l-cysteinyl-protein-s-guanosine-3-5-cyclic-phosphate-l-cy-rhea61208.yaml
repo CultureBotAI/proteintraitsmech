@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:144462
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,149 @@ definitions:
       Catalyses the reaction: 8-nitro-cGMP + L-cysteinyl-[protein] = S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl-[protein] + nitrite + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 8-nitro-cGMP + L-cysteinyl-[protein] = S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl…
+  description: Substrate-to-product chemistry of RHEA:61208, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:61209 (rh:substrates → 61208_L, rh:products → 61208_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 8-nitro-cGMP + L-cysteinyl-[protein] = S-(guanosine 3',5'-cyclic phosphate)-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:61208
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 8-nitro-cGMP + L-cysteinyl-[protein] = S-(guanosine 3'',5''-cyclic phosphate)-L-cysteinyl-[protein]
+      + nitrite + H(+)'
+  - node_id: sub1
+    label: 8-nitro-cGMP
+    node_type: CHEMICAL
+    grounding: CHEBI:144462
+    description: Formula C10H10N6O9P.
+  - node_id: sub2
+    label: L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10131
+    description: Rhea compound GENERIC:10131.
+  - node_id: sub2_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10131 (L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1
+    label: S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15771
+    description: Rhea compound GENERIC:15771.
+  - node_id: prd1_rp1
+    label: S-(guanosine 3',5'-cyclic phosphate)-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15771 (S-(guanosine
+      3',5'-cyclic phosphate)-L-cysteinyl-[protein]); no position on any specific protein sequence is
+      asserted.
+    grounding: CHEBI:144463
+  - node_id: prd2
+    label: nitrite
+    node_type: CHEMICAL
+    grounding: CHEBI:16301
+    description: Formula NO2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 8-nitro-cGMP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61209
+      snippet: 8-nitro-cGMP + L-cysteinyl-[protein] => S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl-[protein]
+        + nitrite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61209 declares side 61208_L as its substrates
+        (rh:substrates); the master reaction RHEA:61208 is undirected. This participant is CHEBI:144462
+        with coefficient 1. Rhea cites PMID:20498371, PMID:17906641, PMID:28213625 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-cysteinyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61209
+      snippet: 8-nitro-cGMP + L-cysteinyl-[protein] => S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl-[protein]
+        + nitrite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61209 declares side 61208_L as its substrates
+        (rh:substrates); the master reaction RHEA:61208 is undirected. This participant is GENERIC:10131
+        with coefficient 1. Rhea cites PMID:20498371, PMID:17906641, PMID:28213625 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:61208
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10131 (L-cysteinyl-[protein]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl-[protein] is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61209
+      snippet: 8-nitro-cGMP + L-cysteinyl-[protein] => S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl-[protein]
+        + nitrite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61209 declares side 61208_R as its products
+        (rh:products); the master reaction RHEA:61208 is undirected. This participant is GENERIC:15771
+        with coefficient 1. Rhea cites PMID:20498371, PMID:17906641, PMID:28213625 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-(guanosine 3',5'-cyclic phosphate)-L-cysteine residue is the reactive part of S-(guanosine
+      3',5'-cyclic phosphate)-L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:61208
+      snippet: S-(guanosine 3',5'-cyclic phosphate)-L-cysteine residue
+      notes: Rhea compound GENERIC:15771 (S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl-[protein])
+        declares rh:reactivePart = S-(guanosine 3',5'-cyclic phosphate)-L-cysteine residue (CHEBI:144463),
+        formula C13H14N6O8PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nitrite is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61209
+      snippet: 8-nitro-cGMP + L-cysteinyl-[protein] => S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl-[protein]
+        + nitrite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61209 declares side 61208_R as its products
+        (rh:products); the master reaction RHEA:61208 is undirected. This participant is CHEBI:16301 with
+        coefficient 1. Rhea cites PMID:20498371, PMID:17906641, PMID:28213625 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61209
+      snippet: 8-nitro-cGMP + L-cysteinyl-[protein] => S-(guanosine 3',5'-cyclic phosphate)-L-cysteinyl-[protein]
+        + nitrite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61209 declares side 61208_R as its products
+        (rh:products); the master reaction RHEA:61208 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:20498371, PMID:17906641, PMID:28213625 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -25,4 +25,106 @@ definitions:
       Catalyses: 3,4-dichloroaniline + malonyl-CoA = N-(3,4-dichlorophenyl)malonamate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3,4-dichloroaniline N-malonyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.114. EC 2.3.1.114 maps to
+    exactly one curated Rhea reaction (RHEA:21060), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3,4-dichloroaniline
+    + malonyl-CoA = N-(3,4-dichlorophenyl)malonamate + CoA". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3,4-dichloroaniline N-malonyltransferase
+    grounding: EC:2.3.1.114
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3,4-dichloroaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:16767
+    description: Formula C6H5Cl2N.
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: prd1
+    label: N-(3,4-dichlorophenyl)malonamate
+    node_type: CHEMICAL
+    grounding: CHEBI:17318
+    description: Formula C9H6Cl2NO3.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3,4-dichloroaniline N-malonyltransferase activity
+    grounding: GO:0047163
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3,4-dichloroaniline is a substrate consumed by RHEA:21060 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21061
+      snippet: 3,4-dichloroaniline + malonyl-CoA => N-(3,4-dichlorophenyl)malonamate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21061 declares side 21060_L as its substrates
+        (rh:substrates); the master reaction RHEA:21060 is undirected. This participant is CHEBI:16767
+        with coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by RHEA:21060 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21061
+      snippet: 3,4-dichloroaniline + malonyl-CoA => N-(3,4-dichlorophenyl)malonamate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21061 declares side 21060_L as its substrates
+        (rh:substrates); the master reaction RHEA:21060 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-(3,4-dichlorophenyl)malonamate is a product released by RHEA:21060 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21061
+      snippet: 3,4-dichloroaniline + malonyl-CoA => N-(3,4-dichlorophenyl)malonamate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21061 declares side 21060_R as its products
+        (rh:products); the master reaction RHEA:21060 is undirected. This participant is CHEBI:17318 with
+        coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:21060 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21061
+      snippet: 3,4-dichloroaniline + malonyl-CoA => N-(3,4-dichlorophenyl)malonamate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21061 declares side 21060_R as its products
+        (rh:products); the master reaction RHEA:21060 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.114
+      snippet: EC:2.3.1.114 > GO:3,4-dichloroaniline N-malonyltransferase activity ; GO:0047163
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047163 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

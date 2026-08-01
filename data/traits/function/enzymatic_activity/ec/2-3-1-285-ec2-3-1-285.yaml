@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -28,4 +28,110 @@ definitions:
       Catalyses: (13S,14R)-1,13-dihydroxy-N-methylcanadine + acetyl-CoA = (13S,14R)-13-O- acetyl-1-hydroxy-N-methylcanadine + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (13S,14R)-1,13-dihydroxy-N-methylcanadine 13-O-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.285. EC 2.3.1.285 maps to
+    exactly one curated Rhea reaction (RHEA:57384), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(13S,14R)-1,13-dihydroxy-N-methylcanadine
+    + acetyl-CoA = (13S,14R)-13-O- acetyl-1-hydroxy-N-methylcanadine + CoA". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (13S,14R)-1,13-dihydroxy-N-methylcanadine 13-O-acetyltransferase
+    grounding: EC:2.3.1.285
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (13S,14R)-1,13-dihydroxy-N-methylcanadine
+    node_type: CHEMICAL
+    grounding: CHEBI:141639
+    description: Formula C21H24NO6.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: (13S,14R)-13-O-acetyl-1-hydroxy-N-methylcanadine
+    node_type: CHEMICAL
+    grounding: CHEBI:141640
+    description: Formula C23H26NO7.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_I3PLR4
+    node_type: PROTEIN
+    label: AT1_PAPSO
+    grounding: UniProtKB:I3PLR4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (13S,14R)-1,13-dihydroxy-N-methylcanadine is a substrate consumed by RHEA:57384 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57385
+      snippet: (13S,14R)-1,13-dihydroxy-N-methylcanadine + acetyl-CoA => (13S,14R)-13-O-acetyl-1-hydroxy-N-methylcanadine
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:57385 declares side 57384_L as its substrates
+        (rh:substrates); the master reaction RHEA:57384 is undirected. This participant is CHEBI:141639
+        with coefficient 1. Rhea cites PMID:29610307, PMID:25485687 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:57384 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57385
+      snippet: (13S,14R)-1,13-dihydroxy-N-methylcanadine + acetyl-CoA => (13S,14R)-13-O-acetyl-1-hydroxy-N-methylcanadine
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:57385 declares side 57384_L as its substrates
+        (rh:substrates); the master reaction RHEA:57384 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:29610307, PMID:25485687 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (13S,14R)-13-O-acetyl-1-hydroxy-N-methylcanadine is a product released by RHEA:57384
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57385
+      snippet: (13S,14R)-1,13-dihydroxy-N-methylcanadine + acetyl-CoA => (13S,14R)-13-O-acetyl-1-hydroxy-N-methylcanadine
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:57385 declares side 57384_R as its products
+        (rh:products); the master reaction RHEA:57384 is undirected. This participant is CHEBI:141640
+        with coefficient 1. Rhea cites PMID:29610307, PMID:25485687 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:57384 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57385
+      snippet: (13S,14R)-1,13-dihydroxy-N-methylcanadine + acetyl-CoA => (13S,14R)-13-O-acetyl-1-hydroxy-N-methylcanadine
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:57385 declares side 57384_R as its products
+        (rh:products); the master reaction RHEA:57384 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:29610307, PMID:25485687 for this reaction.
+  - subject: prot_I3PLR4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AT1_PAPSO is an exemplar enzyme with EC 2.3.1.285 activity.
+    evidence:
+    - reference: EC:2.3.1.285
+      snippet: DR   I3PLR4, AT1_PAPSO  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.285 cross-references UniProtKB:I3PLR4 (AT1_PAPSO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

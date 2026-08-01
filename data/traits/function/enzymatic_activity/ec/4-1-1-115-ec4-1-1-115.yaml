@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 synonyms:
@@ -31,4 +31,104 @@ definitions:
       Catalyses: (indol-3-yl)acetate + H(+) = skatole + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of indoleacetate decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.115. EC 4.1.1.115 maps to
+    exactly one curated Rhea reaction (RHEA:59216), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(indol-3-yl)acetate
+    + H(+) = skatole + CO2". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: indoleacetate decarboxylase
+    grounding: EC:4.1.1.115
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (indol-3-yl)acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30854
+    description: Formula C10H8NO2.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: skatole
+    node_type: CHEMICAL
+    grounding: CHEBI:9171
+    description: Formula C9H9N.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prot_A0A100YXA1
+    node_type: PROTEIN
+    label: IAD_TRASO
+    grounding: UniProtKB:A0A100YXA1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (indol-3-yl)acetate is a substrate consumed by RHEA:59216 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59217
+      snippet: (indol-3-yl)acetate + H(+) => skatole + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:59217 declares side 59216_L as its substrates
+        (rh:substrates); the master reaction RHEA:59216 is undirected. This participant is CHEBI:30854
+        with coefficient 1. Rhea cites PMID:30310076 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:59216 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59217
+      snippet: (indol-3-yl)acetate + H(+) => skatole + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:59217 declares side 59216_L as its substrates
+        (rh:substrates); the master reaction RHEA:59216 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:30310076 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: skatole is a product released by RHEA:59216 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59217
+      snippet: (indol-3-yl)acetate + H(+) => skatole + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:59217 declares side 59216_R as its products
+        (rh:products); the master reaction RHEA:59216 is undirected. This participant is CHEBI:9171 with
+        coefficient 1. Rhea cites PMID:30310076 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:59216 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59217
+      snippet: (indol-3-yl)acetate + H(+) => skatole + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:59217 declares side 59216_R as its products
+        (rh:products); the master reaction RHEA:59216 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:30310076 for this reaction.
+  - subject: prot_A0A100YXA1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IAD_TRASO is an exemplar enzyme with EC 4.1.1.115 activity.
+    evidence:
+    - reference: EC:4.1.1.115
+      snippet: DR   A0A100YXA1, IAD_TRASO  ;
+      notes: ExPASy ENZYME entry EC 4.1.1.115 cross-references UniProtKB:A0A100YXA1 (IAD_TRASO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57589
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,98 @@ definitions:
       Catalyses the reaction: O-acetyl-(R)-carnitine(in) + (R)-carnitine(out) = O-acetyl-(R)-carnitine(out) + (R)-carnitine(in)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of O-acetyl-(R)-carnitine(in) + (R)-carnitine(out) = O-acetyl-(R)-carnitine(out)
+    + (R)-car…
+  description: 'Substrate-to-product chemistry of RHEA:49908, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49909 (rh:substrates → 49908_L, rh:products → 49908_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of O-acetyl-(R)-carnitine(in) + (R)-carnitine(out) = O-acetyl-(R)-carnitine(out…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49908
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: O-acetyl-(R)-carnitine(in) + (R)-carnitine(out) = O-acetyl-(R)-carnitine(out) + (R)-carnitine(in)'
+  - node_id: sub1
+    label: O-acetyl-(R)-carnitine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57589
+    description: Formula C9H17NO4.
+  - node_id: sub2
+    label: (R)-carnitine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:16347
+    description: Formula C7H15NO3.
+  - node_id: prd1
+    label: O-acetyl-(R)-carnitine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57589
+    description: Formula C9H17NO4.
+  - node_id: prd2
+    label: (R)-carnitine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:16347
+    description: Formula C7H15NO3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: O-acetyl-(R)-carnitine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49909
+      snippet: O-acetyl-(R)-carnitine(in) + (R)-carnitine(out) => O-acetyl-(R)-carnitine(out) + (R)-carnitine(in)
+      notes: Rhea's left-to-right directional reaction RHEA:49909 declares side 49908_L as its substrates
+        (rh:substrates); the master reaction RHEA:49908 is undirected. This participant is CHEBI:57589
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:18307102,
+        PMID:9731180 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (R)-carnitine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49909
+      snippet: O-acetyl-(R)-carnitine(in) + (R)-carnitine(out) => O-acetyl-(R)-carnitine(out) + (R)-carnitine(in)
+      notes: Rhea's left-to-right directional reaction RHEA:49909 declares side 49908_L as its substrates
+        (rh:substrates); the master reaction RHEA:49908 is undirected. This participant is CHEBI:16347
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:18307102, PMID:9731180 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-acetyl-(R)-carnitine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49909
+      snippet: O-acetyl-(R)-carnitine(in) + (R)-carnitine(out) => O-acetyl-(R)-carnitine(out) + (R)-carnitine(in)
+      notes: Rhea's left-to-right directional reaction RHEA:49909 declares side 49908_R as its products
+        (rh:products); the master reaction RHEA:49908 is undirected. This participant is CHEBI:57589 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:18307102,
+        PMID:9731180 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (R)-carnitine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49909
+      snippet: O-acetyl-(R)-carnitine(in) + (R)-carnitine(out) => O-acetyl-(R)-carnitine(out) + (R)-carnitine(in)
+      notes: Rhea's left-to-right directional reaction RHEA:49909 declares side 49908_R as its products
+        (rh:products); the master reaction RHEA:49908 is undirected. This participant is CHEBI:16347 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:18307102,
+        PMID:9731180 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

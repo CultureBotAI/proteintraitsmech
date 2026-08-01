@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:28745
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,76 @@ definitions:
       Catalyses the reaction: L-xylo-hex-3-ulonolactone = L-ascorbate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-xylo-hex-3-ulonolactone = L-ascorbate + H(+)
+  description: Substrate-to-product chemistry of RHEA:15269, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:15270 (rh:substrates → 15269_L, rh:products → 15269_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-xylo-hex-3-ulonolactone = L-ascorbate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15269
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-xylo-hex-3-ulonolactone = L-ascorbate + H(+)'
+  - node_id: sub1
+    label: L-xylo-hex-3-ulonolactone
+    node_type: CHEMICAL
+    grounding: CHEBI:28745
+    description: Formula C6H8O6.
+  - node_id: prd1
+    label: L-ascorbate
+    node_type: CHEMICAL
+    grounding: CHEBI:38290
+    description: Formula C6H7O6.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-xylo-hex-3-ulonolactone is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15270
+      snippet: L-xylo-hex-3-ulonolactone => L-ascorbate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15270 declares side 15269_L as its substrates
+        (rh:substrates); the master reaction RHEA:15269 is undirected. This participant is CHEBI:28745
+        with coefficient 1. Rhea cites PMID:7138847, PMID:14962674, PMID:20622436, PMID:8175804 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-ascorbate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15270
+      snippet: L-xylo-hex-3-ulonolactone => L-ascorbate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15270 declares side 15269_R as its products
+        (rh:products); the master reaction RHEA:15269 is undirected. This participant is CHEBI:38290 with
+        coefficient 1. Rhea cites PMID:7138847, PMID:14962674, PMID:20622436, PMID:8175804 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15270
+      snippet: L-xylo-hex-3-ulonolactone => L-ascorbate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15270 declares side 15269_R as its products
+        (rh:products); the master reaction RHEA:15269 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:7138847, PMID:14962674, PMID:20622436, PMID:8175804 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

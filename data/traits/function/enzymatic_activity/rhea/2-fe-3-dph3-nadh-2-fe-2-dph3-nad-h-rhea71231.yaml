@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29034
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,170 @@ definitions:
       Catalyses the reaction: 2 Fe(3+)-[Dph3] + NADH = 2 Fe(2+)-[Dph3] + NAD(+) + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 Fe(3+)-[Dph3] + NADH = 2 Fe(2+)-[Dph3] + NAD(+) + H(+)
+  description: Substrate-to-product chemistry of RHEA:71231, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71232 (rh:substrates → 71231_L, rh:products → 71231_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 Fe(3+)-[Dph3] + NADH = 2 Fe(2+)-[Dph3] + NAD(+) + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71231
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 Fe(3+)-[Dph3] + NADH = 2 Fe(2+)-[Dph3] + NAD(+) + H(+)'
+  - node_id: sub1
+    label: Fe(3+)-[Dph3]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18003
+    description: Rhea compound GENERIC:18003.
+  - node_id: sub1_rp1
+    label: Fe(3+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18003 (Fe(3+)-[Dph3]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: sub1_rp2
+    label: an L-alpha amino acid residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18003 (Fe(3+)-[Dph3]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83228
+  - node_id: sub2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd1
+    label: Fe(2+)-[Dph3]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18002
+    description: Rhea compound GENERIC:18002.
+  - node_id: prd1_rp1
+    label: Fe(2+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18002 (Fe(2+)-[Dph3]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd1_rp2
+    label: an L-alpha amino acid residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18002 (Fe(2+)-[Dph3]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83228
+  - node_id: prd2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(3+)-[Dph3] is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:71232
+      snippet: 2 Fe(3+)-[Dph3] + NADH => 2 Fe(2+)-[Dph3] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71232 declares side 71231_L as its substrates
+        (rh:substrates); the master reaction RHEA:71231 is undirected. This participant is GENERIC:18003
+        with coefficient 2. Rhea cites PMID:34154323, PMID:27694803 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(3+) is the reactive part of Fe(3+)-[Dph3].
+    evidence:
+    - reference: RHEA:71231
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:18003 (Fe(3+)-[Dph3]) declares rh:reactivePart = Fe(3+) (CHEBI:29034),
+        formula Fe.
+  - subject: sub1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: an L-alpha amino acid residue is the reactive part of Fe(3+)-[Dph3].
+    evidence:
+    - reference: RHEA:71231
+      snippet: an L-alpha amino acid residue
+      notes: Rhea compound GENERIC:18003 (Fe(3+)-[Dph3]) declares rh:reactivePart = an L-alpha amino acid
+        residue (CHEBI:83228), formula C2H2NOR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71232
+      snippet: 2 Fe(3+)-[Dph3] + NADH => 2 Fe(2+)-[Dph3] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71232 declares side 71231_L as its substrates
+        (rh:substrates); the master reaction RHEA:71231 is undirected. This participant is CHEBI:57945
+        with coefficient 1. Rhea cites PMID:34154323, PMID:27694803 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(2+)-[Dph3] is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:71232
+      snippet: 2 Fe(3+)-[Dph3] + NADH => 2 Fe(2+)-[Dph3] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71232 declares side 71231_R as its products
+        (rh:products); the master reaction RHEA:71231 is undirected. This participant is GENERIC:18002
+        with coefficient 2. Rhea cites PMID:34154323, PMID:27694803 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Fe(2+) is the reactive part of Fe(2+)-[Dph3].
+    evidence:
+    - reference: RHEA:71231
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:18002 (Fe(2+)-[Dph3]) declares rh:reactivePart = Fe(2+) (CHEBI:29033),
+        formula Fe.
+  - subject: prd1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: an L-alpha amino acid residue is the reactive part of Fe(2+)-[Dph3].
+    evidence:
+    - reference: RHEA:71231
+      snippet: an L-alpha amino acid residue
+      notes: Rhea compound GENERIC:18002 (Fe(2+)-[Dph3]) declares rh:reactivePart = an L-alpha amino acid
+        residue (CHEBI:83228), formula C2H2NOR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NAD(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71232
+      snippet: 2 Fe(3+)-[Dph3] + NADH => 2 Fe(2+)-[Dph3] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71232 declares side 71231_R as its products
+        (rh:products); the master reaction RHEA:71231 is undirected. This participant is CHEBI:57540 with
+        coefficient 1. Rhea cites PMID:34154323, PMID:27694803 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71232
+      snippet: 2 Fe(3+)-[Dph3] + NADH => 2 Fe(2+)-[Dph3] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71232 declares side 71231_R as its products
+        (rh:products); the master reaction RHEA:71231 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:34154323, PMID:27694803 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

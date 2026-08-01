@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:137664
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: allodeoxycholoyl-CoA + cholate = allodeoxycholate + choloyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of allodeoxycholoyl-CoA + cholate = allodeoxycholate + choloyl-CoA
+  description: Substrate-to-product chemistry of RHEA:53756, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53757 (rh:substrates → 53756_L, rh:products → 53756_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of allodeoxycholoyl-CoA + cholate = allodeoxycholate + choloyl-CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53756
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: allodeoxycholoyl-CoA + cholate = allodeoxycholate + choloyl-CoA'
+  - node_id: sub1
+    label: allodeoxycholoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:137664
+    description: Formula C45H70N7O19P3S.
+  - node_id: sub2
+    label: cholate
+    node_type: CHEMICAL
+    grounding: CHEBI:29747
+    description: Formula C24H39O5.
+  - node_id: prd1
+    label: allodeoxycholate
+    node_type: CHEMICAL
+    grounding: CHEBI:137662
+    description: Formula C24H39O4.
+  - node_id: prd2
+    label: choloyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57373
+    description: Formula C45H70N7O20P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: allodeoxycholoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53757
+      snippet: allodeoxycholoyl-CoA + cholate => allodeoxycholate + choloyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:53757 declares side 53756_L as its substrates
+        (rh:substrates); the master reaction RHEA:53756 is undirected. This participant is CHEBI:137664
+        with coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: cholate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53757
+      snippet: allodeoxycholoyl-CoA + cholate => allodeoxycholate + choloyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:53757 declares side 53756_L as its substrates
+        (rh:substrates); the master reaction RHEA:53756 is undirected. This participant is CHEBI:29747
+        with coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: allodeoxycholate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53757
+      snippet: allodeoxycholoyl-CoA + cholate => allodeoxycholate + choloyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:53757 declares side 53756_R as its products
+        (rh:products); the master reaction RHEA:53756 is undirected. This participant is CHEBI:137662
+        with coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: choloyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53757
+      snippet: allodeoxycholoyl-CoA + cholate => allodeoxycholate + choloyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:53757 declares side 53756_R as its products
+        (rh:products); the master reaction RHEA:53756 is undirected. This participant is CHEBI:57373 with
+        coefficient 1. Rhea cites PMID:22021638 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

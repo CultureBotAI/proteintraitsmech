@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:142692
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,75 @@ definitions:
       Catalyses the reaction: N-decanoyl-(2S)-hydroxyglycine = decanamide + glyoxylate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-decanoyl-(2S)-hydroxyglycine = decanamide + glyoxylate
+  description: Substrate-to-product chemistry of RHEA:58620, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58621 (rh:substrates → 58620_L, rh:products → 58620_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-decanoyl-(2S)-hydroxyglycine = decanamide + glyoxylate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58620
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-decanoyl-(2S)-hydroxyglycine = decanamide + glyoxylate'
+  - node_id: sub1
+    label: N-decanoyl-(2S)-hydroxyglycine
+    node_type: CHEMICAL
+    grounding: CHEBI:142692
+    description: Formula C12H22NO4.
+  - node_id: prd1
+    label: decanamide
+    node_type: CHEMICAL
+    grounding: CHEBI:38833
+    description: Formula C10H21NO.
+  - node_id: prd2
+    label: glyoxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:36655
+    description: Formula C2HO3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-decanoyl-(2S)-hydroxyglycine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:58621
+      snippet: N-decanoyl-(2S)-hydroxyglycine => decanamide + glyoxylate
+      notes: Rhea's left-to-right directional reaction RHEA:58621 declares side 58620_L as its substrates
+        (rh:substrates); the master reaction RHEA:58620 is undirected. This participant is CHEBI:142692
+        with coefficient 1. Rhea cites PMID:10079066 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: decanamide is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58621
+      snippet: N-decanoyl-(2S)-hydroxyglycine => decanamide + glyoxylate
+      notes: Rhea's left-to-right directional reaction RHEA:58621 declares side 58620_R as its products
+        (rh:products); the master reaction RHEA:58620 is undirected. This participant is CHEBI:38833 with
+        coefficient 1. Rhea cites PMID:10079066 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glyoxylate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58621
+      snippet: N-decanoyl-(2S)-hydroxyglycine => decanamide + glyoxylate
+      notes: Rhea's left-to-right directional reaction RHEA:58621 declares side 58620_R as its products
+        (rh:products); the master reaction RHEA:58620 is undirected. This participant is CHEBI:36655 with
+        coefficient 1. Rhea cites PMID:10079066 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

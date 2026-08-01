@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.117
     mapping_source: rhea2ec
@@ -26,4 +26,111 @@ definitions:
       Catalyses the reaction: (2S,3S)-2-methylcitrate = 2-methyl-trans-aconitate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2S,3S)-2-methylcitrate = 2-methyl-trans-aconitate + H2O
+  description: Substrate-to-product chemistry of RHEA:26522, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:26523 (rh:substrates → 26522_L, rh:products → 26522_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2S,3S)-2-methylcitrate = 2-methyl-trans-aconitate + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:26522
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2S,3S)-2-methylcitrate = 2-methyl-trans-aconitate + H2O'
+  - node_id: sub1
+    label: (2S,3S)-2-methylcitrate
+    node_type: CHEMICAL
+    grounding: CHEBI:58853
+    description: Formula C7H7O7.
+  - node_id: prd1
+    label: 2-methyl-trans-aconitate
+    node_type: CHEMICAL
+    grounding: CHEBI:58915
+    description: Formula C7H5O6.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2-methylcitrate dehydratase (2-methyl-trans-aconitate forming)
+    grounding: EC:4.2.1.117
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8EJW3
+    node_type: PROTEIN
+    label: ACND_SHEON
+    grounding: UniProtKB:Q8EJW3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S,3S)-2-methylcitrate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26523
+      snippet: (2S,3S)-2-methylcitrate => 2-methyl-trans-aconitate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:26523 declares side 26522_L as its substrates
+        (rh:substrates); the master reaction RHEA:26522 is undirected. This participant is CHEBI:58853
+        with coefficient 1. Rhea cites PMID:14702315 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-methyl-trans-aconitate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26523
+      snippet: (2S,3S)-2-methylcitrate => 2-methyl-trans-aconitate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:26523 declares side 26522_R as its products
+        (rh:products); the master reaction RHEA:26522 is undirected. This participant is CHEBI:58915 with
+        coefficient 1. Rhea cites PMID:14702315 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26523
+      snippet: (2S,3S)-2-methylcitrate => 2-methyl-trans-aconitate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:26523 declares side 26522_R as its products
+        (rh:products); the master reaction RHEA:26522 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:14702315 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.117; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:26522
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.117"/>
+      notes: The rh:ec triple on RHEA:26522 in rhea.rdf. EC 4.2.1.117 is itself a record in this KB.
+  - subject: prot_Q8EJW3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACND_SHEON is an exemplar enzyme carrying EC 4.2.1.117, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.117
+      snippet: DR   Q8EJW3, ACND_SHEON ;
+      notes: ExPASy ENZYME entry EC 4.2.1.117 cross-references UniProtKB:Q8EJW3 (ACND_SHEON) as a protein
+        with this activity.
+    - reference: RHEA:26522
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.117"/>
+      notes: Rhea assigns RHEA:26522 to EC 4.2.1.117, and EC 4.2.1.117 maps to exactly one Rhea master
+        reaction (RHEA:26522), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

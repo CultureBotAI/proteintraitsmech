@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.4.3.-
 mapped_xrefs:
@@ -34,4 +34,222 @@ definitions:
       Catalyses: 7-chloro-L-tryptophan + O2 = 3-(7-chloroindol-3-yl)-2-iminopropanoate + H2O2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 7-chloro-L-tryptophan oxidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.4.3.23. Rhea assigns 2 curated
+    reactions to EC 1.4.3.23. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "7-chloro-L-tryptophan + O2 = 3-(7-chloroindol-3-yl)-2-iminopropanoate
+    + H2O2". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 7-chloro-L-tryptophan oxidase
+    grounding: EC:1.4.3.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 7-chloro-L-tryptophan + O2 = 3-(7-chloroindol-3-yl)-2-iminopropanoate + H2O2
+    grounding: RHEA:27302
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 7-chloro-L-tryptophan + O2 = 3-(7-chloroindol-3-yl)-2-iminopropanoate +
+      H2O2'
+  - node_id: rxn1_sub1
+    label: 7-chloro-L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:58713
+    description: Formula C11H11ClN2O2.
+  - node_id: rxn1_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn1_prd1
+    label: 3-(7-chloroindol-3-yl)-2-iminopropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:59194
+    description: Formula C11H9ClN2O2.
+  - node_id: rxn1_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-tryptophan + O2 = 2-iminio-3-(indol-3-yl)propanoate + H2O2
+    grounding: RHEA:49024
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-tryptophan + O2 = 2-iminio-3-(indol-3-yl)propanoate + H2O2'
+  - node_id: rxn2_sub1
+    label: L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:57912
+    description: Formula C11H12N2O2.
+  - node_id: rxn2_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn2_prd1
+    label: 2-iminio-3-(indol-3-yl)propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:59193
+    description: Formula C11H10N2O2.
+  - node_id: rxn2_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: prot_Q8KHS0
+    node_type: PROTEIN
+    label: REBO_LENAE
+    grounding: UniProtKB:Q8KHS0
+  - node_id: prot_Q9S3V1
+    node_type: PROTEIN
+    label: VIOA_CHRVO
+    grounding: UniProtKB:Q9S3V1
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:27302 is one of the 2 curated reactions Rhea assigns to EC 1.4.3.23; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:27302
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.4.3.23"/>
+      notes: The rh:ec triple on RHEA:27302 in rhea.rdf assigns that reaction to EC 1.4.3.23.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 7-chloro-L-tryptophan is a substrate consumed by RHEA:27302 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27303
+      snippet: 7-chloro-L-tryptophan + O2 => 3-(7-chloroindol-3-yl)-2-iminopropanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:27303 declares side 27302_L as its substrates
+        (rh:substrates); the master reaction RHEA:27302 is undirected. This participant is CHEBI:58713
+        with coefficient 1. Rhea cites PMID:12619684, PMID:16313168, PMID:15743957 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: O2 is a substrate consumed by RHEA:27302 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27303
+      snippet: 7-chloro-L-tryptophan + O2 => 3-(7-chloroindol-3-yl)-2-iminopropanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:27303 declares side 27302_L as its substrates
+        (rh:substrates); the master reaction RHEA:27302 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:12619684, PMID:16313168, PMID:15743957 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 3-(7-chloroindol-3-yl)-2-iminopropanoate is a product released by RHEA:27302 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27303
+      snippet: 7-chloro-L-tryptophan + O2 => 3-(7-chloroindol-3-yl)-2-iminopropanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:27303 declares side 27302_R as its products
+        (rh:products); the master reaction RHEA:27302 is undirected. This participant is CHEBI:59194 with
+        coefficient 1. Rhea cites PMID:12619684, PMID:16313168, PMID:15743957 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O2 is a product released by RHEA:27302 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27303
+      snippet: 7-chloro-L-tryptophan + O2 => 3-(7-chloroindol-3-yl)-2-iminopropanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:27303 declares side 27302_R as its products
+        (rh:products); the master reaction RHEA:27302 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:12619684, PMID:16313168, PMID:15743957 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:49024 is one of the 2 curated reactions Rhea assigns to EC 1.4.3.23; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:49024
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.4.3.23"/>
+      notes: The rh:ec triple on RHEA:49024 in rhea.rdf assigns that reaction to EC 1.4.3.23.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: L-tryptophan is a substrate consumed by RHEA:49024 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49025
+      snippet: L-tryptophan + O2 => 2-iminio-3-(indol-3-yl)propanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:49025 declares side 49024_L as its substrates
+        (rh:substrates); the master reaction RHEA:49024 is undirected. This participant is CHEBI:57912
+        with coefficient 1. Rhea cites PMID:16874749, PMID:21779844, PMID:19756309, PMID:16313168 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: O2 is a substrate consumed by RHEA:49024 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49025
+      snippet: L-tryptophan + O2 => 2-iminio-3-(indol-3-yl)propanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:49025 declares side 49024_L as its substrates
+        (rh:substrates); the master reaction RHEA:49024 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:16874749, PMID:21779844, PMID:19756309, PMID:16313168 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2-iminio-3-(indol-3-yl)propanoate is a product released by RHEA:49024 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49025
+      snippet: L-tryptophan + O2 => 2-iminio-3-(indol-3-yl)propanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:49025 declares side 49024_R as its products
+        (rh:products); the master reaction RHEA:49024 is undirected. This participant is CHEBI:59193 with
+        coefficient 1. Rhea cites PMID:16874749, PMID:21779844, PMID:19756309, PMID:16313168 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O2 is a product released by RHEA:49024 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49025
+      snippet: L-tryptophan + O2 => 2-iminio-3-(indol-3-yl)propanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:49025 declares side 49024_R as its products
+        (rh:products); the master reaction RHEA:49024 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:16874749, PMID:21779844, PMID:19756309, PMID:16313168 for this
+        reaction.
+  - subject: prot_Q8KHS0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: REBO_LENAE is an exemplar enzyme with EC 1.4.3.23 activity.
+    evidence:
+    - reference: EC:1.4.3.23
+      snippet: DR   Q8KHS0, REBO_LENAE ;  Q9S3V1, VIOA_CHRVO ;
+      notes: ExPASy ENZYME entry EC 1.4.3.23 cross-references UniProtKB:Q8KHS0 (REBO_LENAE) as a protein
+        with this activity.
+  - subject: prot_Q9S3V1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VIOA_CHRVO is an exemplar enzyme with EC 1.4.3.23 activity.
+    evidence:
+    - reference: EC:1.4.3.23
+      snippet: DR   Q8KHS0, REBO_LENAE ;  Q9S3V1, VIOA_CHRVO ;
+      notes: ExPASy ENZYME entry EC 1.4.3.23 cross-references UniProtKB:Q9S3V1 (VIOA_CHRVO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

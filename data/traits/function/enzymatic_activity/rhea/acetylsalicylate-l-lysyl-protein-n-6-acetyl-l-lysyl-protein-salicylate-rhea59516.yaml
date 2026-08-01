@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:13719
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,143 @@ definitions:
       Catalyses the reaction: acetylsalicylate + L-lysyl-[protein] = N(6)-acetyl-L-lysyl-[protein] + salicylate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetylsalicylate + L-lysyl-[protein] = N(6)-acetyl-L-lysyl-[protein] +
+    salicylate + H(+)
+  description: Substrate-to-product chemistry of RHEA:59516, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59517 (rh:substrates → 59516_L, rh:products → 59516_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of acetylsalicylate + L-lysyl-[protein] = N(6)-acetyl-L-lysyl-[protein] + salic…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59516
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: acetylsalicylate + L-lysyl-[protein] = N(6)-acetyl-L-lysyl-[protein] + salicylate
+      + H(+)'
+  - node_id: sub1
+    label: acetylsalicylate
+    node_type: CHEMICAL
+    grounding: CHEBI:13719
+    description: Formula C9H7O4.
+  - node_id: sub2
+    label: L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9752
+    description: Rhea compound GENERIC:9752.
+  - node_id: sub2_rp1
+    label: L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9752 (L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29969
+  - node_id: prd1
+    label: N(6)-acetyl-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10731
+    description: Rhea compound GENERIC:10731.
+  - node_id: prd1_rp1
+    label: N(6)-acetyl-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10731 (N(6)-acetyl-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:61930
+  - node_id: prd2
+    label: salicylate
+    node_type: CHEMICAL
+    grounding: CHEBI:30762
+    description: Formula C7H5O3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetylsalicylate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59517
+      snippet: acetylsalicylate + L-lysyl-[protein] => N(6)-acetyl-L-lysyl-[protein] + salicylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59517 declares side 59516_L as its substrates
+        (rh:substrates); the master reaction RHEA:59516 is undirected. This participant is CHEBI:13719
+        with coefficient 1. Rhea cites PMID:26596838, PMID:27356773, PMID:27913581 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-lysyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59517
+      snippet: acetylsalicylate + L-lysyl-[protein] => N(6)-acetyl-L-lysyl-[protein] + salicylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59517 declares side 59516_L as its substrates
+        (rh:substrates); the master reaction RHEA:59516 is undirected. This participant is GENERIC:9752
+        with coefficient 1. Rhea cites PMID:26596838, PMID:27356773, PMID:27913581 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-lysine residue is the reactive part of L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:59516
+      snippet: L-lysine residue
+      notes: Rhea compound GENERIC:9752 (L-lysyl-[protein]) declares rh:reactivePart = L-lysine residue
+        (CHEBI:29969), formula C6H13N2O.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-acetyl-L-lysyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59517
+      snippet: acetylsalicylate + L-lysyl-[protein] => N(6)-acetyl-L-lysyl-[protein] + salicylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59517 declares side 59516_R as its products
+        (rh:products); the master reaction RHEA:59516 is undirected. This participant is GENERIC:10731
+        with coefficient 1. Rhea cites PMID:26596838, PMID:27356773, PMID:27913581 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-acetyl-L-lysine residue is the reactive part of N(6)-acetyl-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:59516
+      snippet: N(6)-acetyl-L-lysine residue
+      notes: Rhea compound GENERIC:10731 (N(6)-acetyl-L-lysyl-[protein]) declares rh:reactivePart = N(6)-acetyl-L-lysine
+        residue (CHEBI:61930), formula C8H14N2O2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: salicylate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59517
+      snippet: acetylsalicylate + L-lysyl-[protein] => N(6)-acetyl-L-lysyl-[protein] + salicylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59517 declares side 59516_R as its products
+        (rh:products); the master reaction RHEA:59516 is undirected. This participant is CHEBI:30762 with
+        coefficient 1. Rhea cites PMID:26596838, PMID:27356773, PMID:27913581 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59517
+      snippet: acetylsalicylate + L-lysyl-[protein] => N(6)-acetyl-L-lysyl-[protein] + salicylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59517 declares side 59516_R as its products
+        (rh:products); the master reaction RHEA:59516 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:26596838, PMID:27356773, PMID:27913581 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

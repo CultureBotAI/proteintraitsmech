@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.17.4.1
     mapping_source: rhea2ec
@@ -30,4 +30,187 @@ definitions:
       Catalyses the reaction: dUDP + [thioredoxin]-disulfide + H2O = [thioredoxin]-dithiol + UDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dUDP + [thioredoxin]-disulfide + H2O = [thioredoxin]-dithiol + UDP
+  description: Substrate-to-product chemistry of RHEA:28026, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28027 (rh:substrates → 28026_L, rh:products → 28026_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dUDP + [thioredoxin]-disulfide + H2O = [thioredoxin]-dithiol + UDP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28026
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dUDP + [thioredoxin]-disulfide + H2O = [thioredoxin]-dithiol + UDP'
+  - node_id: sub1
+    label: dUDP
+    node_type: CHEMICAL
+    grounding: CHEBI:60471
+    description: Formula C9H11N2O11P2.
+  - node_id: sub2
+    label: '[thioredoxin]-disulfide'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10700
+    description: Rhea compound GENERIC:10700.
+  - node_id: sub2_rp1
+    label: L-cystine residue at position n/n+3
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10700 ([thioredoxin]-disulfide);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:50058
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: '[thioredoxin]-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10698
+    description: Rhea compound GENERIC:10698.
+  - node_id: prd1_rp1
+    label: L-cysteine residue at position n
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10698 ([thioredoxin]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1_rp2
+    label: L-cysteine residue at position n+3
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10698 ([thioredoxin]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: UDP reductase activity
+    grounding: GO:0051062
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: ribonucleoside-diphosphate reductase
+    grounding: EC:1.17.4.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dUDP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28027
+      snippet: dUDP + [thioredoxin]-disulfide + H2O => [thioredoxin]-dithiol + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28027 declares side 28026_L as its substrates
+        (rh:substrates); the master reaction RHEA:28026 is undirected. This participant is CHEBI:60471
+        with coefficient 1. Rhea cites PMID:16376858 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: '[thioredoxin]-disulfide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:28027
+      snippet: dUDP + [thioredoxin]-disulfide + H2O => [thioredoxin]-dithiol + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28027 declares side 28026_L as its substrates
+        (rh:substrates); the master reaction RHEA:28026 is undirected. This participant is GENERIC:10700
+        with coefficient 1. Rhea cites PMID:16376858 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-cystine residue is the reactive part of [thioredoxin]-disulfide.
+    evidence:
+    - reference: RHEA:28026
+      snippet: L-cystine residue
+      notes: Rhea compound GENERIC:10700 ([thioredoxin]-disulfide) declares rh:reactivePart at position
+        n/n+3 = L-cystine residue (CHEBI:50058), formula C6H8N2O2S2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28027
+      snippet: dUDP + [thioredoxin]-disulfide + H2O => [thioredoxin]-dithiol + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28027 declares side 28026_L as its substrates
+        (rh:substrates); the master reaction RHEA:28026 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16376858 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[thioredoxin]-dithiol is a product released by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:28027
+      snippet: dUDP + [thioredoxin]-disulfide + H2O => [thioredoxin]-dithiol + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28027 declares side 28026_R as its products
+        (rh:products); the master reaction RHEA:28026 is undirected. This participant is GENERIC:10698
+        with coefficient 1. Rhea cites PMID:16376858 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of [thioredoxin]-dithiol.
+    evidence:
+    - reference: RHEA:28026
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10698 ([thioredoxin]-dithiol) declares rh:reactivePart at position
+        n = L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: prd1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of [thioredoxin]-dithiol.
+    evidence:
+    - reference: RHEA:28026
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10698 ([thioredoxin]-dithiol) declares rh:reactivePart at position
+        n+3 = L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28027
+      snippet: dUDP + [thioredoxin]-disulfide + H2O => [thioredoxin]-dithiol + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28027 declares side 28026_R as its products
+        (rh:products); the master reaction RHEA:28026 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:16376858 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:28026
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0051062"/>
+      notes: The rdfs:seeAlso triple on RHEA:28026 in rhea.rdf. GO term GO:0051062 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.17.4.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28026
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.17.4.1"/>
+      notes: The rh:ec triple on RHEA:28026 in rhea.rdf. EC 1.17.4.1 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

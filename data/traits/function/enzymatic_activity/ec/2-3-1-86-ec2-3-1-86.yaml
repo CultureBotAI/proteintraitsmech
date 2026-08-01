@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -41,4 +41,81 @@ definitions:
       Catalyses: acetyl-CoA + n malonyl-CoA + 2n NADPH + 4n H(+) = a long-chain-acyl-CoA + n CoA + n CO2 + 2n NADP(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fatty-acyl-CoA synthase system
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.86. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "acetyl-CoA
+    + n malonyl-CoA + 2n NADPH + 4n H(+) = a long-chain-acyl-CoA + n CoA + n CO2 + 2n NADP(+)".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fatty-acyl-CoA synthase system
+    grounding: EC:2.3.1.86
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: fatty-acyl-CoA synthase activity
+    grounding: GO:0004321
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8TGA2
+    node_type: PROTEIN
+    label: AFLA_ASPPU
+    grounding: UniProtKB:Q8TGA2
+  - node_id: prot_Q8TGA1
+    node_type: PROTEIN
+    label: AFLB_ASPPU
+    grounding: UniProtKB:Q8TGA1
+  - node_id: prot_Q5AV00
+    node_type: PROTEIN
+    label: ATNF_EMENI
+    grounding: UniProtKB:Q5AV00
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.86
+      snippet: EC:2.3.1.86 > GO:fatty-acyl-CoA synthase activity ; GO:0004321
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004321 is itself a record
+        in this KB.
+  - subject: prot_Q8TGA2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFLA_ASPPU is an exemplar enzyme with EC 2.3.1.86 activity.
+    evidence:
+    - reference: EC:2.3.1.86
+      snippet: DR   Q8TGA2, AFLA_ASPPU ;  Q8TGA1, AFLB_ASPPU ;  Q5AV00, ATNF_EMENI ;
+      notes: ExPASy ENZYME entry EC 2.3.1.86 cross-references UniProtKB:Q8TGA2 (AFLA_ASPPU) as a protein
+        with this activity.
+  - subject: prot_Q8TGA1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFLB_ASPPU is an exemplar enzyme with EC 2.3.1.86 activity.
+    evidence:
+    - reference: EC:2.3.1.86
+      snippet: DR   Q8TGA2, AFLA_ASPPU ;  Q8TGA1, AFLB_ASPPU ;  Q5AV00, ATNF_EMENI ;
+      notes: ExPASy ENZYME entry EC 2.3.1.86 cross-references UniProtKB:Q8TGA1 (AFLB_ASPPU) as a protein
+        with this activity.
+  - subject: prot_Q5AV00
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATNF_EMENI is an exemplar enzyme with EC 2.3.1.86 activity.
+    evidence:
+    - reference: EC:2.3.1.86
+      snippet: DR   Q8TGA2, AFLA_ASPPU ;  Q8TGA1, AFLB_ASPPU ;  Q5AV00, ATNF_EMENI ;
+      notes: ExPASy ENZYME entry EC 2.3.1.86 cross-references UniProtKB:Q5AV00 (ATNF_EMENI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

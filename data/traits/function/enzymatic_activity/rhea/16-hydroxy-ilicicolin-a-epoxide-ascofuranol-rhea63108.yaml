@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:146158
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,59 @@ definitions:
       Catalyses the reaction: 16-hydroxy-ilicicolin A epoxide = ascofuranol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 16-hydroxy-ilicicolin A epoxide = ascofuranol
+  description: Substrate-to-product chemistry of RHEA:63108, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63109 (rh:substrates → 63108_L, rh:products → 63108_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 16-hydroxy-ilicicolin A epoxide = ascofuranol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63108
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 16-hydroxy-ilicicolin A epoxide = ascofuranol'
+  - node_id: sub1
+    label: 16-hydroxy-ilicicolin A epoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:146158
+    description: Formula C23H30ClO5.
+  - node_id: prd1
+    label: ascofuranol
+    node_type: CHEMICAL
+    grounding: CHEBI:146159
+    description: Formula C23H30ClO5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 16-hydroxy-ilicicolin A epoxide is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:63109
+      snippet: 16-hydroxy-ilicicolin A epoxide => ascofuranol
+      notes: Rhea's left-to-right directional reaction RHEA:63109 declares side 63108_L as its substrates
+        (rh:substrates); the master reaction RHEA:63108 is undirected. This participant is CHEBI:146158
+        with coefficient 1. Rhea cites PMID:30952781 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ascofuranol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63109
+      snippet: 16-hydroxy-ilicicolin A epoxide => ascofuranol
+      notes: Rhea's left-to-right directional reaction RHEA:63109 declares side 63108_R as its products
+        (rh:products); the master reaction RHEA:63108 is undirected. This participant is CHEBI:146159
+        with coefficient 1. Rhea cites PMID:30952781 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.20.4.-
 synonyms:
@@ -41,4 +41,268 @@ definitions:
       Catalyses: [glutaredoxin]-dithiol + arsenate + glutathione + H(+) = glutathionyl-S- S-[glutaredoxin] + arsenite + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of arsenate reductase (glutathione/glutaredoxin)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.20.4.1. EC 1.20.4.1 maps to exactly
+    one curated Rhea reaction (RHEA:22016), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[glutaredoxin]-dithiol
+    + arsenate + glutathione + H(+) = glutathionyl-S- S-[glutaredoxin] + arsenite + H2O". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: arsenate reductase (glutathione/glutaredoxin)
+    grounding: EC:1.20.4.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[glutaredoxin]-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10729
+    description: Rhea compound GENERIC:10729.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue at position n
+    description: The reacting group Rhea names inside the generic participant GENERIC:10729 ([glutaredoxin]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub1_rp2
+    node_type: RESIDUE
+    label: L-cysteine residue at position n+3
+    description: The reacting group Rhea names inside the generic participant GENERIC:10729 ([glutaredoxin]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: arsenate
+    node_type: CHEMICAL
+    grounding: CHEBI:48597
+    description: Formula AsHO4.
+  - node_id: sub3
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: glutathionyl-S-S-[glutaredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17668
+    description: Rhea compound GENERIC:17668.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue at position n+3
+    description: The reacting group Rhea names inside the generic participant GENERIC:17668 (glutathionyl-S-S-[glutaredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1_rp2
+    node_type: RESIDUE
+    label: S-(S-glutathionyl)-L-cysteine residue at position n
+    description: The reacting group Rhea names inside the generic participant GENERIC:17668 (glutathionyl-S-S-[glutaredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:146199
+  - node_id: prd2
+    label: arsenite
+    node_type: CHEMICAL
+    grounding: CHEBI:29242
+    description: Formula AsH2O3.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: arsenate reductase (glutaredoxin) activity
+    grounding: GO:0008794
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q336V5
+    node_type: PROTEIN
+    label: ACR21_ORYSJ
+    grounding: UniProtKB:Q336V5
+  - node_id: prot_Q10SX6
+    node_type: PROTEIN
+    label: ACR22_ORYSJ
+    grounding: UniProtKB:Q10SX6
+  - node_id: prot_P08692
+    node_type: PROTEIN
+    label: ARSC1_ECOLX
+    grounding: UniProtKB:P08692
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[glutaredoxin]-dithiol is a substrate consumed by RHEA:22016 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:22017
+      snippet: '[glutaredoxin]-dithiol + arsenate + glutathione + H(+) => glutathionyl-S-S-[glutaredoxin]
+        + arsenite + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:22017 declares side 22016_L as its substrates
+        (rh:substrates); the master reaction RHEA:22016 is undirected. This participant is GENERIC:10729
+        with coefficient 1. Rhea cites PMID:8003492, PMID:10649963, PMID:8969183 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [glutaredoxin]-dithiol.
+    evidence:
+    - reference: RHEA:22016
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10729 ([glutaredoxin]-dithiol) declares rh:reactivePart at position
+        n = L-cysteine residue (CHEBI:29950).
+  - subject: sub1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [glutaredoxin]-dithiol.
+    evidence:
+    - reference: RHEA:22016
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10729 ([glutaredoxin]-dithiol) declares rh:reactivePart at position
+        n+3 = L-cysteine residue (CHEBI:29950).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: arsenate is a substrate consumed by RHEA:22016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22017
+      snippet: '[glutaredoxin]-dithiol + arsenate + glutathione + H(+) => glutathionyl-S-S-[glutaredoxin]
+        + arsenite + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:22017 declares side 22016_L as its substrates
+        (rh:substrates); the master reaction RHEA:22016 is undirected. This participant is CHEBI:48597
+        with coefficient 1. Rhea cites PMID:8003492, PMID:10649963, PMID:8969183 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: glutathione is a substrate consumed by RHEA:22016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22017
+      snippet: '[glutaredoxin]-dithiol + arsenate + glutathione + H(+) => glutathionyl-S-S-[glutaredoxin]
+        + arsenite + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:22017 declares side 22016_L as its substrates
+        (rh:substrates); the master reaction RHEA:22016 is undirected. This participant is CHEBI:57925
+        with coefficient 1. Rhea cites PMID:8003492, PMID:10649963, PMID:8969183 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by RHEA:22016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22017
+      snippet: '[glutaredoxin]-dithiol + arsenate + glutathione + H(+) => glutathionyl-S-S-[glutaredoxin]
+        + arsenite + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:22017 declares side 22016_L as its substrates
+        (rh:substrates); the master reaction RHEA:22016 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:8003492, PMID:10649963, PMID:8969183 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: glutathionyl-S-S-[glutaredoxin] is a product released by RHEA:22016 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22017
+      snippet: '[glutaredoxin]-dithiol + arsenate + glutathione + H(+) => glutathionyl-S-S-[glutaredoxin]
+        + arsenite + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:22017 declares side 22016_R as its products
+        (rh:products); the master reaction RHEA:22016 is undirected. This participant is GENERIC:17668
+        with coefficient 1. Rhea cites PMID:8003492, PMID:10649963, PMID:8969183 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of glutathionyl-S-S-[glutaredoxin].
+    evidence:
+    - reference: RHEA:22016
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:17668 (glutathionyl-S-S-[glutaredoxin]) declares rh:reactivePart at
+        position n+3 = L-cysteine residue (CHEBI:29950).
+  - subject: prd1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-(S-glutathionyl)-L-cysteine residue is the reactive part of glutathionyl-S-S-[glutaredoxin].
+    evidence:
+    - reference: RHEA:22016
+      snippet: S-(S-glutathionyl)-L-cysteine residue
+      notes: Rhea compound GENERIC:17668 (glutathionyl-S-S-[glutaredoxin]) declares rh:reactivePart at
+        position n = S-(S-glutathionyl)-L-cysteine residue (CHEBI:146199).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: arsenite is a product released by RHEA:22016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22017
+      snippet: '[glutaredoxin]-dithiol + arsenate + glutathione + H(+) => glutathionyl-S-S-[glutaredoxin]
+        + arsenite + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:22017 declares side 22016_R as its products
+        (rh:products); the master reaction RHEA:22016 is undirected. This participant is CHEBI:29242 with
+        coefficient 1. Rhea cites PMID:8003492, PMID:10649963, PMID:8969183 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:22016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22017
+      snippet: '[glutaredoxin]-dithiol + arsenate + glutathione + H(+) => glutathionyl-S-S-[glutaredoxin]
+        + arsenite + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:22017 declares side 22016_R as its products
+        (rh:products); the master reaction RHEA:22016 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:8003492, PMID:10649963, PMID:8969183 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.20.4.1
+      snippet: EC:1.20.4.1 > GO:arsenate reductase (glutaredoxin) activity ; GO:0008794
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008794 is itself a record
+        in this KB.
+  - subject: prot_Q336V5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACR21_ORYSJ is an exemplar enzyme with EC 1.20.4.1 activity.
+    evidence:
+    - reference: EC:1.20.4.1
+      snippet: DR   Q336V5, ACR21_ORYSJ;  Q10SX6, ACR22_ORYSJ;  P08692, ARSC1_ECOLX;
+      notes: ExPASy ENZYME entry EC 1.20.4.1 cross-references UniProtKB:Q336V5 (ACR21_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_Q10SX6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACR22_ORYSJ is an exemplar enzyme with EC 1.20.4.1 activity.
+    evidence:
+    - reference: EC:1.20.4.1
+      snippet: DR   Q336V5, ACR21_ORYSJ;  Q10SX6, ACR22_ORYSJ;  P08692, ARSC1_ECOLX;
+      notes: ExPASy ENZYME entry EC 1.20.4.1 cross-references UniProtKB:Q10SX6 (ACR22_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_P08692
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSC1_ECOLX is an exemplar enzyme with EC 1.20.4.1 activity.
+    evidence:
+    - reference: EC:1.20.4.1
+      snippet: DR   Q336V5, ACR21_ORYSJ;  Q10SX6, ACR22_ORYSJ;  P08692, ARSC1_ECOLX;
+      notes: ExPASy ENZYME entry EC 1.20.4.1 cross-references UniProtKB:P08692 (ARSC1_ECOLX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

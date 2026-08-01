@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.2.-
 synonyms:
@@ -45,4 +45,210 @@ definitions:
       Catalyses: (1) N(6)-(1,2-dicarboxyethyl)-AMP = fumarate + AMP. (2) (2S)-2-[5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4- carboxamido]succinate = 5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4- carboxamide + fumarate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of adenylosuccinate lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.2.2. Rhea assigns 2 curated
+    reactions to EC 4.3.2.2. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "(1) N(6)-(1,2-dicarboxyethyl)-AMP = fumarate + AMP. (2) (2S)-2-[5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-
+    carboxamido]succinate = 5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4- carboxamide + fumarate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: adenylosuccinate lyase
+    grounding: EC:4.3.2.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of N(6)-(1,2-dicarboxyethyl)-AMP = fumarate + AMP
+    grounding: RHEA:16853
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: N(6)-(1,2-dicarboxyethyl)-AMP = fumarate + AMP'
+  - node_id: rxn1_sub1
+    label: N(6)-(1,2-dicarboxyethyl)-AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57567
+    description: Formula C14H14N5O11P.
+  - node_id: rxn1_prd1
+    label: fumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+    description: Formula C4H2O4.
+  - node_id: rxn1_prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (2S)-2-[5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamido]succinat…
+    grounding: RHEA:23920
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (2S)-2-[5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamido]succinate
+      = 5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide + fumarate'
+  - node_id: rxn2_sub1
+    label: (2S)-2-[5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamido]succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:58443
+    description: Formula C13H15N4O12P.
+  - node_id: rxn2_prd1
+    label: 5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide
+    node_type: CHEMICAL
+    grounding: CHEBI:58475
+    description: Formula C9H13N4O8P.
+  - node_id: rxn2_prd2
+    label: fumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+    description: Formula C4H2O4.
+  - node_id: prot_O66856
+    node_type: PROTEIN
+    label: PUR8_AQUAE
+    grounding: UniProtKB:O66856
+  - node_id: prot_O28041
+    node_type: PROTEIN
+    label: PUR8_ARCFU
+    grounding: UniProtKB:O28041
+  - node_id: prot_P12047
+    node_type: PROTEIN
+    label: PUR8_BACSU
+    grounding: UniProtKB:P12047
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:16853 is one of the 2 curated reactions Rhea assigns to EC 4.3.2.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:16853
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.2.2"/>
+      notes: The rh:ec triple on RHEA:16853 in rhea.rdf assigns that reaction to EC 4.3.2.2.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: N(6)-(1,2-dicarboxyethyl)-AMP is a substrate consumed by RHEA:16853 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16854
+      snippet: N(6)-(1,2-dicarboxyethyl)-AMP => fumarate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:16854 declares side 16853_L as its substrates
+        (rh:substrates); the master reaction RHEA:16853 is undirected. This participant is CHEBI:57567
+        with coefficient 1. Rhea cites PMID:17531264, PMID:22812634, PMID:15182182, PMID:16973378 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: fumarate is a product released by RHEA:16853 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16854
+      snippet: N(6)-(1,2-dicarboxyethyl)-AMP => fumarate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:16854 declares side 16853_R as its products
+        (rh:products); the master reaction RHEA:16853 is undirected. This participant is CHEBI:29806 with
+        coefficient 1. Rhea cites PMID:17531264, PMID:22812634, PMID:15182182, PMID:16973378 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: AMP is a product released by RHEA:16853 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16854
+      snippet: N(6)-(1,2-dicarboxyethyl)-AMP => fumarate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:16854 declares side 16853_R as its products
+        (rh:products); the master reaction RHEA:16853 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:17531264, PMID:22812634, PMID:15182182, PMID:16973378 for
+        this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:23920 is one of the 2 curated reactions Rhea assigns to EC 4.3.2.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:23920
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.2.2"/>
+      notes: The rh:ec triple on RHEA:23920 in rhea.rdf assigns that reaction to EC 4.3.2.2.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (2S)-2-[5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamido]succinate is a substrate
+      consumed by RHEA:23920 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23921
+      snippet: (2S)-2-[5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamido]succinate => 5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide
+        + fumarate
+      notes: Rhea's left-to-right directional reaction RHEA:23921 declares side 23920_L as its substrates
+        (rh:substrates); the master reaction RHEA:23920 is undirected. This participant is CHEBI:58443
+        with coefficient 1. Rhea cites PMID:17531264, PMID:22812634, PMID:18469177, PMID:15182182 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide is a product released by
+      RHEA:23920 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23921
+      snippet: (2S)-2-[5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamido]succinate => 5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide
+        + fumarate
+      notes: Rhea's left-to-right directional reaction RHEA:23921 declares side 23920_R as its products
+        (rh:products); the master reaction RHEA:23920 is undirected. This participant is CHEBI:58475 with
+        coefficient 1. Rhea cites PMID:17531264, PMID:22812634, PMID:18469177, PMID:15182182 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: fumarate is a product released by RHEA:23920 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23921
+      snippet: (2S)-2-[5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamido]succinate => 5-amino-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide
+        + fumarate
+      notes: Rhea's left-to-right directional reaction RHEA:23921 declares side 23920_R as its products
+        (rh:products); the master reaction RHEA:23920 is undirected. This participant is CHEBI:29806 with
+        coefficient 1. Rhea cites PMID:17531264, PMID:22812634, PMID:18469177, PMID:15182182 for this
+        reaction.
+  - subject: prot_O66856
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PUR8_AQUAE is an exemplar enzyme with EC 4.3.2.2 activity.
+    evidence:
+    - reference: EC:4.3.2.2
+      snippet: DR   O66856, PUR8_AQUAE ;  O28041, PUR8_ARCFU ;  P12047, PUR8_BACSU ;
+      notes: ExPASy ENZYME entry EC 4.3.2.2 cross-references UniProtKB:O66856 (PUR8_AQUAE) as a protein
+        with this activity.
+  - subject: prot_O28041
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PUR8_ARCFU is an exemplar enzyme with EC 4.3.2.2 activity.
+    evidence:
+    - reference: EC:4.3.2.2
+      snippet: DR   O66856, PUR8_AQUAE ;  O28041, PUR8_ARCFU ;  P12047, PUR8_BACSU ;
+      notes: ExPASy ENZYME entry EC 4.3.2.2 cross-references UniProtKB:O28041 (PUR8_ARCFU) as a protein
+        with this activity.
+  - subject: prot_P12047
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PUR8_BACSU is an exemplar enzyme with EC 4.3.2.2 activity.
+    evidence:
+    - reference: EC:4.3.2.2
+      snippet: DR   O66856, PUR8_AQUAE ;  O28041, PUR8_ARCFU ;  P12047, PUR8_BACSU ;
+      notes: ExPASy ENZYME entry EC 4.3.2.2 cross-references UniProtKB:P12047 (PUR8_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

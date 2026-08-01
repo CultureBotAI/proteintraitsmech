@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:82748
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,140 @@ definitions:
       Catalyses the reaction: a cytidine in mRNA + H2O + H(+) = a uridine in mRNA + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a cytidine in mRNA + H2O + H(+) = a uridine in mRNA + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:74355, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:74356 (rh:substrates → 74355_L, rh:products → 74355_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a cytidine in mRNA + H2O + H(+) = a uridine in mRNA + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:74355
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a cytidine in mRNA + H2O + H(+) = a uridine in mRNA + NH4(+)'
+  - node_id: sub1
+    label: a cytidine in mRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15145
+    description: Rhea compound GENERIC:15145.
+  - node_id: sub1_rp1
+    label: CMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15145 (a cytidine
+      in mRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82748
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: a uridine in mRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:14658
+    description: Rhea compound GENERIC:14658.
+  - node_id: prd1_rp1
+    label: UMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14658 (a uridine
+      in mRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a cytidine in mRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74356
+      snippet: a cytidine in mRNA + H2O + H(+) => a uridine in mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74356 declares side 74355_L as its substrates
+        (rh:substrates); the master reaction RHEA:74355 is undirected. This participant is GENERIC:15145
+        with coefficient 1. Rhea cites PMID:30844405 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: CMP residue is the reactive part of a cytidine in mRNA.
+    evidence:
+    - reference: RHEA:74355
+      snippet: CMP residue
+      notes: Rhea compound GENERIC:15145 (a cytidine in mRNA) declares rh:reactivePart = CMP residue (CHEBI:82748),
+        formula C9H11N3O7P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74356
+      snippet: a cytidine in mRNA + H2O + H(+) => a uridine in mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74356 declares side 74355_L as its substrates
+        (rh:substrates); the master reaction RHEA:74355 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:30844405 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74356
+      snippet: a cytidine in mRNA + H2O + H(+) => a uridine in mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74356 declares side 74355_L as its substrates
+        (rh:substrates); the master reaction RHEA:74355 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:30844405 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a uridine in mRNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74356
+      snippet: a cytidine in mRNA + H2O + H(+) => a uridine in mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74356 declares side 74355_R as its products
+        (rh:products); the master reaction RHEA:74355 is undirected. This participant is GENERIC:14658
+        with coefficient 1. Rhea cites PMID:30844405 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: UMP residue is the reactive part of a uridine in mRNA.
+    evidence:
+    - reference: RHEA:74355
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:14658 (a uridine in mRNA) declares rh:reactivePart = UMP residue (CHEBI:65315),
+        formula C9H10N2O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74356
+      snippet: a cytidine in mRNA + H2O + H(+) => a uridine in mRNA + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74356 declares side 74355_R as its products
+        (rh:products); the master reaction RHEA:74355 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:30844405 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58905
     role: SUBSTRATE_OR_PRODUCT
@@ -35,4 +35,96 @@ definitions:
       Catalyses the reaction: S-sulfanylglutathione + O2 = glutathione S,S-dioxide + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-sulfanylglutathione + O2 = glutathione S,S-dioxide + H(+)
+  description: Substrate-to-product chemistry of RHEA:13061, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:13062 (rh:substrates → 13061_L, rh:products → 13061_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of S-sulfanylglutathione + O2 = glutathione S,S-dioxide + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13061
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: S-sulfanylglutathione + O2 = glutathione S,S-dioxide + H(+)'
+  - node_id: sub1
+    label: S-sulfanylglutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:58905
+    description: Formula C10H16N3O6S2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: glutathione S,S-dioxide
+    node_type: CHEMICAL
+    grounding: CHEBI:85586
+    description: Formula C10H15N3O8S2.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-sulfanylglutathione is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13062
+      snippet: S-sulfanylglutathione + O2 => glutathione S,S-dioxide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13062 declares side 13061_L as its substrates
+        (rh:substrates); the master reaction RHEA:13061 is undirected. This participant is CHEBI:58905
+        with coefficient 1. Rhea cites PMID:23144459, PMID:19136963, PMID:22786886, PMID:12855721 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13062
+      snippet: S-sulfanylglutathione + O2 => glutathione S,S-dioxide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13062 declares side 13061_L as its substrates
+        (rh:substrates); the master reaction RHEA:13061 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:23144459, PMID:19136963, PMID:22786886, PMID:12855721 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: glutathione S,S-dioxide is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13062
+      snippet: S-sulfanylglutathione + O2 => glutathione S,S-dioxide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13062 declares side 13061_R as its products
+        (rh:products); the master reaction RHEA:13061 is undirected. This participant is CHEBI:85586 with
+        coefficient 1. Rhea cites PMID:23144459, PMID:19136963, PMID:22786886, PMID:12855721 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13062
+      snippet: S-sulfanylglutathione + O2 => glutathione S,S-dioxide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13062 declares side 13061_R as its products
+        (rh:products); the master reaction RHEA:13061 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:23144459, PMID:19136963, PMID:22786886, PMID:12855721 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

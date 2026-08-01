@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.1.-
 mapped_xrefs:
@@ -28,4 +28,87 @@ definitions:
       Catalyses: L-lysine = L-pipecolate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-lysine cyclodeaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.1.28. EC 4.3.1.28 maps to exactly
+    one curated Rhea reaction (RHEA:34303), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-lysine = L-pipecolate
+    + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-lysine cyclodeaminase
+    grounding: EC:4.3.1.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32551
+    description: Formula C6H15N2O2.
+  - node_id: prd1
+    label: L-pipecolate
+    node_type: CHEMICAL
+    grounding: CHEBI:61185
+    description: Formula C6H11NO2.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prot_Q54304
+    node_type: PROTEIN
+    label: RAPL_STRRN
+    grounding: UniProtKB:Q54304
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-lysine is a substrate consumed by RHEA:34303 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34304
+      snippet: L-lysine => L-pipecolate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34304 declares side 34303_L as its substrates
+        (rh:substrates); the master reaction RHEA:34303 is undirected. This participant is CHEBI:32551
+        with coefficient 1. Rhea cites PMID:9473033, PMID:17291665, PMID:16536560 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-pipecolate is a product released by RHEA:34303 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34304
+      snippet: L-lysine => L-pipecolate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34304 declares side 34303_R as its products
+        (rh:products); the master reaction RHEA:34303 is undirected. This participant is CHEBI:61185 with
+        coefficient 1. Rhea cites PMID:9473033, PMID:17291665, PMID:16536560 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:34303 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34304
+      snippet: L-lysine => L-pipecolate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34304 declares side 34303_R as its products
+        (rh:products); the master reaction RHEA:34303 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:9473033, PMID:17291665, PMID:16536560 for this reaction.
+  - subject: prot_Q54304
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RAPL_STRRN is an exemplar enzyme with EC 4.3.1.28 activity.
+    evidence:
+    - reference: EC:4.3.1.28
+      snippet: DR   Q54304, RAPL_STRRN ;
+      notes: ExPASy ENZYME entry EC 4.3.1.28 cross-references UniProtKB:Q54304 (RAPL_STRRN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.8.-
 mapped_xrefs:
@@ -25,4 +25,121 @@ definitions:
       Catalyses: CDP-choline + an N-acylsphing-4-enine = a sphingomyelin + CMP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ceramide cholinephosphotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.8.3. EC 2.7.8.3 maps to exactly
+    one curated Rhea reaction (RHEA:16273), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "CDP-choline +
+    an N-acylsphing-4-enine = a sphingomyelin + CMP + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ceramide cholinephosphotransferase
+    grounding: EC:2.7.8.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: CDP-choline
+    node_type: CHEMICAL
+    grounding: CHEBI:58779
+    description: Formula C14H25N4O11P2.
+  - node_id: sub2
+    label: an N-acylsphing-4-enine
+    node_type: CHEMICAL
+    grounding: CHEBI:52639
+    description: Formula C19H36NO3R.
+  - node_id: prd1
+    label: a sphingomyelin
+    node_type: CHEMICAL
+    grounding: CHEBI:17636
+    description: Formula C24H48N2O6PR.
+  - node_id: prd2
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ceramide cholinephosphotransferase activity
+    grounding: GO:0047493
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: CDP-choline is a substrate consumed by RHEA:16273 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16274
+      snippet: CDP-choline + an N-acylsphing-4-enine => a sphingomyelin + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16274 declares side 16273_L as its substrates
+        (rh:substrates); the master reaction RHEA:16273 is undirected. This participant is CHEBI:58779
+        with coefficient 1. Rhea cites PMID:13610834 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: an N-acylsphing-4-enine is a substrate consumed by RHEA:16273 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16274
+      snippet: CDP-choline + an N-acylsphing-4-enine => a sphingomyelin + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16274 declares side 16273_L as its substrates
+        (rh:substrates); the master reaction RHEA:16273 is undirected. This participant is CHEBI:52639
+        with coefficient 1. Rhea cites PMID:13610834 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a sphingomyelin is a product released by RHEA:16273 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16274
+      snippet: CDP-choline + an N-acylsphing-4-enine => a sphingomyelin + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16274 declares side 16273_R as its products
+        (rh:products); the master reaction RHEA:16273 is undirected. This participant is CHEBI:17636 with
+        coefficient 1. Rhea cites PMID:13610834 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CMP is a product released by RHEA:16273 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16274
+      snippet: CDP-choline + an N-acylsphing-4-enine => a sphingomyelin + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16274 declares side 16273_R as its products
+        (rh:products); the master reaction RHEA:16273 is undirected. This participant is CHEBI:60377 with
+        coefficient 1. Rhea cites PMID:13610834 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:16273 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16274
+      snippet: CDP-choline + an N-acylsphing-4-enine => a sphingomyelin + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16274 declares side 16273_R as its products
+        (rh:products); the master reaction RHEA:16273 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:13610834 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.8.3
+      snippet: EC:2.7.8.3 > GO:ceramide cholinephosphotransferase activity ; GO:0047493
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047493 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

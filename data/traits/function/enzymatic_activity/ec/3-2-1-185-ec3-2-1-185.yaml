@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -30,4 +30,104 @@ definitions:
       Catalyses: beta-L-arabinofuranosyl-(1->2)-beta-L-arabinofuranose + H2O = 2 beta-L- arabinofuranose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of non-reducing end beta-L-arabinofuranosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.185. EC 3.2.1.185 maps to
+    exactly one curated Rhea reaction (RHEA:36051), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "beta-L-arabinofuranosyl-(1->2)-beta-L-arabinofuranose
+    + H2O = 2 beta-L- arabinofuranose". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: non-reducing end beta-L-arabinofuranosidase
+    grounding: EC:3.2.1.185
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: beta-L-arabinofuranosyl-(1->2)-beta-L-arabinofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:73180
+    description: Formula C10H18O9.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: beta-L-arabinofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:28272
+    description: Formula C5H10O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-L-arabinofuranosidase activity
+    grounding: GO:0102478
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_E8MGH8
+    node_type: PROTEIN
+    label: HYBA1_BIFL2
+    grounding: UniProtKB:E8MGH8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: beta-L-arabinofuranosyl-(1->2)-beta-L-arabinofuranose is a substrate consumed by RHEA:36051
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36052
+      snippet: beta-L-arabinofuranosyl-(1->2)-beta-L-arabinofuranose + H2O => 2 beta-L-arabinofuranose
+      notes: Rhea's left-to-right directional reaction RHEA:36052 declares side 36051_L as its substrates
+        (rh:substrates); the master reaction RHEA:36051 is undirected. This participant is CHEBI:73180
+        with coefficient 1. Rhea cites PMID:24385433 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:36051 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36052
+      snippet: beta-L-arabinofuranosyl-(1->2)-beta-L-arabinofuranose + H2O => 2 beta-L-arabinofuranose
+      notes: Rhea's left-to-right directional reaction RHEA:36052 declares side 36051_L as its substrates
+        (rh:substrates); the master reaction RHEA:36051 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24385433 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-L-arabinofuranose is a product released by RHEA:36051 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:36052
+      snippet: beta-L-arabinofuranosyl-(1->2)-beta-L-arabinofuranose + H2O => 2 beta-L-arabinofuranose
+      notes: Rhea's left-to-right directional reaction RHEA:36052 declares side 36051_R as its products
+        (rh:products); the master reaction RHEA:36051 is undirected. This participant is CHEBI:28272 with
+        coefficient 2. Rhea cites PMID:24385433 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.185
+      snippet: EC:3.2.1.185 > GO:beta-L-arabinofuranosidase activity ; GO:0102478
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102478 is itself a record
+        in this KB.
+  - subject: prot_E8MGH8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYBA1_BIFL2 is an exemplar enzyme with EC 3.2.1.185 activity.
+    evidence:
+    - reference: EC:3.2.1.185
+      snippet: DR   E8MGH8, HYBA1_BIFL2;
+      notes: ExPASy ENZYME entry EC 3.2.1.185 cross-references UniProtKB:E8MGH8 (HYBA1_BIFL2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

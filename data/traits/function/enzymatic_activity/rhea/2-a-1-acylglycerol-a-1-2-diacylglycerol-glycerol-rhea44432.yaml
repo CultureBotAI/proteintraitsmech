@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:35759
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,76 @@ definitions:
       Catalyses the reaction: 2 a 1-acylglycerol = a 1,2-diacylglycerol + glycerol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 a 1-acylglycerol = a 1,2-diacylglycerol + glycerol
+  description: Substrate-to-product chemistry of RHEA:44432, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:44433 (rh:substrates → 44432_L, rh:products → 44432_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 a 1-acylglycerol = a 1,2-diacylglycerol + glycerol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:44432
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 a 1-acylglycerol = a 1,2-diacylglycerol + glycerol'
+  - node_id: sub1
+    label: a 1-acylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:35759
+    description: Formula C4H7O4R.
+  - node_id: prd1
+    label: a 1,2-diacylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:49172
+    description: Formula C5H6O5R2.
+  - node_id: prd2
+    label: glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17754
+    description: Formula C3H8O3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 1-acylglycerol is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:44433
+      snippet: 2 a 1-acylglycerol => a 1,2-diacylglycerol + glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:44433 declares side 44432_L as its substrates
+        (rh:substrates); the master reaction RHEA:44432 is undirected. This participant is CHEBI:35759
+        with coefficient 2. Rhea cites PMID:15364929 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 1,2-diacylglycerol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44433
+      snippet: 2 a 1-acylglycerol => a 1,2-diacylglycerol + glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:44433 declares side 44432_R as its products
+        (rh:products); the master reaction RHEA:44432 is undirected. This participant is CHEBI:49172 with
+        coefficient 1. Rhea cites PMID:15364929 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glycerol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44433
+      snippet: 2 a 1-acylglycerol => a 1,2-diacylglycerol + glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:44433 declares side 44432_R as its products
+        (rh:products); the master reaction RHEA:44432 is undirected. This participant is CHEBI:17754 with
+        coefficient 1. Rhea cites PMID:15364929 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

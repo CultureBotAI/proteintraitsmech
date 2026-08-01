@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -45,4 +45,83 @@ definitions:
       Catalyses: Hydrolysis of an N(4)-(acetyl-beta-D-glucosaminyl)asparagine residue in which the glucosamine residue may be further glycosylated, to yield a (substituted) N-acetyl-beta-D-glucosaminylamine and a peptide containing an aspartate residue
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptide-N(4)-(N-acetyl-beta-glucosaminyl)asparagine amidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.52. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of an N(4)-(acetyl-beta-D-glucosaminyl)asparagine residue in which the glucosamine residue may be
+    further glycosylated, to yield a (substituted) N-acetyl-beta-D-glucosaminylamine and a peptide containing
+    an aspartate residue".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptide-N(4)-(N-acetyl-beta-glucosaminyl)asparagine amidase
+    grounding: EC:3.5.1.52
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: peptide-N4-(N-acetyl-beta-glucosaminyl)asparagine amidase activity
+    grounding: GO:0000224
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5WNE3
+    node_type: PROTEIN
+    label: NGLY1_CAEBR
+    grounding: UniProtKB:Q5WNE3
+  - node_id: prot_Q9TW67
+    node_type: PROTEIN
+    label: NGLY1_CAEEL
+    grounding: UniProtKB:Q9TW67
+  - node_id: prot_Q5ZJM3
+    node_type: PROTEIN
+    label: NGLY1_CHICK
+    grounding: UniProtKB:Q5ZJM3
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.52
+      snippet: EC:3.5.1.52 > GO:peptide-N4-(N-acetyl-beta-glucosaminyl)asparagine amidase activity ; GO:0000224
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0000224 is itself a record
+        in this KB.
+  - subject: prot_Q5WNE3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NGLY1_CAEBR is an exemplar enzyme with EC 3.5.1.52 activity.
+    evidence:
+    - reference: EC:3.5.1.52
+      snippet: DR   Q5WNE3, NGLY1_CAEBR;  Q9TW67, NGLY1_CAEEL;  Q5ZJM3, NGLY1_CHICK;
+      notes: ExPASy ENZYME entry EC 3.5.1.52 cross-references UniProtKB:Q5WNE3 (NGLY1_CAEBR) as a protein
+        with this activity.
+  - subject: prot_Q9TW67
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NGLY1_CAEEL is an exemplar enzyme with EC 3.5.1.52 activity.
+    evidence:
+    - reference: EC:3.5.1.52
+      snippet: DR   Q5WNE3, NGLY1_CAEBR;  Q9TW67, NGLY1_CAEEL;  Q5ZJM3, NGLY1_CHICK;
+      notes: ExPASy ENZYME entry EC 3.5.1.52 cross-references UniProtKB:Q9TW67 (NGLY1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_Q5ZJM3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NGLY1_CHICK is an exemplar enzyme with EC 3.5.1.52 activity.
+    evidence:
+    - reference: EC:3.5.1.52
+      snippet: DR   Q5WNE3, NGLY1_CAEBR;  Q9TW67, NGLY1_CAEEL;  Q5ZJM3, NGLY1_CHICK;
+      notes: ExPASy ENZYME entry EC 3.5.1.52 cross-references UniProtKB:Q5ZJM3 (NGLY1_CHICK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

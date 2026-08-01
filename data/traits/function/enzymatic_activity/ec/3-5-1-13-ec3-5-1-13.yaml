@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 mapped_xrefs:
@@ -34,4 +34,148 @@ definitions:
       Catalyses: an anilide + H2O = aniline + a carboxylate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aryl-acylamidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.13. EC 3.5.1.13 maps to exactly
+    one curated Rhea reaction (RHEA:20297), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an anilide +
+    H2O = aniline + a carboxylate + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aryl-acylamidase
+    grounding: EC:3.5.1.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an anilide
+    node_type: CHEMICAL
+    grounding: CHEBI:13248
+    description: Formula C7H6NOR.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: aniline
+    node_type: CHEMICAL
+    grounding: CHEBI:17296
+    description: Formula C6H7N.
+  - node_id: prd2
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aryl-acylamidase activity
+    grounding: GO:0047680
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_K9NBS6
+    node_type: PROTEIN
+    label: AAM_RHOER
+    grounding: UniProtKB:K9NBS6
+  - node_id: prot_P80008
+    node_type: PROTEIN
+    label: ARYC_NOCGL
+    grounding: UniProtKB:P80008
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an anilide is a substrate consumed by RHEA:20297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20298
+      snippet: an anilide + H2O => aniline + a carboxylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20298 declares side 20297_L as its substrates
+        (rh:substrates); the master reaction RHEA:20297 is undirected. This participant is CHEBI:13248
+        with coefficient 1. Rhea cites PMID:2065673, PMID:14427286 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:20297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20298
+      snippet: an anilide + H2O => aniline + a carboxylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20298 declares side 20297_L as its substrates
+        (rh:substrates); the master reaction RHEA:20297 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2065673, PMID:14427286 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: aniline is a product released by RHEA:20297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20298
+      snippet: an anilide + H2O => aniline + a carboxylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20298 declares side 20297_R as its products
+        (rh:products); the master reaction RHEA:20297 is undirected. This participant is CHEBI:17296 with
+        coefficient 1. Rhea cites PMID:2065673, PMID:14427286 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a carboxylate is a product released by RHEA:20297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20298
+      snippet: an anilide + H2O => aniline + a carboxylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20298 declares side 20297_R as its products
+        (rh:products); the master reaction RHEA:20297 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. Rhea cites PMID:2065673, PMID:14427286 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:20297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20298
+      snippet: an anilide + H2O => aniline + a carboxylate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20298 declares side 20297_R as its products
+        (rh:products); the master reaction RHEA:20297 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2065673, PMID:14427286 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.13
+      snippet: EC:3.5.1.13 > GO:aryl-acylamidase activity ; GO:0047680
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047680 is itself a record
+        in this KB.
+  - subject: prot_K9NBS6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAM_RHOER is an exemplar enzyme with EC 3.5.1.13 activity.
+    evidence:
+    - reference: EC:3.5.1.13
+      snippet: DR   K9NBS6, AAM_RHOER  ;  P80008, ARYC_NOCGL ;
+      notes: ExPASy ENZYME entry EC 3.5.1.13 cross-references UniProtKB:K9NBS6 (AAM_RHOER) as a protein
+        with this activity.
+  - subject: prot_P80008
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARYC_NOCGL is an exemplar enzyme with EC 3.5.1.13 activity.
+    evidence:
+    - reference: EC:3.5.1.13
+      snippet: DR   K9NBS6, AAM_RHOER  ;  P80008, ARYC_NOCGL ;
+      notes: ExPASy ENZYME entry EC 3.5.1.13 cross-references UniProtKB:P80008 (ARYC_NOCGL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

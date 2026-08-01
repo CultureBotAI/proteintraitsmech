@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -45,4 +45,81 @@ definitions:
       Catalyses: Hydrolysis of (1->4)-beta-D-xylans, to remove successive D-xylose residues from the non-reducing termini
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of xylan 1,4-beta-xylosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.37. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of (1->4)-beta-D-xylans, to remove successive D-xylose residues from the non-reducing termini".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: xylan 1,4-beta-xylosidase
+    grounding: EC:3.2.1.37
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: xylan 1,4-beta-xylosidase activity
+    grounding: GO:0009044
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q46684
+    node_type: PROTEIN
+    label: BGLX_DICCH
+    grounding: UniProtKB:Q46684
+  - node_id: prot_Q9FLG1
+    node_type: PROTEIN
+    label: BXL4_ARATH
+    grounding: UniProtKB:Q9FLG1
+  - node_id: prot_A1CCL9
+    node_type: PROTEIN
+    label: BXLB_ASPCL
+    grounding: UniProtKB:A1CCL9
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.37
+      snippet: EC:3.2.1.37 > GO:xylan 1,4-beta-xylosidase activity ; GO:0009044
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0009044 is itself a record
+        in this KB.
+  - subject: prot_Q46684
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BGLX_DICCH is an exemplar enzyme with EC 3.2.1.37 activity.
+    evidence:
+    - reference: EC:3.2.1.37
+      snippet: DR   Q46684, BGLX_DICCH ;  Q9FLG1, BXL4_ARATH ;  A1CCL9, BXLB_ASPCL ;
+      notes: ExPASy ENZYME entry EC 3.2.1.37 cross-references UniProtKB:Q46684 (BGLX_DICCH) as a protein
+        with this activity.
+  - subject: prot_Q9FLG1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BXL4_ARATH is an exemplar enzyme with EC 3.2.1.37 activity.
+    evidence:
+    - reference: EC:3.2.1.37
+      snippet: DR   Q46684, BGLX_DICCH ;  Q9FLG1, BXL4_ARATH ;  A1CCL9, BXLB_ASPCL ;
+      notes: ExPASy ENZYME entry EC 3.2.1.37 cross-references UniProtKB:Q9FLG1 (BXL4_ARATH) as a protein
+        with this activity.
+  - subject: prot_A1CCL9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BXLB_ASPCL is an exemplar enzyme with EC 3.2.1.37 activity.
+    evidence:
+    - reference: EC:3.2.1.37
+      snippet: DR   Q46684, BGLX_DICCH ;  Q9FLG1, BXL4_ARATH ;  A1CCL9, BXLB_ASPCL ;
+      notes: ExPASy ENZYME entry EC 3.2.1.37 cross-references UniProtKB:A1CCL9 (BXLB_ASPCL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

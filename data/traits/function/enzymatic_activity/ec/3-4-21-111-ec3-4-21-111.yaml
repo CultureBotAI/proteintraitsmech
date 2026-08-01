@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -28,4 +28,39 @@ definitions:
       Catalyses: Exhibits low specificity toward esters of amino acids with small hydrophobic or aromatic residues at the P1 position
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aqualysin 1
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.111. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "Exhibits low specificity toward esters of amino acids with small hydrophobic or aromatic residues
+    at the P1 position".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aqualysin 1
+    grounding: EC:3.4.21.111
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P08594
+    node_type: PROTEIN
+    label: AQL1_THEAQ
+    grounding: UniProtKB:P08594
+  edges:
+  - subject: prot_P08594
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AQL1_THEAQ is an exemplar enzyme with EC 3.4.21.111 activity.
+    evidence:
+    - reference: EC:3.4.21.111
+      snippet: DR   P08594, AQL1_THEAQ ;
+      notes: ExPASy ENZYME entry EC 3.4.21.111 cross-references UniProtKB:P08594 (AQL1_THEAQ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

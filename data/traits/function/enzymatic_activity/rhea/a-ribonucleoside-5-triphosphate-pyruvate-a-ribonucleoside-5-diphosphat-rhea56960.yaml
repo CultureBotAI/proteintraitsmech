@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:61557
     role: SUBSTRATE_OR_PRODUCT
@@ -24,4 +24,116 @@ definitions:
       Catalyses the reaction: a ribonucleoside 5'-triphosphate + pyruvate = a ribonucleoside 5'-diphosphate + phosphoenolpyruvate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a ribonucleoside 5'-triphosphate + pyruvate = a ribonucleoside 5'-diphosphate
+    + phospho…
+  description: Substrate-to-product chemistry of RHEA:56960, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:56961 (rh:substrates → 56960_L, rh:products → 56960_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a ribonucleoside 5'-triphosphate + pyruvate = a ribonucleoside 5'-diphosphat…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:56960
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a ribonucleoside 5''-triphosphate + pyruvate = a ribonucleoside 5''-diphosphate +
+      phosphoenolpyruvate + H(+)'
+  - node_id: sub1
+    label: a ribonucleoside 5'-triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61557
+    description: Formula C5H8O13P3R.
+  - node_id: sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd1
+    label: a ribonucleoside 5'-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57930
+    description: Formula C5H8O10P2R.
+  - node_id: prd2
+    label: phosphoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+    description: Formula C3H2O6P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a ribonucleoside 5'-triphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56961
+      snippet: a ribonucleoside 5'-triphosphate + pyruvate => a ribonucleoside 5'-diphosphate + phosphoenolpyruvate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56961 declares side 56960_L as its substrates
+        (rh:substrates); the master reaction RHEA:56960 is undirected. This participant is CHEBI:61557
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: pyruvate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56961
+      snippet: a ribonucleoside 5'-triphosphate + pyruvate => a ribonucleoside 5'-diphosphate + phosphoenolpyruvate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56961 declares side 56960_L as its substrates
+        (rh:substrates); the master reaction RHEA:56960 is undirected. This participant is CHEBI:15361
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a ribonucleoside 5'-diphosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56961
+      snippet: a ribonucleoside 5'-triphosphate + pyruvate => a ribonucleoside 5'-diphosphate + phosphoenolpyruvate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56961 declares side 56960_R as its products
+        (rh:products); the master reaction RHEA:56960 is undirected. This participant is CHEBI:57930 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphoenolpyruvate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56961
+      snippet: a ribonucleoside 5'-triphosphate + pyruvate => a ribonucleoside 5'-diphosphate + phosphoenolpyruvate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56961 declares side 56960_R as its products
+        (rh:products); the master reaction RHEA:56960 is undirected. This participant is CHEBI:58702 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56961
+      snippet: a ribonucleoside 5'-triphosphate + pyruvate => a ribonucleoside 5'-diphosphate + phosphoenolpyruvate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56961 declares side 56960_R as its products
+        (rh:products); the master reaction RHEA:56960 is undirected. This participant is CHEBI:15378 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

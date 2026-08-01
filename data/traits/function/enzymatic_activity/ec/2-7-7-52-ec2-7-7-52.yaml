@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -43,4 +43,154 @@ definitions:
       Catalyses: RNA(n) + UTP = RNA(n)-3'-uridine ribonucleotide + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of RNA uridylyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.52. EC 2.7.7.52 maps to exactly
+    one curated Rhea reaction (RHEA:14785), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "RNA(n) + UTP
+    = RNA(n)-3''-uridine ribonucleotide + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: RNA uridylyltransferase
+    grounding: EC:2.7.7.52
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: RNA(n)
+    node_type: CHEMICAL
+    grounding: CHEBI:140395
+    xrefs:
+    - RHEA-COMP:14527
+    description: Rhea compound POLYMER:14527. Formula H2O(C5H7O6PR)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: UTP
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  - node_id: prd1
+    label: RNA(n)-3'-uridine ribonucleotide
+    node_type: CHEMICAL
+    grounding: CHEBI:173116
+    xrefs:
+    - RHEA-COMP:17348
+    description: Rhea compound POLYMER:17348. Formula C9H12N2O9P(C5H7O6PR)<i><sub>n</sub></i>.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: RNA uridylyltransferase activity
+    grounding: GO:0050265
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O13833
+    node_type: PROTEIN
+    label: CID1_SCHPO
+    grounding: UniProtKB:O13833
+  - node_id: prot_Q5XET5
+    node_type: PROTEIN
+    label: HESO1_ARATH
+    grounding: UniProtKB:Q5XET5
+  - node_id: prot_D2HS90
+    node_type: PROTEIN
+    label: STPAP_AILME
+    grounding: UniProtKB:D2HS90
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: RNA(n) is a substrate consumed by RHEA:14785 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14786
+      snippet: RNA(n) + UTP => RNA(n)-3'-uridine ribonucleotide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14786 declares side 14785_L as its substrates
+        (rh:substrates); the master reaction RHEA:14785 is undirected. This participant is POLYMER:14527
+        with coefficient 1. Rhea cites PMID:6269049, PMID:25712096, PMID:23748567, PMID:19430462 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UTP is a substrate consumed by RHEA:14785 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14786
+      snippet: RNA(n) + UTP => RNA(n)-3'-uridine ribonucleotide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14786 declares side 14785_L as its substrates
+        (rh:substrates); the master reaction RHEA:14785 is undirected. This participant is CHEBI:46398
+        with coefficient 1. Rhea cites PMID:6269049, PMID:25712096, PMID:23748567, PMID:19430462 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: RNA(n)-3'-uridine ribonucleotide is a product released by RHEA:14785 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14786
+      snippet: RNA(n) + UTP => RNA(n)-3'-uridine ribonucleotide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14786 declares side 14785_R as its products
+        (rh:products); the master reaction RHEA:14785 is undirected. This participant is POLYMER:17348
+        with coefficient 1. Rhea cites PMID:6269049, PMID:25712096, PMID:23748567, PMID:19430462 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:14785 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14786
+      snippet: RNA(n) + UTP => RNA(n)-3'-uridine ribonucleotide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14786 declares side 14785_R as its products
+        (rh:products); the master reaction RHEA:14785 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:6269049, PMID:25712096, PMID:23748567, PMID:19430462 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.7.52
+      snippet: EC:2.7.7.52 > GO:RNA uridylyltransferase activity ; GO:0050265
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050265 is itself a record
+        in this KB.
+  - subject: prot_O13833
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CID1_SCHPO is an exemplar enzyme with EC 2.7.7.52 activity.
+    evidence:
+    - reference: EC:2.7.7.52
+      snippet: DR   O13833, CID1_SCHPO ;  Q5XET5, HESO1_ARATH;  D2HS90, STPAP_AILME;
+      notes: ExPASy ENZYME entry EC 2.7.7.52 cross-references UniProtKB:O13833 (CID1_SCHPO) as a protein
+        with this activity.
+  - subject: prot_Q5XET5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HESO1_ARATH is an exemplar enzyme with EC 2.7.7.52 activity.
+    evidence:
+    - reference: EC:2.7.7.52
+      snippet: DR   O13833, CID1_SCHPO ;  Q5XET5, HESO1_ARATH;  D2HS90, STPAP_AILME;
+      notes: ExPASy ENZYME entry EC 2.7.7.52 cross-references UniProtKB:Q5XET5 (HESO1_ARATH) as a protein
+        with this activity.
+  - subject: prot_D2HS90
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STPAP_AILME is an exemplar enzyme with EC 2.7.7.52 activity.
+    evidence:
+    - reference: EC:2.7.7.52
+      snippet: DR   O13833, CID1_SCHPO ;  Q5XET5, HESO1_ARATH;  D2HS90, STPAP_AILME;
+      notes: ExPASy ENZYME entry EC 2.7.7.52 cross-references UniProtKB:D2HS90 (STPAP_AILME) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

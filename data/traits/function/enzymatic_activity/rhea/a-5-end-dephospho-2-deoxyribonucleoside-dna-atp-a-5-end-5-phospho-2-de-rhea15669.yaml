@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.1.78
     mapping_source: rhea2ec
@@ -34,4 +34,177 @@ definitions:
       Catalyses the reaction: a 5'-end dephospho-2'-deoxyribonucleoside-DNA + ATP = a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 5'-end dephospho-2'-deoxyribonucleoside-DNA + ATP = a 5'-end 5'-phospho-2'-deoxyribon…
+  description: Substrate-to-product chemistry of RHEA:15669, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:15670 (rh:substrates → 15669_L, rh:products → 15669_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 5'-end dephospho-2'-deoxyribonucleoside-DNA + ATP = a 5'-end 5'-phospho-2'…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15669
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 5''-end dephospho-2''-deoxyribonucleoside-DNA + ATP = a 5''-end 5''-phospho-2''-deoxyribonucleoside-DNA
+      + ADP + H(+)'
+  - node_id: sub1
+    label: a 5'-end dephospho-2'-deoxyribonucleoside-DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13184
+    description: Rhea compound GENERIC:13184.
+  - node_id: sub1_rp1
+    label: 5'-end 2'-deoxyribonucleoside
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13184 (a 5'-end
+      dephospho-2'-deoxyribonucleoside-DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:136416
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13180
+    description: Rhea compound GENERIC:13180.
+  - node_id: prd1_rp1
+    label: 5'-phosphate 2'-deoxynucleoside residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13180 (a 5'-end
+      5'-phospho-2'-deoxyribonucleoside-DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:136412
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ATP-dependent polydeoxyribonucleotide 5'-hydroxyl-kinase activity
+    grounding: GO:0046404
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: polynucleotide 5'-hydroxyl-kinase
+    grounding: EC:2.7.1.78
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 5'-end dephospho-2'-deoxyribonucleoside-DNA is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15670
+      snippet: a 5'-end dephospho-2'-deoxyribonucleoside-DNA + ATP => a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15670 declares side 15669_L as its substrates
+        (rh:substrates); the master reaction RHEA:15669 is undirected. This participant is GENERIC:13184
+        with coefficient 1. Rhea cites PMID:4287929, PMID:19299550, PMID:4287930 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 5'-end 2'-deoxyribonucleoside is the reactive part of a 5'-end dephospho-2'-deoxyribonucleoside-DNA.
+    evidence:
+    - reference: RHEA:15669
+      snippet: 5'-end 2'-deoxyribonucleoside
+      notes: Rhea compound GENERIC:13184 (a 5'-end dephospho-2'-deoxyribonucleoside-DNA) declares rh:reactivePart
+        = 5'-end 2'-deoxyribonucleoside (CHEBI:136416), formula C5H8O3R.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15670
+      snippet: a 5'-end dephospho-2'-deoxyribonucleoside-DNA + ATP => a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15670 declares side 15669_L as its substrates
+        (rh:substrates); the master reaction RHEA:15669 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:4287929, PMID:19299550, PMID:4287930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15670
+      snippet: a 5'-end dephospho-2'-deoxyribonucleoside-DNA + ATP => a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15670 declares side 15669_R as its products
+        (rh:products); the master reaction RHEA:15669 is undirected. This participant is GENERIC:13180
+        with coefficient 1. Rhea cites PMID:4287929, PMID:19299550, PMID:4287930 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 5'-phosphate 2'-deoxynucleoside residue is the reactive part of a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA.
+    evidence:
+    - reference: RHEA:15669
+      snippet: 5'-phosphate 2'-deoxynucleoside residue
+      notes: Rhea compound GENERIC:13180 (a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA) declares rh:reactivePart
+        = 5'-phosphate 2'-deoxynucleoside residue (CHEBI:136412), formula C5H7O6PR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15670
+      snippet: a 5'-end dephospho-2'-deoxyribonucleoside-DNA + ATP => a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15670 declares side 15669_R as its products
+        (rh:products); the master reaction RHEA:15669 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:4287929, PMID:19299550, PMID:4287930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15670
+      snippet: a 5'-end dephospho-2'-deoxyribonucleoside-DNA + ATP => a 5'-end 5'-phospho-2'-deoxyribonucleoside-DNA
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15670 declares side 15669_R as its products
+        (rh:products); the master reaction RHEA:15669 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4287929, PMID:19299550, PMID:4287930 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:15669
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0046404"/>
+      notes: The rdfs:seeAlso triple on RHEA:15669 in rhea.rdf. GO term GO:0046404 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.1.78; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:15669
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.78"/>
+      notes: The rh:ec triple on RHEA:15669 in rhea.rdf. EC 2.7.1.78 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

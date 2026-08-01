@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.1.14
     mapping_source: rhea2ec
@@ -28,4 +28,114 @@ definitions:
       Catalyses the reaction: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate = tetrahydropteroyltri-L-glutamate + L-selenomethionine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate = tetrahydropteroyltri-…
+  description: Substrate-to-product chemistry of RHEA:45016, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:45017 (rh:substrates → 45016_L, rh:products → 45016_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate = tetrahydro…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:45016
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate = tetrahydropteroyltri-L-glutamate
+      + L-selenomethionine'
+  - node_id: sub1
+    label: L-selenohomocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:84850
+    description: Formula C4H9NO2Se.
+  - node_id: sub2
+    label: 5-methyltetrahydropteroyltri-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58207
+    description: Formula C30H35N9O12.
+  - node_id: prd1
+    label: tetrahydropteroyltri-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58140
+    description: Formula C29H33N9O12.
+  - node_id: prd2
+    label: L-selenomethionine
+    node_type: CHEMICAL
+    grounding: CHEBI:62621
+    description: Formula C5H11NO2Se.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase
+    grounding: EC:2.1.1.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-selenohomocysteine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45017
+      snippet: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate => tetrahydropteroyltri-L-glutamate
+        + L-selenomethionine
+      notes: Rhea's left-to-right directional reaction RHEA:45017 declares side 45016_L as its substrates
+        (rh:substrates); the master reaction RHEA:45016 is undirected. This participant is CHEBI:84850
+        with coefficient 1. Rhea cites PMID:11078203 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 5-methyltetrahydropteroyltri-L-glutamate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45017
+      snippet: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate => tetrahydropteroyltri-L-glutamate
+        + L-selenomethionine
+      notes: Rhea's left-to-right directional reaction RHEA:45017 declares side 45016_L as its substrates
+        (rh:substrates); the master reaction RHEA:45016 is undirected. This participant is CHEBI:58207
+        with coefficient 1. Rhea cites PMID:11078203 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tetrahydropteroyltri-L-glutamate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45017
+      snippet: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate => tetrahydropteroyltri-L-glutamate
+        + L-selenomethionine
+      notes: Rhea's left-to-right directional reaction RHEA:45017 declares side 45016_R as its products
+        (rh:products); the master reaction RHEA:45016 is undirected. This participant is CHEBI:58140 with
+        coefficient 1. Rhea cites PMID:11078203 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-selenomethionine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45017
+      snippet: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate => tetrahydropteroyltri-L-glutamate
+        + L-selenomethionine
+      notes: Rhea's left-to-right directional reaction RHEA:45017 declares side 45016_R as its products
+        (rh:products); the master reaction RHEA:45016 is undirected. This participant is CHEBI:62621 with
+        coefficient 1. Rhea cites PMID:11078203 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.1.14; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:45016
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.14"/>
+      notes: The rh:ec triple on RHEA:45016 in rhea.rdf. EC 2.1.1.14 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 mapped_xrefs:
@@ -28,4 +28,228 @@ definitions:
       Catalyses: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine = anaerobilin + 2 oxidized [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of anaerobilin synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.342. EC 2.1.1.342 maps to
+    exactly one curated Rhea reaction (RHEA:15429), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 reduced
+    [flavodoxin] + heme b + 2 S-adenosyl-L-methionine = anaerobilin + 2 oxidized [flavodoxin] + Fe(2+)
+    + 5''-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: anaerobilin synthase
+    grounding: EC:2.1.1.342
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: reduced [flavodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10622
+    description: Rhea compound GENERIC:10622.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: FMNH2
+    description: The reacting group Rhea names inside the generic participant GENERIC:10622 (reduced [flavodoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57618
+  - node_id: sub2
+    label: heme b
+    node_type: CHEMICAL
+    grounding: CHEBI:60344
+    description: Formula C34H30FeN4O4.
+  - node_id: sub3
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: anaerobilin
+    node_type: CHEMICAL
+    grounding: CHEBI:136517
+    description: Formula C35H38N4O4.
+  - node_id: prd2
+    label: oxidized [flavodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10623
+    description: Rhea compound GENERIC:10623.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: FMN
+    description: The reacting group Rhea names inside the generic participant GENERIC:10623 (oxidized
+      [flavodoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58210
+  - node_id: prd3
+    label: Fe(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+    description: Formula Fe.
+  - node_id: prd4
+    label: 5'-deoxyadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17319
+    description: Formula C10H13N5O3.
+  - node_id: prd5
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+    description: Formula C5H11NO2S.
+  - node_id: prd6
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prot_A0A384LP51
+    node_type: PROTEIN
+    label: CHUW_ECO57
+    grounding: UniProtKB:A0A384LP51
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: reduced [flavodoxin] is a substrate consumed by RHEA:15429 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:15430
+      snippet: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine => anaerobilin + 2 oxidized
+        [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:15430 declares side 15429_L as its substrates
+        (rh:substrates); the master reaction RHEA:15429 is undirected. This participant is GENERIC:10622
+        with coefficient 2. Rhea cites PMID:27791000 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: FMNH2 is the reactive part of reduced [flavodoxin].
+    evidence:
+    - reference: RHEA:15429
+      snippet: FMNH2
+      notes: Rhea compound GENERIC:10622 (reduced [flavodoxin]) declares rh:reactivePart = FMNH2 (CHEBI:57618).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: heme b is a substrate consumed by RHEA:15429 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15430
+      snippet: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine => anaerobilin + 2 oxidized
+        [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:15430 declares side 15429_L as its substrates
+        (rh:substrates); the master reaction RHEA:15429 is undirected. This participant is CHEBI:60344
+        with coefficient 1. Rhea cites PMID:27791000 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:15429 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:15430
+      snippet: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine => anaerobilin + 2 oxidized
+        [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:15430 declares side 15429_L as its substrates
+        (rh:substrates); the master reaction RHEA:15429 is undirected. This participant is CHEBI:59789
+        with coefficient 2. Rhea cites PMID:27791000 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: anaerobilin is a product released by RHEA:15429 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15430
+      snippet: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine => anaerobilin + 2 oxidized
+        [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:15430 declares side 15429_R as its products
+        (rh:products); the master reaction RHEA:15429 is undirected. This participant is CHEBI:136517
+        with coefficient 1. Rhea cites PMID:27791000 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [flavodoxin] is a product released by RHEA:15429 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:15430
+      snippet: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine => anaerobilin + 2 oxidized
+        [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:15430 declares side 15429_R as its products
+        (rh:products); the master reaction RHEA:15429 is undirected. This participant is GENERIC:10623
+        with coefficient 2. Rhea cites PMID:27791000 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: FMN is the reactive part of oxidized [flavodoxin].
+    evidence:
+    - reference: RHEA:15429
+      snippet: FMN
+      notes: Rhea compound GENERIC:10623 (oxidized [flavodoxin]) declares rh:reactivePart = FMN (CHEBI:58210).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: Fe(2+) is a product released by RHEA:15429 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15430
+      snippet: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine => anaerobilin + 2 oxidized
+        [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:15430 declares side 15429_R as its products
+        (rh:products); the master reaction RHEA:15429 is undirected. This participant is CHEBI:29033 with
+        coefficient 1. Rhea cites PMID:27791000 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: 5'-deoxyadenosine is a product released by RHEA:15429 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15430
+      snippet: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine => anaerobilin + 2 oxidized
+        [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:15430 declares side 15429_R as its products
+        (rh:products); the master reaction RHEA:15429 is undirected. This participant is CHEBI:17319 with
+        coefficient 1. Rhea cites PMID:27791000 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd5
+    description: L-methionine is a product released by RHEA:15429 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15430
+      snippet: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine => anaerobilin + 2 oxidized
+        [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:15430 declares side 15429_R as its products
+        (rh:products); the master reaction RHEA:15429 is undirected. This participant is CHEBI:57844 with
+        coefficient 1. Rhea cites PMID:27791000 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd6
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:15429 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15430
+      snippet: 2 reduced [flavodoxin] + heme b + 2 S-adenosyl-L-methionine => anaerobilin + 2 oxidized
+        [flavodoxin] + Fe(2+) + 5'-deoxyadenosine + L-methionine + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:15430 declares side 15429_R as its products
+        (rh:products); the master reaction RHEA:15429 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:27791000 for this reaction.
+  - subject: prot_A0A384LP51
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHUW_ECO57 is an exemplar enzyme with EC 2.1.1.342 activity.
+    evidence:
+    - reference: EC:2.1.1.342
+      snippet: DR   A0A384LP51, CHUW_ECO57 ;
+      notes: ExPASy ENZYME entry EC 2.1.1.342 cross-references UniProtKB:A0A384LP51 (CHUW_ECO57) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

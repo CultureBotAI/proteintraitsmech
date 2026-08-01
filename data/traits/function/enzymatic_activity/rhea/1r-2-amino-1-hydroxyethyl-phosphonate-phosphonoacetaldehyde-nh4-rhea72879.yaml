@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.3.1.33
     mapping_source: rhea2ec
@@ -26,4 +26,111 @@ definitions:
       Catalyses the reaction: (1R)-(2-amino-1-hydroxyethyl)phosphonate = phosphonoacetaldehyde + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (1R)-(2-amino-1-hydroxyethyl)phosphonate = phosphonoacetaldehyde + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:72879, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:72880 (rh:substrates → 72879_L, rh:products → 72879_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (1R)-(2-amino-1-hydroxyethyl)phosphonate = phosphonoacetaldehyde + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:72879
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (1R)-(2-amino-1-hydroxyethyl)phosphonate = phosphonoacetaldehyde + NH4(+)'
+  - node_id: sub1
+    label: (1R)-(2-amino-1-hydroxyethyl)phosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:141612
+    description: Formula C2H8NO4P.
+  - node_id: prd1
+    label: phosphonoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58383
+    description: Formula C2H4O4P.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (R)-1-hydroxy-2-aminoethylphosphonate ammonia-lyase
+    grounding: EC:4.3.1.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A3UZK3
+    node_type: PROTEIN
+    label: PBFA_VIBS1
+    grounding: UniProtKB:A3UZK3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (1R)-(2-amino-1-hydroxyethyl)phosphonate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:72880
+      snippet: (1R)-(2-amino-1-hydroxyethyl)phosphonate => phosphonoacetaldehyde + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72880 declares side 72879_L as its substrates
+        (rh:substrates); the master reaction RHEA:72879 is undirected. This participant is CHEBI:141612
+        with coefficient 1. Rhea cites PMID:33830741 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phosphonoacetaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:72880
+      snippet: (1R)-(2-amino-1-hydroxyethyl)phosphonate => phosphonoacetaldehyde + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72880 declares side 72879_R as its products
+        (rh:products); the master reaction RHEA:72879 is undirected. This participant is CHEBI:58383 with
+        coefficient 1. Rhea cites PMID:33830741 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72880
+      snippet: (1R)-(2-amino-1-hydroxyethyl)phosphonate => phosphonoacetaldehyde + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72880 declares side 72879_R as its products
+        (rh:products); the master reaction RHEA:72879 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:33830741 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.3.1.33; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:72879
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.33"/>
+      notes: The rh:ec triple on RHEA:72879 in rhea.rdf. EC 4.3.1.33 is itself a record in this KB.
+  - subject: prot_A3UZK3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PBFA_VIBS1 is an exemplar enzyme carrying EC 4.3.1.33, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.33
+      snippet: DR   A3UZK3, PBFA_VIBS1 ;
+      notes: ExPASy ENZYME entry EC 4.3.1.33 cross-references UniProtKB:A3UZK3 (PBFA_VIBS1) as a protein
+        with this activity.
+    - reference: RHEA:72879
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.33"/>
+      notes: Rhea assigns RHEA:72879 to EC 4.3.1.33, and EC 4.3.1.33 maps to exactly one Rhea master reaction
+        (RHEA:72879), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

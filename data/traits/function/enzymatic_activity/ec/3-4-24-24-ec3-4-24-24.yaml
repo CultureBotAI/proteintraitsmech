@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -43,4 +43,81 @@ definitions:
       Catalyses: Cleavage of gelatin type I and collagen types IV, V, VII, X. Cleaves the collagen-like sequence Pro-Gln-Gly-|-Ile-Ala-Gly-Gln
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gelatinase A
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.24. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleavage
+    of gelatin type I and collagen types IV, V, VII, X. Cleaves the collagen-like sequence Pro-Gln-Gly-|-Ile-Ala-Gly-Gln".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gelatinase A
+    grounding: EC:3.4.24.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: metalloendopeptidase activity
+    grounding: GO:0004222
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9GLE5
+    node_type: PROTEIN
+    label: MMP2_BOVIN
+    grounding: UniProtKB:Q9GLE5
+  - node_id: prot_Q90611
+    node_type: PROTEIN
+    label: MMP2_CHICK
+    grounding: UniProtKB:Q90611
+  - node_id: prot_P08253
+    node_type: PROTEIN
+    label: MMP2_HUMAN
+    grounding: UniProtKB:P08253
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.24.24
+      snippet: EC:3.4.24.24 > GO:metalloendopeptidase activity ; GO:0004222
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004222 is itself a record
+        in this KB.
+  - subject: prot_Q9GLE5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP2_BOVIN is an exemplar enzyme with EC 3.4.24.24 activity.
+    evidence:
+    - reference: EC:3.4.24.24
+      snippet: DR   Q9GLE5, MMP2_BOVIN ;  Q90611, MMP2_CHICK ;  P08253, MMP2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.24.24 cross-references UniProtKB:Q9GLE5 (MMP2_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q90611
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP2_CHICK is an exemplar enzyme with EC 3.4.24.24 activity.
+    evidence:
+    - reference: EC:3.4.24.24
+      snippet: DR   Q9GLE5, MMP2_BOVIN ;  Q90611, MMP2_CHICK ;  P08253, MMP2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.24.24 cross-references UniProtKB:Q90611 (MMP2_CHICK) as a protein
+        with this activity.
+  - subject: prot_P08253
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP2_HUMAN is an exemplar enzyme with EC 3.4.24.24 activity.
+    evidence:
+    - reference: EC:3.4.24.24
+      snippet: DR   Q9GLE5, MMP2_BOVIN ;  Q90611, MMP2_CHICK ;  P08253, MMP2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.24.24 cross-references UniProtKB:P08253 (MMP2_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

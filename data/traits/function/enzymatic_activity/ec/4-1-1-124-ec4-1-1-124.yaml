@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 synonyms:
@@ -26,4 +26,121 @@ definitions:
       Catalyses: malonyl-[ACP] + H(+) = acetyl-[ACP] + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of malonyl-[acp] decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.124. EC 4.1.1.124 maps to
+    exactly one curated Rhea reaction (RHEA:24460), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "malonyl-[ACP]
+    + H(+) = acetyl-[ACP] + CO2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: malonyl-[acp] decarboxylase
+    grounding: EC:4.1.1.124
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: malonyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9623
+    description: Rhea compound GENERIC:9623.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9623 (malonyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78449
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: acetyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9621
+    description: Rhea compound GENERIC:9621.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9621 (acetyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78446
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: malonyl-[ACP] is a substrate consumed by RHEA:24460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24461
+      snippet: malonyl-[ACP] + H(+) => acetyl-[ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:24461 declares side 24460_L as its substrates
+        (rh:substrates); the master reaction RHEA:24460 is undirected. This participant is GENERIC:9623
+        with coefficient 1. Rhea cites PMID:8620876, PMID:16757561, PMID:10496981 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of malonyl-[ACP].
+    evidence:
+    - reference: RHEA:24460
+      snippet: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9623 (malonyl-[ACP]) declares rh:reactivePart = O-(S-malonylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78449).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:24460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24461
+      snippet: malonyl-[ACP] + H(+) => acetyl-[ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:24461 declares side 24460_L as its substrates
+        (rh:substrates); the master reaction RHEA:24460 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:8620876, PMID:16757561, PMID:10496981 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: acetyl-[ACP] is a product released by RHEA:24460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24461
+      snippet: malonyl-[ACP] + H(+) => acetyl-[ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:24461 declares side 24460_R as its products
+        (rh:products); the master reaction RHEA:24460 is undirected. This participant is GENERIC:9621
+        with coefficient 1. Rhea cites PMID:8620876, PMID:16757561, PMID:10496981 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of acetyl-[ACP].
+    evidence:
+    - reference: RHEA:24460
+      snippet: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9621 (acetyl-[ACP]) declares rh:reactivePart = O-(S-acetylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78446).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:24460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24461
+      snippet: malonyl-[ACP] + H(+) => acetyl-[ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:24461 declares side 24460_R as its products
+        (rh:products); the master reaction RHEA:24460 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:8620876, PMID:16757561, PMID:10496981 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

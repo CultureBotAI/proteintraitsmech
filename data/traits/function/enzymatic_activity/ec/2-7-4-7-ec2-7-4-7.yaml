@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 synonyms:
@@ -43,4 +43,153 @@ definitions:
       Catalyses: 4-amino-2-methyl-5-(phosphooxymethyl)pyrimidine + ATP = 4-amino-2-methyl- 5-(diphosphooxymethyl)pyrimidine + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphooxymethylpyrimidine kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.7. EC 2.7.4.7 maps to exactly
+    one curated Rhea reaction (RHEA:19893), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-amino-2-methyl-5-(phosphooxymethyl)pyrimidine
+    + ATP = 4-amino-2-methyl- 5-(diphosphooxymethyl)pyrimidine + ADP". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphooxymethylpyrimidine kinase
+    grounding: EC:2.7.4.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-amino-2-methyl-5-(phosphooxymethyl)pyrimidine
+    node_type: CHEMICAL
+    grounding: CHEBI:58354
+    description: Formula C6H8N3O4P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: 4-amino-2-methyl-5-(diphosphooxymethyl)pyrimidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57841
+    description: Formula C6H8N3O7P2.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphomethylpyrimidine kinase activity
+    grounding: GO:0008972
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q08224
+    node_type: PROTEIN
+    label: THI20_YEAST
+    grounding: UniProtKB:Q08224
+  - node_id: prot_O94265
+    node_type: PROTEIN
+    label: THI21_SCHPO
+    grounding: UniProtKB:O94265
+  - node_id: prot_Q08975
+    node_type: PROTEIN
+    label: THI21_YEAST
+    grounding: UniProtKB:Q08975
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-amino-2-methyl-5-(phosphooxymethyl)pyrimidine is a substrate consumed by RHEA:19893
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19894
+      snippet: 4-amino-2-methyl-5-(phosphooxymethyl)pyrimidine + ATP => 4-amino-2-methyl-5-(diphosphooxymethyl)pyrimidine
+        + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:19894 declares side 19893_L as its substrates
+        (rh:substrates); the master reaction RHEA:19893 is undirected. This participant is CHEBI:58354
+        with coefficient 1. Rhea cites PMID:10075431, PMID:14973012 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:19893 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19894
+      snippet: 4-amino-2-methyl-5-(phosphooxymethyl)pyrimidine + ATP => 4-amino-2-methyl-5-(diphosphooxymethyl)pyrimidine
+        + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:19894 declares side 19893_L as its substrates
+        (rh:substrates); the master reaction RHEA:19893 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:10075431, PMID:14973012 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-amino-2-methyl-5-(diphosphooxymethyl)pyrimidine is a product released by RHEA:19893
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19894
+      snippet: 4-amino-2-methyl-5-(phosphooxymethyl)pyrimidine + ATP => 4-amino-2-methyl-5-(diphosphooxymethyl)pyrimidine
+        + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:19894 declares side 19893_R as its products
+        (rh:products); the master reaction RHEA:19893 is undirected. This participant is CHEBI:57841 with
+        coefficient 1. Rhea cites PMID:10075431, PMID:14973012 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:19893 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19894
+      snippet: 4-amino-2-methyl-5-(phosphooxymethyl)pyrimidine + ATP => 4-amino-2-methyl-5-(diphosphooxymethyl)pyrimidine
+        + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:19894 declares side 19893_R as its products
+        (rh:products); the master reaction RHEA:19893 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:10075431, PMID:14973012 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.4.7
+      snippet: EC:2.7.4.7 > GO:phosphomethylpyrimidine kinase activity ; GO:0008972
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008972 is itself a record
+        in this KB.
+  - subject: prot_Q08224
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THI20_YEAST is an exemplar enzyme with EC 2.7.4.7 activity.
+    evidence:
+    - reference: EC:2.7.4.7
+      snippet: DR   Q08224, THI20_YEAST;  O94265, THI21_SCHPO;  Q08975, THI21_YEAST;
+      notes: ExPASy ENZYME entry EC 2.7.4.7 cross-references UniProtKB:Q08224 (THI20_YEAST) as a protein
+        with this activity.
+  - subject: prot_O94265
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THI21_SCHPO is an exemplar enzyme with EC 2.7.4.7 activity.
+    evidence:
+    - reference: EC:2.7.4.7
+      snippet: DR   Q08224, THI20_YEAST;  O94265, THI21_SCHPO;  Q08975, THI21_YEAST;
+      notes: ExPASy ENZYME entry EC 2.7.4.7 cross-references UniProtKB:O94265 (THI21_SCHPO) as a protein
+        with this activity.
+  - subject: prot_Q08975
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THI21_YEAST is an exemplar enzyme with EC 2.7.4.7 activity.
+    evidence:
+    - reference: EC:2.7.4.7
+      snippet: DR   Q08224, THI20_YEAST;  O94265, THI21_SCHPO;  Q08975, THI21_YEAST;
+      notes: ExPASy ENZYME entry EC 2.7.4.7 cross-references UniProtKB:Q08975 (THI21_YEAST) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

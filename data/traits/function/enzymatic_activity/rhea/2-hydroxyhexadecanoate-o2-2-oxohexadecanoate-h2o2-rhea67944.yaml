@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:65097
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: 2-hydroxyhexadecanoate + O2 = 2-oxohexadecanoate + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-hydroxyhexadecanoate + O2 = 2-oxohexadecanoate + H2O2
+  description: Substrate-to-product chemistry of RHEA:67944, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67945 (rh:substrates → 67944_L, rh:products → 67944_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-hydroxyhexadecanoate + O2 = 2-oxohexadecanoate + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67944
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-hydroxyhexadecanoate + O2 = 2-oxohexadecanoate + H2O2'
+  - node_id: sub1
+    label: 2-hydroxyhexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:65097
+    description: Formula C16H31O3.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 2-oxohexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:176593
+    description: Formula C16H29O3.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-hydroxyhexadecanoate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:67945
+      snippet: 2-hydroxyhexadecanoate + O2 => 2-oxohexadecanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:67945 declares side 67944_L as its substrates
+        (rh:substrates); the master reaction RHEA:67944 is undirected. This participant is CHEBI:65097
+        with coefficient 1. Rhea cites PMID:10777549 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67945
+      snippet: 2-hydroxyhexadecanoate + O2 => 2-oxohexadecanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:67945 declares side 67944_L as its substrates
+        (rh:substrates); the master reaction RHEA:67944 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:10777549 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-oxohexadecanoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:67945
+      snippet: 2-hydroxyhexadecanoate + O2 => 2-oxohexadecanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:67945 declares side 67944_R as its products
+        (rh:products); the master reaction RHEA:67944 is undirected. This participant is CHEBI:176593
+        with coefficient 1. Rhea cites PMID:10777549 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67945
+      snippet: 2-hydroxyhexadecanoate + O2 => 2-oxohexadecanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:67945 declares side 67944_R as its products
+        (rh:products); the master reaction RHEA:67944 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:10777549 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

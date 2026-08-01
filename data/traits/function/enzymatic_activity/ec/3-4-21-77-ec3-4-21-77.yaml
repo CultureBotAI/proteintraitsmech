@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -42,4 +42,66 @@ definitions:
       Catalyses: Preferential cleavage: -Tyr-|-Xaa-
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of semenogelase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.77. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage: -Tyr-|-Xaa-".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: semenogelase
+    grounding: EC:3.4.21.77
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P07288
+    node_type: PROTEIN
+    label: KLK3_HUMAN
+    grounding: UniProtKB:P07288
+  - node_id: prot_Q6DT45
+    node_type: PROTEIN
+    label: KLK3_MACFA
+    grounding: UniProtKB:Q6DT45
+  - node_id: prot_P33619
+    node_type: PROTEIN
+    label: KLK3_MACMU
+    grounding: UniProtKB:P33619
+  edges:
+  - subject: prot_P07288
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KLK3_HUMAN is an exemplar enzyme with EC 3.4.21.77 activity.
+    evidence:
+    - reference: EC:3.4.21.77
+      snippet: DR   P07288, KLK3_HUMAN ;  Q6DT45, KLK3_MACFA ;  P33619, KLK3_MACMU ;
+      notes: ExPASy ENZYME entry EC 3.4.21.77 cross-references UniProtKB:P07288 (KLK3_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q6DT45
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KLK3_MACFA is an exemplar enzyme with EC 3.4.21.77 activity.
+    evidence:
+    - reference: EC:3.4.21.77
+      snippet: DR   P07288, KLK3_HUMAN ;  Q6DT45, KLK3_MACFA ;  P33619, KLK3_MACMU ;
+      notes: ExPASy ENZYME entry EC 3.4.21.77 cross-references UniProtKB:Q6DT45 (KLK3_MACFA) as a protein
+        with this activity.
+  - subject: prot_P33619
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KLK3_MACMU is an exemplar enzyme with EC 3.4.21.77 activity.
+    evidence:
+    - reference: EC:3.4.21.77
+      snippet: DR   P07288, KLK3_HUMAN ;  Q6DT45, KLK3_MACFA ;  P33619, KLK3_MACMU ;
+      notes: ExPASy ENZYME entry EC 3.4.21.77 cross-references UniProtKB:P33619 (KLK3_MACMU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

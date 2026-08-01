@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 mapped_xrefs:
@@ -28,4 +28,110 @@ definitions:
       Catalyses: [5-(aminomethyl)-3-furyl]methyl phosphate + ATP = [5-(aminomethyl)furan- 3-yl]methyl diphosphate + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [5-(aminomethyl)furan-3-yl]methyl phosphate kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.31. EC 2.7.4.31 maps to exactly
+    one curated Rhea reaction (RHEA:47836), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[5-(aminomethyl)-3-furyl]methyl
+    phosphate + ATP = [5-(aminomethyl)furan- 3-yl]methyl diphosphate + ADP". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[5-(aminomethyl)furan-3-yl]methyl phosphate kinase'
+    grounding: EC:2.7.4.31
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[5-(aminomethyl)-3-furyl]methyl phosphate'
+    node_type: CHEMICAL
+    grounding: CHEBI:83431
+    description: Formula C6H9NO5P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: '[5-(aminomethyl)furan-3-yl]methyl diphosphate'
+    node_type: CHEMICAL
+    grounding: CHEBI:88054
+    description: Formula C6H9NO8P2.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prot_Q57900
+    node_type: PROTEIN
+    label: MFNE_METJA
+    grounding: UniProtKB:Q57900
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[5-(aminomethyl)-3-furyl]methyl phosphate is a substrate consumed by RHEA:47836 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:47837
+      snippet: '[5-(aminomethyl)-3-furyl]methyl phosphate + ATP => [5-(aminomethyl)furan-3-yl]methyl diphosphate
+        + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:47837 declares side 47836_L as its substrates
+        (rh:substrates); the master reaction RHEA:47836 is undirected. This participant is CHEBI:83431
+        with coefficient 1. Rhea cites PMID:26100040 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:47836 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47837
+      snippet: '[5-(aminomethyl)-3-furyl]methyl phosphate + ATP => [5-(aminomethyl)furan-3-yl]methyl diphosphate
+        + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:47837 declares side 47836_L as its substrates
+        (rh:substrates); the master reaction RHEA:47836 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:26100040 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[5-(aminomethyl)furan-3-yl]methyl diphosphate is a product released by RHEA:47836 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:47837
+      snippet: '[5-(aminomethyl)-3-furyl]methyl phosphate + ATP => [5-(aminomethyl)furan-3-yl]methyl diphosphate
+        + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:47837 declares side 47836_R as its products
+        (rh:products); the master reaction RHEA:47836 is undirected. This participant is CHEBI:88054 with
+        coefficient 1. Rhea cites PMID:26100040 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:47836 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47837
+      snippet: '[5-(aminomethyl)-3-furyl]methyl phosphate + ATP => [5-(aminomethyl)furan-3-yl]methyl diphosphate
+        + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:47837 declares side 47836_R as its products
+        (rh:products); the master reaction RHEA:47836 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:26100040 for this reaction.
+  - subject: prot_Q57900
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MFNE_METJA is an exemplar enzyme with EC 2.7.4.31 activity.
+    evidence:
+    - reference: EC:2.7.4.31
+      snippet: DR   Q57900, MFNE_METJA ;
+      notes: ExPASy ENZYME entry EC 2.7.4.31 cross-references UniProtKB:Q57900 (MFNE_METJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

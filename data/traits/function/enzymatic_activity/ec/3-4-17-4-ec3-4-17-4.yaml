@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.17.-
 synonyms:
@@ -41,4 +41,67 @@ definitions:
       Catalyses: Release of a C-terminal amino acid from a peptide in which glycine is the penultimate amino acid, e.g. Z-Gly-|-Leu
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Gly-Xaa carboxypeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.17.4. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of a C-terminal amino acid from a peptide in which glycine is the penultimate amino acid, e.g. Z-Gly-|-Leu".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Gly-Xaa carboxypeptidase
+    grounding: EC:3.4.17.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: metallocarboxypeptidase activity
+    grounding: GO:0004181
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O13968
+    node_type: PROTEIN
+    label: CBPS_SCHPO
+    grounding: UniProtKB:O13968
+  - node_id: prot_P27614
+    node_type: PROTEIN
+    label: CBPS_YEAST
+    grounding: UniProtKB:P27614
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.17.4
+      snippet: EC:3.4.17.4 > GO:metallocarboxypeptidase activity ; GO:0004181
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004181 is itself a record
+        in this KB.
+  - subject: prot_O13968
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBPS_SCHPO is an exemplar enzyme with EC 3.4.17.4 activity.
+    evidence:
+    - reference: EC:3.4.17.4
+      snippet: DR   O13968, CBPS_SCHPO ;  P27614, CBPS_YEAST ;
+      notes: ExPASy ENZYME entry EC 3.4.17.4 cross-references UniProtKB:O13968 (CBPS_SCHPO) as a protein
+        with this activity.
+  - subject: prot_P27614
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBPS_YEAST is an exemplar enzyme with EC 3.4.17.4 activity.
+    evidence:
+    - reference: EC:3.4.17.4
+      snippet: DR   O13968, CBPS_SCHPO ;  P27614, CBPS_YEAST ;
+      notes: ExPASy ENZYME entry EC 3.4.17.4 cross-references UniProtKB:P27614 (CBPS_YEAST) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

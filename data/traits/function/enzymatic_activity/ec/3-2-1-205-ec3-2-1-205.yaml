@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -28,4 +28,103 @@ definitions:
       Catalyses: isomaltose + H2O = beta-D-glucose + D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isomaltose glucohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.205. EC 3.2.1.205 maps to
+    exactly one curated Rhea reaction (RHEA:52752), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "isomaltose
+    + H2O = beta-D-glucose + D-glucose". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: isomaltose glucohydrolase
+    grounding: EC:3.2.1.205
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: isomaltose
+    node_type: CHEMICAL
+    grounding: CHEBI:28189
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+    description: Formula C6H12O6.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: prot_D2PPM8
+    node_type: PROTEIN
+    label: IMGH_KRIFD
+    grounding: UniProtKB:D2PPM8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: isomaltose is a substrate consumed by RHEA:52752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52753
+      snippet: isomaltose + H2O => beta-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:52753 declares side 52752_L as its substrates
+        (rh:substrates); the master reaction RHEA:52752 is undirected. This participant is CHEBI:28189
+        with coefficient 1. Rhea cites PMID:27302067, PMID:15063208 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:52752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52753
+      snippet: isomaltose + H2O => beta-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:52753 declares side 52752_L as its substrates
+        (rh:substrates); the master reaction RHEA:52752 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:27302067, PMID:15063208 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-glucose is a product released by RHEA:52752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52753
+      snippet: isomaltose + H2O => beta-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:52753 declares side 52752_R as its products
+        (rh:products); the master reaction RHEA:52752 is undirected. This participant is CHEBI:15903 with
+        coefficient 1. Rhea cites PMID:27302067, PMID:15063208 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by RHEA:52752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52753
+      snippet: isomaltose + H2O => beta-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:52753 declares side 52752_R as its products
+        (rh:products); the master reaction RHEA:52752 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:27302067, PMID:15063208 for this reaction.
+  - subject: prot_D2PPM8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IMGH_KRIFD is an exemplar enzyme with EC 3.2.1.205 activity.
+    evidence:
+    - reference: EC:3.2.1.205
+      snippet: DR   D2PPM8, IMGH_KRIFD ;
+      notes: ExPASy ENZYME entry EC 3.2.1.205 cross-references UniProtKB:D2PPM8 (IMGH_KRIFD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

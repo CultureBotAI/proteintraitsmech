@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.19.-
 synonyms:
@@ -40,4 +40,68 @@ definitions:
       Catalyses: Hydrolysis of gamma-D-glutamyl bonds to the L-terminus (position 7) of meso-diaminopimelic acid (meso-A2pm) in 7-(L-Ala-gamma-D-Glu)-meso-A2pm and 7-(L-Ala-gamma-D-Glu)-7-(D-Ala)-meso-A2pm. It is required that the D-terminal amino and carboxy groups of meso-A2pm are unsubstituted
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gamma-D-glutamyl-meso-diaminopimelate peptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.19.11. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of gamma-D-glutamyl bonds to the L-terminus (position 7) of meso-diaminopimelic acid (meso-A2pm) in
+    7-(L-Ala-gamma-D-Glu)-meso-A2pm and 7-(L-Ala-gamma-D-Glu)-7-(D-Ala)-meso-A2pm. It is required that
+    the D-terminal amino and carboxy groups of meso-A2pm are unsubstituted".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-D-glutamyl-meso-diaminopimelate peptidase
+    grounding: EC:3.4.19.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_O31852
+    node_type: PROTEIN
+    label: CWLS_BACSU
+    grounding: UniProtKB:O31852
+  - node_id: prot_Q03415
+    node_type: PROTEIN
+    label: ENP1_LYSSH
+    grounding: UniProtKB:Q03415
+  - node_id: prot_Q9I2Q1
+    node_type: PROTEIN
+    label: TSE1_PSEAE
+    grounding: UniProtKB:Q9I2Q1
+  edges:
+  - subject: prot_O31852
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CWLS_BACSU is an exemplar enzyme with EC 3.4.19.11 activity.
+    evidence:
+    - reference: EC:3.4.19.11
+      snippet: DR   O31852, CWLS_BACSU ;  Q03415, ENP1_LYSSH ;  Q9I2Q1, TSE1_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.4.19.11 cross-references UniProtKB:O31852 (CWLS_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q03415
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ENP1_LYSSH is an exemplar enzyme with EC 3.4.19.11 activity.
+    evidence:
+    - reference: EC:3.4.19.11
+      snippet: DR   O31852, CWLS_BACSU ;  Q03415, ENP1_LYSSH ;  Q9I2Q1, TSE1_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.4.19.11 cross-references UniProtKB:Q03415 (ENP1_LYSSH) as a protein
+        with this activity.
+  - subject: prot_Q9I2Q1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TSE1_PSEAE is an exemplar enzyme with EC 3.4.19.11 activity.
+    evidence:
+    - reference: EC:3.4.19.11
+      snippet: DR   O31852, CWLS_BACSU ;  Q03415, ENP1_LYSSH ;  Q9I2Q1, TSE1_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.4.19.11 cross-references UniProtKB:Q9I2Q1 (TSE1_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

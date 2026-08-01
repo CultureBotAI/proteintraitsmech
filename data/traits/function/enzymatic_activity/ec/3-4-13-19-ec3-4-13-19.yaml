@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.13.-
 synonyms:
@@ -47,4 +47,132 @@ definitions:
       Catalyses: an L-aminoacyl-L-amino acid + H2O = 2 an L-alpha-amino acid
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of membrane dipeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.13.19. EC 3.4.13.19 maps to
+    exactly one curated Rhea reaction (RHEA:48940), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an L-aminoacyl-L-amino
+    acid + H2O = 2 an L-alpha-amino acid". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: membrane dipeptidase
+    grounding: EC:3.4.13.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an L-aminoacyl-L-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:77460
+    description: Formula C4H6N2O3R2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+    description: Formula C2H4NO2R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dipeptidase activity
+    grounding: GO:0016805
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q2UPB0
+    node_type: PROTEIN
+    label: ALCJ_ASPOR
+    grounding: UniProtKB:Q2UPB0
+  - node_id: prot_Q0CS61
+    node_type: PROTEIN
+    label: ATAJ_ASPTN
+    grounding: UniProtKB:Q0CS61
+  - node_id: prot_O14124
+    node_type: PROTEIN
+    label: DPEH1_SCHPO
+    grounding: UniProtKB:O14124
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an L-aminoacyl-L-amino acid is a substrate consumed by RHEA:48940 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48941
+      snippet: an L-aminoacyl-L-amino acid + H2O => 2 an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:48941 declares side 48940_L as its substrates
+        (rh:substrates); the master reaction RHEA:48940 is undirected. This participant is CHEBI:77460
+        with coefficient 1. Rhea cites PMID:17601807 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:48940 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48941
+      snippet: an L-aminoacyl-L-amino acid + H2O => 2 an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:48941 declares side 48940_L as its substrates
+        (rh:substrates); the master reaction RHEA:48940 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17601807 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an L-alpha-amino acid is a product released by RHEA:48940 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:48941
+      snippet: an L-aminoacyl-L-amino acid + H2O => 2 an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:48941 declares side 48940_R as its products
+        (rh:products); the master reaction RHEA:48940 is undirected. This participant is CHEBI:59869 with
+        coefficient 2. Rhea cites PMID:17601807 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.13.19
+      snippet: EC:3.4.13.19 > GO:dipeptidase activity ; GO:0016805
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016805 is itself a record
+        in this KB.
+  - subject: prot_Q2UPB0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALCJ_ASPOR is an exemplar enzyme with EC 3.4.13.19 activity.
+    evidence:
+    - reference: EC:3.4.13.19
+      snippet: DR   Q2UPB0, ALCJ_ASPOR ;  Q0CS61, ATAJ_ASPTN ;  O14124, DPEH1_SCHPO;
+      notes: ExPASy ENZYME entry EC 3.4.13.19 cross-references UniProtKB:Q2UPB0 (ALCJ_ASPOR) as a protein
+        with this activity.
+  - subject: prot_Q0CS61
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATAJ_ASPTN is an exemplar enzyme with EC 3.4.13.19 activity.
+    evidence:
+    - reference: EC:3.4.13.19
+      snippet: DR   Q2UPB0, ALCJ_ASPOR ;  Q0CS61, ATAJ_ASPTN ;  O14124, DPEH1_SCHPO;
+      notes: ExPASy ENZYME entry EC 3.4.13.19 cross-references UniProtKB:Q0CS61 (ATAJ_ASPTN) as a protein
+        with this activity.
+  - subject: prot_O14124
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DPEH1_SCHPO is an exemplar enzyme with EC 3.4.13.19 activity.
+    evidence:
+    - reference: EC:3.4.13.19
+      snippet: DR   Q2UPB0, ALCJ_ASPOR ;  Q0CS61, ATAJ_ASPTN ;  O14124, DPEH1_SCHPO;
+      notes: ExPASy ENZYME entry EC 3.4.13.19 cross-references UniProtKB:O14124 (DPEH1_SCHPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

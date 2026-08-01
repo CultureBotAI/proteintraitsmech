@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.99.-
 synonyms:
@@ -41,4 +41,162 @@ definitions:
       Catalyses: L-tyrosine + H2O = phenol + pyruvate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tyrosine phenol-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.99.2. EC 4.1.99.2 maps to exactly
+    one curated Rhea reaction (RHEA:21704), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-tyrosine +
+    H2O = phenol + pyruvate + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tyrosine phenol-lyase
+    grounding: EC:4.1.99.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: phenol
+    node_type: CHEMICAL
+    grounding: CHEBI:15882
+    description: Formula C6H6O.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd3
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tyrosine phenol-lyase activity
+    grounding: GO:0050371
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P31013
+    node_type: PROTEIN
+    label: TPL_CITFR
+    grounding: UniProtKB:P31013
+  - node_id: prot_P31012
+    node_type: PROTEIN
+    label: TPL_CITIN
+    grounding: UniProtKB:P31012
+  - node_id: prot_Q897C2
+    node_type: PROTEIN
+    label: TPL_CLOTE
+    grounding: UniProtKB:Q897C2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tyrosine is a substrate consumed by RHEA:21704 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21705
+      snippet: L-tyrosine + H2O => phenol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21705 declares side 21704_L as its substrates
+        (rh:substrates); the master reaction RHEA:21704 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:4908869, PMID:4908868 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:21704 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21705
+      snippet: L-tyrosine + H2O => phenol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21705 declares side 21704_L as its substrates
+        (rh:substrates); the master reaction RHEA:21704 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4908869, PMID:4908868 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phenol is a product released by RHEA:21704 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21705
+      snippet: L-tyrosine + H2O => phenol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21705 declares side 21704_R as its products
+        (rh:products); the master reaction RHEA:21704 is undirected. This participant is CHEBI:15882 with
+        coefficient 1. Rhea cites PMID:4908869, PMID:4908868 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:21704 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21705
+      snippet: L-tyrosine + H2O => phenol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21705 declares side 21704_R as its products
+        (rh:products); the master reaction RHEA:21704 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:4908869, PMID:4908868 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NH4(+) is a product released by RHEA:21704 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21705
+      snippet: L-tyrosine + H2O => phenol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21705 declares side 21704_R as its products
+        (rh:products); the master reaction RHEA:21704 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:4908869, PMID:4908868 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.99.2
+      snippet: EC:4.1.99.2 > GO:tyrosine phenol-lyase activity ; GO:0050371
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050371 is itself a record
+        in this KB.
+  - subject: prot_P31013
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPL_CITFR is an exemplar enzyme with EC 4.1.99.2 activity.
+    evidence:
+    - reference: EC:4.1.99.2
+      snippet: DR   P31013, TPL_CITFR  ;  P31012, TPL_CITIN  ;  Q897C2, TPL_CLOTE  ;
+      notes: ExPASy ENZYME entry EC 4.1.99.2 cross-references UniProtKB:P31013 (TPL_CITFR) as a protein
+        with this activity.
+  - subject: prot_P31012
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPL_CITIN is an exemplar enzyme with EC 4.1.99.2 activity.
+    evidence:
+    - reference: EC:4.1.99.2
+      snippet: DR   P31013, TPL_CITFR  ;  P31012, TPL_CITIN  ;  Q897C2, TPL_CLOTE  ;
+      notes: ExPASy ENZYME entry EC 4.1.99.2 cross-references UniProtKB:P31012 (TPL_CITIN) as a protein
+        with this activity.
+  - subject: prot_Q897C2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPL_CLOTE is an exemplar enzyme with EC 4.1.99.2 activity.
+    evidence:
+    - reference: EC:4.1.99.2
+      snippet: DR   P31013, TPL_CITFR  ;  P31012, TPL_CITIN  ;  Q897C2, TPL_CLOTE  ;
+      notes: ExPASy ENZYME entry EC 4.1.99.2 cross-references UniProtKB:Q897C2 (TPL_CLOTE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

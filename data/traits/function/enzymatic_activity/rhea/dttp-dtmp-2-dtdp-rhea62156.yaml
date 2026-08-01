@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:37568
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,74 @@ definitions:
       Catalyses the reaction: dTTP + dTMP = 2 dTDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dTTP + dTMP = 2 dTDP
+  description: Substrate-to-product chemistry of RHEA:62156, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62157 (rh:substrates → 62156_L, rh:products → 62156_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dTTP + dTMP = 2 dTDP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62156
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dTTP + dTMP = 2 dTDP'
+  - node_id: sub1
+    label: dTTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37568
+    description: Formula C10H13N2O14P3.
+  - node_id: sub2
+    label: dTMP
+    node_type: CHEMICAL
+    grounding: CHEBI:63528
+    description: Formula C10H13N2O8P.
+  - node_id: prd1
+    label: dTDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58369
+    description: Formula C10H13N2O11P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62157
+      snippet: dTTP + dTMP => 2 dTDP
+      notes: Rhea's left-to-right directional reaction RHEA:62157 declares side 62156_L as its substrates
+        (rh:substrates); the master reaction RHEA:62156 is undirected. This participant is CHEBI:37568
+        with coefficient 1. Rhea cites PMID:20497505 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dTMP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62157
+      snippet: dTTP + dTMP => 2 dTDP
+      notes: Rhea's left-to-right directional reaction RHEA:62157 declares side 62156_L as its substrates
+        (rh:substrates); the master reaction RHEA:62156 is undirected. This participant is CHEBI:63528
+        with coefficient 1. Rhea cites PMID:20497505 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTDP is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:62157
+      snippet: dTTP + dTMP => 2 dTDP
+      notes: Rhea's left-to-right directional reaction RHEA:62157 declares side 62156_R as its products
+        (rh:products); the master reaction RHEA:62156 is undirected. This participant is CHEBI:58369 with
+        coefficient 2. Rhea cites PMID:20497505 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

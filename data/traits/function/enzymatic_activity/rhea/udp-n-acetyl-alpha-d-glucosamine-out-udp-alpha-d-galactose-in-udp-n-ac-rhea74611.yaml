@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57705
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,104 @@ definitions:
       Catalyses the reaction: UDP-N-acetyl-alpha-D-glucosamine(out) + UDP-alpha-D-galactose(in) = UDP-N-acetyl-alpha-D-glucosamine(in) + UDP-alpha-D-galactose(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-N-acetyl-alpha-D-glucosamine(out) + UDP-alpha-D-galactose(in) = UDP-N-acetyl-alpha-…
+  description: 'Substrate-to-product chemistry of RHEA:74611, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:74612 (rh:substrates → 74611_L, rh:products → 74611_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of UDP-N-acetyl-alpha-D-glucosamine(out) + UDP-alpha-D-galactose(in) = UDP-N-ac…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:74611
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: UDP-N-acetyl-alpha-D-glucosamine(out) + UDP-alpha-D-galactose(in) = UDP-N-acetyl-alpha-D-glucosamine(in)
+      + UDP-alpha-D-galactose(out)'
+  - node_id: sub1
+    label: UDP-N-acetyl-alpha-D-glucosamine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+    description: Formula C17H25N3O17P2.
+  - node_id: sub2
+    label: UDP-alpha-D-galactose (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:66914
+    description: Formula C15H22N2O17P2.
+  - node_id: prd1
+    label: UDP-N-acetyl-alpha-D-glucosamine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+    description: Formula C17H25N3O17P2.
+  - node_id: prd2
+    label: UDP-alpha-D-galactose (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:66914
+    description: Formula C15H22N2O17P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-N-acetyl-alpha-D-glucosamine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:74612
+      snippet: UDP-N-acetyl-alpha-D-glucosamine(out) + UDP-alpha-D-galactose(in) => UDP-N-acetyl-alpha-D-glucosamine(in)
+        + UDP-alpha-D-galactose(out)
+      notes: Rhea's left-to-right directional reaction RHEA:74612 declares side 74611_L as its substrates
+        (rh:substrates); the master reaction RHEA:74611 is undirected. This participant is CHEBI:57705
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:12682060 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-galactose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74612
+      snippet: UDP-N-acetyl-alpha-D-glucosamine(out) + UDP-alpha-D-galactose(in) => UDP-N-acetyl-alpha-D-glucosamine(in)
+        + UDP-alpha-D-galactose(out)
+      notes: Rhea's left-to-right directional reaction RHEA:74612 declares side 74611_L as its substrates
+        (rh:substrates); the master reaction RHEA:74611 is undirected. This participant is CHEBI:66914
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:12682060
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UDP-N-acetyl-alpha-D-glucosamine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:74612
+      snippet: UDP-N-acetyl-alpha-D-glucosamine(out) + UDP-alpha-D-galactose(in) => UDP-N-acetyl-alpha-D-glucosamine(in)
+        + UDP-alpha-D-galactose(out)
+      notes: Rhea's left-to-right directional reaction RHEA:74612 declares side 74611_R as its products
+        (rh:products); the master reaction RHEA:74611 is undirected. This participant is CHEBI:57705 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:12682060
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP-alpha-D-galactose is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74612
+      snippet: UDP-N-acetyl-alpha-D-glucosamine(out) + UDP-alpha-D-galactose(in) => UDP-N-acetyl-alpha-D-glucosamine(in)
+        + UDP-alpha-D-galactose(out)
+      notes: Rhea's left-to-right directional reaction RHEA:74612 declares side 74611_R as its products
+        (rh:products); the master reaction RHEA:74611 is undirected. This participant is CHEBI:66914 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:12682060
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

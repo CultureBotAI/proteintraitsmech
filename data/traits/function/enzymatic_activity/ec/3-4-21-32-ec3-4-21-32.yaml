@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -36,4 +36,68 @@ definitions:
       Catalyses: Hydrolysis of proteins, with broad specificity for peptide bonds. Native collagen is cleaved about 75% of the length of the molecule from the N-terminus. Low activity on small molecule substrates of both trypsin and chymotrypsin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of brachyurin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.32. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of proteins, with broad specificity for peptide bonds. Native collagen is cleaved about 75% of the
+    length of the molecule from the N-terminus. Low activity on small molecule substrates of both trypsin
+    and chymotrypsin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: brachyurin
+    grounding: EC:3.4.21.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P34153
+    node_type: PROTEIN
+    label: COG1_CHIOP
+    grounding: UniProtKB:P34153
+  - node_id: prot_P20731
+    node_type: PROTEIN
+    label: COG1_PARCM
+    grounding: UniProtKB:P20731
+  - node_id: prot_P81609
+    node_type: PROTEIN
+    label: COG2_CARMA
+    grounding: UniProtKB:P81609
+  edges:
+  - subject: prot_P34153
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COG1_CHIOP is an exemplar enzyme with EC 3.4.21.32 activity.
+    evidence:
+    - reference: EC:3.4.21.32
+      snippet: DR   P34153, COG1_CHIOP ;  P20731, COG1_PARCM ;  P81609, COG2_CARMA ;
+      notes: ExPASy ENZYME entry EC 3.4.21.32 cross-references UniProtKB:P34153 (COG1_CHIOP) as a protein
+        with this activity.
+  - subject: prot_P20731
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COG1_PARCM is an exemplar enzyme with EC 3.4.21.32 activity.
+    evidence:
+    - reference: EC:3.4.21.32
+      snippet: DR   P34153, COG1_CHIOP ;  P20731, COG1_PARCM ;  P81609, COG2_CARMA ;
+      notes: ExPASy ENZYME entry EC 3.4.21.32 cross-references UniProtKB:P20731 (COG1_PARCM) as a protein
+        with this activity.
+  - subject: prot_P81609
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COG2_CARMA is an exemplar enzyme with EC 3.4.21.32 activity.
+    evidence:
+    - reference: EC:3.4.21.32
+      snippet: DR   P34153, COG1_CHIOP ;  P20731, COG1_PARCM ;  P81609, COG2_CARMA ;
+      notes: ExPASy ENZYME entry EC 3.4.21.32 cross-references UniProtKB:P81609 (COG2_CARMA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

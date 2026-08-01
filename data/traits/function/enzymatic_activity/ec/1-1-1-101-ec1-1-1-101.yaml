@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -43,4 +43,291 @@ definitions:
       Catalyses: 1-hexadecanoyl-sn-glycero-3-phosphate + NADP(+) = 1-hexadecanoylglycerone 3-phosphate + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acylglycerone-phosphate reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.101. Rhea assigns 2 curated
+    reactions to EC 1.1.1.101. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "1-hexadecanoyl-sn-glycero-3-phosphate + NADP(+) = 1-hexadecanoylglycerone
+    3-phosphate + NADPH + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acylglycerone-phosphate reductase
+    grounding: EC:1.1.1.101
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 1-hexadecanoyl-sn-glycero-3-phosphate + NADP(+) = 1-hexadecanoylglycerone 3-…
+    grounding: RHEA:17341
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 1-hexadecanoyl-sn-glycero-3-phosphate + NADP(+) = 1-hexadecanoylglycerone
+      3-phosphate + NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: 1-hexadecanoyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57518
+    description: Formula C19H37O7P.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: 1-hexadecanoylglycerone 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58303
+    description: Formula C19H35O7P.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a 1-O-alkylglycerone 3-phosphate + NADPH + H(+) = a 1-O-alkyl-sn-glycero-3-p…
+    grounding: RHEA:36175
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a 1-O-alkylglycerone 3-phosphate + NADPH + H(+) = a 1-O-alkyl-sn-glycero-3-phosphate
+      + NADP(+)'
+  - node_id: rxn2_sub1
+    label: a 1-O-alkylglycerone 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:73315
+    description: Formula C3H4O6PR.
+  - node_id: rxn2_sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2_prd1
+    label: a 1-O-alkyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58014
+    description: Formula C3H6O6PR.
+  - node_id: rxn2_prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acylglycerone-phosphate reductase (NADP+) activity
+    grounding: GO:0000140
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q09851
+    node_type: PROTEIN
+    label: AYR1_SCHPO
+    grounding: UniProtKB:Q09851
+  - node_id: prot_P40471
+    node_type: PROTEIN
+    label: AYR1_YEAST
+    grounding: UniProtKB:P40471
+  - node_id: prot_Q3T0R4
+    node_type: PROTEIN
+    label: PEXRP_BOVIN
+    grounding: UniProtKB:Q3T0R4
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:17341 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.101; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:17341
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.101"/>
+      notes: The rh:ec triple on RHEA:17341 in rhea.rdf assigns that reaction to EC 1.1.1.101.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 1-hexadecanoyl-sn-glycero-3-phosphate is a substrate consumed by RHEA:17341 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17342
+      snippet: 1-hexadecanoyl-sn-glycero-3-phosphate + NADP(+) => 1-hexadecanoylglycerone 3-phosphate
+        + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17342 declares side 17341_L as its substrates
+        (rh:substrates); the master reaction RHEA:17341 is undirected. This participant is CHEBI:57518
+        with coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:17341 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17342
+      snippet: 1-hexadecanoyl-sn-glycero-3-phosphate + NADP(+) => 1-hexadecanoylglycerone 3-phosphate
+        + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17342 declares side 17341_L as its substrates
+        (rh:substrates); the master reaction RHEA:17341 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 1-hexadecanoylglycerone 3-phosphate is a product released by RHEA:17341 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17342
+      snippet: 1-hexadecanoyl-sn-glycero-3-phosphate + NADP(+) => 1-hexadecanoylglycerone 3-phosphate
+        + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17342 declares side 17341_R as its products
+        (rh:products); the master reaction RHEA:17341 is undirected. This participant is CHEBI:58303 with
+        coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:17341 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17342
+      snippet: 1-hexadecanoyl-sn-glycero-3-phosphate + NADP(+) => 1-hexadecanoylglycerone 3-phosphate
+        + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17342 declares side 17341_R as its products
+        (rh:products); the master reaction RHEA:17341 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:17341 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17342
+      snippet: 1-hexadecanoyl-sn-glycero-3-phosphate + NADP(+) => 1-hexadecanoylglycerone 3-phosphate
+        + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17342 declares side 17341_R as its products
+        (rh:products); the master reaction RHEA:17341 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:36175 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.101; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:36175
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.101"/>
+      notes: The rh:ec triple on RHEA:36175 in rhea.rdf assigns that reaction to EC 1.1.1.101.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a 1-O-alkylglycerone 3-phosphate is a substrate consumed by RHEA:36175 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36176
+      snippet: a 1-O-alkylglycerone 3-phosphate + NADPH + H(+) => a 1-O-alkyl-sn-glycero-3-phosphate +
+        NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36176 declares side 36175_L as its substrates
+        (rh:substrates); the master reaction RHEA:36175 is undirected. This participant is CHEBI:73315
+        with coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADPH is a substrate consumed by RHEA:36175 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36176
+      snippet: a 1-O-alkylglycerone 3-phosphate + NADPH + H(+) => a 1-O-alkyl-sn-glycero-3-phosphate +
+        NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36176 declares side 36175_L as its substrates
+        (rh:substrates); the master reaction RHEA:36175 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: H(+) is a substrate consumed by RHEA:36175 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36176
+      snippet: a 1-O-alkylglycerone 3-phosphate + NADPH + H(+) => a 1-O-alkyl-sn-glycero-3-phosphate +
+        NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36176 declares side 36175_L as its substrates
+        (rh:substrates); the master reaction RHEA:36175 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a 1-O-alkyl-sn-glycero-3-phosphate is a product released by RHEA:36175 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36176
+      snippet: a 1-O-alkylglycerone 3-phosphate + NADPH + H(+) => a 1-O-alkyl-sn-glycero-3-phosphate +
+        NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36176 declares side 36175_R as its products
+        (rh:products); the master reaction RHEA:36175 is undirected. This participant is CHEBI:58014 with
+        coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADP(+) is a product released by RHEA:36175 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36176
+      snippet: a 1-O-alkylglycerone 3-phosphate + NADPH + H(+) => a 1-O-alkyl-sn-glycero-3-phosphate +
+        NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36176 declares side 36175_R as its products
+        (rh:products); the master reaction RHEA:36175 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:9295290 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.1.101
+      snippet: EC:1.1.1.101 > GO:acylglycerone-phosphate reductase (NADP+) activity ; GO:0000140
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0000140 is itself a record
+        in this KB.
+  - subject: prot_Q09851
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AYR1_SCHPO is an exemplar enzyme with EC 1.1.1.101 activity.
+    evidence:
+    - reference: EC:1.1.1.101
+      snippet: DR   Q09851, AYR1_SCHPO ;  P40471, AYR1_YEAST ;  Q3T0R4, PEXRP_BOVIN;
+      notes: ExPASy ENZYME entry EC 1.1.1.101 cross-references UniProtKB:Q09851 (AYR1_SCHPO) as a protein
+        with this activity.
+  - subject: prot_P40471
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AYR1_YEAST is an exemplar enzyme with EC 1.1.1.101 activity.
+    evidence:
+    - reference: EC:1.1.1.101
+      snippet: DR   Q09851, AYR1_SCHPO ;  P40471, AYR1_YEAST ;  Q3T0R4, PEXRP_BOVIN;
+      notes: ExPASy ENZYME entry EC 1.1.1.101 cross-references UniProtKB:P40471 (AYR1_YEAST) as a protein
+        with this activity.
+  - subject: prot_Q3T0R4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEXRP_BOVIN is an exemplar enzyme with EC 1.1.1.101 activity.
+    evidence:
+    - reference: EC:1.1.1.101
+      snippet: DR   Q09851, AYR1_SCHPO ;  P40471, AYR1_YEAST ;  Q3T0R4, PEXRP_BOVIN;
+      notes: ExPASy ENZYME entry EC 1.1.1.101 cross-references UniProtKB:Q3T0R4 (PEXRP_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

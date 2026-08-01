@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 mapped_xrefs:
@@ -30,4 +30,237 @@ definitions:
       Catalyses: (1) cis-cis-nepetalactol + NAD(+) = cis-cis-nepetalactone + NADH + H(+). (2) cis-trans-nepetalactol + NAD(+) = cis-trans-nepetalactone + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nepetalactol dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.419. Rhea assigns 2 curated
+    reactions to EC 1.1.1.419. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) cis-cis-nepetalactol + NAD(+) = cis-cis-nepetalactone
+    + NADH + H(+). (2) cis-trans-nepetalactol + NAD(+) = cis-trans-nepetalactone + NADH + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nepetalactol dehydrogenase
+    grounding: EC:1.1.1.419
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of cis-cis-nepetalactol + NAD(+) = cis-cis-nepetalactone + NADH + H(+)
+    grounding: RHEA:61424
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: cis-cis-nepetalactol + NAD(+) = cis-cis-nepetalactone + NADH + H(+)'
+  - node_id: rxn1_sub1
+    label: cis-cis-nepetalactol
+    node_type: CHEMICAL
+    grounding: CHEBI:144485
+    description: Formula C10H16O2.
+  - node_id: rxn1_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn1_prd1
+    label: cis-cis-nepetalactone
+    node_type: CHEMICAL
+    grounding: CHEBI:144482
+    description: Formula C10H14O2.
+  - node_id: rxn1_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of cis-trans-nepetalactol + NAD(+) = cis-trans-nepetalactone + NADH + H(+)
+    grounding: RHEA:61428
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: cis-trans-nepetalactol + NAD(+) = cis-trans-nepetalactone + NADH + H(+)'
+  - node_id: rxn2_sub1
+    label: cis-trans-nepetalactol
+    node_type: CHEMICAL
+    grounding: CHEBI:71494
+    description: Formula C10H16O2.
+  - node_id: rxn2_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2_prd1
+    label: cis-trans-nepetalactone
+    node_type: CHEMICAL
+    grounding: CHEBI:7518
+    description: Formula C10H14O2.
+  - node_id: rxn2_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A0A3Q8GL18
+    node_type: PROTEIN
+    label: NEPS1_NEPRA
+    grounding: UniProtKB:A0A3Q8GL18
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:61424 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.419; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:61424
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.419"/>
+      notes: The rh:ec triple on RHEA:61424 in rhea.rdf assigns that reaction to EC 1.1.1.419.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: cis-cis-nepetalactol is a substrate consumed by RHEA:61424 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61425
+      snippet: cis-cis-nepetalactol + NAD(+) => cis-cis-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61425 declares side 61424_L as its substrates
+        (rh:substrates); the master reaction RHEA:61424 is undirected. This participant is CHEBI:144485
+        with coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NAD(+) is a substrate consumed by RHEA:61424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61425
+      snippet: cis-cis-nepetalactol + NAD(+) => cis-cis-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61425 declares side 61424_L as its substrates
+        (rh:substrates); the master reaction RHEA:61424 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: cis-cis-nepetalactone is a product released by RHEA:61424 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61425
+      snippet: cis-cis-nepetalactol + NAD(+) => cis-cis-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61425 declares side 61424_R as its products
+        (rh:products); the master reaction RHEA:61424 is undirected. This participant is CHEBI:144482
+        with coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADH is a product released by RHEA:61424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61425
+      snippet: cis-cis-nepetalactol + NAD(+) => cis-cis-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61425 declares side 61424_R as its products
+        (rh:products); the master reaction RHEA:61424 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:61424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61425
+      snippet: cis-cis-nepetalactol + NAD(+) => cis-cis-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61425 declares side 61424_R as its products
+        (rh:products); the master reaction RHEA:61424 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:61428 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.419; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:61428
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.419"/>
+      notes: The rh:ec triple on RHEA:61428 in rhea.rdf assigns that reaction to EC 1.1.1.419.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: cis-trans-nepetalactol is a substrate consumed by RHEA:61428 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61429
+      snippet: cis-trans-nepetalactol + NAD(+) => cis-trans-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61429 declares side 61428_L as its substrates
+        (rh:substrates); the master reaction RHEA:61428 is undirected. This participant is CHEBI:71494
+        with coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NAD(+) is a substrate consumed by RHEA:61428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61429
+      snippet: cis-trans-nepetalactol + NAD(+) => cis-trans-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61429 declares side 61428_L as its substrates
+        (rh:substrates); the master reaction RHEA:61428 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: cis-trans-nepetalactone is a product released by RHEA:61428 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61429
+      snippet: cis-trans-nepetalactol + NAD(+) => cis-trans-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61429 declares side 61428_R as its products
+        (rh:products); the master reaction RHEA:61428 is undirected. This participant is CHEBI:7518 with
+        coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADH is a product released by RHEA:61428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61429
+      snippet: cis-trans-nepetalactol + NAD(+) => cis-trans-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61429 declares side 61428_R as its products
+        (rh:products); the master reaction RHEA:61428 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:61428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61429
+      snippet: cis-trans-nepetalactol + NAD(+) => cis-trans-nepetalactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61429 declares side 61428_R as its products
+        (rh:products); the master reaction RHEA:61428 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:30664302, PMID:30531909 for this reaction.
+  - subject: prot_A0A3Q8GL18
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEPS1_NEPRA is an exemplar enzyme with EC 1.1.1.419 activity.
+    evidence:
+    - reference: EC:1.1.1.419
+      snippet: DR   A0A3Q8GL18, NEPS1_NEPRA;
+      notes: ExPASy ENZYME entry EC 1.1.1.419 cross-references UniProtKB:A0A3Q8GL18 (NEPS1_NEPRA) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

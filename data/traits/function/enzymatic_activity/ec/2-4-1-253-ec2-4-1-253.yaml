@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -35,4 +35,284 @@ definitions:
       Catalyses: baicalein + UDP-alpha-D-glucuronate = baicalin + UDP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of baicalein 7-O-glucuronosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.253. Rhea assigns 3 curated
+    reactions to EC 2.4.1.253. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "baicalein + UDP-alpha-D-glucuronate = baicalin + UDP". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: baicalein 7-O-glucuronosyltransferase
+    grounding: EC:2.4.1.253
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of baicalein + UDP-alpha-D-glucuronate = baicalin + UDP
+    grounding: RHEA:28314
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: baicalein + UDP-alpha-D-glucuronate = baicalin + UDP'
+  - node_id: rxn1_sub1
+    label: baicalein
+    node_type: CHEMICAL
+    grounding: CHEBI:78324
+    description: Formula C15H9O5.
+  - node_id: rxn1_sub2
+    label: UDP-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+    description: Formula C15H19N2O18P2.
+  - node_id: rxn1_prd1
+    label: baicalin
+    node_type: CHEMICAL
+    grounding: CHEBI:61283
+    description: Formula C21H17O11.
+  - node_id: rxn1_prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of scutellarein + UDP-alpha-D-glucuronate = scutellarin + UDP
+    grounding: RHEA:28318
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: scutellarein + UDP-alpha-D-glucuronate = scutellarin + UDP'
+  - node_id: rxn2_sub1
+    label: scutellarein
+    node_type: CHEMICAL
+    grounding: CHEBI:78328
+    description: Formula C15H9O6.
+  - node_id: rxn2_sub2
+    label: UDP-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+    description: Formula C15H19N2O18P2.
+  - node_id: rxn2_prd1
+    label: scutellarin
+    node_type: CHEMICAL
+    grounding: CHEBI:61284
+    description: Formula C21H17O12.
+  - node_id: rxn2_prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of wogonin + UDP-alpha-D-glucuronate = wogonin 7-O-beta-D-glucuronate + UDP
+    grounding: RHEA:28322
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: wogonin + UDP-alpha-D-glucuronate = wogonin 7-O-beta-D-glucuronate + UDP'
+  - node_id: rxn3_sub1
+    label: wogonin
+    node_type: CHEMICAL
+    grounding: CHEBI:78338
+    description: Formula C16H11O5.
+  - node_id: rxn3_sub2
+    label: UDP-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+    description: Formula C15H19N2O18P2.
+  - node_id: rxn3_prd1
+    label: wogonin 7-O-beta-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:61285
+    description: Formula C22H19O11.
+  - node_id: rxn3_prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: prot_Q76MR7
+    node_type: PROTEIN
+    label: UBGAT_SCUBA
+    grounding: UniProtKB:Q76MR7
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:28314 is one of the 3 curated reactions Rhea assigns to EC 2.4.1.253; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28314
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.253"/>
+      notes: The rh:ec triple on RHEA:28314 in rhea.rdf assigns that reaction to EC 2.4.1.253.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: baicalein is a substrate consumed by RHEA:28314 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28315
+      snippet: baicalein + UDP-alpha-D-glucuronate => baicalin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28315 declares side 28314_L as its substrates
+        (rh:substrates); the master reaction RHEA:28314 is undirected. This participant is CHEBI:78324
+        with coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: UDP-alpha-D-glucuronate is a substrate consumed by RHEA:28314 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28315
+      snippet: baicalein + UDP-alpha-D-glucuronate => baicalin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28315 declares side 28314_L as its substrates
+        (rh:substrates); the master reaction RHEA:28314 is undirected. This participant is CHEBI:58052
+        with coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: baicalin is a product released by RHEA:28314 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28315
+      snippet: baicalein + UDP-alpha-D-glucuronate => baicalin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28315 declares side 28314_R as its products
+        (rh:products); the master reaction RHEA:28314 is undirected. This participant is CHEBI:61283 with
+        coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: UDP is a product released by RHEA:28314 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28315
+      snippet: baicalein + UDP-alpha-D-glucuronate => baicalin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28315 declares side 28314_R as its products
+        (rh:products); the master reaction RHEA:28314 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:28318 is one of the 3 curated reactions Rhea assigns to EC 2.4.1.253; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28318
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.253"/>
+      notes: The rh:ec triple on RHEA:28318 in rhea.rdf assigns that reaction to EC 2.4.1.253.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: scutellarein is a substrate consumed by RHEA:28318 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28319
+      snippet: scutellarein + UDP-alpha-D-glucuronate => scutellarin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28319 declares side 28318_L as its substrates
+        (rh:substrates); the master reaction RHEA:28318 is undirected. This participant is CHEBI:78328
+        with coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: UDP-alpha-D-glucuronate is a substrate consumed by RHEA:28318 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28319
+      snippet: scutellarein + UDP-alpha-D-glucuronate => scutellarin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28319 declares side 28318_L as its substrates
+        (rh:substrates); the master reaction RHEA:28318 is undirected. This participant is CHEBI:58052
+        with coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: scutellarin is a product released by RHEA:28318 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28319
+      snippet: scutellarein + UDP-alpha-D-glucuronate => scutellarin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28319 declares side 28318_R as its products
+        (rh:products); the master reaction RHEA:28318 is undirected. This participant is CHEBI:61284 with
+        coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: UDP is a product released by RHEA:28318 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28319
+      snippet: scutellarein + UDP-alpha-D-glucuronate => scutellarin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28319 declares side 28318_R as its products
+        (rh:products); the master reaction RHEA:28318 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:28322 is one of the 3 curated reactions Rhea assigns to EC 2.4.1.253; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28322
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.253"/>
+      notes: The rh:ec triple on RHEA:28322 in rhea.rdf assigns that reaction to EC 2.4.1.253.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: wogonin is a substrate consumed by RHEA:28322 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28323
+      snippet: wogonin + UDP-alpha-D-glucuronate => wogonin 7-O-beta-D-glucuronate + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28323 declares side 28322_L as its substrates
+        (rh:substrates); the master reaction RHEA:28322 is undirected. This participant is CHEBI:78338
+        with coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: UDP-alpha-D-glucuronate is a substrate consumed by RHEA:28322 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28323
+      snippet: wogonin + UDP-alpha-D-glucuronate => wogonin 7-O-beta-D-glucuronate + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28323 declares side 28322_L as its substrates
+        (rh:substrates); the master reaction RHEA:28322 is undirected. This participant is CHEBI:58052
+        with coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: wogonin 7-O-beta-D-glucuronate is a product released by RHEA:28322 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28323
+      snippet: wogonin + UDP-alpha-D-glucuronate => wogonin 7-O-beta-D-glucuronate + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28323 declares side 28322_R as its products
+        (rh:products); the master reaction RHEA:28322 is undirected. This participant is CHEBI:61285 with
+        coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: UDP is a product released by RHEA:28322 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28323
+      snippet: wogonin + UDP-alpha-D-glucuronate => wogonin 7-O-beta-D-glucuronate + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28323 declares side 28322_R as its products
+        (rh:products); the master reaction RHEA:28322 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: prot_Q76MR7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UBGAT_SCUBA is an exemplar enzyme with EC 2.4.1.253 activity.
+    evidence:
+    - reference: EC:2.4.1.253
+      snippet: DR   Q76MR7, UBGAT_SCUBA;
+      notes: ExPASy ENZYME entry EC 2.4.1.253 cross-references UniProtKB:Q76MR7 (UBGAT_SCUBA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.98.1.-
 synonyms:
@@ -51,4 +51,146 @@ definitions:
       Catalyses: heme b + 2 H(+) = protoporphyrin IX + Fe(2+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protoporphyrin ferrochelatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.98.1.1. EC 4.98.1.1 maps to exactly
+    one curated Rhea reaction (RHEA:22584), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "heme b + 2 H(+)
+    = protoporphyrin IX + Fe(2+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protoporphyrin ferrochelatase
+    grounding: EC:4.98.1.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: heme b
+    node_type: CHEMICAL
+    grounding: CHEBI:60344
+    description: Formula C34H30FeN4O4.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: protoporphyrin IX
+    node_type: CHEMICAL
+    grounding: CHEBI:57306
+    description: Formula C34H32N4O4.
+  - node_id: prd2
+    label: Fe(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+    description: Formula Fe.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protoporphyrin ferrochelatase activity
+    grounding: GO:0004325
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P39597
+    node_type: PROTEIN
+    label: EFEB_BACSU
+    grounding: UniProtKB:P39597
+  - node_id: prot_Q8XAS4
+    node_type: PROTEIN
+    label: EFEB_ECO57
+    grounding: UniProtKB:Q8XAS4
+  - node_id: prot_A1A9S3
+    node_type: PROTEIN
+    label: EFEB_ECOK1
+    grounding: UniProtKB:A1A9S3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: heme b is a substrate consumed by RHEA:22584 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22585
+      snippet: heme b + 2 H(+) => protoporphyrin IX + Fe(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:22585 declares side 22584_L as its substrates
+        (rh:substrates); the master reaction RHEA:22584 is undirected. This participant is CHEBI:60344
+        with coefficient 1. Rhea cites PMID:13972329, PMID:3805002, PMID:13972328 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:22584 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:22585
+      snippet: heme b + 2 H(+) => protoporphyrin IX + Fe(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:22585 declares side 22584_L as its substrates
+        (rh:substrates); the master reaction RHEA:22584 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:13972329, PMID:3805002, PMID:13972328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: protoporphyrin IX is a product released by RHEA:22584 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22585
+      snippet: heme b + 2 H(+) => protoporphyrin IX + Fe(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:22585 declares side 22584_R as its products
+        (rh:products); the master reaction RHEA:22584 is undirected. This participant is CHEBI:57306 with
+        coefficient 1. Rhea cites PMID:13972329, PMID:3805002, PMID:13972328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Fe(2+) is a product released by RHEA:22584 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22585
+      snippet: heme b + 2 H(+) => protoporphyrin IX + Fe(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:22585 declares side 22584_R as its products
+        (rh:products); the master reaction RHEA:22584 is undirected. This participant is CHEBI:29033 with
+        coefficient 1. Rhea cites PMID:13972329, PMID:3805002, PMID:13972328 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.98.1.1
+      snippet: EC:4.98.1.1 > GO:protoporphyrin ferrochelatase activity ; GO:0004325
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004325 is itself a record
+        in this KB.
+  - subject: prot_P39597
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EFEB_BACSU is an exemplar enzyme with EC 4.98.1.1 activity.
+    evidence:
+    - reference: EC:4.98.1.1
+      snippet: DR   P39597, EFEB_BACSU ;  Q8XAS4, EFEB_ECO57 ;  A1A9S3, EFEB_ECOK1 ;
+      notes: ExPASy ENZYME entry EC 4.98.1.1 cross-references UniProtKB:P39597 (EFEB_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q8XAS4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EFEB_ECO57 is an exemplar enzyme with EC 4.98.1.1 activity.
+    evidence:
+    - reference: EC:4.98.1.1
+      snippet: DR   P39597, EFEB_BACSU ;  Q8XAS4, EFEB_ECO57 ;  A1A9S3, EFEB_ECOK1 ;
+      notes: ExPASy ENZYME entry EC 4.98.1.1 cross-references UniProtKB:Q8XAS4 (EFEB_ECO57) as a protein
+        with this activity.
+  - subject: prot_A1A9S3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EFEB_ECOK1 is an exemplar enzyme with EC 4.98.1.1 activity.
+    evidence:
+    - reference: EC:4.98.1.1
+      snippet: DR   P39597, EFEB_BACSU ;  Q8XAS4, EFEB_ECO57 ;  A1A9S3, EFEB_ECOK1 ;
+      notes: ExPASy ENZYME entry EC 4.98.1.1 cross-references UniProtKB:A1A9S3 (EFEB_ECOK1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

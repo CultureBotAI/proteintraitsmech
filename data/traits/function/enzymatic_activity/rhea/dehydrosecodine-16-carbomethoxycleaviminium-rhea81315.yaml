@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:146237
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,60 @@ definitions:
       Catalyses the reaction: dehydrosecodine = (-)-16-carbomethoxycleaviminium
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dehydrosecodine = (-)-16-carbomethoxycleaviminium
+  description: Substrate-to-product chemistry of RHEA:81315, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81316 (rh:substrates → 81315_L, rh:products → 81315_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dehydrosecodine = (-)-16-carbomethoxycleaviminium
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81315
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dehydrosecodine = (-)-16-carbomethoxycleaviminium'
+  - node_id: sub1
+    label: dehydrosecodine
+    node_type: CHEMICAL
+    grounding: CHEBI:146237
+    description: Formula C21H25N2O2.
+  - node_id: prd1
+    label: (-)-16-carbomethoxycleaviminium
+    node_type: CHEMICAL
+    grounding: CHEBI:231852
+    description: Formula C21H25N2O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dehydrosecodine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81316
+      snippet: dehydrosecodine => (-)-16-carbomethoxycleaviminium
+      notes: Rhea's left-to-right directional reaction RHEA:81316 declares side 81315_L as its substrates
+        (rh:substrates); the master reaction RHEA:81315 is undirected. This participant is CHEBI:146237
+        with coefficient 1. Rhea cites PMID:32066966, PMID:38319969 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-16-carbomethoxycleaviminium is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:81316
+      snippet: dehydrosecodine => (-)-16-carbomethoxycleaviminium
+      notes: Rhea's left-to-right directional reaction RHEA:81316 declares side 81315_R as its products
+        (rh:products); the master reaction RHEA:81315 is undirected. This participant is CHEBI:231852
+        with coefficient 1. Rhea cites PMID:32066966, PMID:38319969 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

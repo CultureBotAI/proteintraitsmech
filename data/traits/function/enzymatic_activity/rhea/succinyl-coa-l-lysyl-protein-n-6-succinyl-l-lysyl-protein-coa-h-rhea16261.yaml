@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57292
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,141 @@ definitions:
       Catalyses the reaction: succinyl-CoA + L-lysyl-[protein] = N(6)-succinyl-L-lysyl-[protein] + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of succinyl-CoA + L-lysyl-[protein] = N(6)-succinyl-L-lysyl-[protein] + CoA
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:16261, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:16262 (rh:substrates → 16261_L, rh:products → 16261_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of succinyl-CoA + L-lysyl-[protein] = N(6)-succinyl-L-lysyl-[protein] + CoA + H…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:16261
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: succinyl-CoA + L-lysyl-[protein] = N(6)-succinyl-L-lysyl-[protein] + CoA + H(+)'
+  - node_id: sub1
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: sub2
+    label: L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9752
+    description: Rhea compound GENERIC:9752.
+  - node_id: sub2_rp1
+    label: L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9752 (L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29969
+  - node_id: prd1
+    label: N(6)-succinyl-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11877
+    description: Rhea compound GENERIC:11877.
+  - node_id: prd1_rp1
+    label: N(6)-succinyl-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11877 (N(6)-succinyl-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:87830
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: succinyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16262
+      snippet: succinyl-CoA + L-lysyl-[protein] => N(6)-succinyl-L-lysyl-[protein] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16262 declares side 16261_L as its substrates
+        (rh:substrates); the master reaction RHEA:16261 is undirected. This participant is CHEBI:57292
+        with coefficient 1. Rhea cites PMID:29211711 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-lysyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16262
+      snippet: succinyl-CoA + L-lysyl-[protein] => N(6)-succinyl-L-lysyl-[protein] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16262 declares side 16261_L as its substrates
+        (rh:substrates); the master reaction RHEA:16261 is undirected. This participant is GENERIC:9752
+        with coefficient 1. Rhea cites PMID:29211711 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-lysine residue is the reactive part of L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:16261
+      snippet: L-lysine residue
+      notes: Rhea compound GENERIC:9752 (L-lysyl-[protein]) declares rh:reactivePart = L-lysine residue
+        (CHEBI:29969), formula C6H13N2O.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-succinyl-L-lysyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16262
+      snippet: succinyl-CoA + L-lysyl-[protein] => N(6)-succinyl-L-lysyl-[protein] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16262 declares side 16261_R as its products
+        (rh:products); the master reaction RHEA:16261 is undirected. This participant is GENERIC:11877
+        with coefficient 1. Rhea cites PMID:29211711 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-succinyl-L-lysine residue is the reactive part of N(6)-succinyl-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:16261
+      snippet: N(6)-succinyl-L-lysine residue
+      notes: Rhea compound GENERIC:11877 (N(6)-succinyl-L-lysyl-[protein]) declares rh:reactivePart =
+        N(6)-succinyl-L-lysine residue (CHEBI:87830), formula C10H15N2O4.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16262
+      snippet: succinyl-CoA + L-lysyl-[protein] => N(6)-succinyl-L-lysyl-[protein] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16262 declares side 16261_R as its products
+        (rh:products); the master reaction RHEA:16261 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:29211711 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16262
+      snippet: succinyl-CoA + L-lysyl-[protein] => N(6)-succinyl-L-lysyl-[protein] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16262 declares side 16261_R as its products
+        (rh:products); the master reaction RHEA:16261 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29211711 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

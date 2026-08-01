@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:132111
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,93 @@ definitions:
       Catalyses the reaction: syringate + (6S)-5,6,7,8-tetrahydrofolate = 3-O-methylgallate + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of syringate + (6S)-5,6,7,8-tetrahydrofolate = 3-O-methylgallate + (6S)-5-methyl-5,6,7,8-t…
+  description: Substrate-to-product chemistry of RHEA:59840, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59841 (rh:substrates → 59840_L, rh:products → 59840_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of syringate + (6S)-5,6,7,8-tetrahydrofolate = 3-O-methylgallate + (6S)-5-methy…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59840
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: syringate + (6S)-5,6,7,8-tetrahydrofolate = 3-O-methylgallate + (6S)-5-methyl-5,6,7,8-tetrahydrofolate'
+  - node_id: sub1
+    label: syringate
+    node_type: CHEMICAL
+    grounding: CHEBI:132111
+    description: Formula C9H9O5.
+  - node_id: sub2
+    label: (6S)-5,6,7,8-tetrahydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:57453
+    description: Formula C19H21N7O6.
+  - node_id: prd1
+    label: 3-O-methylgallate
+    node_type: CHEMICAL
+    grounding: CHEBI:19950
+    description: Formula C8H7O5.
+  - node_id: prd2
+    label: (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:18608
+    description: Formula C20H23N7O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: syringate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59841
+      snippet: syringate + (6S)-5,6,7,8-tetrahydrofolate => 3-O-methylgallate + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+      notes: Rhea's left-to-right directional reaction RHEA:59841 declares side 59840_L as its substrates
+        (rh:substrates); the master reaction RHEA:59840 is undirected. This participant is CHEBI:132111
+        with coefficient 1. Rhea cites PMID:15090517 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (6S)-5,6,7,8-tetrahydrofolate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59841
+      snippet: syringate + (6S)-5,6,7,8-tetrahydrofolate => 3-O-methylgallate + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+      notes: Rhea's left-to-right directional reaction RHEA:59841 declares side 59840_L as its substrates
+        (rh:substrates); the master reaction RHEA:59840 is undirected. This participant is CHEBI:57453
+        with coefficient 1. Rhea cites PMID:15090517 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-O-methylgallate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59841
+      snippet: syringate + (6S)-5,6,7,8-tetrahydrofolate => 3-O-methylgallate + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+      notes: Rhea's left-to-right directional reaction RHEA:59841 declares side 59840_R as its products
+        (rh:products); the master reaction RHEA:59840 is undirected. This participant is CHEBI:19950 with
+        coefficient 1. Rhea cites PMID:15090517 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (6S)-5-methyl-5,6,7,8-tetrahydrofolate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59841
+      snippet: syringate + (6S)-5,6,7,8-tetrahydrofolate => 3-O-methylgallate + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+      notes: Rhea's left-to-right directional reaction RHEA:59841 declares side 59840_R as its products
+        (rh:products); the master reaction RHEA:59840 is undirected. This participant is CHEBI:18608 with
+        coefficient 1. Rhea cites PMID:15090517 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

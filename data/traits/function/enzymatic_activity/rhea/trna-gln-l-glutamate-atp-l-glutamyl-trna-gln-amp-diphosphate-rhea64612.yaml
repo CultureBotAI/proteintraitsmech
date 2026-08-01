@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78442
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,171 @@ definitions:
       Catalyses the reaction: tRNA(Gln) + L-glutamate + ATP = L-glutamyl-tRNA(Gln) + AMP + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(Gln) + L-glutamate + ATP = L-glutamyl-tRNA(Gln) + AMP + diphosphate
+  description: Substrate-to-product chemistry of RHEA:64612, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:64613 (rh:substrates → 64612_L, rh:products → 64612_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tRNA(Gln) + L-glutamate + ATP = L-glutamyl-tRNA(Gln) + AMP + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:64612
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tRNA(Gln) + L-glutamate + ATP = L-glutamyl-tRNA(Gln) + AMP + diphosphate'
+  - node_id: sub1
+    label: tRNA(Gln)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9662
+    description: Rhea compound GENERIC:9662.
+  - node_id: sub1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9662 (tRNA(Gln));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-glutamyl-tRNA(Gln)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9684
+    description: Rhea compound GENERIC:9684.
+  - node_id: prd1_rp1
+    label: 3'-(L-glutamate)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9684 (L-glutamyl-tRNA(Gln));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78520
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glutamate-tRNA(Gln) ligase activity
+    grounding: GO:0050561
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Gln) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64613
+      snippet: tRNA(Gln) + L-glutamate + ATP => L-glutamyl-tRNA(Gln) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64613 declares side 64612_L as its substrates
+        (rh:substrates); the master reaction RHEA:64612 is undirected. This participant is GENERIC:9662
+        with coefficient 1. Rhea cites PMID:3079749, PMID:9749534 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Gln).
+    evidence:
+    - reference: RHEA:64612
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9662 (tRNA(Gln)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-glutamate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64613
+      snippet: tRNA(Gln) + L-glutamate + ATP => L-glutamyl-tRNA(Gln) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64613 declares side 64612_L as its substrates
+        (rh:substrates); the master reaction RHEA:64612 is undirected. This participant is CHEBI:29985
+        with coefficient 1. Rhea cites PMID:3079749, PMID:9749534 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64613
+      snippet: tRNA(Gln) + L-glutamate + ATP => L-glutamyl-tRNA(Gln) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64613 declares side 64612_L as its substrates
+        (rh:substrates); the master reaction RHEA:64612 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:3079749, PMID:9749534 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-glutamyl-tRNA(Gln) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:64613
+      snippet: tRNA(Gln) + L-glutamate + ATP => L-glutamyl-tRNA(Gln) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64613 declares side 64612_R as its products
+        (rh:products); the master reaction RHEA:64612 is undirected. This participant is GENERIC:9684
+        with coefficient 1. Rhea cites PMID:3079749, PMID:9749534 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-glutamate)adenylyl group is the reactive part of L-glutamyl-tRNA(Gln).
+    evidence:
+    - reference: RHEA:64612
+      snippet: 3'-(L-glutamate)adenylyl group
+      notes: Rhea compound GENERIC:9684 (L-glutamyl-tRNA(Gln)) declares rh:reactivePart = 3'-(L-glutamate)adenylyl
+        group (CHEBI:78520), formula C15H19N6O9P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64613
+      snippet: tRNA(Gln) + L-glutamate + ATP => L-glutamyl-tRNA(Gln) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64613 declares side 64612_R as its products
+        (rh:products); the master reaction RHEA:64612 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:3079749, PMID:9749534 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64613
+      snippet: tRNA(Gln) + L-glutamate + ATP => L-glutamyl-tRNA(Gln) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64613 declares side 64612_R as its products
+        (rh:products); the master reaction RHEA:64612 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:3079749, PMID:9749534 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:64612
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050561"/>
+      notes: The rdfs:seeAlso triple on RHEA:64612 in rhea.rdf. GO term GO:0050561 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

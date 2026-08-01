@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 mapped_xrefs:
@@ -38,4 +38,264 @@ definitions:
       Catalyses: (1) (S)-malate + NAD(+) = oxaloacetate + NADH + H(+). (2) (S)-malate + NADP(+) = oxaloacetate + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of malate dehydrogenase [NAD(P)(+)]
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.299. Rhea assigns 2 curated
+    reactions to EC 1.1.1.299. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (S)-malate + NAD(+) = oxaloacetate + NADH + H(+). (2)
+    (S)-malate + NADP(+) = oxaloacetate + NADPH + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: malate dehydrogenase [NAD(P)(+)]
+    grounding: EC:1.1.1.299
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (S)-malate + NADP(+) = oxaloacetate + NADPH + H(+)
+    grounding: RHEA:10824
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (S)-malate + NADP(+) = oxaloacetate + NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: (S)-malate
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+    description: Formula C4H4O5.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+    description: Formula C4H2O5.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (S)-malate + NAD(+) = oxaloacetate + NADH + H(+)
+    grounding: RHEA:21432
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (S)-malate + NAD(+) = oxaloacetate + NADH + H(+)'
+  - node_id: rxn2_sub1
+    label: (S)-malate
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+    description: Formula C4H4O5.
+  - node_id: rxn2_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2_prd1
+    label: oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+    description: Formula C4H2O5.
+  - node_id: rxn2_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q9YEA1
+    node_type: PROTEIN
+    label: MDH_AERPE
+    grounding: UniProtKB:Q9YEA1
+  - node_id: prot_Q8TWG5
+    node_type: PROTEIN
+    label: MDH_METKA
+    grounding: UniProtKB:Q8TWG5
+  - node_id: prot_Q6LZI3
+    node_type: PROTEIN
+    label: MDH_METMP
+    grounding: UniProtKB:Q6LZI3
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:10824 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.299; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:10824
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.299"/>
+      notes: The rh:ec triple on RHEA:10824 in rhea.rdf assigns that reaction to EC 1.1.1.299.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (S)-malate is a substrate consumed by RHEA:10824 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10825
+      snippet: (S)-malate + NADP(+) => oxaloacetate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10825 declares side 10824_L as its substrates
+        (rh:substrates); the master reaction RHEA:10824 is undirected. This participant is CHEBI:15589
+        with coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:10824 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10825
+      snippet: (S)-malate + NADP(+) => oxaloacetate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10825 declares side 10824_L as its substrates
+        (rh:substrates); the master reaction RHEA:10824 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: oxaloacetate is a product released by RHEA:10824 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10825
+      snippet: (S)-malate + NADP(+) => oxaloacetate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10825 declares side 10824_R as its products
+        (rh:products); the master reaction RHEA:10824 is undirected. This participant is CHEBI:16452 with
+        coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:10824 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10825
+      snippet: (S)-malate + NADP(+) => oxaloacetate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10825 declares side 10824_R as its products
+        (rh:products); the master reaction RHEA:10824 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:10824 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10825
+      snippet: (S)-malate + NADP(+) => oxaloacetate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10825 declares side 10824_R as its products
+        (rh:products); the master reaction RHEA:10824 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:21432 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.299; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:21432
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.299"/>
+      notes: The rh:ec triple on RHEA:21432 in rhea.rdf assigns that reaction to EC 1.1.1.299.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (S)-malate is a substrate consumed by RHEA:21432 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21433
+      snippet: (S)-malate + NAD(+) => oxaloacetate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21433 declares side 21432_L as its substrates
+        (rh:substrates); the master reaction RHEA:21432 is undirected. This participant is CHEBI:15589
+        with coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NAD(+) is a substrate consumed by RHEA:21432 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21433
+      snippet: (S)-malate + NAD(+) => oxaloacetate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21433 declares side 21432_L as its substrates
+        (rh:substrates); the master reaction RHEA:21432 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: oxaloacetate is a product released by RHEA:21432 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21433
+      snippet: (S)-malate + NAD(+) => oxaloacetate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21433 declares side 21432_R as its products
+        (rh:products); the master reaction RHEA:21432 is undirected. This participant is CHEBI:16452 with
+        coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADH is a product released by RHEA:21432 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21433
+      snippet: (S)-malate + NAD(+) => oxaloacetate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21433 declares side 21432_R as its products
+        (rh:products); the master reaction RHEA:21432 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:21432 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21433
+      snippet: (S)-malate + NAD(+) => oxaloacetate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21433 declares side 21432_R as its products
+        (rh:products); the master reaction RHEA:21432 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:13345798, PMID:9639601, PMID:5637713, PMID:19555779 for this reaction.
+  - subject: prot_Q9YEA1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MDH_AERPE is an exemplar enzyme with EC 1.1.1.299 activity.
+    evidence:
+    - reference: EC:1.1.1.299
+      snippet: DR   Q9YEA1, MDH_AERPE  ;  Q8TWG5, MDH_METKA  ;  Q6LZI3, MDH_METMP  ;
+      notes: ExPASy ENZYME entry EC 1.1.1.299 cross-references UniProtKB:Q9YEA1 (MDH_AERPE) as a protein
+        with this activity.
+  - subject: prot_Q8TWG5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MDH_METKA is an exemplar enzyme with EC 1.1.1.299 activity.
+    evidence:
+    - reference: EC:1.1.1.299
+      snippet: DR   Q9YEA1, MDH_AERPE  ;  Q8TWG5, MDH_METKA  ;  Q6LZI3, MDH_METMP  ;
+      notes: ExPASy ENZYME entry EC 1.1.1.299 cross-references UniProtKB:Q8TWG5 (MDH_METKA) as a protein
+        with this activity.
+  - subject: prot_Q6LZI3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MDH_METMP is an exemplar enzyme with EC 1.1.1.299 activity.
+    evidence:
+    - reference: EC:1.1.1.299
+      snippet: DR   Q9YEA1, MDH_AERPE  ;  Q8TWG5, MDH_METKA  ;  Q6LZI3, MDH_METMP  ;
+      notes: ExPASy ENZYME entry EC 1.1.1.299 cross-references UniProtKB:Q6LZI3 (MDH_METMP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

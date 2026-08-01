@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 synonyms:
@@ -41,4 +41,149 @@ definitions:
       Catalyses: alpha-D-ribose 1,5-bisphosphate + ATP = 5-phospho-alpha-D-ribose 1-diphosphate + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ribose 1,5-bisphosphate phosphokinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.23. EC 2.7.4.23 maps to exactly
+    one curated Rhea reaction (RHEA:20109), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "alpha-D-ribose
+    1,5-bisphosphate + ATP = 5-phospho-alpha-D-ribose 1-diphosphate + ADP". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ribose 1,5-bisphosphate phosphokinase
+    grounding: EC:2.7.4.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: alpha-D-ribose 1,5-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:68688
+    description: Formula C5H8O11P2.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: 5-phospho-alpha-D-ribose 1-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58017
+    description: Formula C5H8O14P3.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ribose 1,5-bisphosphate phosphokinase activity
+    grounding: GO:0033863
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_E3HQ85
+    node_type: PROTEIN
+    label: PHNN_ACHXA
+    grounding: UniProtKB:E3HQ85
+  - node_id: prot_A5G2M7
+    node_type: PROTEIN
+    label: PHNN_ACICJ
+    grounding: UniProtKB:A5G2M7
+  - node_id: prot_A9CKM5
+    node_type: PROTEIN
+    label: PHNN_AGRFC
+    grounding: UniProtKB:A9CKM5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha-D-ribose 1,5-bisphosphate is a substrate consumed by RHEA:20109 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20110
+      snippet: alpha-D-ribose 1,5-bisphosphate + ATP => 5-phospho-alpha-D-ribose 1-diphosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:20110 declares side 20109_L as its substrates
+        (rh:substrates); the master reaction RHEA:20109 is undirected. This participant is CHEBI:68688
+        with coefficient 1. Rhea cites PMID:12700258 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:20109 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20110
+      snippet: alpha-D-ribose 1,5-bisphosphate + ATP => 5-phospho-alpha-D-ribose 1-diphosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:20110 declares side 20109_L as its substrates
+        (rh:substrates); the master reaction RHEA:20109 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:12700258 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-phospho-alpha-D-ribose 1-diphosphate is a product released by RHEA:20109 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20110
+      snippet: alpha-D-ribose 1,5-bisphosphate + ATP => 5-phospho-alpha-D-ribose 1-diphosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:20110 declares side 20109_R as its products
+        (rh:products); the master reaction RHEA:20109 is undirected. This participant is CHEBI:58017 with
+        coefficient 1. Rhea cites PMID:12700258 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:20109 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20110
+      snippet: alpha-D-ribose 1,5-bisphosphate + ATP => 5-phospho-alpha-D-ribose 1-diphosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:20110 declares side 20109_R as its products
+        (rh:products); the master reaction RHEA:20109 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:12700258 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.4.23
+      snippet: EC:2.7.4.23 > GO:ribose 1,5-bisphosphate phosphokinase activity ; GO:0033863
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033863 is itself a record
+        in this KB.
+  - subject: prot_E3HQ85
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNN_ACHXA is an exemplar enzyme with EC 2.7.4.23 activity.
+    evidence:
+    - reference: EC:2.7.4.23
+      snippet: DR   E3HQ85, PHNN_ACHXA ;  A5G2M7, PHNN_ACICJ ;  A9CKM5, PHNN_AGRFC ;
+      notes: ExPASy ENZYME entry EC 2.7.4.23 cross-references UniProtKB:E3HQ85 (PHNN_ACHXA) as a protein
+        with this activity.
+  - subject: prot_A5G2M7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNN_ACICJ is an exemplar enzyme with EC 2.7.4.23 activity.
+    evidence:
+    - reference: EC:2.7.4.23
+      snippet: DR   E3HQ85, PHNN_ACHXA ;  A5G2M7, PHNN_ACICJ ;  A9CKM5, PHNN_AGRFC ;
+      notes: ExPASy ENZYME entry EC 2.7.4.23 cross-references UniProtKB:A5G2M7 (PHNN_ACICJ) as a protein
+        with this activity.
+  - subject: prot_A9CKM5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNN_AGRFC is an exemplar enzyme with EC 2.7.4.23 activity.
+    evidence:
+    - reference: EC:2.7.4.23
+      snippet: DR   E3HQ85, PHNN_ACHXA ;  A5G2M7, PHNN_ACICJ ;  A9CKM5, PHNN_AGRFC ;
+      notes: ExPASy ENZYME entry EC 2.7.4.23 cross-references UniProtKB:A9CKM5 (PHNN_AGRFC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

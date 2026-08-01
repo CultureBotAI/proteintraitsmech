@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 mapped_xrefs:
@@ -28,4 +28,120 @@ definitions:
       Catalyses: amicoumacin A + ATP = amicoumacin A 2-phosphate + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of amicoumacin kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.230. EC 2.7.1.230 maps to
+    exactly one curated Rhea reaction (RHEA:61588), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "amicoumacin
+    A + ATP = amicoumacin A 2-phosphate + ADP + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: amicoumacin kinase
+    grounding: EC:2.7.1.230
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: amicoumacin A
+    node_type: CHEMICAL
+    grounding: CHEBI:144858
+    description: Formula C20H30N3O7.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: amicoumacin A 2-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:144859
+    description: Formula C20H29N3O10P.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_O34640
+    node_type: PROTEIN
+    label: AMIN_BACSU
+    grounding: UniProtKB:O34640
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: amicoumacin A is a substrate consumed by RHEA:61588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61589
+      snippet: amicoumacin A + ATP => amicoumacin A 2-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61589 declares side 61588_L as its substrates
+        (rh:substrates); the master reaction RHEA:61588 is undirected. This participant is CHEBI:144858
+        with coefficient 1. Rhea cites PMID:30181282 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:61588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61589
+      snippet: amicoumacin A + ATP => amicoumacin A 2-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61589 declares side 61588_L as its substrates
+        (rh:substrates); the master reaction RHEA:61588 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:30181282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: amicoumacin A 2-phosphate is a product released by RHEA:61588 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61589
+      snippet: amicoumacin A + ATP => amicoumacin A 2-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61589 declares side 61588_R as its products
+        (rh:products); the master reaction RHEA:61588 is undirected. This participant is CHEBI:144859
+        with coefficient 1. Rhea cites PMID:30181282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:61588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61589
+      snippet: amicoumacin A + ATP => amicoumacin A 2-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61589 declares side 61588_R as its products
+        (rh:products); the master reaction RHEA:61588 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:30181282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:61588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61589
+      snippet: amicoumacin A + ATP => amicoumacin A 2-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61589 declares side 61588_R as its products
+        (rh:products); the master reaction RHEA:61588 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:30181282 for this reaction.
+  - subject: prot_O34640
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMIN_BACSU is an exemplar enzyme with EC 2.7.1.230 activity.
+    evidence:
+    - reference: EC:2.7.1.230
+      snippet: DR   O34640, AMIN_BACSU ;
+      notes: ExPASy ENZYME entry EC 2.7.1.230 cross-references UniProtKB:O34640 (AMIN_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

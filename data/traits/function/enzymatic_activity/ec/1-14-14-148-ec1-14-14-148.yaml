@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.14.-
 synonyms:
@@ -33,4 +33,225 @@ definitions:
       Catalyses: (S)-columbianetin + reduced [NADPH--hemoprotein reductase] + O2 = angelicin + acetone + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of angelicin synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.14.148. EC 1.14.14.148 maps
+    to exactly one curated Rhea reaction (RHEA:27481), so that reaction''s substrates and products are
+    the class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-columbianetin
+    + reduced [NADPH--hemoprotein reductase] + O2 = angelicin + acetone + oxidized [NADPH--hemoprotein
+    reductase] + 2 H2O + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: angelicin synthase
+    grounding: EC:1.14.14.148
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-columbianetin
+    node_type: CHEMICAL
+    grounding: CHEBI:437678
+    description: Formula C14H14O4.
+  - node_id: sub2
+    label: reduced [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11964
+    description: Rhea compound GENERIC:11964.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: FMNH2
+    description: The reacting group Rhea names inside the generic participant GENERIC:11964 (reduced [NADPH--hemoprotein
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57618
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: angelicin
+    node_type: CHEMICAL
+    grounding: CHEBI:28928
+    description: Formula C11H6O3.
+  - node_id: prd2
+    label: acetone
+    node_type: CHEMICAL
+    grounding: CHEBI:15347
+    description: Formula C3H6O.
+  - node_id: prd3
+    label: oxidized [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11965
+    description: Rhea compound GENERIC:11965.
+  - node_id: prd3_rp1
+    node_type: RESIDUE
+    label: FMN
+    description: The reacting group Rhea names inside the generic participant GENERIC:11965 (oxidized
+      [NADPH--hemoprotein reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58210
+  - node_id: prd4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd5
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: angelicin synthase activity
+    grounding: GO:0102995
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_C0SJS3
+    node_type: PROTEIN
+    label: ANGS_PASSA
+    grounding: UniProtKB:C0SJS3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-columbianetin is a substrate consumed by RHEA:27481 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27482
+      snippet: (S)-columbianetin + reduced [NADPH--hemoprotein reductase] + O2 => angelicin + acetone
+        + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27482 declares side 27481_L as its substrates
+        (rh:substrates); the master reaction RHEA:27481 is undirected. This participant is CHEBI:437678
+        with coefficient 1. Rhea cites PMID:19098286 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [NADPH--hemoprotein reductase] is a substrate consumed by RHEA:27481 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27482
+      snippet: (S)-columbianetin + reduced [NADPH--hemoprotein reductase] + O2 => angelicin + acetone
+        + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27482 declares side 27481_L as its substrates
+        (rh:substrates); the master reaction RHEA:27481 is undirected. This participant is GENERIC:11964
+        with coefficient 1. Rhea cites PMID:19098286 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: FMNH2 is the reactive part of reduced [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:27481
+      snippet: FMNH2
+      notes: Rhea compound GENERIC:11964 (reduced [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMNH2 (CHEBI:57618).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:27481 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27482
+      snippet: (S)-columbianetin + reduced [NADPH--hemoprotein reductase] + O2 => angelicin + acetone
+        + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27482 declares side 27481_L as its substrates
+        (rh:substrates); the master reaction RHEA:27481 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:19098286 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: angelicin is a product released by RHEA:27481 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27482
+      snippet: (S)-columbianetin + reduced [NADPH--hemoprotein reductase] + O2 => angelicin + acetone
+        + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27482 declares side 27481_R as its products
+        (rh:products); the master reaction RHEA:27481 is undirected. This participant is CHEBI:28928 with
+        coefficient 1. Rhea cites PMID:19098286 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetone is a product released by RHEA:27481 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27482
+      snippet: (S)-columbianetin + reduced [NADPH--hemoprotein reductase] + O2 => angelicin + acetone
+        + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27482 declares side 27481_R as its products
+        (rh:products); the master reaction RHEA:27481 is undirected. This participant is CHEBI:15347 with
+        coefficient 1. Rhea cites PMID:19098286 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: oxidized [NADPH--hemoprotein reductase] is a product released by RHEA:27481 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27482
+      snippet: (S)-columbianetin + reduced [NADPH--hemoprotein reductase] + O2 => angelicin + acetone
+        + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27482 declares side 27481_R as its products
+        (rh:products); the master reaction RHEA:27481 is undirected. This participant is GENERIC:11965
+        with coefficient 1. Rhea cites PMID:19098286 for this reaction.
+  - subject: prd3_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd3
+    description: FMN is the reactive part of oxidized [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:27481
+      snippet: FMN
+      notes: Rhea compound GENERIC:11965 (oxidized [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMN (CHEBI:58210).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H2O is a product released by RHEA:27481 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:27482
+      snippet: (S)-columbianetin + reduced [NADPH--hemoprotein reductase] + O2 => angelicin + acetone
+        + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27482 declares side 27481_R as its products
+        (rh:products); the master reaction RHEA:27481 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:19098286 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd5
+    description: H(+) is a product released by RHEA:27481 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27482
+      snippet: (S)-columbianetin + reduced [NADPH--hemoprotein reductase] + O2 => angelicin + acetone
+        + oxidized [NADPH--hemoprotein reductase] + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27482 declares side 27481_R as its products
+        (rh:products); the master reaction RHEA:27481 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19098286 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.14.14.148
+      snippet: EC:1.14.14.148 > GO:angelicin synthase activity ; GO:0102995
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102995 is itself a record
+        in this KB.
+  - subject: prot_C0SJS3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANGS_PASSA is an exemplar enzyme with EC 1.14.14.148 activity.
+    evidence:
+    - reference: EC:1.14.14.148
+      snippet: DR   C0SJS3, ANGS_PASSA ;
+      notes: ExPASy ENZYME entry EC 1.14.14.148 cross-references UniProtKB:C0SJS3 (ANGS_PASSA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

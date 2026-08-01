@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -43,4 +43,149 @@ definitions:
       Catalyses: chorismate + L-glutamine = 4-amino-4-deoxychorismate + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aminodeoxychorismate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.85. EC 2.6.1.85 maps to exactly
+    one curated Rhea reaction (RHEA:11672), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "chorismate +
+    L-glutamine = 4-amino-4-deoxychorismate + L-glutamate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aminodeoxychorismate synthase
+    grounding: EC:2.6.1.85
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: chorismate
+    node_type: CHEMICAL
+    grounding: CHEBI:29748
+    description: Formula C10H8O6.
+  - node_id: sub2
+    label: L-glutamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58359
+    description: Formula C5H10N2O3.
+  - node_id: prd1
+    label: 4-amino-4-deoxychorismate
+    node_type: CHEMICAL
+    grounding: CHEBI:58406
+    description: Formula C10H10NO5.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aminodeoxychorismate synthase activity
+    grounding: GO:0046820
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8LPN3
+    node_type: PROTEIN
+    label: ADCS_ARATH
+    grounding: UniProtKB:Q8LPN3
+  - node_id: prot_Q5Z856
+    node_type: PROTEIN
+    label: ADCS_ORYSJ
+    grounding: UniProtKB:Q5Z856
+  - node_id: prot_O94277
+    node_type: PROTEIN
+    label: ADCS_SCHPO
+    grounding: UniProtKB:O94277
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: chorismate is a substrate consumed by RHEA:11672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11673
+      snippet: chorismate + L-glutamine => 4-amino-4-deoxychorismate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:11673 declares side 11672_L as its substrates
+        (rh:substrates); the master reaction RHEA:11672 is undirected. This participant is CHEBI:29748
+        with coefficient 1. Rhea cites PMID:20851095, PMID:19275258, PMID:2251281, PMID:16605270 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-glutamine is a substrate consumed by RHEA:11672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11673
+      snippet: chorismate + L-glutamine => 4-amino-4-deoxychorismate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:11673 declares side 11672_L as its substrates
+        (rh:substrates); the master reaction RHEA:11672 is undirected. This participant is CHEBI:58359
+        with coefficient 1. Rhea cites PMID:20851095, PMID:19275258, PMID:2251281, PMID:16605270 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-amino-4-deoxychorismate is a product released by RHEA:11672 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11673
+      snippet: chorismate + L-glutamine => 4-amino-4-deoxychorismate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:11673 declares side 11672_R as its products
+        (rh:products); the master reaction RHEA:11672 is undirected. This participant is CHEBI:58406 with
+        coefficient 1. Rhea cites PMID:20851095, PMID:19275258, PMID:2251281, PMID:16605270 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:11672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11673
+      snippet: chorismate + L-glutamine => 4-amino-4-deoxychorismate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:11673 declares side 11672_R as its products
+        (rh:products); the master reaction RHEA:11672 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:20851095, PMID:19275258, PMID:2251281, PMID:16605270 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.6.1.85
+      snippet: EC:2.6.1.85 > GO:aminodeoxychorismate synthase activity ; GO:0046820
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0046820 is itself a record
+        in this KB.
+  - subject: prot_Q8LPN3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADCS_ARATH is an exemplar enzyme with EC 2.6.1.85 activity.
+    evidence:
+    - reference: EC:2.6.1.85
+      snippet: DR   Q8LPN3, ADCS_ARATH ;  Q5Z856, ADCS_ORYSJ ;  O94277, ADCS_SCHPO ;
+      notes: ExPASy ENZYME entry EC 2.6.1.85 cross-references UniProtKB:Q8LPN3 (ADCS_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q5Z856
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADCS_ORYSJ is an exemplar enzyme with EC 2.6.1.85 activity.
+    evidence:
+    - reference: EC:2.6.1.85
+      snippet: DR   Q8LPN3, ADCS_ARATH ;  Q5Z856, ADCS_ORYSJ ;  O94277, ADCS_SCHPO ;
+      notes: ExPASy ENZYME entry EC 2.6.1.85 cross-references UniProtKB:Q5Z856 (ADCS_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_O94277
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADCS_SCHPO is an exemplar enzyme with EC 2.6.1.85 activity.
+    evidence:
+    - reference: EC:2.6.1.85
+      snippet: DR   Q8LPN3, ADCS_ARATH ;  Q5Z856, ADCS_ORYSJ ;  O94277, ADCS_SCHPO ;
+      notes: ExPASy ENZYME entry EC 2.6.1.85 cross-references UniProtKB:O94277 (ADCS_SCHPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

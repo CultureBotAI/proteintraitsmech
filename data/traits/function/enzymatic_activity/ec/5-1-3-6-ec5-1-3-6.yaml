@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.3.-
 synonyms:
@@ -45,4 +45,116 @@ definitions:
       Catalyses: UDP-alpha-D-glucuronate = UDP-alpha-D-galacturonate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-glucuronate 4-epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.3.6. EC 5.1.3.6 maps to exactly
+    one curated Rhea reaction (RHEA:11404), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "UDP-alpha-D-glucuronate
+    = UDP-alpha-D-galacturonate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-glucuronate 4-epimerase
+    grounding: EC:5.1.3.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: UDP-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+    description: Formula C15H19N2O18P2.
+  - node_id: prd1
+    label: UDP-alpha-D-galacturonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57635
+    description: Formula C15H19N2O18P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-glucuronate 4-epimerase activity
+    grounding: GO:0050378
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9M0B6
+    node_type: PROTEIN
+    label: GAE1_ARATH
+    grounding: UniProtKB:Q9M0B6
+  - node_id: prot_Q9LPC1
+    node_type: PROTEIN
+    label: GAE2_ARATH
+    grounding: UniProtKB:Q9LPC1
+  - node_id: prot_O81312
+    node_type: PROTEIN
+    label: GAE3_ARATH
+    grounding: UniProtKB:O81312
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-alpha-D-glucuronate is a substrate consumed by RHEA:11404 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11405
+      snippet: UDP-alpha-D-glucuronate => UDP-alpha-D-galacturonate
+      notes: Rhea's left-to-right directional reaction RHEA:11405 declares side 11404_L as its substrates
+        (rh:substrates); the master reaction RHEA:11404 is undirected. This participant is CHEBI:58052
+        with coefficient 1. Rhea cites PMID:15247385, PMID:13821949 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UDP-alpha-D-galacturonate is a product released by RHEA:11404 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11405
+      snippet: UDP-alpha-D-glucuronate => UDP-alpha-D-galacturonate
+      notes: Rhea's left-to-right directional reaction RHEA:11405 declares side 11404_R as its products
+        (rh:products); the master reaction RHEA:11404 is undirected. This participant is CHEBI:57635 with
+        coefficient 1. Rhea cites PMID:15247385, PMID:13821949 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.3.6
+      snippet: EC:5.1.3.6 > GO:UDP-glucuronate 4-epimerase activity ; GO:0050378
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050378 is itself a record
+        in this KB.
+  - subject: prot_Q9M0B6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GAE1_ARATH is an exemplar enzyme with EC 5.1.3.6 activity.
+    evidence:
+    - reference: EC:5.1.3.6
+      snippet: DR   Q9M0B6, GAE1_ARATH ;  Q9LPC1, GAE2_ARATH ;  O81312, GAE3_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.1.3.6 cross-references UniProtKB:Q9M0B6 (GAE1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9LPC1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GAE2_ARATH is an exemplar enzyme with EC 5.1.3.6 activity.
+    evidence:
+    - reference: EC:5.1.3.6
+      snippet: DR   Q9M0B6, GAE1_ARATH ;  Q9LPC1, GAE2_ARATH ;  O81312, GAE3_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.1.3.6 cross-references UniProtKB:Q9LPC1 (GAE2_ARATH) as a protein
+        with this activity.
+  - subject: prot_O81312
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GAE3_ARATH is an exemplar enzyme with EC 5.1.3.6 activity.
+    evidence:
+    - reference: EC:5.1.3.6
+      snippet: DR   Q9M0B6, GAE1_ARATH ;  Q9LPC1, GAE2_ARATH ;  O81312, GAE3_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.1.3.6 cross-references UniProtKB:O81312 (GAE3_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

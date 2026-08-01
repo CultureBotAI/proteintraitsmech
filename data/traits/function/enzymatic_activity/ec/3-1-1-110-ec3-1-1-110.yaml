@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -31,4 +31,104 @@ definitions:
       Catalyses: D-xylono-1,5-lactone + H2O = D-xylonate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of xylono-1,5-lactonase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.110. EC 3.1.1.110 maps to
+    exactly one curated Rhea reaction (RHEA:59328), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-xylono-1,5-lactone
+    + H2O = D-xylonate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: xylono-1,5-lactonase
+    grounding: EC:3.1.1.110
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-xylono-1,5-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:15867
+    description: Formula C5H8O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-xylonate
+    node_type: CHEMICAL
+    grounding: CHEBI:17746
+    description: Formula C5H9O6.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q9A9Z1
+    node_type: PROTEIN
+    label: XYLC_CAUVC
+    grounding: UniProtKB:Q9A9Z1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-xylono-1,5-lactone is a substrate consumed by RHEA:59328 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59329
+      snippet: D-xylono-1,5-lactone + H2O => D-xylonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59329 declares side 59328_L as its substrates
+        (rh:substrates); the master reaction RHEA:59328 is undirected. This participant is CHEBI:15867
+        with coefficient 1. Rhea cites PMID:11179980, PMID:22709678, PMID:25073011 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:59328 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59329
+      snippet: D-xylono-1,5-lactone + H2O => D-xylonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59329 declares side 59328_L as its substrates
+        (rh:substrates); the master reaction RHEA:59328 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11179980, PMID:22709678, PMID:25073011 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-xylonate is a product released by RHEA:59328 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59329
+      snippet: D-xylono-1,5-lactone + H2O => D-xylonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59329 declares side 59328_R as its products
+        (rh:products); the master reaction RHEA:59328 is undirected. This participant is CHEBI:17746 with
+        coefficient 1. Rhea cites PMID:11179980, PMID:22709678, PMID:25073011 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:59328 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59329
+      snippet: D-xylono-1,5-lactone + H2O => D-xylonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59329 declares side 59328_R as its products
+        (rh:products); the master reaction RHEA:59328 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11179980, PMID:22709678, PMID:25073011 for this reaction.
+  - subject: prot_Q9A9Z1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XYLC_CAUVC is an exemplar enzyme with EC 3.1.1.110 activity.
+    evidence:
+    - reference: EC:3.1.1.110
+      snippet: DR   Q9A9Z1, XYLC_CAUVC ;
+      notes: ExPASy ENZYME entry EC 3.1.1.110 cross-references UniProtKB:Q9A9Z1 (XYLC_CAUVC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

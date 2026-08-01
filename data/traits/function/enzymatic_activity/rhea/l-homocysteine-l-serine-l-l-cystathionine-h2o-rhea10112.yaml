@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.22
     mapping_source: rhea2ec
@@ -34,4 +34,250 @@ definitions:
       Catalyses the reaction: L-homocysteine + L-serine = L,L-cystathionine + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-homocysteine + L-serine = L,L-cystathionine + H2O
+  description: Substrate-to-product chemistry of RHEA:10112, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10113 (rh:substrates → 10112_L, rh:products → 10112_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-homocysteine + L-serine = L,L-cystathionine + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10112
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-homocysteine + L-serine = L,L-cystathionine + H2O'
+  - node_id: sub1
+    label: L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58199
+    description: Formula C4H9NO2S.
+  - node_id: sub2
+    label: L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:33384
+    description: Formula C3H7NO3.
+  - node_id: prd1
+    label: L,L-cystathionine
+    node_type: CHEMICAL
+    grounding: CHEBI:58161
+    description: Formula C7H14N2O4S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cystathionine beta-synthase activity
+    grounding: GO:0004122
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: cystathionine beta-synthase
+    grounding: EC:4.2.1.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_G5EFH8
+    node_type: PROTEIN
+    label: CBS1_CAEEL
+    grounding: UniProtKB:G5EFH8
+  - node_id: prot_Q9N4K2
+    node_type: PROTEIN
+    label: CBS2_CAEEL
+    grounding: UniProtKB:Q9N4K2
+  - node_id: prot_Q2V0C9
+    node_type: PROTEIN
+    label: CBS_APIME
+    grounding: UniProtKB:Q2V0C9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-homocysteine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10113
+      snippet: L-homocysteine + L-serine => L,L-cystathionine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10113 declares side 10112_L as its substrates
+        (rh:substrates); the master reaction RHEA:10112 is undirected. This participant is CHEBI:58199
+        with coefficient 1. Rhea cites PMID:29630349, PMID:23143240, PMID:6838228, PMID:23143241 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-serine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10113
+      snippet: L-homocysteine + L-serine => L,L-cystathionine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10113 declares side 10112_L as its substrates
+        (rh:substrates); the master reaction RHEA:10112 is undirected. This participant is CHEBI:33384
+        with coefficient 1. Rhea cites PMID:29630349, PMID:23143240, PMID:6838228, PMID:23143241 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L,L-cystathionine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10113
+      snippet: L-homocysteine + L-serine => L,L-cystathionine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10113 declares side 10112_R as its products
+        (rh:products); the master reaction RHEA:10112 is undirected. This participant is CHEBI:58161 with
+        coefficient 1. Rhea cites PMID:29630349, PMID:23143240, PMID:6838228, PMID:23143241 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10113
+      snippet: L-homocysteine + L-serine => L,L-cystathionine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10113 declares side 10112_R as its products
+        (rh:products); the master reaction RHEA:10112 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:29630349, PMID:23143240, PMID:6838228, PMID:23143241 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10112
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004122"/>
+      notes: The rdfs:seeAlso triple on RHEA:10112 in rhea.rdf. GO term GO:0004122 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.22; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10112
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.22"/>
+      notes: The rh:ec triple on RHEA:10112 in rhea.rdf. EC 4.2.1.22 is itself a record in this KB.
+  - subject: prot_G5EFH8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBS1_CAEEL is an exemplar enzyme carrying EC 4.2.1.22, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.22
+      snippet: DR   G5EFH8, CBS1_CAEEL ;  Q9N4K2, CBS2_CAEEL ;  Q2V0C9, CBS_APIME  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.22 cross-references UniProtKB:G5EFH8 (CBS1_CAEEL) as a protein
+        with this activity.
+    - reference: RHEA:10112
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.22"/>
+      notes: Rhea assigns RHEA:10112 to EC 4.2.1.22, and EC 4.2.1.22 maps to exactly one Rhea master reaction
+        (RHEA:10112), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9N4K2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBS2_CAEEL is an exemplar enzyme carrying EC 4.2.1.22, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.22
+      snippet: DR   G5EFH8, CBS1_CAEEL ;  Q9N4K2, CBS2_CAEEL ;  Q2V0C9, CBS_APIME  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.22 cross-references UniProtKB:Q9N4K2 (CBS2_CAEEL) as a protein
+        with this activity.
+    - reference: RHEA:10112
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.22"/>
+      notes: Rhea assigns RHEA:10112 to EC 4.2.1.22, and EC 4.2.1.22 maps to exactly one Rhea master reaction
+        (RHEA:10112), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q2V0C9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBS_APIME is an exemplar enzyme carrying EC 4.2.1.22, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.22
+      snippet: DR   G5EFH8, CBS1_CAEEL ;  Q9N4K2, CBS2_CAEEL ;  Q2V0C9, CBS_APIME  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.22 cross-references UniProtKB:Q2V0C9 (CBS_APIME) as a protein
+        with this activity.
+    - reference: RHEA:10112
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.22"/>
+      notes: Rhea assigns RHEA:10112 to EC 4.2.1.22, and EC 4.2.1.22 maps to exactly one Rhea master reaction
+        (RHEA:10112), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa713
+  title: Catalytic residues of RHEA:10112 (from MCSA:713)
+  description: 'The catalytic residues that carry out RHEA:10112, joined from M-CSA entry 713. 1 residues,
+    reused verbatim from the MCSA:713 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 713''s reactant set (CHEBI:33384, CHEBI:58199) equals Rhea side 10112_L exactly,
+    and its product set (CHEBI:15377, CHEBI:58161) equals side 10112_R exactly. EC agreement bounded the
+    candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of L-homocysteine + L-serine = L,L-cystathionine + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10112
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: L-homocysteine + L-serine = L,L-cystathionine + H2O'
+  - node_id: mcsa
+    label: cystathionine beta-synthase
+    node_type: MOTIF
+    grounding: MCSA:713
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: lys119
+    label: catalytic Lys119 (M-CSA/PDB numbering; UniProt residue 119)
+    node_type: RESIDUE
+    grounding: UniProtKB:P35520
+    description: 'M-CSA roles: covalently attached, electron pair acceptor, electron pair donor, nucleofuge,
+      nucleophile, proton acceptor, proton donor, proton relay. Reused verbatim from the MCSA:713 record''s
+      catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 713 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:713
+      snippet: L-serine zwitterion [reactant]; L-cystathionine dizwitterion [product]; water [product];
+        L-homocysteine zwitterion [reactant]
+      notes: 'The `reaction.compounds` field of M-CSA entry 713, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 713''s reactant
+        set (CHEBI:33384, CHEBI:58199) equals Rhea side 10112_L exactly, and its product set (CHEBI:15377,
+        CHEBI:58161) equals side 10112_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: lys119
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:713
+      snippet: covalently attached, electron pair acceptor, electron pair donor, nucleofuge, nucleophile,
+        proton acceptor, proton donor, proton relay
+      notes: 'M-CSA entry 713 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 8 reactant, 3 interaction. M-CSA states which residues are catalytic and
+        what role each plays, but never which compound a residue acts on, so no residue-to-substrate edge
+        is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 713''s reactant set
+        (CHEBI:33384, CHEBI:58199) equals Rhea side 10112_L exactly, and its product set (CHEBI:15377,
+        CHEBI:58161) equals side 10112_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa713' (2 evidence-backed edges) joining MCSA:713
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

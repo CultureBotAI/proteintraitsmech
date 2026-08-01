@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57947
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,61 @@ definitions:
       Catalyses the reaction: creatine(in) = creatine(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of creatine(in) = creatine(out)
+  description: 'Substrate-to-product chemistry of RHEA:73043, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:73044 (rh:substrates → 73043_L, rh:products → 73043_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of creatine(in) = creatine(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:73043
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: creatine(in) = creatine(out)'
+  - node_id: sub1
+    label: creatine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57947
+    description: Formula C4H9N3O2.
+  - node_id: prd1
+    label: creatine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57947
+    description: Formula C4H9N3O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: creatine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73044
+      snippet: creatine(in) => creatine(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73044 declares side 73043_L as its substrates
+        (rh:substrates); the master reaction RHEA:73043 is undirected. This participant is CHEBI:57947
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:33124720,
+        PMID:32249133, PMID:32781157, PMID:23578822 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: creatine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73044
+      snippet: creatine(in) => creatine(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73044 declares side 73043_R as its products
+        (rh:products); the master reaction RHEA:73043 is undirected. This participant is CHEBI:57947 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:33124720,
+        PMID:32249133, PMID:32781157, PMID:23578822 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

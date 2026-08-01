@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -43,4 +43,229 @@ definitions:
       Catalyses: L-tyrosine + 2-oxoglutarate = 3-(4-hydroxyphenyl)pyruvate + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tyrosine transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.5. Rhea assigns 2 curated
+    reactions to EC 2.6.1.5. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "L-tyrosine + 2-oxoglutarate = 3-(4-hydroxyphenyl)pyruvate + L-glutamate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tyrosine transaminase
+    grounding: EC:2.6.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-tyrosine + 2-oxoglutarate = 3-(4-hydroxyphenyl)pyruvate + L-glutamate
+    grounding: RHEA:15093
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-tyrosine + 2-oxoglutarate = 3-(4-hydroxyphenyl)pyruvate + L-glutamate'
+  - node_id: rxn1_sub1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: rxn1_sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: rxn1_prd1
+    label: 3-(4-hydroxyphenyl)pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:36242
+    description: Formula C9H7O4.
+  - node_id: rxn1_prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-phenylalanine + 2-oxoglutarate = 3-phenylpyruvate + L-glutamate
+    grounding: RHEA:25152
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-phenylalanine + 2-oxoglutarate = 3-phenylpyruvate + L-glutamate'
+  - node_id: rxn2_sub1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: rxn2_sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: rxn2_prd1
+    label: 3-phenylpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:18005
+    description: Formula C9H7O3.
+  - node_id: rxn2_prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prot_F8P1W6
+    node_type: PROTEIN
+    label: AMT1_SERL9
+    grounding: UniProtKB:F8P1W6
+  - node_id: prot_B7STY2
+    node_type: PROTEIN
+    label: ATRD_TAPPA
+    grounding: UniProtKB:B7STY2
+  - node_id: prot_Q58CZ9
+    node_type: PROTEIN
+    label: ATTY_BOVIN
+    grounding: UniProtKB:Q58CZ9
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:15093 is one of the 2 curated reactions Rhea assigns to EC 2.6.1.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:15093
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.5"/>
+      notes: The rh:ec triple on RHEA:15093 in rhea.rdf assigns that reaction to EC 2.6.1.5.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: L-tyrosine is a substrate consumed by RHEA:15093 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15094
+      snippet: L-tyrosine + 2-oxoglutarate => 3-(4-hydroxyphenyl)pyruvate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:15094 declares side 15093_L as its substrates
+        (rh:substrates); the master reaction RHEA:15093 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:21153519, PMID:8125113, PMID:10074065 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:15093 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15094
+      snippet: L-tyrosine + 2-oxoglutarate => 3-(4-hydroxyphenyl)pyruvate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:15094 declares side 15093_L as its substrates
+        (rh:substrates); the master reaction RHEA:15093 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:21153519, PMID:8125113, PMID:10074065 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 3-(4-hydroxyphenyl)pyruvate is a product released by RHEA:15093 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15094
+      snippet: L-tyrosine + 2-oxoglutarate => 3-(4-hydroxyphenyl)pyruvate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:15094 declares side 15093_R as its products
+        (rh:products); the master reaction RHEA:15093 is undirected. This participant is CHEBI:36242 with
+        coefficient 1. Rhea cites PMID:21153519, PMID:8125113, PMID:10074065 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: L-glutamate is a product released by RHEA:15093 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15094
+      snippet: L-tyrosine + 2-oxoglutarate => 3-(4-hydroxyphenyl)pyruvate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:15094 declares side 15093_R as its products
+        (rh:products); the master reaction RHEA:15093 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:21153519, PMID:8125113, PMID:10074065 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:25152 is one of the 2 curated reactions Rhea assigns to EC 2.6.1.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25152
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.5"/>
+      notes: The rh:ec triple on RHEA:25152 in rhea.rdf assigns that reaction to EC 2.6.1.5.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: L-phenylalanine is a substrate consumed by RHEA:25152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25153
+      snippet: L-phenylalanine + 2-oxoglutarate => 3-phenylpyruvate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:25153 declares side 25152_L as its substrates
+        (rh:substrates); the master reaction RHEA:25152 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:21153519, PMID:8125113 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:25152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25153
+      snippet: L-phenylalanine + 2-oxoglutarate => 3-phenylpyruvate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:25153 declares side 25152_L as its substrates
+        (rh:substrates); the master reaction RHEA:25152 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:21153519, PMID:8125113 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 3-phenylpyruvate is a product released by RHEA:25152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25153
+      snippet: L-phenylalanine + 2-oxoglutarate => 3-phenylpyruvate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:25153 declares side 25152_R as its products
+        (rh:products); the master reaction RHEA:25152 is undirected. This participant is CHEBI:18005 with
+        coefficient 1. Rhea cites PMID:21153519, PMID:8125113 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: L-glutamate is a product released by RHEA:25152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25153
+      snippet: L-phenylalanine + 2-oxoglutarate => 3-phenylpyruvate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:25153 declares side 25152_R as its products
+        (rh:products); the master reaction RHEA:25152 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:21153519, PMID:8125113 for this reaction.
+  - subject: prot_F8P1W6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMT1_SERL9 is an exemplar enzyme with EC 2.6.1.5 activity.
+    evidence:
+    - reference: EC:2.6.1.5
+      snippet: DR   F8P1W6, AMT1_SERL9 ;  B7STY2, ATRD_TAPPA ;  Q58CZ9, ATTY_BOVIN ;
+      notes: ExPASy ENZYME entry EC 2.6.1.5 cross-references UniProtKB:F8P1W6 (AMT1_SERL9) as a protein
+        with this activity.
+  - subject: prot_B7STY2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATRD_TAPPA is an exemplar enzyme with EC 2.6.1.5 activity.
+    evidence:
+    - reference: EC:2.6.1.5
+      snippet: DR   F8P1W6, AMT1_SERL9 ;  B7STY2, ATRD_TAPPA ;  Q58CZ9, ATTY_BOVIN ;
+      notes: ExPASy ENZYME entry EC 2.6.1.5 cross-references UniProtKB:B7STY2 (ATRD_TAPPA) as a protein
+        with this activity.
+  - subject: prot_Q58CZ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATTY_BOVIN is an exemplar enzyme with EC 2.6.1.5 activity.
+    evidence:
+    - reference: EC:2.6.1.5
+      snippet: DR   F8P1W6, AMT1_SERL9 ;  B7STY2, ATRD_TAPPA ;  Q58CZ9, ATTY_BOVIN ;
+      notes: ExPASy ENZYME entry EC 2.6.1.5 cross-references UniProtKB:Q58CZ9 (ATTY_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

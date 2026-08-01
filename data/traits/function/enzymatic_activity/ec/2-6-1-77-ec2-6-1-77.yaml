@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 mapped_xrefs:
@@ -40,4 +40,244 @@ definitions:
       Catalyses: taurine + pyruvate = sulfoacetaldehyde + L-alanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of taurine--pyruvate aminotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.77. Rhea assigns 2 curated
+    reactions to EC 2.6.1.77. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "taurine + pyruvate = sulfoacetaldehyde + L-alanine". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: taurine--pyruvate aminotransferase
+    grounding: EC:2.6.1.77
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of taurine + pyruvate = sulfoacetaldehyde + L-alanine
+    grounding: RHEA:10420
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: taurine + pyruvate = sulfoacetaldehyde + L-alanine'
+  - node_id: rxn1_sub1
+    label: taurine
+    node_type: CHEMICAL
+    grounding: CHEBI:507393
+    description: Formula C2H7NO3S.
+  - node_id: rxn1_sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: rxn1_prd1
+    label: sulfoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58246
+    description: Formula C2H3O4S.
+  - node_id: rxn1_prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of hypotaurine + pyruvate = 2-sulfinoacetaldehyde + L-alanine
+    grounding: RHEA:58056
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: hypotaurine + pyruvate = 2-sulfinoacetaldehyde + L-alanine'
+  - node_id: rxn2_sub1
+    label: hypotaurine
+    node_type: CHEMICAL
+    grounding: CHEBI:57853
+    description: Formula C2H7NO2S.
+  - node_id: rxn2_sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: rxn2_prd1
+    label: 2-sulfinoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:142501
+    description: Formula C2H3O3S.
+  - node_id: rxn2_prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: taurine:pyruvate transaminase activity
+    grounding: GO:0031299
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A1B9Z3
+    node_type: PROTEIN
+    label: HTPA_PARDP
+    grounding: UniProtKB:A1B9Z3
+  - node_id: prot_E5Y945
+    node_type: PROTEIN
+    label: TPA_BILW3
+    grounding: UniProtKB:E5Y945
+  - node_id: prot_Q9APM5
+    node_type: PROTEIN
+    label: TPA_BILWA
+    grounding: UniProtKB:Q9APM5
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:10420 is one of the 2 curated reactions Rhea assigns to EC 2.6.1.77; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:10420
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.77"/>
+      notes: The rh:ec triple on RHEA:10420 in rhea.rdf assigns that reaction to EC 2.6.1.77.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: taurine is a substrate consumed by RHEA:10420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10421
+      snippet: taurine + pyruvate => sulfoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:10421 declares side 10420_L as its substrates
+        (rh:substrates); the master reaction RHEA:10420 is undirected. This participant is CHEBI:507393
+        with coefficient 1. Rhea cites PMID:11082195, PMID:11728723, PMID:12471498 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: pyruvate is a substrate consumed by RHEA:10420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10421
+      snippet: taurine + pyruvate => sulfoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:10421 declares side 10420_L as its substrates
+        (rh:substrates); the master reaction RHEA:10420 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:11082195, PMID:11728723, PMID:12471498 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: sulfoacetaldehyde is a product released by RHEA:10420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10421
+      snippet: taurine + pyruvate => sulfoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:10421 declares side 10420_R as its products
+        (rh:products); the master reaction RHEA:10420 is undirected. This participant is CHEBI:58246 with
+        coefficient 1. Rhea cites PMID:11082195, PMID:11728723, PMID:12471498 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: L-alanine is a product released by RHEA:10420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10421
+      snippet: taurine + pyruvate => sulfoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:10421 declares side 10420_R as its products
+        (rh:products); the master reaction RHEA:10420 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:11082195, PMID:11728723, PMID:12471498 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:58056 is one of the 2 curated reactions Rhea assigns to EC 2.6.1.77; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:58056
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.77"/>
+      notes: The rh:ec triple on RHEA:58056 in rhea.rdf assigns that reaction to EC 2.6.1.77.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: hypotaurine is a substrate consumed by RHEA:58056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58057
+      snippet: hypotaurine + pyruvate => 2-sulfinoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:58057 declares side 58056_L as its substrates
+        (rh:substrates); the master reaction RHEA:58056 is undirected. This participant is CHEBI:57853
+        with coefficient 1. Rhea cites PMID:23603744 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: pyruvate is a substrate consumed by RHEA:58056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58057
+      snippet: hypotaurine + pyruvate => 2-sulfinoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:58057 declares side 58056_L as its substrates
+        (rh:substrates); the master reaction RHEA:58056 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:23603744 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2-sulfinoacetaldehyde is a product released by RHEA:58056 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58057
+      snippet: hypotaurine + pyruvate => 2-sulfinoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:58057 declares side 58056_R as its products
+        (rh:products); the master reaction RHEA:58056 is undirected. This participant is CHEBI:142501
+        with coefficient 1. Rhea cites PMID:23603744 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: L-alanine is a product released by RHEA:58056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58057
+      snippet: hypotaurine + pyruvate => 2-sulfinoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:58057 declares side 58056_R as its products
+        (rh:products); the master reaction RHEA:58056 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:23603744 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.6.1.77
+      snippet: EC:2.6.1.77 > GO:taurine:pyruvate transaminase activity ; GO:0031299
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0031299 is itself a record
+        in this KB.
+  - subject: prot_A1B9Z3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HTPA_PARDP is an exemplar enzyme with EC 2.6.1.77 activity.
+    evidence:
+    - reference: EC:2.6.1.77
+      snippet: DR   A1B9Z3, HTPA_PARDP ;  E5Y945, TPA_BILW3  ;  Q9APM5, TPA_BILWA  ;
+      notes: ExPASy ENZYME entry EC 2.6.1.77 cross-references UniProtKB:A1B9Z3 (HTPA_PARDP) as a protein
+        with this activity.
+  - subject: prot_E5Y945
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPA_BILW3 is an exemplar enzyme with EC 2.6.1.77 activity.
+    evidence:
+    - reference: EC:2.6.1.77
+      snippet: DR   A1B9Z3, HTPA_PARDP ;  E5Y945, TPA_BILW3  ;  Q9APM5, TPA_BILWA  ;
+      notes: ExPASy ENZYME entry EC 2.6.1.77 cross-references UniProtKB:E5Y945 (TPA_BILW3) as a protein
+        with this activity.
+  - subject: prot_Q9APM5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPA_BILWA is an exemplar enzyme with EC 2.6.1.77 activity.
+    evidence:
+    - reference: EC:2.6.1.77
+      snippet: DR   A1B9Z3, HTPA_PARDP ;  E5Y945, TPA_BILW3  ;  Q9APM5, TPA_BILWA  ;
+      notes: ExPASy ENZYME entry EC 2.6.1.77 cross-references UniProtKB:Q9APM5 (TPA_BILWA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

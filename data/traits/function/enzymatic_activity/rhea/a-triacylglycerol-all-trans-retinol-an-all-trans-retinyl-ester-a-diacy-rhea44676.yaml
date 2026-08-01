@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17855
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,94 @@ definitions:
       Catalyses the reaction: a triacylglycerol + all-trans-retinol = an all-trans-retinyl ester + a diacylglycerol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a triacylglycerol + all-trans-retinol = an all-trans-retinyl ester + a
+    diacylglycerol
+  description: Substrate-to-product chemistry of RHEA:44676, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:44677 (rh:substrates → 44676_L, rh:products → 44676_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a triacylglycerol + all-trans-retinol = an all-trans-retinyl ester + a diacy…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:44676
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a triacylglycerol + all-trans-retinol = an all-trans-retinyl ester + a diacylglycerol'
+  - node_id: sub1
+    label: a triacylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17855
+    description: Formula C6H5O6R3.
+  - node_id: sub2
+    label: all-trans-retinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17336
+    description: Formula C20H30O.
+  - node_id: prd1
+    label: an all-trans-retinyl ester
+    node_type: CHEMICAL
+    grounding: CHEBI:63410
+    description: Formula C21H29O2R.
+  - node_id: prd2
+    label: a diacylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:18035
+    description: Formula C5H6O5R2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a triacylglycerol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44677
+      snippet: a triacylglycerol + all-trans-retinol => an all-trans-retinyl ester + a diacylglycerol
+      notes: Rhea's left-to-right directional reaction RHEA:44677 declares side 44676_L as its substrates
+        (rh:substrates); the master reaction RHEA:44676 is undirected. This participant is CHEBI:17855
+        with coefficient 1. Rhea cites PMID:17603008 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: all-trans-retinol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44677
+      snippet: a triacylglycerol + all-trans-retinol => an all-trans-retinyl ester + a diacylglycerol
+      notes: Rhea's left-to-right directional reaction RHEA:44677 declares side 44676_L as its substrates
+        (rh:substrates); the master reaction RHEA:44676 is undirected. This participant is CHEBI:17336
+        with coefficient 1. Rhea cites PMID:17603008 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an all-trans-retinyl ester is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44677
+      snippet: a triacylglycerol + all-trans-retinol => an all-trans-retinyl ester + a diacylglycerol
+      notes: Rhea's left-to-right directional reaction RHEA:44677 declares side 44676_R as its products
+        (rh:products); the master reaction RHEA:44676 is undirected. This participant is CHEBI:63410 with
+        coefficient 1. Rhea cites PMID:17603008 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a diacylglycerol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44677
+      snippet: a triacylglycerol + all-trans-retinol => an all-trans-retinyl ester + a diacylglycerol
+      notes: Rhea's left-to-right directional reaction RHEA:44677 declares side 44676_R as its products
+        (rh:products); the master reaction RHEA:44676 is undirected. This participant is CHEBI:18035 with
+        coefficient 1. Rhea cites PMID:17603008 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

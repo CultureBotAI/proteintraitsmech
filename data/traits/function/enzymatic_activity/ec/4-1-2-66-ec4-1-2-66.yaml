@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -31,4 +31,104 @@ definitions:
       Catalyses: (E)-4-coumarate + H2O = 4-hydroxybenzaldehyde + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-coumarate hydratase/lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.66. EC 4.1.2.66 maps to exactly
+    one curated Rhea reaction (RHEA:78827), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(E)-4-coumarate
+    + H2O = 4-hydroxybenzaldehyde + acetate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-coumarate hydratase/lyase
+    grounding: EC:4.1.2.66
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (E)-4-coumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:12876
+    description: Formula C9H7O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 4-hydroxybenzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17597
+    description: Formula C7H6O2.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prot_P0DO76
+    node_type: PROTEIN
+    label: 4HBS_VANPL
+    grounding: UniProtKB:P0DO76
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (E)-4-coumarate is a substrate consumed by RHEA:78827 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78828
+      snippet: (E)-4-coumarate + H2O => 4-hydroxybenzaldehyde + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:78828 declares side 78827_L as its substrates
+        (rh:substrates); the master reaction RHEA:78827 is undirected. This participant is CHEBI:12876
+        with coefficient 1. Rhea cites PMID:12423881, PMID:17658659 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:78827 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78828
+      snippet: (E)-4-coumarate + H2O => 4-hydroxybenzaldehyde + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:78828 declares side 78827_L as its substrates
+        (rh:substrates); the master reaction RHEA:78827 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12423881, PMID:17658659 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-hydroxybenzaldehyde is a product released by RHEA:78827 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78828
+      snippet: (E)-4-coumarate + H2O => 4-hydroxybenzaldehyde + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:78828 declares side 78827_R as its products
+        (rh:products); the master reaction RHEA:78827 is undirected. This participant is CHEBI:17597 with
+        coefficient 1. Rhea cites PMID:12423881, PMID:17658659 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:78827 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78828
+      snippet: (E)-4-coumarate + H2O => 4-hydroxybenzaldehyde + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:78828 declares side 78827_R as its products
+        (rh:products); the master reaction RHEA:78827 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:12423881, PMID:17658659 for this reaction.
+  - subject: prot_P0DO76
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 4HBS_VANPL is an exemplar enzyme with EC 4.1.2.66 activity.
+    evidence:
+    - reference: EC:4.1.2.66
+      snippet: DR   P0DO76, 4HBS_VANPL ;
+      notes: ExPASy ENZYME entry EC 4.1.2.66 cross-references UniProtKB:P0DO76 (4HBS_VANPL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

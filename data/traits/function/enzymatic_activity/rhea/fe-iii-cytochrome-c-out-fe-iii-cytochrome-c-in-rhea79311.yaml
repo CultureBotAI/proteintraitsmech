@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29034
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,95 @@ definitions:
       Catalyses the reaction: Fe(III)-[cytochrome c](out) = Fe(III)-[cytochrome c](in)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Fe(III)-[cytochrome c](out) = Fe(III)-[cytochrome c](in)
+  description: 'Substrate-to-product chemistry of RHEA:79311, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79312 (rh:substrates → 79311_L, rh:products → 79311_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of Fe(III)-[cytochrome c](out) = Fe(III)-[cytochrome c](in)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79311
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: Fe(III)-[cytochrome c](out) = Fe(III)-[cytochrome c](in)'
+  - node_id: sub1
+    label: Fe(III)-[cytochrome c] (outside the membrane)
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14399
+    description: Rhea compound GENERIC:14399.
+  - node_id: sub1_rp1
+    label: Fe(3+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14399 (Fe(III)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: prd1
+    label: Fe(III)-[cytochrome c] (inside the membrane)
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14399
+    description: Rhea compound GENERIC:14399.
+  - node_id: prd1_rp1
+    label: Fe(3+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14399 (Fe(III)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(III)-[cytochrome c] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79312
+      snippet: Fe(III)-[cytochrome c](out) => Fe(III)-[cytochrome c](in)
+      notes: Rhea's left-to-right directional reaction RHEA:79312 declares side 79311_L as its substrates
+        (rh:substrates); the master reaction RHEA:79311 is undirected. This participant is GENERIC:14399
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:10766872, PMID:10365962, PMID:20230784 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c].
+    evidence:
+    - reference: RHEA:79311
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:14399 (Fe(III)-[cytochrome c]) declares rh:reactivePart = Fe(3+) (CHEBI:29034),
+        formula Fe.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(III)-[cytochrome c] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79312
+      snippet: Fe(III)-[cytochrome c](out) => Fe(III)-[cytochrome c](in)
+      notes: Rhea's left-to-right directional reaction RHEA:79312 declares side 79311_R as its products
+        (rh:products); the master reaction RHEA:79311 is undirected. This participant is GENERIC:14399
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:10766872,
+        PMID:10365962, PMID:20230784 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c].
+    evidence:
+    - reference: RHEA:79311
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:14399 (Fe(III)-[cytochrome c]) declares rh:reactivePart = Fe(3+) (CHEBI:29034),
+        formula Fe.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

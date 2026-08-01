@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 synonyms:
@@ -51,4 +51,329 @@ definitions:
       Catalyses: a pyrimidine ribonucleoside + H2O = a pyrimidine nucleobase + D-ribose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ribosylpyrimidine nucleosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.8. Rhea assigns 3 curated
+    reactions to EC 3.2.2.8. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "a pyrimidine ribonucleoside + H2O = a pyrimidine nucleobase + D-ribose".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ribosylpyrimidine nucleosidase
+    grounding: EC:3.2.2.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of uridine + H2O = D-ribose + uracil
+    grounding: RHEA:15577
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: uridine + H2O = D-ribose + uracil'
+  - node_id: rxn1_sub1
+    label: uridine
+    node_type: CHEMICAL
+    grounding: CHEBI:16704
+    description: Formula C9H12N2O6.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:47013
+    description: Formula C5H10O5.
+  - node_id: rxn1_prd2
+    label: uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:17568
+    description: Formula C4H4N2O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of cytidine + H2O = cytosine + D-ribose
+    grounding: RHEA:27958
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: cytidine + H2O = cytosine + D-ribose'
+  - node_id: rxn2_sub1
+    label: cytidine
+    node_type: CHEMICAL
+    grounding: CHEBI:17562
+    description: Formula C9H13N3O5.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: cytosine
+    node_type: CHEMICAL
+    grounding: CHEBI:16040
+    description: Formula C4H5N3O.
+  - node_id: rxn2_prd2
+    label: D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:47013
+    description: Formula C5H10O5.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a pyrimidine ribonucleoside + H2O = a pyrimidine nucleobase + D-ribose
+    grounding: RHEA:56816
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a pyrimidine ribonucleoside + H2O = a pyrimidine nucleobase + D-ribose'
+  - node_id: rxn3_sub1
+    label: a pyrimidine ribonucleoside
+    node_type: CHEMICAL
+    grounding: CHEBI:141014
+    description: Formula C9H9N2O4R4.
+  - node_id: rxn3_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3_prd1
+    label: a pyrimidine nucleobase
+    node_type: CHEMICAL
+    grounding: CHEBI:26432
+    description: Formula C4HN2R4.
+  - node_id: rxn3_prd2
+    label: D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:47013
+    description: Formula C5H10O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ribosylpyrimidine nucleosidase activity
+    grounding: GO:0050263
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9XWN7
+    node_type: PROTEIN
+    label: NSH1_CAEEL
+    grounding: UniProtKB:Q9XWN7
+  - node_id: prot_A7ZNY5
+    node_type: PROTEIN
+    label: RIHB_ECO24
+    grounding: UniProtKB:A7ZNY5
+  - node_id: prot_B7UFH8
+    node_type: PROTEIN
+    label: RIHB_ECO27
+    grounding: UniProtKB:B7UFH8
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:15577 is one of the 3 curated reactions Rhea assigns to EC 3.2.2.8; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:15577
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.2.8"/>
+      notes: The rh:ec triple on RHEA:15577 in rhea.rdf assigns that reaction to EC 3.2.2.8.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: uridine is a substrate consumed by RHEA:15577 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15578
+      snippet: uridine + H2O => D-ribose + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:15578 declares side 15577_L as its substrates
+        (rh:substrates); the master reaction RHEA:15577 is undirected. This participant is CHEBI:16704
+        with coefficient 1. Rhea cites PMID:19293370, PMID:12111094, PMID:15130467 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:15577 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15578
+      snippet: uridine + H2O => D-ribose + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:15578 declares side 15577_L as its substrates
+        (rh:substrates); the master reaction RHEA:15577 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19293370, PMID:12111094, PMID:15130467 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: D-ribose is a product released by RHEA:15577 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15578
+      snippet: uridine + H2O => D-ribose + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:15578 declares side 15577_R as its products
+        (rh:products); the master reaction RHEA:15577 is undirected. This participant is CHEBI:47013 with
+        coefficient 1. Rhea cites PMID:19293370, PMID:12111094, PMID:15130467 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: uracil is a product released by RHEA:15577 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15578
+      snippet: uridine + H2O => D-ribose + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:15578 declares side 15577_R as its products
+        (rh:products); the master reaction RHEA:15577 is undirected. This participant is CHEBI:17568 with
+        coefficient 1. Rhea cites PMID:19293370, PMID:12111094, PMID:15130467 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:27958 is one of the 3 curated reactions Rhea assigns to EC 3.2.2.8; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:27958
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.2.8"/>
+      notes: The rh:ec triple on RHEA:27958 in rhea.rdf assigns that reaction to EC 3.2.2.8.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: cytidine is a substrate consumed by RHEA:27958 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27959
+      snippet: cytidine + H2O => cytosine + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:27959 declares side 27958_L as its substrates
+        (rh:substrates); the master reaction RHEA:27958 is undirected. This participant is CHEBI:17562
+        with coefficient 1. Rhea cites PMID:15130467 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:27958 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27959
+      snippet: cytidine + H2O => cytosine + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:27959 declares side 27958_L as its substrates
+        (rh:substrates); the master reaction RHEA:27958 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15130467 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: cytosine is a product released by RHEA:27958 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27959
+      snippet: cytidine + H2O => cytosine + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:27959 declares side 27958_R as its products
+        (rh:products); the master reaction RHEA:27958 is undirected. This participant is CHEBI:16040 with
+        coefficient 1. Rhea cites PMID:15130467 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: D-ribose is a product released by RHEA:27958 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27959
+      snippet: cytidine + H2O => cytosine + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:27959 declares side 27958_R as its products
+        (rh:products); the master reaction RHEA:27958 is undirected. This participant is CHEBI:47013 with
+        coefficient 1. Rhea cites PMID:15130467 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:56816 is one of the 3 curated reactions Rhea assigns to EC 3.2.2.8; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:56816
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.2.8"/>
+      notes: The rh:ec triple on RHEA:56816 in rhea.rdf assigns that reaction to EC 3.2.2.8.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: a pyrimidine ribonucleoside is a substrate consumed by RHEA:56816 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56817
+      snippet: a pyrimidine ribonucleoside + H2O => a pyrimidine nucleobase + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:56817 declares side 56816_L as its substrates
+        (rh:substrates); the master reaction RHEA:56816 is undirected. This participant is CHEBI:141014
+        with coefficient 1. Rhea cites PMID:11027694, PMID:14993681, PMID:12325375, PMID:15130467 for
+        this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: H2O is a substrate consumed by RHEA:56816 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56817
+      snippet: a pyrimidine ribonucleoside + H2O => a pyrimidine nucleobase + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:56817 declares side 56816_L as its substrates
+        (rh:substrates); the master reaction RHEA:56816 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11027694, PMID:14993681, PMID:12325375, PMID:15130467 for
+        this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: a pyrimidine nucleobase is a product released by RHEA:56816 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56817
+      snippet: a pyrimidine ribonucleoside + H2O => a pyrimidine nucleobase + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:56817 declares side 56816_R as its products
+        (rh:products); the master reaction RHEA:56816 is undirected. This participant is CHEBI:26432 with
+        coefficient 1. Rhea cites PMID:11027694, PMID:14993681, PMID:12325375, PMID:15130467 for this
+        reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: D-ribose is a product released by RHEA:56816 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56817
+      snippet: a pyrimidine ribonucleoside + H2O => a pyrimidine nucleobase + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:56817 declares side 56816_R as its products
+        (rh:products); the master reaction RHEA:56816 is undirected. This participant is CHEBI:47013 with
+        coefficient 1. Rhea cites PMID:11027694, PMID:14993681, PMID:12325375, PMID:15130467 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.8
+      snippet: EC:3.2.2.8 > GO:ribosylpyrimidine nucleosidase activity ; GO:0050263
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050263 is itself a record
+        in this KB.
+  - subject: prot_Q9XWN7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NSH1_CAEEL is an exemplar enzyme with EC 3.2.2.8 activity.
+    evidence:
+    - reference: EC:3.2.2.8
+      snippet: DR   Q9XWN7, NSH1_CAEEL ;  A7ZNY5, RIHB_ECO24 ;  B7UFH8, RIHB_ECO27 ;
+      notes: ExPASy ENZYME entry EC 3.2.2.8 cross-references UniProtKB:Q9XWN7 (NSH1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_A7ZNY5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIHB_ECO24 is an exemplar enzyme with EC 3.2.2.8 activity.
+    evidence:
+    - reference: EC:3.2.2.8
+      snippet: DR   Q9XWN7, NSH1_CAEEL ;  A7ZNY5, RIHB_ECO24 ;  B7UFH8, RIHB_ECO27 ;
+      notes: ExPASy ENZYME entry EC 3.2.2.8 cross-references UniProtKB:A7ZNY5 (RIHB_ECO24) as a protein
+        with this activity.
+  - subject: prot_B7UFH8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIHB_ECO27 is an exemplar enzyme with EC 3.2.2.8 activity.
+    evidence:
+    - reference: EC:3.2.2.8
+      snippet: DR   Q9XWN7, NSH1_CAEEL ;  A7ZNY5, RIHB_ECO24 ;  B7UFH8, RIHB_ECO27 ;
+      notes: ExPASy ENZYME entry EC 3.2.2.8 cross-references UniProtKB:B7UFH8 (RIHB_ECO27) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (19 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

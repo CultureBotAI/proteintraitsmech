@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:229741
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,60 @@ definitions:
       Catalyses the reaction: (2S,3R)-diaminobutanoate = (2S,3S)-diaminobutanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2S,3R)-diaminobutanoate = (2S,3S)-diaminobutanoate
+  description: Substrate-to-product chemistry of RHEA:81227, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81228 (rh:substrates → 81227_L, rh:products → 81227_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2S,3R)-diaminobutanoate = (2S,3S)-diaminobutanoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81227
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2S,3R)-diaminobutanoate = (2S,3S)-diaminobutanoate'
+  - node_id: sub1
+    label: (2S,3R)-diaminobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:229741
+    description: Formula C4H10N2O2.
+  - node_id: prd1
+    label: (2S,3S)-diaminobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:229742
+    description: Formula C4H10N2O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S,3R)-diaminobutanoate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81228
+      snippet: (2S,3R)-diaminobutanoate => (2S,3S)-diaminobutanoate
+      notes: Rhea's left-to-right directional reaction RHEA:81228 declares side 81227_L as its substrates
+        (rh:substrates); the master reaction RHEA:81227 is undirected. This participant is CHEBI:229741
+        with coefficient 1. Rhea cites PMID:38456538 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S,3S)-diaminobutanoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81228
+      snippet: (2S,3R)-diaminobutanoate => (2S,3S)-diaminobutanoate
+      notes: Rhea's left-to-right directional reaction RHEA:81228 declares side 81227_R as its products
+        (rh:products); the master reaction RHEA:81227 is undirected. This participant is CHEBI:229742
+        with coefficient 1. Rhea cites PMID:38456538 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

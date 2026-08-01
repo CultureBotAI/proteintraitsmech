@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.2.7
     mapping_source: rhea2ec
@@ -26,4 +26,89 @@ definitions:
       Catalyses the reaction: ascopyrone M = ascopyrone P
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ascopyrone M = ascopyrone P
+  description: Substrate-to-product chemistry of RHEA:22568, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22569 (rh:substrates → 22568_L, rh:products → 22568_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of ascopyrone M = ascopyrone P
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22568
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: ascopyrone M = ascopyrone P'
+  - node_id: sub1
+    label: ascopyrone M
+    node_type: CHEMICAL
+    grounding: CHEBI:50070
+    description: Formula C6H8O4.
+  - node_id: prd1
+    label: ascopyrone P
+    node_type: CHEMICAL
+    grounding: CHEBI:50071
+    description: Formula C6H8O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ascopyrone tautomerase activity
+    grounding: GO:0034018
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: ascopyrone tautomerase
+    grounding: EC:5.3.2.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ascopyrone M is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22569
+      snippet: ascopyrone M => ascopyrone P
+      notes: Rhea's left-to-right directional reaction RHEA:22569 declares side 22568_L as its substrates
+        (rh:substrates); the master reaction RHEA:22568 is undirected. This participant is CHEBI:50070
+        with coefficient 1. Rhea cites PMID:15110094, PMID:16822618 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ascopyrone P is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22569
+      snippet: ascopyrone M => ascopyrone P
+      notes: Rhea's left-to-right directional reaction RHEA:22569 declares side 22568_R as its products
+        (rh:products); the master reaction RHEA:22568 is undirected. This participant is CHEBI:50071 with
+        coefficient 1. Rhea cites PMID:15110094, PMID:16822618 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:22568
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0034018"/>
+      notes: The rdfs:seeAlso triple on RHEA:22568 in rhea.rdf. GO term GO:0034018 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.2.7; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22568
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.2.7"/>
+      notes: The rh:ec triple on RHEA:22568 in rhea.rdf. EC 5.3.2.7 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

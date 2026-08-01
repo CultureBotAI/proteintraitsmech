@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.46
     mapping_source: rhea2ec
@@ -26,4 +26,113 @@ definitions:
       Catalyses the reaction: [N-(6-aminohexanoyl)](n) + H2O = [N-(6-aminohexanoyl)](n-1) + 6-aminohexanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [N-(6-aminohexanoyl)](n) + H2O = [N-(6-aminohexanoyl)](n-1) + 6-aminohexanoate
+  description: Substrate-to-product chemistry of RHEA:18225, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:18226 (rh:substrates → 18225_L, rh:products → 18225_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [N-(6-aminohexanoyl)](n) + H2O = [N-(6-aminohexanoyl)](n-1) + 6-aminohexanoa…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:18225
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [N-(6-aminohexanoyl)](n) + H2O = [N-(6-aminohexanoyl)](n-1) + 6-aminohexanoate'
+  - node_id: sub1
+    label: '[N-(6-aminohexanoyl)](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:78629
+    xrefs:
+    - RHEA-COMP:9820
+    description: Rhea compound POLYMER:9820. Formula C6H13NO2(C6H11NO)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: '[N-(6-aminohexanoyl)](n-1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:78629
+    xrefs:
+    - RHEA-COMP:14302
+    description: Rhea compound POLYMER:14302. Formula C6H13NO2(C6H11NO)<i><sub>n-1</sub></i>. Polymerisation
+      index n-1.
+  - node_id: prd2
+    label: 6-aminohexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57826
+    description: Formula C6H13NO2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 6-aminohexanoate-oligomer exohydrolase
+    grounding: EC:3.5.1.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[N-(6-aminohexanoyl)](n) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:18226
+      snippet: '[N-(6-aminohexanoyl)](n) + H2O => [N-(6-aminohexanoyl)](n-1) + 6-aminohexanoate'
+      notes: Rhea's left-to-right directional reaction RHEA:18226 declares side 18225_L as its substrates
+        (rh:substrates); the master reaction RHEA:18225 is undirected. This participant is POLYMER:9820
+        with coefficient 1. Rhea cites PMID:7262074 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18226
+      snippet: '[N-(6-aminohexanoyl)](n) + H2O => [N-(6-aminohexanoyl)](n-1) + 6-aminohexanoate'
+      notes: Rhea's left-to-right directional reaction RHEA:18226 declares side 18225_L as its substrates
+        (rh:substrates); the master reaction RHEA:18225 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7262074 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[N-(6-aminohexanoyl)](n-1) is a product released by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:18226
+      snippet: '[N-(6-aminohexanoyl)](n) + H2O => [N-(6-aminohexanoyl)](n-1) + 6-aminohexanoate'
+      notes: Rhea's left-to-right directional reaction RHEA:18226 declares side 18225_R as its products
+        (rh:products); the master reaction RHEA:18225 is undirected. This participant is POLYMER:14302
+        with coefficient 1. Rhea cites PMID:7262074 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 6-aminohexanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18226
+      snippet: '[N-(6-aminohexanoyl)](n) + H2O => [N-(6-aminohexanoyl)](n-1) + 6-aminohexanoate'
+      notes: Rhea's left-to-right directional reaction RHEA:18226 declares side 18225_R as its products
+        (rh:products); the master reaction RHEA:18225 is undirected. This participant is CHEBI:57826 with
+        coefficient 1. Rhea cites PMID:7262074 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.46; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:18225
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.46"/>
+      notes: The rh:ec triple on RHEA:18225 in rhea.rdf. EC 3.5.1.46 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

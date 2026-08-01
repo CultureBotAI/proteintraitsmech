@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -30,4 +30,118 @@ definitions:
       Catalyses: (R)-vicianin + H2O = vicianose + mandelonitrile
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of vicianin beta-glucosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.119. EC 3.2.1.119 maps to
+    exactly one curated Rhea reaction (RHEA:14041), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-vicianin
+    + H2O = vicianose + mandelonitrile". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: vicianin beta-glucosidase
+    grounding: EC:3.2.1.119
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-vicianin
+    node_type: CHEMICAL
+    grounding: CHEBI:16358
+    description: Formula C19H25NO10.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: vicianose
+    node_type: CHEMICAL
+    grounding: CHEBI:16177
+    description: Formula C11H20O10.
+  - node_id: prd2
+    label: mandelonitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:16910
+    description: Formula C8H7NO.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: vicianin beta-glucosidase activity
+    grounding: GO:0050392
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A2SY66
+    node_type: PROTEIN
+    label: VICHY_VICSN
+    grounding: UniProtKB:A2SY66
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-vicianin is a substrate consumed by RHEA:14041 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14042
+      snippet: (R)-vicianin + H2O => vicianose + mandelonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:14042 declares side 14041_L as its substrates
+        (rh:substrates); the master reaction RHEA:14041 is undirected. This participant is CHEBI:16358
+        with coefficient 1. Rhea cites PMID:17548373, PMID:16665903 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:14041 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14042
+      snippet: (R)-vicianin + H2O => vicianose + mandelonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:14042 declares side 14041_L as its substrates
+        (rh:substrates); the master reaction RHEA:14041 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17548373, PMID:16665903 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: vicianose is a product released by RHEA:14041 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14042
+      snippet: (R)-vicianin + H2O => vicianose + mandelonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:14042 declares side 14041_R as its products
+        (rh:products); the master reaction RHEA:14041 is undirected. This participant is CHEBI:16177 with
+        coefficient 1. Rhea cites PMID:17548373, PMID:16665903 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: mandelonitrile is a product released by RHEA:14041 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14042
+      snippet: (R)-vicianin + H2O => vicianose + mandelonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:14042 declares side 14041_R as its products
+        (rh:products); the master reaction RHEA:14041 is undirected. This participant is CHEBI:16910 with
+        coefficient 1. Rhea cites PMID:17548373, PMID:16665903 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.119
+      snippet: EC:3.2.1.119 > GO:vicianin beta-glucosidase activity ; GO:0050392
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050392 is itself a record
+        in this KB.
+  - subject: prot_A2SY66
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VICHY_VICSN is an exemplar enzyme with EC 3.2.1.119 activity.
+    evidence:
+    - reference: EC:3.2.1.119
+      snippet: DR   A2SY66, VICHY_VICSN;
+      notes: ExPASy ENZYME entry EC 3.2.1.119 cross-references UniProtKB:A2SY66 (VICHY_VICSN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:77659
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: emodin + S-adenosyl-L-methionine = physcion + S-adenosyl-L-homocysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of emodin + S-adenosyl-L-methionine = physcion + S-adenosyl-L-homocysteine
+  description: Substrate-to-product chemistry of RHEA:76767, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:76768 (rh:substrates → 76767_L, rh:products → 76767_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of emodin + S-adenosyl-L-methionine = physcion + S-adenosyl-L-homocysteine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:76767
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: emodin + S-adenosyl-L-methionine = physcion + S-adenosyl-L-homocysteine'
+  - node_id: sub1
+    label: emodin
+    node_type: CHEMICAL
+    grounding: CHEBI:77659
+    description: Formula C15H9O5.
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: physcion
+    node_type: CHEMICAL
+    grounding: CHEBI:38167
+    description: Formula C16H12O5.
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: emodin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76768
+      snippet: emodin + S-adenosyl-L-methionine => physcion + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:76768 declares side 76767_L as its substrates
+        (rh:substrates); the master reaction RHEA:76767 is undirected. This participant is CHEBI:77659
+        with coefficient 1. Rhea cites PMID:36648527 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76768
+      snippet: emodin + S-adenosyl-L-methionine => physcion + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:76768 declares side 76767_L as its substrates
+        (rh:substrates); the master reaction RHEA:76767 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:36648527 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: physcion is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76768
+      snippet: emodin + S-adenosyl-L-methionine => physcion + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:76768 declares side 76767_R as its products
+        (rh:products); the master reaction RHEA:76767 is undirected. This participant is CHEBI:38167 with
+        coefficient 1. Rhea cites PMID:36648527 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76768
+      snippet: emodin + S-adenosyl-L-methionine => physcion + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:76768 declares side 76767_R as its products
+        (rh:products); the master reaction RHEA:76767 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:36648527 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

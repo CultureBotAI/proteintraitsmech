@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.6.1.-
 synonyms:
@@ -45,4 +45,140 @@ definitions:
       Catalyses: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol) = 1D-myo-inositol 1,2-cyclic phosphate + a 1,2-diacyl-sn-glycerol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphatidylinositol diacylglycerol-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.6.1.13. EC 4.6.1.13 maps to exactly
+    one curated Rhea reaction (RHEA:17093), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol)
+    = 1D-myo-inositol 1,2-cyclic phosphate + a 1,2-diacyl-sn-glycerol". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphatidylinositol diacylglycerol-lyase
+    grounding: EC:4.6.1.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol)
+    node_type: CHEMICAL
+    grounding: CHEBI:57880
+    description: Formula C11H16O13PR2.
+  - node_id: prd1
+    label: 1D-myo-inositol 1,2-cyclic phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58484
+    description: Formula C6H10O8P.
+  - node_id: prd2
+    label: a 1,2-diacyl-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17815
+    description: Formula C5H6O5R2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphatidylinositol diacylglycerol-lyase activity
+    grounding: GO:0004436
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P14262
+    node_type: PROTEIN
+    label: PLC_BACCE
+    grounding: UniProtKB:P14262
+  - node_id: prot_P08954
+    node_type: PROTEIN
+    label: PLC_BACTU
+    grounding: UniProtKB:P08954
+  - node_id: prot_P34024
+    node_type: PROTEIN
+    label: PLC_LISMO
+    grounding: UniProtKB:P34024
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol) is a substrate consumed by RHEA:17093
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17094
+      snippet: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol) => 1D-myo-inositol 1,2-cyclic phosphate
+        + a 1,2-diacyl-sn-glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:17094 declares side 17093_L as its substrates
+        (rh:substrates); the master reaction RHEA:17093 is undirected. This participant is CHEBI:57880
+        with coefficient 1. Rhea cites PMID:11331007, PMID:11583175, PMID:12600209, PMID:15155721 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1D-myo-inositol 1,2-cyclic phosphate is a product released by RHEA:17093 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17094
+      snippet: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol) => 1D-myo-inositol 1,2-cyclic phosphate
+        + a 1,2-diacyl-sn-glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:17094 declares side 17093_R as its products
+        (rh:products); the master reaction RHEA:17093 is undirected. This participant is CHEBI:58484 with
+        coefficient 1. Rhea cites PMID:11331007, PMID:11583175, PMID:12600209, PMID:15155721 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 1,2-diacyl-sn-glycerol is a product released by RHEA:17093 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17094
+      snippet: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol) => 1D-myo-inositol 1,2-cyclic phosphate
+        + a 1,2-diacyl-sn-glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:17094 declares side 17093_R as its products
+        (rh:products); the master reaction RHEA:17093 is undirected. This participant is CHEBI:17815 with
+        coefficient 1. Rhea cites PMID:11331007, PMID:11583175, PMID:12600209, PMID:15155721 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.6.1.13
+      snippet: EC:4.6.1.13 > GO:phosphatidylinositol diacylglycerol-lyase activity ; GO:0004436
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004436 is itself a record
+        in this KB.
+  - subject: prot_P14262
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLC_BACCE is an exemplar enzyme with EC 4.6.1.13 activity.
+    evidence:
+    - reference: EC:4.6.1.13
+      snippet: DR   P14262, PLC_BACCE  ;  P08954, PLC_BACTU  ;  P34024, PLC_LISMO  ;
+      notes: ExPASy ENZYME entry EC 4.6.1.13 cross-references UniProtKB:P14262 (PLC_BACCE) as a protein
+        with this activity.
+  - subject: prot_P08954
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLC_BACTU is an exemplar enzyme with EC 4.6.1.13 activity.
+    evidence:
+    - reference: EC:4.6.1.13
+      snippet: DR   P14262, PLC_BACCE  ;  P08954, PLC_BACTU  ;  P34024, PLC_LISMO  ;
+      notes: ExPASy ENZYME entry EC 4.6.1.13 cross-references UniProtKB:P08954 (PLC_BACTU) as a protein
+        with this activity.
+  - subject: prot_P34024
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLC_LISMO is an exemplar enzyme with EC 4.6.1.13 activity.
+    evidence:
+    - reference: EC:4.6.1.13
+      snippet: DR   P14262, PLC_BACCE  ;  P08954, PLC_BACTU  ;  P34024, PLC_LISMO  ;
+      notes: ExPASy ENZYME entry EC 4.6.1.13 cross-references UniProtKB:P34024 (PLC_LISMO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

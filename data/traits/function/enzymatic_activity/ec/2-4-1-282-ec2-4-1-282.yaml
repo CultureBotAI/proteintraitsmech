@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: 3-O-alpha-D-glucosyl-L-rhamnose + phosphate = beta-D-glucose 1-phosphate + L-rhamnopyranose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-O-alpha-D-glucosyl-L-rhamnose phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.282. EC 2.4.1.282 maps to
+    exactly one curated Rhea reaction (RHEA:34207), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-O-alpha-D-glucosyl-L-rhamnose
+    + phosphate = beta-D-glucose 1-phosphate + L-rhamnopyranose". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-O-alpha-D-glucosyl-L-rhamnose phosphorylase
+    grounding: EC:2.4.1.282
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-O-alpha-D-glucosyl-L-rhamnose
+    node_type: CHEMICAL
+    grounding: CHEBI:66909
+    description: Formula C12H22O10.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: beta-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57684
+    description: Formula C6H11O9P.
+  - node_id: prd2
+    label: L-rhamnopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:62346
+    description: Formula C6H12O5.
+  - node_id: prot_A9KM56
+    node_type: PROTEIN
+    label: 3OAGR_LACP7
+    grounding: UniProtKB:A9KM56
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-O-alpha-D-glucosyl-L-rhamnose is a substrate consumed by RHEA:34207 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34208
+      snippet: 3-O-alpha-D-glucosyl-L-rhamnose + phosphate => beta-D-glucose 1-phosphate + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:34208 declares side 34207_L as its substrates
+        (rh:substrates); the master reaction RHEA:34207 is undirected. This participant is CHEBI:66909
+        with coefficient 1. Rhea cites PMID:22277537 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:34207 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34208
+      snippet: 3-O-alpha-D-glucosyl-L-rhamnose + phosphate => beta-D-glucose 1-phosphate + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:34208 declares side 34207_L as its substrates
+        (rh:substrates); the master reaction RHEA:34207 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:22277537 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-glucose 1-phosphate is a product released by RHEA:34207 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34208
+      snippet: 3-O-alpha-D-glucosyl-L-rhamnose + phosphate => beta-D-glucose 1-phosphate + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:34208 declares side 34207_R as its products
+        (rh:products); the master reaction RHEA:34207 is undirected. This participant is CHEBI:57684 with
+        coefficient 1. Rhea cites PMID:22277537 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-rhamnopyranose is a product released by RHEA:34207 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34208
+      snippet: 3-O-alpha-D-glucosyl-L-rhamnose + phosphate => beta-D-glucose 1-phosphate + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:34208 declares side 34207_R as its products
+        (rh:products); the master reaction RHEA:34207 is undirected. This participant is CHEBI:62346 with
+        coefficient 1. Rhea cites PMID:22277537 for this reaction.
+  - subject: prot_A9KM56
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3OAGR_LACP7 is an exemplar enzyme with EC 2.4.1.282 activity.
+    evidence:
+    - reference: EC:2.4.1.282
+      snippet: DR   A9KM56, 3OAGR_LACP7;
+      notes: ExPASy ENZYME entry EC 2.4.1.282 cross-references UniProtKB:A9KM56 (3OAGR_LACP7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

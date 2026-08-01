@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.11.-
 synonyms:
@@ -41,4 +41,81 @@ definitions:
       Catalyses: Exonucleolytic cleavage (in the presence of ATP) in either 5'- to 3'- or 3'- to 5'-direction to yield 5'-phosphooligonucleotides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of exodeoxyribonuclease V
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.11.5. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Exonucleolytic
+    cleavage (in the presence of ATP) in either 5''- to 3''- or 3''- to 5''-direction to yield 5''-phosphooligonucleotides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: exodeoxyribonuclease V
+    grounding: EC:3.1.11.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: exodeoxyribonuclease V activity
+    grounding: GO:0008854
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O51578
+    node_type: PROTEIN
+    label: RECB_BORBU
+    grounding: UniProtKB:O51578
+  - node_id: prot_P57529
+    node_type: PROTEIN
+    label: RECB_BUCAI
+    grounding: UniProtKB:P57529
+  - node_id: prot_Q8K9A9
+    node_type: PROTEIN
+    label: RECB_BUCAP
+    grounding: UniProtKB:Q8K9A9
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.11.5
+      snippet: EC:3.1.11.5 > GO:exodeoxyribonuclease V activity ; GO:0008854
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008854 is itself a record
+        in this KB.
+  - subject: prot_O51578
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RECB_BORBU is an exemplar enzyme with EC 3.1.11.5 activity.
+    evidence:
+    - reference: EC:3.1.11.5
+      snippet: DR   O51578, RECB_BORBU ;  P57529, RECB_BUCAI ;  Q8K9A9, RECB_BUCAP ;
+      notes: ExPASy ENZYME entry EC 3.1.11.5 cross-references UniProtKB:O51578 (RECB_BORBU) as a protein
+        with this activity.
+  - subject: prot_P57529
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RECB_BUCAI is an exemplar enzyme with EC 3.1.11.5 activity.
+    evidence:
+    - reference: EC:3.1.11.5
+      snippet: DR   O51578, RECB_BORBU ;  P57529, RECB_BUCAI ;  Q8K9A9, RECB_BUCAP ;
+      notes: ExPASy ENZYME entry EC 3.1.11.5 cross-references UniProtKB:P57529 (RECB_BUCAI) as a protein
+        with this activity.
+  - subject: prot_Q8K9A9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RECB_BUCAP is an exemplar enzyme with EC 3.1.11.5 activity.
+    evidence:
+    - reference: EC:3.1.11.5
+      snippet: DR   O51578, RECB_BORBU ;  P57529, RECB_BUCAI ;  Q8K9A9, RECB_BUCAP ;
+      notes: ExPASy ENZYME entry EC 3.1.11.5 cross-references UniProtKB:Q8K9A9 (RECB_BUCAP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

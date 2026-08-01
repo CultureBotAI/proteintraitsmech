@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:195517
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: 5-S-cysteinyldopa + L-dopaquinone = 5-S-cysteinyldopaquinone + L-dopa
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-S-cysteinyldopa + L-dopaquinone = 5-S-cysteinyldopaquinone + L-dopa
+  description: Substrate-to-product chemistry of RHEA:77095, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77096 (rh:substrates → 77095_L, rh:products → 77095_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-S-cysteinyldopa + L-dopaquinone = 5-S-cysteinyldopaquinone + L-dopa
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77095
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-S-cysteinyldopa + L-dopaquinone = 5-S-cysteinyldopaquinone + L-dopa'
+  - node_id: sub1
+    label: 5-S-cysteinyldopa
+    node_type: CHEMICAL
+    grounding: CHEBI:195517
+    description: Formula C12H16N2O6S.
+  - node_id: sub2
+    label: L-dopaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:57924
+    description: Formula C9H9NO4.
+  - node_id: prd1
+    label: 5-S-cysteinyldopaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:195518
+    description: Formula C12H14N2O6S.
+  - node_id: prd2
+    label: L-dopa
+    node_type: CHEMICAL
+    grounding: CHEBI:57504
+    description: Formula C9H11NO4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-S-cysteinyldopa is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77096
+      snippet: 5-S-cysteinyldopa + L-dopaquinone => 5-S-cysteinyldopaquinone + L-dopa
+      notes: Rhea's left-to-right directional reaction RHEA:77096 declares side 77095_L as its substrates
+        (rh:substrates); the master reaction RHEA:77095 is undirected. This participant is CHEBI:195517
+        with coefficient 1. Rhea cites PMID:10952395 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-dopaquinone is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77096
+      snippet: 5-S-cysteinyldopa + L-dopaquinone => 5-S-cysteinyldopaquinone + L-dopa
+      notes: Rhea's left-to-right directional reaction RHEA:77096 declares side 77095_L as its substrates
+        (rh:substrates); the master reaction RHEA:77095 is undirected. This participant is CHEBI:57924
+        with coefficient 1. Rhea cites PMID:10952395 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-S-cysteinyldopaquinone is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77096
+      snippet: 5-S-cysteinyldopa + L-dopaquinone => 5-S-cysteinyldopaquinone + L-dopa
+      notes: Rhea's left-to-right directional reaction RHEA:77096 declares side 77095_R as its products
+        (rh:products); the master reaction RHEA:77095 is undirected. This participant is CHEBI:195518
+        with coefficient 1. Rhea cites PMID:10952395 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-dopa is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77096
+      snippet: 5-S-cysteinyldopa + L-dopaquinone => 5-S-cysteinyldopaquinone + L-dopa
+      notes: Rhea's left-to-right directional reaction RHEA:77096 declares side 77095_R as its products
+        (rh:products); the master reaction RHEA:77095 is undirected. This participant is CHEBI:57504 with
+        coefficient 1. Rhea cites PMID:10952395 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

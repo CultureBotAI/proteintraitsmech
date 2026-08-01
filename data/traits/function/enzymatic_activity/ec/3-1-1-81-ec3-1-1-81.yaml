@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -63,4 +63,148 @@ definitions:
       Catalyses: an N-acyl-L-homoserine lactone + H2O = an N-acyl-L-homoserine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of quorum-quenching N-acyl-homoserine lactonase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.81. EC 3.1.1.81 maps to exactly
+    one curated Rhea reaction (RHEA:22576), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an N-acyl-L-homoserine
+    lactone + H2O = an N-acyl-L-homoserine + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: quorum-quenching N-acyl-homoserine lactonase
+    grounding: EC:3.1.1.81
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an N-acyl-L-homoserine lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:55474
+    description: Formula C5H6NO3R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an N-acyl-L-homoserine
+    node_type: CHEMICAL
+    grounding: CHEBI:58921
+    description: Formula C5H7NO4R.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acyl-L-homoserine-lactone lactonohydrolase activity
+    grounding: GO:0102007
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0CJ63
+    node_type: PROTEIN
+    label: AHLLA_BACTK
+    grounding: UniProtKB:P0CJ63
+  - node_id: prot_A9CKY2
+    node_type: PROTEIN
+    label: AHLLB_AGRFC
+    grounding: UniProtKB:A9CKY2
+  - node_id: prot_B9JPK6
+    node_type: PROTEIN
+    label: AHLLB_RHIR8
+    grounding: UniProtKB:B9JPK6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-acyl-L-homoserine lactone is a substrate consumed by RHEA:22576 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:22577
+      snippet: an N-acyl-L-homoserine lactone + H2O => an N-acyl-L-homoserine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22577 declares side 22576_L as its substrates
+        (rh:substrates); the master reaction RHEA:22576 is undirected. This participant is CHEBI:55474
+        with coefficient 1. Rhea cites PMID:17307843, PMID:16314577 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:22576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22577
+      snippet: an N-acyl-L-homoserine lactone + H2O => an N-acyl-L-homoserine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22577 declares side 22576_L as its substrates
+        (rh:substrates); the master reaction RHEA:22576 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17307843, PMID:16314577 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N-acyl-L-homoserine is a product released by RHEA:22576 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22577
+      snippet: an N-acyl-L-homoserine lactone + H2O => an N-acyl-L-homoserine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22577 declares side 22576_R as its products
+        (rh:products); the master reaction RHEA:22576 is undirected. This participant is CHEBI:58921 with
+        coefficient 1. Rhea cites PMID:17307843, PMID:16314577 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:22576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22577
+      snippet: an N-acyl-L-homoserine lactone + H2O => an N-acyl-L-homoserine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22577 declares side 22576_R as its products
+        (rh:products); the master reaction RHEA:22576 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:17307843, PMID:16314577 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.81
+      snippet: EC:3.1.1.81 > GO:acyl-L-homoserine-lactone lactonohydrolase activity ; GO:0102007
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102007 is itself a record
+        in this KB.
+  - subject: prot_P0CJ63
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHLLA_BACTK is an exemplar enzyme with EC 3.1.1.81 activity.
+    evidence:
+    - reference: EC:3.1.1.81
+      snippet: DR   P0CJ63, AHLLA_BACTK;  A9CKY2, AHLLB_AGRFC;  B9JPK6, AHLLB_RHIR8;
+      notes: ExPASy ENZYME entry EC 3.1.1.81 cross-references UniProtKB:P0CJ63 (AHLLA_BACTK) as a protein
+        with this activity.
+  - subject: prot_A9CKY2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHLLB_AGRFC is an exemplar enzyme with EC 3.1.1.81 activity.
+    evidence:
+    - reference: EC:3.1.1.81
+      snippet: DR   P0CJ63, AHLLA_BACTK;  A9CKY2, AHLLB_AGRFC;  B9JPK6, AHLLB_RHIR8;
+      notes: ExPASy ENZYME entry EC 3.1.1.81 cross-references UniProtKB:A9CKY2 (AHLLB_AGRFC) as a protein
+        with this activity.
+  - subject: prot_B9JPK6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHLLB_RHIR8 is an exemplar enzyme with EC 3.1.1.81 activity.
+    evidence:
+    - reference: EC:3.1.1.81
+      snippet: DR   P0CJ63, AHLLA_BACTK;  A9CKY2, AHLLB_AGRFC;  B9JPK6, AHLLB_RHIR8;
+      notes: ExPASy ENZYME entry EC 3.1.1.81 cross-references UniProtKB:B9JPK6 (AHLLB_RHIR8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

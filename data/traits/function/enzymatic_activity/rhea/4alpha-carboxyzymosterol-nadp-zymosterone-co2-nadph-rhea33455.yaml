@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:143575
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,107 @@ definitions:
       Catalyses the reaction: 4alpha-carboxyzymosterol + NADP(+) = zymosterone + CO2 + NADPH
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4alpha-carboxyzymosterol + NADP(+) = zymosterone + CO2 + NADPH
+  description: Substrate-to-product chemistry of RHEA:33455, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33456 (rh:substrates → 33455_L, rh:products → 33455_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4alpha-carboxyzymosterol + NADP(+) = zymosterone + CO2 + NADPH
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33455
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4alpha-carboxyzymosterol + NADP(+) = zymosterone + CO2 + NADPH'
+  - node_id: sub1
+    label: 4alpha-carboxyzymosterol
+    node_type: CHEMICAL
+    grounding: CHEBI:143575
+    description: Formula C28H43O3.
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: zymosterone
+    node_type: CHEMICAL
+    grounding: CHEBI:52386
+    description: Formula C27H42O.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4alpha-carboxyzymosterol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33456
+      snippet: 4alpha-carboxyzymosterol + NADP(+) => zymosterone + CO2 + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:33456 declares side 33455_L as its substrates
+        (rh:substrates); the master reaction RHEA:33455 is undirected. This participant is CHEBI:143575
+        with coefficient 1. Rhea cites PMID:23583456, PMID:16246076, PMID:10369263 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33456
+      snippet: 4alpha-carboxyzymosterol + NADP(+) => zymosterone + CO2 + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:33456 declares side 33455_L as its substrates
+        (rh:substrates); the master reaction RHEA:33455 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:23583456, PMID:16246076, PMID:10369263 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: zymosterone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33456
+      snippet: 4alpha-carboxyzymosterol + NADP(+) => zymosterone + CO2 + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:33456 declares side 33455_R as its products
+        (rh:products); the master reaction RHEA:33455 is undirected. This participant is CHEBI:52386 with
+        coefficient 1. Rhea cites PMID:23583456, PMID:16246076, PMID:10369263 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33456
+      snippet: 4alpha-carboxyzymosterol + NADP(+) => zymosterone + CO2 + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:33456 declares side 33455_R as its products
+        (rh:products); the master reaction RHEA:33455 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:23583456, PMID:16246076, PMID:10369263 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NADPH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33456
+      snippet: 4alpha-carboxyzymosterol + NADP(+) => zymosterone + CO2 + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:33456 declares side 33455_R as its products
+        (rh:products); the master reaction RHEA:33455 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:23583456, PMID:16246076, PMID:10369263 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

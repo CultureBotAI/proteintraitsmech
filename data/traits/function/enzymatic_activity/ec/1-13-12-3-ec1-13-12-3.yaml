@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.12.-
 mapped_xrefs:
@@ -38,4 +38,162 @@ definitions:
       Catalyses: L-tryptophan + O2 = indole-3-acetamide + CO2 + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tryptophan 2-monooxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.12.3. EC 1.13.12.3 maps to
+    exactly one curated Rhea reaction (RHEA:16165), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-tryptophan
+    + O2 = indole-3-acetamide + CO2 + H2O". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tryptophan 2-monooxygenase
+    grounding: EC:1.13.12.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:57912
+    description: Formula C11H12N2O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: indole-3-acetamide
+    node_type: CHEMICAL
+    grounding: CHEBI:16031
+    description: Formula C10H10N2O.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tryptophan 2-monooxygenase activity
+    grounding: GO:0050361
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P25017
+    node_type: PROTEIN
+    label: TR2M2_AGRVI
+    grounding: UniProtKB:P25017
+  - node_id: prot_P0A3V2
+    node_type: PROTEIN
+    label: TR2M_AGRT4
+    grounding: UniProtKB:P0A3V2
+  - node_id: prot_P0A3V3
+    node_type: PROTEIN
+    label: TR2M_AGRTU
+    grounding: UniProtKB:P0A3V3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tryptophan is a substrate consumed by RHEA:16165 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16166
+      snippet: L-tryptophan + O2 => indole-3-acetamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:16166 declares side 16165_L as its substrates
+        (rh:substrates); the master reaction RHEA:16165 is undirected. This participant is CHEBI:57912
+        with coefficient 1. Rhea cites PMID:23521653 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:16165 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16166
+      snippet: L-tryptophan + O2 => indole-3-acetamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:16166 declares side 16165_L as its substrates
+        (rh:substrates); the master reaction RHEA:16165 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:23521653 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: indole-3-acetamide is a product released by RHEA:16165 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16166
+      snippet: L-tryptophan + O2 => indole-3-acetamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:16166 declares side 16165_R as its products
+        (rh:products); the master reaction RHEA:16165 is undirected. This participant is CHEBI:16031 with
+        coefficient 1. Rhea cites PMID:23521653 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:16165 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16166
+      snippet: L-tryptophan + O2 => indole-3-acetamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:16166 declares side 16165_R as its products
+        (rh:products); the master reaction RHEA:16165 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:23521653 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:16165 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16166
+      snippet: L-tryptophan + O2 => indole-3-acetamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:16166 declares side 16165_R as its products
+        (rh:products); the master reaction RHEA:16165 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:23521653 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.12.3
+      snippet: EC:1.13.12.3 > GO:tryptophan 2-monooxygenase activity ; GO:0050361
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050361 is itself a record
+        in this KB.
+  - subject: prot_P25017
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TR2M2_AGRVI is an exemplar enzyme with EC 1.13.12.3 activity.
+    evidence:
+    - reference: EC:1.13.12.3
+      snippet: DR   P25017, TR2M2_AGRVI;  P0A3V2, TR2M_AGRT4 ;  P0A3V3, TR2M_AGRTU ;
+      notes: ExPASy ENZYME entry EC 1.13.12.3 cross-references UniProtKB:P25017 (TR2M2_AGRVI) as a protein
+        with this activity.
+  - subject: prot_P0A3V2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TR2M_AGRT4 is an exemplar enzyme with EC 1.13.12.3 activity.
+    evidence:
+    - reference: EC:1.13.12.3
+      snippet: DR   P25017, TR2M2_AGRVI;  P0A3V2, TR2M_AGRT4 ;  P0A3V3, TR2M_AGRTU ;
+      notes: ExPASy ENZYME entry EC 1.13.12.3 cross-references UniProtKB:P0A3V2 (TR2M_AGRT4) as a protein
+        with this activity.
+  - subject: prot_P0A3V3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TR2M_AGRTU is an exemplar enzyme with EC 1.13.12.3 activity.
+    evidence:
+    - reference: EC:1.13.12.3
+      snippet: DR   P25017, TR2M2_AGRVI;  P0A3V2, TR2M_AGRT4 ;  P0A3V3, TR2M_AGRTU ;
+      notes: ExPASy ENZYME entry EC 1.13.12.3 cross-references UniProtKB:P0A3V3 (TR2M_AGRTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

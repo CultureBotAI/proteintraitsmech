@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 mapped_xrefs:
@@ -25,4 +25,104 @@ definitions:
       Catalyses: 1-methyladenosine + H2O = 1-methyladenine + D-ribose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-methyladenosine nucleosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.13. EC 3.2.2.13 maps to exactly
+    one curated Rhea reaction (RHEA:12865), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "1-methyladenosine
+    + H2O = 1-methyladenine + D-ribose". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1-methyladenosine nucleosidase
+    grounding: EC:3.2.2.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 1-methyladenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:16020
+    description: Formula C11H15N5O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 1-methyladenine
+    node_type: CHEMICAL
+    grounding: CHEBI:18083
+    description: Formula C6H7N5.
+  - node_id: prd2
+    label: D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:47013
+    description: Formula C5H10O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 1-methyladenosine nucleosidase activity
+    grounding: GO:0047518
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-methyladenosine is a substrate consumed by RHEA:12865 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12866
+      snippet: 1-methyladenosine + H2O => 1-methyladenine + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:12866 declares side 12865_L as its substrates
+        (rh:substrates); the master reaction RHEA:12865 is undirected. This participant is CHEBI:16020
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:12865 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12866
+      snippet: 1-methyladenosine + H2O => 1-methyladenine + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:12866 declares side 12865_L as its substrates
+        (rh:substrates); the master reaction RHEA:12865 is undirected. This participant is CHEBI:15377
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-methyladenine is a product released by RHEA:12865 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12866
+      snippet: 1-methyladenosine + H2O => 1-methyladenine + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:12866 declares side 12865_R as its products
+        (rh:products); the master reaction RHEA:12865 is undirected. This participant is CHEBI:18083 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-ribose is a product released by RHEA:12865 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12866
+      snippet: 1-methyladenosine + H2O => 1-methyladenine + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:12866 declares side 12865_R as its products
+        (rh:products); the master reaction RHEA:12865 is undirected. This participant is CHEBI:47013 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.13
+      snippet: EC:3.2.2.13 > GO:1-methyladenosine nucleosidase activity ; GO:0047518
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047518 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

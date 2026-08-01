@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -31,4 +31,103 @@ definitions:
       Catalyses: L-phenylalanine + pyruvate = 3-phenylpyruvate + L-alanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenylalanine(histidine) transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.58. EC 2.6.1.58 maps to exactly
+    one curated Rhea reaction (RHEA:13053), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-phenylalanine
+    + pyruvate = 3-phenylpyruvate + L-alanine". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine(histidine) transaminase
+    grounding: EC:2.6.1.58
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd1
+    label: 3-phenylpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:18005
+    description: Formula C9H7O3.
+  - node_id: prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: prot_A0A0D3LQY6
+    node_type: PROTEIN
+    label: ARAT4_ATRBE
+    grounding: UniProtKB:A0A0D3LQY6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-phenylalanine is a substrate consumed by RHEA:13053 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13054
+      snippet: L-phenylalanine + pyruvate => 3-phenylpyruvate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:13054 declares side 13053_L as its substrates
+        (rh:substrates); the master reaction RHEA:13053 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:38593075, PMID:12220660, PMID:14070 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: pyruvate is a substrate consumed by RHEA:13053 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13054
+      snippet: L-phenylalanine + pyruvate => 3-phenylpyruvate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:13054 declares side 13053_L as its substrates
+        (rh:substrates); the master reaction RHEA:13053 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:38593075, PMID:12220660, PMID:14070 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-phenylpyruvate is a product released by RHEA:13053 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13054
+      snippet: L-phenylalanine + pyruvate => 3-phenylpyruvate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:13054 declares side 13053_R as its products
+        (rh:products); the master reaction RHEA:13053 is undirected. This participant is CHEBI:18005 with
+        coefficient 1. Rhea cites PMID:38593075, PMID:12220660, PMID:14070 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-alanine is a product released by RHEA:13053 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13054
+      snippet: L-phenylalanine + pyruvate => 3-phenylpyruvate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:13054 declares side 13053_R as its products
+        (rh:products); the master reaction RHEA:13053 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:38593075, PMID:12220660, PMID:14070 for this reaction.
+  - subject: prot_A0A0D3LQY6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAT4_ATRBE is an exemplar enzyme with EC 2.6.1.58 activity.
+    evidence:
+    - reference: EC:2.6.1.58
+      snippet: DR   A0A0D3LQY6, ARAT4_ATRBE;
+      notes: ExPASy ENZYME entry EC 2.6.1.58 cross-references UniProtKB:A0A0D3LQY6 (ARAT4_ATRBE) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.11.2.5
     mapping_source: rhea2ec
@@ -28,4 +28,127 @@ definitions:
       Catalyses the reaction: 3-methyl-L-tyrosine + H2O2 = 5-hydroxy-3-methyl-L-tyrosine + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-methyl-L-tyrosine + H2O2 = 5-hydroxy-3-methyl-L-tyrosine + H2O
+  description: Substrate-to-product chemistry of RHEA:41432, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:41433 (rh:substrates → 41432_L, rh:products → 41432_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-methyl-L-tyrosine + H2O2 = 5-hydroxy-3-methyl-L-tyrosine + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:41432
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-methyl-L-tyrosine + H2O2 = 5-hydroxy-3-methyl-L-tyrosine + H2O'
+  - node_id: sub1
+    label: 3-methyl-L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:78239
+    description: Formula C10H13NO3.
+  - node_id: sub2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: prd1
+    label: 5-hydroxy-3-methyl-L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:78241
+    description: Formula C10H13NO4.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 3-methyl-L-tyrosine peroxygenase
+    grounding: EC:1.11.2.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_B0CN28
+    node_type: PROTEIN
+    label: SFMD_STRLA
+    grounding: UniProtKB:B0CN28
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-methyl-L-tyrosine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41433
+      snippet: 3-methyl-L-tyrosine + H2O2 => 5-hydroxy-3-methyl-L-tyrosine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41433 declares side 41432_L as its substrates
+        (rh:substrates); the master reaction RHEA:41432 is undirected. This participant is CHEBI:78239
+        with coefficient 1. Rhea cites PMID:22187429 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41433
+      snippet: 3-methyl-L-tyrosine + H2O2 => 5-hydroxy-3-methyl-L-tyrosine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41433 declares side 41432_L as its substrates
+        (rh:substrates); the master reaction RHEA:41432 is undirected. This participant is CHEBI:16240
+        with coefficient 1. Rhea cites PMID:22187429 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-hydroxy-3-methyl-L-tyrosine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:41433
+      snippet: 3-methyl-L-tyrosine + H2O2 => 5-hydroxy-3-methyl-L-tyrosine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41433 declares side 41432_R as its products
+        (rh:products); the master reaction RHEA:41432 is undirected. This participant is CHEBI:78241 with
+        coefficient 1. Rhea cites PMID:22187429 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41433
+      snippet: 3-methyl-L-tyrosine + H2O2 => 5-hydroxy-3-methyl-L-tyrosine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41433 declares side 41432_R as its products
+        (rh:products); the master reaction RHEA:41432 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:22187429 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.11.2.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:41432
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.2.5"/>
+      notes: The rh:ec triple on RHEA:41432 in rhea.rdf. EC 1.11.2.5 is itself a record in this KB.
+  - subject: prot_B0CN28
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SFMD_STRLA is an exemplar enzyme carrying EC 1.11.2.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.11.2.5
+      snippet: DR   B0CN28, SFMD_STRLA ;
+      notes: ExPASy ENZYME entry EC 1.11.2.5 cross-references UniProtKB:B0CN28 (SFMD_STRLA) as a protein
+        with this activity.
+    - reference: RHEA:41432
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.2.5"/>
+      notes: Rhea assigns RHEA:41432 to EC 1.11.2.5, and EC 1.11.2.5 maps to exactly one Rhea master reaction
+        (RHEA:41432), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

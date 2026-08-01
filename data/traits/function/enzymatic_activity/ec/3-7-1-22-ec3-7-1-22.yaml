@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.7.1.-
 synonyms:
@@ -41,4 +41,148 @@ definitions:
       Catalyses: 3D-3,5/4-trihydroxycyclohexane-1,2-dione + H2O = 5-deoxy-D-glucuronate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3D-(3,5/4)-trihydroxycyclohexane-1,2-dione acylhydrolase (decyclizing)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.7.1.22. EC 3.7.1.22 maps to exactly
+    one curated Rhea reaction (RHEA:25836), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3D-3,5/4-trihydroxycyclohexane-1,2-dione
+    + H2O = 5-deoxy-D-glucuronate + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3D-(3,5/4)-trihydroxycyclohexane-1,2-dione acylhydrolase (decyclizing)
+    grounding: EC:3.7.1.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3D-3,5/4-trihydroxycyclohexane-1,2-dione
+    node_type: CHEMICAL
+    grounding: CHEBI:28446
+    description: Formula C6H8O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 5-deoxy-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58852
+    description: Formula C6H9O6.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3D-(3,5/4)-trihydroxycyclohexane-1,2-dione hydrolase activity
+    grounding: GO:0102481
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q63B73
+    node_type: PROTEIN
+    label: IOLD1_BACCZ
+    grounding: UniProtKB:Q63B73
+  - node_id: prot_Q4V1F5
+    node_type: PROTEIN
+    label: IOLD2_BACCZ
+    grounding: UniProtKB:Q4V1F5
+  - node_id: prot_C3PAZ3
+    node_type: PROTEIN
+    label: IOLD_BACAA
+    grounding: UniProtKB:C3PAZ3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3D-3,5/4-trihydroxycyclohexane-1,2-dione is a substrate consumed by RHEA:25836 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:25837
+      snippet: 3D-3,5/4-trihydroxycyclohexane-1,2-dione + H2O => 5-deoxy-D-glucuronate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25837 declares side 25836_L as its substrates
+        (rh:substrates); the master reaction RHEA:25836 is undirected. This participant is CHEBI:28446
+        with coefficient 1. Rhea cites PMID:18310071 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:25836 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25837
+      snippet: 3D-3,5/4-trihydroxycyclohexane-1,2-dione + H2O => 5-deoxy-D-glucuronate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25837 declares side 25836_L as its substrates
+        (rh:substrates); the master reaction RHEA:25836 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18310071 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-deoxy-D-glucuronate is a product released by RHEA:25836 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25837
+      snippet: 3D-3,5/4-trihydroxycyclohexane-1,2-dione + H2O => 5-deoxy-D-glucuronate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25837 declares side 25836_R as its products
+        (rh:products); the master reaction RHEA:25836 is undirected. This participant is CHEBI:58852 with
+        coefficient 1. Rhea cites PMID:18310071 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:25836 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25837
+      snippet: 3D-3,5/4-trihydroxycyclohexane-1,2-dione + H2O => 5-deoxy-D-glucuronate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25837 declares side 25836_R as its products
+        (rh:products); the master reaction RHEA:25836 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18310071 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.7.1.22
+      snippet: EC:3.7.1.22 > GO:3D-(3,5/4)-trihydroxycyclohexane-1,2-dione hydrolase activity ; GO:0102481
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102481 is itself a record
+        in this KB.
+  - subject: prot_Q63B73
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IOLD1_BACCZ is an exemplar enzyme with EC 3.7.1.22 activity.
+    evidence:
+    - reference: EC:3.7.1.22
+      snippet: DR   Q63B73, IOLD1_BACCZ;  Q4V1F5, IOLD2_BACCZ;  C3PAZ3, IOLD_BACAA ;
+      notes: ExPASy ENZYME entry EC 3.7.1.22 cross-references UniProtKB:Q63B73 (IOLD1_BACCZ) as a protein
+        with this activity.
+  - subject: prot_Q4V1F5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IOLD2_BACCZ is an exemplar enzyme with EC 3.7.1.22 activity.
+    evidence:
+    - reference: EC:3.7.1.22
+      snippet: DR   Q63B73, IOLD1_BACCZ;  Q4V1F5, IOLD2_BACCZ;  C3PAZ3, IOLD_BACAA ;
+      notes: ExPASy ENZYME entry EC 3.7.1.22 cross-references UniProtKB:Q4V1F5 (IOLD2_BACCZ) as a protein
+        with this activity.
+  - subject: prot_C3PAZ3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IOLD_BACAA is an exemplar enzyme with EC 3.7.1.22 activity.
+    evidence:
+    - reference: EC:3.7.1.22
+      snippet: DR   Q63B73, IOLD1_BACCZ;  Q4V1F5, IOLD2_BACCZ;  C3PAZ3, IOLD_BACAA ;
+      notes: ExPASy ENZYME entry EC 3.7.1.22 cross-references UniProtKB:C3PAZ3 (IOLD_BACAA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

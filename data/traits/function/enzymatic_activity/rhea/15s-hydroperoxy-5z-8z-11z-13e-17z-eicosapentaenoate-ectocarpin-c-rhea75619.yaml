@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:194369
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,59 @@ definitions:
       Catalyses the reaction: (15S)-hydroperoxy-(5Z,8Z,11Z,13E,17Z)-eicosapentaenoate = ectocarpin C
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (15S)-hydroperoxy-(5Z,8Z,11Z,13E,17Z)-eicosapentaenoate = ectocarpin C
+  description: Substrate-to-product chemistry of RHEA:75619, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:75620 (rh:substrates → 75619_L, rh:products → 75619_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (15S)-hydroperoxy-(5Z,8Z,11Z,13E,17Z)-eicosapentaenoate = ectocarpin C
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:75619
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (15S)-hydroperoxy-(5Z,8Z,11Z,13E,17Z)-eicosapentaenoate = ectocarpin C'
+  - node_id: sub1
+    label: (15S)-hydroperoxy-(5Z,8Z,11Z,13E,17Z)-eicosapentaenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:194369
+    description: Formula C20H29O4.
+  - node_id: prd1
+    label: ectocarpin C
+    node_type: CHEMICAL
+    grounding: CHEBI:194364
+    description: Formula C20H29O4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (15S)-hydroperoxy-(5Z,8Z,11Z,13E,17Z)-eicosapentaenoate is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75620
+      snippet: (15S)-hydroperoxy-(5Z,8Z,11Z,13E,17Z)-eicosapentaenoate => ectocarpin C
+      notes: Rhea's left-to-right directional reaction RHEA:75620 declares side 75619_L as its substrates
+        (rh:substrates); the master reaction RHEA:75619 is undirected. This participant is CHEBI:194369
+        with coefficient 1. Rhea cites PMID:35835431 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ectocarpin C is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75620
+      snippet: (15S)-hydroperoxy-(5Z,8Z,11Z,13E,17Z)-eicosapentaenoate => ectocarpin C
+      notes: Rhea's left-to-right directional reaction RHEA:75620 declares side 75619_R as its products
+        (rh:products); the master reaction RHEA:75619 is undirected. This participant is CHEBI:194364
+        with coefficient 1. Rhea cites PMID:35835431 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

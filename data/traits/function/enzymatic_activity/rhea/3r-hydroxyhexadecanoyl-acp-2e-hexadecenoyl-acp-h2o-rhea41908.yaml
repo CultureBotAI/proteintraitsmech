@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78480
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,126 @@ definitions:
       Catalyses the reaction: (3R)-hydroxyhexadecanoyl-[ACP] = (2E)-hexadecenoyl-[ACP] + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (3R)-hydroxyhexadecanoyl-[ACP] = (2E)-hexadecenoyl-[ACP] + H2O
+  description: Substrate-to-product chemistry of RHEA:41908, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:41909 (rh:substrates → 41908_L, rh:products → 41908_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (3R)-hydroxyhexadecanoyl-[ACP] = (2E)-hexadecenoyl-[ACP] + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:41908
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (3R)-hydroxyhexadecanoyl-[ACP] = (2E)-hexadecenoyl-[ACP] + H2O'
+  - node_id: sub1
+    label: (3R)-hydroxyhexadecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9650
+    description: Rhea compound GENERIC:9650.
+  - node_id: sub1_rp1
+    label: O-(S-3R-hydroxyhexadecanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9650 ((3R)-hydroxyhexadecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78480
+  - node_id: prd1
+    label: (2E)-hexadecenoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9651
+    description: Rhea compound GENERIC:9651.
+  - node_id: prd1_rp1
+    label: O-(S-2E-hexadecenoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9651 ((2E)-hexadecenoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78481
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (3R)-hydroxyacyl-[acyl-carrier-protein] dehydratase activity
+    grounding: GO:0019171
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3R)-hydroxyhexadecanoyl-[ACP] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:41909
+      snippet: (3R)-hydroxyhexadecanoyl-[ACP] => (2E)-hexadecenoyl-[ACP] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41909 declares side 41908_L as its substrates
+        (rh:substrates); the master reaction RHEA:41908 is undirected. This participant is GENERIC:9650
+        with coefficient 1. Rhea cites PMID:7567999, PMID:8910376, PMID:8962082 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-3R-hydroxyhexadecanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive
+      part of (3R)-hydroxyhexadecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:41908
+      snippet: O-(S-3R-hydroxyhexadecanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9650 ((3R)-hydroxyhexadecanoyl-[ACP]) declares rh:reactivePart = O-(S-3R-hydroxyhexadecanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78480), formula C30H55N3O10PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-hexadecenoyl-[ACP] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41909
+      snippet: (3R)-hydroxyhexadecanoyl-[ACP] => (2E)-hexadecenoyl-[ACP] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41909 declares side 41908_R as its products
+        (rh:products); the master reaction RHEA:41908 is undirected. This participant is GENERIC:9651
+        with coefficient 1. Rhea cites PMID:7567999, PMID:8910376, PMID:8962082 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-2E-hexadecenoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part
+      of (2E)-hexadecenoyl-[ACP].
+    evidence:
+    - reference: RHEA:41908
+      snippet: O-(S-2E-hexadecenoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9651 ((2E)-hexadecenoyl-[ACP]) declares rh:reactivePart = O-(S-2E-hexadecenoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78481), formula C30H53N3O9PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41909
+      snippet: (3R)-hydroxyhexadecanoyl-[ACP] => (2E)-hexadecenoyl-[ACP] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41909 declares side 41908_R as its products
+        (rh:products); the master reaction RHEA:41908 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:7567999, PMID:8910376, PMID:8962082 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:41908
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0019171"/>
+      notes: The rdfs:seeAlso triple on RHEA:41908 in rhea.rdf. GO term GO:0019171 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

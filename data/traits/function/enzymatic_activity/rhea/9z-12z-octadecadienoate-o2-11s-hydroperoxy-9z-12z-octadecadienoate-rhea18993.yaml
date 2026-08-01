@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.13.11.45
     mapping_source: rhea2ec
@@ -34,4 +34,169 @@ definitions:
       Catalyses the reaction: (9Z,12Z)-octadecadienoate + O2 = (11S)-hydroperoxy-(9Z,12Z)-octadecadienoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (9Z,12Z)-octadecadienoate + O2 = (11S)-hydroperoxy-(9Z,12Z)-octadecadienoate
+  description: Substrate-to-product chemistry of RHEA:18993, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:18994 (rh:substrates → 18993_L, rh:products → 18993_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (9Z,12Z)-octadecadienoate + O2 = (11S)-hydroperoxy-(9Z,12Z)-octadecadienoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:18993
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (9Z,12Z)-octadecadienoate + O2 = (11S)-hydroperoxy-(9Z,12Z)-octadecadienoate'
+  - node_id: sub1
+    label: (9Z,12Z)-octadecadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30245
+    description: Formula C18H31O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (11S)-hydroperoxy-(9Z,12Z)-octadecadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57467
+    description: Formula C18H31O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: linoleate 11-lipoxygenase activity
+    grounding: GO:0050584
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: linoleate 11-lipoxygenase
+    grounding: EC:1.13.11.45
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_T0JRM4
+    node_type: PROTEIN
+    label: MNLOX_COLGC
+    grounding: UniProtKB:T0JRM4
+  - node_id: prot_F9FRH4
+    node_type: PROTEIN
+    label: MNLOX_FUSOF
+    grounding: UniProtKB:F9FRH4
+  - node_id: prot_Q8X151
+    node_type: PROTEIN
+    label: MNLOX_GAEAV
+    grounding: UniProtKB:Q8X151
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (9Z,12Z)-octadecadienoate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18994
+      snippet: (9Z,12Z)-octadecadienoate + O2 => (11S)-hydroperoxy-(9Z,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:18994 declares side 18993_L as its substrates
+        (rh:substrates); the master reaction RHEA:18993 is undirected. This participant is CHEBI:30245
+        with coefficient 1. Rhea cites PMID:23233731, PMID:26264916, PMID:9582345, PMID:9778131 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18994
+      snippet: (9Z,12Z)-octadecadienoate + O2 => (11S)-hydroperoxy-(9Z,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:18994 declares side 18993_L as its substrates
+        (rh:substrates); the master reaction RHEA:18993 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:23233731, PMID:26264916, PMID:9582345, PMID:9778131 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (11S)-hydroperoxy-(9Z,12Z)-octadecadienoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18994
+      snippet: (9Z,12Z)-octadecadienoate + O2 => (11S)-hydroperoxy-(9Z,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:18994 declares side 18993_R as its products
+        (rh:products); the master reaction RHEA:18993 is undirected. This participant is CHEBI:57467 with
+        coefficient 1. Rhea cites PMID:23233731, PMID:26264916, PMID:9582345, PMID:9778131 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:18993
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050584"/>
+      notes: The rdfs:seeAlso triple on RHEA:18993 in rhea.rdf. GO term GO:0050584 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.13.11.45; the EC class covers the chemistry, this
+      reaction is one curated instance of it.
+    evidence:
+    - reference: RHEA:18993
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.45"/>
+      notes: The rh:ec triple on RHEA:18993 in rhea.rdf. EC 1.13.11.45 is itself a record in this KB.
+  - subject: prot_T0JRM4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MNLOX_COLGC is an exemplar enzyme carrying EC 1.13.11.45, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.45
+      snippet: DR   T0JRM4, MNLOX_COLGC;  F9FRH4, MNLOX_FUSOF;  Q8X151, MNLOX_GAEAV;
+      notes: ExPASy ENZYME entry EC 1.13.11.45 cross-references UniProtKB:T0JRM4 (MNLOX_COLGC) as a protein
+        with this activity.
+    - reference: RHEA:18993
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.45"/>
+      notes: Rhea assigns RHEA:18993 to EC 1.13.11.45, and EC 1.13.11.45 maps to exactly one Rhea master
+        reaction (RHEA:18993), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_F9FRH4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MNLOX_FUSOF is an exemplar enzyme carrying EC 1.13.11.45, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.45
+      snippet: DR   T0JRM4, MNLOX_COLGC;  F9FRH4, MNLOX_FUSOF;  Q8X151, MNLOX_GAEAV;
+      notes: ExPASy ENZYME entry EC 1.13.11.45 cross-references UniProtKB:F9FRH4 (MNLOX_FUSOF) as a protein
+        with this activity.
+    - reference: RHEA:18993
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.45"/>
+      notes: Rhea assigns RHEA:18993 to EC 1.13.11.45, and EC 1.13.11.45 maps to exactly one Rhea master
+        reaction (RHEA:18993), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q8X151
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MNLOX_GAEAV is an exemplar enzyme carrying EC 1.13.11.45, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.45
+      snippet: DR   T0JRM4, MNLOX_COLGC;  F9FRH4, MNLOX_FUSOF;  Q8X151, MNLOX_GAEAV;
+      notes: ExPASy ENZYME entry EC 1.13.11.45 cross-references UniProtKB:Q8X151 (MNLOX_GAEAV) as a protein
+        with this activity.
+    - reference: RHEA:18993
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.45"/>
+      notes: Rhea assigns RHEA:18993 to EC 1.13.11.45, and EC 1.13.11.45 maps to exactly one Rhea master
+        reaction (RHEA:18993), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

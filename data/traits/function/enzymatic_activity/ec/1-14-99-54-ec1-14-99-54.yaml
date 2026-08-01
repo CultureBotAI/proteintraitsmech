@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.99.-
 synonyms:
@@ -38,4 +38,67 @@ definitions:
       Catalyses: [(1->4)-beta-D-glucosyl]n+m + reduced acceptor + O2 = [(1->4)-beta-D- glucosyl]m-1-(1->4)-D-glucono-1,5-lactone + [(1->4)-beta-D-glucosyl]n + acceptor + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lytic cellulose monooxygenase (C1-hydroxylating)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.99.54. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "[(1->4)-beta-D-glucosyl]n+m + reduced acceptor + O2 = [(1->4)-beta-D- glucosyl]m-1-(1->4)-D-glucono-1,5-lactone
+    + [(1->4)-beta-D-glucosyl]n + acceptor + H2O".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lytic cellulose monooxygenase (C1-hydroxylating)
+    grounding: EC:1.14.99.54
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_A3KKC4
+    node_type: PROTEIN
+    label: LCEMO_STRA7
+    grounding: UniProtKB:A3KKC4
+  - node_id: prot_A0A384K4U6
+    node_type: PROTEIN
+    label: LP9A_BOTFB
+    grounding: UniProtKB:A0A384K4U6
+  - node_id: prot_A0A0J9XKT0
+    node_type: PROTEIN
+    label: LP9A_GEOCN
+    grounding: UniProtKB:A0A0J9XKT0
+  edges:
+  - subject: prot_A3KKC4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCEMO_STRA7 is an exemplar enzyme with EC 1.14.99.54 activity.
+    evidence:
+    - reference: EC:1.14.99.54
+      snippet: DR   A3KKC4, LCEMO_STRA7;  A0A384K4U6, LP9A_BOTFB ;  A0A0J9XKT0, LP9A_GEOCN ;
+      notes: ExPASy ENZYME entry EC 1.14.99.54 cross-references UniProtKB:A3KKC4 (LCEMO_STRA7) as a protein
+        with this activity.
+  - subject: prot_A0A384K4U6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LP9A_BOTFB is an exemplar enzyme with EC 1.14.99.54 activity.
+    evidence:
+    - reference: EC:1.14.99.54
+      snippet: DR   A3KKC4, LCEMO_STRA7;  A0A384K4U6, LP9A_BOTFB ;  A0A0J9XKT0, LP9A_GEOCN ;
+      notes: ExPASy ENZYME entry EC 1.14.99.54 cross-references UniProtKB:A0A384K4U6 (LP9A_BOTFB) as a
+        protein with this activity.
+  - subject: prot_A0A0J9XKT0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LP9A_GEOCN is an exemplar enzyme with EC 1.14.99.54 activity.
+    evidence:
+    - reference: EC:1.14.99.54
+      snippet: DR   A3KKC4, LCEMO_STRA7;  A0A384K4U6, LP9A_BOTFB ;  A0A0J9XKT0, LP9A_GEOCN ;
+      notes: ExPASy ENZYME entry EC 1.14.99.54 cross-references UniProtKB:A0A0J9XKT0 (LP9A_GEOCN) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

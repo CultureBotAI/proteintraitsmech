@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.47
     mapping_source: rhea2ec
@@ -36,4 +36,291 @@ definitions:
       Catalyses the reaction: GDP-alpha-D-mannose = GDP-4-dehydro-alpha-D-rhamnose + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of GDP-alpha-D-mannose = GDP-4-dehydro-alpha-D-rhamnose + H2O
+  description: Substrate-to-product chemistry of RHEA:23820, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23821 (rh:substrates → 23820_L, rh:products → 23820_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of GDP-alpha-D-mannose = GDP-4-dehydro-alpha-D-rhamnose + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23820
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: GDP-alpha-D-mannose = GDP-4-dehydro-alpha-D-rhamnose + H2O'
+  - node_id: sub1
+    label: GDP-alpha-D-mannose
+    node_type: CHEMICAL
+    grounding: CHEBI:57527
+    description: Formula C16H23N5O16P2.
+  - node_id: prd1
+    label: GDP-4-dehydro-alpha-D-rhamnose
+    node_type: CHEMICAL
+    grounding: CHEBI:57964
+    description: Formula C16H21N5O15P2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: GDP-mannose 4,6-dehydratase activity
+    grounding: GO:0008446
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: GDP-mannose 4,6-dehydratase
+    grounding: EC:4.2.1.47
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9JRN5
+    node_type: PROTEIN
+    label: GM4D_AGGAC
+    grounding: UniProtKB:Q9JRN5
+  - node_id: prot_P0AC90
+    node_type: PROTEIN
+    label: GM4D_ECO57
+    grounding: UniProtKB:P0AC90
+  - node_id: prot_P0AC89
+    node_type: PROTEIN
+    label: GM4D_ECOL6
+    grounding: UniProtKB:P0AC89
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: GDP-alpha-D-mannose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23821
+      snippet: GDP-alpha-D-mannose => GDP-4-dehydro-alpha-D-rhamnose + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23821 declares side 23820_L as its substrates
+        (rh:substrates); the master reaction RHEA:23820 is undirected. This participant is CHEBI:57527
+        with coefficient 1. Rhea cites PMID:9525924, PMID:5047712, PMID:12501186, PMID:11096116 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: GDP-4-dehydro-alpha-D-rhamnose is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23821
+      snippet: GDP-alpha-D-mannose => GDP-4-dehydro-alpha-D-rhamnose + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23821 declares side 23820_R as its products
+        (rh:products); the master reaction RHEA:23820 is undirected. This participant is CHEBI:57964 with
+        coefficient 1. Rhea cites PMID:9525924, PMID:5047712, PMID:12501186, PMID:11096116 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23821
+      snippet: GDP-alpha-D-mannose => GDP-4-dehydro-alpha-D-rhamnose + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23821 declares side 23820_R as its products
+        (rh:products); the master reaction RHEA:23820 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:9525924, PMID:5047712, PMID:12501186, PMID:11096116 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:23820
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008446"/>
+      notes: The rdfs:seeAlso triple on RHEA:23820 in rhea.rdf. GO term GO:0008446 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.47; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:23820
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.47"/>
+      notes: The rh:ec triple on RHEA:23820 in rhea.rdf. EC 4.2.1.47 is itself a record in this KB.
+  - subject: prot_Q9JRN5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GM4D_AGGAC is an exemplar enzyme carrying EC 4.2.1.47, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.47
+      snippet: DR   Q9JRN5, GM4D_AGGAC ;  P0AC90, GM4D_ECO57 ;  P0AC89, GM4D_ECOL6 ;
+      notes: ExPASy ENZYME entry EC 4.2.1.47 cross-references UniProtKB:Q9JRN5 (GM4D_AGGAC) as a protein
+        with this activity.
+    - reference: RHEA:23820
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.47"/>
+      notes: Rhea assigns RHEA:23820 to EC 4.2.1.47, and EC 4.2.1.47 maps to exactly one Rhea master reaction
+        (RHEA:23820), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P0AC90
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GM4D_ECO57 is an exemplar enzyme carrying EC 4.2.1.47, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.47
+      snippet: DR   Q9JRN5, GM4D_AGGAC ;  P0AC90, GM4D_ECO57 ;  P0AC89, GM4D_ECOL6 ;
+      notes: ExPASy ENZYME entry EC 4.2.1.47 cross-references UniProtKB:P0AC90 (GM4D_ECO57) as a protein
+        with this activity.
+    - reference: RHEA:23820
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.47"/>
+      notes: Rhea assigns RHEA:23820 to EC 4.2.1.47, and EC 4.2.1.47 maps to exactly one Rhea master reaction
+        (RHEA:23820), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P0AC89
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GM4D_ECOL6 is an exemplar enzyme carrying EC 4.2.1.47, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.47
+      snippet: DR   Q9JRN5, GM4D_AGGAC ;  P0AC90, GM4D_ECO57 ;  P0AC89, GM4D_ECOL6 ;
+      notes: ExPASy ENZYME entry EC 4.2.1.47 cross-references UniProtKB:P0AC89 (GM4D_ECOL6) as a protein
+        with this activity.
+    - reference: RHEA:23820
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.47"/>
+      notes: Rhea assigns RHEA:23820 to EC 4.2.1.47, and EC 4.2.1.47 maps to exactly one Rhea master reaction
+        (RHEA:23820), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa487
+  title: Catalytic residues of RHEA:23820 (from MCSA:487)
+  description: 'The catalytic residues that carry out RHEA:23820, joined from M-CSA entry 487. 4 residues,
+    reused verbatim from the MCSA:487 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 487''s reactant set (CHEBI:57527) equals Rhea side 23820_L exactly, and its product
+    set (CHEBI:15377, CHEBI:57964) equals side 23820_R exactly. EC agreement bounded the candidates but
+    was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of GDP-alpha-D-mannose = GDP-4-dehydro-alpha-D-rhamnose + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23820
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: GDP-alpha-D-mannose = GDP-4-dehydro-alpha-D-rhamnose + H2O'
+  - node_id: mcsa
+    label: GDP-mannose 4,6-dehydratase
+    node_type: MOTIF
+    grounding: MCSA:487
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: thr132
+    label: catalytic Thr132 (M-CSA/PDB numbering; UniProt residue 133)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AC88
+    description: 'M-CSA roles: proton shuttle (general acid/base). Reused verbatim from the MCSA:487 record''s
+      catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: glu134
+    label: catalytic Glu134 (M-CSA/PDB numbering; UniProt residue 135)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AC88
+    description: 'M-CSA roles: proton shuttle (general acid/base). Reused verbatim from the MCSA:487 record''s
+      catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: tyr156
+    label: catalytic Tyr156 (M-CSA/PDB numbering; UniProt residue 157)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AC88
+    description: 'M-CSA roles: electrostatic stabiliser, proton shuttle (general acid/base). Reused verbatim
+      from the MCSA:487 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: lys160
+    label: catalytic Lys160 (M-CSA/PDB numbering; UniProt residue 161)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0AC88
+    description: 'M-CSA roles: electrostatic stabiliser, modifies pKa. Reused verbatim from the MCSA:487
+      record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 487 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:487
+      snippet: GDP-alpha-D-mannose(2-) [reactant]; GDP-4-dehydro-6-deoxy-alpha-D-mannose(2-) [product];
+        water [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 487, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 487''s reactant
+        set (CHEBI:57527) equals Rhea side 23820_L exactly, and its product set (CHEBI:15377, CHEBI:57964)
+        equals side 23820_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: thr132
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:487
+      snippet: proton shuttle (general acid/base)
+      notes: 'M-CSA entry 487 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 reactant, 6 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 487''s reactant set (CHEBI:57527)
+        equals Rhea side 23820_L exactly, and its product set (CHEBI:15377, CHEBI:57964) equals side 23820_R
+        exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: glu134
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:487
+      snippet: proton shuttle (general acid/base)
+      notes: 'M-CSA entry 487 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 reactant, 6 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 487''s reactant set (CHEBI:57527)
+        equals Rhea side 23820_L exactly, and its product set (CHEBI:15377, CHEBI:57964) equals side 23820_R
+        exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: tyr156
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:487
+      snippet: electrostatic stabiliser, proton shuttle (general acid/base)
+      notes: 'M-CSA entry 487 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 reactant, 6 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 487''s reactant set (CHEBI:57527)
+        equals Rhea side 23820_L exactly, and its product set (CHEBI:15377, CHEBI:57964) equals side 23820_R
+        exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: lys160
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:487
+      snippet: electrostatic stabiliser, modifies pKa
+      notes: 'M-CSA entry 487 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 6 reactant, 6 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 487''s reactant set (CHEBI:57527)
+        equals Rhea side 23820_L exactly, and its product set (CHEBI:15377, CHEBI:57964) equals side 23820_R
+        exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa487' (5 evidence-backed edges) joining MCSA:487
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

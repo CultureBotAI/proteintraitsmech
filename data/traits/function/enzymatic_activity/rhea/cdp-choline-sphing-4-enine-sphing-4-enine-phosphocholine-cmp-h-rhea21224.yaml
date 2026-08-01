@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.8.10
     mapping_source: rhea2ec
@@ -30,4 +30,138 @@ definitions:
       Catalyses the reaction: CDP-choline + sphing-4-enine = sphing-4-enine-phosphocholine + CMP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of CDP-choline + sphing-4-enine = sphing-4-enine-phosphocholine + CMP + H(+)
+  description: Substrate-to-product chemistry of RHEA:21224, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:21225 (rh:substrates → 21224_L, rh:products → 21224_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of CDP-choline + sphing-4-enine = sphing-4-enine-phosphocholine + CMP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21224
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: CDP-choline + sphing-4-enine = sphing-4-enine-phosphocholine + CMP + H(+)'
+  - node_id: sub1
+    label: CDP-choline
+    node_type: CHEMICAL
+    grounding: CHEBI:58779
+    description: Formula C14H25N4O11P2.
+  - node_id: sub2
+    label: sphing-4-enine
+    node_type: CHEMICAL
+    grounding: CHEBI:57756
+    description: Formula C18H38NO2.
+  - node_id: prd1
+    label: sphing-4-enine-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:58906
+    description: Formula C23H50N2O5P.
+  - node_id: prd2
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sphingosine cholinephosphotransferase activity
+    grounding: GO:0047354
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: sphingosine cholinephosphotransferase
+    grounding: EC:2.7.8.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: CDP-choline is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21225
+      snippet: CDP-choline + sphing-4-enine => sphing-4-enine-phosphocholine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21225 declares side 21224_L as its substrates
+        (rh:substrates); the master reaction RHEA:21224 is undirected. This participant is CHEBI:58779
+        with coefficient 1. Rhea cites PMID:5679375 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sphing-4-enine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21225
+      snippet: CDP-choline + sphing-4-enine => sphing-4-enine-phosphocholine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21225 declares side 21224_L as its substrates
+        (rh:substrates); the master reaction RHEA:21224 is undirected. This participant is CHEBI:57756
+        with coefficient 1. Rhea cites PMID:5679375 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sphing-4-enine-phosphocholine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21225
+      snippet: CDP-choline + sphing-4-enine => sphing-4-enine-phosphocholine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21225 declares side 21224_R as its products
+        (rh:products); the master reaction RHEA:21224 is undirected. This participant is CHEBI:58906 with
+        coefficient 1. Rhea cites PMID:5679375 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21225
+      snippet: CDP-choline + sphing-4-enine => sphing-4-enine-phosphocholine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21225 declares side 21224_R as its products
+        (rh:products); the master reaction RHEA:21224 is undirected. This participant is CHEBI:60377 with
+        coefficient 1. Rhea cites PMID:5679375 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21225
+      snippet: CDP-choline + sphing-4-enine => sphing-4-enine-phosphocholine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21225 declares side 21224_R as its products
+        (rh:products); the master reaction RHEA:21224 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:5679375 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:21224
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047354"/>
+      notes: The rdfs:seeAlso triple on RHEA:21224 in rhea.rdf. GO term GO:0047354 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.8.10; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:21224
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.8.10"/>
+      notes: The rh:ec triple on RHEA:21224 in rhea.rdf. EC 2.7.8.10 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

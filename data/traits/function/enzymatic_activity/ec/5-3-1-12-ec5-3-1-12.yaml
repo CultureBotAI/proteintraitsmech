@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 synonyms:
@@ -49,4 +49,180 @@ definitions:
       Catalyses: D-glucuronate = D-fructuronate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucuronate isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.12. Rhea assigns 2 curated
+    reactions to EC 5.3.1.12. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "D-glucuronate = D-fructuronate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucuronate isomerase
+    grounding: EC:5.3.1.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-glucuronate = D-fructuronate
+    grounding: RHEA:13049
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-glucuronate = D-fructuronate'
+  - node_id: rxn1_sub1
+    label: D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58720
+    description: Formula C6H9O7.
+  - node_id: rxn1_prd1
+    label: D-fructuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:59863
+    description: Formula C6H9O7.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of aldehydo-D-galacturonate = keto-D-tagaturonate
+    grounding: RHEA:27702
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: aldehydo-D-galacturonate = keto-D-tagaturonate'
+  - node_id: rxn2_sub1
+    label: aldehydo-D-galacturonate
+    node_type: CHEMICAL
+    grounding: CHEBI:12952
+    description: Formula C6H9O7.
+  - node_id: rxn2_prd1
+    label: keto-D-tagaturonate
+    node_type: CHEMICAL
+    grounding: CHEBI:17886
+    description: Formula C6H9O7.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucuronate isomerase activity
+    grounding: GO:0008880
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A6VKM8
+    node_type: PROTEIN
+    label: UXAC_ACTSZ
+    grounding: UniProtKB:A6VKM8
+  - node_id: prot_Q5LCT3
+    node_type: PROTEIN
+    label: UXAC_BACFN
+    grounding: UniProtKB:Q5LCT3
+  - node_id: prot_Q64TY9
+    node_type: PROTEIN
+    label: UXAC_BACFR
+    grounding: UniProtKB:Q64TY9
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:13049 is one of the 2 curated reactions Rhea assigns to EC 5.3.1.12; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:13049
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.12"/>
+      notes: The rh:ec triple on RHEA:13049 in rhea.rdf assigns that reaction to EC 5.3.1.12.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: D-glucuronate is a substrate consumed by RHEA:13049 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13050
+      snippet: D-glucuronate => D-fructuronate
+      notes: Rhea's left-to-right directional reaction RHEA:13050 declares side 13049_L as its substrates
+        (rh:substrates); the master reaction RHEA:13049 is undirected. This participant is CHEBI:58720
+        with coefficient 1. Rhea cites PMID:14409051, PMID:13794771 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: D-fructuronate is a product released by RHEA:13049 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13050
+      snippet: D-glucuronate => D-fructuronate
+      notes: Rhea's left-to-right directional reaction RHEA:13050 declares side 13049_R as its products
+        (rh:products); the master reaction RHEA:13049 is undirected. This participant is CHEBI:59863 with
+        coefficient 1. Rhea cites PMID:14409051, PMID:13794771 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:27702 is one of the 2 curated reactions Rhea assigns to EC 5.3.1.12; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:27702
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.12"/>
+      notes: The rh:ec triple on RHEA:27702 in rhea.rdf assigns that reaction to EC 5.3.1.12.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: aldehydo-D-galacturonate is a substrate consumed by RHEA:27702 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27703
+      snippet: aldehydo-D-galacturonate => keto-D-tagaturonate
+      notes: Rhea's left-to-right directional reaction RHEA:27703 declares side 27702_L as its substrates
+        (rh:substrates); the master reaction RHEA:27702 is undirected. This participant is CHEBI:12952
+        with coefficient 1. Rhea cites PMID:14409051 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: keto-D-tagaturonate is a product released by RHEA:27702 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27703
+      snippet: aldehydo-D-galacturonate => keto-D-tagaturonate
+      notes: Rhea's left-to-right directional reaction RHEA:27703 declares side 27702_R as its products
+        (rh:products); the master reaction RHEA:27702 is undirected. This participant is CHEBI:17886 with
+        coefficient 1. Rhea cites PMID:14409051 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.12
+      snippet: EC:5.3.1.12 > GO:glucuronate isomerase activity ; GO:0008880
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008880 is itself a record
+        in this KB.
+  - subject: prot_A6VKM8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UXAC_ACTSZ is an exemplar enzyme with EC 5.3.1.12 activity.
+    evidence:
+    - reference: EC:5.3.1.12
+      snippet: DR   A6VKM8, UXAC_ACTSZ ;  Q5LCT3, UXAC_BACFN ;  Q64TY9, UXAC_BACFR ;
+      notes: ExPASy ENZYME entry EC 5.3.1.12 cross-references UniProtKB:A6VKM8 (UXAC_ACTSZ) as a protein
+        with this activity.
+  - subject: prot_Q5LCT3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UXAC_BACFN is an exemplar enzyme with EC 5.3.1.12 activity.
+    evidence:
+    - reference: EC:5.3.1.12
+      snippet: DR   A6VKM8, UXAC_ACTSZ ;  Q5LCT3, UXAC_BACFN ;  Q64TY9, UXAC_BACFR ;
+      notes: ExPASy ENZYME entry EC 5.3.1.12 cross-references UniProtKB:Q5LCT3 (UXAC_BACFN) as a protein
+        with this activity.
+  - subject: prot_Q64TY9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UXAC_BACFR is an exemplar enzyme with EC 5.3.1.12 activity.
+    evidence:
+    - reference: EC:5.3.1.12
+      snippet: DR   A6VKM8, UXAC_ACTSZ ;  Q5LCT3, UXAC_BACFN ;  Q64TY9, UXAC_BACFR ;
+      notes: ExPASy ENZYME entry EC 5.3.1.12 cross-references UniProtKB:Q64TY9 (UXAC_BACFR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

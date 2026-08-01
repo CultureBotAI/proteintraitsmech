@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.2.-
 mapped_xrefs:
@@ -38,4 +38,146 @@ definitions:
       Catalyses: cyanurate + H2O = 1-carboxybiuret + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyanuric acid amidohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.2.15. EC 3.5.2.15 maps to exactly
+    one curated Rhea reaction (RHEA:70363), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "cyanurate + H2O
+    = 1-carboxybiuret + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cyanuric acid amidohydrolase
+    grounding: EC:3.5.2.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: cyanurate
+    node_type: CHEMICAL
+    grounding: CHEBI:38028
+    description: Formula C3H3N3O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 1-carboxybiuret
+    node_type: CHEMICAL
+    grounding: CHEBI:142864
+    description: Formula C3H4N3O4.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cyanuric acid amidohydrolase activity
+    grounding: GO:0018753
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A8IKD2
+    node_type: PROTEIN
+    label: CAH_AZOC5
+    grounding: UniProtKB:A8IKD2
+  - node_id: prot_Q89E06
+    node_type: PROTEIN
+    label: CAH_BRADU
+    grounding: UniProtKB:Q89E06
+  - node_id: prot_H0SH23
+    node_type: PROTEIN
+    label: CAH_BRAS3
+    grounding: UniProtKB:H0SH23
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cyanurate is a substrate consumed by RHEA:70363 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70364
+      snippet: cyanurate + H2O => 1-carboxybiuret + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70364 declares side 70363_L as its substrates
+        (rh:substrates); the master reaction RHEA:70363 is undirected. This participant is CHEBI:38028
+        with coefficient 1. Rhea cites PMID:28345631, PMID:31181074, PMID:29523689 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:70363 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70364
+      snippet: cyanurate + H2O => 1-carboxybiuret + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70364 declares side 70363_L as its substrates
+        (rh:substrates); the master reaction RHEA:70363 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:28345631, PMID:31181074, PMID:29523689 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-carboxybiuret is a product released by RHEA:70363 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70364
+      snippet: cyanurate + H2O => 1-carboxybiuret + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70364 declares side 70363_R as its products
+        (rh:products); the master reaction RHEA:70363 is undirected. This participant is CHEBI:142864
+        with coefficient 1. Rhea cites PMID:28345631, PMID:31181074, PMID:29523689 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:70363 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70364
+      snippet: cyanurate + H2O => 1-carboxybiuret + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70364 declares side 70363_R as its products
+        (rh:products); the master reaction RHEA:70363 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:28345631, PMID:31181074, PMID:29523689 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.2.15
+      snippet: EC:3.5.2.15 > GO:cyanuric acid amidohydrolase activity ; GO:0018753
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018753 is itself a record
+        in this KB.
+  - subject: prot_A8IKD2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAH_AZOC5 is an exemplar enzyme with EC 3.5.2.15 activity.
+    evidence:
+    - reference: EC:3.5.2.15
+      snippet: DR   A8IKD2, CAH_AZOC5  ;  Q89E06, CAH_BRADU  ;  H0SH23, CAH_BRAS3  ;
+      notes: ExPASy ENZYME entry EC 3.5.2.15 cross-references UniProtKB:A8IKD2 (CAH_AZOC5) as a protein
+        with this activity.
+  - subject: prot_Q89E06
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAH_BRADU is an exemplar enzyme with EC 3.5.2.15 activity.
+    evidence:
+    - reference: EC:3.5.2.15
+      snippet: DR   A8IKD2, CAH_AZOC5  ;  Q89E06, CAH_BRADU  ;  H0SH23, CAH_BRAS3  ;
+      notes: ExPASy ENZYME entry EC 3.5.2.15 cross-references UniProtKB:Q89E06 (CAH_BRADU) as a protein
+        with this activity.
+  - subject: prot_H0SH23
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAH_BRAS3 is an exemplar enzyme with EC 3.5.2.15 activity.
+    evidence:
+    - reference: EC:3.5.2.15
+      snippet: DR   A8IKD2, CAH_AZOC5  ;  Q89E06, CAH_BRADU  ;  H0SH23, CAH_BRAS3  ;
+      notes: ExPASy ENZYME entry EC 3.5.2.15 cross-references UniProtKB:H0SH23 (CAH_BRAS3) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

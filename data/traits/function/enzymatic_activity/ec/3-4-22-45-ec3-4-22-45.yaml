@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -36,4 +36,67 @@ definitions:
       Catalyses: Hydrolyzes a Gly-|-Gly bond at its own C-terminus, commonly in the sequence -Tyr-Xaa-Val-Gly-|-Gly, in the processing of the potyviral polyprotein
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of helper-component proteinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.45. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolyzes
+    a Gly-|-Gly bond at its own C-terminus, commonly in the sequence -Tyr-Xaa-Val-Gly-|-Gly, in the processing
+    of the potyviral polyprotein".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: helper-component proteinase
+    grounding: EC:3.4.22.45
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P0CJ94
+    node_type: PROTEIN
+    label: MVP_BCMNN
+    grounding: UniProtKB:P0CJ94
+  - node_id: prot_P0CJ96
+    node_type: PROTEIN
+    label: MVP_BTMV
+    grounding: UniProtKB:P0CJ96
+  - node_id: prot_P0CJ95
+    node_type: PROTEIN
+    label: MVP_BYMV
+    grounding: UniProtKB:P0CJ95
+  edges:
+  - subject: prot_P0CJ94
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MVP_BCMNN is an exemplar enzyme with EC 3.4.22.45 activity.
+    evidence:
+    - reference: EC:3.4.22.45
+      snippet: DR   P0CJ94, MVP_BCMNN  ;  P0CJ96, MVP_BTMV   ;  P0CJ95, MVP_BYMV   ;
+      notes: ExPASy ENZYME entry EC 3.4.22.45 cross-references UniProtKB:P0CJ94 (MVP_BCMNN) as a protein
+        with this activity.
+  - subject: prot_P0CJ96
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MVP_BTMV is an exemplar enzyme with EC 3.4.22.45 activity.
+    evidence:
+    - reference: EC:3.4.22.45
+      snippet: DR   P0CJ94, MVP_BCMNN  ;  P0CJ96, MVP_BTMV   ;  P0CJ95, MVP_BYMV   ;
+      notes: ExPASy ENZYME entry EC 3.4.22.45 cross-references UniProtKB:P0CJ96 (MVP_BTMV) as a protein
+        with this activity.
+  - subject: prot_P0CJ95
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MVP_BYMV is an exemplar enzyme with EC 3.4.22.45 activity.
+    evidence:
+    - reference: EC:3.4.22.45
+      snippet: DR   P0CJ94, MVP_BCMNN  ;  P0CJ96, MVP_BTMV   ;  P0CJ95, MVP_BYMV   ;
+      notes: ExPASy ENZYME entry EC 3.4.22.45 cross-references UniProtKB:P0CJ95 (MVP_BYMV) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

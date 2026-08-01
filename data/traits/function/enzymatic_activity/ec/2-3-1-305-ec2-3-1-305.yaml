@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -23,4 +23,152 @@ definitions:
       Catalyses: UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucopyranose + a (3R)- hydroxyacyl-[ACP] = a UDP-2-acetamido-3-{[(3R)-3-hydroxyacyl]amino}-2,3- dideoxy-alpha-D-glucopyranose + holo-[ACP] + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acyl-[acyl-carrier protein]--UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-
+    glucopyranose…
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.305. EC 2.3.1.305 maps to
+    exactly one curated Rhea reaction (RHEA:69472), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucopyranose
+    + a (3R)- hydroxyacyl-[ACP] = a UDP-2-acetamido-3-{[(3R)-3-hydroxyacyl]amino}-2,3- dideoxy-alpha-D-glucopyranose
+    + holo-[ACP] + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acyl-[acyl-carrier protein]--UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D- glucopyranose N…
+    grounding: EC:2.3.1.305
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:184123
+    description: Formula C17H27N4O16P2.
+  - node_id: sub2
+    label: a (3R)-hydroxyacyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9945
+    description: Rhea compound GENERIC:9945.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: (3R)-hydroxyacyl-pantetheine-4-phosphorylserine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9945 (a (3R)-hydroxyacyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78827
+  - node_id: prd1
+    label: a UDP-2-acetamido-3-{[(3R)-3-hydroxyacyl]amino}-2,3-dideoxy-alpha-D-glucopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:184117
+    description: Formula C20H29N4O18P2R.
+  - node_id: prd2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucopyranose is a substrate consumed by
+      RHEA:69472 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69473
+      snippet: UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucopyranose + a (3R)-hydroxyacyl-[ACP] =>
+        a UDP-2-acetamido-3-{[(3R)-3-hydroxyacyl]amino}-2,3-dideoxy-alpha-D-glucopyranose + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69473 declares side 69472_L as its substrates
+        (rh:substrates); the master reaction RHEA:69472 is undirected. This participant is CHEBI:184123
+        with coefficient 1. Rhea cites PMID:15044493, PMID:19456129 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a (3R)-hydroxyacyl-[ACP] is a substrate consumed by RHEA:69472 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69473
+      snippet: UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucopyranose + a (3R)-hydroxyacyl-[ACP] =>
+        a UDP-2-acetamido-3-{[(3R)-3-hydroxyacyl]amino}-2,3-dideoxy-alpha-D-glucopyranose + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69473 declares side 69472_L as its substrates
+        (rh:substrates); the master reaction RHEA:69472 is undirected. This participant is GENERIC:9945
+        with coefficient 1. Rhea cites PMID:15044493, PMID:19456129 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: (3R)-hydroxyacyl-pantetheine-4-phosphorylserine residue is the reactive part of a (3R)-hydroxyacyl-[ACP].
+    evidence:
+    - reference: RHEA:69472
+      snippet: (3R)-hydroxyacyl-pantetheine-4-phosphorylserine residue
+      notes: Rhea compound GENERIC:9945 (a (3R)-hydroxyacyl-[ACP]) declares rh:reactivePart = (3R)-hydroxyacyl-pantetheine-4-phosphorylserine
+        residue (CHEBI:78827).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a UDP-2-acetamido-3-{[(3R)-3-hydroxyacyl]amino}-2,3-dideoxy-alpha-D-glucopyranose is
+      a product released by RHEA:69472 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69473
+      snippet: UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucopyranose + a (3R)-hydroxyacyl-[ACP] =>
+        a UDP-2-acetamido-3-{[(3R)-3-hydroxyacyl]amino}-2,3-dideoxy-alpha-D-glucopyranose + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69473 declares side 69472_R as its products
+        (rh:products); the master reaction RHEA:69472 is undirected. This participant is CHEBI:184117
+        with coefficient 1. Rhea cites PMID:15044493, PMID:19456129 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[ACP] is a product released by RHEA:69472 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69473
+      snippet: UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucopyranose + a (3R)-hydroxyacyl-[ACP] =>
+        a UDP-2-acetamido-3-{[(3R)-3-hydroxyacyl]amino}-2,3-dideoxy-alpha-D-glucopyranose + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69473 declares side 69472_R as its products
+        (rh:products); the master reaction RHEA:69472 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:15044493, PMID:19456129 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:69472
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:69472 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69473
+      snippet: UDP-2-acetamido-3-amino-2,3-dideoxy-alpha-D-glucopyranose + a (3R)-hydroxyacyl-[ACP] =>
+        a UDP-2-acetamido-3-{[(3R)-3-hydroxyacyl]amino}-2,3-dideoxy-alpha-D-glucopyranose + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69473 declares side 69472_R as its products
+        (rh:products); the master reaction RHEA:69472 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15044493, PMID:19456129 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

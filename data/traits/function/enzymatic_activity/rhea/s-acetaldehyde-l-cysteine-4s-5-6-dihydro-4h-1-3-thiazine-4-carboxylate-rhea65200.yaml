@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:156378
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,94 @@ definitions:
       Catalyses the reaction: S-(acetaldehyde)-L-cysteine = (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate + H2O + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-(acetaldehyde)-L-cysteine = (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate
+    + H2O + H(…
+  description: Substrate-to-product chemistry of RHEA:65200, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:65201 (rh:substrates → 65200_L, rh:products → 65200_R), and Rhea
+    curates the reverse direction too. 1 substrate, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of S-(acetaldehyde)-L-cysteine = (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:65200
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: S-(acetaldehyde)-L-cysteine = (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate + H2O
+      + H(+)'
+  - node_id: sub1
+    label: S-(acetaldehyde)-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:156378
+    description: Formula C5H9NO3S.
+  - node_id: prd1
+    label: (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:156133
+    description: Formula C5H6NO2S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-(acetaldehyde)-L-cysteine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:65201
+      snippet: S-(acetaldehyde)-L-cysteine => (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65201 declares side 65200_L as its substrates
+        (rh:substrates); the master reaction RHEA:65200 is undirected. This participant is CHEBI:156378
+        with coefficient 1. Rhea cites PMID:14766574 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65201
+      snippet: S-(acetaldehyde)-L-cysteine => (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65201 declares side 65200_R as its products
+        (rh:products); the master reaction RHEA:65200 is undirected. This participant is CHEBI:156133
+        with coefficient 1. Rhea cites PMID:14766574 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65201
+      snippet: S-(acetaldehyde)-L-cysteine => (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65201 declares side 65200_R as its products
+        (rh:products); the master reaction RHEA:65200 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:14766574 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65201
+      snippet: S-(acetaldehyde)-L-cysteine => (4S)-5,6-dihydro-4H-1,3-thiazine-4-carboxylate + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65201 declares side 65200_R as its products
+        (rh:products); the master reaction RHEA:65200 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:14766574 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

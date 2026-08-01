@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:145752
     role: SUBSTRATE_OR_PRODUCT
@@ -35,4 +35,80 @@ definitions:
       Catalyses the reaction: 3-hydroxy-3-(3,4-dihydroxyphenyl)propanoyl-CoA = 3,4-dihydroxybenzaldehyde + acetyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hydroxy-3-(3,4-dihydroxyphenyl)propanoyl-CoA = 3,4-dihydroxybenzaldehyde
+    + acetyl-CoA
+  description: Substrate-to-product chemistry of RHEA:62428, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62429 (rh:substrates → 62428_L, rh:products → 62428_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-hydroxy-3-(3,4-dihydroxyphenyl)propanoyl-CoA = 3,4-dihydroxybenzaldehyde +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62428
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-hydroxy-3-(3,4-dihydroxyphenyl)propanoyl-CoA = 3,4-dihydroxybenzaldehyde + acetyl-CoA'
+  - node_id: sub1
+    label: 3-hydroxy-3-(3,4-dihydroxyphenyl)propanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:145752
+    description: Formula C30H40N7O20P3S.
+  - node_id: prd1
+    label: 3,4-dihydroxybenzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:50205
+    description: Formula C7H6O3.
+  - node_id: prd2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxy-3-(3,4-dihydroxyphenyl)propanoyl-CoA is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62429
+      snippet: 3-hydroxy-3-(3,4-dihydroxyphenyl)propanoyl-CoA => 3,4-dihydroxybenzaldehyde + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:62429 declares side 62428_L as its substrates
+        (rh:substrates); the master reaction RHEA:62428 is undirected. This participant is CHEBI:145752
+        with coefficient 1. Rhea cites PMID:10222033, PMID:12534466, PMID:10543794, PMID:18479250 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3,4-dihydroxybenzaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62429
+      snippet: 3-hydroxy-3-(3,4-dihydroxyphenyl)propanoyl-CoA => 3,4-dihydroxybenzaldehyde + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:62429 declares side 62428_R as its products
+        (rh:products); the master reaction RHEA:62428 is undirected. This participant is CHEBI:50205 with
+        coefficient 1. Rhea cites PMID:10222033, PMID:12534466, PMID:10543794, PMID:18479250 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62429
+      snippet: 3-hydroxy-3-(3,4-dihydroxyphenyl)propanoyl-CoA => 3,4-dihydroxybenzaldehyde + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:62429 declares side 62428_R as its products
+        (rh:products); the master reaction RHEA:62428 is undirected. This participant is CHEBI:57288 with
+        coefficient 1. Rhea cites PMID:10222033, PMID:12534466, PMID:10543794, PMID:18479250 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

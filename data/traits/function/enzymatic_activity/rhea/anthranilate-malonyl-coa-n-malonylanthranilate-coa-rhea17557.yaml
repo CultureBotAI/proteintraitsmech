@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.113
     mapping_source: rhea2ec
@@ -28,4 +28,122 @@ definitions:
       Catalyses the reaction: anthranilate + malonyl-CoA = N-malonylanthranilate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of anthranilate + malonyl-CoA = N-malonylanthranilate + CoA
+  description: Substrate-to-product chemistry of RHEA:17557, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17558 (rh:substrates → 17557_L, rh:products → 17557_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of anthranilate + malonyl-CoA = N-malonylanthranilate + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17557
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: anthranilate + malonyl-CoA = N-malonylanthranilate + CoA'
+  - node_id: sub1
+    label: anthranilate
+    node_type: CHEMICAL
+    grounding: CHEBI:16567
+    description: Formula C7H6NO2.
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: prd1
+    label: N-malonylanthranilate
+    node_type: CHEMICAL
+    grounding: CHEBI:16872
+    description: Formula C10H7NO5.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: anthranilate N-malonyltransferase activity
+    grounding: GO:0047673
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: anthranilate N-malonyltransferase
+    grounding: EC:2.3.1.113
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: anthranilate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17558
+      snippet: anthranilate + malonyl-CoA => N-malonylanthranilate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:17558 declares side 17557_L as its substrates
+        (rh:substrates); the master reaction RHEA:17557 is undirected. This participant is CHEBI:16567
+        with coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17558
+      snippet: anthranilate + malonyl-CoA => N-malonylanthranilate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:17558 declares side 17557_L as its substrates
+        (rh:substrates); the master reaction RHEA:17557 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-malonylanthranilate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17558
+      snippet: anthranilate + malonyl-CoA => N-malonylanthranilate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:17558 declares side 17557_R as its products
+        (rh:products); the master reaction RHEA:17557 is undirected. This participant is CHEBI:16872 with
+        coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17558
+      snippet: anthranilate + malonyl-CoA => N-malonylanthranilate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:17558 declares side 17557_R as its products
+        (rh:products); the master reaction RHEA:17557 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17557
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047673"/>
+      notes: The rdfs:seeAlso triple on RHEA:17557 in rhea.rdf. GO term GO:0047673 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.113; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17557
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.113"/>
+      notes: The rh:ec triple on RHEA:17557 in rhea.rdf. EC 2.3.1.113 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

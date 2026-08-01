@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29950
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,156 @@ definitions:
       Catalyses the reaction: [thioredoxin]-dithiol + H2O2 = [thioredoxin]-disulfide + 2 H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [thioredoxin]-dithiol + H2O2 = [thioredoxin]-disulfide + 2 H2O
+  description: Substrate-to-product chemistry of RHEA:63528, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63529 (rh:substrates → 63528_L, rh:products → 63528_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [thioredoxin]-dithiol + H2O2 = [thioredoxin]-disulfide + 2 H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63528
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [thioredoxin]-dithiol + H2O2 = [thioredoxin]-disulfide + 2 H2O'
+  - node_id: sub1
+    label: '[thioredoxin]-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10698
+    description: Rhea compound GENERIC:10698.
+  - node_id: sub1_rp1
+    label: L-cysteine residue at position n
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10698 ([thioredoxin]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub1_rp2
+    label: L-cysteine residue at position n+3
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10698 ([thioredoxin]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: prd1
+    label: '[thioredoxin]-disulfide'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10700
+    description: Rhea compound GENERIC:10700.
+  - node_id: prd1_rp1
+    label: L-cystine residue at position n/n+3
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10700 ([thioredoxin]-disulfide);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:50058
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: thioredoxin peroxidase activity
+    grounding: GO:0008379
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[thioredoxin]-dithiol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:63529
+      snippet: '[thioredoxin]-dithiol + H2O2 => [thioredoxin]-disulfide + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:63529 declares side 63528_L as its substrates
+        (rh:substrates); the master reaction RHEA:63528 is undirected. This participant is GENERIC:10698
+        with coefficient 1. Rhea cites PMID:11087748, PMID:20356456 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [thioredoxin]-dithiol.
+    evidence:
+    - reference: RHEA:63528
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10698 ([thioredoxin]-dithiol) declares rh:reactivePart at position
+        n = L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: sub1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [thioredoxin]-dithiol.
+    evidence:
+    - reference: RHEA:63528
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10698 ([thioredoxin]-dithiol) declares rh:reactivePart at position
+        n+3 = L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63529
+      snippet: '[thioredoxin]-dithiol + H2O2 => [thioredoxin]-disulfide + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:63529 declares side 63528_L as its substrates
+        (rh:substrates); the master reaction RHEA:63528 is undirected. This participant is CHEBI:16240
+        with coefficient 1. Rhea cites PMID:11087748, PMID:20356456 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[thioredoxin]-disulfide is a product released by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:63529
+      snippet: '[thioredoxin]-dithiol + H2O2 => [thioredoxin]-disulfide + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:63529 declares side 63528_R as its products
+        (rh:products); the master reaction RHEA:63528 is undirected. This participant is GENERIC:10700
+        with coefficient 1. Rhea cites PMID:11087748, PMID:20356456 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cystine residue is the reactive part of [thioredoxin]-disulfide.
+    evidence:
+    - reference: RHEA:63528
+      snippet: L-cystine residue
+      notes: Rhea compound GENERIC:10700 ([thioredoxin]-disulfide) declares rh:reactivePart at position
+        n/n+3 = L-cystine residue (CHEBI:50058), formula C6H8N2O2S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:63529
+      snippet: '[thioredoxin]-dithiol + H2O2 => [thioredoxin]-disulfide + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:63529 declares side 63528_R as its products
+        (rh:products); the master reaction RHEA:63528 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:11087748, PMID:20356456 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:63528
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008379"/>
+      notes: The rdfs:seeAlso triple on RHEA:63528 in rhea.rdf. GO term GO:0008379 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

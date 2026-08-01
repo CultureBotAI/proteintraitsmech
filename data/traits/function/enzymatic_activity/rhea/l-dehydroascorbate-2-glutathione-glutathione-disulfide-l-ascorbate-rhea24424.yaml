@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.8.5.1
     mapping_source: rhea2ec
@@ -32,4 +32,183 @@ definitions:
       Catalyses the reaction: L-dehydroascorbate + 2 glutathione = glutathione disulfide + L-ascorbate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-dehydroascorbate + 2 glutathione = glutathione disulfide + L-ascorbate
+  description: Substrate-to-product chemistry of RHEA:24424, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24425 (rh:substrates → 24424_L, rh:products → 24424_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-dehydroascorbate + 2 glutathione = glutathione disulfide + L-ascorbate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24424
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-dehydroascorbate + 2 glutathione = glutathione disulfide + L-ascorbate'
+  - node_id: sub1
+    label: L-dehydroascorbate
+    node_type: CHEMICAL
+    grounding: CHEBI:58539
+    description: Formula C6H5O6.
+  - node_id: sub2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: prd1
+    label: glutathione disulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:58297
+    description: Formula C20H30N6O12S2.
+  - node_id: prd2
+    label: L-ascorbate
+    node_type: CHEMICAL
+    grounding: CHEBI:38290
+    description: Formula C6H7O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glutathione dehydrogenase (ascorbate) activity
+    grounding: GO:0045174
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: glutathione dehydrogenase (ascorbate)
+    grounding: EC:1.8.5.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q5E9B7
+    node_type: PROTEIN
+    label: CLIC1_BOVIN
+    grounding: UniProtKB:Q5E9B7
+  - node_id: prot_O00299
+    node_type: PROTEIN
+    label: CLIC1_HUMAN
+    grounding: UniProtKB:O00299
+  - node_id: prot_Q9Z1Q5
+    node_type: PROTEIN
+    label: CLIC1_MOUSE
+    grounding: UniProtKB:Q9Z1Q5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-dehydroascorbate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24425
+      snippet: L-dehydroascorbate + 2 glutathione => glutathione disulfide + L-ascorbate
+      notes: Rhea's left-to-right directional reaction RHEA:24425 declares side 24424_L as its substrates
+        (rh:substrates); the master reaction RHEA:24424 is undirected. This participant is CHEBI:58539
+        with coefficient 1. Rhea cites PMID:16709151, PMID:9890907, PMID:17901115 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: glutathione is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:24425
+      snippet: L-dehydroascorbate + 2 glutathione => glutathione disulfide + L-ascorbate
+      notes: Rhea's left-to-right directional reaction RHEA:24425 declares side 24424_L as its substrates
+        (rh:substrates); the master reaction RHEA:24424 is undirected. This participant is CHEBI:57925
+        with coefficient 2. Rhea cites PMID:16709151, PMID:9890907, PMID:17901115 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: glutathione disulfide is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24425
+      snippet: L-dehydroascorbate + 2 glutathione => glutathione disulfide + L-ascorbate
+      notes: Rhea's left-to-right directional reaction RHEA:24425 declares side 24424_R as its products
+        (rh:products); the master reaction RHEA:24424 is undirected. This participant is CHEBI:58297 with
+        coefficient 1. Rhea cites PMID:16709151, PMID:9890907, PMID:17901115 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-ascorbate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24425
+      snippet: L-dehydroascorbate + 2 glutathione => glutathione disulfide + L-ascorbate
+      notes: Rhea's left-to-right directional reaction RHEA:24425 declares side 24424_R as its products
+        (rh:products); the master reaction RHEA:24424 is undirected. This participant is CHEBI:38290 with
+        coefficient 1. Rhea cites PMID:16709151, PMID:9890907, PMID:17901115 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:24424
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0045174"/>
+      notes: The rdfs:seeAlso triple on RHEA:24424 in rhea.rdf. GO term GO:0045174 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.8.5.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24424
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.5.1"/>
+      notes: The rh:ec triple on RHEA:24424 in rhea.rdf. EC 1.8.5.1 is itself a record in this KB.
+  - subject: prot_Q5E9B7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLIC1_BOVIN is an exemplar enzyme carrying EC 1.8.5.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.8.5.1
+      snippet: DR   Q5E9B7, CLIC1_BOVIN;  O00299, CLIC1_HUMAN;  Q9Z1Q5, CLIC1_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.8.5.1 cross-references UniProtKB:Q5E9B7 (CLIC1_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:24424
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.5.1"/>
+      notes: Rhea assigns RHEA:24424 to EC 1.8.5.1, and EC 1.8.5.1 maps to exactly one Rhea master reaction
+        (RHEA:24424), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O00299
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLIC1_HUMAN is an exemplar enzyme carrying EC 1.8.5.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.8.5.1
+      snippet: DR   Q5E9B7, CLIC1_BOVIN;  O00299, CLIC1_HUMAN;  Q9Z1Q5, CLIC1_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.8.5.1 cross-references UniProtKB:O00299 (CLIC1_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:24424
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.5.1"/>
+      notes: Rhea assigns RHEA:24424 to EC 1.8.5.1, and EC 1.8.5.1 maps to exactly one Rhea master reaction
+        (RHEA:24424), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9Z1Q5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLIC1_MOUSE is an exemplar enzyme carrying EC 1.8.5.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.8.5.1
+      snippet: DR   Q5E9B7, CLIC1_BOVIN;  O00299, CLIC1_HUMAN;  Q9Z1Q5, CLIC1_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.8.5.1 cross-references UniProtKB:Q9Z1Q5 (CLIC1_MOUSE) as a protein
+        with this activity.
+    - reference: RHEA:24424
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.5.1"/>
+      notes: Rhea assigns RHEA:24424 to EC 1.8.5.1, and EC 1.8.5.1 maps to exactly one Rhea master reaction
+        (RHEA:24424), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

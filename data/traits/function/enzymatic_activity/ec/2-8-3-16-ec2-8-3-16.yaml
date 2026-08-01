@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.3.-
 synonyms:
@@ -45,4 +45,243 @@ definitions:
       Catalyses: formyl-CoA + oxalate = oxalyl-CoA + formate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of formyl-CoA transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.3.16. Rhea assigns 2 curated
+    reactions to EC 2.8.3.16. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "formyl-CoA + oxalate = oxalyl-CoA + formate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: formyl-CoA transferase
+    grounding: EC:2.8.3.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of formyl-CoA + oxalate = oxalyl-CoA + formate
+    grounding: RHEA:16545
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: formyl-CoA + oxalate = oxalyl-CoA + formate'
+  - node_id: rxn1_sub1
+    label: formyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57376
+    description: Formula C22H32N7O17P3S.
+  - node_id: rxn1_sub2
+    label: oxalate
+    node_type: CHEMICAL
+    grounding: CHEBI:30623
+    description: Formula C2O4.
+  - node_id: rxn1_prd1
+    label: oxalyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57388
+    description: Formula C23H31N7O19P3S.
+  - node_id: rxn1_prd2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of formyl-CoA + succinate = succinyl-CoA + formate
+    grounding: RHEA:71735
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: formyl-CoA + succinate = succinyl-CoA + formate'
+  - node_id: rxn2_sub1
+    label: formyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57376
+    description: Formula C22H32N7O17P3S.
+  - node_id: rxn2_sub2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: rxn2_prd1
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: rxn2_prd2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: formyl-CoA transferase activity
+    grounding: GO:0033608
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B6JE29
+    node_type: PROTEIN
+    label: FCTA_AFIC5
+    grounding: UniProtKB:B6JE29
+  - node_id: prot_Q89QH2
+    node_type: PROTEIN
+    label: FCTA_BRADU
+    grounding: UniProtKB:Q89QH2
+  - node_id: prot_A5EGD7
+    node_type: PROTEIN
+    label: FCTA_BRASB
+    grounding: UniProtKB:A5EGD7
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:16545 is one of the 2 curated reactions Rhea assigns to EC 2.8.3.16; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:16545
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.16"/>
+      notes: The rh:ec triple on RHEA:16545 in rhea.rdf assigns that reaction to EC 2.8.3.16.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: formyl-CoA is a substrate consumed by RHEA:16545 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16546
+      snippet: formyl-CoA + oxalate => oxalyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:16546 declares side 16545_L as its substrates
+        (rh:substrates); the master reaction RHEA:16545 is undirected. This participant is CHEBI:57376
+        with coefficient 1. Rhea cites PMID:18245280, PMID:12844490, PMID:2361939 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: oxalate is a substrate consumed by RHEA:16545 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16546
+      snippet: formyl-CoA + oxalate => oxalyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:16546 declares side 16545_L as its substrates
+        (rh:substrates); the master reaction RHEA:16545 is undirected. This participant is CHEBI:30623
+        with coefficient 1. Rhea cites PMID:18245280, PMID:12844490, PMID:2361939 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: oxalyl-CoA is a product released by RHEA:16545 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16546
+      snippet: formyl-CoA + oxalate => oxalyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:16546 declares side 16545_R as its products
+        (rh:products); the master reaction RHEA:16545 is undirected. This participant is CHEBI:57388 with
+        coefficient 1. Rhea cites PMID:18245280, PMID:12844490, PMID:2361939 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: formate is a product released by RHEA:16545 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16546
+      snippet: formyl-CoA + oxalate => oxalyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:16546 declares side 16545_R as its products
+        (rh:products); the master reaction RHEA:16545 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:18245280, PMID:12844490, PMID:2361939 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:71735 is one of the 2 curated reactions Rhea assigns to EC 2.8.3.16; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:71735
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.16"/>
+      notes: The rh:ec triple on RHEA:71735 in rhea.rdf assigns that reaction to EC 2.8.3.16.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: formyl-CoA is a substrate consumed by RHEA:71735 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71736
+      snippet: formyl-CoA + succinate => succinyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:71736 declares side 71735_L as its substrates
+        (rh:substrates); the master reaction RHEA:71735 is undirected. This participant is CHEBI:57376
+        with coefficient 1. Rhea cites PMID:18245280, PMID:2361939 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: succinate is a substrate consumed by RHEA:71735 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71736
+      snippet: formyl-CoA + succinate => succinyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:71736 declares side 71735_L as its substrates
+        (rh:substrates); the master reaction RHEA:71735 is undirected. This participant is CHEBI:30031
+        with coefficient 1. Rhea cites PMID:18245280, PMID:2361939 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: succinyl-CoA is a product released by RHEA:71735 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71736
+      snippet: formyl-CoA + succinate => succinyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:71736 declares side 71735_R as its products
+        (rh:products); the master reaction RHEA:71735 is undirected. This participant is CHEBI:57292 with
+        coefficient 1. Rhea cites PMID:18245280, PMID:2361939 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: formate is a product released by RHEA:71735 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71736
+      snippet: formyl-CoA + succinate => succinyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:71736 declares side 71735_R as its products
+        (rh:products); the master reaction RHEA:71735 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:18245280, PMID:2361939 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.3.16
+      snippet: EC:2.8.3.16 > GO:formyl-CoA transferase activity ; GO:0033608
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033608 is itself a record
+        in this KB.
+  - subject: prot_B6JE29
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FCTA_AFIC5 is an exemplar enzyme with EC 2.8.3.16 activity.
+    evidence:
+    - reference: EC:2.8.3.16
+      snippet: DR   B6JE29, FCTA_AFIC5 ;  Q89QH2, FCTA_BRADU ;  A5EGD7, FCTA_BRASB ;
+      notes: ExPASy ENZYME entry EC 2.8.3.16 cross-references UniProtKB:B6JE29 (FCTA_AFIC5) as a protein
+        with this activity.
+  - subject: prot_Q89QH2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FCTA_BRADU is an exemplar enzyme with EC 2.8.3.16 activity.
+    evidence:
+    - reference: EC:2.8.3.16
+      snippet: DR   B6JE29, FCTA_AFIC5 ;  Q89QH2, FCTA_BRADU ;  A5EGD7, FCTA_BRASB ;
+      notes: ExPASy ENZYME entry EC 2.8.3.16 cross-references UniProtKB:Q89QH2 (FCTA_BRADU) as a protein
+        with this activity.
+  - subject: prot_A5EGD7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FCTA_BRASB is an exemplar enzyme with EC 2.8.3.16 activity.
+    evidence:
+    - reference: EC:2.8.3.16
+      snippet: DR   B6JE29, FCTA_AFIC5 ;  Q89QH2, FCTA_BRADU ;  A5EGD7, FCTA_BRASB ;
+      notes: ExPASy ENZYME entry EC 2.8.3.16 cross-references UniProtKB:A5EGD7 (FCTA_BRASB) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

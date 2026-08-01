@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.186
     mapping_source: rhea2ec
@@ -30,4 +30,146 @@ definitions:
       Catalyses the reaction: protodioscin + H2O = 26-deglucoprotodioscin + D-glucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protodioscin + H2O = 26-deglucoprotodioscin + D-glucose
+  description: Substrate-to-product chemistry of RHEA:37895, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:37896 (rh:substrates → 37895_L, rh:products → 37895_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of protodioscin + H2O = 26-deglucoprotodioscin + D-glucose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:37895
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: protodioscin + H2O = 26-deglucoprotodioscin + D-glucose'
+  - node_id: sub1
+    label: protodioscin
+    node_type: CHEMICAL
+    grounding: CHEBI:8588
+    description: Formula C51H84O22.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 26-deglucoprotodioscin
+    node_type: CHEMICAL
+    grounding: CHEBI:74026
+    description: Formula C45H74O17.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: protodioscin 26-O-beta-D-glucosidase
+    grounding: EC:3.2.1.186
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q42707
+    node_type: PROTEIN
+    label: F26G_HELSP
+    grounding: UniProtKB:Q42707
+  - node_id: prot_P0DKH4
+    node_type: PROTEIN
+    label: F26G_SOLTO
+    grounding: UniProtKB:P0DKH4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: protodioscin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37896
+      snippet: protodioscin + H2O => 26-deglucoprotodioscin + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:37896 declares side 37895_L as its substrates
+        (rh:substrates); the master reaction RHEA:37895 is undirected. This participant is CHEBI:8588
+        with coefficient 1. Rhea cites PMID:16289258, PMID:8549824 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37896
+      snippet: protodioscin + H2O => 26-deglucoprotodioscin + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:37896 declares side 37895_L as its substrates
+        (rh:substrates); the master reaction RHEA:37895 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16289258, PMID:8549824 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 26-deglucoprotodioscin is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:37896
+      snippet: protodioscin + H2O => 26-deglucoprotodioscin + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:37896 declares side 37895_R as its products
+        (rh:products); the master reaction RHEA:37895 is undirected. This participant is CHEBI:74026 with
+        coefficient 1. Rhea cites PMID:16289258, PMID:8549824 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37896
+      snippet: protodioscin + H2O => 26-deglucoprotodioscin + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:37896 declares side 37895_R as its products
+        (rh:products); the master reaction RHEA:37895 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:16289258, PMID:8549824 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.186; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:37895
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.186"/>
+      notes: The rh:ec triple on RHEA:37895 in rhea.rdf. EC 3.2.1.186 is itself a record in this KB.
+  - subject: prot_Q42707
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: F26G_HELSP is an exemplar enzyme carrying EC 3.2.1.186, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.186
+      snippet: DR   Q42707, F26G_HELSP ;  P0DKH4, F26G_SOLTO ;
+      notes: ExPASy ENZYME entry EC 3.2.1.186 cross-references UniProtKB:Q42707 (F26G_HELSP) as a protein
+        with this activity.
+    - reference: RHEA:37895
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.186"/>
+      notes: Rhea assigns RHEA:37895 to EC 3.2.1.186, and EC 3.2.1.186 maps to exactly one Rhea master
+        reaction (RHEA:37895), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P0DKH4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: F26G_SOLTO is an exemplar enzyme carrying EC 3.2.1.186, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.186
+      snippet: DR   Q42707, F26G_HELSP ;  P0DKH4, F26G_SOLTO ;
+      notes: ExPASy ENZYME entry EC 3.2.1.186 cross-references UniProtKB:P0DKH4 (F26G_SOLTO) as a protein
+        with this activity.
+    - reference: RHEA:37895
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.186"/>
+      notes: Rhea assigns RHEA:37895 to EC 3.2.1.186, and EC 3.2.1.186 maps to exactly one Rhea master
+        reaction (RHEA:37895), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.1.5.4
     mapping_source: rhea2ec
@@ -25,4 +25,127 @@ definitions:
       Catalyses the reaction: a menaquinone + (S)-malate = a menaquinol + oxaloacetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a menaquinone + (S)-malate = a menaquinol + oxaloacetate
+  description: Substrate-to-product chemistry of RHEA:30095, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30096 (rh:substrates → 30095_L, rh:products → 30095_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a menaquinone + (S)-malate = a menaquinol + oxaloacetate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30095
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a menaquinone + (S)-malate = a menaquinol + oxaloacetate'
+  - node_id: sub1
+    label: a menaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16374
+    xrefs:
+    - RHEA-COMP:9537
+    description: Rhea compound POLYMER:9537. Formula C11H8O2(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: (S)-malate
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+    description: Formula C4H4O5.
+  - node_id: prd1
+    label: a menaquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:18151
+    xrefs:
+    - RHEA-COMP:9539
+    description: Rhea compound POLYMER:9539. Formula C11H10O2(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: prd2
+    label: oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+    description: Formula C4H2O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-malate dehydrogenase (quinone) activity
+    grounding: GO:0008924
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: malate dehydrogenase (quinone)
+    grounding: EC:1.1.5.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a menaquinone is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30096
+      snippet: a menaquinone + (S)-malate => a menaquinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:30096 declares side 30095_L as its substrates
+        (rh:substrates); the master reaction RHEA:30095 is undirected. This participant is POLYMER:9537
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (S)-malate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30096
+      snippet: a menaquinone + (S)-malate => a menaquinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:30096 declares side 30095_L as its substrates
+        (rh:substrates); the master reaction RHEA:30095 is undirected. This participant is CHEBI:15589
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a menaquinol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30096
+      snippet: a menaquinone + (S)-malate => a menaquinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:30096 declares side 30095_R as its products
+        (rh:products); the master reaction RHEA:30095 is undirected. This participant is POLYMER:9539
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxaloacetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30096
+      snippet: a menaquinone + (S)-malate => a menaquinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:30096 declares side 30095_R as its products
+        (rh:products); the master reaction RHEA:30095 is undirected. This participant is CHEBI:16452 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:30095
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008924"/>
+      notes: The rdfs:seeAlso triple on RHEA:30095 in rhea.rdf. GO term GO:0008924 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.1.5.4; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:30095
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.5.4"/>
+      notes: The rh:ec triple on RHEA:30095 in rhea.rdf. EC 1.1.5.4 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -41,4 +41,271 @@ definitions:
       Catalyses: eugenol + a carboxylate + NADP(+) = a coniferyl ester + NADPH
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of eugenol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.318. Rhea assigns 2 curated
+    reactions to EC 1.1.1.318. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "eugenol + a carboxylate + NADP(+) = a coniferyl ester +
+    NADPH". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: eugenol synthase
+    grounding: EC:1.1.1.318
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of eugenol + acetate + NADP(+) = (E)-coniferyl acetate + NADPH
+    grounding: RHEA:24690
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: eugenol + acetate + NADP(+) = (E)-coniferyl acetate + NADPH'
+  - node_id: rxn1_sub1
+    label: eugenol
+    node_type: CHEMICAL
+    grounding: CHEBI:4917
+    description: Formula C10H12O2.
+  - node_id: rxn1_sub2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: rxn1_sub3
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: (E)-coniferyl acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:47905
+    description: Formula C12H14O4.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of eugenol + a carboxylate + NADP(+) = a coniferyl ester + NADPH
+    grounding: RHEA:32655
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: eugenol + a carboxylate + NADP(+) = a coniferyl ester + NADPH'
+  - node_id: rxn2_sub1
+    label: eugenol
+    node_type: CHEMICAL
+    grounding: CHEBI:4917
+    description: Formula C10H12O2.
+  - node_id: rxn2_sub2
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: rxn2_sub3
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_prd1
+    label: a coniferyl ester
+    node_type: CHEMICAL
+    grounding: CHEBI:64292
+    description: Formula C11H11O4R.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prot_D0VWT0
+    node_type: PROTEIN
+    label: EGS1_CLABR
+    grounding: UniProtKB:D0VWT0
+  - node_id: prot_Q15GI4
+    node_type: PROTEIN
+    label: EGS1_OCIBA
+    grounding: UniProtKB:Q15GI4
+  - node_id: prot_B2WSN1
+    node_type: PROTEIN
+    label: EGS1_PETHY
+    grounding: UniProtKB:B2WSN1
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:24690 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.318; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24690
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.318"/>
+      notes: The rh:ec triple on RHEA:24690 in rhea.rdf assigns that reaction to EC 1.1.1.318.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: eugenol is a substrate consumed by RHEA:24690 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24691
+      snippet: eugenol + acetate + NADP(+) => (E)-coniferyl acetate + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:24691 declares side 24690_L as its substrates
+        (rh:substrates); the master reaction RHEA:24690 is undirected. This participant is CHEBI:4917
+        with coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: acetate is a substrate consumed by RHEA:24690 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24691
+      snippet: eugenol + acetate + NADP(+) => (E)-coniferyl acetate + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:24691 declares side 24690_L as its substrates
+        (rh:substrates); the master reaction RHEA:24690 is undirected. This participant is CHEBI:30089
+        with coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: NADP(+) is a substrate consumed by RHEA:24690 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24691
+      snippet: eugenol + acetate + NADP(+) => (E)-coniferyl acetate + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:24691 declares side 24690_L as its substrates
+        (rh:substrates); the master reaction RHEA:24690 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (E)-coniferyl acetate is a product released by RHEA:24690 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24691
+      snippet: eugenol + acetate + NADP(+) => (E)-coniferyl acetate + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:24691 declares side 24690_R as its products
+        (rh:products); the master reaction RHEA:24690 is undirected. This participant is CHEBI:47905 with
+        coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:24690 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24691
+      snippet: eugenol + acetate + NADP(+) => (E)-coniferyl acetate + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:24691 declares side 24690_R as its products
+        (rh:products); the master reaction RHEA:24690 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:32655 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.318; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:32655
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.318"/>
+      notes: The rh:ec triple on RHEA:32655 in rhea.rdf assigns that reaction to EC 1.1.1.318.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: eugenol is a substrate consumed by RHEA:32655 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32656
+      snippet: eugenol + a carboxylate + NADP(+) => a coniferyl ester + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:32656 declares side 32655_L as its substrates
+        (rh:substrates); the master reaction RHEA:32655 is undirected. This participant is CHEBI:4917
+        with coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: a carboxylate is a substrate consumed by RHEA:32655 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32656
+      snippet: eugenol + a carboxylate + NADP(+) => a coniferyl ester + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:32656 declares side 32655_L as its substrates
+        (rh:substrates); the master reaction RHEA:32655 is undirected. This participant is CHEBI:29067
+        with coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: NADP(+) is a substrate consumed by RHEA:32655 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32656
+      snippet: eugenol + a carboxylate + NADP(+) => a coniferyl ester + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:32656 declares side 32655_L as its substrates
+        (rh:substrates); the master reaction RHEA:32655 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a coniferyl ester is a product released by RHEA:32655 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32656
+      snippet: eugenol + a carboxylate + NADP(+) => a coniferyl ester + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:32656 declares side 32655_R as its products
+        (rh:products); the master reaction RHEA:32655 is undirected. This participant is CHEBI:64292 with
+        coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:32655 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32656
+      snippet: eugenol + a carboxylate + NADP(+) => a coniferyl ester + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:32656 declares side 32655_R as its products
+        (rh:products); the master reaction RHEA:32655 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:17624297, PMID:18987218, PMID:18208524, PMID:16782809 for this
+        reaction.
+  - subject: prot_D0VWT0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EGS1_CLABR is an exemplar enzyme with EC 1.1.1.318 activity.
+    evidence:
+    - reference: EC:1.1.1.318
+      snippet: DR   D0VWT0, EGS1_CLABR ;  Q15GI4, EGS1_OCIBA ;  B2WSN1, EGS1_PETHY ;
+      notes: ExPASy ENZYME entry EC 1.1.1.318 cross-references UniProtKB:D0VWT0 (EGS1_CLABR) as a protein
+        with this activity.
+  - subject: prot_Q15GI4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EGS1_OCIBA is an exemplar enzyme with EC 1.1.1.318 activity.
+    evidence:
+    - reference: EC:1.1.1.318
+      snippet: DR   D0VWT0, EGS1_CLABR ;  Q15GI4, EGS1_OCIBA ;  B2WSN1, EGS1_PETHY ;
+      notes: ExPASy ENZYME entry EC 1.1.1.318 cross-references UniProtKB:Q15GI4 (EGS1_OCIBA) as a protein
+        with this activity.
+  - subject: prot_B2WSN1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EGS1_PETHY is an exemplar enzyme with EC 1.1.1.318 activity.
+    evidence:
+    - reference: EC:1.1.1.318
+      snippet: DR   D0VWT0, EGS1_CLABR ;  Q15GI4, EGS1_OCIBA ;  B2WSN1, EGS1_PETHY ;
+      notes: ExPASy ENZYME entry EC 1.1.1.318 cross-references UniProtKB:B2WSN1 (EGS1_PETHY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

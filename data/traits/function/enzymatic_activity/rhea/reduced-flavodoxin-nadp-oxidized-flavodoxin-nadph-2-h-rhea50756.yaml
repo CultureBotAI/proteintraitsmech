@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.19.1.1
     mapping_source: rhea2ec
@@ -40,4 +40,220 @@ definitions:
       Catalyses the reaction: reduced [flavodoxin] + NADP(+) = oxidized [flavodoxin] + NADPH + 2 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of reduced [flavodoxin] + NADP(+) = oxidized [flavodoxin] + NADPH + 2 H(+)
+  description: Substrate-to-product chemistry of RHEA:50756, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50757 (rh:substrates → 50756_L, rh:products → 50756_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of reduced [flavodoxin] + NADP(+) = oxidized [flavodoxin] + NADPH + 2 H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50756
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: reduced [flavodoxin] + NADP(+) = oxidized [flavodoxin] + NADPH + 2 H(+)'
+  - node_id: sub1
+    label: reduced [flavodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10622
+    description: Rhea compound GENERIC:10622.
+  - node_id: sub1_rp1
+    label: FMNH2
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10622 (reduced [flavodoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57618
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: oxidized [flavodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10623
+    description: Rhea compound GENERIC:10623.
+  - node_id: prd1_rp1
+    label: FMN
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10623 (oxidized
+      [flavodoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58210
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: flavodoxin--NADP(+) reductase
+    grounding: EC:1.19.1.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P57641
+    node_type: PROTEIN
+    label: FENR_BUCAI
+    grounding: UniProtKB:P57641
+  - node_id: prot_Q9Z615
+    node_type: PROTEIN
+    label: FENR_BUCAP
+    grounding: UniProtKB:Q9Z615
+  - node_id: prot_Q89A28
+    node_type: PROTEIN
+    label: FENR_BUCBP
+    grounding: UniProtKB:Q89A28
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: reduced [flavodoxin] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50757
+      snippet: reduced [flavodoxin] + NADP(+) => oxidized [flavodoxin] + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50757 declares side 50756_L as its substrates
+        (rh:substrates); the master reaction RHEA:50756 is undirected. This participant is GENERIC:10622
+        with coefficient 1. Rhea cites PMID:24915092, PMID:18973834, PMID:11085917, PMID:24016470 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: FMNH2 is the reactive part of reduced [flavodoxin].
+    evidence:
+    - reference: RHEA:50756
+      snippet: FMNH2
+      notes: Rhea compound GENERIC:10622 (reduced [flavodoxin]) declares rh:reactivePart = FMNH2 (CHEBI:57618),
+        formula C17H21N4O9P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50757
+      snippet: reduced [flavodoxin] + NADP(+) => oxidized [flavodoxin] + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50757 declares side 50756_L as its substrates
+        (rh:substrates); the master reaction RHEA:50756 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:24915092, PMID:18973834, PMID:11085917, PMID:24016470 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: oxidized [flavodoxin] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50757
+      snippet: reduced [flavodoxin] + NADP(+) => oxidized [flavodoxin] + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50757 declares side 50756_R as its products
+        (rh:products); the master reaction RHEA:50756 is undirected. This participant is GENERIC:10623
+        with coefficient 1. Rhea cites PMID:24915092, PMID:18973834, PMID:11085917, PMID:24016470 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: FMN is the reactive part of oxidized [flavodoxin].
+    evidence:
+    - reference: RHEA:50756
+      snippet: FMN
+      notes: Rhea compound GENERIC:10623 (oxidized [flavodoxin]) declares rh:reactivePart = FMN (CHEBI:58210),
+        formula C17H18N4O9P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50757
+      snippet: reduced [flavodoxin] + NADP(+) => oxidized [flavodoxin] + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50757 declares side 50756_R as its products
+        (rh:products); the master reaction RHEA:50756 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:24915092, PMID:18973834, PMID:11085917, PMID:24016470 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:50757
+      snippet: reduced [flavodoxin] + NADP(+) => oxidized [flavodoxin] + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50757 declares side 50756_R as its products
+        (rh:products); the master reaction RHEA:50756 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:24915092, PMID:18973834, PMID:11085917, PMID:24016470 for this
+        reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.19.1.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:50756
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.19.1.1"/>
+      notes: The rh:ec triple on RHEA:50756 in rhea.rdf. EC 1.19.1.1 is itself a record in this KB.
+  - subject: prot_P57641
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FENR_BUCAI is an exemplar enzyme carrying EC 1.19.1.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.19.1.1
+      snippet: DR   P57641, FENR_BUCAI ;  Q9Z615, FENR_BUCAP ;  Q89A28, FENR_BUCBP ;
+      notes: ExPASy ENZYME entry EC 1.19.1.1 cross-references UniProtKB:P57641 (FENR_BUCAI) as a protein
+        with this activity.
+    - reference: RHEA:50756
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.19.1.1"/>
+      notes: Rhea assigns RHEA:50756 to EC 1.19.1.1, and EC 1.19.1.1 maps to exactly one Rhea master reaction
+        (RHEA:50756), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9Z615
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FENR_BUCAP is an exemplar enzyme carrying EC 1.19.1.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.19.1.1
+      snippet: DR   P57641, FENR_BUCAI ;  Q9Z615, FENR_BUCAP ;  Q89A28, FENR_BUCBP ;
+      notes: ExPASy ENZYME entry EC 1.19.1.1 cross-references UniProtKB:Q9Z615 (FENR_BUCAP) as a protein
+        with this activity.
+    - reference: RHEA:50756
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.19.1.1"/>
+      notes: Rhea assigns RHEA:50756 to EC 1.19.1.1, and EC 1.19.1.1 maps to exactly one Rhea master reaction
+        (RHEA:50756), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q89A28
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FENR_BUCBP is an exemplar enzyme carrying EC 1.19.1.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.19.1.1
+      snippet: DR   P57641, FENR_BUCAI ;  Q9Z615, FENR_BUCAP ;  Q89A28, FENR_BUCBP ;
+      notes: ExPASy ENZYME entry EC 1.19.1.1 cross-references UniProtKB:Q89A28 (FENR_BUCBP) as a protein
+        with this activity.
+    - reference: RHEA:50756
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.19.1.1"/>
+      notes: Rhea assigns RHEA:50756 to EC 1.19.1.1, and EC 1.19.1.1 maps to exactly one Rhea master reaction
+        (RHEA:50756), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

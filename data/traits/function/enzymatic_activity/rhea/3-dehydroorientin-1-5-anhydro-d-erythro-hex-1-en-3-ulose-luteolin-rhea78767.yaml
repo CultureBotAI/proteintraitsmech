@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:229564
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,76 @@ definitions:
       Catalyses the reaction: 3''-dehydroorientin = 1,5-anhydro-D-erythro-hex-1-en-3-ulose + luteolin
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3''-dehydroorientin = 1,5-anhydro-D-erythro-hex-1-en-3-ulose + luteolin
+  description: Substrate-to-product chemistry of RHEA:78767, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78768 (rh:substrates → 78767_L, rh:products → 78767_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3''-dehydroorientin = 1,5-anhydro-D-erythro-hex-1-en-3-ulose + luteolin
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78767
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3''''-dehydroorientin = 1,5-anhydro-D-erythro-hex-1-en-3-ulose + luteolin'
+  - node_id: sub1
+    label: 3''-dehydroorientin
+    node_type: CHEMICAL
+    grounding: CHEBI:229564
+    description: Formula C21H17O11.
+  - node_id: prd1
+    label: 1,5-anhydro-D-erythro-hex-1-en-3-ulose
+    node_type: CHEMICAL
+    grounding: CHEBI:195275
+    description: Formula C6H8O5.
+  - node_id: prd2
+    label: luteolin
+    node_type: CHEMICAL
+    grounding: CHEBI:57545
+    description: Formula C15H9O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3''-dehydroorientin is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78768
+      snippet: 3''-dehydroorientin => 1,5-anhydro-D-erythro-hex-1-en-3-ulose + luteolin
+      notes: Rhea's left-to-right directional reaction RHEA:78768 declares side 78767_L as its substrates
+        (rh:substrates); the master reaction RHEA:78767 is undirected. This participant is CHEBI:229564
+        with coefficient 1. Rhea cites PMID:34728636 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1,5-anhydro-D-erythro-hex-1-en-3-ulose is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78768
+      snippet: 3''-dehydroorientin => 1,5-anhydro-D-erythro-hex-1-en-3-ulose + luteolin
+      notes: Rhea's left-to-right directional reaction RHEA:78768 declares side 78767_R as its products
+        (rh:products); the master reaction RHEA:78767 is undirected. This participant is CHEBI:195275
+        with coefficient 1. Rhea cites PMID:34728636 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: luteolin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78768
+      snippet: 3''-dehydroorientin => 1,5-anhydro-D-erythro-hex-1-en-3-ulose + luteolin
+      notes: Rhea's left-to-right directional reaction RHEA:78768 declares side 78767_R as its products
+        (rh:products); the master reaction RHEA:78767 is undirected. This participant is CHEBI:57545 with
+        coefficient 1. Rhea cites PMID:34728636 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

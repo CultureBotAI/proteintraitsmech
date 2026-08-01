@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -38,4 +38,67 @@ definitions:
       Catalyses: Selective hydrolysis of -Xaa-Xaa-|-Yaa- bonds in which each of the Xaa can be either Arg or Lys and Yaa can be either Ser or Ala
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of flavivirin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.91. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Selective
+    hydrolysis of -Xaa-Xaa-|-Yaa- bonds in which each of the Xaa can be either Arg or Lys and Yaa can
+    be either Ser or Ala".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: flavivirin
+    grounding: EC:3.4.21.91
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q91B85
+    node_type: PROTEIN
+    label: POLG_ALKV
+    grounding: UniProtKB:Q91B85
+  - node_id: prot_C8XPA8
+    node_type: PROTEIN
+    label: POLG_BANV
+    grounding: UniProtKB:C8XPA8
+  - node_id: prot_Q32ZE0
+    node_type: PROTEIN
+    label: POLG_BUSV
+    grounding: UniProtKB:Q32ZE0
+  edges:
+  - subject: prot_Q91B85
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_ALKV is an exemplar enzyme with EC 3.4.21.91 activity.
+    evidence:
+    - reference: EC:3.4.21.91
+      snippet: DR   Q91B85, POLG_ALKV  ;  C8XPA8, POLG_BANV  ;  Q32ZE0, POLG_BUSV  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.91 cross-references UniProtKB:Q91B85 (POLG_ALKV) as a protein
+        with this activity.
+  - subject: prot_C8XPA8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_BANV is an exemplar enzyme with EC 3.4.21.91 activity.
+    evidence:
+    - reference: EC:3.4.21.91
+      snippet: DR   Q91B85, POLG_ALKV  ;  C8XPA8, POLG_BANV  ;  Q32ZE0, POLG_BUSV  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.91 cross-references UniProtKB:C8XPA8 (POLG_BANV) as a protein
+        with this activity.
+  - subject: prot_Q32ZE0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_BUSV is an exemplar enzyme with EC 3.4.21.91 activity.
+    evidence:
+    - reference: EC:3.4.21.91
+      snippet: DR   Q91B85, POLG_ALKV  ;  C8XPA8, POLG_BANV  ;  Q32ZE0, POLG_BUSV  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.91 cross-references UniProtKB:Q32ZE0 (POLG_BUSV) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

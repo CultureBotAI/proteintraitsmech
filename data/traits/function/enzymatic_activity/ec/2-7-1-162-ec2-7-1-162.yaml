@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -33,4 +33,238 @@ definitions:
       Catalyses: N-acetyl-D-hexosamine + ATP = N-acetyl-alpha-D-hexosamine 1-phosphate + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acetylhexosamine 1-kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.162. Rhea assigns 2 curated
+    reactions to EC 2.7.1.162. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "N-acetyl-D-hexosamine + ATP = N-acetyl-alpha-D-hexosamine
+    1-phosphate + ADP + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-acetylhexosamine 1-kinase
+    grounding: EC:2.7.1.162
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of N-acetyl-D-hexosamine + ATP = N-acetyl-alpha-D-hexosamine 1-phosphate + ADP…
+    grounding: RHEA:25428
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: N-acetyl-D-hexosamine + ATP = N-acetyl-alpha-D-hexosamine 1-phosphate +
+      ADP + H(+)'
+  - node_id: rxn1_sub1
+    label: N-acetyl-D-hexosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:21601
+    description: Formula C8H15NO6.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_prd1
+    label: N-acetyl-alpha-D-hexosamine 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138007
+    description: Formula C8H14NO9P.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of N-acetyl-D-glucosamine + ATP = N-acetyl-alpha-D-glucosamine 1-phosphate + AD…
+    grounding: RHEA:53724
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: N-acetyl-D-glucosamine + ATP = N-acetyl-alpha-D-glucosamine 1-phosphate
+      + ADP + H(+)'
+  - node_id: rxn2_sub1
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+    description: Formula C8H15NO6.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_prd1
+    label: N-acetyl-alpha-D-glucosamine 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57776
+    description: Formula C8H14NO9P.
+  - node_id: rxn2_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_E8MF12
+    node_type: PROTEIN
+    label: NAHK_BIFL2
+    grounding: UniProtKB:E8MF12
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:25428 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.162; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25428
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.162"/>
+      notes: The rh:ec triple on RHEA:25428 in rhea.rdf assigns that reaction to EC 2.7.1.162.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: N-acetyl-D-hexosamine is a substrate consumed by RHEA:25428 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25429
+      snippet: N-acetyl-D-hexosamine + ATP => N-acetyl-alpha-D-hexosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25429 declares side 25428_L as its substrates
+        (rh:substrates); the master reaction RHEA:25428 is undirected. This participant is CHEBI:21601
+        with coefficient 1. Rhea cites PMID:19683921, PMID:19436918, PMID:17720833 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:25428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25429
+      snippet: N-acetyl-D-hexosamine + ATP => N-acetyl-alpha-D-hexosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25429 declares side 25428_L as its substrates
+        (rh:substrates); the master reaction RHEA:25428 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:19683921, PMID:19436918, PMID:17720833 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: N-acetyl-alpha-D-hexosamine 1-phosphate is a product released by RHEA:25428 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:25429
+      snippet: N-acetyl-D-hexosamine + ATP => N-acetyl-alpha-D-hexosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25429 declares side 25428_R as its products
+        (rh:products); the master reaction RHEA:25428 is undirected. This participant is CHEBI:138007
+        with coefficient 1. Rhea cites PMID:19683921, PMID:19436918, PMID:17720833 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:25428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25429
+      snippet: N-acetyl-D-hexosamine + ATP => N-acetyl-alpha-D-hexosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25429 declares side 25428_R as its products
+        (rh:products); the master reaction RHEA:25428 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:19683921, PMID:19436918, PMID:17720833 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:25428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25429
+      snippet: N-acetyl-D-hexosamine + ATP => N-acetyl-alpha-D-hexosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25429 declares side 25428_R as its products
+        (rh:products); the master reaction RHEA:25428 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19683921, PMID:19436918, PMID:17720833 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:53724 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.162; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:53724
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.162"/>
+      notes: The rh:ec triple on RHEA:53724 in rhea.rdf assigns that reaction to EC 2.7.1.162.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: N-acetyl-D-glucosamine is a substrate consumed by RHEA:53724 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53725
+      snippet: N-acetyl-D-glucosamine + ATP => N-acetyl-alpha-D-glucosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53725 declares side 53724_L as its substrates
+        (rh:substrates); the master reaction RHEA:53724 is undirected. This participant is CHEBI:506227
+        with coefficient 1. Rhea cites PMID:23831760 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:53724 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53725
+      snippet: N-acetyl-D-glucosamine + ATP => N-acetyl-alpha-D-glucosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53725 declares side 53724_L as its substrates
+        (rh:substrates); the master reaction RHEA:53724 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:23831760 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: N-acetyl-alpha-D-glucosamine 1-phosphate is a product released by RHEA:53724 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:53725
+      snippet: N-acetyl-D-glucosamine + ATP => N-acetyl-alpha-D-glucosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53725 declares side 53724_R as its products
+        (rh:products); the master reaction RHEA:53724 is undirected. This participant is CHEBI:57776 with
+        coefficient 1. Rhea cites PMID:23831760 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: ADP is a product released by RHEA:53724 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53725
+      snippet: N-acetyl-D-glucosamine + ATP => N-acetyl-alpha-D-glucosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53725 declares side 53724_R as its products
+        (rh:products); the master reaction RHEA:53724 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:23831760 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:53724 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53725
+      snippet: N-acetyl-D-glucosamine + ATP => N-acetyl-alpha-D-glucosamine 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53725 declares side 53724_R as its products
+        (rh:products); the master reaction RHEA:53724 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:23831760 for this reaction.
+  - subject: prot_E8MF12
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NAHK_BIFL2 is an exemplar enzyme with EC 2.7.1.162 activity.
+    evidence:
+    - reference: EC:2.7.1.162
+      snippet: DR   E8MF12, NAHK_BIFL2 ;
+      notes: ExPASy ENZYME entry EC 2.7.1.162 cross-references UniProtKB:E8MF12 (NAHK_BIFL2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

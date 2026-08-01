@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.4.1.17
     mapping_source: rhea2ec
@@ -26,4 +26,215 @@ definitions:
       Catalyses the reaction: holo-[cytochrome c] = apo-[cytochrome c] + heme b
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of holo-[cytochrome c] = apo-[cytochrome c] + heme b
+  description: Substrate-to-product chemistry of RHEA:22648, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22649 (rh:substrates → 22648_L, rh:products → 22648_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of holo-[cytochrome c] = apo-[cytochrome c] + heme b
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22648
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: holo-[cytochrome c] = apo-[cytochrome c] + heme b'
+  - node_id: sub1
+    label: holo-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10726
+    description: Rhea compound GENERIC:10726.
+  - node_id: sub1_rp1
+    label: holocytochrome c residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10726 (holo-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83739
+  - node_id: prd1
+    label: apo-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10725
+    description: Rhea compound GENERIC:10725.
+  - node_id: prd1_rp1
+    label: L-cysteine residue at position n
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10725 (apo-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1_rp2
+    label: L-cysteine residue at position n+3
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10725 (apo-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd2
+    label: heme b
+    node_type: CHEMICAL
+    grounding: CHEBI:60344
+    description: Formula C34H30FeN4O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: holocytochrome-c synthase activity
+    grounding: GO:0004408
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: holocytochrome-c synthase
+    grounding: EC:4.4.1.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A5PJG7
+    node_type: PROTEIN
+    label: CCHL_BOVIN
+    grounding: UniProtKB:A5PJG7
+  - node_id: prot_P53703
+    node_type: PROTEIN
+    label: CCHL_CAEEL
+    grounding: UniProtKB:P53703
+  - node_id: prot_P53700
+    node_type: PROTEIN
+    label: CCHL_CANAW
+    grounding: UniProtKB:P53700
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: holo-[cytochrome c] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22649
+      snippet: holo-[cytochrome c] => apo-[cytochrome c] + heme b
+      notes: Rhea's left-to-right directional reaction RHEA:22649 declares side 22648_L as its substrates
+        (rh:substrates); the master reaction RHEA:22648 is undirected. This participant is GENERIC:10726
+        with coefficient 1. Rhea cites PMID:3034577 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: holocytochrome c residue is the reactive part of holo-[cytochrome c].
+    evidence:
+    - reference: RHEA:22648
+      snippet: holocytochrome c residue
+      notes: Rhea compound GENERIC:10726 (holo-[cytochrome c]) declares rh:reactivePart = holocytochrome
+        c residue (CHEBI:83739), formula C40H40FeN6O6S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: apo-[cytochrome c] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22649
+      snippet: holo-[cytochrome c] => apo-[cytochrome c] + heme b
+      notes: Rhea's left-to-right directional reaction RHEA:22649 declares side 22648_R as its products
+        (rh:products); the master reaction RHEA:22648 is undirected. This participant is GENERIC:10725
+        with coefficient 1. Rhea cites PMID:3034577 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of apo-[cytochrome c].
+    evidence:
+    - reference: RHEA:22648
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10725 (apo-[cytochrome c]) declares rh:reactivePart at position n =
+        L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: prd1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of apo-[cytochrome c].
+    evidence:
+    - reference: RHEA:22648
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10725 (apo-[cytochrome c]) declares rh:reactivePart at position n+3
+        = L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: heme b is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22649
+      snippet: holo-[cytochrome c] => apo-[cytochrome c] + heme b
+      notes: Rhea's left-to-right directional reaction RHEA:22649 declares side 22648_R as its products
+        (rh:products); the master reaction RHEA:22648 is undirected. This participant is CHEBI:60344 with
+        coefficient 1. Rhea cites PMID:3034577 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:22648
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004408"/>
+      notes: The rdfs:seeAlso triple on RHEA:22648 in rhea.rdf. GO term GO:0004408 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.4.1.17; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22648
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.17"/>
+      notes: The rh:ec triple on RHEA:22648 in rhea.rdf. EC 4.4.1.17 is itself a record in this KB.
+  - subject: prot_A5PJG7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCHL_BOVIN is an exemplar enzyme carrying EC 4.4.1.17, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.4.1.17
+      snippet: DR   A5PJG7, CCHL_BOVIN ;  P53703, CCHL_CAEEL ;  P53700, CCHL_CANAW ;
+      notes: ExPASy ENZYME entry EC 4.4.1.17 cross-references UniProtKB:A5PJG7 (CCHL_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:22648
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.17"/>
+      notes: Rhea assigns RHEA:22648 to EC 4.4.1.17, and EC 4.4.1.17 maps to exactly one Rhea master reaction
+        (RHEA:22648), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P53703
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCHL_CAEEL is an exemplar enzyme carrying EC 4.4.1.17, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.4.1.17
+      snippet: DR   A5PJG7, CCHL_BOVIN ;  P53703, CCHL_CAEEL ;  P53700, CCHL_CANAW ;
+      notes: ExPASy ENZYME entry EC 4.4.1.17 cross-references UniProtKB:P53703 (CCHL_CAEEL) as a protein
+        with this activity.
+    - reference: RHEA:22648
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.17"/>
+      notes: Rhea assigns RHEA:22648 to EC 4.4.1.17, and EC 4.4.1.17 maps to exactly one Rhea master reaction
+        (RHEA:22648), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P53700
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCHL_CANAW is an exemplar enzyme carrying EC 4.4.1.17, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.4.1.17
+      snippet: DR   A5PJG7, CCHL_BOVIN ;  P53703, CCHL_CAEEL ;  P53700, CCHL_CANAW ;
+      notes: ExPASy ENZYME entry EC 4.4.1.17 cross-references UniProtKB:P53700 (CCHL_CANAW) as a protein
+        with this activity.
+    - reference: RHEA:22648
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.17"/>
+      notes: Rhea assigns RHEA:22648 to EC 4.4.1.17, and EC 4.4.1.17 maps to exactly one Rhea master reaction
+        (RHEA:22648), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

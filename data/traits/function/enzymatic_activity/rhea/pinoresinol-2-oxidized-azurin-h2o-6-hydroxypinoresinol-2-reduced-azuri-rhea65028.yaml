@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.17.9.2
     mapping_source: rhea2ec
@@ -32,4 +32,180 @@ definitions:
       Catalyses the reaction: (+)-pinoresinol + 2 oxidized [azurin] + H2O = (+)-6-hydroxypinoresinol + 2 reduced [azurin] + 2 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (+)-pinoresinol + 2 oxidized [azurin] + H2O = (+)-6-hydroxypinoresinol
+    + 2 reduced [azu…
+  description: Substrate-to-product chemistry of RHEA:65028, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:65029 (rh:substrates → 65028_L, rh:products → 65028_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (+)-pinoresinol + 2 oxidized [azurin] + H2O = (+)-6-hydroxypinoresinol + 2 r…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:65028
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (+)-pinoresinol + 2 oxidized [azurin] + H2O = (+)-6-hydroxypinoresinol + 2 reduced
+      [azurin] + 2 H(+)'
+  - node_id: sub1
+    label: (+)-pinoresinol
+    node_type: CHEMICAL
+    grounding: CHEBI:40
+    description: Formula C20H22O6.
+  - node_id: sub2
+    label: oxidized [azurin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11034
+    description: Rhea compound GENERIC:11034.
+  - node_id: sub2_rp1
+    label: Cu(2+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11034 (oxidized
+      [azurin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29036
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (+)-6-hydroxypinoresinol
+    node_type: CHEMICAL
+    grounding: CHEBI:155844
+    description: Formula C20H22O7.
+  - node_id: prd2
+    label: reduced [azurin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11035
+    description: Rhea compound GENERIC:11035.
+  - node_id: prd2_rp1
+    label: Cu(+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11035 (reduced [azurin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:49552
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-pinoresinol hydroxylase
+    grounding: EC:1.17.9.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (+)-pinoresinol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:65029
+      snippet: (+)-pinoresinol + 2 oxidized [azurin] + H2O => (+)-6-hydroxypinoresinol + 2 reduced [azurin]
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65029 declares side 65028_L as its substrates
+        (rh:substrates); the master reaction RHEA:65028 is undirected. This participant is CHEBI:40 with
+        coefficient 1. Rhea cites PMID:32198167 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: oxidized [azurin] is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:65029
+      snippet: (+)-pinoresinol + 2 oxidized [azurin] + H2O => (+)-6-hydroxypinoresinol + 2 reduced [azurin]
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65029 declares side 65028_L as its substrates
+        (rh:substrates); the master reaction RHEA:65028 is undirected. This participant is GENERIC:11034
+        with coefficient 2. Rhea cites PMID:32198167 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: Cu(2+) is the reactive part of oxidized [azurin].
+    evidence:
+    - reference: RHEA:65028
+      snippet: Cu(2+)
+      notes: Rhea compound GENERIC:11034 (oxidized [azurin]) declares rh:reactivePart = Cu(2+) (CHEBI:29036),
+        formula Cu.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65029
+      snippet: (+)-pinoresinol + 2 oxidized [azurin] + H2O => (+)-6-hydroxypinoresinol + 2 reduced [azurin]
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65029 declares side 65028_L as its substrates
+        (rh:substrates); the master reaction RHEA:65028 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:32198167 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-6-hydroxypinoresinol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:65029
+      snippet: (+)-pinoresinol + 2 oxidized [azurin] + H2O => (+)-6-hydroxypinoresinol + 2 reduced [azurin]
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65029 declares side 65028_R as its products
+        (rh:products); the master reaction RHEA:65028 is undirected. This participant is CHEBI:155844
+        with coefficient 1. Rhea cites PMID:32198167 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: reduced [azurin] is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:65029
+      snippet: (+)-pinoresinol + 2 oxidized [azurin] + H2O => (+)-6-hydroxypinoresinol + 2 reduced [azurin]
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65029 declares side 65028_R as its products
+        (rh:products); the master reaction RHEA:65028 is undirected. This participant is GENERIC:11035
+        with coefficient 2. Rhea cites PMID:32198167 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: Cu(+) is the reactive part of reduced [azurin].
+    evidence:
+    - reference: RHEA:65028
+      snippet: Cu(+)
+      notes: Rhea compound GENERIC:11035 (reduced [azurin]) declares rh:reactivePart = Cu(+) (CHEBI:49552),
+        formula Cu.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:65029
+      snippet: (+)-pinoresinol + 2 oxidized [azurin] + H2O => (+)-6-hydroxypinoresinol + 2 reduced [azurin]
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:65029 declares side 65028_R as its products
+        (rh:products); the master reaction RHEA:65028 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:32198167 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.17.9.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:65028
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.17.9.2"/>
+      notes: The rh:ec triple on RHEA:65028 in rhea.rdf. EC 1.17.9.2 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

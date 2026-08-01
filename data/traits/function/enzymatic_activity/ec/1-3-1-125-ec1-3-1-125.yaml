@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.1.-
 mapped_xrefs:
@@ -28,4 +28,119 @@ definitions:
       Catalyses: acrylate + NADH + H(+) = propanoate + NAD(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acrylate reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.1.125. EC 1.3.1.125 maps to
+    exactly one curated Rhea reaction (RHEA:72699), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "acrylate
+    + NADH + H(+) = propanoate + NAD(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acrylate reductase
+    grounding: EC:1.3.1.125
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: acrylate
+    node_type: CHEMICAL
+    grounding: CHEBI:37080
+    description: Formula C3H3O2.
+  - node_id: sub2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17272
+    description: Formula C3H5O2.
+  - node_id: prd2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prot_P0DW92
+    node_type: PROTEIN
+    label: ARD_VIBHA
+    grounding: UniProtKB:P0DW92
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acrylate is a substrate consumed by RHEA:72699 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72700
+      snippet: acrylate + NADH + H(+) => propanoate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72700 declares side 72699_L as its substrates
+        (rh:substrates); the master reaction RHEA:72699 is undirected. This participant is CHEBI:37080
+        with coefficient 1. Rhea cites PMID:35612301 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADH is a substrate consumed by RHEA:72699 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72700
+      snippet: acrylate + NADH + H(+) => propanoate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72700 declares side 72699_L as its substrates
+        (rh:substrates); the master reaction RHEA:72699 is undirected. This participant is CHEBI:57945
+        with coefficient 1. Rhea cites PMID:35612301 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:72699 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72700
+      snippet: acrylate + NADH + H(+) => propanoate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72700 declares side 72699_L as its substrates
+        (rh:substrates); the master reaction RHEA:72699 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:35612301 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: propanoate is a product released by RHEA:72699 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72700
+      snippet: acrylate + NADH + H(+) => propanoate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72700 declares side 72699_R as its products
+        (rh:products); the master reaction RHEA:72699 is undirected. This participant is CHEBI:17272 with
+        coefficient 1. Rhea cites PMID:35612301 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NAD(+) is a product released by RHEA:72699 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72700
+      snippet: acrylate + NADH + H(+) => propanoate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72700 declares side 72699_R as its products
+        (rh:products); the master reaction RHEA:72699 is undirected. This participant is CHEBI:57540 with
+        coefficient 1. Rhea cites PMID:35612301 for this reaction.
+  - subject: prot_P0DW92
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARD_VIBHA is an exemplar enzyme with EC 1.3.1.125 activity.
+    evidence:
+    - reference: EC:1.3.1.125
+      snippet: DR   P0DW92, ARD_VIBHA  ;
+      notes: ExPASy ENZYME entry EC 1.3.1.125 cross-references UniProtKB:P0DW92 (ARD_VIBHA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

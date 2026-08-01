@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -36,4 +36,132 @@ definitions:
       Catalyses: 2-oxoadipate + O2 = (R)-2-hydroxyglutarate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-oxoadipate dioxygenase/decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.93. EC 1.13.11.93 maps to
+    exactly one curated Rhea reaction (RHEA:71787), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-oxoadipate
+    + O2 = (R)-2-hydroxyglutarate + CO2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-oxoadipate dioxygenase/decarboxylase
+    grounding: EC:1.13.11.93
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-oxoadipate
+    node_type: CHEMICAL
+    grounding: CHEBI:57499
+    description: Formula C6H6O5.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (R)-2-hydroxyglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:15801
+    description: Formula C5H6O5.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prot_Q9LMJ7
+    node_type: PROTEIN
+    label: HGLS_ARATH
+    grounding: UniProtKB:Q9LMJ7
+  - node_id: prot_P76097
+    node_type: PROTEIN
+    label: HGLS_ECOLI
+    grounding: UniProtKB:P76097
+  - node_id: prot_P65066
+    node_type: PROTEIN
+    label: HGLS_MYCBO
+    grounding: UniProtKB:P65066
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-oxoadipate is a substrate consumed by RHEA:71787 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71788
+      snippet: 2-oxoadipate + O2 => (R)-2-hydroxyglutarate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71788 declares side 71787_L as its substrates
+        (rh:substrates); the master reaction RHEA:71787 is undirected. This participant is CHEBI:57499
+        with coefficient 1. Rhea cites PMID:31064836 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:71787 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71788
+      snippet: 2-oxoadipate + O2 => (R)-2-hydroxyglutarate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71788 declares side 71787_L as its substrates
+        (rh:substrates); the master reaction RHEA:71787 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:31064836 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-2-hydroxyglutarate is a product released by RHEA:71787 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:71788
+      snippet: 2-oxoadipate + O2 => (R)-2-hydroxyglutarate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71788 declares side 71787_R as its products
+        (rh:products); the master reaction RHEA:71787 is undirected. This participant is CHEBI:15801 with
+        coefficient 1. Rhea cites PMID:31064836 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:71787 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71788
+      snippet: 2-oxoadipate + O2 => (R)-2-hydroxyglutarate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71788 declares side 71787_R as its products
+        (rh:products); the master reaction RHEA:71787 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:31064836 for this reaction.
+  - subject: prot_Q9LMJ7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGLS_ARATH is an exemplar enzyme with EC 1.13.11.93 activity.
+    evidence:
+    - reference: EC:1.13.11.93
+      snippet: DR   Q9LMJ7, HGLS_ARATH ;  P76097, HGLS_ECOLI ;  P65066, HGLS_MYCBO ;
+      notes: ExPASy ENZYME entry EC 1.13.11.93 cross-references UniProtKB:Q9LMJ7 (HGLS_ARATH) as a protein
+        with this activity.
+  - subject: prot_P76097
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGLS_ECOLI is an exemplar enzyme with EC 1.13.11.93 activity.
+    evidence:
+    - reference: EC:1.13.11.93
+      snippet: DR   Q9LMJ7, HGLS_ARATH ;  P76097, HGLS_ECOLI ;  P65066, HGLS_MYCBO ;
+      notes: ExPASy ENZYME entry EC 1.13.11.93 cross-references UniProtKB:P76097 (HGLS_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P65066
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGLS_MYCBO is an exemplar enzyme with EC 1.13.11.93 activity.
+    evidence:
+    - reference: EC:1.13.11.93
+      snippet: DR   Q9LMJ7, HGLS_ARATH ;  P76097, HGLS_ECOLI ;  P65066, HGLS_MYCBO ;
+      notes: ExPASy ENZYME entry EC 1.13.11.93 cross-references UniProtKB:P65066 (HGLS_MYCBO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

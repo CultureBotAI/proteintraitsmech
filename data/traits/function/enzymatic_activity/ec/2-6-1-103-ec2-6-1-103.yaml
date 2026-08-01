@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 mapped_xrefs:
@@ -28,4 +28,110 @@ definitions:
       Catalyses: (S)-3,5-dihydroxyphenylglycine + 2-oxoglutarate = 2-(3,5- dihydroxyphenyl)-2-oxoacetate + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-3,5-dihydroxyphenylglycine transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.103. EC 2.6.1.103 maps to
+    exactly one curated Rhea reaction (RHEA:38347), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-3,5-dihydroxyphenylglycine
+    + 2-oxoglutarate = 2-(3,5- dihydroxyphenyl)-2-oxoacetate + L-glutamate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (S)-3,5-dihydroxyphenylglycine transaminase
+    grounding: EC:2.6.1.103
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-3,5-dihydroxyphenylglycine
+    node_type: CHEMICAL
+    grounding: CHEBI:75204
+    description: Formula C8H9NO4.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: 2-(3,5-dihydroxyphenyl)-2-oxoacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:75210
+    description: Formula C8H5O5.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prot_O52815
+    node_type: PROTEIN
+    label: HPGT_AMYOR
+    grounding: UniProtKB:O52815
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-3,5-dihydroxyphenylglycine is a substrate consumed by RHEA:38347 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:38348
+      snippet: (S)-3,5-dihydroxyphenylglycine + 2-oxoglutarate => 2-(3,5-dihydroxyphenyl)-2-oxoacetate
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:38348 declares side 38347_L as its substrates
+        (rh:substrates); the master reaction RHEA:38347 is undirected. This participant is CHEBI:75204
+        with coefficient 1. Rhea cites PMID:11137816 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:38347 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38348
+      snippet: (S)-3,5-dihydroxyphenylglycine + 2-oxoglutarate => 2-(3,5-dihydroxyphenyl)-2-oxoacetate
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:38348 declares side 38347_L as its substrates
+        (rh:substrates); the master reaction RHEA:38347 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:11137816 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-(3,5-dihydroxyphenyl)-2-oxoacetate is a product released by RHEA:38347 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:38348
+      snippet: (S)-3,5-dihydroxyphenylglycine + 2-oxoglutarate => 2-(3,5-dihydroxyphenyl)-2-oxoacetate
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:38348 declares side 38347_R as its products
+        (rh:products); the master reaction RHEA:38347 is undirected. This participant is CHEBI:75210 with
+        coefficient 1. Rhea cites PMID:11137816 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:38347 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38348
+      snippet: (S)-3,5-dihydroxyphenylglycine + 2-oxoglutarate => 2-(3,5-dihydroxyphenyl)-2-oxoacetate
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:38348 declares side 38347_R as its products
+        (rh:products); the master reaction RHEA:38347 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:11137816 for this reaction.
+  - subject: prot_O52815
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPGT_AMYOR is an exemplar enzyme with EC 2.6.1.103 activity.
+    evidence:
+    - reference: EC:2.6.1.103
+      snippet: DR   O52815, HPGT_AMYOR ;
+      notes: ExPASy ENZYME entry EC 2.6.1.103 cross-references UniProtKB:O52815 (HPGT_AMYOR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

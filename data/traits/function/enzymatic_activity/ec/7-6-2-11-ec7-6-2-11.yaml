@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.6.2.-
 synonyms:
@@ -43,4 +43,195 @@ definitions:
       Catalyses: ATP + H2O + polyamine-[polyamine-binding protein]Side 1 = ADP + phosphate + polyamineSide 2 + [polyamine-binding protein]Side 1
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ABC-type polyamine transporter
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.6.2.11. EC 7.6.2.11 maps to exactly
+    one curated Rhea reaction (RHEA:29999), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ATP + H2O + polyamine-[polyamine-binding
+    protein]Side 1 = ADP + phosphate + polyamineSide 2 + [polyamine-binding protein]Side 1". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type polyamine transporter
+    grounding: EC:7.6.2.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: spermidine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57834
+    description: Formula C7H22N3.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: spermidine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57834
+    description: Formula C7H22N3.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type polyamine transporter activity
+    grounding: GO:0015417
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9I6T2
+    node_type: PROTEIN
+    label: POTA1_PSEAE
+    grounding: UniProtKB:Q9I6T2
+  - node_id: prot_Q9HY19
+    node_type: PROTEIN
+    label: POTA2_PSEAE
+    grounding: UniProtKB:Q9HY19
+  - node_id: prot_A3DDF6
+    node_type: PROTEIN
+    label: POTA_ACET2
+    grounding: UniProtKB:A3DDF6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: spermidine is a substrate consumed by RHEA:29999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30000
+      snippet: spermidine(out) + ATP + H2O => spermidine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30000 declares side 29999_L as its substrates
+        (rh:substrates); the master reaction RHEA:29999 is undirected. This participant is CHEBI:57834
+        with coefficient 1. Rhea cites PMID:8366082, PMID:31996848 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:29999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30000
+      snippet: spermidine(out) + ATP + H2O => spermidine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30000 declares side 29999_L as its substrates
+        (rh:substrates); the master reaction RHEA:29999 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:8366082, PMID:31996848 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:29999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30000
+      snippet: spermidine(out) + ATP + H2O => spermidine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30000 declares side 29999_L as its substrates
+        (rh:substrates); the master reaction RHEA:29999 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8366082, PMID:31996848 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: spermidine is a product released by RHEA:29999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30000
+      snippet: spermidine(out) + ATP + H2O => spermidine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30000 declares side 29999_R as its products
+        (rh:products); the master reaction RHEA:29999 is undirected. This participant is CHEBI:57834 with
+        coefficient 1. Rhea cites PMID:8366082, PMID:31996848 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:29999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30000
+      snippet: spermidine(out) + ATP + H2O => spermidine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30000 declares side 29999_R as its products
+        (rh:products); the master reaction RHEA:29999 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:8366082, PMID:31996848 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: phosphate is a product released by RHEA:29999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30000
+      snippet: spermidine(out) + ATP + H2O => spermidine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30000 declares side 29999_R as its products
+        (rh:products); the master reaction RHEA:29999 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:8366082, PMID:31996848 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:29999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30000
+      snippet: spermidine(out) + ATP + H2O => spermidine(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30000 declares side 29999_R as its products
+        (rh:products); the master reaction RHEA:29999 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8366082, PMID:31996848 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:7.6.2.11
+      snippet: EC:7.6.2.11 > GO:ABC-type polyamine transporter activity ; GO:0015417
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0015417 is itself a record
+        in this KB.
+  - subject: prot_Q9I6T2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POTA1_PSEAE is an exemplar enzyme with EC 7.6.2.11 activity.
+    evidence:
+    - reference: EC:7.6.2.11
+      snippet: DR   Q9I6T2, POTA1_PSEAE;  Q9HY19, POTA2_PSEAE;  A3DDF6, POTA_ACET2 ;
+      notes: ExPASy ENZYME entry EC 7.6.2.11 cross-references UniProtKB:Q9I6T2 (POTA1_PSEAE) as a protein
+        with this activity.
+  - subject: prot_Q9HY19
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POTA2_PSEAE is an exemplar enzyme with EC 7.6.2.11 activity.
+    evidence:
+    - reference: EC:7.6.2.11
+      snippet: DR   Q9I6T2, POTA1_PSEAE;  Q9HY19, POTA2_PSEAE;  A3DDF6, POTA_ACET2 ;
+      notes: ExPASy ENZYME entry EC 7.6.2.11 cross-references UniProtKB:Q9HY19 (POTA2_PSEAE) as a protein
+        with this activity.
+  - subject: prot_A3DDF6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POTA_ACET2 is an exemplar enzyme with EC 7.6.2.11 activity.
+    evidence:
+    - reference: EC:7.6.2.11
+      snippet: DR   Q9I6T2, POTA1_PSEAE;  Q9HY19, POTA2_PSEAE;  A3DDF6, POTA_ACET2 ;
+      notes: ExPASy ENZYME entry EC 7.6.2.11 cross-references UniProtKB:A3DDF6 (POTA_ACET2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

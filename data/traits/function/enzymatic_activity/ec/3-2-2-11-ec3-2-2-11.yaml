@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 mapped_xrefs:
@@ -25,4 +25,106 @@ definitions:
       Catalyses: N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine + H2O = N-acetyl-D- glucosamine + L-asparagine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-aspartyl-N-acetylglucosaminidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.11. EC 3.2.2.11 maps to exactly
+    one curated Rhea reaction (RHEA:12324), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine
+    + H2O = N-acetyl-D- glucosamine + L-asparagine". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-aspartyl-N-acetylglucosaminidase
+    grounding: EC:3.2.2.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine
+    node_type: CHEMICAL
+    grounding: CHEBI:58080
+    description: Formula C12H21N3O8.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+    description: Formula C8H15NO6.
+  - node_id: prd2
+    label: L-asparagine
+    node_type: CHEMICAL
+    grounding: CHEBI:58048
+    description: Formula C4H8N2O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-aspartyl-N-acetylglucosaminidase activity
+    grounding: GO:0047406
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine is a substrate consumed by RHEA:12324
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12325
+      snippet: N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine + H2O => N-acetyl-D-glucosamine + L-asparagine
+      notes: Rhea's left-to-right directional reaction RHEA:12325 declares side 12324_L as its substrates
+        (rh:substrates); the master reaction RHEA:12324 is undirected. This participant is CHEBI:58080
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:12324 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12325
+      snippet: N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine + H2O => N-acetyl-D-glucosamine + L-asparagine
+      notes: Rhea's left-to-right directional reaction RHEA:12325 declares side 12324_L as its substrates
+        (rh:substrates); the master reaction RHEA:12324 is undirected. This participant is CHEBI:15377
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-D-glucosamine is a product released by RHEA:12324 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12325
+      snippet: N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine + H2O => N-acetyl-D-glucosamine + L-asparagine
+      notes: Rhea's left-to-right directional reaction RHEA:12325 declares side 12324_R as its products
+        (rh:products); the master reaction RHEA:12324 is undirected. This participant is CHEBI:506227
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-asparagine is a product released by RHEA:12324 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12325
+      snippet: N(4)-(beta-N-acetyl-D-glucosaminyl)-L-asparagine + H2O => N-acetyl-D-glucosamine + L-asparagine
+      notes: Rhea's left-to-right directional reaction RHEA:12325 declares side 12324_R as its products
+        (rh:products); the master reaction RHEA:12324 is undirected. This participant is CHEBI:58048 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.11
+      snippet: EC:3.2.2.11 > GO:beta-aspartyl-N-acetylglucosaminidase activity ; GO:0047406
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047406 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

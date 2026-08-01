@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.1.1.-
 synonyms:
@@ -43,4 +43,215 @@ definitions:
       Catalyses: tRNA(Ala) + L-alanine + ATP = L-alanyl-tRNA(Ala) + AMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alanine--tRNA ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.1.1.7. EC 6.1.1.7 maps to exactly
+    one curated Rhea reaction (RHEA:12540), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "tRNA(Ala) + L-alanine
+    + ATP = L-alanyl-tRNA(Ala) + AMP + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alanine--tRNA ligase
+    grounding: EC:6.1.1.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: tRNA(Ala)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9657
+    description: Rhea compound GENERIC:9657.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9657 (tRNA(Ala));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-alanyl-tRNA(Ala)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9923
+    description: Rhea compound GENERIC:9923.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 3'-(L-alanyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9923 (L-alanyl-tRNA(Ala));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78497
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alanine-tRNA ligase activity
+    grounding: GO:0004813
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A9KMW7
+    node_type: PROTEIN
+    label: SYA1_LACP7
+    grounding: UniProtKB:A9KMW7
+  - node_id: prot_A9KLZ5
+    node_type: PROTEIN
+    label: SYA2_LACP7
+    grounding: UniProtKB:A9KLZ5
+  - node_id: prot_P21894
+    node_type: PROTEIN
+    label: SYAC_BOMMO
+    grounding: UniProtKB:P21894
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Ala) is a substrate consumed by RHEA:12540 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12541
+      snippet: tRNA(Ala) + L-alanine + ATP => L-alanyl-tRNA(Ala) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12541 declares side 12540_L as its substrates
+        (rh:substrates); the master reaction RHEA:12540 is undirected. This participant is GENERIC:9657
+        with coefficient 1. Rhea cites PMID:25817015, PMID:27911835, PMID:13783653, PMID:27622773 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Ala).
+    evidence:
+    - reference: RHEA:12540
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9657 (tRNA(Ala)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-alanine is a substrate consumed by RHEA:12540 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12541
+      snippet: tRNA(Ala) + L-alanine + ATP => L-alanyl-tRNA(Ala) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12541 declares side 12540_L as its substrates
+        (rh:substrates); the master reaction RHEA:12540 is undirected. This participant is CHEBI:57972
+        with coefficient 1. Rhea cites PMID:25817015, PMID:27911835, PMID:13783653, PMID:27622773 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:12540 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12541
+      snippet: tRNA(Ala) + L-alanine + ATP => L-alanyl-tRNA(Ala) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12541 declares side 12540_L as its substrates
+        (rh:substrates); the master reaction RHEA:12540 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:25817015, PMID:27911835, PMID:13783653, PMID:27622773 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-alanyl-tRNA(Ala) is a product released by RHEA:12540 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12541
+      snippet: tRNA(Ala) + L-alanine + ATP => L-alanyl-tRNA(Ala) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12541 declares side 12540_R as its products
+        (rh:products); the master reaction RHEA:12540 is undirected. This participant is GENERIC:9923
+        with coefficient 1. Rhea cites PMID:25817015, PMID:27911835, PMID:13783653, PMID:27622773 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-alanyl)adenylyl group is the reactive part of L-alanyl-tRNA(Ala).
+    evidence:
+    - reference: RHEA:12540
+      snippet: 3'-(L-alanyl)adenylyl group
+      notes: Rhea compound GENERIC:9923 (L-alanyl-tRNA(Ala)) declares rh:reactivePart = 3'-(L-alanyl)adenylyl
+        group (CHEBI:78497).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:12540 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12541
+      snippet: tRNA(Ala) + L-alanine + ATP => L-alanyl-tRNA(Ala) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12541 declares side 12540_R as its products
+        (rh:products); the master reaction RHEA:12540 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:25817015, PMID:27911835, PMID:13783653, PMID:27622773 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:12540 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12541
+      snippet: tRNA(Ala) + L-alanine + ATP => L-alanyl-tRNA(Ala) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12541 declares side 12540_R as its products
+        (rh:products); the master reaction RHEA:12540 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25817015, PMID:27911835, PMID:13783653, PMID:27622773 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.1.1.7
+      snippet: EC:6.1.1.7 > GO:alanine-tRNA ligase activity ; GO:0004813
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004813 is itself a record
+        in this KB.
+  - subject: prot_A9KMW7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYA1_LACP7 is an exemplar enzyme with EC 6.1.1.7 activity.
+    evidence:
+    - reference: EC:6.1.1.7
+      snippet: DR   A9KMW7, SYA1_LACP7 ;  A9KLZ5, SYA2_LACP7 ;  P21894, SYAC_BOMMO ;
+      notes: ExPASy ENZYME entry EC 6.1.1.7 cross-references UniProtKB:A9KMW7 (SYA1_LACP7) as a protein
+        with this activity.
+  - subject: prot_A9KLZ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYA2_LACP7 is an exemplar enzyme with EC 6.1.1.7 activity.
+    evidence:
+    - reference: EC:6.1.1.7
+      snippet: DR   A9KMW7, SYA1_LACP7 ;  A9KLZ5, SYA2_LACP7 ;  P21894, SYAC_BOMMO ;
+      notes: ExPASy ENZYME entry EC 6.1.1.7 cross-references UniProtKB:A9KLZ5 (SYA2_LACP7) as a protein
+        with this activity.
+  - subject: prot_P21894
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYAC_BOMMO is an exemplar enzyme with EC 6.1.1.7 activity.
+    evidence:
+    - reference: EC:6.1.1.7
+      snippet: DR   A9KMW7, SYA1_LACP7 ;  A9KLZ5, SYA2_LACP7 ;  P21894, SYAC_BOMMO ;
+      notes: ExPASy ENZYME entry EC 6.1.1.7 cross-references UniProtKB:P21894 (SYAC_BOMMO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

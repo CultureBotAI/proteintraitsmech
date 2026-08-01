@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -35,4 +35,103 @@ definitions:
       Catalyses: geranylgeranyl diphosphate = fusicocca-2,10(14)-diene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fusicocca-2,10(14)-diene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.43. EC 4.2.3.43 maps to exactly
+    one curated Rhea reaction (RHEA:26245), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "geranylgeranyl
+    diphosphate = fusicocca-2,10(14)-diene + diphosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fusicocca-2,10(14)-diene synthase
+    grounding: EC:4.2.3.43
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57533
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: fusicocca-2,10(14)-diene
+    node_type: CHEMICAL
+    grounding: CHEBI:52463
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_C9K2Q3
+    node_type: PROTEIN
+    label: BSC8_ALTBR
+    grounding: UniProtKB:C9K2Q3
+  - node_id: prot_A2PZA5
+    node_type: PROTEIN
+    label: FC1_DIAAM
+    grounding: UniProtKB:A2PZA5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: geranylgeranyl diphosphate is a substrate consumed by RHEA:26245 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26246
+      snippet: geranylgeranyl diphosphate => fusicocca-2,10(14)-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26246 declares side 26245_L as its substrates
+        (rh:substrates); the master reaction RHEA:26245 is undirected. This participant is CHEBI:57533
+        with coefficient 1. Rhea cites PMID:17360612, PMID:39365814, PMID:19097780 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: fusicocca-2,10(14)-diene is a product released by RHEA:26245 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26246
+      snippet: geranylgeranyl diphosphate => fusicocca-2,10(14)-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26246 declares side 26245_R as its products
+        (rh:products); the master reaction RHEA:26245 is undirected. This participant is CHEBI:52463 with
+        coefficient 1. Rhea cites PMID:17360612, PMID:39365814, PMID:19097780 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:26245 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26246
+      snippet: geranylgeranyl diphosphate => fusicocca-2,10(14)-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26246 declares side 26245_R as its products
+        (rh:products); the master reaction RHEA:26245 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:17360612, PMID:39365814, PMID:19097780 for this reaction.
+  - subject: prot_C9K2Q3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BSC8_ALTBR is an exemplar enzyme with EC 4.2.3.43 activity.
+    evidence:
+    - reference: EC:4.2.3.43
+      snippet: DR   C9K2Q3, BSC8_ALTBR ;  A2PZA5, FC1_DIAAM  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.43 cross-references UniProtKB:C9K2Q3 (BSC8_ALTBR) as a protein
+        with this activity.
+  - subject: prot_A2PZA5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FC1_DIAAM is an exemplar enzyme with EC 4.2.3.43 activity.
+    evidence:
+    - reference: EC:4.2.3.43
+      snippet: DR   C9K2Q3, BSC8_ALTBR ;  A2PZA5, FC1_DIAAM  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.43 cross-references UniProtKB:A2PZA5 (FC1_DIAAM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

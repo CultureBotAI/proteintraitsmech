@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78534
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,123 @@ definitions:
       Catalyses the reaction: L-threonyl-tRNA(Ser) + H2O = tRNA(Ser) + L-threonine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-threonyl-tRNA(Ser) + H2O = tRNA(Ser) + L-threonine
+  description: Substrate-to-product chemistry of RHEA:74235, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:74236 (rh:substrates → 74235_L, rh:products → 74235_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-threonyl-tRNA(Ser) + H2O = tRNA(Ser) + L-threonine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:74235
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-threonyl-tRNA(Ser) + H2O = tRNA(Ser) + L-threonine'
+  - node_id: sub1
+    label: L-threonyl-tRNA(Ser)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18350
+    description: Rhea compound GENERIC:18350.
+  - node_id: sub1_rp1
+    label: 3'-(L-threonyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18350 (L-threonyl-tRNA(Ser));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78534
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: tRNA(Ser)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9669
+    description: Rhea compound GENERIC:9669.
+  - node_id: prd1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9669 (tRNA(Ser));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd2
+    label: L-threonine
+    node_type: CHEMICAL
+    grounding: CHEBI:57926
+    description: Formula C4H9NO3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-threonyl-tRNA(Ser) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74236
+      snippet: L-threonyl-tRNA(Ser) + H2O => tRNA(Ser) + L-threonine
+      notes: Rhea's left-to-right directional reaction RHEA:74236 declares side 74235_L as its substrates
+        (rh:substrates); the master reaction RHEA:74235 is undirected. This participant is GENERIC:18350
+        with coefficient 1. Rhea cites PMID:25918376 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-threonyl)adenylyl group is the reactive part of L-threonyl-tRNA(Ser).
+    evidence:
+    - reference: RHEA:74235
+      snippet: 3'-(L-threonyl)adenylyl group
+      notes: Rhea compound GENERIC:18350 (L-threonyl-tRNA(Ser)) declares rh:reactivePart = 3'-(L-threonyl)adenylyl
+        group (CHEBI:78534), formula C14H19N6O8P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74236
+      snippet: L-threonyl-tRNA(Ser) + H2O => tRNA(Ser) + L-threonine
+      notes: Rhea's left-to-right directional reaction RHEA:74236 declares side 74235_L as its substrates
+        (rh:substrates); the master reaction RHEA:74235 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25918376 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tRNA(Ser) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74236
+      snippet: L-threonyl-tRNA(Ser) + H2O => tRNA(Ser) + L-threonine
+      notes: Rhea's left-to-right directional reaction RHEA:74236 declares side 74235_R as its products
+        (rh:products); the master reaction RHEA:74235 is undirected. This participant is GENERIC:9669
+        with coefficient 1. Rhea cites PMID:25918376 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: AMP 3'-end residue is the reactive part of tRNA(Ser).
+    evidence:
+    - reference: RHEA:74235
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9669 (tRNA(Ser)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-threonine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74236
+      snippet: L-threonyl-tRNA(Ser) + H2O => tRNA(Ser) + L-threonine
+      notes: Rhea's left-to-right directional reaction RHEA:74236 declares side 74235_R as its products
+        (rh:products); the master reaction RHEA:74235 is undirected. This participant is CHEBI:57926 with
+        coefficient 1. Rhea cites PMID:25918376 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

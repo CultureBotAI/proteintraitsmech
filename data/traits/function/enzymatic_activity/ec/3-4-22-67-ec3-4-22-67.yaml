@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -38,4 +38,52 @@ definitions:
       Catalyses: Preferential cleavage of peptides with a proline residue at the P2 position
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of zingipain
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.67. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage of peptides with a proline residue at the P2 position".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: zingipain
+    grounding: EC:3.4.22.67
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P82473
+    node_type: PROTEIN
+    label: CPGP1_ZINOF
+    grounding: UniProtKB:P82473
+  - node_id: prot_P82474
+    node_type: PROTEIN
+    label: CPGP2_ZINOF
+    grounding: UniProtKB:P82474
+  edges:
+  - subject: prot_P82473
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPGP1_ZINOF is an exemplar enzyme with EC 3.4.22.67 activity.
+    evidence:
+    - reference: EC:3.4.22.67
+      snippet: DR   P82473, CPGP1_ZINOF;  P82474, CPGP2_ZINOF;
+      notes: ExPASy ENZYME entry EC 3.4.22.67 cross-references UniProtKB:P82473 (CPGP1_ZINOF) as a protein
+        with this activity.
+  - subject: prot_P82474
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPGP2_ZINOF is an exemplar enzyme with EC 3.4.22.67 activity.
+    evidence:
+    - reference: EC:3.4.22.67
+      snippet: DR   P82473, CPGP1_ZINOF;  P82474, CPGP2_ZINOF;
+      notes: ExPASy ENZYME entry EC 3.4.22.67 cross-references UniProtKB:P82474 (CPGP2_ZINOF) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

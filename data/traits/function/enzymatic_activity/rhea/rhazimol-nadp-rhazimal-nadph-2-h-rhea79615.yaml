@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.1.1.440
     mapping_source: rhea2ec
@@ -30,4 +30,161 @@ definitions:
       Catalyses the reaction: rhazimol + NADP(+) = rhazimal + NADPH + 2 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of rhazimol + NADP(+) = rhazimal + NADPH + 2 H(+)
+  description: Substrate-to-product chemistry of RHEA:79615, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79616 (rh:substrates → 79615_L, rh:products → 79615_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of rhazimol + NADP(+) = rhazimal + NADPH + 2 H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79615
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: rhazimol + NADP(+) = rhazimal + NADPH + 2 H(+)'
+  - node_id: sub1
+    label: rhazimol
+    node_type: CHEMICAL
+    grounding: CHEBI:230474
+    description: Formula C21H25N2O3.
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: rhazimal
+    node_type: CHEMICAL
+    grounding: CHEBI:230473
+    description: Formula C21H22N2O3.
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: rhazimal reductase
+    grounding: EC:1.1.1.440
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A9E7S518
+    node_type: PROTEIN
+    label: RHR1_ALSSC
+    grounding: UniProtKB:A0A9E7S518
+  - node_id: prot_A0A9E7S5B9
+    node_type: PROTEIN
+    label: RHR2_ALSSC
+    grounding: UniProtKB:A0A9E7S5B9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: rhazimol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79616
+      snippet: rhazimol + NADP(+) => rhazimal + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79616 declares side 79615_L as its substrates
+        (rh:substrates); the master reaction RHEA:79615 is undirected. This participant is CHEBI:230474
+        with coefficient 1. Rhea cites PMID:36349266 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79616
+      snippet: rhazimol + NADP(+) => rhazimal + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79616 declares side 79615_L as its substrates
+        (rh:substrates); the master reaction RHEA:79615 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:36349266 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: rhazimal is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79616
+      snippet: rhazimol + NADP(+) => rhazimal + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79616 declares side 79615_R as its products
+        (rh:products); the master reaction RHEA:79615 is undirected. This participant is CHEBI:230473
+        with coefficient 1. Rhea cites PMID:36349266 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79616
+      snippet: rhazimol + NADP(+) => rhazimal + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79616 declares side 79615_R as its products
+        (rh:products); the master reaction RHEA:79615 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:36349266 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:79616
+      snippet: rhazimol + NADP(+) => rhazimal + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79616 declares side 79615_R as its products
+        (rh:products); the master reaction RHEA:79615 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:36349266 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.1.1.440; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:79615
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.440"/>
+      notes: The rh:ec triple on RHEA:79615 in rhea.rdf. EC 1.1.1.440 is itself a record in this KB.
+  - subject: prot_A0A9E7S518
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHR1_ALSSC is an exemplar enzyme carrying EC 1.1.1.440, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.1.1.440
+      snippet: DR   A0A9E7S518, RHR1_ALSSC ;  A0A9E7S5B9, RHR2_ALSSC ;
+      notes: ExPASy ENZYME entry EC 1.1.1.440 cross-references UniProtKB:A0A9E7S518 (RHR1_ALSSC) as a
+        protein with this activity.
+    - reference: RHEA:79615
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.440"/>
+      notes: Rhea assigns RHEA:79615 to EC 1.1.1.440, and EC 1.1.1.440 maps to exactly one Rhea master
+        reaction (RHEA:79615), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0A9E7S5B9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHR2_ALSSC is an exemplar enzyme carrying EC 1.1.1.440, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.1.1.440
+      snippet: DR   A0A9E7S518, RHR1_ALSSC ;  A0A9E7S5B9, RHR2_ALSSC ;
+      notes: ExPASy ENZYME entry EC 1.1.1.440 cross-references UniProtKB:A0A9E7S5B9 (RHR2_ALSSC) as a
+        protein with this activity.
+    - reference: RHEA:79615
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.440"/>
+      notes: Rhea assigns RHEA:79615 to EC 1.1.1.440, and EC 1.1.1.440 maps to exactly one Rhea master
+        reaction (RHEA:79615), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

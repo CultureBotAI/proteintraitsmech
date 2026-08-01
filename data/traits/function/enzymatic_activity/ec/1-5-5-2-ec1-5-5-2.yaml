@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.5.5.-
 mapped_xrefs:
@@ -40,4 +40,284 @@ definitions:
       Catalyses: L-proline + a quinone = (S)-1-pyrroline-5-carboxylate + a quinol + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of proline dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.5.5.2. Rhea assigns 2 curated
+    reactions to EC 1.5.5.2. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "L-proline + a quinone = (S)-1-pyrroline-5-carboxylate + a quinol
+    + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: proline dehydrogenase
+    grounding: EC:1.5.5.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-proline + a quinone = (S)-1-pyrroline-5-carboxylate + a quinol + H(+)
+    grounding: RHEA:23784
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-proline + a quinone = (S)-1-pyrroline-5-carboxylate + a quinol + H(+)'
+  - node_id: rxn1_sub1
+    label: L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:60039
+    description: Formula C5H9NO2.
+  - node_id: rxn1_sub2
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: rxn1_prd1
+    label: (S)-1-pyrroline-5-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:17388
+    description: Formula C5H6NO2.
+  - node_id: rxn1_prd2
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a ubiquinone + L-proline = (S)-1-pyrroline-5-carboxylate + a ubiquinol + H(+)
+    grounding: RHEA:42416
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a ubiquinone + L-proline = (S)-1-pyrroline-5-carboxylate + a ubiquinol
+      + H(+)'
+  - node_id: rxn2_sub1
+    label: a ubiquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16389
+    xrefs:
+    - RHEA-COMP:9565
+    description: Rhea compound POLYMER:9565. Formula C9H10O4(C5H8)<i><sub>n</sub></i>.
+  - node_id: rxn2_sub2
+    label: L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:60039
+    description: Formula C5H9NO2.
+  - node_id: rxn2_prd1
+    label: (S)-1-pyrroline-5-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:17388
+    description: Formula C5H6NO2.
+  - node_id: rxn2_prd2
+    label: a ubiquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17976
+    xrefs:
+    - RHEA-COMP:9566
+    description: Rhea compound POLYMER:9566. Formula C9H12O4(C5H8)<i><sub>n</sub></i>.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: proline dehydrogenase activity
+    grounding: GO:0004657
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A6QQ74
+    node_type: PROTEIN
+    label: HYPDH_BOVIN
+    grounding: UniProtKB:A6QQ74
+  - node_id: prot_Q9UF12
+    node_type: PROTEIN
+    label: HYPDH_HUMAN
+    grounding: UniProtKB:Q9UF12
+  - node_id: prot_Q8VCZ9
+    node_type: PROTEIN
+    label: HYPDH_MOUSE
+    grounding: UniProtKB:Q8VCZ9
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:23784 is one of the 2 curated reactions Rhea assigns to EC 1.5.5.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:23784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.5.2"/>
+      notes: The rh:ec triple on RHEA:23784 in rhea.rdf assigns that reaction to EC 1.5.5.2.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: L-proline is a substrate consumed by RHEA:23784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23785
+      snippet: L-proline + a quinone => (S)-1-pyrroline-5-carboxylate + a quinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23785 declares side 23784_L as its substrates
+        (rh:substrates); the master reaction RHEA:23784 is undirected. This participant is CHEBI:60039
+        with coefficient 1. Rhea cites PMID:1618807, PMID:22040654, PMID:355248, PMID:17536821 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: a quinone is a substrate consumed by RHEA:23784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23785
+      snippet: L-proline + a quinone => (S)-1-pyrroline-5-carboxylate + a quinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23785 declares side 23784_L as its substrates
+        (rh:substrates); the master reaction RHEA:23784 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:1618807, PMID:22040654, PMID:355248, PMID:17536821 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (S)-1-pyrroline-5-carboxylate is a product released by RHEA:23784 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23785
+      snippet: L-proline + a quinone => (S)-1-pyrroline-5-carboxylate + a quinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23785 declares side 23784_R as its products
+        (rh:products); the master reaction RHEA:23784 is undirected. This participant is CHEBI:17388 with
+        coefficient 1. Rhea cites PMID:1618807, PMID:22040654, PMID:355248, PMID:17536821 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: a quinol is a product released by RHEA:23784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23785
+      snippet: L-proline + a quinone => (S)-1-pyrroline-5-carboxylate + a quinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23785 declares side 23784_R as its products
+        (rh:products); the master reaction RHEA:23784 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:1618807, PMID:22040654, PMID:355248, PMID:17536821 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:23784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23785
+      snippet: L-proline + a quinone => (S)-1-pyrroline-5-carboxylate + a quinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23785 declares side 23784_R as its products
+        (rh:products); the master reaction RHEA:23784 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:1618807, PMID:22040654, PMID:355248, PMID:17536821 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:42416 is one of the 2 curated reactions Rhea assigns to EC 1.5.5.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:42416
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.5.2"/>
+      notes: The rh:ec triple on RHEA:42416 in rhea.rdf assigns that reaction to EC 1.5.5.2.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a ubiquinone is a substrate consumed by RHEA:42416 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42417
+      snippet: a ubiquinone + L-proline => (S)-1-pyrroline-5-carboxylate + a ubiquinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42417 declares side 42416_L as its substrates
+        (rh:substrates); the master reaction RHEA:42416 is undirected. This participant is POLYMER:9565
+        with coefficient 1. Rhea cites PMID:22040654 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: L-proline is a substrate consumed by RHEA:42416 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42417
+      snippet: a ubiquinone + L-proline => (S)-1-pyrroline-5-carboxylate + a ubiquinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42417 declares side 42416_L as its substrates
+        (rh:substrates); the master reaction RHEA:42416 is undirected. This participant is CHEBI:60039
+        with coefficient 1. Rhea cites PMID:22040654 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (S)-1-pyrroline-5-carboxylate is a product released by RHEA:42416 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42417
+      snippet: a ubiquinone + L-proline => (S)-1-pyrroline-5-carboxylate + a ubiquinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42417 declares side 42416_R as its products
+        (rh:products); the master reaction RHEA:42416 is undirected. This participant is CHEBI:17388 with
+        coefficient 1. Rhea cites PMID:22040654 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: a ubiquinol is a product released by RHEA:42416 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42417
+      snippet: a ubiquinone + L-proline => (S)-1-pyrroline-5-carboxylate + a ubiquinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42417 declares side 42416_R as its products
+        (rh:products); the master reaction RHEA:42416 is undirected. This participant is POLYMER:9566
+        with coefficient 1. Rhea cites PMID:22040654 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:42416 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42417
+      snippet: a ubiquinone + L-proline => (S)-1-pyrroline-5-carboxylate + a ubiquinol + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42417 declares side 42416_R as its products
+        (rh:products); the master reaction RHEA:42416 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22040654 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.5.5.2
+      snippet: EC:1.5.5.2 > GO:proline dehydrogenase activity ; GO:0004657
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004657 is itself a record
+        in this KB.
+  - subject: prot_A6QQ74
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYPDH_BOVIN is an exemplar enzyme with EC 1.5.5.2 activity.
+    evidence:
+    - reference: EC:1.5.5.2
+      snippet: DR   A6QQ74, HYPDH_BOVIN;  Q9UF12, HYPDH_HUMAN;  Q8VCZ9, HYPDH_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.5.5.2 cross-references UniProtKB:A6QQ74 (HYPDH_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q9UF12
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYPDH_HUMAN is an exemplar enzyme with EC 1.5.5.2 activity.
+    evidence:
+    - reference: EC:1.5.5.2
+      snippet: DR   A6QQ74, HYPDH_BOVIN;  Q9UF12, HYPDH_HUMAN;  Q8VCZ9, HYPDH_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.5.5.2 cross-references UniProtKB:Q9UF12 (HYPDH_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q8VCZ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYPDH_MOUSE is an exemplar enzyme with EC 1.5.5.2 activity.
+    evidence:
+    - reference: EC:1.5.5.2
+      snippet: DR   A6QQ74, HYPDH_BOVIN;  Q9UF12, HYPDH_HUMAN;  Q8VCZ9, HYPDH_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.5.5.2 cross-references UniProtKB:Q8VCZ9 (HYPDH_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

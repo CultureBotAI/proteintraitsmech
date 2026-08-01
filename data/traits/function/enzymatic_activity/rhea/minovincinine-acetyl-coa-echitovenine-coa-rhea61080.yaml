@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:144371
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,91 @@ definitions:
       Catalyses the reaction: (+)-minovincinine + acetyl-CoA = (+)-echitovenine + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (+)-minovincinine + acetyl-CoA = (+)-echitovenine + CoA
+  description: Substrate-to-product chemistry of RHEA:61080, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:61081 (rh:substrates → 61080_L, rh:products → 61080_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (+)-minovincinine + acetyl-CoA = (+)-echitovenine + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:61080
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (+)-minovincinine + acetyl-CoA = (+)-echitovenine + CoA'
+  - node_id: sub1
+    label: (+)-minovincinine
+    node_type: CHEMICAL
+    grounding: CHEBI:144371
+    description: Formula C21H27N2O3.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: (+)-echitovenine
+    node_type: CHEMICAL
+    grounding: CHEBI:144379
+    description: Formula C23H29N2O4.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (+)-minovincinine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61081
+      snippet: (+)-minovincinine + acetyl-CoA => (+)-echitovenine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:61081 declares side 61080_L as its substrates
+        (rh:substrates); the master reaction RHEA:61080 is undirected. This participant is CHEBI:144371
+        with coefficient 1. Rhea cites PMID:29438577, PMID:11154328, PMID:31009114 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61081
+      snippet: (+)-minovincinine + acetyl-CoA => (+)-echitovenine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:61081 declares side 61080_L as its substrates
+        (rh:substrates); the master reaction RHEA:61080 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:29438577, PMID:11154328, PMID:31009114 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-echitovenine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61081
+      snippet: (+)-minovincinine + acetyl-CoA => (+)-echitovenine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:61081 declares side 61080_R as its products
+        (rh:products); the master reaction RHEA:61080 is undirected. This participant is CHEBI:144379
+        with coefficient 1. Rhea cites PMID:29438577, PMID:11154328, PMID:31009114 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61081
+      snippet: (+)-minovincinine + acetyl-CoA => (+)-echitovenine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:61081 declares side 61080_R as its products
+        (rh:products); the master reaction RHEA:61080 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:29438577, PMID:11154328, PMID:31009114 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

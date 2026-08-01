@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:231738
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,60 @@ definitions:
       Catalyses the reaction: (S)-(2E,6E,10E)-epoxygeranylgeranyl-triacetate lactone = sartorypyrone D
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-(2E,6E,10E)-epoxygeranylgeranyl-triacetate lactone = sartorypyrone
+    D
+  description: Substrate-to-product chemistry of RHEA:80875, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80876 (rh:substrates → 80875_L, rh:products → 80875_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (S)-(2E,6E,10E)-epoxygeranylgeranyl-triacetate lactone = sartorypyrone D
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80875
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (S)-(2E,6E,10E)-epoxygeranylgeranyl-triacetate lactone = sartorypyrone D'
+  - node_id: sub1
+    label: (S)-(2E,6E,10E)-epoxygeranylgeranyl-triacetate lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:231738
+    description: Formula C26H38O4.
+  - node_id: prd1
+    label: sartorypyrone D
+    node_type: CHEMICAL
+    grounding: CHEBI:201384
+    description: Formula C26H38O4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-(2E,6E,10E)-epoxygeranylgeranyl-triacetate lactone is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80876
+      snippet: (S)-(2E,6E,10E)-epoxygeranylgeranyl-triacetate lactone => sartorypyrone D
+      notes: Rhea's left-to-right directional reaction RHEA:80876 declares side 80875_L as its substrates
+        (rh:substrates); the master reaction RHEA:80875 is undirected. This participant is CHEBI:231738
+        with coefficient 1. Rhea cites PMID:37860661 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sartorypyrone D is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80876
+      snippet: (S)-(2E,6E,10E)-epoxygeranylgeranyl-triacetate lactone => sartorypyrone D
+      notes: Rhea's left-to-right directional reaction RHEA:80876 declares side 80875_R as its products
+        (rh:products); the master reaction RHEA:80875 is undirected. This participant is CHEBI:201384
+        with coefficient 1. Rhea cites PMID:37860661 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

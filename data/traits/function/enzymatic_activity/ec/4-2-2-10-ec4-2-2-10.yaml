@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -53,4 +53,82 @@ definitions:
       Catalyses: Eliminative cleavage of (1->4)-alpha-D-galacturonan methyl ester to give oligosaccharides with 4-deoxy-6-O-methyl-alpha-D-galact-4-enuronosyl groups at their non-reducing ends
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pectin lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.10. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Eliminative
+    cleavage of (1->4)-alpha-D-galacturonan methyl ester to give oligosaccharides with 4-deoxy-6-O-methyl-alpha-D-galact-4-enuronosyl
+    groups at their non-reducing ends".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: pectin lyase
+    grounding: EC:4.2.2.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: pectin lyase activity
+    grounding: GO:0047490
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O34819
+    node_type: PROTEIN
+    label: PEL1_BACSU
+    grounding: UniProtKB:O34819
+  - node_id: prot_P94449
+    node_type: PROTEIN
+    label: PEL2_BACIU
+    grounding: UniProtKB:P94449
+  - node_id: prot_A1CFS2
+    node_type: PROTEIN
+    label: PELA_ASPCL
+    grounding: UniProtKB:A1CFS2
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.10
+      snippet: EC:4.2.2.10 > GO:pectin lyase activity ; GO:0047490
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047490 is itself a record
+        in this KB.
+  - subject: prot_O34819
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEL1_BACSU is an exemplar enzyme with EC 4.2.2.10 activity.
+    evidence:
+    - reference: EC:4.2.2.10
+      snippet: DR   O34819, PEL1_BACSU ;  P94449, PEL2_BACIU ;  A1CFS2, PELA_ASPCL ;
+      notes: ExPASy ENZYME entry EC 4.2.2.10 cross-references UniProtKB:O34819 (PEL1_BACSU) as a protein
+        with this activity.
+  - subject: prot_P94449
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEL2_BACIU is an exemplar enzyme with EC 4.2.2.10 activity.
+    evidence:
+    - reference: EC:4.2.2.10
+      snippet: DR   O34819, PEL1_BACSU ;  P94449, PEL2_BACIU ;  A1CFS2, PELA_ASPCL ;
+      notes: ExPASy ENZYME entry EC 4.2.2.10 cross-references UniProtKB:P94449 (PEL2_BACIU) as a protein
+        with this activity.
+  - subject: prot_A1CFS2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PELA_ASPCL is an exemplar enzyme with EC 4.2.2.10 activity.
+    evidence:
+    - reference: EC:4.2.2.10
+      snippet: DR   O34819, PEL1_BACSU ;  P94449, PEL2_BACIU ;  A1CFS2, PELA_ASPCL ;
+      notes: ExPASy ENZYME entry EC 4.2.2.10 cross-references UniProtKB:A1CFS2 (PELA_ASPCL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

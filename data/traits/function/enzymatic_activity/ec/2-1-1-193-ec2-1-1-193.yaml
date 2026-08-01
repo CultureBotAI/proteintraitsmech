@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 synonyms:
@@ -39,4 +39,190 @@ definitions:
       Catalyses: uridine(1498) in 16S rRNA + S-adenosyl-L-methionine = N(3)- methyluridine(1498) in 16S rRNA + S-adenosyl-L-homocysteine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 16S rRNA (uracil(1498)-N(3))-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.193. EC 2.1.1.193 maps to
+    exactly one curated Rhea reaction (RHEA:42920), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "uridine(1498)
+    in 16S rRNA + S-adenosyl-L-methionine = N(3)- methyluridine(1498) in 16S rRNA + S-adenosyl-L-homocysteine
+    + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 16S rRNA (uracil(1498)-N(3))-methyltransferase
+    grounding: EC:2.1.1.193
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: uridine(1498) in 16S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10284
+    description: Rhea compound GENERIC:10284.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: UMP residue at position 1498
+    description: The reacting group Rhea names inside the generic participant GENERIC:10284 (uridine(1498)
+      in 16S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: N(3)-methyluridine(1498) in 16S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10283
+    description: Rhea compound GENERIC:10283.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(3)-methyluridine 5'-phosphate residue at position 1498
+    description: The reacting group Rhea names inside the generic participant GENERIC:10283 (N(3)-methyluridine(1498)
+      in 16S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74502
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_O51089
+    node_type: PROTEIN
+    label: RSME1_BORBU
+    grounding: UniProtKB:O51089
+  - node_id: prot_O51333
+    node_type: PROTEIN
+    label: RSME2_BORBU
+    grounding: UniProtKB:O51333
+  - node_id: prot_O66552
+    node_type: PROTEIN
+    label: RSME_AQUAE
+    grounding: UniProtKB:O66552
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine(1498) in 16S rRNA is a substrate consumed by RHEA:42920 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42921
+      snippet: uridine(1498) in 16S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine(1498) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42921 declares side 42920_L as its substrates
+        (rh:substrates); the master reaction RHEA:42920 is undirected. This participant is GENERIC:10284
+        with coefficient 1. Rhea cites PMID:16431987, PMID:17872509 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(1498) in 16S rRNA.
+    evidence:
+    - reference: RHEA:42920
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10284 (uridine(1498) in 16S rRNA) declares rh:reactivePart at position
+        1498 = UMP residue (CHEBI:65315).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:42920 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42921
+      snippet: uridine(1498) in 16S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine(1498) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42921 declares side 42920_L as its substrates
+        (rh:substrates); the master reaction RHEA:42920 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:16431987, PMID:17872509 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(3)-methyluridine(1498) in 16S rRNA is a product released by RHEA:42920 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42921
+      snippet: uridine(1498) in 16S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine(1498) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42921 declares side 42920_R as its products
+        (rh:products); the master reaction RHEA:42920 is undirected. This participant is GENERIC:10283
+        with coefficient 1. Rhea cites PMID:16431987, PMID:17872509 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(3)-methyluridine 5'-phosphate residue is the reactive part of N(3)-methyluridine(1498)
+      in 16S rRNA.
+    evidence:
+    - reference: RHEA:42920
+      snippet: N(3)-methyluridine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10283 (N(3)-methyluridine(1498) in 16S rRNA) declares rh:reactivePart
+        at position 1498 = N(3)-methyluridine 5'-phosphate residue (CHEBI:74502).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:42920 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42921
+      snippet: uridine(1498) in 16S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine(1498) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42921 declares side 42920_R as its products
+        (rh:products); the master reaction RHEA:42920 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:16431987, PMID:17872509 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:42920 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42921
+      snippet: uridine(1498) in 16S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine(1498) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42921 declares side 42920_R as its products
+        (rh:products); the master reaction RHEA:42920 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:16431987, PMID:17872509 for this reaction.
+  - subject: prot_O51089
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSME1_BORBU is an exemplar enzyme with EC 2.1.1.193 activity.
+    evidence:
+    - reference: EC:2.1.1.193
+      snippet: DR   O51089, RSME1_BORBU;  O51333, RSME2_BORBU;  O66552, RSME_AQUAE ;
+      notes: ExPASy ENZYME entry EC 2.1.1.193 cross-references UniProtKB:O51089 (RSME1_BORBU) as a protein
+        with this activity.
+  - subject: prot_O51333
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSME2_BORBU is an exemplar enzyme with EC 2.1.1.193 activity.
+    evidence:
+    - reference: EC:2.1.1.193
+      snippet: DR   O51089, RSME1_BORBU;  O51333, RSME2_BORBU;  O66552, RSME_AQUAE ;
+      notes: ExPASy ENZYME entry EC 2.1.1.193 cross-references UniProtKB:O51333 (RSME2_BORBU) as a protein
+        with this activity.
+  - subject: prot_O66552
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSME_AQUAE is an exemplar enzyme with EC 2.1.1.193 activity.
+    evidence:
+    - reference: EC:2.1.1.193
+      snippet: DR   O51089, RSME1_BORBU;  O51333, RSME2_BORBU;  O66552, RSME_AQUAE ;
+      notes: ExPASy ENZYME entry EC 2.1.1.193 cross-references UniProtKB:O66552 (RSME_AQUAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

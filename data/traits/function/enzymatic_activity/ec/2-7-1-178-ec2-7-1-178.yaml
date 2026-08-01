@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -39,4 +39,268 @@ definitions:
       Catalyses: (1) 2-dehydro-3-deoxy-D-gluconate + ATP = 2-dehydro-3-deoxy-6-phospho-D- gluconate + ADP + H(+). (2) 2-dehydro-3-deoxy-D-galactonate + ATP = 2-dehydro-3-deoxy-6-phospho- D-galactonate + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-dehydro-3-deoxyglucono/galactono-kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.178. Rhea assigns 2 curated
+    reactions to EC 2.7.1.178. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 2-dehydro-3-deoxy-D-gluconate + ATP = 2-dehydro-3-deoxy-6-phospho-D-
+    gluconate + ADP + H(+). (2) 2-dehydro-3-deoxy-D-galactonate + ATP = 2-dehydro-3-deoxy-6-phospho- D-galactonate
+    + ADP + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydro-3-deoxyglucono/galactono-kinase
+    grounding: EC:2.7.1.178
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2-dehydro-3-deoxy-D-gluconate + ATP = 2-dehydro-3-deoxy-6-phospho-D-gluconat…
+    grounding: RHEA:14797
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2-dehydro-3-deoxy-D-gluconate + ATP = 2-dehydro-3-deoxy-6-phospho-D-gluconate
+      + ADP + H(+)'
+  - node_id: rxn1_sub1
+    label: 2-dehydro-3-deoxy-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:57990
+    description: Formula C6H9O6.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_prd1
+    label: 2-dehydro-3-deoxy-6-phospho-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:57569
+    description: Formula C6H8O9P.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2-dehydro-3-deoxy-D-galactonate + ATP = 2-dehydro-3-deoxy-6-phospho-D-galact…
+    grounding: RHEA:16525
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2-dehydro-3-deoxy-D-galactonate + ATP = 2-dehydro-3-deoxy-6-phospho-D-galactonate
+      + ADP + H(+)'
+  - node_id: rxn2_sub1
+    label: 2-dehydro-3-deoxy-D-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57989
+    description: Formula C6H9O6.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_prd1
+    label: 2-dehydro-3-deoxy-6-phospho-D-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:58298
+    description: Formula C6H8O9P.
+  - node_id: rxn2_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_D4GSE6
+    node_type: PROTEIN
+    label: KDGK1_HALVD
+    grounding: UniProtKB:D4GSE6
+  - node_id: prot_Q97U29
+    node_type: PROTEIN
+    label: KDGK_SACS2
+    grounding: UniProtKB:Q97U29
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:14797 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.178; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:14797
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.178"/>
+      notes: The rh:ec triple on RHEA:14797 in rhea.rdf assigns that reaction to EC 2.7.1.178.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 2-dehydro-3-deoxy-D-gluconate is a substrate consumed by RHEA:14797 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14798
+      snippet: 2-dehydro-3-deoxy-D-gluconate + ATP => 2-dehydro-3-deoxy-6-phospho-D-gluconate + ADP +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14798 declares side 14797_L as its substrates
+        (rh:substrates); the master reaction RHEA:14797 is undirected. This participant is CHEBI:57990
+        with coefficient 1. Rhea cites PMID:29377793, PMID:16330030, PMID:13813474, PMID:16794308 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:14797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14798
+      snippet: 2-dehydro-3-deoxy-D-gluconate + ATP => 2-dehydro-3-deoxy-6-phospho-D-gluconate + ADP +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14798 declares side 14797_L as its substrates
+        (rh:substrates); the master reaction RHEA:14797 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:29377793, PMID:16330030, PMID:13813474, PMID:16794308 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 2-dehydro-3-deoxy-6-phospho-D-gluconate is a product released by RHEA:14797 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14798
+      snippet: 2-dehydro-3-deoxy-D-gluconate + ATP => 2-dehydro-3-deoxy-6-phospho-D-gluconate + ADP +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14798 declares side 14797_R as its products
+        (rh:products); the master reaction RHEA:14797 is undirected. This participant is CHEBI:57569 with
+        coefficient 1. Rhea cites PMID:29377793, PMID:16330030, PMID:13813474, PMID:16794308 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:14797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14798
+      snippet: 2-dehydro-3-deoxy-D-gluconate + ATP => 2-dehydro-3-deoxy-6-phospho-D-gluconate + ADP +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14798 declares side 14797_R as its products
+        (rh:products); the master reaction RHEA:14797 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:29377793, PMID:16330030, PMID:13813474, PMID:16794308 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:14797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14798
+      snippet: 2-dehydro-3-deoxy-D-gluconate + ATP => 2-dehydro-3-deoxy-6-phospho-D-gluconate + ADP +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14798 declares side 14797_R as its products
+        (rh:products); the master reaction RHEA:14797 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29377793, PMID:16330030, PMID:13813474, PMID:16794308 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:16525 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.178; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:16525
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.178"/>
+      notes: The rh:ec triple on RHEA:16525 in rhea.rdf assigns that reaction to EC 2.7.1.178.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 2-dehydro-3-deoxy-D-galactonate is a substrate consumed by RHEA:16525 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16526
+      snippet: 2-dehydro-3-deoxy-D-galactonate + ATP => 2-dehydro-3-deoxy-6-phospho-D-galactonate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16526 declares side 16525_L as its substrates
+        (rh:substrates); the master reaction RHEA:16525 is undirected. This participant is CHEBI:57989
+        with coefficient 1. Rhea cites PMID:16330030, PMID:16794308 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:16525 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16526
+      snippet: 2-dehydro-3-deoxy-D-galactonate + ATP => 2-dehydro-3-deoxy-6-phospho-D-galactonate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16526 declares side 16525_L as its substrates
+        (rh:substrates); the master reaction RHEA:16525 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:16330030, PMID:16794308 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2-dehydro-3-deoxy-6-phospho-D-galactonate is a product released by RHEA:16525 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16526
+      snippet: 2-dehydro-3-deoxy-D-galactonate + ATP => 2-dehydro-3-deoxy-6-phospho-D-galactonate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16526 declares side 16525_R as its products
+        (rh:products); the master reaction RHEA:16525 is undirected. This participant is CHEBI:58298 with
+        coefficient 1. Rhea cites PMID:16330030, PMID:16794308 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: ADP is a product released by RHEA:16525 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16526
+      snippet: 2-dehydro-3-deoxy-D-galactonate + ATP => 2-dehydro-3-deoxy-6-phospho-D-galactonate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16526 declares side 16525_R as its products
+        (rh:products); the master reaction RHEA:16525 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:16330030, PMID:16794308 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:16525 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16526
+      snippet: 2-dehydro-3-deoxy-D-galactonate + ATP => 2-dehydro-3-deoxy-6-phospho-D-galactonate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16526 declares side 16525_R as its products
+        (rh:products); the master reaction RHEA:16525 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:16330030, PMID:16794308 for this reaction.
+  - subject: prot_D4GSE6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KDGK1_HALVD is an exemplar enzyme with EC 2.7.1.178 activity.
+    evidence:
+    - reference: EC:2.7.1.178
+      snippet: DR   D4GSE6, KDGK1_HALVD;  Q97U29, KDGK_SACS2 ;
+      notes: ExPASy ENZYME entry EC 2.7.1.178 cross-references UniProtKB:D4GSE6 (KDGK1_HALVD) as a protein
+        with this activity.
+  - subject: prot_Q97U29
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KDGK_SACS2 is an exemplar enzyme with EC 2.7.1.178 activity.
+    evidence:
+    - reference: EC:2.7.1.178
+      snippet: DR   D4GSE6, KDGK1_HALVD;  Q97U29, KDGK_SACS2 ;
+      notes: ExPASy ENZYME entry EC 2.7.1.178 cross-references UniProtKB:Q97U29 (KDGK_SACS2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

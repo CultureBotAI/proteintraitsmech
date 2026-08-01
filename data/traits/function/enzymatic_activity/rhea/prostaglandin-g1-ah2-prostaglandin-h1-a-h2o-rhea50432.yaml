@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:133084
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,107 @@ definitions:
       Catalyses the reaction: prostaglandin G1 + AH2 = prostaglandin H1 + A + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of prostaglandin G1 + AH2 = prostaglandin H1 + A + H2O
+  description: Substrate-to-product chemistry of RHEA:50432, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50433 (rh:substrates → 50432_L, rh:products → 50432_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of prostaglandin G1 + AH2 = prostaglandin H1 + A + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50432
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: prostaglandin G1 + AH2 = prostaglandin H1 + A + H2O'
+  - node_id: sub1
+    label: prostaglandin G1
+    node_type: CHEMICAL
+    grounding: CHEBI:133084
+    description: Formula C20H33O6.
+  - node_id: sub2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: prd1
+    label: prostaglandin H1
+    node_type: CHEMICAL
+    grounding: CHEBI:90793
+    description: Formula C20H33O5.
+  - node_id: prd2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: prostaglandin G1 is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50433
+      snippet: prostaglandin G1 + AH2 => prostaglandin H1 + A + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50433 declares side 50432_L as its substrates
+        (rh:substrates); the master reaction RHEA:50432 is undirected. This participant is CHEBI:133084
+        with coefficient 1. Rhea cites PMID:22442685, PMID:20347284, PMID:11939906 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: AH2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50433
+      snippet: prostaglandin G1 + AH2 => prostaglandin H1 + A + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50433 declares side 50432_L as its substrates
+        (rh:substrates); the master reaction RHEA:50432 is undirected. This participant is CHEBI:17499
+        with coefficient 1. Rhea cites PMID:22442685, PMID:20347284, PMID:11939906 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: prostaglandin H1 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50433
+      snippet: prostaglandin G1 + AH2 => prostaglandin H1 + A + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50433 declares side 50432_R as its products
+        (rh:products); the master reaction RHEA:50432 is undirected. This participant is CHEBI:90793 with
+        coefficient 1. Rhea cites PMID:22442685, PMID:20347284, PMID:11939906 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: A is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50433
+      snippet: prostaglandin G1 + AH2 => prostaglandin H1 + A + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50433 declares side 50432_R as its products
+        (rh:products); the master reaction RHEA:50432 is undirected. This participant is CHEBI:13193 with
+        coefficient 1. Rhea cites PMID:22442685, PMID:20347284, PMID:11939906 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50433
+      snippet: prostaglandin G1 + AH2 => prostaglandin H1 + A + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50433 declares side 50432_R as its products
+        (rh:products); the master reaction RHEA:50432 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:22442685, PMID:20347284, PMID:11939906 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

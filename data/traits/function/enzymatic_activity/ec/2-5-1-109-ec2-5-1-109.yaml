@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -35,4 +35,119 @@ definitions:
       Catalyses: brevianamide F + dimethylallyl diphosphate = deoxybrevianamide E + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of brevianamide F prenyltransferase (deoxybrevianamide E-forming)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.109. EC 2.5.1.109 maps to
+    exactly one curated Rhea reaction (RHEA:35943), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "brevianamide
+    F + dimethylallyl diphosphate = deoxybrevianamide E + diphosphate". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: brevianamide F prenyltransferase (deoxybrevianamide E-forming)
+    grounding: EC:2.5.1.109
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: brevianamide F
+    node_type: CHEMICAL
+    grounding: CHEBI:64530
+    description: Formula C16H17N3O2.
+  - node_id: sub2
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: deoxybrevianamide E
+    node_type: CHEMICAL
+    grounding: CHEBI:72948
+    description: Formula C21H25N3O2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_E0Y3X1
+    node_type: PROTEIN
+    label: NOTF_ASPSM
+    grounding: UniProtKB:E0Y3X1
+  - node_id: prot_I4AY86
+    node_type: PROTEIN
+    label: NOTF_ASPVE
+    grounding: UniProtKB:I4AY86
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: brevianamide F is a substrate consumed by RHEA:35943 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35944
+      snippet: brevianamide F + dimethylallyl diphosphate => deoxybrevianamide E + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35944 declares side 35943_L as its substrates
+        (rh:substrates); the master reaction RHEA:35943 is undirected. This participant is CHEBI:64530
+        with coefficient 1. Rhea cites PMID:20722388 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:35943 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35944
+      snippet: brevianamide F + dimethylallyl diphosphate => deoxybrevianamide E + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35944 declares side 35943_L as its substrates
+        (rh:substrates); the master reaction RHEA:35943 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:20722388 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: deoxybrevianamide E is a product released by RHEA:35943 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35944
+      snippet: brevianamide F + dimethylallyl diphosphate => deoxybrevianamide E + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35944 declares side 35943_R as its products
+        (rh:products); the master reaction RHEA:35943 is undirected. This participant is CHEBI:72948 with
+        coefficient 1. Rhea cites PMID:20722388 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:35943 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35944
+      snippet: brevianamide F + dimethylallyl diphosphate => deoxybrevianamide E + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35944 declares side 35943_R as its products
+        (rh:products); the master reaction RHEA:35943 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20722388 for this reaction.
+  - subject: prot_E0Y3X1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NOTF_ASPSM is an exemplar enzyme with EC 2.5.1.109 activity.
+    evidence:
+    - reference: EC:2.5.1.109
+      snippet: DR   E0Y3X1, NOTF_ASPSM ;  I4AY86, NOTF_ASPVE ;
+      notes: ExPASy ENZYME entry EC 2.5.1.109 cross-references UniProtKB:E0Y3X1 (NOTF_ASPSM) as a protein
+        with this activity.
+  - subject: prot_I4AY86
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NOTF_ASPVE is an exemplar enzyme with EC 2.5.1.109 activity.
+    evidence:
+    - reference: EC:2.5.1.109
+      snippet: DR   E0Y3X1, NOTF_ASPSM ;  I4AY86, NOTF_ASPVE ;
+      notes: ExPASy ENZYME entry EC 2.5.1.109 cross-references UniProtKB:I4AY86 (NOTF_ASPVE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29969
     role: SUBSTRATE_OR_PRODUCT
@@ -33,4 +33,144 @@ definitions:
       Catalyses the reaction: L-lysyl-[protein] + GTP = N(epsilon)-GMP-L-lysyl-[protein] + diphosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-lysyl-[protein] + GTP = N(epsilon)-GMP-L-lysyl-[protein] + diphosphate
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:19881, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:19882 (rh:substrates → 19881_L, rh:products → 19881_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-lysyl-[protein] + GTP = N(epsilon)-GMP-L-lysyl-[protein] + diphosphate + H…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:19881
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-lysyl-[protein] + GTP = N(epsilon)-GMP-L-lysyl-[protein] + diphosphate + H(+)'
+  - node_id: sub1
+    label: L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9752
+    description: Rhea compound GENERIC:9752.
+  - node_id: sub1_rp1
+    label: L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9752 (L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29969
+  - node_id: sub2
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: prd1
+    label: N(epsilon)-GMP-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13946
+    description: Rhea compound GENERIC:13946.
+  - node_id: prd1_rp1
+    label: N(epsilon)-GMP-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13946 (N(epsilon)-GMP-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138294
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-lysyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19882
+      snippet: L-lysyl-[protein] + GTP => N(epsilon)-GMP-L-lysyl-[protein] + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19882 declares side 19881_L as its substrates
+        (rh:substrates); the master reaction RHEA:19881 is undirected. This participant is GENERIC:9752
+        with coefficient 1. Rhea cites PMID:7991582, PMID:27317694, PMID:21956912, PMID:6264433 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-lysine residue is the reactive part of L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:19881
+      snippet: L-lysine residue
+      notes: Rhea compound GENERIC:9752 (L-lysyl-[protein]) declares rh:reactivePart = L-lysine residue
+        (CHEBI:29969), formula C6H13N2O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19882
+      snippet: L-lysyl-[protein] + GTP => N(epsilon)-GMP-L-lysyl-[protein] + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19882 declares side 19881_L as its substrates
+        (rh:substrates); the master reaction RHEA:19881 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:7991582, PMID:27317694, PMID:21956912, PMID:6264433 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(epsilon)-GMP-L-lysyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:19882
+      snippet: L-lysyl-[protein] + GTP => N(epsilon)-GMP-L-lysyl-[protein] + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19882 declares side 19881_R as its products
+        (rh:products); the master reaction RHEA:19881 is undirected. This participant is GENERIC:13946
+        with coefficient 1. Rhea cites PMID:7991582, PMID:27317694, PMID:21956912, PMID:6264433 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(epsilon)-GMP-L-lysine residue is the reactive part of N(epsilon)-GMP-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:19881
+      snippet: N(epsilon)-GMP-L-lysine residue
+      notes: Rhea compound GENERIC:13946 (N(epsilon)-GMP-L-lysyl-[protein]) declares rh:reactivePart =
+        N(epsilon)-GMP-L-lysine residue (CHEBI:138294), formula C16H23N7O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19882
+      snippet: L-lysyl-[protein] + GTP => N(epsilon)-GMP-L-lysyl-[protein] + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19882 declares side 19881_R as its products
+        (rh:products); the master reaction RHEA:19881 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:7991582, PMID:27317694, PMID:21956912, PMID:6264433 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19882
+      snippet: L-lysyl-[protein] + GTP => N(epsilon)-GMP-L-lysyl-[protein] + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19882 declares side 19881_R as its products
+        (rh:products); the master reaction RHEA:19881 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:7991582, PMID:27317694, PMID:21956912, PMID:6264433 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

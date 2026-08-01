@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 mapped_xrefs:
@@ -40,4 +40,218 @@ definitions:
       Catalyses: (1) delta-tocopherol = 2-methyl-6-phytyl-1,4-benzene-1,4-diol. (2) gamma-tocopherol = 2,3-dimethyl-6-phytylbenzene-1,4-diol. (3) delta-tocotrienol = 6-geranylgeranyl-2-methylbenzene-1,4-diol. (4) gamma-tocotrienol = 6-geranylgeranyl-2,3-dimethylbenzene-1,4-diol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tocopherol cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.24. Rhea assigns 4 curated
+    reactions to EC 5.5.1.24 (the first 3 are shown). No one substrate set is the class''s chemistry,
+    so each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "(1) delta-tocopherol = 2-methyl-6-phytyl-1,4-benzene-1,4-diol.
+    (2) gamma-tocopherol = 2,3-dimethyl-6-phytylbenzene-1,4-diol. (3) delta-tocotrienol = 6-geranylgeranyl-2-methylbenzene-1,4-diol.
+    (4) gamma-tocotrienol = 6-geranylgeranyl-2,3-dimethylbenzene-1,4-diol". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tocopherol cyclase
+    grounding: EC:5.5.1.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of gamma-tocopherol = 2,3-dimethyl-6-phytylbenzene-1,4-diol
+    grounding: RHEA:37983
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: gamma-tocopherol = 2,3-dimethyl-6-phytylbenzene-1,4-diol'
+  - node_id: rxn1_sub1
+    label: gamma-tocopherol
+    node_type: CHEMICAL
+    grounding: CHEBI:18185
+    description: Formula C28H48O2.
+  - node_id: rxn1_prd1
+    label: 2,3-dimethyl-6-phytylbenzene-1,4-diol
+    node_type: CHEMICAL
+    grounding: CHEBI:75921
+    description: Formula C28H48O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of delta-tocopherol = 2-methyl-6-phytyl-1,4-benzene-1,4-diol
+    grounding: RHEA:37987
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: delta-tocopherol = 2-methyl-6-phytyl-1,4-benzene-1,4-diol'
+  - node_id: rxn2_sub1
+    label: delta-tocopherol
+    node_type: CHEMICAL
+    grounding: CHEBI:47772
+    description: Formula C27H46O2.
+  - node_id: rxn2_prd1
+    label: 2-methyl-6-phytyl-1,4-benzene-1,4-diol
+    node_type: CHEMICAL
+    grounding: CHEBI:75920
+    description: Formula C27H46O2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of delta-tocotrienol = 6-geranylgeranyl-2-methylbenzene-1,4-diol
+    grounding: RHEA:38015
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: delta-tocotrienol = 6-geranylgeranyl-2-methylbenzene-1,4-diol'
+  - node_id: rxn3_sub1
+    label: delta-tocotrienol
+    node_type: CHEMICAL
+    grounding: CHEBI:33276
+    description: Formula C27H40O2.
+  - node_id: rxn3_prd1
+    label: 6-geranylgeranyl-2-methylbenzene-1,4-diol
+    node_type: CHEMICAL
+    grounding: CHEBI:75411
+    description: Formula C27H40O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tocopherol cyclase activity
+    grounding: GO:0009976
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q94FY7
+    node_type: PROTEIN
+    label: TOCC_ARATH
+    grounding: UniProtKB:Q94FY7
+  - node_id: prot_Q94FY8
+    node_type: PROTEIN
+    label: TOCC_MAIZE
+    grounding: UniProtKB:Q94FY8
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:37983 is one of the 4 curated reactions Rhea assigns to EC 5.5.1.24; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:37983
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.24"/>
+      notes: The rh:ec triple on RHEA:37983 in rhea.rdf assigns that reaction to EC 5.5.1.24.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: gamma-tocopherol is a substrate consumed by RHEA:37983 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37984
+      snippet: gamma-tocopherol => 2,3-dimethyl-6-phytylbenzene-1,4-diol
+      notes: Rhea's left-to-right directional reaction RHEA:37984 declares side 37983_L as its substrates
+        (rh:substrates); the master reaction RHEA:37983 is undirected. This participant is CHEBI:18185
+        with coefficient 1. Rhea cites PMID:12213958, PMID:12913173 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 2,3-dimethyl-6-phytylbenzene-1,4-diol is a product released by RHEA:37983 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:37984
+      snippet: gamma-tocopherol => 2,3-dimethyl-6-phytylbenzene-1,4-diol
+      notes: Rhea's left-to-right directional reaction RHEA:37984 declares side 37983_R as its products
+        (rh:products); the master reaction RHEA:37983 is undirected. This participant is CHEBI:75921 with
+        coefficient 1. Rhea cites PMID:12213958, PMID:12913173 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:37987 is one of the 4 curated reactions Rhea assigns to EC 5.5.1.24; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:37987
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.24"/>
+      notes: The rh:ec triple on RHEA:37987 in rhea.rdf assigns that reaction to EC 5.5.1.24.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: delta-tocopherol is a substrate consumed by RHEA:37987 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37988
+      snippet: delta-tocopherol => 2-methyl-6-phytyl-1,4-benzene-1,4-diol
+      notes: Rhea's left-to-right directional reaction RHEA:37988 declares side 37987_L as its substrates
+        (rh:substrates); the master reaction RHEA:37987 is undirected. This participant is CHEBI:47772
+        with coefficient 1. Rhea cites PMID:12213958, PMID:12913173 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2-methyl-6-phytyl-1,4-benzene-1,4-diol is a product released by RHEA:37987 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:37988
+      snippet: delta-tocopherol => 2-methyl-6-phytyl-1,4-benzene-1,4-diol
+      notes: Rhea's left-to-right directional reaction RHEA:37988 declares side 37987_R as its products
+        (rh:products); the master reaction RHEA:37987 is undirected. This participant is CHEBI:75920 with
+        coefficient 1. Rhea cites PMID:12213958, PMID:12913173 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:38015 is one of the 4 curated reactions Rhea assigns to EC 5.5.1.24; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:38015
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.24"/>
+      notes: The rh:ec triple on RHEA:38015 in rhea.rdf assigns that reaction to EC 5.5.1.24.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: delta-tocotrienol is a substrate consumed by RHEA:38015 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38016
+      snippet: delta-tocotrienol => 6-geranylgeranyl-2-methylbenzene-1,4-diol
+      notes: Rhea's left-to-right directional reaction RHEA:38016 declares side 38015_L as its substrates
+        (rh:substrates); the master reaction RHEA:38015 is undirected. This participant is CHEBI:33276
+        with coefficient 1. Rhea cites PMID:12213958, PMID:12913173 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: 6-geranylgeranyl-2-methylbenzene-1,4-diol is a product released by RHEA:38015 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:38016
+      snippet: delta-tocotrienol => 6-geranylgeranyl-2-methylbenzene-1,4-diol
+      notes: Rhea's left-to-right directional reaction RHEA:38016 declares side 38015_R as its products
+        (rh:products); the master reaction RHEA:38015 is undirected. This participant is CHEBI:75411 with
+        coefficient 1. Rhea cites PMID:12213958, PMID:12913173 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.5.1.24
+      snippet: EC:5.5.1.24 > GO:tocopherol cyclase activity ; GO:0009976
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0009976 is itself a record
+        in this KB.
+  - subject: prot_Q94FY7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TOCC_ARATH is an exemplar enzyme with EC 5.5.1.24 activity.
+    evidence:
+    - reference: EC:5.5.1.24
+      snippet: DR   Q94FY7, TOCC_ARATH ;  Q94FY8, TOCC_MAIZE ;
+      notes: ExPASy ENZYME entry EC 5.5.1.24 cross-references UniProtKB:Q94FY7 (TOCC_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q94FY8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TOCC_MAIZE is an exemplar enzyme with EC 5.5.1.24 activity.
+    evidence:
+    - reference: EC:5.5.1.24
+      snippet: DR   Q94FY7, TOCC_ARATH ;  Q94FY8, TOCC_MAIZE ;
+      notes: ExPASy ENZYME entry EC 5.5.1.24 cross-references UniProtKB:Q94FY8 (TOCC_MAIZE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

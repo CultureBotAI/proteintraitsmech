@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.99.-
 canonical_examples:
@@ -33,4 +33,67 @@ definitions:
       Catalyses: [(1->4)-beta-D-glucosyl]n+m + reduced acceptor + O2 = 4-dehydro-beta-D- glucosyl-[(1->4)-beta-D-glucosyl]n-1 + [(1->4)-beta-D-glucosyl]m + acceptor + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lytic cellulose monooxygenase (C4-dehydrogenating)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.99.56. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "[(1->4)-beta-D-glucosyl]n+m + reduced acceptor + O2 = 4-dehydro-beta-D- glucosyl-[(1->4)-beta-D-glucosyl]n-1
+    + [(1->4)-beta-D-glucosyl]m + acceptor + H2O".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lytic cellulose monooxygenase (C4-dehydrogenating)
+    grounding: EC:1.14.99.56
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_A0A223GEC9
+    node_type: PROTEIN
+    label: LP9A_ACHVI
+    grounding: UniProtKB:A0A223GEC9
+  - node_id: prot_A0A2H3EDS0
+    node_type: PROTEIN
+    label: LP9A_ARMGA
+    grounding: UniProtKB:A0A2H3EDS0
+  - node_id: prot_A1C4H2
+    node_type: PROTEIN
+    label: LP9A_ASPCL
+    grounding: UniProtKB:A1C4H2
+  edges:
+  - subject: prot_A0A223GEC9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LP9A_ACHVI is an exemplar enzyme with EC 1.14.99.56 activity.
+    evidence:
+    - reference: EC:1.14.99.56
+      snippet: DR   A0A223GEC9, LP9A_ACHVI ;  A0A2H3EDS0, LP9A_ARMGA ;  A1C4H2, LP9A_ASPCL ;
+      notes: ExPASy ENZYME entry EC 1.14.99.56 cross-references UniProtKB:A0A223GEC9 (LP9A_ACHVI) as a
+        protein with this activity.
+  - subject: prot_A0A2H3EDS0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LP9A_ARMGA is an exemplar enzyme with EC 1.14.99.56 activity.
+    evidence:
+    - reference: EC:1.14.99.56
+      snippet: DR   A0A223GEC9, LP9A_ACHVI ;  A0A2H3EDS0, LP9A_ARMGA ;  A1C4H2, LP9A_ASPCL ;
+      notes: ExPASy ENZYME entry EC 1.14.99.56 cross-references UniProtKB:A0A2H3EDS0 (LP9A_ARMGA) as a
+        protein with this activity.
+  - subject: prot_A1C4H2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LP9A_ASPCL is an exemplar enzyme with EC 1.14.99.56 activity.
+    evidence:
+    - reference: EC:1.14.99.56
+      snippet: DR   A0A223GEC9, LP9A_ACHVI ;  A0A2H3EDS0, LP9A_ARMGA ;  A1C4H2, LP9A_ASPCL ;
+      notes: ExPASy ENZYME entry EC 1.14.99.56 cross-references UniProtKB:A1C4H2 (LP9A_ASPCL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

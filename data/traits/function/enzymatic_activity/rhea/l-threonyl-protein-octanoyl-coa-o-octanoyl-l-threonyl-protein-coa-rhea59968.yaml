@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:30013
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,125 @@ definitions:
       Catalyses the reaction: L-threonyl-[protein] + octanoyl-CoA = O-octanoyl-L-threonyl-[protein] + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-threonyl-[protein] + octanoyl-CoA = O-octanoyl-L-threonyl-[protein] +
+    CoA
+  description: Substrate-to-product chemistry of RHEA:59968, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59969 (rh:substrates → 59968_L, rh:products → 59968_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-threonyl-[protein] + octanoyl-CoA = O-octanoyl-L-threonyl-[protein] + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59968
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-threonyl-[protein] + octanoyl-CoA = O-octanoyl-L-threonyl-[protein] + CoA'
+  - node_id: sub1
+    label: L-threonyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11060
+    description: Rhea compound GENERIC:11060.
+  - node_id: sub1_rp1
+    label: L-threonine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11060 (L-threonyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30013
+  - node_id: sub2
+    label: octanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57386
+    description: Formula C29H46N7O17P3S.
+  - node_id: prd1
+    label: O-octanoyl-L-threonyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15485
+    description: Rhea compound GENERIC:15485.
+  - node_id: prd1_rp1
+    label: O-octanoyl-L-threonine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15485 (O-octanoyl-L-threonyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:143547
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-threonyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59969
+      snippet: L-threonyl-[protein] + octanoyl-CoA => O-octanoyl-L-threonyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:59969 declares side 59968_L as its substrates
+        (rh:substrates); the master reaction RHEA:59968 is undirected. This participant is GENERIC:11060
+        with coefficient 1. Rhea cites PMID:25562443 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-threonine residue is the reactive part of L-threonyl-[protein].
+    evidence:
+    - reference: RHEA:59968
+      snippet: L-threonine residue
+      notes: Rhea compound GENERIC:11060 (L-threonyl-[protein]) declares rh:reactivePart = L-threonine
+        residue (CHEBI:30013), formula C4H7NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: octanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59969
+      snippet: L-threonyl-[protein] + octanoyl-CoA => O-octanoyl-L-threonyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:59969 declares side 59968_L as its substrates
+        (rh:substrates); the master reaction RHEA:59968 is undirected. This participant is CHEBI:57386
+        with coefficient 1. Rhea cites PMID:25562443 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-octanoyl-L-threonyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59969
+      snippet: L-threonyl-[protein] + octanoyl-CoA => O-octanoyl-L-threonyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:59969 declares side 59968_R as its products
+        (rh:products); the master reaction RHEA:59968 is undirected. This participant is GENERIC:15485
+        with coefficient 1. Rhea cites PMID:25562443 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-octanoyl-L-threonine residue is the reactive part of O-octanoyl-L-threonyl-[protein].
+    evidence:
+    - reference: RHEA:59968
+      snippet: O-octanoyl-L-threonine residue
+      notes: Rhea compound GENERIC:15485 (O-octanoyl-L-threonyl-[protein]) declares rh:reactivePart =
+        O-octanoyl-L-threonine residue (CHEBI:143547), formula C12H21NO3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59969
+      snippet: L-threonyl-[protein] + octanoyl-CoA => O-octanoyl-L-threonyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:59969 declares side 59968_R as its products
+        (rh:products); the master reaction RHEA:59968 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:25562443 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

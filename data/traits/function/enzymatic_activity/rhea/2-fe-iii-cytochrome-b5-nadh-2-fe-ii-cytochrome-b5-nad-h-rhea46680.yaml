@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.6.2.2
     mapping_source: rhea2ec
@@ -40,4 +40,235 @@ definitions:
       Catalyses the reaction: 2 Fe(III)-[cytochrome b5] + NADH = 2 Fe(II)-[cytochrome b5] + NAD(+) + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 Fe(III)-[cytochrome b5] + NADH = 2 Fe(II)-[cytochrome b5] + NAD(+) +
+    H(+)
+  description: Substrate-to-product chemistry of RHEA:46680, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:46681 (rh:substrates → 46680_L, rh:products → 46680_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 Fe(III)-[cytochrome b5] + NADH = 2 Fe(II)-[cytochrome b5] + NAD(+) + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:46680
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 Fe(III)-[cytochrome b5] + NADH = 2 Fe(II)-[cytochrome b5] + NAD(+) + H(+)'
+  - node_id: sub1
+    label: Fe(III)-[cytochrome b5]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10439
+    description: Rhea compound GENERIC:10439.
+  - node_id: sub1_rp1
+    label: Fe(3+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10439 (Fe(III)-[cytochrome
+      b5]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: sub2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd1
+    label: Fe(II)-[cytochrome b5]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10438
+    description: Rhea compound GENERIC:10438.
+  - node_id: prd1_rp1
+    label: Fe(2+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10438 (Fe(II)-[cytochrome
+      b5]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cytochrome-b5 reductase activity, acting on NADH
+    grounding: GO:0090524
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: cytochrome-b5 reductase
+    grounding: EC:1.6.2.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A7THS1
+    node_type: PROTEIN
+    label: MCR1A_VANPO
+    grounding: UniProtKB:A7THS1
+  - node_id: prot_A7TM72
+    node_type: PROTEIN
+    label: MCR1B_VANPO
+    grounding: UniProtKB:A7TM72
+  - node_id: prot_A1CRK9
+    node_type: PROTEIN
+    label: MCR1_ASPCL
+    grounding: UniProtKB:A1CRK9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(III)-[cytochrome b5] is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:46681
+      snippet: 2 Fe(III)-[cytochrome b5] + NADH => 2 Fe(II)-[cytochrome b5] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46681 declares side 46680_L as its substrates
+        (rh:substrates); the master reaction RHEA:46680 is undirected. This participant is GENERIC:10439
+        with coefficient 2. Rhea cites PMID:15709757, PMID:23113554, PMID:10611283, PMID:7096301 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome b5].
+    evidence:
+    - reference: RHEA:46680
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:10439 (Fe(III)-[cytochrome b5]) declares rh:reactivePart = Fe(3+) (CHEBI:29034),
+        formula Fe.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46681
+      snippet: 2 Fe(III)-[cytochrome b5] + NADH => 2 Fe(II)-[cytochrome b5] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46681 declares side 46680_L as its substrates
+        (rh:substrates); the master reaction RHEA:46680 is undirected. This participant is CHEBI:57945
+        with coefficient 1. Rhea cites PMID:15709757, PMID:23113554, PMID:10611283, PMID:7096301 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(II)-[cytochrome b5] is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:46681
+      snippet: 2 Fe(III)-[cytochrome b5] + NADH => 2 Fe(II)-[cytochrome b5] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46681 declares side 46680_R as its products
+        (rh:products); the master reaction RHEA:46680 is undirected. This participant is GENERIC:10438
+        with coefficient 2. Rhea cites PMID:15709757, PMID:23113554, PMID:10611283, PMID:7096301 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome b5].
+    evidence:
+    - reference: RHEA:46680
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:10438 (Fe(II)-[cytochrome b5]) declares rh:reactivePart = Fe(2+) (CHEBI:29033),
+        formula Fe.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NAD(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46681
+      snippet: 2 Fe(III)-[cytochrome b5] + NADH => 2 Fe(II)-[cytochrome b5] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46681 declares side 46680_R as its products
+        (rh:products); the master reaction RHEA:46680 is undirected. This participant is CHEBI:57540 with
+        coefficient 1. Rhea cites PMID:15709757, PMID:23113554, PMID:10611283, PMID:7096301 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46681
+      snippet: 2 Fe(III)-[cytochrome b5] + NADH => 2 Fe(II)-[cytochrome b5] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46681 declares side 46680_R as its products
+        (rh:products); the master reaction RHEA:46680 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15709757, PMID:23113554, PMID:10611283, PMID:7096301 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:46680
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0090524"/>
+      notes: The rdfs:seeAlso triple on RHEA:46680 in rhea.rdf. GO term GO:0090524 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.6.2.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:46680
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.6.2.2"/>
+      notes: The rh:ec triple on RHEA:46680 in rhea.rdf. EC 1.6.2.2 is itself a record in this KB.
+  - subject: prot_A7THS1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCR1A_VANPO is an exemplar enzyme carrying EC 1.6.2.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.6.2.2
+      snippet: DR   A7THS1, MCR1A_VANPO;  A7TM72, MCR1B_VANPO;  A1CRK9, MCR1_ASPCL ;
+      notes: ExPASy ENZYME entry EC 1.6.2.2 cross-references UniProtKB:A7THS1 (MCR1A_VANPO) as a protein
+        with this activity.
+    - reference: RHEA:46680
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.6.2.2"/>
+      notes: Rhea assigns RHEA:46680 to EC 1.6.2.2, and EC 1.6.2.2 maps to exactly one Rhea master reaction
+        (RHEA:46680), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A7TM72
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCR1B_VANPO is an exemplar enzyme carrying EC 1.6.2.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.6.2.2
+      snippet: DR   A7THS1, MCR1A_VANPO;  A7TM72, MCR1B_VANPO;  A1CRK9, MCR1_ASPCL ;
+      notes: ExPASy ENZYME entry EC 1.6.2.2 cross-references UniProtKB:A7TM72 (MCR1B_VANPO) as a protein
+        with this activity.
+    - reference: RHEA:46680
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.6.2.2"/>
+      notes: Rhea assigns RHEA:46680 to EC 1.6.2.2, and EC 1.6.2.2 maps to exactly one Rhea master reaction
+        (RHEA:46680), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A1CRK9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCR1_ASPCL is an exemplar enzyme carrying EC 1.6.2.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.6.2.2
+      snippet: DR   A7THS1, MCR1A_VANPO;  A7TM72, MCR1B_VANPO;  A1CRK9, MCR1_ASPCL ;
+      notes: ExPASy ENZYME entry EC 1.6.2.2 cross-references UniProtKB:A1CRK9 (MCR1_ASPCL) as a protein
+        with this activity.
+    - reference: RHEA:46680
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.6.2.2"/>
+      notes: Rhea assigns RHEA:46680 to EC 1.6.2.2, and EC 1.6.2.2 maps to exactly one Rhea master reaction
+        (RHEA:46680), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

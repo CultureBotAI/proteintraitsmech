@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:176581
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,139 @@ definitions:
       Catalyses the reaction: L-lysyl-5'-AMP + tRNA(Lys) = L-lysyl-tRNA(Lys) + AMP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-lysyl-5'-AMP + tRNA(Lys) = L-lysyl-tRNA(Lys) + AMP + H(+)
+  description: Substrate-to-product chemistry of RHEA:78619, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78620 (rh:substrates → 78619_L, rh:products → 78619_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-lysyl-5'-AMP + tRNA(Lys) = L-lysyl-tRNA(Lys) + AMP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78619
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-lysyl-5''-AMP + tRNA(Lys) = L-lysyl-tRNA(Lys) + AMP + H(+)'
+  - node_id: sub1
+    label: L-lysyl-5'-AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:176581
+    description: Formula C16H27N7O8P.
+  - node_id: sub2
+    label: tRNA(Lys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9697
+    description: Rhea compound GENERIC:9697.
+  - node_id: sub2_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9697 (tRNA(Lys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd1
+    label: L-lysyl-tRNA(Lys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9696
+    description: Rhea compound GENERIC:9696.
+  - node_id: prd1_rp1
+    label: 3'-(L-lysyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9696 (L-lysyl-tRNA(Lys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78529
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-lysyl-5'-AMP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78620
+      snippet: L-lysyl-5'-AMP + tRNA(Lys) => L-lysyl-tRNA(Lys) + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78620 declares side 78619_L as its substrates
+        (rh:substrates); the master reaction RHEA:78619 is undirected. This participant is CHEBI:176581
+        with coefficient 1. Rhea cites PMID:23159739 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: tRNA(Lys) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78620
+      snippet: L-lysyl-5'-AMP + tRNA(Lys) => L-lysyl-tRNA(Lys) + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78620 declares side 78619_L as its substrates
+        (rh:substrates); the master reaction RHEA:78619 is undirected. This participant is GENERIC:9697
+        with coefficient 1. Rhea cites PMID:23159739 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: AMP 3'-end residue is the reactive part of tRNA(Lys).
+    evidence:
+    - reference: RHEA:78619
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9697 (tRNA(Lys)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-lysyl-tRNA(Lys) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78620
+      snippet: L-lysyl-5'-AMP + tRNA(Lys) => L-lysyl-tRNA(Lys) + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78620 declares side 78619_R as its products
+        (rh:products); the master reaction RHEA:78619 is undirected. This participant is GENERIC:9696
+        with coefficient 1. Rhea cites PMID:23159739 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-lysyl)adenylyl group is the reactive part of L-lysyl-tRNA(Lys).
+    evidence:
+    - reference: RHEA:78619
+      snippet: 3'-(L-lysyl)adenylyl group
+      notes: Rhea compound GENERIC:9696 (L-lysyl-tRNA(Lys)) declares rh:reactivePart = 3'-(L-lysyl)adenylyl
+        group (CHEBI:78529), formula C16H26N7O7P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78620
+      snippet: L-lysyl-5'-AMP + tRNA(Lys) => L-lysyl-tRNA(Lys) + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78620 declares side 78619_R as its products
+        (rh:products); the master reaction RHEA:78619 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:23159739 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78620
+      snippet: L-lysyl-5'-AMP + tRNA(Lys) => L-lysyl-tRNA(Lys) + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78620 declares side 78619_R as its products
+        (rh:products); the master reaction RHEA:78619 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:23159739 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

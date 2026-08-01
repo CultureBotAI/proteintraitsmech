@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64723
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,147 @@ definitions:
       Catalyses the reaction: N-terminal glycyl-[protein] + hexadecanoyl-CoA = N-terminal N(6)-hexadecanoylglycyl-[protein] + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-terminal glycyl-[protein] + hexadecanoyl-CoA = N-terminal N(6)-hexadecanoylglycyl-[pr…
+  description: Substrate-to-product chemistry of RHEA:59812, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59813 (rh:substrates → 59812_L, rh:products → 59812_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-terminal glycyl-[protein] + hexadecanoyl-CoA = N-terminal N(6)-hexadecanoy…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59812
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-terminal glycyl-[protein] + hexadecanoyl-CoA = N-terminal N(6)-hexadecanoylglycyl-[protein]
+      + CoA + H(+)'
+  - node_id: sub1
+    label: N-terminal glycyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12666
+    description: Rhea compound GENERIC:12666.
+  - node_id: sub1_rp1
+    label: a N-terminal Gly residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12666 (N-terminal
+      glycyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64723
+  - node_id: sub2
+    label: hexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57379
+    description: Formula C37H62N7O17P3S.
+  - node_id: prd1
+    label: N-terminal N(6)-hexadecanoylglycyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15448
+    description: Rhea compound GENERIC:15448.
+  - node_id: prd1_rp1
+    label: N-terminal N-hexadecanoylglycyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15448 (N-terminal
+      N(6)-hexadecanoylglycyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:143223
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-terminal glycyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59813
+      snippet: N-terminal glycyl-[protein] + hexadecanoyl-CoA => N-terminal N(6)-hexadecanoylglycyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59813 declares side 59812_L as its substrates
+        (rh:substrates); the master reaction RHEA:59812 is undirected. This participant is GENERIC:12666
+        with coefficient 1. Rhea cites PMID:12574119 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a N-terminal Gly residue is the reactive part of N-terminal glycyl-[protein].
+    evidence:
+    - reference: RHEA:59812
+      snippet: a N-terminal Gly residue
+      notes: Rhea compound GENERIC:12666 (N-terminal glycyl-[protein]) declares rh:reactivePart = a N-terminal
+        Gly residue (CHEBI:64723), formula C2H5NO.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hexadecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59813
+      snippet: N-terminal glycyl-[protein] + hexadecanoyl-CoA => N-terminal N(6)-hexadecanoylglycyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59813 declares side 59812_L as its substrates
+        (rh:substrates); the master reaction RHEA:59812 is undirected. This participant is CHEBI:57379
+        with coefficient 1. Rhea cites PMID:12574119 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-terminal N(6)-hexadecanoylglycyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59813
+      snippet: N-terminal glycyl-[protein] + hexadecanoyl-CoA => N-terminal N(6)-hexadecanoylglycyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59813 declares side 59812_R as its products
+        (rh:products); the master reaction RHEA:59812 is undirected. This participant is GENERIC:15448
+        with coefficient 1. Rhea cites PMID:12574119 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N-terminal N-hexadecanoylglycyl residue is the reactive part of N-terminal N(6)-hexadecanoylglycyl-[protein].
+    evidence:
+    - reference: RHEA:59812
+      snippet: N-terminal N-hexadecanoylglycyl residue
+      notes: Rhea compound GENERIC:15448 (N-terminal N(6)-hexadecanoylglycyl-[protein]) declares rh:reactivePart
+        = N-terminal N-hexadecanoylglycyl residue (CHEBI:143223), formula C18H34NO2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59813
+      snippet: N-terminal glycyl-[protein] + hexadecanoyl-CoA => N-terminal N(6)-hexadecanoylglycyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59813 declares side 59812_R as its products
+        (rh:products); the master reaction RHEA:59812 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:12574119 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59813
+      snippet: N-terminal glycyl-[protein] + hexadecanoyl-CoA => N-terminal N(6)-hexadecanoylglycyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59813 declares side 59812_R as its products
+        (rh:products); the master reaction RHEA:59812 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12574119 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

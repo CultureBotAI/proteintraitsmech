@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -33,4 +33,54 @@ definitions:
       Catalyses: Hydrolysis of (1->6)-alpha-D-glucosidic linkages in alpha- and beta-limit dextrins of amylopectin and glycogen, and in amylopectin and pullulan
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of limit dextrinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.142. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of (1->6)-alpha-D-glucosidic linkages in alpha- and beta-limit dextrins of amylopectin and glycogen,
+    and in amylopectin and pullulan".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: limit dextrinase
+    grounding: EC:3.2.1.142
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: limit dextrinase activity
+    grounding: GO:0010303
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8GTR4
+    node_type: PROTEIN
+    label: PULA1_ARATH
+    grounding: UniProtKB:Q8GTR4
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.142
+      snippet: EC:3.2.1.142 > GO:limit dextrinase activity ; GO:0010303
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0010303 is itself a record
+        in this KB.
+  - subject: prot_Q8GTR4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PULA1_ARATH is an exemplar enzyme with EC 3.2.1.142 activity.
+    evidence:
+    - reference: EC:3.2.1.142
+      snippet: DR   Q8GTR4, PULA1_ARATH;
+      notes: ExPASy ENZYME entry EC 3.2.1.142 cross-references UniProtKB:Q8GTR4 (PULA1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

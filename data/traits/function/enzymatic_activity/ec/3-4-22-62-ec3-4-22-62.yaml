@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -46,4 +46,67 @@ definitions:
       Catalyses: Strict requirement for an Asp residue at position P1 and with a marked preference for His at position P2. It has a preferred cleavage sequence of Leu-Gly-His-Asp-|-Xaa
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of caspase-9
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.62. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Strict
+    requirement for an Asp residue at position P1 and with a marked preference for His at position P2.
+    It has a preferred cleavage sequence of Leu-Gly-His-Asp-|-Xaa".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: caspase-9
+    grounding: EC:3.4.22.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P55211
+    node_type: PROTEIN
+    label: CASP9_HUMAN
+    grounding: UniProtKB:P55211
+  - node_id: prot_Q8C3Q9
+    node_type: PROTEIN
+    label: CASP9_MOUSE
+    grounding: UniProtKB:Q8C3Q9
+  - node_id: prot_Q9XYF4
+    node_type: PROTEIN
+    label: DRONC_DROME
+    grounding: UniProtKB:Q9XYF4
+  edges:
+  - subject: prot_P55211
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASP9_HUMAN is an exemplar enzyme with EC 3.4.22.62 activity.
+    evidence:
+    - reference: EC:3.4.22.62
+      snippet: DR   P55211, CASP9_HUMAN;  Q8C3Q9, CASP9_MOUSE;  Q9XYF4, DRONC_DROME;
+      notes: ExPASy ENZYME entry EC 3.4.22.62 cross-references UniProtKB:P55211 (CASP9_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q8C3Q9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASP9_MOUSE is an exemplar enzyme with EC 3.4.22.62 activity.
+    evidence:
+    - reference: EC:3.4.22.62
+      snippet: DR   P55211, CASP9_HUMAN;  Q8C3Q9, CASP9_MOUSE;  Q9XYF4, DRONC_DROME;
+      notes: ExPASy ENZYME entry EC 3.4.22.62 cross-references UniProtKB:Q8C3Q9 (CASP9_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q9XYF4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DRONC_DROME is an exemplar enzyme with EC 3.4.22.62 activity.
+    evidence:
+    - reference: EC:3.4.22.62
+      snippet: DR   P55211, CASP9_HUMAN;  Q8C3Q9, CASP9_MOUSE;  Q9XYF4, DRONC_DROME;
+      notes: ExPASy ENZYME entry EC 3.4.22.62 cross-references UniProtKB:Q9XYF4 (DRONC_DROME) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

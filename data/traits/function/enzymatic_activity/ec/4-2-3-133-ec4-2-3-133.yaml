@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -38,4 +38,134 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = alpha-copaene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha-copaene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.133. EC 4.2.3.133 maps to
+    exactly one curated Rhea reaction (RHEA:33991), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = alpha-copaene + diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-copaene synthase
+    grounding: EC:4.2.3.133
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: alpha-copaene
+    node_type: CHEMICAL
+    grounding: CHEBI:10221
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-copaene synthase activity
+    grounding: GO:0102877
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_H9L9E5
+    node_type: PROTEIN
+    label: COP_ELETR
+    grounding: UniProtKB:H9L9E5
+  - node_id: prot_Q4U3F6
+    node_type: PROTEIN
+    label: CS_HELAN
+    grounding: UniProtKB:Q4U3F6
+  - node_id: prot_Q2NM15
+    node_type: PROTEIN
+    label: FARS_MAIZE
+    grounding: UniProtKB:Q2NM15
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:33991 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33992
+      snippet: (2E,6E)-farnesyl diphosphate => alpha-copaene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33992 declares side 33991_L as its substrates
+        (rh:substrates); the master reaction RHEA:33991 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:19580670, PMID:22459969, PMID:15918888, PMID:12566586 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-copaene is a product released by RHEA:33991 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33992
+      snippet: (2E,6E)-farnesyl diphosphate => alpha-copaene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33992 declares side 33991_R as its products
+        (rh:products); the master reaction RHEA:33991 is undirected. This participant is CHEBI:10221 with
+        coefficient 1. Rhea cites PMID:19580670, PMID:22459969, PMID:15918888, PMID:12566586 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:33991 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33992
+      snippet: (2E,6E)-farnesyl diphosphate => alpha-copaene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33992 declares side 33991_R as its products
+        (rh:products); the master reaction RHEA:33991 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:19580670, PMID:22459969, PMID:15918888, PMID:12566586 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.133
+      snippet: EC:4.2.3.133 > GO:alpha-copaene synthase activity ; GO:0102877
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102877 is itself a record
+        in this KB.
+  - subject: prot_H9L9E5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COP_ELETR is an exemplar enzyme with EC 4.2.3.133 activity.
+    evidence:
+    - reference: EC:4.2.3.133
+      snippet: DR   H9L9E5, COP_ELETR  ;  Q4U3F6, CS_HELAN   ;  Q2NM15, FARS_MAIZE ;
+      notes: ExPASy ENZYME entry EC 4.2.3.133 cross-references UniProtKB:H9L9E5 (COP_ELETR) as a protein
+        with this activity.
+  - subject: prot_Q4U3F6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CS_HELAN is an exemplar enzyme with EC 4.2.3.133 activity.
+    evidence:
+    - reference: EC:4.2.3.133
+      snippet: DR   H9L9E5, COP_ELETR  ;  Q4U3F6, CS_HELAN   ;  Q2NM15, FARS_MAIZE ;
+      notes: ExPASy ENZYME entry EC 4.2.3.133 cross-references UniProtKB:Q4U3F6 (CS_HELAN) as a protein
+        with this activity.
+  - subject: prot_Q2NM15
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FARS_MAIZE is an exemplar enzyme with EC 4.2.3.133 activity.
+    evidence:
+    - reference: EC:4.2.3.133
+      snippet: DR   H9L9E5, COP_ELETR  ;  Q4U3F6, CS_HELAN   ;  Q2NM15, FARS_MAIZE ;
+      notes: ExPASy ENZYME entry EC 4.2.3.133 cross-references UniProtKB:Q2NM15 (FARS_MAIZE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

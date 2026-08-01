@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:176581
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: L-lysyl-5'-AMP + ATP = P(1),P(4)-bis(5'-adenosyl) tetraphosphate + L-lysine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-lysyl-5'-AMP + ATP = P(1),P(4)-bis(5'-adenosyl) tetraphosphate + L-lysine
+  description: Substrate-to-product chemistry of RHEA:78623, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78624 (rh:substrates → 78623_L, rh:products → 78623_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-lysyl-5'-AMP + ATP = P(1),P(4)-bis(5'-adenosyl) tetraphosphate + L-lysine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78623
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-lysyl-5''-AMP + ATP = P(1),P(4)-bis(5''-adenosyl) tetraphosphate + L-lysine'
+  - node_id: sub1
+    label: L-lysyl-5'-AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:176581
+    description: Formula C16H27N7O8P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: P(1),P(4)-bis(5'-adenosyl) tetraphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58141
+    description: Formula C20H24N10O19P4.
+  - node_id: prd2
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32551
+    description: Formula C6H15N2O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-lysyl-5'-AMP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78624
+      snippet: L-lysyl-5'-AMP + ATP => P(1),P(4)-bis(5'-adenosyl) tetraphosphate + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:78624 declares side 78623_L as its substrates
+        (rh:substrates); the master reaction RHEA:78623 is undirected. This participant is CHEBI:176581
+        with coefficient 1. Rhea cites PMID:23159739 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78624
+      snippet: L-lysyl-5'-AMP + ATP => P(1),P(4)-bis(5'-adenosyl) tetraphosphate + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:78624 declares side 78623_L as its substrates
+        (rh:substrates); the master reaction RHEA:78623 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:23159739 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: P(1),P(4)-bis(5'-adenosyl) tetraphosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78624
+      snippet: L-lysyl-5'-AMP + ATP => P(1),P(4)-bis(5'-adenosyl) tetraphosphate + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:78624 declares side 78623_R as its products
+        (rh:products); the master reaction RHEA:78623 is undirected. This participant is CHEBI:58141 with
+        coefficient 1. Rhea cites PMID:23159739 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-lysine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78624
+      snippet: L-lysyl-5'-AMP + ATP => P(1),P(4)-bis(5'-adenosyl) tetraphosphate + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:78624 declares side 78623_R as its products
+        (rh:products); the master reaction RHEA:78623 is undirected. This participant is CHEBI:32551 with
+        coefficient 1. Rhea cites PMID:23159739 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

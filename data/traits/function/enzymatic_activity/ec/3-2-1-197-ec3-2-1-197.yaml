@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -23,4 +23,97 @@ definitions:
       Catalyses: beta-D-Manp-(1->2)-beta-D-Manp-(1->2)-D-Manp + H2O = beta-D- mannopyranosyl-(1->2)-D-mannopyranose + alpha-D-mannopyranose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-1,2-mannosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.197. EC 3.2.1.197 maps to
+    exactly one curated Rhea reaction (RHEA:49448), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "beta-D-Manp-(1->2)-beta-D-Manp-(1->2)-D-Manp
+    + H2O = beta-D- mannopyranosyl-(1->2)-D-mannopyranose + alpha-D-mannopyranose". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-1,2-mannosidase
+    grounding: EC:3.2.1.197
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: beta-D-Manp-(1->2)-beta-D-Manp-(1->2)-D-Manp
+    node_type: CHEMICAL
+    grounding: CHEBI:131448
+    description: Formula C18H32O16.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: beta-D-mannopyranosyl-(1->2)-D-mannopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:62037
+    description: Formula C12H22O11.
+  - node_id: prd2
+    label: alpha-D-mannopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:28729
+    description: Formula C6H12O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: beta-D-Manp-(1->2)-beta-D-Manp-(1->2)-D-Manp is a substrate consumed by RHEA:49448 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49449
+      snippet: beta-D-Manp-(1->2)-beta-D-Manp-(1->2)-D-Manp + H2O => beta-D-mannopyranosyl-(1->2)-D-mannopyranose
+        + alpha-D-mannopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:49449 declares side 49448_L as its substrates
+        (rh:substrates); the master reaction RHEA:49448 is undirected. This participant is CHEBI:131448
+        with coefficient 1. Rhea cites PMID:26476324, PMID:26286752 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:49448 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49449
+      snippet: beta-D-Manp-(1->2)-beta-D-Manp-(1->2)-D-Manp + H2O => beta-D-mannopyranosyl-(1->2)-D-mannopyranose
+        + alpha-D-mannopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:49449 declares side 49448_L as its substrates
+        (rh:substrates); the master reaction RHEA:49448 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:26476324, PMID:26286752 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-mannopyranosyl-(1->2)-D-mannopyranose is a product released by RHEA:49448 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49449
+      snippet: beta-D-Manp-(1->2)-beta-D-Manp-(1->2)-D-Manp + H2O => beta-D-mannopyranosyl-(1->2)-D-mannopyranose
+        + alpha-D-mannopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:49449 declares side 49448_R as its products
+        (rh:products); the master reaction RHEA:49448 is undirected. This participant is CHEBI:62037 with
+        coefficient 1. Rhea cites PMID:26476324, PMID:26286752 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: alpha-D-mannopyranose is a product released by RHEA:49448 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49449
+      snippet: beta-D-Manp-(1->2)-beta-D-Manp-(1->2)-D-Manp + H2O => beta-D-mannopyranosyl-(1->2)-D-mannopyranose
+        + alpha-D-mannopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:49449 declares side 49448_R as its products
+        (rh:products); the master reaction RHEA:49448 is undirected. This participant is CHEBI:28729 with
+        coefficient 1. Rhea cites PMID:26476324, PMID:26286752 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

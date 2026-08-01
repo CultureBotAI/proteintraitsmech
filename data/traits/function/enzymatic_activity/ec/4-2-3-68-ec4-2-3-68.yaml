@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate + H2O = beta-eudesmol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-eudesmol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.68. EC 4.2.3.68 maps to exactly
+    one curated Rhea reaction (RHEA:29495), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate + H2O = beta-eudesmol + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-eudesmol synthase
+    grounding: EC:4.2.3.68
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: beta-eudesmol
+    node_type: CHEMICAL
+    grounding: CHEBI:10417
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_B1B1U4
+    node_type: PROTEIN
+    label: TPSBE_ZINZE
+    grounding: UniProtKB:B1B1U4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:29495 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29496
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => beta-eudesmol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29496 declares side 29495_L as its substrates
+        (rh:substrates); the master reaction RHEA:29495 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:18242187 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:29495 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29496
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => beta-eudesmol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29496 declares side 29495_L as its substrates
+        (rh:substrates); the master reaction RHEA:29495 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18242187 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-eudesmol is a product released by RHEA:29495 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29496
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => beta-eudesmol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29496 declares side 29495_R as its products
+        (rh:products); the master reaction RHEA:29495 is undirected. This participant is CHEBI:10417 with
+        coefficient 1. Rhea cites PMID:18242187 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:29495 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29496
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => beta-eudesmol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29496 declares side 29495_R as its products
+        (rh:products); the master reaction RHEA:29495 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18242187 for this reaction.
+  - subject: prot_B1B1U4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPSBE_ZINZE is an exemplar enzyme with EC 4.2.3.68 activity.
+    evidence:
+    - reference: EC:4.2.3.68
+      snippet: DR   B1B1U4, TPSBE_ZINZE;
+      notes: ExPASy ENZYME entry EC 4.2.3.68 cross-references UniProtKB:B1B1U4 (TPSBE_ZINZE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.11.-
 synonyms:
@@ -40,4 +40,68 @@ definitions:
       Catalyses: Release of an N-terminal amino acid, Cys-|-Xaa-, in which the half- cystine residue is involved in a disulfide loop, notably in oxytocin or vasopressin. Hydrolysis rates on a range of aminoacyl arylamides exceed that for the cystinyl derivative, however
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cystinyl aminopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.11.3. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of an N-terminal amino acid, Cys-|-Xaa-, in which the half- cystine residue is involved in a disulfide
+    loop, notably in oxytocin or vasopressin. Hydrolysis rates on a range of aminoacyl arylamides exceed
+    that for the cystinyl derivative, however".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cystinyl aminopeptidase
+    grounding: EC:3.4.11.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9UIQ6
+    node_type: PROTEIN
+    label: LCAP_HUMAN
+    grounding: UniProtKB:Q9UIQ6
+  - node_id: prot_Q8C129
+    node_type: PROTEIN
+    label: LCAP_MOUSE
+    grounding: UniProtKB:Q8C129
+  - node_id: prot_P97629
+    node_type: PROTEIN
+    label: LCAP_RAT
+    grounding: UniProtKB:P97629
+  edges:
+  - subject: prot_Q9UIQ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCAP_HUMAN is an exemplar enzyme with EC 3.4.11.3 activity.
+    evidence:
+    - reference: EC:3.4.11.3
+      snippet: DR   Q9UIQ6, LCAP_HUMAN ;  Q8C129, LCAP_MOUSE ;  P97629, LCAP_RAT   ;
+      notes: ExPASy ENZYME entry EC 3.4.11.3 cross-references UniProtKB:Q9UIQ6 (LCAP_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q8C129
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCAP_MOUSE is an exemplar enzyme with EC 3.4.11.3 activity.
+    evidence:
+    - reference: EC:3.4.11.3
+      snippet: DR   Q9UIQ6, LCAP_HUMAN ;  Q8C129, LCAP_MOUSE ;  P97629, LCAP_RAT   ;
+      notes: ExPASy ENZYME entry EC 3.4.11.3 cross-references UniProtKB:Q8C129 (LCAP_MOUSE) as a protein
+        with this activity.
+  - subject: prot_P97629
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCAP_RAT is an exemplar enzyme with EC 3.4.11.3 activity.
+    evidence:
+    - reference: EC:3.4.11.3
+      snippet: DR   Q9UIQ6, LCAP_HUMAN ;  Q8C129, LCAP_MOUSE ;  P97629, LCAP_RAT   ;
+      notes: ExPASy ENZYME entry EC 3.4.11.3 cross-references UniProtKB:P97629 (LCAP_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

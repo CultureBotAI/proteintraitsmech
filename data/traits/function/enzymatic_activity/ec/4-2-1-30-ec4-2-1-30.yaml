@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -30,4 +30,102 @@ definitions:
       Catalyses: glycerol = 3-hydroxypropanal + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glycerol dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.30. EC 4.2.1.30 maps to exactly
+    one curated Rhea reaction (RHEA:19765), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "glycerol = 3-hydroxypropanal
+    + H2O". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glycerol dehydratase
+    grounding: EC:4.2.1.30
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17754
+    description: Formula C3H8O3.
+  - node_id: prd1
+    label: 3-hydroxypropanal
+    node_type: CHEMICAL
+    grounding: CHEBI:17871
+    description: Formula C3H6O2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glycerol dehydratase activity
+    grounding: GO:0046405
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P45514
+    node_type: PROTEIN
+    label: DHAB_CITFR
+    grounding: UniProtKB:P45514
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: glycerol is a substrate consumed by RHEA:19765 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19766
+      snippet: glycerol => 3-hydroxypropanal + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:19766 declares side 19765_L as its substrates
+        (rh:substrates); the master reaction RHEA:19765 is undirected. This participant is CHEBI:17754
+        with coefficient 1. Rhea cites PMID:7035429, PMID:22042303, PMID:15096031 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-hydroxypropanal is a product released by RHEA:19765 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19766
+      snippet: glycerol => 3-hydroxypropanal + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:19766 declares side 19765_R as its products
+        (rh:products); the master reaction RHEA:19765 is undirected. This participant is CHEBI:17871 with
+        coefficient 1. Rhea cites PMID:7035429, PMID:22042303, PMID:15096031 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:19765 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19766
+      snippet: glycerol => 3-hydroxypropanal + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:19766 declares side 19765_R as its products
+        (rh:products); the master reaction RHEA:19765 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:7035429, PMID:22042303, PMID:15096031 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.30
+      snippet: EC:4.2.1.30 > GO:glycerol dehydratase activity ; GO:0046405
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0046405 is itself a record
+        in this KB.
+  - subject: prot_P45514
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHAB_CITFR is an exemplar enzyme with EC 4.2.1.30 activity.
+    evidence:
+    - reference: EC:4.2.1.30
+      snippet: DR   P45514, DHAB_CITFR ;
+      notes: ExPASy ENZYME entry EC 4.2.1.30 cross-references UniProtKB:P45514 (DHAB_CITFR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

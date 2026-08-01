@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.171
     mapping_source: rhea2ec
@@ -30,4 +30,167 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate + H2O = (+)-corvol ether A + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate + H2O = (+)-corvol ether A + diphosphate
+  description: Substrate-to-product chemistry of RHEA:53648, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53649 (rh:substrates → 53648_L, rh:products → 53648_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate + H2O = (+)-corvol ether A + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53648
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate + H2O = (+)-corvol ether A + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (+)-corvol ether A
+    node_type: CHEMICAL
+    grounding: CHEBI:137535
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-corvol ether A synthase
+    grounding: EC:4.2.3.171
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A0B4FWC3
+    node_type: PROTEIN
+    label: BTPS1_METBS
+    grounding: UniProtKB:A0A0B4FWC3
+  - node_id: prot_A0A0B4G3Q7
+    node_type: PROTEIN
+    label: BTPS2_METBS
+    grounding: UniProtKB:A0A0B4G3Q7
+  - node_id: prot_E9E766
+    node_type: PROTEIN
+    label: BTPSL_METAQ
+    grounding: UniProtKB:E9E766
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:53649
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-corvol ether A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53649 declares side 53648_L as its substrates
+        (rh:substrates); the master reaction RHEA:53648 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:25809275, PMID:27666571 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53649
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-corvol ether A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53649 declares side 53648_L as its substrates
+        (rh:substrates); the master reaction RHEA:53648 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25809275, PMID:27666571 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-corvol ether A is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53649
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-corvol ether A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53649 declares side 53648_R as its products
+        (rh:products); the master reaction RHEA:53648 is undirected. This participant is CHEBI:137535
+        with coefficient 1. Rhea cites PMID:25809275, PMID:27666571 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53649
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-corvol ether A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53649 declares side 53648_R as its products
+        (rh:products); the master reaction RHEA:53648 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25809275, PMID:27666571 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.171; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:53648
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.171"/>
+      notes: The rh:ec triple on RHEA:53648 in rhea.rdf. EC 4.2.3.171 is itself a record in this KB.
+  - subject: prot_A0A0B4FWC3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BTPS1_METBS is an exemplar enzyme carrying EC 4.2.3.171, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.171
+      snippet: DR   A0A0B4FWC3, BTPS1_METBS;  A0A0B4G3Q7, BTPS2_METBS;  E9E766, BTPSL_METAQ;
+      notes: ExPASy ENZYME entry EC 4.2.3.171 cross-references UniProtKB:A0A0B4FWC3 (BTPS1_METBS) as a
+        protein with this activity.
+    - reference: RHEA:53648
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.171"/>
+      notes: Rhea assigns RHEA:53648 to EC 4.2.3.171, and EC 4.2.3.171 maps to exactly one Rhea master
+        reaction (RHEA:53648), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0A0B4G3Q7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BTPS2_METBS is an exemplar enzyme carrying EC 4.2.3.171, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.171
+      snippet: DR   A0A0B4FWC3, BTPS1_METBS;  A0A0B4G3Q7, BTPS2_METBS;  E9E766, BTPSL_METAQ;
+      notes: ExPASy ENZYME entry EC 4.2.3.171 cross-references UniProtKB:A0A0B4G3Q7 (BTPS2_METBS) as a
+        protein with this activity.
+    - reference: RHEA:53648
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.171"/>
+      notes: Rhea assigns RHEA:53648 to EC 4.2.3.171, and EC 4.2.3.171 maps to exactly one Rhea master
+        reaction (RHEA:53648), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_E9E766
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BTPSL_METAQ is an exemplar enzyme carrying EC 4.2.3.171, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.171
+      snippet: DR   A0A0B4FWC3, BTPS1_METBS;  A0A0B4G3Q7, BTPS2_METBS;  E9E766, BTPSL_METAQ;
+      notes: ExPASy ENZYME entry EC 4.2.3.171 cross-references UniProtKB:E9E766 (BTPSL_METAQ) as a protein
+        with this activity.
+    - reference: RHEA:53648
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.171"/>
+      notes: Rhea assigns RHEA:53648 to EC 4.2.3.171, and EC 4.2.3.171 maps to exactly one Rhea master
+        reaction (RHEA:53648), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

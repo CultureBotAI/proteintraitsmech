@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -43,4 +43,180 @@ definitions:
       Catalyses: [protein-PII]-L-tyrosine + UTP = [protein-PII]-uridylyl-L-tyrosine + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [protein-PII] uridylyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.59. EC 2.7.7.59 maps to exactly
+    one curated Rhea reaction (RHEA:13673), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[protein-PII]-L-tyrosine
+    + UTP = [protein-PII]-uridylyl-L-tyrosine + diphosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[protein-PII] uridylyltransferase'
+    grounding: EC:2.7.7.59
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[protein-PII]-L-tyrosine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12147
+    description: Rhea compound GENERIC:12147.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-tyrosine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12147 ([protein-PII]-L-tyrosine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:46858
+  - node_id: sub2
+    label: UTP
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  - node_id: prd1
+    label: '[protein-PII]-uridylyl-L-tyrosine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12148
+    description: Rhea compound GENERIC:12148.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: uridylyl-L-tyrosine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12148 ([protein-PII]-uridylyl-L-tyrosine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90602
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: '[protein-PII] uridylyltransferase activity'
+    grounding: GO:0008773
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q6FAM5
+    node_type: PROTEIN
+    label: GLND_ACIAD
+    grounding: UniProtKB:Q6FAM5
+  - node_id: prot_B7H3W7
+    node_type: PROTEIN
+    label: GLND_ACIB3
+    grounding: UniProtKB:B7H3W7
+  - node_id: prot_B7I420
+    node_type: PROTEIN
+    label: GLND_ACIB5
+    grounding: UniProtKB:B7I420
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[protein-PII]-L-tyrosine is a substrate consumed by RHEA:13673 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:13674
+      snippet: '[protein-PII]-L-tyrosine + UTP => [protein-PII]-uridylyl-L-tyrosine + diphosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:13674 declares side 13673_L as its substrates
+        (rh:substrates); the master reaction RHEA:13673 is undirected. This participant is GENERIC:12147
+        with coefficient 1. Rhea cites PMID:17553696, PMID:6130097, PMID:8412694 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-tyrosine residue is the reactive part of [protein-PII]-L-tyrosine.
+    evidence:
+    - reference: RHEA:13673
+      snippet: L-tyrosine residue
+      notes: Rhea compound GENERIC:12147 ([protein-PII]-L-tyrosine) declares rh:reactivePart = L-tyrosine
+        residue (CHEBI:46858).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UTP is a substrate consumed by RHEA:13673 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13674
+      snippet: '[protein-PII]-L-tyrosine + UTP => [protein-PII]-uridylyl-L-tyrosine + diphosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:13674 declares side 13673_L as its substrates
+        (rh:substrates); the master reaction RHEA:13673 is undirected. This participant is CHEBI:46398
+        with coefficient 1. Rhea cites PMID:17553696, PMID:6130097, PMID:8412694 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[protein-PII]-uridylyl-L-tyrosine is a product released by RHEA:13673 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:13674
+      snippet: '[protein-PII]-L-tyrosine + UTP => [protein-PII]-uridylyl-L-tyrosine + diphosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:13674 declares side 13673_R as its products
+        (rh:products); the master reaction RHEA:13673 is undirected. This participant is GENERIC:12148
+        with coefficient 1. Rhea cites PMID:17553696, PMID:6130097, PMID:8412694 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: uridylyl-L-tyrosine residue is the reactive part of [protein-PII]-uridylyl-L-tyrosine.
+    evidence:
+    - reference: RHEA:13673
+      snippet: uridylyl-L-tyrosine residue
+      notes: Rhea compound GENERIC:12148 ([protein-PII]-uridylyl-L-tyrosine) declares rh:reactivePart
+        = uridylyl-L-tyrosine residue (CHEBI:90602).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:13673 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13674
+      snippet: '[protein-PII]-L-tyrosine + UTP => [protein-PII]-uridylyl-L-tyrosine + diphosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:13674 declares side 13673_R as its products
+        (rh:products); the master reaction RHEA:13673 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:17553696, PMID:6130097, PMID:8412694 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.7.59
+      snippet: EC:2.7.7.59 > GO:[protein-PII] uridylyltransferase activity ; GO:0008773
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008773 is itself a record
+        in this KB.
+  - subject: prot_Q6FAM5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLND_ACIAD is an exemplar enzyme with EC 2.7.7.59 activity.
+    evidence:
+    - reference: EC:2.7.7.59
+      snippet: DR   Q6FAM5, GLND_ACIAD ;  B7H3W7, GLND_ACIB3 ;  B7I420, GLND_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 2.7.7.59 cross-references UniProtKB:Q6FAM5 (GLND_ACIAD) as a protein
+        with this activity.
+  - subject: prot_B7H3W7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLND_ACIB3 is an exemplar enzyme with EC 2.7.7.59 activity.
+    evidence:
+    - reference: EC:2.7.7.59
+      snippet: DR   Q6FAM5, GLND_ACIAD ;  B7H3W7, GLND_ACIB3 ;  B7I420, GLND_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 2.7.7.59 cross-references UniProtKB:B7H3W7 (GLND_ACIB3) as a protein
+        with this activity.
+  - subject: prot_B7I420
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLND_ACIB5 is an exemplar enzyme with EC 2.7.7.59 activity.
+    evidence:
+    - reference: EC:2.7.7.59
+      snippet: DR   Q6FAM5, GLND_ACIAD ;  B7H3W7, GLND_ACIB3 ;  B7I420, GLND_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 2.7.7.59 cross-references UniProtKB:B7I420 (GLND_ACIB5) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

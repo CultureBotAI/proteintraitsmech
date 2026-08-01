@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 synonyms:
@@ -39,4 +39,164 @@ definitions:
       Catalyses: 2 L-leucyl-tRNA(Leu) = cyclo(L-leucyl-L-leucyl) + 2 tRNA(Leu) + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclo(L-leucyl-L-leucyl) synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.22. EC 2.3.2.22 maps to exactly
+    one curated Rhea reaction (RHEA:46452), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 L-leucyl-tRNA(Leu)
+    = cyclo(L-leucyl-L-leucyl) + 2 tRNA(Leu) + 2 H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cyclo(L-leucyl-L-leucyl) synthase
+    grounding: EC:2.3.2.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-leucyl-tRNA(Leu)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9622
+    description: Rhea compound GENERIC:9622.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: 3'-(L-leucyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9622 (L-leucyl-tRNA(Leu));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78494
+  - node_id: prd1
+    label: cyclo(L-leucyl-L-leucyl)
+    node_type: CHEMICAL
+    grounding: CHEBI:67269
+    description: Formula C12H22N2O2.
+  - node_id: prd2
+    label: tRNA(Leu)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9613
+    description: Rhea compound GENERIC:9613.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9613 (tRNA(Leu));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q65EX3
+    node_type: PROTEIN
+    label: CDLS_BACLD
+    grounding: UniProtKB:Q65EX3
+  - node_id: prot_O34351
+    node_type: PROTEIN
+    label: CDLS_BACSU
+    grounding: UniProtKB:O34351
+  - node_id: prot_Q4JVS0
+    node_type: PROTEIN
+    label: CDLS_CORJK
+    grounding: UniProtKB:Q4JVS0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-leucyl-tRNA(Leu) is a substrate consumed by RHEA:46452 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:46453
+      snippet: 2 L-leucyl-tRNA(Leu) => cyclo(L-leucyl-L-leucyl) + 2 tRNA(Leu) + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46453 declares side 46452_L as its substrates
+        (rh:substrates); the master reaction RHEA:46452 is undirected. This participant is GENERIC:9622
+        with coefficient 2. Rhea cites PMID:19430487, PMID:21325056 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-leucyl)adenylyl group is the reactive part of L-leucyl-tRNA(Leu).
+    evidence:
+    - reference: RHEA:46452
+      snippet: 3'-(L-leucyl)adenylyl group
+      notes: Rhea compound GENERIC:9622 (L-leucyl-tRNA(Leu)) declares rh:reactivePart = 3'-(L-leucyl)adenylyl
+        group (CHEBI:78494).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cyclo(L-leucyl-L-leucyl) is a product released by RHEA:46452 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46453
+      snippet: 2 L-leucyl-tRNA(Leu) => cyclo(L-leucyl-L-leucyl) + 2 tRNA(Leu) + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46453 declares side 46452_R as its products
+        (rh:products); the master reaction RHEA:46452 is undirected. This participant is CHEBI:67269 with
+        coefficient 1. Rhea cites PMID:19430487, PMID:21325056 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: tRNA(Leu) is a product released by RHEA:46452 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:46453
+      snippet: 2 L-leucyl-tRNA(Leu) => cyclo(L-leucyl-L-leucyl) + 2 tRNA(Leu) + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46453 declares side 46452_R as its products
+        (rh:products); the master reaction RHEA:46452 is undirected. This participant is GENERIC:9613
+        with coefficient 2. Rhea cites PMID:19430487, PMID:21325056 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: AMP 3'-end residue is the reactive part of tRNA(Leu).
+    evidence:
+    - reference: RHEA:46452
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9613 (tRNA(Leu)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:46452 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:46453
+      snippet: 2 L-leucyl-tRNA(Leu) => cyclo(L-leucyl-L-leucyl) + 2 tRNA(Leu) + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46453 declares side 46452_R as its products
+        (rh:products); the master reaction RHEA:46452 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:19430487, PMID:21325056 for this reaction.
+  - subject: prot_Q65EX3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDLS_BACLD is an exemplar enzyme with EC 2.3.2.22 activity.
+    evidence:
+    - reference: EC:2.3.2.22
+      snippet: DR   Q65EX3, CDLS_BACLD ;  O34351, CDLS_BACSU ;  Q4JVS0, CDLS_CORJK ;
+      notes: ExPASy ENZYME entry EC 2.3.2.22 cross-references UniProtKB:Q65EX3 (CDLS_BACLD) as a protein
+        with this activity.
+  - subject: prot_O34351
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDLS_BACSU is an exemplar enzyme with EC 2.3.2.22 activity.
+    evidence:
+    - reference: EC:2.3.2.22
+      snippet: DR   Q65EX3, CDLS_BACLD ;  O34351, CDLS_BACSU ;  Q4JVS0, CDLS_CORJK ;
+      notes: ExPASy ENZYME entry EC 2.3.2.22 cross-references UniProtKB:O34351 (CDLS_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q4JVS0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDLS_CORJK is an exemplar enzyme with EC 2.3.2.22 activity.
+    evidence:
+    - reference: EC:2.3.2.22
+      snippet: DR   Q65EX3, CDLS_BACLD ;  O34351, CDLS_BACSU ;  Q4JVS0, CDLS_CORJK ;
+      notes: ExPASy ENZYME entry EC 2.3.2.22 cross-references UniProtKB:Q4JVS0 (CDLS_CORJK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

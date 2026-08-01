@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -39,4 +39,81 @@ definitions:
       Catalyses: Selective cleavage of Arg-|-Ile bond in factor X to form factor Xa
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of coagulation factor IXa
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.22. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Selective
+    cleavage of Arg-|-Ile bond in factor X to form factor Xa".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: coagulation factor IXa
+    grounding: EC:3.4.21.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: serine-type endopeptidase activity
+    grounding: GO:0004252
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P00741
+    node_type: PROTEIN
+    label: FA9_BOVIN
+    grounding: UniProtKB:P00741
+  - node_id: prot_P19540
+    node_type: PROTEIN
+    label: FA9_CANLF
+    grounding: UniProtKB:P19540
+  - node_id: prot_P16295
+    node_type: PROTEIN
+    label: FA9_CAVPO
+    grounding: UniProtKB:P16295
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.21.22
+      snippet: EC:3.4.21.22 > GO:serine-type endopeptidase activity ; GO:0004252
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004252 is itself a record
+        in this KB.
+  - subject: prot_P00741
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FA9_BOVIN is an exemplar enzyme with EC 3.4.21.22 activity.
+    evidence:
+    - reference: EC:3.4.21.22
+      snippet: DR   P00741, FA9_BOVIN  ;  P19540, FA9_CANLF  ;  P16295, FA9_CAVPO  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.22 cross-references UniProtKB:P00741 (FA9_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P19540
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FA9_CANLF is an exemplar enzyme with EC 3.4.21.22 activity.
+    evidence:
+    - reference: EC:3.4.21.22
+      snippet: DR   P00741, FA9_BOVIN  ;  P19540, FA9_CANLF  ;  P16295, FA9_CAVPO  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.22 cross-references UniProtKB:P19540 (FA9_CANLF) as a protein
+        with this activity.
+  - subject: prot_P16295
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FA9_CAVPO is an exemplar enzyme with EC 3.4.21.22 activity.
+    evidence:
+    - reference: EC:3.4.21.22
+      snippet: DR   P00741, FA9_BOVIN  ;  P19540, FA9_CANLF  ;  P16295, FA9_CAVPO  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.22 cross-references UniProtKB:P16295 (FA9_CAVPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

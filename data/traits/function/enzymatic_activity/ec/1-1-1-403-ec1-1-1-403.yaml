@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 mapped_xrefs:
@@ -28,4 +28,119 @@ definitions:
       Catalyses: D-threitol + NAD(+) = D-erythrulose + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-threitol dehydrogenase (NAD(+))
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.403. EC 1.1.1.403 maps to
+    exactly one curated Rhea reaction (RHEA:48748), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-threitol
+    + NAD(+) = D-erythrulose + NADH + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-threitol dehydrogenase (NAD(+))
+    grounding: EC:1.1.1.403
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-threitol
+    node_type: CHEMICAL
+    grounding: CHEBI:48300
+    description: Formula C4H10O4.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: D-erythrulose
+    node_type: CHEMICAL
+    grounding: CHEBI:16023
+    description: Formula C4H8O4.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A0QYC2
+    node_type: PROTEIN
+    label: DTHD_MYCS2
+    grounding: UniProtKB:A0QYC2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-threitol is a substrate consumed by RHEA:48748 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48749
+      snippet: D-threitol + NAD(+) => D-erythrulose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48749 declares side 48748_L as its substrates
+        (rh:substrates); the master reaction RHEA:48748 is undirected. This participant is CHEBI:48300
+        with coefficient 1. Rhea cites PMID:26560079 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:48748 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48749
+      snippet: D-threitol + NAD(+) => D-erythrulose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48749 declares side 48748_L as its substrates
+        (rh:substrates); the master reaction RHEA:48748 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:26560079 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-erythrulose is a product released by RHEA:48748 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48749
+      snippet: D-threitol + NAD(+) => D-erythrulose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48749 declares side 48748_R as its products
+        (rh:products); the master reaction RHEA:48748 is undirected. This participant is CHEBI:16023 with
+        coefficient 1. Rhea cites PMID:26560079 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by RHEA:48748 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48749
+      snippet: D-threitol + NAD(+) => D-erythrulose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48749 declares side 48748_R as its products
+        (rh:products); the master reaction RHEA:48748 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:26560079 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:48748 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48749
+      snippet: D-threitol + NAD(+) => D-erythrulose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48749 declares side 48748_R as its products
+        (rh:products); the master reaction RHEA:48748 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:26560079 for this reaction.
+  - subject: prot_A0QYC2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DTHD_MYCS2 is an exemplar enzyme with EC 1.1.1.403 activity.
+    evidence:
+    - reference: EC:1.1.1.403
+      snippet: DR   A0QYC2, DTHD_MYCS2 ;
+      notes: ExPASy ENZYME entry EC 1.1.1.403 cross-references UniProtKB:A0QYC2 (DTHD_MYCS2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

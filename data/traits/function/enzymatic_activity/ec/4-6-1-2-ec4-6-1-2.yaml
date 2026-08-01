@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.6.1.-
 synonyms:
@@ -43,4 +43,131 @@ definitions:
       Catalyses: GTP = 3',5'-cyclic GMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of guanylate cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.6.1.2. EC 4.6.1.2 maps to exactly
+    one curated Rhea reaction (RHEA:13665), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "GTP = 3'',5''-cyclic
+    GMP + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: guanylate cyclase
+    grounding: EC:4.6.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: prd1
+    label: 3',5'-cyclic GMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57746
+    description: Formula C10H11N5O7P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: guanylate cyclase activity
+    grounding: GO:0004383
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P16066
+    node_type: PROTEIN
+    label: ANPRA_HUMAN
+    grounding: UniProtKB:P16066
+  - node_id: prot_P18293
+    node_type: PROTEIN
+    label: ANPRA_MOUSE
+    grounding: UniProtKB:P18293
+  - node_id: prot_P18910
+    node_type: PROTEIN
+    label: ANPRA_RAT
+    grounding: UniProtKB:P18910
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: GTP is a substrate consumed by RHEA:13665 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13666
+      snippet: GTP => 3',5'-cyclic GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13666 declares side 13665_L as its substrates
+        (rh:substrates); the master reaction RHEA:13665 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:4982201, PMID:8102054, PMID:9600905, PMID:7912093 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3',5'-cyclic GMP is a product released by RHEA:13665 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13666
+      snippet: GTP => 3',5'-cyclic GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13666 declares side 13665_R as its products
+        (rh:products); the master reaction RHEA:13665 is undirected. This participant is CHEBI:57746 with
+        coefficient 1. Rhea cites PMID:4982201, PMID:8102054, PMID:9600905, PMID:7912093 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:13665 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13666
+      snippet: GTP => 3',5'-cyclic GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13666 declares side 13665_R as its products
+        (rh:products); the master reaction RHEA:13665 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:4982201, PMID:8102054, PMID:9600905, PMID:7912093 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.6.1.2
+      snippet: EC:4.6.1.2 > GO:guanylate cyclase activity ; GO:0004383
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004383 is itself a record
+        in this KB.
+  - subject: prot_P16066
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANPRA_HUMAN is an exemplar enzyme with EC 4.6.1.2 activity.
+    evidence:
+    - reference: EC:4.6.1.2
+      snippet: DR   P16066, ANPRA_HUMAN;  P18293, ANPRA_MOUSE;  P18910, ANPRA_RAT  ;
+      notes: ExPASy ENZYME entry EC 4.6.1.2 cross-references UniProtKB:P16066 (ANPRA_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P18293
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANPRA_MOUSE is an exemplar enzyme with EC 4.6.1.2 activity.
+    evidence:
+    - reference: EC:4.6.1.2
+      snippet: DR   P16066, ANPRA_HUMAN;  P18293, ANPRA_MOUSE;  P18910, ANPRA_RAT  ;
+      notes: ExPASy ENZYME entry EC 4.6.1.2 cross-references UniProtKB:P18293 (ANPRA_MOUSE) as a protein
+        with this activity.
+  - subject: prot_P18910
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANPRA_RAT is an exemplar enzyme with EC 4.6.1.2 activity.
+    evidence:
+    - reference: EC:4.6.1.2
+      snippet: DR   P16066, ANPRA_HUMAN;  P18293, ANPRA_MOUSE;  P18910, ANPRA_RAT  ;
+      notes: ExPASy ENZYME entry EC 4.6.1.2 cross-references UniProtKB:P18910 (ANPRA_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

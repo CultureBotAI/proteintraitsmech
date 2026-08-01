@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.4.3.23
     mapping_source: rhea2ec
@@ -42,4 +42,110 @@ definitions:
       Catalyses the reaction: L-tryptophan + O2 = 2-iminio-3-(indol-3-yl)propanoate + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-tryptophan + O2 = 2-iminio-3-(indol-3-yl)propanoate + H2O2
+  description: Substrate-to-product chemistry of RHEA:49024, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49025 (rh:substrates → 49024_L, rh:products → 49024_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-tryptophan + O2 = 2-iminio-3-(indol-3-yl)propanoate + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49024
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-tryptophan + O2 = 2-iminio-3-(indol-3-yl)propanoate + H2O2'
+  - node_id: sub1
+    label: L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:57912
+    description: Formula C11H12N2O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 2-iminio-3-(indol-3-yl)propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:59193
+    description: Formula C11H10N2O2.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 7-chloro-L-tryptophan oxidase
+    grounding: EC:1.4.3.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tryptophan is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49025
+      snippet: L-tryptophan + O2 => 2-iminio-3-(indol-3-yl)propanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:49025 declares side 49024_L as its substrates
+        (rh:substrates); the master reaction RHEA:49024 is undirected. This participant is CHEBI:57912
+        with coefficient 1. Rhea cites PMID:16874749, PMID:21779844, PMID:19756309, PMID:16313168 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49025
+      snippet: L-tryptophan + O2 => 2-iminio-3-(indol-3-yl)propanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:49025 declares side 49024_L as its substrates
+        (rh:substrates); the master reaction RHEA:49024 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:16874749, PMID:21779844, PMID:19756309, PMID:16313168 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-iminio-3-(indol-3-yl)propanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49025
+      snippet: L-tryptophan + O2 => 2-iminio-3-(indol-3-yl)propanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:49025 declares side 49024_R as its products
+        (rh:products); the master reaction RHEA:49024 is undirected. This participant is CHEBI:59193 with
+        coefficient 1. Rhea cites PMID:16874749, PMID:21779844, PMID:19756309, PMID:16313168 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49025
+      snippet: L-tryptophan + O2 => 2-iminio-3-(indol-3-yl)propanoate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:49025 declares side 49024_R as its products
+        (rh:products); the master reaction RHEA:49024 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:16874749, PMID:21779844, PMID:19756309, PMID:16313168 for this
+        reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.4.3.23; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:49024
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.4.3.23"/>
+      notes: The rh:ec triple on RHEA:49024 in rhea.rdf. EC 1.4.3.23 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

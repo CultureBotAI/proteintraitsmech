@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.2.-
 mapped_xrefs:
@@ -38,4 +38,146 @@ definitions:
       Catalyses: (S)-allantoin + H2O = allantoate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of allantoinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.2.5. EC 3.5.2.5 maps to exactly
+    one curated Rhea reaction (RHEA:17029), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-allantoin
+    + H2O = allantoate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: allantoinase
+    grounding: EC:3.5.2.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-allantoin
+    node_type: CHEMICAL
+    grounding: CHEBI:15678
+    description: Formula C4H6N4O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: allantoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17536
+    description: Formula C4H7N4O4.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: allantoinase activity
+    grounding: GO:0004038
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q65LN0
+    node_type: PROTEIN
+    label: ALLB_BACLD
+    grounding: UniProtKB:Q65LN0
+  - node_id: prot_O32137
+    node_type: PROTEIN
+    label: ALLB_BACSU
+    grounding: UniProtKB:O32137
+  - node_id: prot_A7Z8F5
+    node_type: PROTEIN
+    label: ALLB_BACVZ
+    grounding: UniProtKB:A7Z8F5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-allantoin is a substrate consumed by RHEA:17029 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17030
+      snippet: (S)-allantoin + H2O => allantoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17030 declares side 17029_L as its substrates
+        (rh:substrates); the master reaction RHEA:17029 is undirected. This participant is CHEBI:15678
+        with coefficient 1. Rhea cites PMID:11092864, PMID:24333989, PMID:19248789 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:17029 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17030
+      snippet: (S)-allantoin + H2O => allantoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17030 declares side 17029_L as its substrates
+        (rh:substrates); the master reaction RHEA:17029 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11092864, PMID:24333989, PMID:19248789 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: allantoate is a product released by RHEA:17029 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17030
+      snippet: (S)-allantoin + H2O => allantoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17030 declares side 17029_R as its products
+        (rh:products); the master reaction RHEA:17029 is undirected. This participant is CHEBI:17536 with
+        coefficient 1. Rhea cites PMID:11092864, PMID:24333989, PMID:19248789 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:17029 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17030
+      snippet: (S)-allantoin + H2O => allantoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17030 declares side 17029_R as its products
+        (rh:products); the master reaction RHEA:17029 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11092864, PMID:24333989, PMID:19248789 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.2.5
+      snippet: EC:3.5.2.5 > GO:allantoinase activity ; GO:0004038
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004038 is itself a record
+        in this KB.
+  - subject: prot_Q65LN0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALLB_BACLD is an exemplar enzyme with EC 3.5.2.5 activity.
+    evidence:
+    - reference: EC:3.5.2.5
+      snippet: DR   Q65LN0, ALLB_BACLD ;  O32137, ALLB_BACSU ;  A7Z8F5, ALLB_BACVZ ;
+      notes: ExPASy ENZYME entry EC 3.5.2.5 cross-references UniProtKB:Q65LN0 (ALLB_BACLD) as a protein
+        with this activity.
+  - subject: prot_O32137
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALLB_BACSU is an exemplar enzyme with EC 3.5.2.5 activity.
+    evidence:
+    - reference: EC:3.5.2.5
+      snippet: DR   Q65LN0, ALLB_BACLD ;  O32137, ALLB_BACSU ;  A7Z8F5, ALLB_BACVZ ;
+      notes: ExPASy ENZYME entry EC 3.5.2.5 cross-references UniProtKB:O32137 (ALLB_BACSU) as a protein
+        with this activity.
+  - subject: prot_A7Z8F5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALLB_BACVZ is an exemplar enzyme with EC 3.5.2.5 activity.
+    evidence:
+    - reference: EC:3.5.2.5
+      snippet: DR   Q65LN0, ALLB_BACLD ;  O32137, ALLB_BACSU ;  A7Z8F5, ALLB_BACVZ ;
+      notes: ExPASy ENZYME entry EC 3.5.2.5 cross-references UniProtKB:A7Z8F5 (ALLB_BACVZ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

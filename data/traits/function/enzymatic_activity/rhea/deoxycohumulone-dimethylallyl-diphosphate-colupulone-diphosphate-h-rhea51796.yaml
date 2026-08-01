@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.5.1.137
     mapping_source: rhea2ec
@@ -30,4 +30,124 @@ definitions:
       Catalyses the reaction: deoxycohumulone + dimethylallyl diphosphate = colupulone + diphosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of deoxycohumulone + dimethylallyl diphosphate = colupulone + diphosphate
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:51796, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:51797 (rh:substrates → 51796_L, rh:products → 51796_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of deoxycohumulone + dimethylallyl diphosphate = colupulone + diphosphate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:51796
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: deoxycohumulone + dimethylallyl diphosphate = colupulone + diphosphate + H(+)'
+  - node_id: sub1
+    label: deoxycohumulone
+    node_type: CHEMICAL
+    grounding: CHEBI:134353
+    description: Formula C20H28O4.
+  - node_id: sub2
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: colupulone
+    node_type: CHEMICAL
+    grounding: CHEBI:134349
+    description: Formula C25H35O4.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2-acyl-4-prenylphloroglucinol 6-prenyltransferase
+    grounding: EC:2.5.1.137
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: deoxycohumulone is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51797
+      snippet: deoxycohumulone + dimethylallyl diphosphate => colupulone + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51797 declares side 51796_L as its substrates
+        (rh:substrates); the master reaction RHEA:51796 is undirected. This participant is CHEBI:134353
+        with coefficient 1. Rhea cites PMID:25564559 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethylallyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51797
+      snippet: deoxycohumulone + dimethylallyl diphosphate => colupulone + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51797 declares side 51796_L as its substrates
+        (rh:substrates); the master reaction RHEA:51796 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:25564559 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: colupulone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51797
+      snippet: deoxycohumulone + dimethylallyl diphosphate => colupulone + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51797 declares side 51796_R as its products
+        (rh:products); the master reaction RHEA:51796 is undirected. This participant is CHEBI:134349
+        with coefficient 1. Rhea cites PMID:25564559 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51797
+      snippet: deoxycohumulone + dimethylallyl diphosphate => colupulone + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51797 declares side 51796_R as its products
+        (rh:products); the master reaction RHEA:51796 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25564559 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51797
+      snippet: deoxycohumulone + dimethylallyl diphosphate => colupulone + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51797 declares side 51796_R as its products
+        (rh:products); the master reaction RHEA:51796 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25564559 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.5.1.137; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:51796
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.137"/>
+      notes: The rh:ec triple on RHEA:51796 in rhea.rdf. EC 2.5.1.137 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

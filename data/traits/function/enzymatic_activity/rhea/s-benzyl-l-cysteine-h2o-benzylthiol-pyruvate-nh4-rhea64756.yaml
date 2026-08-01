@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:145803
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,123 @@ definitions:
       Catalyses the reaction: S-benzyl-L-cysteine + H2O = benzylthiol + pyruvate + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-benzyl-L-cysteine + H2O = benzylthiol + pyruvate + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:64756, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:64757 (rh:substrates → 64756_L, rh:products → 64756_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of S-benzyl-L-cysteine + H2O = benzylthiol + pyruvate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:64756
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: S-benzyl-L-cysteine + H2O = benzylthiol + pyruvate + NH4(+)'
+  - node_id: sub1
+    label: S-benzyl-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:145803
+    description: Formula C10H13NO2S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: benzylthiol
+    node_type: CHEMICAL
+    grounding: CHEBI:137674
+    description: Formula C7H8S.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd3
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cysteine-S-conjugate beta-lyase activity
+    grounding: GO:0047804
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-benzyl-L-cysteine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:64757
+      snippet: S-benzyl-L-cysteine + H2O => benzylthiol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64757 declares side 64756_L as its substrates
+        (rh:substrates); the master reaction RHEA:64756 is undirected. This participant is CHEBI:145803
+        with coefficient 1. Rhea cites PMID:17191898 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64757
+      snippet: S-benzyl-L-cysteine + H2O => benzylthiol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64757 declares side 64756_L as its substrates
+        (rh:substrates); the master reaction RHEA:64756 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17191898 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: benzylthiol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64757
+      snippet: S-benzyl-L-cysteine + H2O => benzylthiol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64757 declares side 64756_R as its products
+        (rh:products); the master reaction RHEA:64756 is undirected. This participant is CHEBI:137674
+        with coefficient 1. Rhea cites PMID:17191898 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64757
+      snippet: S-benzyl-L-cysteine + H2O => benzylthiol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64757 declares side 64756_R as its products
+        (rh:products); the master reaction RHEA:64756 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:17191898 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64757
+      snippet: S-benzyl-L-cysteine + H2O => benzylthiol + pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:64757 declares side 64756_R as its products
+        (rh:products); the master reaction RHEA:64756 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:17191898 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:64756
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047804"/>
+      notes: The rdfs:seeAlso triple on RHEA:64756 in rhea.rdf. GO term GO:0047804 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

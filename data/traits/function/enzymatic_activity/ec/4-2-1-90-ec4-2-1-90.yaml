@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -38,4 +38,131 @@ definitions:
       Catalyses: L-rhamnonate = 2-dehydro-3-deoxy-L-rhamnonate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-rhamnonate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.90. EC 4.2.1.90 maps to exactly
+    one curated Rhea reaction (RHEA:23080), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-rhamnonate
+    = 2-dehydro-3-deoxy-L-rhamnonate + H2O". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-rhamnonate dehydratase
+    grounding: EC:4.2.1.90
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-rhamnonate
+    node_type: CHEMICAL
+    grounding: CHEBI:58118
+    description: Formula C6H11O6.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-L-rhamnonate
+    node_type: CHEMICAL
+    grounding: CHEBI:58371
+    description: Formula C6H9O5.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-rhamnonate dehydratase activity
+    grounding: GO:0050032
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A8I5F1
+    node_type: PROTEIN
+    label: RHMD_AZOC5
+    grounding: UniProtKB:A8I5F1
+  - node_id: prot_B1YMY4
+    node_type: PROTEIN
+    label: RHMD_BURA4
+    grounding: UniProtKB:B1YMY4
+  - node_id: prot_A0KDV2
+    node_type: PROTEIN
+    label: RHMD_BURCH
+    grounding: UniProtKB:A0KDV2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-rhamnonate is a substrate consumed by RHEA:23080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23081
+      snippet: L-rhamnonate => 2-dehydro-3-deoxy-L-rhamnonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23081 declares side 23080_L as its substrates
+        (rh:substrates); the master reaction RHEA:23080 is undirected. This participant is CHEBI:58118
+        with coefficient 1. Rhea cites PMID:18754693, PMID:24382357 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-L-rhamnonate is a product released by RHEA:23080 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23081
+      snippet: L-rhamnonate => 2-dehydro-3-deoxy-L-rhamnonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23081 declares side 23080_R as its products
+        (rh:products); the master reaction RHEA:23080 is undirected. This participant is CHEBI:58371 with
+        coefficient 1. Rhea cites PMID:18754693, PMID:24382357 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:23080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23081
+      snippet: L-rhamnonate => 2-dehydro-3-deoxy-L-rhamnonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23081 declares side 23080_R as its products
+        (rh:products); the master reaction RHEA:23080 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:18754693, PMID:24382357 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.90
+      snippet: EC:4.2.1.90 > GO:L-rhamnonate dehydratase activity ; GO:0050032
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050032 is itself a record
+        in this KB.
+  - subject: prot_A8I5F1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHMD_AZOC5 is an exemplar enzyme with EC 4.2.1.90 activity.
+    evidence:
+    - reference: EC:4.2.1.90
+      snippet: DR   A8I5F1, RHMD_AZOC5 ;  B1YMY4, RHMD_BURA4 ;  A0KDV2, RHMD_BURCH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.90 cross-references UniProtKB:A8I5F1 (RHMD_AZOC5) as a protein
+        with this activity.
+  - subject: prot_B1YMY4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHMD_BURA4 is an exemplar enzyme with EC 4.2.1.90 activity.
+    evidence:
+    - reference: EC:4.2.1.90
+      snippet: DR   A8I5F1, RHMD_AZOC5 ;  B1YMY4, RHMD_BURA4 ;  A0KDV2, RHMD_BURCH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.90 cross-references UniProtKB:B1YMY4 (RHMD_BURA4) as a protein
+        with this activity.
+  - subject: prot_A0KDV2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHMD_BURCH is an exemplar enzyme with EC 4.2.1.90 activity.
+    evidence:
+    - reference: EC:4.2.1.90
+      snippet: DR   A8I5F1, RHMD_AZOC5 ;  B1YMY4, RHMD_BURA4 ;  A0KDV2, RHMD_BURCH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.90 cross-references UniProtKB:A0KDV2 (RHMD_BURCH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

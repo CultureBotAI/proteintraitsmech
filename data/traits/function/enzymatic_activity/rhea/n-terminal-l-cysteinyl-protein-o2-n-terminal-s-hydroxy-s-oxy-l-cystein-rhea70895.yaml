@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:65250
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,129 @@ definitions:
       Catalyses the reaction: N-terminal L-cysteinyl-[protein] + O2 = N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein] + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-terminal L-cysteinyl-[protein] + O2 = N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein…
+  description: Substrate-to-product chemistry of RHEA:70895, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:70896 (rh:substrates → 70895_L, rh:products → 70895_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-terminal L-cysteinyl-[protein] + O2 = N-terminal S-hydroxy-S-oxy-L-cystein…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:70895
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-terminal L-cysteinyl-[protein] + O2 = N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein]
+      + H(+)'
+  - node_id: sub1
+    label: N-terminal L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12707
+    description: Rhea compound GENERIC:12707.
+  - node_id: sub1_rp1
+    label: N-terminal L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12707 (N-terminal
+      L-cysteinyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65250
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17973
+    description: Rhea compound GENERIC:17973.
+  - node_id: prd1_rp1
+    label: N-terminal S-hydroxy-S-oxo-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17973 (N-terminal
+      S-hydroxy-S-oxy-L-cysteinyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:156254
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-terminal L-cysteinyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:70896
+      snippet: N-terminal L-cysteinyl-[protein] + O2 => N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70896 declares side 70895_L as its substrates
+        (rh:substrates); the master reaction RHEA:70895 is undirected. This participant is GENERIC:12707
+        with coefficient 1. Rhea cites PMID:31273118 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N-terminal L-cysteine residue is the reactive part of N-terminal L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:70895
+      snippet: N-terminal L-cysteine residue
+      notes: Rhea compound GENERIC:12707 (N-terminal L-cysteinyl-[protein]) declares rh:reactivePart =
+        N-terminal L-cysteine residue (CHEBI:65250), formula C3H7NOS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70896
+      snippet: N-terminal L-cysteinyl-[protein] + O2 => N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70896 declares side 70895_L as its substrates
+        (rh:substrates); the master reaction RHEA:70895 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:31273118 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein] is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70896
+      snippet: N-terminal L-cysteinyl-[protein] + O2 => N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70896 declares side 70895_R as its products
+        (rh:products); the master reaction RHEA:70895 is undirected. This participant is GENERIC:17973
+        with coefficient 1. Rhea cites PMID:31273118 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N-terminal S-hydroxy-S-oxo-L-cysteine residue is the reactive part of N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:70895
+      snippet: N-terminal S-hydroxy-S-oxo-L-cysteine residue
+      notes: Rhea compound GENERIC:17973 (N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein]) declares rh:reactivePart
+        = N-terminal S-hydroxy-S-oxo-L-cysteine residue (CHEBI:156254), formula C3H6NO3S.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70896
+      snippet: N-terminal L-cysteinyl-[protein] + O2 => N-terminal S-hydroxy-S-oxy-L-cysteinyl-[protein]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70896 declares side 70895_R as its products
+        (rh:products); the master reaction RHEA:70895 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:31273118 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

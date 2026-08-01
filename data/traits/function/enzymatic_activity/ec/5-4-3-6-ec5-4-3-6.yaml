@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.3.-
 synonyms:
@@ -41,4 +41,115 @@ definitions:
       Catalyses: L-tyrosine = 3-amino-3-(4-hydroxyphenyl)propanoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tyrosine 2,3-aminomutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.3.6. EC 5.4.3.6 maps to exactly
+    one curated Rhea reaction (RHEA:15781), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-tyrosine =
+    3-amino-3-(4-hydroxyphenyl)propanoate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tyrosine 2,3-aminomutase
+    grounding: EC:5.4.3.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: prd1
+    label: 3-amino-3-(4-hydroxyphenyl)propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57956
+    description: Formula C9H11NO3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-tyrosine 2,3-aminomutase activity
+    grounding: GO:0050368
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q1LRV9
+    node_type: PROTEIN
+    label: TALY_CUPMC
+    grounding: UniProtKB:Q1LRV9
+  - node_id: prot_Q0VZ68
+    node_type: PROTEIN
+    label: TAM_CHOCO
+    grounding: UniProtKB:Q0VZ68
+  - node_id: prot_B8ZV93
+    node_type: PROTEIN
+    label: TAM_MYXFU
+    grounding: UniProtKB:B8ZV93
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tyrosine is a substrate consumed by RHEA:15781 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15782
+      snippet: L-tyrosine => 3-amino-3-(4-hydroxyphenyl)propanoate
+      notes: Rhea's left-to-right directional reaction RHEA:15782 declares side 15781_L as its substrates
+        (rh:substrates); the master reaction RHEA:15781 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:20577998, PMID:23800193, PMID:19222035 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-amino-3-(4-hydroxyphenyl)propanoate is a product released by RHEA:15781 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:15782
+      snippet: L-tyrosine => 3-amino-3-(4-hydroxyphenyl)propanoate
+      notes: Rhea's left-to-right directional reaction RHEA:15782 declares side 15781_R as its products
+        (rh:products); the master reaction RHEA:15781 is undirected. This participant is CHEBI:57956 with
+        coefficient 1. Rhea cites PMID:20577998, PMID:23800193, PMID:19222035 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.3.6
+      snippet: EC:5.4.3.6 > GO:L-tyrosine 2,3-aminomutase activity ; GO:0050368
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050368 is itself a record
+        in this KB.
+  - subject: prot_Q1LRV9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TALY_CUPMC is an exemplar enzyme with EC 5.4.3.6 activity.
+    evidence:
+    - reference: EC:5.4.3.6
+      snippet: DR   Q1LRV9, TALY_CUPMC ;  Q0VZ68, TAM_CHOCO  ;  B8ZV93, TAM_MYXFU  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.6 cross-references UniProtKB:Q1LRV9 (TALY_CUPMC) as a protein
+        with this activity.
+  - subject: prot_Q0VZ68
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAM_CHOCO is an exemplar enzyme with EC 5.4.3.6 activity.
+    evidence:
+    - reference: EC:5.4.3.6
+      snippet: DR   Q1LRV9, TALY_CUPMC ;  Q0VZ68, TAM_CHOCO  ;  B8ZV93, TAM_MYXFU  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.6 cross-references UniProtKB:Q0VZ68 (TAM_CHOCO) as a protein
+        with this activity.
+  - subject: prot_B8ZV93
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAM_MYXFU is an exemplar enzyme with EC 5.4.3.6 activity.
+    evidence:
+    - reference: EC:5.4.3.6
+      snippet: DR   Q1LRV9, TALY_CUPMC ;  Q0VZ68, TAM_CHOCO  ;  B8ZV93, TAM_MYXFU  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.6 cross-references UniProtKB:B8ZV93 (TAM_MYXFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

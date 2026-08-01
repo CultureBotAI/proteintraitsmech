@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 mapped_xrefs:
@@ -36,4 +36,262 @@ definitions:
       Catalyses: 4-hydroxytryptamine + ATP = norbaeocystin + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-hydroxytryptamine kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.222. Rhea assigns 2 curated
+    reactions to EC 2.7.1.222. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "4-hydroxytryptamine + ATP = norbaeocystin + ADP + H(+)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxytryptamine kinase
+    grounding: EC:2.7.1.222
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 4-hydroxytryptamine + ATP = norbaeocystin + ADP + H(+)
+    grounding: RHEA:55564
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 4-hydroxytryptamine + ATP = norbaeocystin + ADP + H(+)'
+  - node_id: rxn1_sub1
+    label: 4-hydroxytryptamine
+    node_type: CHEMICAL
+    grounding: CHEBI:139069
+    description: Formula C10H13N2O.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_prd1
+    label: norbaeocystin
+    node_type: CHEMICAL
+    grounding: CHEBI:139070
+    description: Formula C10H12N2O4P.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of psilocin + ATP = psilocybin + ADP + H(+)
+    grounding: RHEA:73911
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: psilocin + ATP = psilocybin + ADP + H(+)'
+  - node_id: rxn2_sub1
+    label: psilocin
+    node_type: CHEMICAL
+    grounding: CHEBI:193059
+    description: Formula C12H17N2O.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_prd1
+    label: psilocybin
+    node_type: CHEMICAL
+    grounding: CHEBI:139072
+    description: Formula C12H16N2O4P.
+  - node_id: rxn2_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxytryptamine kinase activity
+    grounding: GO:0140383
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0DPA8
+    node_type: PROTEIN
+    label: PSIK_PSICU
+    grounding: UniProtKB:P0DPA8
+  - node_id: prot_A0A286LEZ6
+    node_type: PROTEIN
+    label: PSIK_PSICY
+    grounding: UniProtKB:A0A286LEZ6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:55564 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.222; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:55564
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.222"/>
+      notes: The rh:ec triple on RHEA:55564 in rhea.rdf assigns that reaction to EC 2.7.1.222.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 4-hydroxytryptamine is a substrate consumed by RHEA:55564 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:55565
+      snippet: 4-hydroxytryptamine + ATP => norbaeocystin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55565 declares side 55564_L as its substrates
+        (rh:substrates); the master reaction RHEA:55564 is undirected. This participant is CHEBI:139069
+        with coefficient 1. Rhea cites PMID:28763571 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:55564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55565
+      snippet: 4-hydroxytryptamine + ATP => norbaeocystin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55565 declares side 55564_L as its substrates
+        (rh:substrates); the master reaction RHEA:55564 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:28763571 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: norbaeocystin is a product released by RHEA:55564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55565
+      snippet: 4-hydroxytryptamine + ATP => norbaeocystin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55565 declares side 55564_R as its products
+        (rh:products); the master reaction RHEA:55564 is undirected. This participant is CHEBI:139070
+        with coefficient 1. Rhea cites PMID:28763571 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:55564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55565
+      snippet: 4-hydroxytryptamine + ATP => norbaeocystin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55565 declares side 55564_R as its products
+        (rh:products); the master reaction RHEA:55564 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:28763571 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:55564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55565
+      snippet: 4-hydroxytryptamine + ATP => norbaeocystin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55565 declares side 55564_R as its products
+        (rh:products); the master reaction RHEA:55564 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:28763571 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:73911 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.222; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:73911
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.222"/>
+      notes: The rh:ec triple on RHEA:73911 in rhea.rdf assigns that reaction to EC 2.7.1.222.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: psilocin is a substrate consumed by RHEA:73911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73912
+      snippet: psilocin + ATP => psilocybin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:73912 declares side 73911_L as its substrates
+        (rh:substrates); the master reaction RHEA:73911 is undirected. This participant is CHEBI:193059
+        with coefficient 1. Rhea cites PMID:28763571, PMID:35583969, PMID:32101345 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:73911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73912
+      snippet: psilocin + ATP => psilocybin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:73912 declares side 73911_L as its substrates
+        (rh:substrates); the master reaction RHEA:73911 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:28763571, PMID:35583969, PMID:32101345 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: psilocybin is a product released by RHEA:73911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73912
+      snippet: psilocin + ATP => psilocybin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:73912 declares side 73911_R as its products
+        (rh:products); the master reaction RHEA:73911 is undirected. This participant is CHEBI:139072
+        with coefficient 1. Rhea cites PMID:28763571, PMID:35583969, PMID:32101345 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: ADP is a product released by RHEA:73911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73912
+      snippet: psilocin + ATP => psilocybin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:73912 declares side 73911_R as its products
+        (rh:products); the master reaction RHEA:73911 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:28763571, PMID:35583969, PMID:32101345 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:73911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73912
+      snippet: psilocin + ATP => psilocybin + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:73912 declares side 73911_R as its products
+        (rh:products); the master reaction RHEA:73911 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:28763571, PMID:35583969, PMID:32101345 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.1.222
+      snippet: EC:2.7.1.222 > GO:4-hydroxytryptamine kinase activity ; GO:0140383
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0140383 is itself a record
+        in this KB.
+  - subject: prot_P0DPA8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSIK_PSICU is an exemplar enzyme with EC 2.7.1.222 activity.
+    evidence:
+    - reference: EC:2.7.1.222
+      snippet: DR   P0DPA8, PSIK_PSICU ;  A0A286LEZ6, PSIK_PSICY ;
+      notes: ExPASy ENZYME entry EC 2.7.1.222 cross-references UniProtKB:P0DPA8 (PSIK_PSICU) as a protein
+        with this activity.
+  - subject: prot_A0A286LEZ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSIK_PSICY is an exemplar enzyme with EC 2.7.1.222 activity.
+    evidence:
+    - reference: EC:2.7.1.222
+      snippet: DR   P0DPA8, PSIK_PSICU ;  A0A286LEZ6, PSIK_PSICY ;
+      notes: ExPASy ENZYME entry EC 2.7.1.222 cross-references UniProtKB:A0A286LEZ6 (PSIK_PSICY) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

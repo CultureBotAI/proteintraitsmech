@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:77417
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,93 @@ definitions:
       Catalyses the reaction: tetradecan-1-ol + hexadecanoyl-CoA = tetradecyl hexadecanoate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tetradecan-1-ol + hexadecanoyl-CoA = tetradecyl hexadecanoate + CoA
+  description: Substrate-to-product chemistry of RHEA:44124, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:44125 (rh:substrates → 44124_L, rh:products → 44124_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tetradecan-1-ol + hexadecanoyl-CoA = tetradecyl hexadecanoate + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:44124
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tetradecan-1-ol + hexadecanoyl-CoA = tetradecyl hexadecanoate + CoA'
+  - node_id: sub1
+    label: tetradecan-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:77417
+    description: Formula C14H30O.
+  - node_id: sub2
+    label: hexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57379
+    description: Formula C37H62N7O17P3S.
+  - node_id: prd1
+    label: tetradecyl hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:84064
+    description: Formula C30H60O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tetradecan-1-ol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44125
+      snippet: tetradecan-1-ol + hexadecanoyl-CoA => tetradecyl hexadecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44125 declares side 44124_L as its substrates
+        (rh:substrates); the master reaction RHEA:44124 is undirected. This participant is CHEBI:77417
+        with coefficient 1. Rhea cites PMID:15070765 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hexadecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44125
+      snippet: tetradecan-1-ol + hexadecanoyl-CoA => tetradecyl hexadecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44125 declares side 44124_L as its substrates
+        (rh:substrates); the master reaction RHEA:44124 is undirected. This participant is CHEBI:57379
+        with coefficient 1. Rhea cites PMID:15070765 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tetradecyl hexadecanoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44125
+      snippet: tetradecan-1-ol + hexadecanoyl-CoA => tetradecyl hexadecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44125 declares side 44124_R as its products
+        (rh:products); the master reaction RHEA:44124 is undirected. This participant is CHEBI:84064 with
+        coefficient 1. Rhea cites PMID:15070765 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44125
+      snippet: tetradecan-1-ol + hexadecanoyl-CoA => tetradecyl hexadecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44125 declares side 44124_R as its products
+        (rh:products); the master reaction RHEA:44124 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:15070765 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

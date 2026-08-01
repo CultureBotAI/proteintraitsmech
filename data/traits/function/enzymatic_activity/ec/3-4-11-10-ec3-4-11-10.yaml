@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.11.-
 synonyms:
@@ -36,4 +36,66 @@ definitions:
       Catalyses: Release of an N-terminal amino acid, preferentially leucine, but not glutamic or aspartic acids
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of bacterial leucyl aminopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.11.10. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of an N-terminal amino acid, preferentially leucine, but not glutamic or aspartic acids".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: bacterial leucyl aminopeptidase
+    grounding: EC:3.4.11.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q8EI85
+    node_type: PROTEIN
+    label: AMPA1_SHEON
+    grounding: UniProtKB:Q8EI85
+  - node_id: prot_Q8EH62
+    node_type: PROTEIN
+    label: AMPA2_SHEON
+    grounding: UniProtKB:Q8EH62
+  - node_id: prot_B0CCF6
+    node_type: PROTEIN
+    label: AMPA_ACAM1
+    grounding: UniProtKB:B0CCF6
+  edges:
+  - subject: prot_Q8EI85
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPA1_SHEON is an exemplar enzyme with EC 3.4.11.10 activity.
+    evidence:
+    - reference: EC:3.4.11.10
+      snippet: DR   Q8EI85, AMPA1_SHEON;  Q8EH62, AMPA2_SHEON;  B0CCF6, AMPA_ACAM1 ;
+      notes: ExPASy ENZYME entry EC 3.4.11.10 cross-references UniProtKB:Q8EI85 (AMPA1_SHEON) as a protein
+        with this activity.
+  - subject: prot_Q8EH62
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPA2_SHEON is an exemplar enzyme with EC 3.4.11.10 activity.
+    evidence:
+    - reference: EC:3.4.11.10
+      snippet: DR   Q8EI85, AMPA1_SHEON;  Q8EH62, AMPA2_SHEON;  B0CCF6, AMPA_ACAM1 ;
+      notes: ExPASy ENZYME entry EC 3.4.11.10 cross-references UniProtKB:Q8EH62 (AMPA2_SHEON) as a protein
+        with this activity.
+  - subject: prot_B0CCF6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPA_ACAM1 is an exemplar enzyme with EC 3.4.11.10 activity.
+    evidence:
+    - reference: EC:3.4.11.10
+      snippet: DR   Q8EI85, AMPA1_SHEON;  Q8EH62, AMPA2_SHEON;  B0CCF6, AMPA_ACAM1 ;
+      notes: ExPASy ENZYME entry EC 3.4.11.10 cross-references UniProtKB:B0CCF6 (AMPA_ACAM1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

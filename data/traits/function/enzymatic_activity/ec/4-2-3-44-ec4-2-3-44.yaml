@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,117 @@ definitions:
       Catalyses: (+)-copalyl diphosphate = isopimara-7,15-diene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isopimara-7,15-diene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.44. EC 4.2.3.44 maps to exactly
+    one curated Rhea reaction (RHEA:26128), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(+)-copalyl diphosphate
+    = isopimara-7,15-diene + diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: isopimara-7,15-diene synthase
+    grounding: EC:4.2.3.44
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (+)-copalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58635
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: isopimara-7,15-diene
+    node_type: CHEMICAL
+    grounding: CHEBI:52280
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_H8ZM71
+    node_type: PROTEIN
+    label: ISO_ABIBA
+    grounding: UniProtKB:H8ZM71
+  - node_id: prot_M4HXW5
+    node_type: PROTEIN
+    label: MISO1_PINBN
+    grounding: UniProtKB:M4HXW5
+  - node_id: prot_M4HYP3
+    node_type: PROTEIN
+    label: MISO1_PINCO
+    grounding: UniProtKB:M4HYP3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (+)-copalyl diphosphate is a substrate consumed by RHEA:26128 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26129
+      snippet: (+)-copalyl diphosphate => isopimara-7,15-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26129 declares side 26128_L as its substrates
+        (rh:substrates); the master reaction RHEA:26128 is undirected. This participant is CHEBI:58635
+        with coefficient 1. Rhea cites PMID:22337889, PMID:23370714, PMID:15310829 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: isopimara-7,15-diene is a product released by RHEA:26128 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26129
+      snippet: (+)-copalyl diphosphate => isopimara-7,15-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26129 declares side 26128_R as its products
+        (rh:products); the master reaction RHEA:26128 is undirected. This participant is CHEBI:52280 with
+        coefficient 1. Rhea cites PMID:22337889, PMID:23370714, PMID:15310829 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:26128 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26129
+      snippet: (+)-copalyl diphosphate => isopimara-7,15-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26129 declares side 26128_R as its products
+        (rh:products); the master reaction RHEA:26128 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:22337889, PMID:23370714, PMID:15310829 for this reaction.
+  - subject: prot_H8ZM71
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ISO_ABIBA is an exemplar enzyme with EC 4.2.3.44 activity.
+    evidence:
+    - reference: EC:4.2.3.44
+      snippet: DR   H8ZM71, ISO_ABIBA  ;  M4HXW5, MISO1_PINBN;  M4HYP3, MISO1_PINCO;
+      notes: ExPASy ENZYME entry EC 4.2.3.44 cross-references UniProtKB:H8ZM71 (ISO_ABIBA) as a protein
+        with this activity.
+  - subject: prot_M4HXW5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MISO1_PINBN is an exemplar enzyme with EC 4.2.3.44 activity.
+    evidence:
+    - reference: EC:4.2.3.44
+      snippet: DR   H8ZM71, ISO_ABIBA  ;  M4HXW5, MISO1_PINBN;  M4HYP3, MISO1_PINCO;
+      notes: ExPASy ENZYME entry EC 4.2.3.44 cross-references UniProtKB:M4HXW5 (MISO1_PINBN) as a protein
+        with this activity.
+  - subject: prot_M4HYP3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MISO1_PINCO is an exemplar enzyme with EC 4.2.3.44 activity.
+    evidence:
+    - reference: EC:4.2.3.44
+      snippet: DR   H8ZM71, ISO_ABIBA  ;  M4HXW5, MISO1_PINBN;  M4HYP3, MISO1_PINCO;
+      notes: ExPASy ENZYME entry EC 4.2.3.44 cross-references UniProtKB:M4HYP3 (MISO1_PINCO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

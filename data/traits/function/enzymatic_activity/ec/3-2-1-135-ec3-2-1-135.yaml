@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: Hydrolysis of pullulan to panose (6-alpha-D-glucosylmaltose)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of neopullulanase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.135. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of pullulan to panose (6-alpha-D-glucosylmaltose)".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: neopullulanase
+    grounding: EC:3.2.1.135
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: neopullulanase activity
+    grounding: GO:0031216
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q59226
+    node_type: PROTEIN
+    label: CDAS_BACSP
+    grounding: UniProtKB:Q59226
+  - node_id: prot_Q60053
+    node_type: PROTEIN
+    label: NEPU1_THEVU
+    grounding: UniProtKB:Q60053
+  - node_id: prot_Q08751
+    node_type: PROTEIN
+    label: NEPU2_THEVU
+    grounding: UniProtKB:Q08751
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.135
+      snippet: EC:3.2.1.135 > GO:neopullulanase activity ; GO:0031216
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0031216 is itself a record
+        in this KB.
+  - subject: prot_Q59226
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDAS_BACSP is an exemplar enzyme with EC 3.2.1.135 activity.
+    evidence:
+    - reference: EC:3.2.1.135
+      snippet: DR   Q59226, CDAS_BACSP ;  Q60053, NEPU1_THEVU;  Q08751, NEPU2_THEVU;
+      notes: ExPASy ENZYME entry EC 3.2.1.135 cross-references UniProtKB:Q59226 (CDAS_BACSP) as a protein
+        with this activity.
+  - subject: prot_Q60053
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEPU1_THEVU is an exemplar enzyme with EC 3.2.1.135 activity.
+    evidence:
+    - reference: EC:3.2.1.135
+      snippet: DR   Q59226, CDAS_BACSP ;  Q60053, NEPU1_THEVU;  Q08751, NEPU2_THEVU;
+      notes: ExPASy ENZYME entry EC 3.2.1.135 cross-references UniProtKB:Q60053 (NEPU1_THEVU) as a protein
+        with this activity.
+  - subject: prot_Q08751
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEPU2_THEVU is an exemplar enzyme with EC 3.2.1.135 activity.
+    evidence:
+    - reference: EC:3.2.1.135
+      snippet: DR   Q59226, CDAS_BACSP ;  Q60053, NEPU1_THEVU;  Q08751, NEPU2_THEVU;
+      notes: ExPASy ENZYME entry EC 3.2.1.135 cross-references UniProtKB:Q08751 (NEPU2_THEVU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

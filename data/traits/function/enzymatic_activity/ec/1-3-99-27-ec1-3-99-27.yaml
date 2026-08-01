@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.99.-
 synonyms:
@@ -43,4 +43,132 @@ definitions:
       Catalyses: rhodopin + A = (3E)-3,4-didehydrorhodopin + AH2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-hydroxycarotenoid 3,4-desaturase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.99.27. EC 1.3.99.27 maps to
+    exactly one curated Rhea reaction (RHEA:30919), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "rhodopin
+    + A = (3E)-3,4-didehydrorhodopin + AH2". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1-hydroxycarotenoid 3,4-desaturase
+    grounding: EC:1.3.99.27
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: rhodopin
+    node_type: CHEMICAL
+    grounding: CHEBI:35331
+    description: Formula C40H58O.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd1
+    label: (3E)-3,4-didehydrorhodopin
+    node_type: CHEMICAL
+    grounding: CHEBI:62481
+    description: Formula C40H56O.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: prot_Q7WT72
+    node_type: PROTEIN
+    label: CRTDH_FLAS9
+    grounding: UniProtKB:Q7WT72
+  - node_id: prot_L7WC64
+    node_type: PROTEIN
+    label: CRTDH_NONDD
+    grounding: UniProtKB:L7WC64
+  - node_id: prot_Q01671
+    node_type: PROTEIN
+    label: CRTD_CERS4
+    grounding: UniProtKB:Q01671
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: rhodopin is a substrate consumed by RHEA:30919 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30920
+      snippet: rhodopin + A => (3E)-3,4-didehydrorhodopin + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30920 declares side 30919_L as its substrates
+        (rh:substrates); the master reaction RHEA:30919 is undirected. This participant is CHEBI:35331
+        with coefficient 1. Rhea cites PMID:9393712, PMID:15251462, PMID:10880364 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by RHEA:30919 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30920
+      snippet: rhodopin + A => (3E)-3,4-didehydrorhodopin + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30920 declares side 30919_L as its substrates
+        (rh:substrates); the master reaction RHEA:30919 is undirected. This participant is CHEBI:13193
+        with coefficient 1. Rhea cites PMID:9393712, PMID:15251462, PMID:10880364 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3E)-3,4-didehydrorhodopin is a product released by RHEA:30919 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30920
+      snippet: rhodopin + A => (3E)-3,4-didehydrorhodopin + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30920 declares side 30919_R as its products
+        (rh:products); the master reaction RHEA:30919 is undirected. This participant is CHEBI:62481 with
+        coefficient 1. Rhea cites PMID:9393712, PMID:15251462, PMID:10880364 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by RHEA:30919 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30920
+      snippet: rhodopin + A => (3E)-3,4-didehydrorhodopin + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:30920 declares side 30919_R as its products
+        (rh:products); the master reaction RHEA:30919 is undirected. This participant is CHEBI:17499 with
+        coefficient 1. Rhea cites PMID:9393712, PMID:15251462, PMID:10880364 for this reaction.
+  - subject: prot_Q7WT72
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTDH_FLAS9 is an exemplar enzyme with EC 1.3.99.27 activity.
+    evidence:
+    - reference: EC:1.3.99.27
+      snippet: DR   Q7WT72, CRTDH_FLAS9;  L7WC64, CRTDH_NONDD;  Q01671, CRTD_CERS4 ;
+      notes: ExPASy ENZYME entry EC 1.3.99.27 cross-references UniProtKB:Q7WT72 (CRTDH_FLAS9) as a protein
+        with this activity.
+  - subject: prot_L7WC64
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTDH_NONDD is an exemplar enzyme with EC 1.3.99.27 activity.
+    evidence:
+    - reference: EC:1.3.99.27
+      snippet: DR   Q7WT72, CRTDH_FLAS9;  L7WC64, CRTDH_NONDD;  Q01671, CRTD_CERS4 ;
+      notes: ExPASy ENZYME entry EC 1.3.99.27 cross-references UniProtKB:L7WC64 (CRTDH_NONDD) as a protein
+        with this activity.
+  - subject: prot_Q01671
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTD_CERS4 is an exemplar enzyme with EC 1.3.99.27 activity.
+    evidence:
+    - reference: EC:1.3.99.27
+      snippet: DR   Q7WT72, CRTDH_FLAS9;  L7WC64, CRTDH_NONDD;  Q01671, CRTD_CERS4 ;
+      notes: ExPASy ENZYME entry EC 1.3.99.27 cross-references UniProtKB:Q01671 (CRTD_CERS4) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

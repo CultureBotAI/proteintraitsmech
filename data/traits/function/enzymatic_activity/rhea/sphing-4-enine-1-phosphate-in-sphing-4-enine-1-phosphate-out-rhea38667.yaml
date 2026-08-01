@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:60119
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,63 @@ definitions:
       Catalyses the reaction: sphing-4-enine 1-phosphate(in) = sphing-4-enine 1-phosphate(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sphing-4-enine 1-phosphate(in) = sphing-4-enine 1-phosphate(out)
+  description: 'Substrate-to-product chemistry of RHEA:38667, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:38668 (rh:substrates → 38667_L, rh:products → 38667_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of sphing-4-enine 1-phosphate(in) = sphing-4-enine 1-phosphate(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:38667
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: sphing-4-enine 1-phosphate(in) = sphing-4-enine 1-phosphate(out)'
+  - node_id: sub1
+    label: sphing-4-enine 1-phosphate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:60119
+    description: Formula C18H37NO5P.
+  - node_id: prd1
+    label: sphing-4-enine 1-phosphate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:60119
+    description: Formula C18H37NO5P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sphing-4-enine 1-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38668
+      snippet: sphing-4-enine 1-phosphate(in) => sphing-4-enine 1-phosphate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:38668 declares side 38667_L as its substrates
+        (rh:substrates); the master reaction RHEA:38667 is undirected. This participant is CHEBI:60119
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:23180825,
+        PMID:33863882 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sphing-4-enine 1-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38668
+      snippet: sphing-4-enine 1-phosphate(in) => sphing-4-enine 1-phosphate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:38668 declares side 38667_R as its products
+        (rh:products); the master reaction RHEA:38667 is undirected. This participant is CHEBI:60119 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:23180825,
+        PMID:33863882 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

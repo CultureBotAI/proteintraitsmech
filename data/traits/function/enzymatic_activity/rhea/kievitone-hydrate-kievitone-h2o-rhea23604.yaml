@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.95
     mapping_source: rhea2ec
@@ -28,4 +28,126 @@ definitions:
       Catalyses the reaction: kievitone hydrate = kievitone + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of kievitone hydrate = kievitone + H2O
+  description: Substrate-to-product chemistry of RHEA:23604, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23605 (rh:substrates → 23604_L, rh:products → 23604_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of kievitone hydrate = kievitone + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23604
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: kievitone hydrate = kievitone + H2O'
+  - node_id: sub1
+    label: kievitone hydrate
+    node_type: CHEMICAL
+    grounding: CHEBI:17529
+    description: Formula C20H22O7.
+  - node_id: prd1
+    label: kievitone
+    node_type: CHEMICAL
+    grounding: CHEBI:16832
+    description: Formula C20H20O6.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: kievitone hydratase activity
+    grounding: GO:0050015
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: kievitone hydratase
+    grounding: EC:4.2.1.95
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q00870
+    node_type: PROTEIN
+    label: KHS_FUSSH
+    grounding: UniProtKB:Q00870
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: kievitone hydrate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23605
+      snippet: kievitone hydrate => kievitone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23605 declares side 23604_L as its substrates
+        (rh:substrates); the master reaction RHEA:23604 is undirected. This participant is CHEBI:17529
+        with coefficient 1. Rhea cites PMID:7655061, PMID:1366757 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: kievitone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23605
+      snippet: kievitone hydrate => kievitone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23605 declares side 23604_R as its products
+        (rh:products); the master reaction RHEA:23604 is undirected. This participant is CHEBI:16832 with
+        coefficient 1. Rhea cites PMID:7655061, PMID:1366757 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23605
+      snippet: kievitone hydrate => kievitone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:23605 declares side 23604_R as its products
+        (rh:products); the master reaction RHEA:23604 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:7655061, PMID:1366757 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:23604
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050015"/>
+      notes: The rdfs:seeAlso triple on RHEA:23604 in rhea.rdf. GO term GO:0050015 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.95; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:23604
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.95"/>
+      notes: The rh:ec triple on RHEA:23604 in rhea.rdf. EC 4.2.1.95 is itself a record in this KB.
+  - subject: prot_Q00870
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KHS_FUSSH is an exemplar enzyme carrying EC 4.2.1.95, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.95
+      snippet: DR   Q00870, KHS_FUSSH  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.95 cross-references UniProtKB:Q00870 (KHS_FUSSH) as a protein
+        with this activity.
+    - reference: RHEA:23604
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.95"/>
+      notes: Rhea assigns RHEA:23604 to EC 4.2.1.95, and EC 4.2.1.95 maps to exactly one Rhea master reaction
+        (RHEA:23604), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

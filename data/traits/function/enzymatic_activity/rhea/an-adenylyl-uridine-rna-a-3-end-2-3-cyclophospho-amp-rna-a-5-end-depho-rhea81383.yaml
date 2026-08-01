@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:231879
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,126 @@ definitions:
       Catalyses the reaction: an adenylyl-uridine-RNA = a 3'-end 2',3'-cyclophospho-AMP-RNA + a 5'-end dephospho-uridine-RNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an adenylyl-uridine-RNA = a 3'-end 2',3'-cyclophospho-AMP-RNA + a 5'-end
+    dephospho-urid…
+  description: Substrate-to-product chemistry of RHEA:81383, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81384 (rh:substrates → 81383_L, rh:products → 81383_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an adenylyl-uridine-RNA = a 3'-end 2',3'-cyclophospho-AMP-RNA + a 5'-end dep…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81383
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an adenylyl-uridine-RNA = a 3''-end 2'',3''-cyclophospho-AMP-RNA + a 5''-end dephospho-uridine-RNA'
+  - node_id: sub1
+    label: an adenylyl-uridine-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19675
+    description: Rhea compound GENERIC:19675.
+  - node_id: sub1_rp1
+    label: adenylyl-uridine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19675 (an adenylyl-uridine-RNA);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:231879
+  - node_id: prd1
+    label: a 3'-end 2',3'-cyclophospho-AMP-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19676
+    description: Rhea compound GENERIC:19676.
+  - node_id: prd1_rp1
+    label: 3'-end 2',3'-cyclophospho-AMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19676 (a 3'-end
+      2',3'-cyclophospho-AMP-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:231881
+  - node_id: prd2
+    label: a 5'-end dephospho-uridine-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17356
+    description: Rhea compound GENERIC:17356.
+  - node_id: prd2_rp1
+    label: 5'-dephospho-uridine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17356 (a 5'-end
+      dephospho-uridine-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:173224
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an adenylyl-uridine-RNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81384
+      snippet: an adenylyl-uridine-RNA => a 3'-end 2',3'-cyclophospho-AMP-RNA + a 5'-end dephospho-uridine-RNA
+      notes: Rhea's left-to-right directional reaction RHEA:81384 declares side 81383_L as its substrates
+        (rh:substrates); the master reaction RHEA:81383 is undirected. This participant is GENERIC:19675
+        with coefficient 1. Rhea cites PMID:31778653 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: adenylyl-uridine residue is the reactive part of an adenylyl-uridine-RNA.
+    evidence:
+    - reference: RHEA:81383
+      snippet: adenylyl-uridine residue
+      notes: Rhea compound GENERIC:19675 (an adenylyl-uridine-RNA) declares rh:reactivePart = adenylyl-uridine
+        residue (CHEBI:231879), formula C19H21N7O14P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3'-end 2',3'-cyclophospho-AMP-RNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:81384
+      snippet: an adenylyl-uridine-RNA => a 3'-end 2',3'-cyclophospho-AMP-RNA + a 5'-end dephospho-uridine-RNA
+      notes: Rhea's left-to-right directional reaction RHEA:81384 declares side 81383_R as its products
+        (rh:products); the master reaction RHEA:81383 is undirected. This participant is GENERIC:19676
+        with coefficient 1. Rhea cites PMID:31778653 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-end 2',3'-cyclophospho-AMP residue is the reactive part of a 3'-end 2',3'-cyclophospho-AMP-RNA.
+    evidence:
+    - reference: RHEA:81383
+      snippet: 3'-end 2',3'-cyclophospho-AMP residue
+      notes: Rhea compound GENERIC:19676 (a 3'-end 2',3'-cyclophospho-AMP-RNA) declares rh:reactivePart
+        = 3'-end 2',3'-cyclophospho-AMP residue (CHEBI:231881), formula C10H10N5O8P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 5'-end dephospho-uridine-RNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:81384
+      snippet: an adenylyl-uridine-RNA => a 3'-end 2',3'-cyclophospho-AMP-RNA + a 5'-end dephospho-uridine-RNA
+      notes: Rhea's left-to-right directional reaction RHEA:81384 declares side 81383_R as its products
+        (rh:products); the master reaction RHEA:81383 is undirected. This participant is GENERIC:17356
+        with coefficient 1. Rhea cites PMID:31778653 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: 5'-dephospho-uridine residue is the reactive part of a 5'-end dephospho-uridine-RNA.
+    evidence:
+    - reference: RHEA:81383
+      snippet: 5'-dephospho-uridine residue
+      notes: Rhea compound GENERIC:17356 (a 5'-end dephospho-uridine-RNA) declares rh:reactivePart = 5'-dephospho-uridine
+        residue (CHEBI:173224), formula C9H11N2O6.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

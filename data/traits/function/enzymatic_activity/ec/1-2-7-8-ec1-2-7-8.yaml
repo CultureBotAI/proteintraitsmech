@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.2.7.-
 synonyms:
@@ -43,4 +43,241 @@ definitions:
       Catalyses: indole-3-pyruvate + 2 oxidized [2Fe-2S]-[ferredoxin] + CoA = (indol-3- yl)acetyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of indolepyruvate ferredoxin oxidoreductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.2.7.8. EC 1.2.7.8 maps to exactly
+    one curated Rhea reaction (RHEA:12645), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "indole-3-pyruvate
+    + 2 oxidized [2Fe-2S]-[ferredoxin] + CoA = (indol-3- yl)acetyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin]
+    + CO2 + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: indolepyruvate ferredoxin oxidoreductase
+    grounding: EC:1.2.7.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: indole-3-pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:17640
+    description: Formula C11H8NO3.
+  - node_id: sub2
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: sub3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd1
+    label: (indol-3-yl)acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57271
+    description: Formula C31H39N8O17P3S.
+  - node_id: prd2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: prd3
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: indolepyruvate ferredoxin oxidoreductase activity
+    grounding: GO:0043805
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O28783
+    node_type: PROTEIN
+    label: IORA_ARCFU
+    grounding: UniProtKB:O28783
+  - node_id: prot_O27880
+    node_type: PROTEIN
+    label: IORA_METTH
+    grounding: UniProtKB:O27880
+  - node_id: prot_P80910
+    node_type: PROTEIN
+    label: IORA_METTM
+    grounding: UniProtKB:P80910
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: indole-3-pyruvate is a substrate consumed by RHEA:12645 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12646
+      snippet: indole-3-pyruvate + 2 oxidized [2Fe-2S]-[ferredoxin] + CoA => (indol-3-yl)acetyl-CoA +
+        2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12646 declares side 12645_L as its substrates
+        (rh:substrates); the master reaction RHEA:12645 is undirected. This participant is CHEBI:17640
+        with coefficient 1. Rhea cites PMID:9180697, PMID:8206994, PMID:11265457, PMID:9108258 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: oxidized [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:12645 (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:12646
+      snippet: indole-3-pyruvate + 2 oxidized [2Fe-2S]-[ferredoxin] + CoA => (indol-3-yl)acetyl-CoA +
+        2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12646 declares side 12645_L as its substrates
+        (rh:substrates); the master reaction RHEA:12645 is undirected. This participant is GENERIC:10000
+        with coefficient 2. Rhea cites PMID:9180697, PMID:8206994, PMID:11265457, PMID:9108258 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:12645
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: CoA is a substrate consumed by RHEA:12645 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12646
+      snippet: indole-3-pyruvate + 2 oxidized [2Fe-2S]-[ferredoxin] + CoA => (indol-3-yl)acetyl-CoA +
+        2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12646 declares side 12645_L as its substrates
+        (rh:substrates); the master reaction RHEA:12645 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:9180697, PMID:8206994, PMID:11265457, PMID:9108258 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (indol-3-yl)acetyl-CoA is a product released by RHEA:12645 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12646
+      snippet: indole-3-pyruvate + 2 oxidized [2Fe-2S]-[ferredoxin] + CoA => (indol-3-yl)acetyl-CoA +
+        2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12646 declares side 12645_R as its products
+        (rh:products); the master reaction RHEA:12645 is undirected. This participant is CHEBI:57271 with
+        coefficient 1. Rhea cites PMID:9180697, PMID:8206994, PMID:11265457, PMID:9108258 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: reduced [2Fe-2S]-[ferredoxin] is a product released by RHEA:12645 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:12646
+      snippet: indole-3-pyruvate + 2 oxidized [2Fe-2S]-[ferredoxin] + CoA => (indol-3-yl)acetyl-CoA +
+        2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12646 declares side 12645_R as its products
+        (rh:products); the master reaction RHEA:12645 is undirected. This participant is GENERIC:10001
+        with coefficient 2. Rhea cites PMID:9180697, PMID:8206994, PMID:11265457, PMID:9108258 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:12645
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CO2 is a product released by RHEA:12645 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12646
+      snippet: indole-3-pyruvate + 2 oxidized [2Fe-2S]-[ferredoxin] + CoA => (indol-3-yl)acetyl-CoA +
+        2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12646 declares side 12645_R as its products
+        (rh:products); the master reaction RHEA:12645 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:9180697, PMID:8206994, PMID:11265457, PMID:9108258 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:12645 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12646
+      snippet: indole-3-pyruvate + 2 oxidized [2Fe-2S]-[ferredoxin] + CoA => (indol-3-yl)acetyl-CoA +
+        2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12646 declares side 12645_R as its products
+        (rh:products); the master reaction RHEA:12645 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9180697, PMID:8206994, PMID:11265457, PMID:9108258 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.2.7.8
+      snippet: EC:1.2.7.8 > GO:indolepyruvate ferredoxin oxidoreductase activity ; GO:0043805
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043805 is itself a record
+        in this KB.
+  - subject: prot_O28783
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IORA_ARCFU is an exemplar enzyme with EC 1.2.7.8 activity.
+    evidence:
+    - reference: EC:1.2.7.8
+      snippet: DR   O28783, IORA_ARCFU ;  O27880, IORA_METTH ;  P80910, IORA_METTM ;
+      notes: ExPASy ENZYME entry EC 1.2.7.8 cross-references UniProtKB:O28783 (IORA_ARCFU) as a protein
+        with this activity.
+  - subject: prot_O27880
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IORA_METTH is an exemplar enzyme with EC 1.2.7.8 activity.
+    evidence:
+    - reference: EC:1.2.7.8
+      snippet: DR   O28783, IORA_ARCFU ;  O27880, IORA_METTH ;  P80910, IORA_METTM ;
+      notes: ExPASy ENZYME entry EC 1.2.7.8 cross-references UniProtKB:O27880 (IORA_METTH) as a protein
+        with this activity.
+  - subject: prot_P80910
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IORA_METTM is an exemplar enzyme with EC 1.2.7.8 activity.
+    evidence:
+    - reference: EC:1.2.7.8
+      snippet: DR   O28783, IORA_ARCFU ;  O27880, IORA_METTH ;  P80910, IORA_METTM ;
+      notes: ExPASy ENZYME entry EC 1.2.7.8 cross-references UniProtKB:P80910 (IORA_METTM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

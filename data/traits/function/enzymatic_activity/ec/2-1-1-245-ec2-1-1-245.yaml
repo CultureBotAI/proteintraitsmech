@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 mapped_xrefs:
@@ -36,4 +36,189 @@ definitions:
       Catalyses: 5,6,7,8-tetrahydrosarcinapterin + methyl-Co(III)-[corrinoid Fe-S protein] = 5-methyltetrahydrosarcinapterin + Co(I)-[corrinoid Fe-S protein] + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-methyltetrahydrosarcinapterin:corrinoid/iron-sulfur protein Co-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.245. EC 2.1.1.245 maps to
+    exactly one curated Rhea reaction (RHEA:45196), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "5,6,7,8-tetrahydrosarcinapterin
+    + methyl-Co(III)-[corrinoid Fe-S protein] = 5-methyltetrahydrosarcinapterin + Co(I)-[corrinoid Fe-S
+    protein] + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 5-methyltetrahydrosarcinapterin:corrinoid/iron-sulfur protein Co-methyltransferase
+    grounding: EC:2.1.1.245
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 5,6,7,8-tetrahydrosarcinapterin
+    node_type: CHEMICAL
+    grounding: CHEBI:59924
+    description: Formula C35H48N7O19P.
+  - node_id: sub2
+    label: methyl-Co(III)-[corrinoid Fe-S protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11111
+    description: Rhea compound GENERIC:11111.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: methyl-Co(III)
+    description: The reacting group Rhea names inside the generic participant GENERIC:11111 (methyl-Co(III)-[corrinoid
+      Fe-S protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85035
+  - node_id: prd1
+    label: 5-methyltetrahydrosarcinapterin
+    node_type: CHEMICAL
+    grounding: CHEBI:64267
+    description: Formula C36H50N7O19P.
+  - node_id: prd2
+    label: Co(I)-[corrinoid Fe-S protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11110
+    description: Rhea compound GENERIC:11110.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: Co(+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:11110 (Co(I)-[corrinoid
+      Fe-S protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85033
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q8PZ09
+    node_type: PROTEIN
+    label: ACDG1_METMA
+    grounding: UniProtKB:Q8PZ09
+  - node_id: prot_Q50539
+    node_type: PROTEIN
+    label: ACDG1_METTE
+    grounding: UniProtKB:Q50539
+  - node_id: prot_Q8PV87
+    node_type: PROTEIN
+    label: ACDG2_METMA
+    grounding: UniProtKB:Q8PV87
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5,6,7,8-tetrahydrosarcinapterin is a substrate consumed by RHEA:45196 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45197
+      snippet: 5,6,7,8-tetrahydrosarcinapterin + methyl-Co(III)-[corrinoid Fe-S protein] => 5-methyltetrahydrosarcinapterin
+        + Co(I)-[corrinoid Fe-S protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45197 declares side 45196_L as its substrates
+        (rh:substrates); the master reaction RHEA:45196 is undirected. This participant is CHEBI:59924
+        with coefficient 1. Rhea cites PMID:8550451, PMID:8626532 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: methyl-Co(III)-[corrinoid Fe-S protein] is a substrate consumed by RHEA:45196 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45197
+      snippet: 5,6,7,8-tetrahydrosarcinapterin + methyl-Co(III)-[corrinoid Fe-S protein] => 5-methyltetrahydrosarcinapterin
+        + Co(I)-[corrinoid Fe-S protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45197 declares side 45196_L as its substrates
+        (rh:substrates); the master reaction RHEA:45196 is undirected. This participant is GENERIC:11111
+        with coefficient 1. Rhea cites PMID:8550451, PMID:8626532 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: methyl-Co(III) is the reactive part of methyl-Co(III)-[corrinoid Fe-S protein].
+    evidence:
+    - reference: RHEA:45196
+      snippet: methyl-Co(III)
+      notes: Rhea compound GENERIC:11111 (methyl-Co(III)-[corrinoid Fe-S protein]) declares rh:reactivePart
+        = methyl-Co(III) (CHEBI:85035).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-methyltetrahydrosarcinapterin is a product released by RHEA:45196 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45197
+      snippet: 5,6,7,8-tetrahydrosarcinapterin + methyl-Co(III)-[corrinoid Fe-S protein] => 5-methyltetrahydrosarcinapterin
+        + Co(I)-[corrinoid Fe-S protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45197 declares side 45196_R as its products
+        (rh:products); the master reaction RHEA:45196 is undirected. This participant is CHEBI:64267 with
+        coefficient 1. Rhea cites PMID:8550451, PMID:8626532 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Co(I)-[corrinoid Fe-S protein] is a product released by RHEA:45196 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45197
+      snippet: 5,6,7,8-tetrahydrosarcinapterin + methyl-Co(III)-[corrinoid Fe-S protein] => 5-methyltetrahydrosarcinapterin
+        + Co(I)-[corrinoid Fe-S protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45197 declares side 45196_R as its products
+        (rh:products); the master reaction RHEA:45196 is undirected. This participant is GENERIC:11110
+        with coefficient 1. Rhea cites PMID:8550451, PMID:8626532 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: Co(+) is the reactive part of Co(I)-[corrinoid Fe-S protein].
+    evidence:
+    - reference: RHEA:45196
+      snippet: Co(+)
+      notes: Rhea compound GENERIC:11110 (Co(I)-[corrinoid Fe-S protein]) declares rh:reactivePart = Co(+)
+        (CHEBI:85033).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:45196 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45197
+      snippet: 5,6,7,8-tetrahydrosarcinapterin + methyl-Co(III)-[corrinoid Fe-S protein] => 5-methyltetrahydrosarcinapterin
+        + Co(I)-[corrinoid Fe-S protein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45197 declares side 45196_R as its products
+        (rh:products); the master reaction RHEA:45196 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8550451, PMID:8626532 for this reaction.
+  - subject: prot_Q8PZ09
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACDG1_METMA is an exemplar enzyme with EC 2.1.1.245 activity.
+    evidence:
+    - reference: EC:2.1.1.245
+      snippet: DR   Q8PZ09, ACDG1_METMA;  Q50539, ACDG1_METTE;  Q8PV87, ACDG2_METMA;
+      notes: ExPASy ENZYME entry EC 2.1.1.245 cross-references UniProtKB:Q8PZ09 (ACDG1_METMA) as a protein
+        with this activity.
+  - subject: prot_Q50539
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACDG1_METTE is an exemplar enzyme with EC 2.1.1.245 activity.
+    evidence:
+    - reference: EC:2.1.1.245
+      snippet: DR   Q8PZ09, ACDG1_METMA;  Q50539, ACDG1_METTE;  Q8PV87, ACDG2_METMA;
+      notes: ExPASy ENZYME entry EC 2.1.1.245 cross-references UniProtKB:Q50539 (ACDG1_METTE) as a protein
+        with this activity.
+  - subject: prot_Q8PV87
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACDG2_METMA is an exemplar enzyme with EC 2.1.1.245 activity.
+    evidence:
+    - reference: EC:2.1.1.245
+      snippet: DR   Q8PZ09, ACDG1_METMA;  Q50539, ACDG1_METTE;  Q8PV87, ACDG2_METMA;
+      notes: ExPASy ENZYME entry EC 2.1.1.245 cross-references UniProtKB:Q8PV87 (ACDG2_METMA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

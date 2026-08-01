@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.1.79
     mapping_source: rhea2ec
@@ -28,4 +28,183 @@ definitions:
       Catalyses the reaction: 3-sulfopyruvate + H(+) = sulfoacetaldehyde + CO2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-sulfopyruvate + H(+) = sulfoacetaldehyde + CO2
+  description: Substrate-to-product chemistry of RHEA:20948, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20949 (rh:substrates → 20948_L, rh:products → 20948_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-sulfopyruvate + H(+) = sulfoacetaldehyde + CO2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20948
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-sulfopyruvate + H(+) = sulfoacetaldehyde + CO2'
+  - node_id: sub1
+    label: 3-sulfopyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:57940
+    description: Formula C3H2O6S.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: sulfoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58246
+    description: Formula C2H3O4S.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sulfopyruvate decarboxylase activity
+    grounding: GO:0050545
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: sulfopyruvate decarboxylase
+    grounding: EC:4.1.1.79
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8TKU6
+    node_type: PROTEIN
+    label: COMDE_METAC
+    grounding: UniProtKB:Q8TKU6
+  - node_id: prot_P58415
+    node_type: PROTEIN
+    label: COMD_METJA
+    grounding: UniProtKB:P58415
+  - node_id: prot_Q6M060
+    node_type: PROTEIN
+    label: COMD_METMP
+    grounding: UniProtKB:Q6M060
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-sulfopyruvate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20949
+      snippet: 3-sulfopyruvate + H(+) => sulfoacetaldehyde + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:20949 declares side 20948_L as its substrates
+        (rh:substrates); the master reaction RHEA:20948 is undirected. This participant is CHEBI:57940
+        with coefficient 1. Rhea cites PMID:10940029 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20949
+      snippet: 3-sulfopyruvate + H(+) => sulfoacetaldehyde + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:20949 declares side 20948_L as its substrates
+        (rh:substrates); the master reaction RHEA:20948 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:10940029 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sulfoacetaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20949
+      snippet: 3-sulfopyruvate + H(+) => sulfoacetaldehyde + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:20949 declares side 20948_R as its products
+        (rh:products); the master reaction RHEA:20948 is undirected. This participant is CHEBI:58246 with
+        coefficient 1. Rhea cites PMID:10940029 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20949
+      snippet: 3-sulfopyruvate + H(+) => sulfoacetaldehyde + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:20949 declares side 20948_R as its products
+        (rh:products); the master reaction RHEA:20948 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:10940029 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20948
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050545"/>
+      notes: The rdfs:seeAlso triple on RHEA:20948 in rhea.rdf. GO term GO:0050545 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.1.79; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.79"/>
+      notes: The rh:ec triple on RHEA:20948 in rhea.rdf. EC 4.1.1.79 is itself a record in this KB.
+  - subject: prot_Q8TKU6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COMDE_METAC is an exemplar enzyme carrying EC 4.1.1.79, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.1.79
+      snippet: DR   Q8TKU6, COMDE_METAC;  P58415, COMD_METJA ;  Q6M060, COMD_METMP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.79 cross-references UniProtKB:Q8TKU6 (COMDE_METAC) as a protein
+        with this activity.
+    - reference: RHEA:20948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.79"/>
+      notes: Rhea assigns RHEA:20948 to EC 4.1.1.79, and EC 4.1.1.79 maps to exactly one Rhea master reaction
+        (RHEA:20948), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P58415
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COMD_METJA is an exemplar enzyme carrying EC 4.1.1.79, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.1.79
+      snippet: DR   Q8TKU6, COMDE_METAC;  P58415, COMD_METJA ;  Q6M060, COMD_METMP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.79 cross-references UniProtKB:P58415 (COMD_METJA) as a protein
+        with this activity.
+    - reference: RHEA:20948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.79"/>
+      notes: Rhea assigns RHEA:20948 to EC 4.1.1.79, and EC 4.1.1.79 maps to exactly one Rhea master reaction
+        (RHEA:20948), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q6M060
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COMD_METMP is an exemplar enzyme carrying EC 4.1.1.79, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.1.79
+      snippet: DR   Q8TKU6, COMDE_METAC;  P58415, COMD_METJA ;  Q6M060, COMD_METMP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.79 cross-references UniProtKB:Q6M060 (COMD_METMP) as a protein
+        with this activity.
+    - reference: RHEA:20948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.79"/>
+      notes: Rhea assigns RHEA:20948 to EC 4.1.1.79, and EC 4.1.1.79 maps to exactly one Rhea master reaction
+        (RHEA:20948), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:85644
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,126 @@ definitions:
       Catalyses the reaction: a 3'-end 2',3'-cyclophospho-uridine-RNA + H2O = a 3'-end 3'-phosphouridine-RNA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 3'-end 2',3'-cyclophospho-uridine-RNA + H2O = a 3'-end 3'-phosphouridine-RNA
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:67928, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67929 (rh:substrates → 67928_L, rh:products → 67928_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 3'-end 2',3'-cyclophospho-uridine-RNA + H2O = a 3'-end 3'-phosphouridine-R…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67928
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 3''-end 2'',3''-cyclophospho-uridine-RNA + H2O = a 3''-end 3''-phosphouridine-RNA
+      + H(+)'
+  - node_id: sub1
+    label: a 3'-end 2',3'-cyclophospho-uridine-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17385
+    description: Rhea compound GENERIC:17385.
+  - node_id: sub1_rp1
+    label: 3'-terminal uridine 2',3'-cyclic phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17385 (a 3'-end
+      2',3'-cyclophospho-uridine-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85644
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 3'-end 3'-phosphouridine-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17391
+    description: Rhea compound GENERIC:17391.
+  - node_id: prd1_rp1
+    label: 3'-terminal uridine 3'-phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17391 (a 3'-end
+      3'-phosphouridine-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:176589
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3'-end 2',3'-cyclophospho-uridine-RNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67929
+      snippet: a 3'-end 2',3'-cyclophospho-uridine-RNA + H2O => a 3'-end 3'-phosphouridine-RNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:67929 declares side 67928_L as its substrates
+        (rh:substrates); the master reaction RHEA:67928 is undirected. This participant is GENERIC:17385
+        with coefficient 1. Rhea cites PMID:28887445 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-terminal uridine 2',3'-cyclic phosphate residue is the reactive part of a 3'-end 2',3'-cyclophospho-uridine-RNA.
+    evidence:
+    - reference: RHEA:67928
+      snippet: 3'-terminal uridine 2',3'-cyclic phosphate residue
+      notes: Rhea compound GENERIC:17385 (a 3'-end 2',3'-cyclophospho-uridine-RNA) declares rh:reactivePart
+        = 3'-terminal uridine 2',3'-cyclic phosphate residue (CHEBI:85644), formula C9H9N2O10P2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67929
+      snippet: a 3'-end 2',3'-cyclophospho-uridine-RNA + H2O => a 3'-end 3'-phosphouridine-RNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:67929 declares side 67928_L as its substrates
+        (rh:substrates); the master reaction RHEA:67928 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:28887445 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3'-end 3'-phosphouridine-RNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67929
+      snippet: a 3'-end 2',3'-cyclophospho-uridine-RNA + H2O => a 3'-end 3'-phosphouridine-RNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:67929 declares side 67928_R as its products
+        (rh:products); the master reaction RHEA:67928 is undirected. This participant is GENERIC:17391
+        with coefficient 1. Rhea cites PMID:28887445 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-terminal uridine 3'-phosphate residue is the reactive part of a 3'-end 3'-phosphouridine-RNA.
+    evidence:
+    - reference: RHEA:67928
+      snippet: 3'-terminal uridine 3'-phosphate residue
+      notes: Rhea compound GENERIC:17391 (a 3'-end 3'-phosphouridine-RNA) declares rh:reactivePart = 3'-terminal
+        uridine 3'-phosphate residue (CHEBI:176589), formula C9H10N2O11P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67929
+      snippet: a 3'-end 2',3'-cyclophospho-uridine-RNA + H2O => a 3'-end 3'-phosphouridine-RNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:67929 declares side 67928_R as its products
+        (rh:products); the master reaction RHEA:67928 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:28887445 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

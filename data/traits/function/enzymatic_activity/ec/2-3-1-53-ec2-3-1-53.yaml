@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -30,4 +30,135 @@ definitions:
       Catalyses: L-phenylalanine + acetyl-CoA = N-acetyl-L-phenylalanine + CoA + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenylalanine N-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.53. EC 2.3.1.53 maps to exactly
+    one curated Rhea reaction (RHEA:17801), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-phenylalanine
+    + acetyl-CoA = N-acetyl-L-phenylalanine + CoA + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine N-acetyltransferase
+    grounding: EC:2.3.1.53
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: N-acetyl-L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57702
+    description: Formula C11H12NO3.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-phenylalanine N-acetyltransferase activity
+    grounding: GO:0050176
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P46854
+    node_type: PROTEIN
+    label: AAAT_ECOLI
+    grounding: UniProtKB:P46854
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-phenylalanine is a substrate consumed by RHEA:17801 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17802
+      snippet: L-phenylalanine + acetyl-CoA => N-acetyl-L-phenylalanine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17802 declares side 17801_L as its substrates
+        (rh:substrates); the master reaction RHEA:17801 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:17801 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17802
+      snippet: L-phenylalanine + acetyl-CoA => N-acetyl-L-phenylalanine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17802 declares side 17801_L as its substrates
+        (rh:substrates); the master reaction RHEA:17801 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-L-phenylalanine is a product released by RHEA:17801 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17802
+      snippet: L-phenylalanine + acetyl-CoA => N-acetyl-L-phenylalanine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17802 declares side 17801_R as its products
+        (rh:products); the master reaction RHEA:17801 is undirected. This participant is CHEBI:57702 with
+        coefficient 1. Rhea cites PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:17801 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17802
+      snippet: L-phenylalanine + acetyl-CoA => N-acetyl-L-phenylalanine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17802 declares side 17801_R as its products
+        (rh:products); the master reaction RHEA:17801 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:17801 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17802
+      snippet: L-phenylalanine + acetyl-CoA => N-acetyl-L-phenylalanine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17802 declares side 17801_R as its products
+        (rh:products); the master reaction RHEA:17801 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.53
+      snippet: EC:2.3.1.53 > GO:L-phenylalanine N-acetyltransferase activity ; GO:0050176
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050176 is itself a record
+        in this KB.
+  - subject: prot_P46854
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAAT_ECOLI is an exemplar enzyme with EC 2.3.1.53 activity.
+    evidence:
+    - reference: EC:2.3.1.53
+      snippet: DR   P46854, AAAT_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.3.1.53 cross-references UniProtKB:P46854 (AAAT_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

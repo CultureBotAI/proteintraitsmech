@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -37,4 +37,132 @@ definitions:
       Catalyses: 2-oxoglutaramate + H2O = 2-oxoglutarate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-oxoglutaramate amidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.111. EC 3.5.1.111 maps to
+    exactly one curated Rhea reaction (RHEA:32963), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-oxoglutaramate
+    + H2O = 2-oxoglutarate + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-oxoglutaramate amidase
+    grounding: EC:3.5.1.111
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-oxoglutaramate
+    node_type: CHEMICAL
+    grounding: CHEBI:16769
+    description: Formula C5H6NO4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-oxoglutaramate amidase activity
+    grounding: GO:0106008
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O31664
+    node_type: PROTEIN
+    label: MTNU_BACSU
+    grounding: UniProtKB:O31664
+  - node_id: prot_Q93NG1
+    node_type: PROTEIN
+    label: NIT_PAENI
+    grounding: UniProtKB:Q93NG1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-oxoglutaramate is a substrate consumed by RHEA:32963 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32964
+      snippet: 2-oxoglutaramate + H2O => 2-oxoglutarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32964 declares side 32963_L as its substrates
+        (rh:substrates); the master reaction RHEA:32963 is undirected. This participant is CHEBI:16769
+        with coefficient 1. Rhea cites PMID:21288482, PMID:19596042 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:32963 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32964
+      snippet: 2-oxoglutaramate + H2O => 2-oxoglutarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32964 declares side 32963_L as its substrates
+        (rh:substrates); the master reaction RHEA:32963 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21288482, PMID:19596042 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-oxoglutarate is a product released by RHEA:32963 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32964
+      snippet: 2-oxoglutaramate + H2O => 2-oxoglutarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32964 declares side 32963_R as its products
+        (rh:products); the master reaction RHEA:32963 is undirected. This participant is CHEBI:16810 with
+        coefficient 1. Rhea cites PMID:21288482, PMID:19596042 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:32963 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32964
+      snippet: 2-oxoglutaramate + H2O => 2-oxoglutarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32964 declares side 32963_R as its products
+        (rh:products); the master reaction RHEA:32963 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:21288482, PMID:19596042 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.111
+      snippet: EC:3.5.1.111 > GO:2-oxoglutaramate amidase activity ; GO:0106008
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0106008 is itself a record
+        in this KB.
+  - subject: prot_O31664
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTNU_BACSU is an exemplar enzyme with EC 3.5.1.111 activity.
+    evidence:
+    - reference: EC:3.5.1.111
+      snippet: DR   O31664, MTNU_BACSU ;  Q93NG1, NIT_PAENI  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.111 cross-references UniProtKB:O31664 (MTNU_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q93NG1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NIT_PAENI is an exemplar enzyme with EC 3.5.1.111 activity.
+    evidence:
+    - reference: EC:3.5.1.111
+      snippet: DR   O31664, MTNU_BACSU ;  Q93NG1, NIT_PAENI  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.111 cross-references UniProtKB:Q93NG1 (NIT_PAENI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

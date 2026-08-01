@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.3.2.-
 synonyms:
@@ -41,4 +41,246 @@ definitions:
       Catalyses: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin] + L-tyrosine + ATP = C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl- [tubulin] + ADP + phosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tubulin--tyrosine ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.3.2.25. EC 6.3.2.25 maps to exactly
+    one curated Rhea reaction (RHEA:17605), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin]
+    + L-tyrosine + ATP = C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl- [tubulin] + ADP
+    + phosphate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tubulin--tyrosine ligase
+    grounding: EC:6.3.2.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:16435
+    description: Rhea compound GENERIC:16435.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: C-terminal alpha-amino-acyl-L-glutamyl-L-glutamate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:16435 (C-terminal
+      L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin]); no position on any specific protein sequence
+      is asserted.
+    grounding: CHEBI:149555
+  - node_id: sub2
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:16434
+    description: Rhea compound GENERIC:16434.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: C-terminal alpha-amino-acyl-L-glutamyl-L-glutamyl-L-tyrosinate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:16434 (C-terminal
+      L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin]); no position on any specific protein
+      sequence is asserted.
+    grounding: CHEBI:149554
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tubulin-tyrosine ligase activity
+    grounding: GO:0004835
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P38584
+    node_type: PROTEIN
+    label: TTL_BOVIN
+    grounding: UniProtKB:P38584
+  - node_id: prot_Q8NG68
+    node_type: PROTEIN
+    label: TTL_HUMAN
+    grounding: UniProtKB:Q8NG68
+  - node_id: prot_P38585
+    node_type: PROTEIN
+    label: TTL_MOUSE
+    grounding: UniProtKB:P38585
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin] is a substrate consumed
+      by RHEA:17605 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17606
+      snippet: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin] + L-tyrosine + ATP => C-terminal
+        L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin] + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17606 declares side 17605_L as its substrates
+        (rh:substrates); the master reaction RHEA:17605 is undirected. This participant is GENERIC:16435
+        with coefficient 1. Rhea cites PMID:22020298, PMID:7510228, PMID:23358242, PMID:3821560 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: C-terminal alpha-amino-acyl-L-glutamyl-L-glutamate residue is the reactive part of C-terminal
+      L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin].
+    evidence:
+    - reference: RHEA:17605
+      snippet: C-terminal alpha-amino-acyl-L-glutamyl-L-glutamate residue
+      notes: Rhea compound GENERIC:16435 (C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin])
+        declares rh:reactivePart = C-terminal alpha-amino-acyl-L-glutamyl-L-glutamate residue (CHEBI:149555).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-tyrosine is a substrate consumed by RHEA:17605 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17606
+      snippet: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin] + L-tyrosine + ATP => C-terminal
+        L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin] + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17606 declares side 17605_L as its substrates
+        (rh:substrates); the master reaction RHEA:17605 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:22020298, PMID:7510228, PMID:23358242, PMID:3821560 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:17605 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17606
+      snippet: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin] + L-tyrosine + ATP => C-terminal
+        L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin] + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17606 declares side 17605_L as its substrates
+        (rh:substrates); the master reaction RHEA:17605 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:22020298, PMID:7510228, PMID:23358242, PMID:3821560 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin] is a product released
+      by RHEA:17605 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17606
+      snippet: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin] + L-tyrosine + ATP => C-terminal
+        L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin] + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17606 declares side 17605_R as its products
+        (rh:products); the master reaction RHEA:17605 is undirected. This participant is GENERIC:16434
+        with coefficient 1. Rhea cites PMID:22020298, PMID:7510228, PMID:23358242, PMID:3821560 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: C-terminal alpha-amino-acyl-L-glutamyl-L-glutamyl-L-tyrosinate residue is the reactive
+      part of C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin].
+    evidence:
+    - reference: RHEA:17605
+      snippet: C-terminal alpha-amino-acyl-L-glutamyl-L-glutamyl-L-tyrosinate residue
+      notes: Rhea compound GENERIC:16434 (C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin])
+        declares rh:reactivePart = C-terminal alpha-amino-acyl-L-glutamyl-L-glutamyl-L-tyrosinate residue
+        (CHEBI:149554).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:17605 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17606
+      snippet: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin] + L-tyrosine + ATP => C-terminal
+        L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin] + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17606 declares side 17605_R as its products
+        (rh:products); the master reaction RHEA:17605 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:22020298, PMID:7510228, PMID:23358242, PMID:3821560 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: phosphate is a product released by RHEA:17605 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17606
+      snippet: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin] + L-tyrosine + ATP => C-terminal
+        L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin] + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17606 declares side 17605_R as its products
+        (rh:products); the master reaction RHEA:17605 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:22020298, PMID:7510228, PMID:23358242, PMID:3821560 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:17605 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17606
+      snippet: C-terminal L-alpha-aminoacyl-L-glutamyl-L-glutamyl-[tubulin] + L-tyrosine + ATP => C-terminal
+        L-alpha-aminoacyl-L-glutamyl-L-glutamyl-L-tyrosyl-[tubulin] + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17606 declares side 17605_R as its products
+        (rh:products); the master reaction RHEA:17605 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22020298, PMID:7510228, PMID:23358242, PMID:3821560 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.3.2.25
+      snippet: EC:6.3.2.25 > GO:tubulin-tyrosine ligase activity ; GO:0004835
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004835 is itself a record
+        in this KB.
+  - subject: prot_P38584
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TTL_BOVIN is an exemplar enzyme with EC 6.3.2.25 activity.
+    evidence:
+    - reference: EC:6.3.2.25
+      snippet: DR   P38584, TTL_BOVIN  ;  Q8NG68, TTL_HUMAN  ;  P38585, TTL_MOUSE  ;
+      notes: ExPASy ENZYME entry EC 6.3.2.25 cross-references UniProtKB:P38584 (TTL_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q8NG68
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TTL_HUMAN is an exemplar enzyme with EC 6.3.2.25 activity.
+    evidence:
+    - reference: EC:6.3.2.25
+      snippet: DR   P38584, TTL_BOVIN  ;  Q8NG68, TTL_HUMAN  ;  P38585, TTL_MOUSE  ;
+      notes: ExPASy ENZYME entry EC 6.3.2.25 cross-references UniProtKB:Q8NG68 (TTL_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P38585
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TTL_MOUSE is an exemplar enzyme with EC 6.3.2.25 activity.
+    evidence:
+    - reference: EC:6.3.2.25
+      snippet: DR   P38584, TTL_BOVIN  ;  Q8NG68, TTL_HUMAN  ;  P38585, TTL_MOUSE  ;
+      notes: ExPASy ENZYME entry EC 6.3.2.25 cross-references UniProtKB:P38585 (TTL_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

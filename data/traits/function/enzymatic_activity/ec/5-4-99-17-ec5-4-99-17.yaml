@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -38,4 +38,115 @@ definitions:
       Catalyses: squalene = hop-22(29)-ene
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of squalene--hopene cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.17. EC 5.4.99.17 maps to
+    exactly one curated Rhea reaction (RHEA:17637), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "squalene
+    = hop-22(29)-ene". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: squalene--hopene cyclase
+    grounding: EC:5.4.99.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: squalene
+    node_type: CHEMICAL
+    grounding: CHEBI:15440
+    description: Formula C30H50.
+  - node_id: prd1
+    label: hop-22(29)-ene
+    node_type: CHEMICAL
+    grounding: CHEBI:4648
+    description: Formula C30H50.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: squalene-hopene cyclase activity
+    grounding: GO:0051007
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B6K412
+    node_type: PROTEIN
+    label: SHC1_SCHJY
+    grounding: UniProtKB:B6K412
+  - node_id: prot_P33247
+    node_type: PROTEIN
+    label: SQHC_ALIAD
+    grounding: UniProtKB:P33247
+  - node_id: prot_P54924
+    node_type: PROTEIN
+    label: SQHC_BRADU
+    grounding: UniProtKB:P54924
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: squalene is a substrate consumed by RHEA:17637 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17638
+      snippet: squalene => hop-22(29)-ene
+      notes: Rhea's left-to-right directional reaction RHEA:17638 declares side 17637_L as its substrates
+        (rh:substrates); the master reaction RHEA:17637 is undirected. This participant is CHEBI:15440
+        with coefficient 1. Rhea cites PMID:21531832, PMID:37416896, PMID:9931258, PMID:23485581 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hop-22(29)-ene is a product released by RHEA:17637 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17638
+      snippet: squalene => hop-22(29)-ene
+      notes: Rhea's left-to-right directional reaction RHEA:17638 declares side 17637_R as its products
+        (rh:products); the master reaction RHEA:17637 is undirected. This participant is CHEBI:4648 with
+        coefficient 1. Rhea cites PMID:21531832, PMID:37416896, PMID:9931258, PMID:23485581 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.17
+      snippet: EC:5.4.99.17 > GO:squalene-hopene cyclase activity ; GO:0051007
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0051007 is itself a record
+        in this KB.
+  - subject: prot_B6K412
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SHC1_SCHJY is an exemplar enzyme with EC 5.4.99.17 activity.
+    evidence:
+    - reference: EC:5.4.99.17
+      snippet: DR   B6K412, SHC1_SCHJY ;  P33247, SQHC_ALIAD ;  P54924, SQHC_BRADU ;
+      notes: ExPASy ENZYME entry EC 5.4.99.17 cross-references UniProtKB:B6K412 (SHC1_SCHJY) as a protein
+        with this activity.
+  - subject: prot_P33247
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQHC_ALIAD is an exemplar enzyme with EC 5.4.99.17 activity.
+    evidence:
+    - reference: EC:5.4.99.17
+      snippet: DR   B6K412, SHC1_SCHJY ;  P33247, SQHC_ALIAD ;  P54924, SQHC_BRADU ;
+      notes: ExPASy ENZYME entry EC 5.4.99.17 cross-references UniProtKB:P33247 (SQHC_ALIAD) as a protein
+        with this activity.
+  - subject: prot_P54924
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQHC_BRADU is an exemplar enzyme with EC 5.4.99.17 activity.
+    evidence:
+    - reference: EC:5.4.99.17
+      snippet: DR   B6K412, SHC1_SCHJY ;  P33247, SQHC_ALIAD ;  P54924, SQHC_BRADU ;
+      notes: ExPASy ENZYME entry EC 5.4.99.17 cross-references UniProtKB:P54924 (SQHC_BRADU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

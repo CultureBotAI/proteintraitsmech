@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -45,4 +45,133 @@ definitions:
       Catalyses: hydroxymethylbilane = uroporphyrinogen III + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of uroporphyrinogen-III synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.75. EC 4.2.1.75 maps to exactly
+    one curated Rhea reaction (RHEA:18965), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "hydroxymethylbilane
+    = uroporphyrinogen III + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: uroporphyrinogen-III synthase
+    grounding: EC:4.2.1.75
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: hydroxymethylbilane
+    node_type: CHEMICAL
+    grounding: CHEBI:57845
+    description: Formula C40H38N4O17.
+  - node_id: prd1
+    label: uroporphyrinogen III
+    node_type: CHEMICAL
+    grounding: CHEBI:57308
+    description: Formula C40H36N4O16.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: uroporphyrinogen-III synthase activity
+    grounding: GO:0004852
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O48721
+    node_type: PROTEIN
+    label: HEM4_ARATH
+    grounding: UniProtKB:O48721
+  - node_id: prot_O30120
+    node_type: PROTEIN
+    label: HEM4_ARCFU
+    grounding: UniProtKB:O30120
+  - node_id: prot_P21248
+    node_type: PROTEIN
+    label: HEM4_BACSU
+    grounding: UniProtKB:P21248
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hydroxymethylbilane is a substrate consumed by RHEA:18965 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18966
+      snippet: hydroxymethylbilane => uroporphyrinogen III + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18966 declares side 18965_L as its substrates
+        (rh:substrates); the master reaction RHEA:18965 is undirected. This participant is CHEBI:57845
+        with coefficient 1. Rhea cites PMID:13680202, PMID:3805019, PMID:6769048, PMID:11689424 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: uroporphyrinogen III is a product released by RHEA:18965 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18966
+      snippet: hydroxymethylbilane => uroporphyrinogen III + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18966 declares side 18965_R as its products
+        (rh:products); the master reaction RHEA:18965 is undirected. This participant is CHEBI:57308 with
+        coefficient 1. Rhea cites PMID:13680202, PMID:3805019, PMID:6769048, PMID:11689424 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:18965 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18966
+      snippet: hydroxymethylbilane => uroporphyrinogen III + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18966 declares side 18965_R as its products
+        (rh:products); the master reaction RHEA:18965 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:13680202, PMID:3805019, PMID:6769048, PMID:11689424 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.75
+      snippet: EC:4.2.1.75 > GO:uroporphyrinogen-III synthase activity ; GO:0004852
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004852 is itself a record
+        in this KB.
+  - subject: prot_O48721
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HEM4_ARATH is an exemplar enzyme with EC 4.2.1.75 activity.
+    evidence:
+    - reference: EC:4.2.1.75
+      snippet: DR   O48721, HEM4_ARATH ;  O30120, HEM4_ARCFU ;  P21248, HEM4_BACSU ;
+      notes: ExPASy ENZYME entry EC 4.2.1.75 cross-references UniProtKB:O48721 (HEM4_ARATH) as a protein
+        with this activity.
+  - subject: prot_O30120
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HEM4_ARCFU is an exemplar enzyme with EC 4.2.1.75 activity.
+    evidence:
+    - reference: EC:4.2.1.75
+      snippet: DR   O48721, HEM4_ARATH ;  O30120, HEM4_ARCFU ;  P21248, HEM4_BACSU ;
+      notes: ExPASy ENZYME entry EC 4.2.1.75 cross-references UniProtKB:O30120 (HEM4_ARCFU) as a protein
+        with this activity.
+  - subject: prot_P21248
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HEM4_BACSU is an exemplar enzyme with EC 4.2.1.75 activity.
+    evidence:
+    - reference: EC:4.2.1.75
+      snippet: DR   O48721, HEM4_ARATH ;  O30120, HEM4_ARCFU ;  P21248, HEM4_BACSU ;
+      notes: ExPASy ENZYME entry EC 4.2.1.75 cross-references UniProtKB:P21248 (HEM4_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

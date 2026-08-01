@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:86458
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,108 @@ definitions:
       Catalyses the reaction: 2-hydroxybenzoyl-5'-AMP + CoA = 2-hydroxybenzoyl-CoA + AMP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-hydroxybenzoyl-5'-AMP + CoA = 2-hydroxybenzoyl-CoA + AMP + H(+)
+  description: Substrate-to-product chemistry of RHEA:51788, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:51789 (rh:substrates → 51788_L, rh:products → 51788_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-hydroxybenzoyl-5'-AMP + CoA = 2-hydroxybenzoyl-CoA + AMP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:51788
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-hydroxybenzoyl-5''-AMP + CoA = 2-hydroxybenzoyl-CoA + AMP + H(+)'
+  - node_id: sub1
+    label: 2-hydroxybenzoyl-5'-AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:86458
+    description: Formula C17H17N5O9P.
+  - node_id: sub2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd1
+    label: 2-hydroxybenzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:67148
+    description: Formula C28H36N7O18P3S.
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-hydroxybenzoyl-5'-AMP is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51789
+      snippet: 2-hydroxybenzoyl-5'-AMP + CoA => 2-hydroxybenzoyl-CoA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51789 declares side 51788_L as its substrates
+        (rh:substrates); the master reaction RHEA:51788 is undirected. This participant is CHEBI:86458
+        with coefficient 1. Rhea cites PMID:8661934, PMID:15006746 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51789
+      snippet: 2-hydroxybenzoyl-5'-AMP + CoA => 2-hydroxybenzoyl-CoA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51789 declares side 51788_L as its substrates
+        (rh:substrates); the master reaction RHEA:51788 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:8661934, PMID:15006746 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-hydroxybenzoyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51789
+      snippet: 2-hydroxybenzoyl-5'-AMP + CoA => 2-hydroxybenzoyl-CoA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51789 declares side 51788_R as its products
+        (rh:products); the master reaction RHEA:51788 is undirected. This participant is CHEBI:67148 with
+        coefficient 1. Rhea cites PMID:8661934, PMID:15006746 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51789
+      snippet: 2-hydroxybenzoyl-5'-AMP + CoA => 2-hydroxybenzoyl-CoA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51789 declares side 51788_R as its products
+        (rh:products); the master reaction RHEA:51788 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:8661934, PMID:15006746 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51789
+      snippet: 2-hydroxybenzoyl-5'-AMP + CoA => 2-hydroxybenzoyl-CoA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51789 declares side 51788_R as its products
+        (rh:products); the master reaction RHEA:51788 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8661934, PMID:15006746 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

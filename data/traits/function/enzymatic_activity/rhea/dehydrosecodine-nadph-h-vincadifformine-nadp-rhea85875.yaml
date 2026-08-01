@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:146237
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,108 @@ definitions:
       Catalyses the reaction: dehydrosecodine + NADPH + H(+) = (-)-vincadifformine + NADP(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dehydrosecodine + NADPH + H(+) = (-)-vincadifformine + NADP(+)
+  description: Substrate-to-product chemistry of RHEA:85875, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:85876 (rh:substrates → 85875_L, rh:products → 85875_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dehydrosecodine + NADPH + H(+) = (-)-vincadifformine + NADP(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:85875
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dehydrosecodine + NADPH + H(+) = (-)-vincadifformine + NADP(+)'
+  - node_id: sub1
+    label: dehydrosecodine
+    node_type: CHEMICAL
+    grounding: CHEBI:146237
+    description: Formula C21H25N2O2.
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: (-)-vincadifformine
+    node_type: CHEMICAL
+    grounding: CHEBI:142771
+    description: Formula C21H27N2O2.
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dehydrosecodine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:85876
+      snippet: dehydrosecodine + NADPH + H(+) => (-)-vincadifformine + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85876 declares side 85875_L as its substrates
+        (rh:substrates); the master reaction RHEA:85875 is undirected. This participant is CHEBI:146237
+        with coefficient 1. Rhea cites PMID:36198083, PMID:31364847 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85876
+      snippet: dehydrosecodine + NADPH + H(+) => (-)-vincadifformine + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85876 declares side 85875_L as its substrates
+        (rh:substrates); the master reaction RHEA:85875 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:36198083, PMID:31364847 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85876
+      snippet: dehydrosecodine + NADPH + H(+) => (-)-vincadifformine + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85876 declares side 85875_L as its substrates
+        (rh:substrates); the master reaction RHEA:85875 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:36198083, PMID:31364847 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-vincadifformine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:85876
+      snippet: dehydrosecodine + NADPH + H(+) => (-)-vincadifformine + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85876 declares side 85875_R as its products
+        (rh:products); the master reaction RHEA:85875 is undirected. This participant is CHEBI:142771
+        with coefficient 1. Rhea cites PMID:36198083, PMID:31364847 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85876
+      snippet: dehydrosecodine + NADPH + H(+) => (-)-vincadifformine + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:85876 declares side 85875_R as its products
+        (rh:products); the master reaction RHEA:85875 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:36198083, PMID:31364847 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

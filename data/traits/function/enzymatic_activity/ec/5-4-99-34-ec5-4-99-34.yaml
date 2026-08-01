@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -32,4 +32,86 @@ definitions:
       Catalyses: (S)-2,3-epoxysqualene = germanicol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of germanicol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.34. EC 5.4.99.34 maps to
+    exactly one curated Rhea reaction (RHEA:31003), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-2,3-epoxysqualene
+    = germanicol". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: germanicol synthase
+    grounding: EC:5.4.99.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-2,3-epoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:15441
+    description: Formula C30H50O.
+  - node_id: prd1
+    label: germanicol
+    node_type: CHEMICAL
+    grounding: CHEBI:62455
+    description: Formula C30H50O.
+  - node_id: prot_A8C980
+    node_type: PROTEIN
+    label: GERS_RHISY
+    grounding: UniProtKB:A8C980
+  - node_id: prot_Q9C5M3
+    node_type: PROTEIN
+    label: LUP1_ARATH
+    grounding: UniProtKB:Q9C5M3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-2,3-epoxysqualene is a substrate consumed by RHEA:31003 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31004
+      snippet: (S)-2,3-epoxysqualene => germanicol
+      notes: Rhea's left-to-right directional reaction RHEA:31004 declares side 31003_L as its substrates
+        (rh:substrates); the master reaction RHEA:31003 is undirected. This participant is CHEBI:15441
+        with coefficient 1. Rhea cites PMID:17803686 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: germanicol is a product released by RHEA:31003 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31004
+      snippet: (S)-2,3-epoxysqualene => germanicol
+      notes: Rhea's left-to-right directional reaction RHEA:31004 declares side 31003_R as its products
+        (rh:products); the master reaction RHEA:31003 is undirected. This participant is CHEBI:62455 with
+        coefficient 1. Rhea cites PMID:17803686 for this reaction.
+  - subject: prot_A8C980
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GERS_RHISY is an exemplar enzyme with EC 5.4.99.34 activity.
+    evidence:
+    - reference: EC:5.4.99.34
+      snippet: DR   A8C980, GERS_RHISY ;  Q9C5M3, LUP1_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.4.99.34 cross-references UniProtKB:A8C980 (GERS_RHISY) as a protein
+        with this activity.
+  - subject: prot_Q9C5M3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LUP1_ARATH is an exemplar enzyme with EC 5.4.99.34 activity.
+    evidence:
+    - reference: EC:5.4.99.34
+      snippet: DR   A8C980, GERS_RHISY ;  Q9C5M3, LUP1_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.4.99.34 cross-references UniProtKB:Q9C5M3 (LUP1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

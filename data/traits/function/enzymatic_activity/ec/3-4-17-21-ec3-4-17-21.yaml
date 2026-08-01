@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.17.-
 synonyms:
@@ -47,4 +47,149 @@ definitions:
       Catalyses: Release of an unsubstituted, C-terminal glutamyl residue, typically from Ac-Asp-Glu or folylpoly-gamma-glutamates
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glutamate carboxypeptidase II
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.17.21. EC 3.4.17.21 maps to
+    exactly one curated Rhea reaction (RHEA:68356), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "Release
+    of an unsubstituted, C-terminal glutamyl residue, typically from Ac-Asp-Glu or folylpoly-gamma-glutamates".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glutamate carboxypeptidase II
+    grounding: EC:3.4.17.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-acetyl-L-aspartyl-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:76931
+    description: Formula C11H13N2O8.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-acetyl-L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:16953
+    description: Formula C6H7NO5.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: metallocarboxypeptidase activity
+    grounding: GO:0004181
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q04609
+    node_type: PROTEIN
+    label: FOLH1_HUMAN
+    grounding: UniProtKB:Q04609
+  - node_id: prot_O35409
+    node_type: PROTEIN
+    label: FOLH1_MOUSE
+    grounding: UniProtKB:O35409
+  - node_id: prot_O77564
+    node_type: PROTEIN
+    label: FOLH1_PIG
+    grounding: UniProtKB:O77564
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-acetyl-L-aspartyl-L-glutamate is a substrate consumed by RHEA:68356 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68357
+      snippet: N-acetyl-L-aspartyl-L-glutamate + H2O => N-acetyl-L-aspartate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:68357 declares side 68356_L as its substrates
+        (rh:substrates); the master reaction RHEA:68356 is undirected. This participant is CHEBI:76931
+        with coefficient 1. Rhea cites PMID:16467855, PMID:19301871, PMID:8570628 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:68356 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68357
+      snippet: N-acetyl-L-aspartyl-L-glutamate + H2O => N-acetyl-L-aspartate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:68357 declares side 68356_L as its substrates
+        (rh:substrates); the master reaction RHEA:68356 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16467855, PMID:19301871, PMID:8570628 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-L-aspartate is a product released by RHEA:68356 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68357
+      snippet: N-acetyl-L-aspartyl-L-glutamate + H2O => N-acetyl-L-aspartate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:68357 declares side 68356_R as its products
+        (rh:products); the master reaction RHEA:68356 is undirected. This participant is CHEBI:16953 with
+        coefficient 1. Rhea cites PMID:16467855, PMID:19301871, PMID:8570628 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:68356 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68357
+      snippet: N-acetyl-L-aspartyl-L-glutamate + H2O => N-acetyl-L-aspartate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:68357 declares side 68356_R as its products
+        (rh:products); the master reaction RHEA:68356 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:16467855, PMID:19301871, PMID:8570628 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.17.21
+      snippet: EC:3.4.17.21 > GO:metallocarboxypeptidase activity ; GO:0004181
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004181 is itself a record
+        in this KB.
+  - subject: prot_Q04609
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FOLH1_HUMAN is an exemplar enzyme with EC 3.4.17.21 activity.
+    evidence:
+    - reference: EC:3.4.17.21
+      snippet: DR   Q04609, FOLH1_HUMAN;  O35409, FOLH1_MOUSE;  O77564, FOLH1_PIG  ;
+      notes: ExPASy ENZYME entry EC 3.4.17.21 cross-references UniProtKB:Q04609 (FOLH1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_O35409
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FOLH1_MOUSE is an exemplar enzyme with EC 3.4.17.21 activity.
+    evidence:
+    - reference: EC:3.4.17.21
+      snippet: DR   Q04609, FOLH1_HUMAN;  O35409, FOLH1_MOUSE;  O77564, FOLH1_PIG  ;
+      notes: ExPASy ENZYME entry EC 3.4.17.21 cross-references UniProtKB:O35409 (FOLH1_MOUSE) as a protein
+        with this activity.
+  - subject: prot_O77564
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FOLH1_PIG is an exemplar enzyme with EC 3.4.17.21 activity.
+    evidence:
+    - reference: EC:3.4.17.21
+      snippet: DR   Q04609, FOLH1_HUMAN;  O35409, FOLH1_MOUSE;  O77564, FOLH1_PIG  ;
+      notes: ExPASy ENZYME entry EC 3.4.17.21 cross-references UniProtKB:O77564 (FOLH1_PIG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

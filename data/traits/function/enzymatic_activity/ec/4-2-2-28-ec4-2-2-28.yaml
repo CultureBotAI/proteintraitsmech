@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -28,4 +28,163 @@ definitions:
       Catalyses: alpha-L-rhamnosyl-(1->4)-D-glucuronate = 4-deoxy-L-threo-hex-4- enopyranuronate + L-rhamnopyranose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha-L-rhamnosyl-(1->4)-beta-D-glucuronate lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.28. Rhea assigns 2 curated
+    reactions to EC 4.2.2.28. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "alpha-L-rhamnosyl-(1->4)-D-glucuronate = 4-deoxy-L-threo-hex-4-
+    enopyranuronate + L-rhamnopyranose". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-L-rhamnosyl-(1->4)-beta-D-glucuronate lyase
+    grounding: EC:4.2.2.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an alpha-L-rhamnosyl-(1->4)-beta-D-glucuronide = a 4-deoxy-alpha-L-threo-hex…
+    grounding: RHEA:78747
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an alpha-L-rhamnosyl-(1->4)-beta-D-glucuronide = a 4-deoxy-alpha-L-threo-hex-4-enopyranuronoside
+      + L-rhamnopyranose'
+  - node_id: rxn1_sub1
+    label: an alpha-L-rhamnosyl-(1->4)-beta-D-glucuronide
+    node_type: CHEMICAL
+    grounding: CHEBI:229551
+    description: Formula C12H18O11R.
+  - node_id: rxn1_prd1
+    label: a 4-deoxy-alpha-L-threo-hex-4-enopyranuronoside
+    node_type: CHEMICAL
+    grounding: CHEBI:229553
+    description: Formula C6H6O6R.
+  - node_id: rxn1_prd2
+    label: L-rhamnopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:62346
+    description: Formula C6H12O5.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of alpha-L-rhamnosyl-(1->4)-D-glucuronate = 4-deoxy-L-threo-hex-4-enopyranurona…
+    grounding: RHEA:78755
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: alpha-L-rhamnosyl-(1->4)-D-glucuronate = 4-deoxy-L-threo-hex-4-enopyranuronate
+      + L-rhamnopyranose'
+  - node_id: rxn2_sub1
+    label: alpha-L-rhamnosyl-(1->4)-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:229550
+    description: Formula C12H19O11.
+  - node_id: rxn2_prd1
+    label: 4-deoxy-L-threo-hex-4-enopyranuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:195277
+    description: Formula C6H7O6.
+  - node_id: rxn2_prd2
+    label: L-rhamnopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:62346
+    description: Formula C6H12O5.
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:78747 is one of the 2 curated reactions Rhea assigns to EC 4.2.2.28; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:78747
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.2.28"/>
+      notes: The rh:ec triple on RHEA:78747 in rhea.rdf assigns that reaction to EC 4.2.2.28.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: an alpha-L-rhamnosyl-(1->4)-beta-D-glucuronide is a substrate consumed by RHEA:78747
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78748
+      snippet: an alpha-L-rhamnosyl-(1->4)-beta-D-glucuronide => a 4-deoxy-alpha-L-threo-hex-4-enopyranuronoside
+        + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:78748 declares side 78747_L as its substrates
+        (rh:substrates); the master reaction RHEA:78747 is undirected. This participant is CHEBI:229551
+        with coefficient 1. Rhea cites PMID:34303708 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a 4-deoxy-alpha-L-threo-hex-4-enopyranuronoside is a product released by RHEA:78747 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78748
+      snippet: an alpha-L-rhamnosyl-(1->4)-beta-D-glucuronide => a 4-deoxy-alpha-L-threo-hex-4-enopyranuronoside
+        + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:78748 declares side 78747_R as its products
+        (rh:products); the master reaction RHEA:78747 is undirected. This participant is CHEBI:229553
+        with coefficient 1. Rhea cites PMID:34303708 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: L-rhamnopyranose is a product released by RHEA:78747 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78748
+      snippet: an alpha-L-rhamnosyl-(1->4)-beta-D-glucuronide => a 4-deoxy-alpha-L-threo-hex-4-enopyranuronoside
+        + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:78748 declares side 78747_R as its products
+        (rh:products); the master reaction RHEA:78747 is undirected. This participant is CHEBI:62346 with
+        coefficient 1. Rhea cites PMID:34303708 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:78755 is one of the 2 curated reactions Rhea assigns to EC 4.2.2.28; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:78755
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.2.28"/>
+      notes: The rh:ec triple on RHEA:78755 in rhea.rdf assigns that reaction to EC 4.2.2.28.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: alpha-L-rhamnosyl-(1->4)-D-glucuronate is a substrate consumed by RHEA:78755 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78756
+      snippet: alpha-L-rhamnosyl-(1->4)-D-glucuronate => 4-deoxy-L-threo-hex-4-enopyranuronate + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:78756 declares side 78755_L as its substrates
+        (rh:substrates); the master reaction RHEA:78755 is undirected. This participant is CHEBI:229550
+        with coefficient 1. Rhea cites PMID:34303708 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 4-deoxy-L-threo-hex-4-enopyranuronate is a product released by RHEA:78755 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78756
+      snippet: alpha-L-rhamnosyl-(1->4)-D-glucuronate => 4-deoxy-L-threo-hex-4-enopyranuronate + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:78756 declares side 78755_R as its products
+        (rh:products); the master reaction RHEA:78755 is undirected. This participant is CHEBI:195277
+        with coefficient 1. Rhea cites PMID:34303708 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: L-rhamnopyranose is a product released by RHEA:78755 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78756
+      snippet: alpha-L-rhamnosyl-(1->4)-D-glucuronate => 4-deoxy-L-threo-hex-4-enopyranuronate + L-rhamnopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:78756 declares side 78755_R as its products
+        (rh:products); the master reaction RHEA:78755 is undirected. This participant is CHEBI:62346 with
+        coefficient 1. Rhea cites PMID:34303708 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

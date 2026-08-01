@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: 15alpha-stemmadenine + acetyl-CoA = O-acetyl-15alpha-stemmadenine + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of stemmadenine O-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.323. EC 2.3.1.323 maps to
+    exactly one curated Rhea reaction (RHEA:58568), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "15alpha-stemmadenine
+    + acetyl-CoA = O-acetyl-15alpha-stemmadenine + CoA". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: stemmadenine O-acetyltransferase
+    grounding: EC:2.3.1.323
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 15alpha-stemmadenine
+    node_type: CHEMICAL
+    grounding: CHEBI:142674
+    description: Formula C21H27N2O3.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: O-acetyl-15alpha-stemmadenine
+    node_type: CHEMICAL
+    grounding: CHEBI:142673
+    description: Formula C23H29N2O4.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_A0A2P1GIW7
+    node_type: PROTEIN
+    label: SAT_CATRO
+    grounding: UniProtKB:A0A2P1GIW7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 15alpha-stemmadenine is a substrate consumed by RHEA:58568 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58569
+      snippet: 15alpha-stemmadenine + acetyl-CoA => O-acetyl-15alpha-stemmadenine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58569 declares side 58568_L as its substrates
+        (rh:substrates); the master reaction RHEA:58568 is undirected. This participant is CHEBI:142674
+        with coefficient 1. Rhea cites PMID:29511102 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:58568 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58569
+      snippet: 15alpha-stemmadenine + acetyl-CoA => O-acetyl-15alpha-stemmadenine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58569 declares side 58568_L as its substrates
+        (rh:substrates); the master reaction RHEA:58568 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:29511102 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-acetyl-15alpha-stemmadenine is a product released by RHEA:58568 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58569
+      snippet: 15alpha-stemmadenine + acetyl-CoA => O-acetyl-15alpha-stemmadenine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58569 declares side 58568_R as its products
+        (rh:products); the master reaction RHEA:58568 is undirected. This participant is CHEBI:142673
+        with coefficient 1. Rhea cites PMID:29511102 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:58568 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58569
+      snippet: 15alpha-stemmadenine + acetyl-CoA => O-acetyl-15alpha-stemmadenine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58569 declares side 58568_R as its products
+        (rh:products); the master reaction RHEA:58568 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:29511102 for this reaction.
+  - subject: prot_A0A2P1GIW7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SAT_CATRO is an exemplar enzyme with EC 2.3.1.323 activity.
+    evidence:
+    - reference: EC:2.3.1.323
+      snippet: DR   A0A2P1GIW7, SAT_CATRO  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.323 cross-references UniProtKB:A0A2P1GIW7 (SAT_CATRO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

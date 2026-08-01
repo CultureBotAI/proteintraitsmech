@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58968
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,76 @@ definitions:
       Catalyses the reaction: (E)-4-hydroxynon-2-enal + glutathione = 3-(glutathion-S-yl)-4-hydroxynonanal
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E)-4-hydroxynon-2-enal + glutathione = 3-(glutathion-S-yl)-4-hydroxynonanal
+  description: Substrate-to-product chemistry of RHEA:85343, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:85344 (rh:substrates → 85343_L, rh:products → 85343_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (E)-4-hydroxynon-2-enal + glutathione = 3-(glutathion-S-yl)-4-hydroxynonanal
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:85343
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (E)-4-hydroxynon-2-enal + glutathione = 3-(glutathion-S-yl)-4-hydroxynonanal'
+  - node_id: sub1
+    label: (E)-4-hydroxynon-2-enal
+    node_type: CHEMICAL
+    grounding: CHEBI:58968
+    description: Formula C9H16O2.
+  - node_id: sub2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: prd1
+    label: 3-(glutathion-S-yl)-4-hydroxynonanal
+    node_type: CHEMICAL
+    grounding: CHEBI:234318
+    description: Formula C19H32N3O8S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (E)-4-hydroxynon-2-enal is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:85344
+      snippet: (E)-4-hydroxynon-2-enal + glutathione => 3-(glutathion-S-yl)-4-hydroxynonanal
+      notes: Rhea's left-to-right directional reaction RHEA:85344 declares side 85343_L as its substrates
+        (rh:substrates); the master reaction RHEA:85343 is undirected. This participant is CHEBI:58968
+        with coefficient 1. Rhea cites PMID:38016474 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: glutathione is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85344
+      snippet: (E)-4-hydroxynon-2-enal + glutathione => 3-(glutathion-S-yl)-4-hydroxynonanal
+      notes: Rhea's left-to-right directional reaction RHEA:85344 declares side 85343_L as its substrates
+        (rh:substrates); the master reaction RHEA:85343 is undirected. This participant is CHEBI:57925
+        with coefficient 1. Rhea cites PMID:38016474 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-(glutathion-S-yl)-4-hydroxynonanal is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:85344
+      snippet: (E)-4-hydroxynon-2-enal + glutathione => 3-(glutathion-S-yl)-4-hydroxynonanal
+      notes: Rhea's left-to-right directional reaction RHEA:85344 declares side 85343_R as its products
+        (rh:products); the master reaction RHEA:85343 is undirected. This participant is CHEBI:234318
+        with coefficient 1. Rhea cites PMID:38016474 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

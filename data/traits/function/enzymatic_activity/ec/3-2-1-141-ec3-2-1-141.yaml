@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -41,4 +41,83 @@ definitions:
       Catalyses: hydrolysis of (1->4)-alpha-D-glucosidic linkage in 4-alpha-D-[(1->4)- alpha-D-glucanosyl]n trehalose to yield trehalose and (1->4)-alpha-D- glucan
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-alpha-D-{(1->4)-alpha-D-glucano}trehalose trehalohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.141. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "hydrolysis
+    of (1->4)-alpha-D-glucosidic linkage in 4-alpha-D-[(1->4)- alpha-D-glucanosyl]n trehalose to yield
+    trehalose and (1->4)-alpha-D- glucan".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-alpha-D-{(1->4)-alpha-D-glucano}trehalose trehalohydrolase
+    grounding: EC:3.2.1.141
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-alpha-D-(1->4)-alpha-D-glucanotrehalose trehalohydrolase activity
+    grounding: GO:0033942
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9AJN6
+    node_type: PROTEIN
+    label: TREZ_ARTRM
+    grounding: UniProtKB:Q9AJN6
+  - node_id: prot_Q44316
+    node_type: PROTEIN
+    label: TREZ_ARTSQ
+    grounding: UniProtKB:Q44316
+  - node_id: prot_O52520
+    node_type: PROTEIN
+    label: TREZ_BREHE
+    grounding: UniProtKB:O52520
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.141
+      snippet: EC:3.2.1.141 > GO:4-alpha-D-(1->4)-alpha-D-glucanotrehalose trehalohydrolase activity ;
+        GO:0033942
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033942 is itself a record
+        in this KB.
+  - subject: prot_Q9AJN6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TREZ_ARTRM is an exemplar enzyme with EC 3.2.1.141 activity.
+    evidence:
+    - reference: EC:3.2.1.141
+      snippet: DR   Q9AJN6, TREZ_ARTRM ;  Q44316, TREZ_ARTSQ ;  O52520, TREZ_BREHE ;
+      notes: ExPASy ENZYME entry EC 3.2.1.141 cross-references UniProtKB:Q9AJN6 (TREZ_ARTRM) as a protein
+        with this activity.
+  - subject: prot_Q44316
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TREZ_ARTSQ is an exemplar enzyme with EC 3.2.1.141 activity.
+    evidence:
+    - reference: EC:3.2.1.141
+      snippet: DR   Q9AJN6, TREZ_ARTRM ;  Q44316, TREZ_ARTSQ ;  O52520, TREZ_BREHE ;
+      notes: ExPASy ENZYME entry EC 3.2.1.141 cross-references UniProtKB:Q44316 (TREZ_ARTSQ) as a protein
+        with this activity.
+  - subject: prot_O52520
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TREZ_BREHE is an exemplar enzyme with EC 3.2.1.141 activity.
+    evidence:
+    - reference: EC:3.2.1.141
+      snippet: DR   Q9AJN6, TREZ_ARTRM ;  Q44316, TREZ_ARTSQ ;  O52520, TREZ_BREHE ;
+      notes: ExPASy ENZYME entry EC 3.2.1.141 cross-references UniProtKB:O52520 (TREZ_BREHE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

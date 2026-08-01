@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.327
     mapping_source: rhea2ec
@@ -30,4 +30,164 @@ definitions:
       Catalyses the reaction: 11-methyldodecanoyl-[ACP] + L-phenylalanine = N-(11-methyldodecanoyl)-L-phenylalanine + holo-[ACP] + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 11-methyldodecanoyl-[ACP] + L-phenylalanine = N-(11-methyldodecanoyl)-L-phenylalanine
+    +…
+  description: Substrate-to-product chemistry of RHEA:84091, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:84092 (rh:substrates → 84091_L, rh:products → 84091_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 11-methyldodecanoyl-[ACP] + L-phenylalanine = N-(11-methyldodecanoyl)-L-phen…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:84091
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 11-methyldodecanoyl-[ACP] + L-phenylalanine = N-(11-methyldodecanoyl)-L-phenylalanine
+      + holo-[ACP] + H(+)'
+  - node_id: sub1
+    label: 11-methyldodecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:20299
+    description: Rhea compound GENERIC:20299.
+  - node_id: sub1_rp1
+    label: O-(S-11-methyldodecanoylpantetheine-4-phosphoryl)serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:20299 (11-methyldodecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:233597
+  - node_id: sub2
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prd1
+    label: N-(11-methyldodecanoyl)-L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:232395
+    description: Formula C22H34NO3.
+  - node_id: prd2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: prd2_rp1
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: long-chain acyl-[ACP]:L-phenylalanine N-acyltransferase
+    grounding: EC:2.3.1.327
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 11-methyldodecanoyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:84092
+      snippet: 11-methyldodecanoyl-[ACP] + L-phenylalanine => N-(11-methyldodecanoyl)-L-phenylalanine
+        + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:84092 declares side 84091_L as its substrates
+        (rh:substrates); the master reaction RHEA:84091 is undirected. This participant is GENERIC:20299
+        with coefficient 1. Rhea cites PMID:21714057 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-11-methyldodecanoylpantetheine-4-phosphoryl)serine residue is the reactive part
+      of 11-methyldodecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:84091
+      snippet: O-(S-11-methyldodecanoylpantetheine-4-phosphoryl)serine residue
+      notes: Rhea compound GENERIC:20299 (11-methyldodecanoyl-[ACP]) declares rh:reactivePart = O-(S-11-methyldodecanoylpantetheine-4-phosphoryl)serine
+        residue (CHEBI:233597), formula C27H49N3O9PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-phenylalanine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:84092
+      snippet: 11-methyldodecanoyl-[ACP] + L-phenylalanine => N-(11-methyldodecanoyl)-L-phenylalanine
+        + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:84092 declares side 84091_L as its substrates
+        (rh:substrates); the master reaction RHEA:84091 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:21714057 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-(11-methyldodecanoyl)-L-phenylalanine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:84092
+      snippet: 11-methyldodecanoyl-[ACP] + L-phenylalanine => N-(11-methyldodecanoyl)-L-phenylalanine
+        + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:84092 declares side 84091_R as its products
+        (rh:products); the master reaction RHEA:84091 is undirected. This participant is CHEBI:232395
+        with coefficient 1. Rhea cites PMID:21714057 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[ACP] is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84092
+      snippet: 11-methyldodecanoyl-[ACP] + L-phenylalanine => N-(11-methyldodecanoyl)-L-phenylalanine
+        + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:84092 declares side 84091_R as its products
+        (rh:products); the master reaction RHEA:84091 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:21714057 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:84091
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479), formula C14H25N3O8PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84092
+      snippet: 11-methyldodecanoyl-[ACP] + L-phenylalanine => N-(11-methyldodecanoyl)-L-phenylalanine
+        + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:84092 declares side 84091_R as its products
+        (rh:products); the master reaction RHEA:84091 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21714057 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.327; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:84091
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.327"/>
+      notes: The rh:ec triple on RHEA:84091 in rhea.rdf. EC 2.3.1.327 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

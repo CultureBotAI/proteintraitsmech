@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -33,4 +33,135 @@ definitions:
       Catalyses: (2S)-3-sulfolactate + NAD(+) = 3-sulfopyruvate + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-sulfolactate dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.310. EC 1.1.1.310 maps to
+    exactly one curated Rhea reaction (RHEA:28194), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2S)-3-sulfolactate
+    + NAD(+) = 3-sulfopyruvate + NADH + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (S)-sulfolactate dehydrogenase
+    grounding: EC:1.1.1.310
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2S)-3-sulfolactate
+    node_type: CHEMICAL
+    grounding: CHEBI:61289
+    description: Formula C3H4O6S.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: 3-sulfopyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:57940
+    description: Formula C3H2O6S.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: S-sulfolactate dehydrogenase activity
+    grounding: GO:0102155
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q1QWN6
+    node_type: PROTEIN
+    label: SLCC_CHRI1
+    grounding: UniProtKB:Q1QWN6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S)-3-sulfolactate is a substrate consumed by RHEA:28194 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28195
+      snippet: (2S)-3-sulfolactate + NAD(+) => 3-sulfopyruvate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28195 declares side 28194_L as its substrates
+        (rh:substrates); the master reaction RHEA:28194 is undirected. This participant is CHEBI:61289
+        with coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:28194 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28195
+      snippet: (2S)-3-sulfolactate + NAD(+) => 3-sulfopyruvate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28195 declares side 28194_L as its substrates
+        (rh:substrates); the master reaction RHEA:28194 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-sulfopyruvate is a product released by RHEA:28194 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28195
+      snippet: (2S)-3-sulfolactate + NAD(+) => 3-sulfopyruvate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28195 declares side 28194_R as its products
+        (rh:products); the master reaction RHEA:28194 is undirected. This participant is CHEBI:57940 with
+        coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by RHEA:28194 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28195
+      snippet: (2S)-3-sulfolactate + NAD(+) => 3-sulfopyruvate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28195 declares side 28194_R as its products
+        (rh:products); the master reaction RHEA:28194 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:28194 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28195
+      snippet: (2S)-3-sulfolactate + NAD(+) => 3-sulfopyruvate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28195 declares side 28194_R as its products
+        (rh:products); the master reaction RHEA:28194 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.1.310
+      snippet: EC:1.1.1.310 > GO:S-sulfolactate dehydrogenase activity ; GO:0102155
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102155 is itself a record
+        in this KB.
+  - subject: prot_Q1QWN6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SLCC_CHRI1 is an exemplar enzyme with EC 1.1.1.310 activity.
+    evidence:
+    - reference: EC:1.1.1.310
+      snippet: DR   Q1QWN6, SLCC_CHRI1 ;
+      notes: ExPASy ENZYME entry EC 1.1.1.310 cross-references UniProtKB:Q1QWN6 (SLCC_CHRI1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:28235
     role: SUBSTRATE_OR_PRODUCT
@@ -20,4 +20,93 @@ definitions:
       Catalyses the reaction: 4-methoxybenzaldehyde + hydrogen cyanide = (2S)-2-hydroxy-2-(4-methoxyphenyl)acetonitrile
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-methoxybenzaldehyde + hydrogen cyanide = (2S)-2-hydroxy-2-(4-methoxyphenyl)acetonitri…
+  description: Substrate-to-product chemistry of RHEA:77447, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77448 (rh:substrates → 77447_L, rh:products → 77447_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-methoxybenzaldehyde + hydrogen cyanide = (2S)-2-hydroxy-2-(4-methoxyphenyl…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77447
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-methoxybenzaldehyde + hydrogen cyanide = (2S)-2-hydroxy-2-(4-methoxyphenyl)acetonitrile'
+  - node_id: sub1
+    label: 4-methoxybenzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:28235
+    description: Formula C8H8O2.
+  - node_id: sub2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: prd1
+    label: (2S)-2-hydroxy-2-(4-methoxyphenyl)acetonitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:197328
+    description: Formula C9H9NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aromatic (S)-hydroxynitrile lyase activity
+    grounding: GO:0052892
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-methoxybenzaldehyde is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77448
+      snippet: 4-methoxybenzaldehyde + hydrogen cyanide => (2S)-2-hydroxy-2-(4-methoxyphenyl)acetonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77448 declares side 77447_L as its substrates
+        (rh:substrates); the master reaction RHEA:77447 is undirected. This participant is CHEBI:28235
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen cyanide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77448
+      snippet: 4-methoxybenzaldehyde + hydrogen cyanide => (2S)-2-hydroxy-2-(4-methoxyphenyl)acetonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77448 declares side 77447_L as its substrates
+        (rh:substrates); the master reaction RHEA:77447 is undirected. This participant is CHEBI:18407
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-2-hydroxy-2-(4-methoxyphenyl)acetonitrile is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77448
+      snippet: 4-methoxybenzaldehyde + hydrogen cyanide => (2S)-2-hydroxy-2-(4-methoxyphenyl)acetonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77448 declares side 77447_R as its products
+        (rh:products); the master reaction RHEA:77447 is undirected. This participant is CHEBI:197328
+        with coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:77447
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052892"/>
+      notes: The rdfs:seeAlso triple on RHEA:77447 in rhea.rdf. GO term GO:0052892 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

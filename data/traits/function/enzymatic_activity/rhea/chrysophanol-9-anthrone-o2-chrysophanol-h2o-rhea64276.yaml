@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:3686
     role: SUBSTRATE_OR_PRODUCT
@@ -22,4 +22,91 @@ definitions:
       Catalyses the reaction: chrysophanol-9-anthrone + O2 = chrysophanol + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chrysophanol-9-anthrone + O2 = chrysophanol + H2O
+  description: Substrate-to-product chemistry of RHEA:64276, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:64277 (rh:substrates → 64276_L, rh:products → 64276_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of chrysophanol-9-anthrone + O2 = chrysophanol + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:64276
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: chrysophanol-9-anthrone + O2 = chrysophanol + H2O'
+  - node_id: sub1
+    label: chrysophanol-9-anthrone
+    node_type: CHEMICAL
+    grounding: CHEBI:3686
+    description: Formula C15H12O3.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: chrysophanol
+    node_type: CHEMICAL
+    grounding: CHEBI:3687
+    description: Formula C15H10O4.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: chrysophanol-9-anthrone is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:64277
+      snippet: chrysophanol-9-anthrone + O2 => chrysophanol + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64277 declares side 64276_L as its substrates
+        (rh:substrates); the master reaction RHEA:64276 is undirected. This participant is CHEBI:3686
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64277
+      snippet: chrysophanol-9-anthrone + O2 => chrysophanol + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64277 declares side 64276_L as its substrates
+        (rh:substrates); the master reaction RHEA:64276 is undirected. This participant is CHEBI:15379
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: chrysophanol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64277
+      snippet: chrysophanol-9-anthrone + O2 => chrysophanol + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64277 declares side 64276_R as its products
+        (rh:products); the master reaction RHEA:64276 is undirected. This participant is CHEBI:3687 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64277
+      snippet: chrysophanol-9-anthrone + O2 => chrysophanol + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64277 declares side 64276_R as its products
+        (rh:products); the master reaction RHEA:64276 is undirected. This participant is CHEBI:15377 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

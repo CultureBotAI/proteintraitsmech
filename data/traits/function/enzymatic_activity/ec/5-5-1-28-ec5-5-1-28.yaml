@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 synonyms:
@@ -41,4 +41,101 @@ definitions:
       Catalyses: (2E,6E,10E)-geranylgeranyl diphosphate = (-)-kolavenyl diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (-)-kolavenyl diphosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.28. EC 5.5.1.28 maps to exactly
+    one curated Rhea reaction (RHEA:54684), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E,10E)-geranylgeranyl
+    diphosphate = (-)-kolavenyl diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-kolavenyl diphosphate synthase
+    grounding: EC:5.5.1.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: (-)-kolavenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138310
+    description: Formula C20H33O7P2.
+  - node_id: prot_A0A1S5RW73
+    node_type: PROTEIN
+    label: KPS_SALDI
+    grounding: UniProtKB:A0A1S5RW73
+  - node_id: prot_A0A1C7AAN2
+    node_type: PROTEIN
+    label: TPS10_TRIWF
+    grounding: UniProtKB:A0A1C7AAN2
+  - node_id: prot_A0A0M5L832
+    node_type: PROTEIN
+    label: TPS14_TRIWF
+    grounding: UniProtKB:A0A0M5L832
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by RHEA:54684 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54685
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => (-)-kolavenyl diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54685 declares side 54684_L as its substrates
+        (rh:substrates); the master reaction RHEA:54684 is undirected. This participant is CHEBI:58756
+        with coefficient 1. Rhea cites PMID:28204567, PMID:27801964 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-kolavenyl diphosphate is a product released by RHEA:54684 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54685
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => (-)-kolavenyl diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54685 declares side 54684_R as its products
+        (rh:products); the master reaction RHEA:54684 is undirected. This participant is CHEBI:138310
+        with coefficient 1. Rhea cites PMID:28204567, PMID:27801964 for this reaction.
+  - subject: prot_A0A1S5RW73
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KPS_SALDI is an exemplar enzyme with EC 5.5.1.28 activity.
+    evidence:
+    - reference: EC:5.5.1.28
+      snippet: DR   A0A1S5RW73, KPS_SALDI  ;  A0A1C7AAN2, TPS10_TRIWF;  A0A0M5L832, TPS14_TRIWF;
+      notes: ExPASy ENZYME entry EC 5.5.1.28 cross-references UniProtKB:A0A1S5RW73 (KPS_SALDI) as a protein
+        with this activity.
+  - subject: prot_A0A1C7AAN2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS10_TRIWF is an exemplar enzyme with EC 5.5.1.28 activity.
+    evidence:
+    - reference: EC:5.5.1.28
+      snippet: DR   A0A1S5RW73, KPS_SALDI  ;  A0A1C7AAN2, TPS10_TRIWF;  A0A0M5L832, TPS14_TRIWF;
+      notes: ExPASy ENZYME entry EC 5.5.1.28 cross-references UniProtKB:A0A1C7AAN2 (TPS10_TRIWF) as a
+        protein with this activity.
+  - subject: prot_A0A0M5L832
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS14_TRIWF is an exemplar enzyme with EC 5.5.1.28 activity.
+    evidence:
+    - reference: EC:5.5.1.28
+      snippet: DR   A0A1S5RW73, KPS_SALDI  ;  A0A1C7AAN2, TPS10_TRIWF;  A0A0M5L832, TPS14_TRIWF;
+      notes: ExPASy ENZYME entry EC 5.5.1.28 cross-references UniProtKB:A0A0M5L832 (TPS14_TRIWF) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -45,4 +45,254 @@ definitions:
       Catalyses: (1) DIMBOA beta-D-glucoside + H2O = DIMBOA + D-glucose. (2) DIBOA beta-D-glucoside + H2O = DIBOA + D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-hydroxy-7-methoxy-3-oxo-3,4-dihydro-2H-1,4-benzoxazin-2-yl glucoside
+    beta-D-glucosida…
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.182. Rhea assigns 2 curated
+    reactions to EC 3.2.1.182. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) DIMBOA beta-D-glucoside + H2O = DIMBOA + D-glucose.
+    (2) DIBOA beta-D-glucoside + H2O = DIBOA + D-glucose". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxy-7-methoxy-3-oxo-3,4-dihydro-2H-1,4-benzoxazin-2-yl glucoside beta-D-glucosidase
+    grounding: EC:3.2.1.182
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of DIMBOA beta-D-glucoside + H2O = DIMBOA + D-glucose
+    grounding: RHEA:33975
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: DIMBOA beta-D-glucoside + H2O = DIMBOA + D-glucose'
+  - node_id: rxn1_sub1
+    label: DIMBOA beta-D-glucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:37573
+    description: Formula C15H19NO10.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: DIMBOA
+    node_type: CHEMICAL
+    grounding: CHEBI:18048
+    description: Formula C9H9NO5.
+  - node_id: rxn1_prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of DIBOA beta-D-glucoside + H2O = DIBOA + D-glucose
+    grounding: RHEA:33979
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: DIBOA beta-D-glucoside + H2O = DIBOA + D-glucose'
+  - node_id: rxn2_sub1
+    label: DIBOA beta-D-glucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:63670
+    description: Formula C14H17NO9.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: DIBOA
+    node_type: CHEMICAL
+    grounding: CHEBI:63558
+    description: Formula C8H7NO4.
+  - node_id: rxn2_prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: DIMBOA glucoside beta-D-glucosidase activity
+    grounding: GO:0102726
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P49235
+    node_type: PROTEIN
+    label: HGGL1_MAIZE
+    grounding: UniProtKB:P49235
+  - node_id: prot_Q41761
+    node_type: PROTEIN
+    label: HGGL2_MAIZE
+    grounding: UniProtKB:Q41761
+  - node_id: prot_Q9FYS3
+    node_type: PROTEIN
+    label: HGGL_SECCE
+    grounding: UniProtKB:Q9FYS3
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:33975 is one of the 2 curated reactions Rhea assigns to EC 3.2.1.182; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:33975
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.182"/>
+      notes: The rh:ec triple on RHEA:33975 in rhea.rdf assigns that reaction to EC 3.2.1.182.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: DIMBOA beta-D-glucoside is a substrate consumed by RHEA:33975 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33976
+      snippet: DIMBOA beta-D-glucoside + H2O => DIMBOA + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33976 declares side 33975_L as its substrates
+        (rh:substrates); the master reaction RHEA:33975 is undirected. This participant is CHEBI:37573
+        with coefficient 1. Rhea cites PMID:11106394, PMID:10773341, PMID:10099619, PMID:10750901 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:33975 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33976
+      snippet: DIMBOA beta-D-glucoside + H2O => DIMBOA + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33976 declares side 33975_L as its substrates
+        (rh:substrates); the master reaction RHEA:33975 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11106394, PMID:10773341, PMID:10099619, PMID:10750901 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: DIMBOA is a product released by RHEA:33975 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33976
+      snippet: DIMBOA beta-D-glucoside + H2O => DIMBOA + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33976 declares side 33975_R as its products
+        (rh:products); the master reaction RHEA:33975 is undirected. This participant is CHEBI:18048 with
+        coefficient 1. Rhea cites PMID:11106394, PMID:10773341, PMID:10099619, PMID:10750901 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: D-glucose is a product released by RHEA:33975 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33976
+      snippet: DIMBOA beta-D-glucoside + H2O => DIMBOA + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33976 declares side 33975_R as its products
+        (rh:products); the master reaction RHEA:33975 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:11106394, PMID:10773341, PMID:10099619, PMID:10750901 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:33979 is one of the 2 curated reactions Rhea assigns to EC 3.2.1.182; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:33979
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.182"/>
+      notes: The rh:ec triple on RHEA:33979 in rhea.rdf assigns that reaction to EC 3.2.1.182.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: DIBOA beta-D-glucoside is a substrate consumed by RHEA:33979 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33980
+      snippet: DIBOA beta-D-glucoside + H2O => DIBOA + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33980 declares side 33979_L as its substrates
+        (rh:substrates); the master reaction RHEA:33979 is undirected. This participant is CHEBI:63670
+        with coefficient 1. Rhea cites PMID:11106394, PMID:10773341, PMID:10099619, PMID:10750901 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:33979 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33980
+      snippet: DIBOA beta-D-glucoside + H2O => DIBOA + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33980 declares side 33979_L as its substrates
+        (rh:substrates); the master reaction RHEA:33979 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11106394, PMID:10773341, PMID:10099619, PMID:10750901 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: DIBOA is a product released by RHEA:33979 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33980
+      snippet: DIBOA beta-D-glucoside + H2O => DIBOA + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33980 declares side 33979_R as its products
+        (rh:products); the master reaction RHEA:33979 is undirected. This participant is CHEBI:63558 with
+        coefficient 1. Rhea cites PMID:11106394, PMID:10773341, PMID:10099619, PMID:10750901 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: D-glucose is a product released by RHEA:33979 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33980
+      snippet: DIBOA beta-D-glucoside + H2O => DIBOA + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33980 declares side 33979_R as its products
+        (rh:products); the master reaction RHEA:33979 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:11106394, PMID:10773341, PMID:10099619, PMID:10750901 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.182
+      snippet: EC:3.2.1.182 > GO:DIMBOA glucoside beta-D-glucosidase activity ; GO:0102726
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102726 is itself a record
+        in this KB.
+  - subject: prot_P49235
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGGL1_MAIZE is an exemplar enzyme with EC 3.2.1.182 activity.
+    evidence:
+    - reference: EC:3.2.1.182
+      snippet: DR   P49235, HGGL1_MAIZE;  Q41761, HGGL2_MAIZE;  Q9FYS3, HGGL_SECCE ;
+      notes: ExPASy ENZYME entry EC 3.2.1.182 cross-references UniProtKB:P49235 (HGGL1_MAIZE) as a protein
+        with this activity.
+  - subject: prot_Q41761
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGGL2_MAIZE is an exemplar enzyme with EC 3.2.1.182 activity.
+    evidence:
+    - reference: EC:3.2.1.182
+      snippet: DR   P49235, HGGL1_MAIZE;  Q41761, HGGL2_MAIZE;  Q9FYS3, HGGL_SECCE ;
+      notes: ExPASy ENZYME entry EC 3.2.1.182 cross-references UniProtKB:Q41761 (HGGL2_MAIZE) as a protein
+        with this activity.
+  - subject: prot_Q9FYS3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGGL_SECCE is an exemplar enzyme with EC 3.2.1.182 activity.
+    evidence:
+    - reference: EC:3.2.1.182
+      snippet: DR   P49235, HGGL1_MAIZE;  Q41761, HGGL2_MAIZE;  Q9FYS3, HGGL_SECCE ;
+      notes: ExPASy ENZYME entry EC 3.2.1.182 cross-references UniProtKB:Q9FYS3 (HGGL_SECCE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 synonyms:
@@ -45,4 +45,152 @@ definitions:
       Catalyses: 3-dehydro-L-gulonate 6-phosphate + H(+) = L-xylulose 5-phosphate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-dehydro-L-gulonate-6-phosphate decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.85. EC 4.1.1.85 maps to exactly
+    one curated Rhea reaction (RHEA:14353), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-dehydro-L-gulonate
+    6-phosphate + H(+) = L-xylulose 5-phosphate + CO2". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-dehydro-L-gulonate-6-phosphate decarboxylase
+    grounding: EC:4.1.1.85
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-dehydro-L-gulonate 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58774
+    description: Formula C6H8O10P.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: L-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57829
+    description: Formula C5H9O8P.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3-dehydro-L-gulonate-6-phosphate decarboxylase activity
+    grounding: GO:0033982
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P37678
+    node_type: PROTEIN
+    label: SGBH_ECOLI
+    grounding: UniProtKB:P37678
+  - node_id: prot_P44988
+    node_type: PROTEIN
+    label: SGBH_HAEIN
+    grounding: UniProtKB:P44988
+  - node_id: prot_A7ZV66
+    node_type: PROTEIN
+    label: ULAD_ECO24
+    grounding: UniProtKB:A7ZV66
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-dehydro-L-gulonate 6-phosphate is a substrate consumed by RHEA:14353 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14354
+      snippet: 3-dehydro-L-gulonate 6-phosphate + H(+) => L-xylulose 5-phosphate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:14354 declares side 14353_L as its substrates
+        (rh:substrates); the master reaction RHEA:14353 is undirected. This participant is CHEBI:58774
+        with coefficient 1. Rhea cites PMID:14567674, PMID:15157077, PMID:15157078, PMID:11900527 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:14353 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14354
+      snippet: 3-dehydro-L-gulonate 6-phosphate + H(+) => L-xylulose 5-phosphate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:14354 declares side 14353_L as its substrates
+        (rh:substrates); the master reaction RHEA:14353 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:14567674, PMID:15157077, PMID:15157078, PMID:11900527 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-xylulose 5-phosphate is a product released by RHEA:14353 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14354
+      snippet: 3-dehydro-L-gulonate 6-phosphate + H(+) => L-xylulose 5-phosphate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:14354 declares side 14353_R as its products
+        (rh:products); the master reaction RHEA:14353 is undirected. This participant is CHEBI:57829 with
+        coefficient 1. Rhea cites PMID:14567674, PMID:15157077, PMID:15157078, PMID:11900527 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:14353 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14354
+      snippet: 3-dehydro-L-gulonate 6-phosphate + H(+) => L-xylulose 5-phosphate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:14354 declares side 14353_R as its products
+        (rh:products); the master reaction RHEA:14353 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:14567674, PMID:15157077, PMID:15157078, PMID:11900527 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.1.85
+      snippet: EC:4.1.1.85 > GO:3-dehydro-L-gulonate-6-phosphate decarboxylase activity ; GO:0033982
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033982 is itself a record
+        in this KB.
+  - subject: prot_P37678
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SGBH_ECOLI is an exemplar enzyme with EC 4.1.1.85 activity.
+    evidence:
+    - reference: EC:4.1.1.85
+      snippet: DR   P37678, SGBH_ECOLI ;  P44988, SGBH_HAEIN ;  A7ZV66, ULAD_ECO24 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.85 cross-references UniProtKB:P37678 (SGBH_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P44988
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SGBH_HAEIN is an exemplar enzyme with EC 4.1.1.85 activity.
+    evidence:
+    - reference: EC:4.1.1.85
+      snippet: DR   P37678, SGBH_ECOLI ;  P44988, SGBH_HAEIN ;  A7ZV66, ULAD_ECO24 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.85 cross-references UniProtKB:P44988 (SGBH_HAEIN) as a protein
+        with this activity.
+  - subject: prot_A7ZV66
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ULAD_ECO24 is an exemplar enzyme with EC 4.1.1.85 activity.
+    evidence:
+    - reference: EC:4.1.1.85
+      snippet: DR   P37678, SGBH_ECOLI ;  P44988, SGBH_HAEIN ;  A7ZV66, ULAD_ECO24 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.85 cross-references UniProtKB:A7ZV66 (ULAD_ECO24) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

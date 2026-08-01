@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.3.-
 synonyms:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: oxalate + succinyl-CoA = oxalyl-CoA + succinate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of oxalate CoA-transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.3.2. EC 2.8.3.2 maps to exactly
+    one curated Rhea reaction (RHEA:23588), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "oxalate + succinyl-CoA
+    = oxalyl-CoA + succinate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: oxalate CoA-transferase
+    grounding: EC:2.8.3.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: oxalate
+    node_type: CHEMICAL
+    grounding: CHEBI:30623
+    description: Formula C2O4.
+  - node_id: sub2
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: prd1
+    label: oxalyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57388
+    description: Formula C23H31N7O19P3S.
+  - node_id: prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: succinyl-CoA:oxalate CoA-transferase activity
+    grounding: GO:0050161
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxalate is a substrate consumed by RHEA:23588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23589
+      snippet: oxalate + succinyl-CoA => oxalyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:23589 declares side 23588_L as its substrates
+        (rh:substrates); the master reaction RHEA:23588 is undirected. This participant is CHEBI:30623
+        with coefficient 1. Rhea cites PMID:16748872 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: succinyl-CoA is a substrate consumed by RHEA:23588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23589
+      snippet: oxalate + succinyl-CoA => oxalyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:23589 declares side 23588_L as its substrates
+        (rh:substrates); the master reaction RHEA:23588 is undirected. This participant is CHEBI:57292
+        with coefficient 1. Rhea cites PMID:16748872 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: oxalyl-CoA is a product released by RHEA:23588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23589
+      snippet: oxalate + succinyl-CoA => oxalyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:23589 declares side 23588_R as its products
+        (rh:products); the master reaction RHEA:23588 is undirected. This participant is CHEBI:57388 with
+        coefficient 1. Rhea cites PMID:16748872 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinate is a product released by RHEA:23588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23589
+      snippet: oxalate + succinyl-CoA => oxalyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:23589 declares side 23588_R as its products
+        (rh:products); the master reaction RHEA:23588 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:16748872 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.3.2
+      snippet: EC:2.8.3.2 > GO:succinyl-CoA:oxalate CoA-transferase activity ; GO:0050161
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050161 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

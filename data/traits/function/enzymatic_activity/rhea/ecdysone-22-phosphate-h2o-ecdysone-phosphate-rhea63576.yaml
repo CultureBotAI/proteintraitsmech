@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:147380
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,107 @@ definitions:
       Catalyses the reaction: ecdysone 22-phosphate + H2O = ecdysone + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ecdysone 22-phosphate + H2O = ecdysone + phosphate
+  description: Substrate-to-product chemistry of RHEA:63576, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63577 (rh:substrates → 63576_L, rh:products → 63576_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of ecdysone 22-phosphate + H2O = ecdysone + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63576
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: ecdysone 22-phosphate + H2O = ecdysone + phosphate'
+  - node_id: sub1
+    label: ecdysone 22-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:147380
+    description: Formula C27H43O9P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: ecdysone
+    node_type: CHEMICAL
+    grounding: CHEBI:16688
+    description: Formula C27H44O6.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ecdysteroid-phosphate phosphatase activity
+    grounding: GO:0102531
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ecdysone 22-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63577
+      snippet: ecdysone 22-phosphate + H2O => ecdysone + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:63577 declares side 63576_L as its substrates
+        (rh:substrates); the master reaction RHEA:63576 is undirected. This participant is CHEBI:147380
+        with coefficient 1. Rhea cites PMID:18937503, PMID:19524123, PMID:12721294 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63577
+      snippet: ecdysone 22-phosphate + H2O => ecdysone + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:63577 declares side 63576_L as its substrates
+        (rh:substrates); the master reaction RHEA:63576 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18937503, PMID:19524123, PMID:12721294 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ecdysone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63577
+      snippet: ecdysone 22-phosphate + H2O => ecdysone + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:63577 declares side 63576_R as its products
+        (rh:products); the master reaction RHEA:63576 is undirected. This participant is CHEBI:16688 with
+        coefficient 1. Rhea cites PMID:18937503, PMID:19524123, PMID:12721294 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63577
+      snippet: ecdysone 22-phosphate + H2O => ecdysone + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:63577 declares side 63576_R as its products
+        (rh:products); the master reaction RHEA:63576 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:18937503, PMID:19524123, PMID:12721294 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:63576
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102531"/>
+      notes: The rdfs:seeAlso triple on RHEA:63576 in rhea.rdf. GO term GO:0102531 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58161
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,79 @@ definitions:
       Catalyses the reaction: L,L-cystathionine = 2-aminobut-2-enoate + L-cysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L,L-cystathionine = 2-aminobut-2-enoate + L-cysteine
+  description: Substrate-to-product chemistry of RHEA:24910, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24911 (rh:substrates → 24910_L, rh:products → 24910_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L,L-cystathionine = 2-aminobut-2-enoate + L-cysteine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24910
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L,L-cystathionine = 2-aminobut-2-enoate + L-cysteine'
+  - node_id: sub1
+    label: L,L-cystathionine
+    node_type: CHEMICAL
+    grounding: CHEBI:58161
+    description: Formula C7H14N2O4S.
+  - node_id: prd1
+    label: 2-aminobut-2-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:48306
+    description: Formula C4H7NO2.
+  - node_id: prd2
+    label: L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+    description: Formula C3H7NO2S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L,L-cystathionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24911
+      snippet: L,L-cystathionine => 2-aminobut-2-enoate + L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:24911 declares side 24910_L as its substrates
+        (rh:substrates); the master reaction RHEA:24910 is undirected. This participant is CHEBI:58161
+        with coefficient 1. Rhea cites PMID:10212249, PMID:17056751, PMID:19955263, PMID:19019829 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-aminobut-2-enoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24911
+      snippet: L,L-cystathionine => 2-aminobut-2-enoate + L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:24911 declares side 24910_R as its products
+        (rh:products); the master reaction RHEA:24910 is undirected. This participant is CHEBI:48306 with
+        coefficient 1. Rhea cites PMID:10212249, PMID:17056751, PMID:19955263, PMID:19019829 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-cysteine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24911
+      snippet: L,L-cystathionine => 2-aminobut-2-enoate + L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:24911 declares side 24910_R as its products
+        (rh:products); the master reaction RHEA:24910 is undirected. This participant is CHEBI:35235 with
+        coefficient 1. Rhea cites PMID:10212249, PMID:17056751, PMID:19955263, PMID:19019829 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

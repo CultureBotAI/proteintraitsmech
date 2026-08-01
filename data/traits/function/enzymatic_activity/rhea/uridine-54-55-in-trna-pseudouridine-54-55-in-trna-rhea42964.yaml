@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:65315
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,140 @@ definitions:
       Catalyses the reaction: uridine(54/55) in tRNA = pseudouridine(54/55) in tRNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of uridine(54/55) in tRNA = pseudouridine(54/55) in tRNA
+  description: Substrate-to-product chemistry of RHEA:42964, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:42965 (rh:substrates → 42964_L, rh:products → 42964_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of uridine(54/55) in tRNA = pseudouridine(54/55) in tRNA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:42964
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: uridine(54/55) in tRNA = pseudouridine(54/55) in tRNA'
+  - node_id: sub1
+    label: uridine(54/55) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10306
+    description: Rhea compound GENERIC:10306.
+  - node_id: sub1_rp1
+    label: UMP residue at position 54
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10306 (uridine(54/55)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: sub1_rp2
+    label: UMP residue at position 55
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10306 (uridine(54/55)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd1
+    label: pseudouridine(54/55) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10307
+    description: Rhea compound GENERIC:10307.
+  - node_id: prd1_rp1
+    label: psi-uridine residue at position 54
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10307 (pseudouridine(54/55)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65314
+  - node_id: prd1_rp2
+    label: psi-uridine residue at position 55
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10307 (pseudouridine(54/55)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65314
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA pseudouridine synthase activity
+    grounding: GO:0106029
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine(54/55) in tRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42965
+      snippet: uridine(54/55) in tRNA => pseudouridine(54/55) in tRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42965 declares side 42964_L as its substrates
+        (rh:substrates); the master reaction RHEA:42964 is undirected. This participant is GENERIC:10306
+        with coefficient 1. Rhea cites PMID:16920741, PMID:18952823 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(54/55) in tRNA.
+    evidence:
+    - reference: RHEA:42964
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10306 (uridine(54/55) in tRNA) declares rh:reactivePart at position
+        54 = UMP residue (CHEBI:65315), formula C9H10N2O8P.
+  - subject: sub1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(54/55) in tRNA.
+    evidence:
+    - reference: RHEA:42964
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10306 (uridine(54/55) in tRNA) declares rh:reactivePart at position
+        55 = UMP residue (CHEBI:65315), formula C9H10N2O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pseudouridine(54/55) in tRNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42965
+      snippet: uridine(54/55) in tRNA => pseudouridine(54/55) in tRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42965 declares side 42964_R as its products
+        (rh:products); the master reaction RHEA:42964 is undirected. This participant is GENERIC:10307
+        with coefficient 1. Rhea cites PMID:16920741, PMID:18952823 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: psi-uridine residue is the reactive part of pseudouridine(54/55) in tRNA.
+    evidence:
+    - reference: RHEA:42964
+      snippet: psi-uridine residue
+      notes: Rhea compound GENERIC:10307 (pseudouridine(54/55) in tRNA) declares rh:reactivePart at position
+        54 = psi-uridine residue (CHEBI:65314), formula C9H10N2O8P.
+  - subject: prd1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: psi-uridine residue is the reactive part of pseudouridine(54/55) in tRNA.
+    evidence:
+    - reference: RHEA:42964
+      snippet: psi-uridine residue
+      notes: Rhea compound GENERIC:10307 (pseudouridine(54/55) in tRNA) declares rh:reactivePart at position
+        55 = psi-uridine residue (CHEBI:65314), formula C9H10N2O8P.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:42964
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0106029"/>
+      notes: The rdfs:seeAlso triple on RHEA:42964 in rhea.rdf. GO term GO:0106029 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

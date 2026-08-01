@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -44,4 +44,66 @@ definitions:
       Catalyses: [N-(6-aminohexanoyl)]n + H2O = [N-(6-aminohexanoyl)]n-x + [N-(6-aminohexanoyl)]x
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-aminohexanoate-oligomer endohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.117. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "[N-(6-aminohexanoyl)]n
+    + H2O = [N-(6-aminohexanoyl)]n-x + [N-(6-aminohexanoyl)]x".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6-aminohexanoate-oligomer endohydrolase
+    grounding: EC:3.5.1.117
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q1EPR5
+    node_type: PROTEIN
+    label: NYLC_AGRS5
+    grounding: UniProtKB:Q1EPR5
+  - node_id: prot_Q1EPR4
+    node_type: PROTEIN
+    label: NYLC_KOCS2
+    grounding: UniProtKB:Q1EPR4
+  - node_id: prot_Q79F77
+    node_type: PROTEIN
+    label: NYLC_PAEUR
+    grounding: UniProtKB:Q79F77
+  edges:
+  - subject: prot_Q1EPR5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NYLC_AGRS5 is an exemplar enzyme with EC 3.5.1.117 activity.
+    evidence:
+    - reference: EC:3.5.1.117
+      snippet: DR   Q1EPR5, NYLC_AGRS5 ;  Q1EPR4, NYLC_KOCS2 ;  Q79F77, NYLC_PAEUR ;
+      notes: ExPASy ENZYME entry EC 3.5.1.117 cross-references UniProtKB:Q1EPR5 (NYLC_AGRS5) as a protein
+        with this activity.
+  - subject: prot_Q1EPR4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NYLC_KOCS2 is an exemplar enzyme with EC 3.5.1.117 activity.
+    evidence:
+    - reference: EC:3.5.1.117
+      snippet: DR   Q1EPR5, NYLC_AGRS5 ;  Q1EPR4, NYLC_KOCS2 ;  Q79F77, NYLC_PAEUR ;
+      notes: ExPASy ENZYME entry EC 3.5.1.117 cross-references UniProtKB:Q1EPR4 (NYLC_KOCS2) as a protein
+        with this activity.
+  - subject: prot_Q79F77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NYLC_PAEUR is an exemplar enzyme with EC 3.5.1.117 activity.
+    evidence:
+    - reference: EC:3.5.1.117
+      snippet: DR   Q1EPR5, NYLC_AGRS5 ;  Q1EPR4, NYLC_KOCS2 ;  Q79F77, NYLC_PAEUR ;
+      notes: ExPASy ENZYME entry EC 3.5.1.117 cross-references UniProtKB:Q79F77 (NYLC_PAEUR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

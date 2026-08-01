@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -47,4 +47,278 @@ definitions:
       Catalyses: (1) 17-O-acetylajmaline + H2O = ajmaline + acetate + H(+). (2) 17-O-acetylnorajmaline + H2O = norajmaline + acetate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetylajmaline esterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.80. Rhea assigns 2 curated
+    reactions to EC 3.1.1.80. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 17-O-acetylajmaline + H2O = ajmaline + acetate + H(+).
+    (2) 17-O-acetylnorajmaline + H2O = norajmaline + acetate + H(+)". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acetylajmaline esterase
+    grounding: EC:3.1.1.80
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 17-O-acetylajmaline + H2O = ajmaline + acetate + H(+)
+    grounding: RHEA:22124
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 17-O-acetylajmaline + H2O = ajmaline + acetate + H(+)'
+  - node_id: rxn1_sub1
+    label: 17-O-acetylajmaline
+    node_type: CHEMICAL
+    grounding: CHEBI:58679
+    description: Formula C22H29N2O3.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: ajmaline
+    node_type: CHEMICAL
+    grounding: CHEBI:58567
+    description: Formula C20H27N2O2.
+  - node_id: rxn1_prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 17-O-acetylnorajmaline + H2O = norajmaline + acetate + H(+)
+    grounding: RHEA:23796
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 17-O-acetylnorajmaline + H2O = norajmaline + acetate + H(+)'
+  - node_id: rxn2_sub1
+    label: 17-O-acetylnorajmaline
+    node_type: CHEMICAL
+    grounding: CHEBI:77725
+    description: Formula C21H27N2O3.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: norajmaline
+    node_type: CHEMICAL
+    grounding: CHEBI:77618
+    description: Formula C19H25N2O2.
+  - node_id: rxn2_prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acetylajmaline esterase activity
+    grounding: GO:0033879
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0DXJ4
+    node_type: PROTEIN
+    label: AAE1_RAUSE
+    grounding: UniProtKB:P0DXJ4
+  - node_id: prot_P0DXJ5
+    node_type: PROTEIN
+    label: AAE2_RAUSE
+    grounding: UniProtKB:P0DXJ5
+  - node_id: prot_Q3MKY2
+    node_type: PROTEIN
+    label: AAE_RAUSE
+    grounding: UniProtKB:Q3MKY2
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:22124 is one of the 2 curated reactions Rhea assigns to EC 3.1.1.80; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:22124
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.80"/>
+      notes: The rh:ec triple on RHEA:22124 in rhea.rdf assigns that reaction to EC 3.1.1.80.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 17-O-acetylajmaline is a substrate consumed by RHEA:22124 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22125
+      snippet: 17-O-acetylajmaline + H2O => ajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22125 declares side 22124_L as its substrates
+        (rh:substrates); the master reaction RHEA:22124 is undirected. This participant is CHEBI:58679
+        with coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:22124 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22125
+      snippet: 17-O-acetylajmaline + H2O => ajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22125 declares side 22124_L as its substrates
+        (rh:substrates); the master reaction RHEA:22124 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: ajmaline is a product released by RHEA:22124 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22125
+      snippet: 17-O-acetylajmaline + H2O => ajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22125 declares side 22124_R as its products
+        (rh:products); the master reaction RHEA:22124 is undirected. This participant is CHEBI:58567 with
+        coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: acetate is a product released by RHEA:22124 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22125
+      snippet: 17-O-acetylajmaline + H2O => ajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22125 declares side 22124_R as its products
+        (rh:products); the master reaction RHEA:22124 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:22124 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22125
+      snippet: 17-O-acetylajmaline + H2O => ajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22125 declares side 22124_R as its products
+        (rh:products); the master reaction RHEA:22124 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:23796 is one of the 2 curated reactions Rhea assigns to EC 3.1.1.80; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:23796
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.80"/>
+      notes: The rh:ec triple on RHEA:23796 in rhea.rdf assigns that reaction to EC 3.1.1.80.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 17-O-acetylnorajmaline is a substrate consumed by RHEA:23796 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23797
+      snippet: 17-O-acetylnorajmaline + H2O => norajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23797 declares side 23796_L as its substrates
+        (rh:substrates); the master reaction RHEA:23796 is undirected. This participant is CHEBI:77725
+        with coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:23796 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23797
+      snippet: 17-O-acetylnorajmaline + H2O => norajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23797 declares side 23796_L as its substrates
+        (rh:substrates); the master reaction RHEA:23796 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: norajmaline is a product released by RHEA:23796 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23797
+      snippet: 17-O-acetylnorajmaline + H2O => norajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23797 declares side 23796_R as its products
+        (rh:products); the master reaction RHEA:23796 is undirected. This participant is CHEBI:77618 with
+        coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: acetate is a product released by RHEA:23796 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23797
+      snippet: 17-O-acetylnorajmaline + H2O => norajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23797 declares side 23796_R as its products
+        (rh:products); the master reaction RHEA:23796 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:23796 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23797
+      snippet: 17-O-acetylnorajmaline + H2O => norajmaline + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23797 declares side 23796_R as its products
+        (rh:products); the master reaction RHEA:23796 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2955586, PMID:16133216 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.80
+      snippet: EC:3.1.1.80 > GO:acetylajmaline esterase activity ; GO:0033879
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033879 is itself a record
+        in this KB.
+  - subject: prot_P0DXJ4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAE1_RAUSE is an exemplar enzyme with EC 3.1.1.80 activity.
+    evidence:
+    - reference: EC:3.1.1.80
+      snippet: DR   P0DXJ4, AAE1_RAUSE ;  P0DXJ5, AAE2_RAUSE ;  Q3MKY2, AAE_RAUSE  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.80 cross-references UniProtKB:P0DXJ4 (AAE1_RAUSE) as a protein
+        with this activity.
+  - subject: prot_P0DXJ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAE2_RAUSE is an exemplar enzyme with EC 3.1.1.80 activity.
+    evidence:
+    - reference: EC:3.1.1.80
+      snippet: DR   P0DXJ4, AAE1_RAUSE ;  P0DXJ5, AAE2_RAUSE ;  Q3MKY2, AAE_RAUSE  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.80 cross-references UniProtKB:P0DXJ5 (AAE2_RAUSE) as a protein
+        with this activity.
+  - subject: prot_Q3MKY2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAE_RAUSE is an exemplar enzyme with EC 3.1.1.80 activity.
+    evidence:
+    - reference: EC:3.1.1.80
+      snippet: DR   P0DXJ4, AAE1_RAUSE ;  P0DXJ5, AAE2_RAUSE ;  Q3MKY2, AAE_RAUSE  ;
+      notes: ExPASy ENZYME entry EC 3.1.1.80 cross-references UniProtKB:Q3MKY2 (AAE_RAUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

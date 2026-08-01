@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.2.-
 mapped_xrefs:
@@ -34,4 +34,118 @@ definitions:
       Catalyses: 1,8-diazacyclotetradecane-2,9-dione + H2O = N-(6-aminohexanoyl)-6- aminohexanoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-aminohexanoate-cyclic-dimer hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.2.12. EC 3.5.2.12 maps to exactly
+    one curated Rhea reaction (RHEA:16225), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "1,8-diazacyclotetradecane-2,9-dione
+    + H2O = N-(6-aminohexanoyl)-6- aminohexanoate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6-aminohexanoate-cyclic-dimer hydrolase
+    grounding: EC:3.5.2.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 1,8-diazacyclotetradecane-2,9-dione
+    node_type: CHEMICAL
+    grounding: CHEBI:16968
+    description: Formula C12H22N2O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-(6-aminohexanoyl)-6-aminohexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58798
+    description: Formula C12H24N2O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 6-aminohexanoate-cyclic-dimer hydrolase activity
+    grounding: GO:0019874
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P13398
+    node_type: PROTEIN
+    label: NYLA_PAEUR
+    grounding: UniProtKB:P13398
+  - node_id: prot_P13397
+    node_type: PROTEIN
+    label: NYLA_PSES8
+    grounding: UniProtKB:P13397
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1,8-diazacyclotetradecane-2,9-dione is a substrate consumed by RHEA:16225 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16226
+      snippet: 1,8-diazacyclotetradecane-2,9-dione + H2O => N-(6-aminohexanoyl)-6-aminohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:16226 declares side 16225_L as its substrates
+        (rh:substrates); the master reaction RHEA:16225 is undirected. This participant is CHEBI:16968
+        with coefficient 1. Rhea cites PMID:19889645, PMID:923591 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:16225 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16226
+      snippet: 1,8-diazacyclotetradecane-2,9-dione + H2O => N-(6-aminohexanoyl)-6-aminohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:16226 declares side 16225_L as its substrates
+        (rh:substrates); the master reaction RHEA:16225 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19889645, PMID:923591 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-(6-aminohexanoyl)-6-aminohexanoate is a product released by RHEA:16225 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16226
+      snippet: 1,8-diazacyclotetradecane-2,9-dione + H2O => N-(6-aminohexanoyl)-6-aminohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:16226 declares side 16225_R as its products
+        (rh:products); the master reaction RHEA:16225 is undirected. This participant is CHEBI:58798 with
+        coefficient 1. Rhea cites PMID:19889645, PMID:923591 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.2.12
+      snippet: EC:3.5.2.12 > GO:6-aminohexanoate-cyclic-dimer hydrolase activity ; GO:0019874
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0019874 is itself a record
+        in this KB.
+  - subject: prot_P13398
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NYLA_PAEUR is an exemplar enzyme with EC 3.5.2.12 activity.
+    evidence:
+    - reference: EC:3.5.2.12
+      snippet: DR   P13398, NYLA_PAEUR ;  P13397, NYLA_PSES8 ;
+      notes: ExPASy ENZYME entry EC 3.5.2.12 cross-references UniProtKB:P13398 (NYLA_PAEUR) as a protein
+        with this activity.
+  - subject: prot_P13397
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NYLA_PSES8 is an exemplar enzyme with EC 3.5.2.12 activity.
+    evidence:
+    - reference: EC:3.5.2.12
+      snippet: DR   P13398, NYLA_PAEUR ;  P13397, NYLA_PSES8 ;
+      notes: ExPASy ENZYME entry EC 3.5.2.12 cross-references UniProtKB:P13397 (NYLA_PSES8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

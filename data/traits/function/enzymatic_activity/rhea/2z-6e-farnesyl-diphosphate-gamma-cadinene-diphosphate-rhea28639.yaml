@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.62
     mapping_source: rhea2ec
@@ -30,4 +30,111 @@ definitions:
       Catalyses the reaction: (2Z,6E)-farnesyl diphosphate = (-)-gamma-cadinene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2Z,6E)-farnesyl diphosphate = (-)-gamma-cadinene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:28639, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28640 (rh:substrates → 28639_L, rh:products → 28639_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2Z,6E)-farnesyl diphosphate = (-)-gamma-cadinene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28639
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2Z,6E)-farnesyl diphosphate = (-)-gamma-cadinene + diphosphate'
+  - node_id: sub1
+    label: (2Z,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:162247
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (-)-gamma-cadinene
+    node_type: CHEMICAL
+    grounding: CHEBI:63203
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-gamma-cadinene synthase [(2Z,6E)-farnesyl diphosphate cyclizing]
+    grounding: EC:4.2.3.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_C7PLV2
+    node_type: PROTEIN
+    label: GCAS_CHIPD
+    grounding: UniProtKB:C7PLV2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2Z,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:28640
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-gamma-cadinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28640 declares side 28639_L as its substrates
+        (rh:substrates); the master reaction RHEA:28639 is undirected. This participant is CHEBI:162247
+        with coefficient 1. Rhea cites PMID:27666571, PMID:27829890, PMID:23307484 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-gamma-cadinene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28640
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-gamma-cadinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28640 declares side 28639_R as its products
+        (rh:products); the master reaction RHEA:28639 is undirected. This participant is CHEBI:63203 with
+        coefficient 1. Rhea cites PMID:27666571, PMID:27829890, PMID:23307484 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28640
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-gamma-cadinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28640 declares side 28639_R as its products
+        (rh:products); the master reaction RHEA:28639 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:27666571, PMID:27829890, PMID:23307484 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.62; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28639
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.62"/>
+      notes: The rh:ec triple on RHEA:28639 in rhea.rdf. EC 4.2.3.62 is itself a record in this KB.
+  - subject: prot_C7PLV2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCAS_CHIPD is an exemplar enzyme carrying EC 4.2.3.62, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.62
+      snippet: DR   C7PLV2, GCAS_CHIPD ;
+      notes: ExPASy ENZYME entry EC 4.2.3.62 cross-references UniProtKB:C7PLV2 (GCAS_CHIPD) as a protein
+        with this activity.
+    - reference: RHEA:28639
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.62"/>
+      notes: Rhea assigns RHEA:28639 to EC 4.2.3.62, and EC 4.2.3.62 maps to exactly one Rhea master reaction
+        (RHEA:28639), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

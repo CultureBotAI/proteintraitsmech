@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.2.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: 3'-phosphoadenylyl sulfate + keratan = adenosine 3',5'-bisphosphate + keratan 6'-sulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of keratan sulfotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.2.21. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "3''-phosphoadenylyl
+    sulfate + keratan = adenosine 3'',5''-bisphosphate + keratan 6''-sulfate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: keratan sulfotransferase
+    grounding: EC:2.8.2.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: keratan sulfotransferase activity
+    grounding: GO:0045130
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q6DBY9
+    node_type: PROTEIN
+    label: CHST1_DANRE
+    grounding: UniProtKB:Q6DBY9
+  - node_id: prot_O43916
+    node_type: PROTEIN
+    label: CHST1_HUMAN
+    grounding: UniProtKB:O43916
+  - node_id: prot_Q9EQC0
+    node_type: PROTEIN
+    label: CHST1_MOUSE
+    grounding: UniProtKB:Q9EQC0
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.2.21
+      snippet: EC:2.8.2.21 > GO:keratan sulfotransferase activity ; GO:0045130
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0045130 is itself a record
+        in this KB.
+  - subject: prot_Q6DBY9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHST1_DANRE is an exemplar enzyme with EC 2.8.2.21 activity.
+    evidence:
+    - reference: EC:2.8.2.21
+      snippet: DR   Q6DBY9, CHST1_DANRE;  O43916, CHST1_HUMAN;  Q9EQC0, CHST1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.8.2.21 cross-references UniProtKB:Q6DBY9 (CHST1_DANRE) as a protein
+        with this activity.
+  - subject: prot_O43916
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHST1_HUMAN is an exemplar enzyme with EC 2.8.2.21 activity.
+    evidence:
+    - reference: EC:2.8.2.21
+      snippet: DR   Q6DBY9, CHST1_DANRE;  O43916, CHST1_HUMAN;  Q9EQC0, CHST1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.8.2.21 cross-references UniProtKB:O43916 (CHST1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9EQC0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHST1_MOUSE is an exemplar enzyme with EC 2.8.2.21 activity.
+    evidence:
+    - reference: EC:2.8.2.21
+      snippet: DR   Q6DBY9, CHST1_DANRE;  O43916, CHST1_HUMAN;  Q9EQC0, CHST1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.8.2.21 cross-references UniProtKB:Q9EQC0 (CHST1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -30,4 +30,103 @@ definitions:
       Catalyses: 8-hydroxycopalyl diphosphate = (13R)-manoyl oxide + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of manoyl oxide synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.190. EC 4.2.3.190 maps to
+    exactly one curated Rhea reaction (RHEA:54516), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "8-hydroxycopalyl
+    diphosphate = (13R)-manoyl oxide + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: manoyl oxide synthase
+    grounding: EC:4.2.3.190
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 8-hydroxycopalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:64283
+    description: Formula C20H35O8P2.
+  - node_id: prd1
+    label: (13R)-manoyl oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:138234
+    description: Formula C20H34O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: manoyl oxide synthase activity
+    grounding: GO:0062206
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A075FBG7
+    node_type: PROTEIN
+    label: ELS_MARVU
+    grounding: UniProtKB:A0A075FBG7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 8-hydroxycopalyl diphosphate is a substrate consumed by RHEA:54516 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54517
+      snippet: 8-hydroxycopalyl diphosphate => (13R)-manoyl oxide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54517 declares side 54516_L as its substrates
+        (rh:substrates); the master reaction RHEA:54516 is undirected. This participant is CHEBI:64283
+        with coefficient 1. Rhea cites PMID:24990389, PMID:23613273, PMID:24481136 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (13R)-manoyl oxide is a product released by RHEA:54516 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54517
+      snippet: 8-hydroxycopalyl diphosphate => (13R)-manoyl oxide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54517 declares side 54516_R as its products
+        (rh:products); the master reaction RHEA:54516 is undirected. This participant is CHEBI:138234
+        with coefficient 1. Rhea cites PMID:24990389, PMID:23613273, PMID:24481136 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:54516 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54517
+      snippet: 8-hydroxycopalyl diphosphate => (13R)-manoyl oxide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54517 declares side 54516_R as its products
+        (rh:products); the master reaction RHEA:54516 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:24990389, PMID:23613273, PMID:24481136 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.190
+      snippet: EC:4.2.3.190 > GO:manoyl oxide synthase activity ; GO:0062206
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0062206 is itself a record
+        in this KB.
+  - subject: prot_A0A075FBG7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ELS_MARVU is an exemplar enzyme with EC 4.2.3.190 activity.
+    evidence:
+    - reference: EC:4.2.3.190
+      snippet: DR   A0A075FBG7, ELS_MARVU  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.190 cross-references UniProtKB:A0A075FBG7 (ELS_MARVU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

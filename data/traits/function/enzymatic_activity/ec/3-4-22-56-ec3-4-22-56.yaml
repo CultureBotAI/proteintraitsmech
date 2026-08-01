@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -42,4 +42,68 @@ definitions:
       Catalyses: Strict requirement for an Asp residue at positions P1 and P4. It has a preferred cleavage sequence of Asp-Xaa-Xaa-Asp-|- with a hydrophobic amino-acid residue at P2 and a hydrophilic amino-acid residue at P3, although Val or Ala are also accepted at this position
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of caspase-3
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.56. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Strict
+    requirement for an Asp residue at positions P1 and P4. It has a preferred cleavage sequence of Asp-Xaa-Xaa-Asp-|-
+    with a hydrophobic amino-acid residue at P2 and a hydrophilic amino-acid residue at P3, although Val
+    or Ala are also accepted at this position".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: caspase-3
+    grounding: EC:3.4.22.56
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q08DY9
+    node_type: PROTEIN
+    label: CASP3_BOVIN
+    grounding: UniProtKB:Q08DY9
+  - node_id: prot_Q8MKI5
+    node_type: PROTEIN
+    label: CASP3_CANLF
+    grounding: UniProtKB:Q8MKI5
+  - node_id: prot_Q8MJU1
+    node_type: PROTEIN
+    label: CASP3_FELCA
+    grounding: UniProtKB:Q8MJU1
+  edges:
+  - subject: prot_Q08DY9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASP3_BOVIN is an exemplar enzyme with EC 3.4.22.56 activity.
+    evidence:
+    - reference: EC:3.4.22.56
+      snippet: DR   Q08DY9, CASP3_BOVIN;  Q8MKI5, CASP3_CANLF;  Q8MJU1, CASP3_FELCA;
+      notes: ExPASy ENZYME entry EC 3.4.22.56 cross-references UniProtKB:Q08DY9 (CASP3_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q8MKI5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASP3_CANLF is an exemplar enzyme with EC 3.4.22.56 activity.
+    evidence:
+    - reference: EC:3.4.22.56
+      snippet: DR   Q08DY9, CASP3_BOVIN;  Q8MKI5, CASP3_CANLF;  Q8MJU1, CASP3_FELCA;
+      notes: ExPASy ENZYME entry EC 3.4.22.56 cross-references UniProtKB:Q8MKI5 (CASP3_CANLF) as a protein
+        with this activity.
+  - subject: prot_Q8MJU1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CASP3_FELCA is an exemplar enzyme with EC 3.4.22.56 activity.
+    evidence:
+    - reference: EC:3.4.22.56
+      snippet: DR   Q08DY9, CASP3_BOVIN;  Q8MKI5, CASP3_CANLF;  Q8MJU1, CASP3_FELCA;
+      notes: ExPASy ENZYME entry EC 3.4.22.56 cross-references UniProtKB:Q8MJU1 (CASP3_FELCA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

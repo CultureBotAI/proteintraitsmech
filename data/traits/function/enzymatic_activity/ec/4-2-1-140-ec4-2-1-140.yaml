@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -37,4 +37,184 @@ definitions:
       Catalyses: (1) D-gluconate = 2-dehydro-3-deoxy-D-gluconate + H2O. (2) D-galactonate = 2-dehydro-3-deoxy-D-galactonate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gluconate/galactonate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.140. Rhea assigns 2 curated
+    reactions to EC 4.2.1.140. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) D-gluconate = 2-dehydro-3-deoxy-D-gluconate + H2O. (2)
+    D-galactonate = 2-dehydro-3-deoxy-D-galactonate + H2O". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gluconate/galactonate dehydratase
+    grounding: EC:4.2.1.140
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-galactonate = 2-dehydro-3-deoxy-D-galactonate + H2O
+    grounding: RHEA:18649
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-galactonate = 2-dehydro-3-deoxy-D-galactonate + H2O'
+  - node_id: rxn1_sub1
+    label: D-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:12931
+    description: Formula C6H11O7.
+  - node_id: rxn1_prd1
+    label: 2-dehydro-3-deoxy-D-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57989
+    description: Formula C6H9O6.
+  - node_id: rxn1_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-gluconate = 2-dehydro-3-deoxy-D-gluconate + H2O
+    grounding: RHEA:21612
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-gluconate = 2-dehydro-3-deoxy-D-gluconate + H2O'
+  - node_id: rxn2_sub1
+    label: D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:18391
+    description: Formula C6H11O7.
+  - node_id: rxn2_prd1
+    label: 2-dehydro-3-deoxy-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:57990
+    description: Formula C6H9O6.
+  - node_id: rxn2_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q6L1T2
+    node_type: PROTEIN
+    label: GAD_PICTO
+    grounding: UniProtKB:Q6L1T2
+  - node_id: prot_Q97U27
+    node_type: PROTEIN
+    label: GAD_SACS2
+    grounding: UniProtKB:Q97U27
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:18649 is one of the 2 curated reactions Rhea assigns to EC 4.2.1.140; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:18649
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.140"/>
+      notes: The rh:ec triple on RHEA:18649 in rhea.rdf assigns that reaction to EC 4.2.1.140.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: D-galactonate is a substrate consumed by RHEA:18649 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18650
+      snippet: D-galactonate => 2-dehydro-3-deoxy-D-galactonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18650 declares side 18649_L as its substrates
+        (rh:substrates); the master reaction RHEA:18649 is undirected. This participant is CHEBI:12931
+        with coefficient 1. Rhea cites PMID:20023024, PMID:15474024, PMID:15869466 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 2-dehydro-3-deoxy-D-galactonate is a product released by RHEA:18649 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18650
+      snippet: D-galactonate => 2-dehydro-3-deoxy-D-galactonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18650 declares side 18649_R as its products
+        (rh:products); the master reaction RHEA:18649 is undirected. This participant is CHEBI:57989 with
+        coefficient 1. Rhea cites PMID:20023024, PMID:15474024, PMID:15869466 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O is a product released by RHEA:18649 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18650
+      snippet: D-galactonate => 2-dehydro-3-deoxy-D-galactonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18650 declares side 18649_R as its products
+        (rh:products); the master reaction RHEA:18649 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:20023024, PMID:15474024, PMID:15869466 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:21612 is one of the 2 curated reactions Rhea assigns to EC 4.2.1.140; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:21612
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.140"/>
+      notes: The rh:ec triple on RHEA:21612 in rhea.rdf assigns that reaction to EC 4.2.1.140.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: D-gluconate is a substrate consumed by RHEA:21612 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21613
+      snippet: D-gluconate => 2-dehydro-3-deoxy-D-gluconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21613 declares side 21612_L as its substrates
+        (rh:substrates); the master reaction RHEA:21612 is undirected. This participant is CHEBI:18391
+        with coefficient 1. Rhea cites PMID:20023024, PMID:5383859, PMID:4772682 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2-dehydro-3-deoxy-D-gluconate is a product released by RHEA:21612 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21613
+      snippet: D-gluconate => 2-dehydro-3-deoxy-D-gluconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21613 declares side 21612_R as its products
+        (rh:products); the master reaction RHEA:21612 is undirected. This participant is CHEBI:57990 with
+        coefficient 1. Rhea cites PMID:20023024, PMID:5383859, PMID:4772682 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O is a product released by RHEA:21612 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21613
+      snippet: D-gluconate => 2-dehydro-3-deoxy-D-gluconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21613 declares side 21612_R as its products
+        (rh:products); the master reaction RHEA:21612 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:20023024, PMID:5383859, PMID:4772682 for this reaction.
+  - subject: prot_Q6L1T2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GAD_PICTO is an exemplar enzyme with EC 4.2.1.140 activity.
+    evidence:
+    - reference: EC:4.2.1.140
+      snippet: DR   Q6L1T2, GAD_PICTO  ;  Q97U27, GAD_SACS2  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.140 cross-references UniProtKB:Q6L1T2 (GAD_PICTO) as a protein
+        with this activity.
+  - subject: prot_Q97U27
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GAD_SACS2 is an exemplar enzyme with EC 4.2.1.140 activity.
+    evidence:
+    - reference: EC:4.2.1.140
+      snippet: DR   Q6L1T2, GAD_PICTO  ;  Q97U27, GAD_SACS2  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.140 cross-references UniProtKB:Q97U27 (GAD_SACS2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

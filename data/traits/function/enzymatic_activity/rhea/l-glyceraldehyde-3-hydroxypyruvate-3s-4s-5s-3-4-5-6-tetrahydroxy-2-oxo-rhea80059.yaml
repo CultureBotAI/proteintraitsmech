@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:27975
     role: SUBSTRATE_OR_PRODUCT
@@ -20,4 +20,77 @@ definitions:
       Catalyses the reaction: L-glyceraldehyde + 3-hydroxypyruvate = (3S,4S,5S)-3,4,5,6-tetrahydroxy-2-oxohexanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-glyceraldehyde + 3-hydroxypyruvate = (3S,4S,5S)-3,4,5,6-tetrahydroxy-2-oxohexanoate
+  description: Substrate-to-product chemistry of RHEA:80059, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80060 (rh:substrates → 80059_L, rh:products → 80059_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-glyceraldehyde + 3-hydroxypyruvate = (3S,4S,5S)-3,4,5,6-tetrahydroxy-2-oxo…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80059
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-glyceraldehyde + 3-hydroxypyruvate = (3S,4S,5S)-3,4,5,6-tetrahydroxy-2-oxohexanoate'
+  - node_id: sub1
+    label: L-glyceraldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:27975
+    description: Formula C3H6O3.
+  - node_id: sub2
+    label: 3-hydroxypyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:17180
+    description: Formula C3H3O4.
+  - node_id: prd1
+    label: (3S,4S,5S)-3,4,5,6-tetrahydroxy-2-oxohexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:231435
+    description: Formula C6H9O7.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-glyceraldehyde is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80060
+      snippet: L-glyceraldehyde + 3-hydroxypyruvate => (3S,4S,5S)-3,4,5,6-tetrahydroxy-2-oxohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:80060 declares side 80059_L as its substrates
+        (rh:substrates); the master reaction RHEA:80059 is undirected. This participant is CHEBI:27975
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 3-hydroxypyruvate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80060
+      snippet: L-glyceraldehyde + 3-hydroxypyruvate => (3S,4S,5S)-3,4,5,6-tetrahydroxy-2-oxohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:80060 declares side 80059_L as its substrates
+        (rh:substrates); the master reaction RHEA:80059 is undirected. This participant is CHEBI:17180
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3S,4S,5S)-3,4,5,6-tetrahydroxy-2-oxohexanoate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80060
+      snippet: L-glyceraldehyde + 3-hydroxypyruvate => (3S,4S,5S)-3,4,5,6-tetrahydroxy-2-oxohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:80060 declares side 80059_R as its products
+        (rh:products); the master reaction RHEA:80059 is undirected. This participant is CHEBI:231435
+        with coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

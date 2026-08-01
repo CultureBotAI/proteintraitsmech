@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 mapped_xrefs:
@@ -32,4 +32,133 @@ definitions:
       Catalyses: D-apiofuranose + NAD(+) = D-apionolactone + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-apiose dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.420. EC 1.1.1.420 maps to
+    exactly one curated Rhea reaction (RHEA:57056), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-apiofuranose
+    + NAD(+) = D-apionolactone + NADH + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-apiose dehydrogenase
+    grounding: EC:1.1.1.420
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-apiofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:141215
+    description: Formula C5H10O5.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: D-apionolactone
+    node_type: CHEMICAL
+    grounding: CHEBI:141216
+    description: Formula C5H8O5.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_B1G894
+    node_type: PROTEIN
+    label: APSD_PARG4
+    grounding: UniProtKB:B1G894
+  - node_id: prot_B9JK80
+    node_type: PROTEIN
+    label: APSD_RHIR8
+    grounding: UniProtKB:B9JK80
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-apiofuranose is a substrate consumed by RHEA:57056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57057
+      snippet: D-apiofuranose + NAD(+) => D-apionolactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57057 declares side 57056_L as its substrates
+        (rh:substrates); the master reaction RHEA:57056 is undirected. This participant is CHEBI:141215
+        with coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:57056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57057
+      snippet: D-apiofuranose + NAD(+) => D-apionolactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57057 declares side 57056_L as its substrates
+        (rh:substrates); the master reaction RHEA:57056 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-apionolactone is a product released by RHEA:57056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57057
+      snippet: D-apiofuranose + NAD(+) => D-apionolactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57057 declares side 57056_R as its products
+        (rh:products); the master reaction RHEA:57056 is undirected. This participant is CHEBI:141216
+        with coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by RHEA:57056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57057
+      snippet: D-apiofuranose + NAD(+) => D-apionolactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57057 declares side 57056_R as its products
+        (rh:products); the master reaction RHEA:57056 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:57056 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57057
+      snippet: D-apiofuranose + NAD(+) => D-apionolactone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57057 declares side 57056_R as its products
+        (rh:products); the master reaction RHEA:57056 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: prot_B1G894
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APSD_PARG4 is an exemplar enzyme with EC 1.1.1.420 activity.
+    evidence:
+    - reference: EC:1.1.1.420
+      snippet: DR   B1G894, APSD_PARG4 ;  B9JK80, APSD_RHIR8 ;
+      notes: ExPASy ENZYME entry EC 1.1.1.420 cross-references UniProtKB:B1G894 (APSD_PARG4) as a protein
+        with this activity.
+  - subject: prot_B9JK80
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APSD_RHIR8 is an exemplar enzyme with EC 1.1.1.420 activity.
+    evidence:
+    - reference: EC:1.1.1.420
+      snippet: DR   B1G894, APSD_PARG4 ;  B9JK80, APSD_RHIR8 ;
+      notes: ExPASy ENZYME entry EC 1.1.1.420 cross-references UniProtKB:B9JK80 (APSD_RHIR8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

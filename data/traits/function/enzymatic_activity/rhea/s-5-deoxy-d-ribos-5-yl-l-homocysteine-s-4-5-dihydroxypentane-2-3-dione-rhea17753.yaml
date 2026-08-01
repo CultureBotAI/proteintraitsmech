@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.4.1.21
     mapping_source: rhea2ec
@@ -28,4 +28,168 @@ definitions:
       Catalyses the reaction: S-(5-deoxy-D-ribos-5-yl)-L-homocysteine = (S)-4,5-dihydroxypentane-2,3-dione + L-homocysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-(5-deoxy-D-ribos-5-yl)-L-homocysteine = (S)-4,5-dihydroxypentane-2,3-dione
+    + L-homocy…
+  description: Substrate-to-product chemistry of RHEA:17753, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17754 (rh:substrates → 17753_L, rh:products → 17753_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of S-(5-deoxy-D-ribos-5-yl)-L-homocysteine = (S)-4,5-dihydroxypentane-2,3-dione…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17753
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: S-(5-deoxy-D-ribos-5-yl)-L-homocysteine = (S)-4,5-dihydroxypentane-2,3-dione + L-homocysteine'
+  - node_id: sub1
+    label: S-(5-deoxy-D-ribos-5-yl)-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58195
+    description: Formula C9H17NO6S.
+  - node_id: prd1
+    label: (S)-4,5-dihydroxypentane-2,3-dione
+    node_type: CHEMICAL
+    grounding: CHEBI:29484
+    description: Formula C5H8O4.
+  - node_id: prd2
+    label: L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58199
+    description: Formula C4H9NO2S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: S-ribosylhomocysteine lyase activity
+    grounding: GO:0043768
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: S-ribosylhomocysteine lyase
+    grounding: EC:4.4.1.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q04CP9
+    node_type: PROTEIN
+    label: LUXS1_LACDB
+    grounding: UniProtKB:Q04CP9
+  - node_id: prot_Q049W0
+    node_type: PROTEIN
+    label: LUXS2_LACDB
+    grounding: UniProtKB:Q049W0
+  - node_id: prot_A3N1L8
+    node_type: PROTEIN
+    label: LUXS_ACTP2
+    grounding: UniProtKB:A3N1L8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-(5-deoxy-D-ribos-5-yl)-L-homocysteine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17754
+      snippet: S-(5-deoxy-D-ribos-5-yl)-L-homocysteine => (S)-4,5-dihydroxypentane-2,3-dione + L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:17754 declares side 17753_L as its substrates
+        (rh:substrates); the master reaction RHEA:17753 is undirected. This participant is CHEBI:58195
+        with coefficient 1. Rhea cites PMID:12705835, PMID:11544353 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-4,5-dihydroxypentane-2,3-dione is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17754
+      snippet: S-(5-deoxy-D-ribos-5-yl)-L-homocysteine => (S)-4,5-dihydroxypentane-2,3-dione + L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:17754 declares side 17753_R as its products
+        (rh:products); the master reaction RHEA:17753 is undirected. This participant is CHEBI:29484 with
+        coefficient 1. Rhea cites PMID:12705835, PMID:11544353 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-homocysteine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17754
+      snippet: S-(5-deoxy-D-ribos-5-yl)-L-homocysteine => (S)-4,5-dihydroxypentane-2,3-dione + L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:17754 declares side 17753_R as its products
+        (rh:products); the master reaction RHEA:17753 is undirected. This participant is CHEBI:58199 with
+        coefficient 1. Rhea cites PMID:12705835, PMID:11544353 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17753
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0043768"/>
+      notes: The rdfs:seeAlso triple on RHEA:17753 in rhea.rdf. GO term GO:0043768 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.4.1.21; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17753
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.21"/>
+      notes: The rh:ec triple on RHEA:17753 in rhea.rdf. EC 4.4.1.21 is itself a record in this KB.
+  - subject: prot_Q04CP9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LUXS1_LACDB is an exemplar enzyme carrying EC 4.4.1.21, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.4.1.21
+      snippet: DR   Q04CP9, LUXS1_LACDB;  Q049W0, LUXS2_LACDB;  A3N1L8, LUXS_ACTP2 ;
+      notes: ExPASy ENZYME entry EC 4.4.1.21 cross-references UniProtKB:Q04CP9 (LUXS1_LACDB) as a protein
+        with this activity.
+    - reference: RHEA:17753
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.21"/>
+      notes: Rhea assigns RHEA:17753 to EC 4.4.1.21, and EC 4.4.1.21 maps to exactly one Rhea master reaction
+        (RHEA:17753), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q049W0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LUXS2_LACDB is an exemplar enzyme carrying EC 4.4.1.21, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.4.1.21
+      snippet: DR   Q04CP9, LUXS1_LACDB;  Q049W0, LUXS2_LACDB;  A3N1L8, LUXS_ACTP2 ;
+      notes: ExPASy ENZYME entry EC 4.4.1.21 cross-references UniProtKB:Q049W0 (LUXS2_LACDB) as a protein
+        with this activity.
+    - reference: RHEA:17753
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.21"/>
+      notes: Rhea assigns RHEA:17753 to EC 4.4.1.21, and EC 4.4.1.21 maps to exactly one Rhea master reaction
+        (RHEA:17753), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A3N1L8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LUXS_ACTP2 is an exemplar enzyme carrying EC 4.4.1.21, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.4.1.21
+      snippet: DR   Q04CP9, LUXS1_LACDB;  Q049W0, LUXS2_LACDB;  A3N1L8, LUXS_ACTP2 ;
+      notes: ExPASy ENZYME entry EC 4.4.1.21 cross-references UniProtKB:A3N1L8 (LUXS_ACTP2) as a protein
+        with this activity.
+    - reference: RHEA:17753
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.21"/>
+      notes: Rhea assigns RHEA:17753 to EC 4.4.1.21, and EC 4.4.1.21 maps to exactly one Rhea master reaction
+        (RHEA:17753), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

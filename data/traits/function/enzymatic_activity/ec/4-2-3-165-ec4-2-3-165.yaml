@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -32,4 +32,104 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = (1R,4R,5S)-(-)-guaia-6,10(14)-diene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (1R,4R,5S)-(-)-guaia-6,10(14)-diene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.165. EC 4.2.3.165 maps to
+    exactly one curated Rhea reaction (RHEA:53668), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = (1R,4R,5S)-(-)-guaia-6,10(14)-diene + diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (1R,4R,5S)-(-)-guaia-6,10(14)-diene synthase
+    grounding: EC:4.2.3.165
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (1R,4R,5S)-(-)-guaia-6,10(14)-diene
+    node_type: CHEMICAL
+    grounding: CHEBI:137563
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A1L7U8F2
+    node_type: PROTEIN
+    label: GUDIS_FUSMA
+    grounding: UniProtKB:A0A1L7U8F2
+  - node_id: prot_A0A1L7VZE7
+    node_type: PROTEIN
+    label: GUDIS_FUSPR
+    grounding: UniProtKB:A0A1L7VZE7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:53668 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53669
+      snippet: (2E,6E)-farnesyl diphosphate => (1R,4R,5S)-(-)-guaia-6,10(14)-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53669 declares side 53668_L as its substrates
+        (rh:substrates); the master reaction RHEA:53668 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:27294564 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1R,4R,5S)-(-)-guaia-6,10(14)-diene is a product released by RHEA:53668 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:53669
+      snippet: (2E,6E)-farnesyl diphosphate => (1R,4R,5S)-(-)-guaia-6,10(14)-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53669 declares side 53668_R as its products
+        (rh:products); the master reaction RHEA:53668 is undirected. This participant is CHEBI:137563
+        with coefficient 1. Rhea cites PMID:27294564 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:53668 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53669
+      snippet: (2E,6E)-farnesyl diphosphate => (1R,4R,5S)-(-)-guaia-6,10(14)-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53669 declares side 53668_R as its products
+        (rh:products); the master reaction RHEA:53668 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:27294564 for this reaction.
+  - subject: prot_A0A1L7U8F2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GUDIS_FUSMA is an exemplar enzyme with EC 4.2.3.165 activity.
+    evidence:
+    - reference: EC:4.2.3.165
+      snippet: DR   A0A1L7U8F2, GUDIS_FUSMA;  A0A1L7VZE7, GUDIS_FUSPR;
+      notes: ExPASy ENZYME entry EC 4.2.3.165 cross-references UniProtKB:A0A1L7U8F2 (GUDIS_FUSMA) as a
+        protein with this activity.
+  - subject: prot_A0A1L7VZE7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GUDIS_FUSPR is an exemplar enzyme with EC 4.2.3.165 activity.
+    evidence:
+    - reference: EC:4.2.3.165
+      snippet: DR   A0A1L7U8F2, GUDIS_FUSMA;  A0A1L7VZE7, GUDIS_FUSPR;
+      notes: ExPASy ENZYME entry EC 4.2.3.165 cross-references UniProtKB:A0A1L7VZE7 (GUDIS_FUSPR) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

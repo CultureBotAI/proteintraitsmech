@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.1.3.33
     mapping_source: rhea2ec
@@ -28,4 +28,161 @@ definitions:
       Catalyses the reaction: a 5'-end 5'-phospho-ribonucleoside-RNA + H2O = a 5'-end dephospho-ribonucleoside-RNA + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 5'-end 5'-phospho-ribonucleoside-RNA + H2O = a 5'-end dephospho-ribonucleoside-RNA
+    +…
+  description: Substrate-to-product chemistry of RHEA:67772, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67773 (rh:substrates → 67772_L, rh:products → 67772_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 5'-end 5'-phospho-ribonucleoside-RNA + H2O = a 5'-end dephospho-ribonucleo…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67772
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 5''-end 5''-phospho-ribonucleoside-RNA + H2O = a 5''-end dephospho-ribonucleoside-RNA
+      + phosphate'
+  - node_id: sub1
+    label: a 5'-end 5'-phospho-ribonucleoside-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15179
+    description: Rhea compound GENERIC:15179.
+  - node_id: sub1_rp1
+    label: 5'-end ribonucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15179 (a 5'-end
+      5'-phospho-ribonucleoside-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138282
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 5'-end dephospho-ribonucleoside-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13936
+    description: Rhea compound GENERIC:13936.
+  - node_id: prd1_rp1
+    label: 5'-end 5'-dephospho ribonucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13936 (a 5'-end
+      dephospho-ribonucleoside-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138284
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: polynucleotide 5'-phosphatase activity
+    grounding: GO:0004651
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: polynucleotide 5'-phosphatase
+    grounding: EC:3.1.3.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 5'-end 5'-phospho-ribonucleoside-RNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67773
+      snippet: a 5'-end 5'-phospho-ribonucleoside-RNA + H2O => a 5'-end dephospho-ribonucleoside-RNA +
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:67773 declares side 67772_L as its substrates
+        (rh:substrates); the master reaction RHEA:67772 is undirected. This participant is GENERIC:15179
+        with coefficient 1. Rhea cites PMID:4289819 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 5'-end ribonucleotide residue is the reactive part of a 5'-end 5'-phospho-ribonucleoside-RNA.
+    evidence:
+    - reference: RHEA:67772
+      snippet: 5'-end ribonucleotide residue
+      notes: Rhea compound GENERIC:15179 (a 5'-end 5'-phospho-ribonucleoside-RNA) declares rh:reactivePart
+        = 5'-end ribonucleotide residue (CHEBI:138282), formula C5H7O7PR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67773
+      snippet: a 5'-end 5'-phospho-ribonucleoside-RNA + H2O => a 5'-end dephospho-ribonucleoside-RNA +
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:67773 declares side 67772_L as its substrates
+        (rh:substrates); the master reaction RHEA:67772 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4289819 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 5'-end dephospho-ribonucleoside-RNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67773
+      snippet: a 5'-end 5'-phospho-ribonucleoside-RNA + H2O => a 5'-end dephospho-ribonucleoside-RNA +
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:67773 declares side 67772_R as its products
+        (rh:products); the master reaction RHEA:67772 is undirected. This participant is GENERIC:13936
+        with coefficient 1. Rhea cites PMID:4289819 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 5'-end 5'-dephospho ribonucleotide residue is the reactive part of a 5'-end dephospho-ribonucleoside-RNA.
+    evidence:
+    - reference: RHEA:67772
+      snippet: 5'-end 5'-dephospho ribonucleotide residue
+      notes: Rhea compound GENERIC:13936 (a 5'-end dephospho-ribonucleoside-RNA) declares rh:reactivePart
+        = 5'-end 5'-dephospho ribonucleotide residue (CHEBI:138284), formula C5H8O4R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67773
+      snippet: a 5'-end 5'-phospho-ribonucleoside-RNA + H2O => a 5'-end dephospho-ribonucleoside-RNA +
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:67773 declares side 67772_R as its products
+        (rh:products); the master reaction RHEA:67772 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:4289819 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:67772
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004651"/>
+      notes: The rdfs:seeAlso triple on RHEA:67772 in rhea.rdf. GO term GO:0004651 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.1.3.33; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:67772
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.33"/>
+      notes: The rh:ec triple on RHEA:67772 in rhea.rdf. EC 3.1.3.33 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

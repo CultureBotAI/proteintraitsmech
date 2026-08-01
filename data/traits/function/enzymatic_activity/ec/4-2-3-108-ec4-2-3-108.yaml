@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -41,4 +41,151 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate + H2O = 1,8-cineole + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1,8-cineole synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.108. EC 4.2.3.108 maps to
+    exactly one curated Rhea reaction (RHEA:32543), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate + H2O = 1,8-cineole + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1,8-cineole synthase
+    grounding: EC:4.2.3.108
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 1,8-cineole
+    node_type: CHEMICAL
+    grounding: CHEBI:27961
+    description: Formula C10H18O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 1,8-cineole synthase activity
+    grounding: GO:0102313
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_R9QMZ0
+    node_type: PROTEIN
+    label: ATERP_PINCO
+    grounding: UniProtKB:R9QMZ0
+  - node_id: prot_P0DI76
+    node_type: PROTEIN
+    label: CIN1_ARATH
+    grounding: UniProtKB:P0DI76
+  - node_id: prot_P0DI77
+    node_type: PROTEIN
+    label: CIN2_ARATH
+    grounding: UniProtKB:P0DI77
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:32543 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32544
+      snippet: (2E)-geranyl diphosphate + H2O => 1,8-cineole + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32544 declares side 32543_L as its substrates
+        (rh:substrates); the master reaction RHEA:32543 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:15299125, PMID:21385377, PMID:20399476, PMID:12941302 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:32543 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32544
+      snippet: (2E)-geranyl diphosphate + H2O => 1,8-cineole + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32544 declares side 32543_L as its substrates
+        (rh:substrates); the master reaction RHEA:32543 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15299125, PMID:21385377, PMID:20399476, PMID:12941302 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1,8-cineole is a product released by RHEA:32543 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32544
+      snippet: (2E)-geranyl diphosphate + H2O => 1,8-cineole + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32544 declares side 32543_R as its products
+        (rh:products); the master reaction RHEA:32543 is undirected. This participant is CHEBI:27961 with
+        coefficient 1. Rhea cites PMID:15299125, PMID:21385377, PMID:20399476, PMID:12941302 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:32543 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32544
+      snippet: (2E)-geranyl diphosphate + H2O => 1,8-cineole + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32544 declares side 32543_R as its products
+        (rh:products); the master reaction RHEA:32543 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:15299125, PMID:21385377, PMID:20399476, PMID:12941302 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.108
+      snippet: EC:4.2.3.108 > GO:1,8-cineole synthase activity ; GO:0102313
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102313 is itself a record
+        in this KB.
+  - subject: prot_R9QMZ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATERP_PINCO is an exemplar enzyme with EC 4.2.3.108 activity.
+    evidence:
+    - reference: EC:4.2.3.108
+      snippet: DR   R9QMZ0, ATERP_PINCO;  P0DI76, CIN1_ARATH ;  P0DI77, CIN2_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.3.108 cross-references UniProtKB:R9QMZ0 (ATERP_PINCO) as a protein
+        with this activity.
+  - subject: prot_P0DI76
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CIN1_ARATH is an exemplar enzyme with EC 4.2.3.108 activity.
+    evidence:
+    - reference: EC:4.2.3.108
+      snippet: DR   R9QMZ0, ATERP_PINCO;  P0DI76, CIN1_ARATH ;  P0DI77, CIN2_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.3.108 cross-references UniProtKB:P0DI76 (CIN1_ARATH) as a protein
+        with this activity.
+  - subject: prot_P0DI77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CIN2_ARATH is an exemplar enzyme with EC 4.2.3.108 activity.
+    evidence:
+    - reference: EC:4.2.3.108
+      snippet: DR   R9QMZ0, ATERP_PINCO;  P0DI76, CIN1_ARATH ;  P0DI77, CIN2_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.3.108 cross-references UniProtKB:P0DI77 (CIN2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

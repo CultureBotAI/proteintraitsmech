@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 synonyms:
@@ -44,4 +44,67 @@ definitions:
       Catalyses: Broad endopeptidase specificity. Cleaves Glu-Val-Asn-Leu-|-Asp-Ala-Glu- Phe in the Swedish variant of Alzheimer's amyloid precursor protein
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of memapsin 2
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.46. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Broad endopeptidase
+    specificity. Cleaves Glu-Val-Asn-Leu-|-Asp-Ala-Glu- Phe in the Swedish variant of Alzheimer''s amyloid
+    precursor protein".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: memapsin 2
+    grounding: EC:3.4.23.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q2HJ40
+    node_type: PROTEIN
+    label: BACE1_BOVIN
+    grounding: UniProtKB:Q2HJ40
+  - node_id: prot_Q1KLR6
+    node_type: PROTEIN
+    label: BACE1_CAVPO
+    grounding: UniProtKB:Q1KLR6
+  - node_id: prot_P56817
+    node_type: PROTEIN
+    label: BACE1_HUMAN
+    grounding: UniProtKB:P56817
+  edges:
+  - subject: prot_Q2HJ40
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACE1_BOVIN is an exemplar enzyme with EC 3.4.23.46 activity.
+    evidence:
+    - reference: EC:3.4.23.46
+      snippet: DR   Q2HJ40, BACE1_BOVIN;  Q1KLR6, BACE1_CAVPO;  P56817, BACE1_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.4.23.46 cross-references UniProtKB:Q2HJ40 (BACE1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q1KLR6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACE1_CAVPO is an exemplar enzyme with EC 3.4.23.46 activity.
+    evidence:
+    - reference: EC:3.4.23.46
+      snippet: DR   Q2HJ40, BACE1_BOVIN;  Q1KLR6, BACE1_CAVPO;  P56817, BACE1_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.4.23.46 cross-references UniProtKB:Q1KLR6 (BACE1_CAVPO) as a protein
+        with this activity.
+  - subject: prot_P56817
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACE1_HUMAN is an exemplar enzyme with EC 3.4.23.46 activity.
+    evidence:
+    - reference: EC:3.4.23.46
+      snippet: DR   Q2HJ40, BACE1_BOVIN;  Q1KLR6, BACE1_CAVPO;  P56817, BACE1_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.4.23.46 cross-references UniProtKB:P56817 (BACE1_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

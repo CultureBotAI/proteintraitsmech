@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.14.-
 synonyms:
@@ -53,4 +53,244 @@ definitions:
       Catalyses: an organic molecule + reduced [NADPH--hemoprotein reductase] + O2 = an alcohol + oxidized [NADPH--hemoprotein reductase] + H2O + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of unspecific monooxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.14.1. EC 1.14.14.1 maps to
+    exactly one curated Rhea reaction (RHEA:17149), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an organic
+    molecule + reduced [NADPH--hemoprotein reductase] + O2 = an alcohol + oxidized [NADPH--hemoprotein
+    reductase] + H2O + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: unspecific monooxygenase
+    grounding: EC:1.14.14.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an organic molecule
+    node_type: CHEMICAL
+    grounding: CHEBI:142491
+    description: Formula HR.
+  - node_id: sub2
+    label: reduced [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11964
+    description: Rhea compound GENERIC:11964.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: FMNH2
+    description: The reacting group Rhea names inside the generic participant GENERIC:11964 (reduced [NADPH--hemoprotein
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57618
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: an alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+    description: Formula HOR.
+  - node_id: prd2
+    label: oxidized [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11965
+    description: Rhea compound GENERIC:11965.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: FMN
+    description: The reacting group Rhea names inside the generic participant GENERIC:11965 (oxidized
+      [NADPH--hemoprotein reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58210
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: oxidoreductase activity, acting on paired donors, with incorporation or reduction of molecular
+      oxygen, reduced flavin or flavoprotein as one donor, and incorporation of one atom of oxygen
+    grounding: GO:0016712
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A3G9HRC2
+    node_type: PROTEIN
+    label: ALT2_ALTAL
+    grounding: UniProtKB:A0A3G9HRC2
+  - node_id: prot_Q81BF4
+    node_type: PROTEIN
+    label: C102_BACCR
+    grounding: UniProtKB:Q81BF4
+  - node_id: prot_Q9PVE8
+    node_type: PROTEIN
+    label: C330_FUNHE
+    grounding: UniProtKB:Q9PVE8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an organic molecule is a substrate consumed by RHEA:17149 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17150
+      snippet: an organic molecule + reduced [NADPH--hemoprotein reductase] + O2 => an alcohol + oxidized
+        [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17150 declares side 17149_L as its substrates
+        (rh:substrates); the master reaction RHEA:17149 is undirected. This participant is CHEBI:142491
+        with coefficient 1. Rhea cites PMID:5132997, PMID:13426111, PMID:434823, PMID:187601 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [NADPH--hemoprotein reductase] is a substrate consumed by RHEA:17149 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17150
+      snippet: an organic molecule + reduced [NADPH--hemoprotein reductase] + O2 => an alcohol + oxidized
+        [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17150 declares side 17149_L as its substrates
+        (rh:substrates); the master reaction RHEA:17149 is undirected. This participant is GENERIC:11964
+        with coefficient 1. Rhea cites PMID:5132997, PMID:13426111, PMID:434823, PMID:187601 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: FMNH2 is the reactive part of reduced [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:17149
+      snippet: FMNH2
+      notes: Rhea compound GENERIC:11964 (reduced [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMNH2 (CHEBI:57618).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:17149 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17150
+      snippet: an organic molecule + reduced [NADPH--hemoprotein reductase] + O2 => an alcohol + oxidized
+        [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17150 declares side 17149_L as its substrates
+        (rh:substrates); the master reaction RHEA:17149 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:5132997, PMID:13426111, PMID:434823, PMID:187601 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an alcohol is a product released by RHEA:17149 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17150
+      snippet: an organic molecule + reduced [NADPH--hemoprotein reductase] + O2 => an alcohol + oxidized
+        [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17150 declares side 17149_R as its products
+        (rh:products); the master reaction RHEA:17149 is undirected. This participant is CHEBI:30879 with
+        coefficient 1. Rhea cites PMID:5132997, PMID:13426111, PMID:434823, PMID:187601 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [NADPH--hemoprotein reductase] is a product released by RHEA:17149 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17150
+      snippet: an organic molecule + reduced [NADPH--hemoprotein reductase] + O2 => an alcohol + oxidized
+        [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17150 declares side 17149_R as its products
+        (rh:products); the master reaction RHEA:17149 is undirected. This participant is GENERIC:11965
+        with coefficient 1. Rhea cites PMID:5132997, PMID:13426111, PMID:434823, PMID:187601 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: FMN is the reactive part of oxidized [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:17149
+      snippet: FMN
+      notes: Rhea compound GENERIC:11965 (oxidized [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMN (CHEBI:58210).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:17149 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17150
+      snippet: an organic molecule + reduced [NADPH--hemoprotein reductase] + O2 => an alcohol + oxidized
+        [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17150 declares side 17149_R as its products
+        (rh:products); the master reaction RHEA:17149 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:5132997, PMID:13426111, PMID:434823, PMID:187601 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:17149 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17150
+      snippet: an organic molecule + reduced [NADPH--hemoprotein reductase] + O2 => an alcohol + oxidized
+        [NADPH--hemoprotein reductase] + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17150 declares side 17149_R as its products
+        (rh:products); the master reaction RHEA:17149 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:5132997, PMID:13426111, PMID:434823, PMID:187601 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.14.14.1
+      snippet: EC:1.14.14.1 > GO:oxidoreductase activity, acting on paired donors, with incorporation
+        or reduction of molecular oxygen, reduced flavin or flavoprotein as one donor, and incorporation
+        of one atom of oxygen ; GO:0016712
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016712 is itself a record
+        in this KB.
+  - subject: prot_A0A3G9HRC2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALT2_ALTAL is an exemplar enzyme with EC 1.14.14.1 activity.
+    evidence:
+    - reference: EC:1.14.14.1
+      snippet: DR   A0A3G9HRC2, ALT2_ALTAL ;  Q81BF4, C102_BACCR ;  Q9PVE8, C330_FUNHE ;
+      notes: ExPASy ENZYME entry EC 1.14.14.1 cross-references UniProtKB:A0A3G9HRC2 (ALT2_ALTAL) as a
+        protein with this activity.
+  - subject: prot_Q81BF4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C102_BACCR is an exemplar enzyme with EC 1.14.14.1 activity.
+    evidence:
+    - reference: EC:1.14.14.1
+      snippet: DR   A0A3G9HRC2, ALT2_ALTAL ;  Q81BF4, C102_BACCR ;  Q9PVE8, C330_FUNHE ;
+      notes: ExPASy ENZYME entry EC 1.14.14.1 cross-references UniProtKB:Q81BF4 (C102_BACCR) as a protein
+        with this activity.
+  - subject: prot_Q9PVE8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C330_FUNHE is an exemplar enzyme with EC 1.14.14.1 activity.
+    evidence:
+    - reference: EC:1.14.14.1
+      snippet: DR   A0A3G9HRC2, ALT2_ALTAL ;  Q81BF4, C102_BACCR ;  Q9PVE8, C330_FUNHE ;
+      notes: ExPASy ENZYME entry EC 1.14.14.1 cross-references UniProtKB:Q9PVE8 (C330_FUNHE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.2.6
     mapping_source: rhea2ec
@@ -34,4 +34,395 @@ definitions:
       Catalyses the reaction: beta-D-glucose 1-phosphate = beta-D-glucose 6-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-D-glucose 1-phosphate = beta-D-glucose 6-phosphate
+  description: Substrate-to-product chemistry of RHEA:20113, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20114 (rh:substrates → 20113_L, rh:products → 20113_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of beta-D-glucose 1-phosphate = beta-D-glucose 6-phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20113
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: beta-D-glucose 1-phosphate = beta-D-glucose 6-phosphate'
+  - node_id: sub1
+    label: beta-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57684
+    description: Formula C6H11O9P.
+  - node_id: prd1
+    label: beta-D-glucose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58247
+    description: Formula C6H11O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-phosphoglucomutase activity
+    grounding: GO:0008801
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: beta-phosphoglucomutase
+    grounding: EC:5.4.2.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O06995
+    node_type: PROTEIN
+    label: PGMB_BACSU
+    grounding: UniProtKB:O06995
+  - node_id: prot_P77366
+    node_type: PROTEIN
+    label: PGMB_ECOLI
+    grounding: UniProtKB:P77366
+  - node_id: prot_P71447
+    node_type: PROTEIN
+    label: PGMB_LACLA
+    grounding: UniProtKB:P71447
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: beta-D-glucose 1-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20114
+      snippet: beta-D-glucose 1-phosphate => beta-D-glucose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:20114 declares side 20113_L as its substrates
+        (rh:substrates); the master reaction RHEA:20113 is undirected. This participant is CHEBI:57684
+        with coefficient 1. Rhea cites PMID:15826149, PMID:12637673, PMID:16784233, PMID:15337123 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-glucose 6-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20114
+      snippet: beta-D-glucose 1-phosphate => beta-D-glucose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:20114 declares side 20113_R as its products
+        (rh:products); the master reaction RHEA:20113 is undirected. This participant is CHEBI:58247 with
+        coefficient 1. Rhea cites PMID:15826149, PMID:12637673, PMID:16784233, PMID:15337123 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20113
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008801"/>
+      notes: The rdfs:seeAlso triple on RHEA:20113 in rhea.rdf. GO term GO:0008801 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.2.6; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20113
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.6"/>
+      notes: The rh:ec triple on RHEA:20113 in rhea.rdf. EC 5.4.2.6 is itself a record in this KB.
+  - subject: prot_O06995
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGMB_BACSU is an exemplar enzyme carrying EC 5.4.2.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.2.6
+      snippet: DR   O06995, PGMB_BACSU ;  P77366, PGMB_ECOLI ;  P71447, PGMB_LACLA ;
+      notes: ExPASy ENZYME entry EC 5.4.2.6 cross-references UniProtKB:O06995 (PGMB_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:20113
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.6"/>
+      notes: Rhea assigns RHEA:20113 to EC 5.4.2.6, and EC 5.4.2.6 maps to exactly one Rhea master reaction
+        (RHEA:20113), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P77366
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGMB_ECOLI is an exemplar enzyme carrying EC 5.4.2.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.2.6
+      snippet: DR   O06995, PGMB_BACSU ;  P77366, PGMB_ECOLI ;  P71447, PGMB_LACLA ;
+      notes: ExPASy ENZYME entry EC 5.4.2.6 cross-references UniProtKB:P77366 (PGMB_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:20113
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.6"/>
+      notes: Rhea assigns RHEA:20113 to EC 5.4.2.6, and EC 5.4.2.6 maps to exactly one Rhea master reaction
+        (RHEA:20113), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P71447
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGMB_LACLA is an exemplar enzyme carrying EC 5.4.2.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.2.6
+      snippet: DR   O06995, PGMB_BACSU ;  P77366, PGMB_ECOLI ;  P71447, PGMB_LACLA ;
+      notes: ExPASy ENZYME entry EC 5.4.2.6 cross-references UniProtKB:P71447 (PGMB_LACLA) as a protein
+        with this activity.
+    - reference: RHEA:20113
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.6"/>
+      notes: Rhea assigns RHEA:20113 to EC 5.4.2.6, and EC 5.4.2.6 maps to exactly one Rhea master reaction
+        (RHEA:20113), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa206
+  title: Catalytic residues of RHEA:20113 (from MCSA:206)
+  description: 'The catalytic residues that carry out RHEA:20113, joined from M-CSA entry 206. 10 residues,
+    reused verbatim from the MCSA:206 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 206''s reactant set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product
+    set (CHEBI:58247) equals side 20113_R exactly. EC agreement bounded the candidates but was not sufficient
+    on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of beta-D-glucose 1-phosphate = beta-D-glucose 6-phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20113
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: beta-D-glucose 1-phosphate = beta-D-glucose 6-phosphate'
+  - node_id: mcsa
+    label: beta-phosphoglucomutase
+    node_type: MOTIF
+    grounding: MCSA:206
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: asp1008
+    label: catalytic Asp1008 (M-CSA/PDB numbering; UniProt residue 8)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: metal ligand, nucleofuge, nucleophile. Reused verbatim from the MCSA:206
+      record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: leu1009
+    label: catalytic Leu1009 (M-CSA/PDB numbering; UniProt residue 9)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:206 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: asp1010
+    label: catalytic Asp1010 (M-CSA/PDB numbering; UniProt residue 10)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor.
+      Reused verbatim from the MCSA:206 record''s catalysis graph, where the UniProt position was resolved
+      through SIFTS.'
+  - node_id: thr1016
+    label: catalytic Thr1016 (M-CSA/PDB numbering; UniProt residue 16)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:206 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: lys1045
+    label: catalytic Lys1045 (M-CSA/PDB numbering; UniProt residue 45)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:206 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: ser1114
+    label: catalytic Ser1114 (M-CSA/PDB numbering; UniProt residue 114)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:206 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: ala1115
+    label: catalytic Ala1115 (M-CSA/PDB numbering; UniProt residue 115)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:206 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: lys1145
+    label: catalytic Lys1145 (M-CSA/PDB numbering; UniProt residue 145)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:206 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: glu1169
+    label: catalytic Glu1169 (M-CSA/PDB numbering; UniProt residue 169)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:206 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: asp1170
+    label: catalytic Asp1170 (M-CSA/PDB numbering; UniProt residue 170)
+    node_type: RESIDUE
+    grounding: UniProtKB:P71447
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:206 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 206 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: beta-D-glucose 1-phosphate(2-) [reactant]; beta-D-glucose 6-phosphate(2-) [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 206, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: asp1008
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: metal ligand, nucleofuge, nucleophile
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: leu1009
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: asp1010
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: thr1016
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: lys1045
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: ser1114
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: ala1115
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: lys1145
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: glu1169
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: metal ligand
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: asp1170
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:206
+      snippet: metal ligand
+      notes: 'M-CSA entry 206 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 37 interaction, 28 spectator, 4 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 206''s reactant
+        set (CHEBI:57684) equals Rhea side 20113_L exactly, and its product set (CHEBI:58247) equals side
+        20113_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa206' (11 evidence-backed edges) joining MCSA:206
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

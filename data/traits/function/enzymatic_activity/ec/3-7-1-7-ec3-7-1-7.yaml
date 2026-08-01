@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.7.1.-
 synonyms:
@@ -37,4 +37,148 @@ definitions:
       Catalyses: nonane-4,6-dione + H2O = pentan-2-one + butanoate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-diketone hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.7.1.7. EC 3.7.1.7 maps to exactly
+    one curated Rhea reaction (RHEA:11908), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "nonane-4,6-dione
+    + H2O = pentan-2-one + butanoate + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-diketone hydrolase
+    grounding: EC:3.7.1.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: nonane-4,6-dione
+    node_type: CHEMICAL
+    grounding: CHEBI:16111
+    description: Formula C9H16O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: pentan-2-one
+    node_type: CHEMICAL
+    grounding: CHEBI:16472
+    description: Formula C5H10O.
+  - node_id: prd2
+    label: butanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17968
+    description: Formula C4H7O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-diketone hydrolase activity
+    grounding: GO:0047699
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9LCQ7
+    node_type: PROTEIN
+    label: OPH_PSESP
+    grounding: UniProtKB:Q9LCQ7
+  - node_id: prot_Q588Z2
+    node_type: PROTEIN
+    label: OPH_SPHS1
+    grounding: UniProtKB:Q588Z2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: nonane-4,6-dione is a substrate consumed by RHEA:11908 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11909
+      snippet: nonane-4,6-dione + H2O => pentan-2-one + butanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11909 declares side 11908_L as its substrates
+        (rh:substrates); the master reaction RHEA:11908 is undirected. This participant is CHEBI:16111
+        with coefficient 1. Rhea cites PMID:15817792, PMID:10746768 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:11908 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11909
+      snippet: nonane-4,6-dione + H2O => pentan-2-one + butanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11909 declares side 11908_L as its substrates
+        (rh:substrates); the master reaction RHEA:11908 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15817792, PMID:10746768 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pentan-2-one is a product released by RHEA:11908 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11909
+      snippet: nonane-4,6-dione + H2O => pentan-2-one + butanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11909 declares side 11908_R as its products
+        (rh:products); the master reaction RHEA:11908 is undirected. This participant is CHEBI:16472 with
+        coefficient 1. Rhea cites PMID:15817792, PMID:10746768 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: butanoate is a product released by RHEA:11908 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11909
+      snippet: nonane-4,6-dione + H2O => pentan-2-one + butanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11909 declares side 11908_R as its products
+        (rh:products); the master reaction RHEA:11908 is undirected. This participant is CHEBI:17968 with
+        coefficient 1. Rhea cites PMID:15817792, PMID:10746768 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:11908 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11909
+      snippet: nonane-4,6-dione + H2O => pentan-2-one + butanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11909 declares side 11908_R as its products
+        (rh:products); the master reaction RHEA:11908 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15817792, PMID:10746768 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.7.1.7
+      snippet: EC:3.7.1.7 > GO:beta-diketone hydrolase activity ; GO:0047699
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047699 is itself a record
+        in this KB.
+  - subject: prot_Q9LCQ7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OPH_PSESP is an exemplar enzyme with EC 3.7.1.7 activity.
+    evidence:
+    - reference: EC:3.7.1.7
+      snippet: DR   Q9LCQ7, OPH_PSESP  ;  Q588Z2, OPH_SPHS1  ;
+      notes: ExPASy ENZYME entry EC 3.7.1.7 cross-references UniProtKB:Q9LCQ7 (OPH_PSESP) as a protein
+        with this activity.
+  - subject: prot_Q588Z2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OPH_SPHS1 is an exemplar enzyme with EC 3.7.1.7 activity.
+    evidence:
+    - reference: EC:3.7.1.7
+      snippet: DR   Q9LCQ7, OPH_PSESP  ;  Q588Z2, OPH_SPHS1  ;
+      notes: ExPASy ENZYME entry EC 3.7.1.7 cross-references UniProtKB:Q588Z2 (OPH_SPHS1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

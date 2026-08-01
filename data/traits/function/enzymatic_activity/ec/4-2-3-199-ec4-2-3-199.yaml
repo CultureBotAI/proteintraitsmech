@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,117 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = (-)-5-epi-eremophilene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (-)-5-epieremophilene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.199. EC 4.2.3.199 maps to
+    exactly one curated Rhea reaction (RHEA:58168), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = (-)-5-epi-eremophilene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-5-epieremophilene synthase
+    grounding: EC:4.2.3.199
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (-)-5-epi-eremophilene
+    node_type: CHEMICAL
+    grounding: CHEBI:142537
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A1W6GW32
+    node_type: PROTEIN
+    label: STPS1_SALMI
+    grounding: UniProtKB:A0A1W6GW32
+  - node_id: prot_A0A1W6GW06
+    node_type: PROTEIN
+    label: STPS2_SALMI
+    grounding: UniProtKB:A0A1W6GW06
+  - node_id: prot_A0A1W6GW18
+    node_type: PROTEIN
+    label: STPS3_SALMI
+    grounding: UniProtKB:A0A1W6GW18
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:58168 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58169
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-5-epi-eremophilene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58169 declares side 58168_L as its substrates
+        (rh:substrates); the master reaction RHEA:58168 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:28487717 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-5-epi-eremophilene is a product released by RHEA:58168 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58169
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-5-epi-eremophilene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58169 declares side 58168_R as its products
+        (rh:products); the master reaction RHEA:58168 is undirected. This participant is CHEBI:142537
+        with coefficient 1. Rhea cites PMID:28487717 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:58168 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58169
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-5-epi-eremophilene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58169 declares side 58168_R as its products
+        (rh:products); the master reaction RHEA:58168 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:28487717 for this reaction.
+  - subject: prot_A0A1W6GW32
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STPS1_SALMI is an exemplar enzyme with EC 4.2.3.199 activity.
+    evidence:
+    - reference: EC:4.2.3.199
+      snippet: DR   A0A1W6GW32, STPS1_SALMI;  A0A1W6GW06, STPS2_SALMI;  A0A1W6GW18, STPS3_SALMI;
+      notes: ExPASy ENZYME entry EC 4.2.3.199 cross-references UniProtKB:A0A1W6GW32 (STPS1_SALMI) as a
+        protein with this activity.
+  - subject: prot_A0A1W6GW06
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STPS2_SALMI is an exemplar enzyme with EC 4.2.3.199 activity.
+    evidence:
+    - reference: EC:4.2.3.199
+      snippet: DR   A0A1W6GW32, STPS1_SALMI;  A0A1W6GW06, STPS2_SALMI;  A0A1W6GW18, STPS3_SALMI;
+      notes: ExPASy ENZYME entry EC 4.2.3.199 cross-references UniProtKB:A0A1W6GW06 (STPS2_SALMI) as a
+        protein with this activity.
+  - subject: prot_A0A1W6GW18
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STPS3_SALMI is an exemplar enzyme with EC 4.2.3.199 activity.
+    evidence:
+    - reference: EC:4.2.3.199
+      snippet: DR   A0A1W6GW32, STPS1_SALMI;  A0A1W6GW06, STPS2_SALMI;  A0A1W6GW18, STPS3_SALMI;
+      notes: ExPASy ENZYME entry EC 4.2.3.199 cross-references UniProtKB:A0A1W6GW18 (STPS3_SALMI) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

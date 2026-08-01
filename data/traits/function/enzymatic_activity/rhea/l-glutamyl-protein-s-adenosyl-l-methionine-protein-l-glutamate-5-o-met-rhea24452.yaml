@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.1.80
     mapping_source: rhea2ec
@@ -32,4 +32,224 @@ definitions:
       Catalyses the reaction: L-glutamyl-[protein] + S-adenosyl-L-methionine = [protein]-L-glutamate 5-O-methyl ester + S-adenosyl-L-homocysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-glutamyl-[protein] + S-adenosyl-L-methionine = [protein]-L-glutamate
+    5-O-methyl ester…
+  description: Substrate-to-product chemistry of RHEA:24452, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24453 (rh:substrates → 24452_L, rh:products → 24452_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-glutamyl-[protein] + S-adenosyl-L-methionine = [protein]-L-glutamate 5-O-m…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24452
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-glutamyl-[protein] + S-adenosyl-L-methionine = [protein]-L-glutamate 5-O-methyl
+      ester + S-adenosyl-L-homocysteine'
+  - node_id: sub1
+    label: L-glutamyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10208
+    description: Rhea compound GENERIC:10208.
+  - node_id: sub1_rp1
+    label: L-glutamate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10208 (L-glutamyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29973
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: '[protein]-L-glutamate 5-O-methyl ester'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10311
+    description: Rhea compound GENERIC:10311.
+  - node_id: prd1_rp1
+    label: L-glutamate O(5)-methyl ester residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10311 ([protein]-L-glutamate
+      5-O-methyl ester); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82795
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-glutamate O-methyltransferase activity
+    grounding: GO:0008983
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: protein-glutamate O-methyltransferase
+    grounding: EC:2.1.1.80
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O87131
+    node_type: PROTEIN
+    label: CHER1_PSEAE
+    grounding: UniProtKB:O87131
+  - node_id: prot_Q9KQ06
+    node_type: PROTEIN
+    label: CHER1_VIBCH
+    grounding: UniProtKB:Q9KQ06
+  - node_id: prot_Q9I6V7
+    node_type: PROTEIN
+    label: CHER2_PSEAE
+    grounding: UniProtKB:Q9I6V7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-glutamyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24453
+      snippet: L-glutamyl-[protein] + S-adenosyl-L-methionine => [protein]-L-glutamate 5-O-methyl ester
+        + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:24453 declares side 24452_L as its substrates
+        (rh:substrates); the master reaction RHEA:24452 is undirected. This participant is GENERIC:10208
+        with coefficient 1. Rhea cites PMID:18514223, PMID:3298235, PMID:9115443 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-glutamate residue is the reactive part of L-glutamyl-[protein].
+    evidence:
+    - reference: RHEA:24452
+      snippet: L-glutamate residue
+      notes: Rhea compound GENERIC:10208 (L-glutamyl-[protein]) declares rh:reactivePart = L-glutamate
+        residue (CHEBI:29973), formula C5H6NO3.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24453
+      snippet: L-glutamyl-[protein] + S-adenosyl-L-methionine => [protein]-L-glutamate 5-O-methyl ester
+        + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:24453 declares side 24452_L as its substrates
+        (rh:substrates); the master reaction RHEA:24452 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:18514223, PMID:3298235, PMID:9115443 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[protein]-L-glutamate 5-O-methyl ester is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:24453
+      snippet: L-glutamyl-[protein] + S-adenosyl-L-methionine => [protein]-L-glutamate 5-O-methyl ester
+        + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:24453 declares side 24452_R as its products
+        (rh:products); the master reaction RHEA:24452 is undirected. This participant is GENERIC:10311
+        with coefficient 1. Rhea cites PMID:18514223, PMID:3298235, PMID:9115443 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-glutamate O(5)-methyl ester residue is the reactive part of [protein]-L-glutamate 5-O-methyl
+      ester.
+    evidence:
+    - reference: RHEA:24452
+      snippet: L-glutamate O(5)-methyl ester residue
+      notes: Rhea compound GENERIC:10311 ([protein]-L-glutamate 5-O-methyl ester) declares rh:reactivePart
+        = L-glutamate O(5)-methyl ester residue (CHEBI:82795), formula C6H9NO3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24453
+      snippet: L-glutamyl-[protein] + S-adenosyl-L-methionine => [protein]-L-glutamate 5-O-methyl ester
+        + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:24453 declares side 24452_R as its products
+        (rh:products); the master reaction RHEA:24452 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:18514223, PMID:3298235, PMID:9115443 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:24452
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008983"/>
+      notes: The rdfs:seeAlso triple on RHEA:24452 in rhea.rdf. GO term GO:0008983 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.1.80; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24452
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.80"/>
+      notes: The rh:ec triple on RHEA:24452 in rhea.rdf. EC 2.1.1.80 is itself a record in this KB.
+  - subject: prot_O87131
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHER1_PSEAE is an exemplar enzyme carrying EC 2.1.1.80, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.1.1.80
+      snippet: DR   O87131, CHER1_PSEAE;  Q9KQ06, CHER1_VIBCH;  Q9I6V7, CHER2_PSEAE;
+      notes: ExPASy ENZYME entry EC 2.1.1.80 cross-references UniProtKB:O87131 (CHER1_PSEAE) as a protein
+        with this activity.
+    - reference: RHEA:24452
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.80"/>
+      notes: Rhea assigns RHEA:24452 to EC 2.1.1.80, and EC 2.1.1.80 maps to exactly one Rhea master reaction
+        (RHEA:24452), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9KQ06
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHER1_VIBCH is an exemplar enzyme carrying EC 2.1.1.80, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.1.1.80
+      snippet: DR   O87131, CHER1_PSEAE;  Q9KQ06, CHER1_VIBCH;  Q9I6V7, CHER2_PSEAE;
+      notes: ExPASy ENZYME entry EC 2.1.1.80 cross-references UniProtKB:Q9KQ06 (CHER1_VIBCH) as a protein
+        with this activity.
+    - reference: RHEA:24452
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.80"/>
+      notes: Rhea assigns RHEA:24452 to EC 2.1.1.80, and EC 2.1.1.80 maps to exactly one Rhea master reaction
+        (RHEA:24452), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9I6V7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHER2_PSEAE is an exemplar enzyme carrying EC 2.1.1.80, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.1.1.80
+      snippet: DR   O87131, CHER1_PSEAE;  Q9KQ06, CHER1_VIBCH;  Q9I6V7, CHER2_PSEAE;
+      notes: ExPASy ENZYME entry EC 2.1.1.80 cross-references UniProtKB:Q9I6V7 (CHER2_PSEAE) as a protein
+        with this activity.
+    - reference: RHEA:24452
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.80"/>
+      notes: Rhea assigns RHEA:24452 to EC 2.1.1.80, and EC 2.1.1.80 maps to exactly one Rhea master reaction
+        (RHEA:24452), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

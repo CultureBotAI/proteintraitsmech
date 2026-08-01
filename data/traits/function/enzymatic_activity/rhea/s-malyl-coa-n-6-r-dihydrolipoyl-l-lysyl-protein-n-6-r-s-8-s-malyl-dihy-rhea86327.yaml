@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57317
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,130 @@ definitions:
       Catalyses the reaction: (S)-malyl-CoA + N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] = N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein] + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-malyl-CoA + N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] = N(6)-[(R)-S(8)-((S)-malyl)…
+  description: Substrate-to-product chemistry of RHEA:86327, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:86328 (rh:substrates → 86327_L, rh:products → 86327_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (S)-malyl-CoA + N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] = N(6)-[(R)-S(8)-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:86327
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (S)-malyl-CoA + N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] = N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein]
+      + CoA'
+  - node_id: sub1
+    label: (S)-malyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57317
+    description: Formula C25H35N7O20P3S.
+  - node_id: sub2
+    label: N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10475
+    description: Rhea compound GENERIC:10475.
+  - node_id: sub2_rp1
+    label: N(6)-[(R)-dihydrolipoyl]-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10475 (N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83100
+  - node_id: prd1
+    label: N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:20774
+    description: Rhea compound GENERIC:20774.
+  - node_id: prd1_rp1
+    label: N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:20774 (N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:235520
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-malyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86328
+      snippet: (S)-malyl-CoA + N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] => N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein]
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:86328 declares side 86327_L as its substrates
+        (rh:substrates); the master reaction RHEA:86327 is undirected. This participant is CHEBI:57317
+        with coefficient 1. Rhea cites PMID:40108300, PMID:6381479 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:86328
+      snippet: (S)-malyl-CoA + N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] => N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein]
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:86328 declares side 86327_L as its substrates
+        (rh:substrates); the master reaction RHEA:86327 is undirected. This participant is GENERIC:10475
+        with coefficient 1. Rhea cites PMID:40108300, PMID:6381479 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: N(6)-[(R)-dihydrolipoyl]-L-lysine residue is the reactive part of N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:86327
+      snippet: N(6)-[(R)-dihydrolipoyl]-L-lysine residue
+      notes: Rhea compound GENERIC:10475 (N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein]) declares rh:reactivePart
+        = N(6)-[(R)-dihydrolipoyl]-L-lysine residue (CHEBI:83100), formula C14H26N2O2S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein] is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86328
+      snippet: (S)-malyl-CoA + N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] => N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein]
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:86328 declares side 86327_R as its products
+        (rh:products); the master reaction RHEA:86327 is undirected. This participant is GENERIC:20774
+        with coefficient 1. Rhea cites PMID:40108300, PMID:6381479 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysine residue is the reactive part of N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:86327
+      snippet: N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysine residue
+      notes: Rhea compound GENERIC:20774 (N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein])
+        declares rh:reactivePart = N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysine residue (CHEBI:235520),
+        formula C18H29N2O6S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86328
+      snippet: (S)-malyl-CoA + N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] => N(6)-[(R)-S(8)-((S)-malyl)dihydrolipoyl]-L-lysyl-[protein]
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:86328 declares side 86327_R as its products
+        (rh:products); the master reaction RHEA:86327 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:40108300, PMID:6381479 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

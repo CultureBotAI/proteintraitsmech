@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.99.-
 mapped_xrefs:
@@ -40,4 +40,250 @@ definitions:
       Catalyses: (1) (S)-3-hydroxybutanoate + 2-oxoglutarate = (R)-2-hydroxyglutarate + acetoacetate. (2) 4-hydroxybutanoate + 2-oxoglutarate = (R)-2-hydroxyglutarate + succinate semialdehyde
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydroxyacid-oxoacid transhydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.99.24. Rhea assigns 2 curated
+    reactions to EC 1.1.99.24. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (S)-3-hydroxybutanoate + 2-oxoglutarate = (R)-2-hydroxyglutarate
+    + acetoacetate. (2) 4-hydroxybutanoate + 2-oxoglutarate = (R)-2-hydroxyglutarate + succinate semialdehyde".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxyacid-oxoacid transhydrogenase
+    grounding: EC:1.1.99.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (S)-3-hydroxybutanoate + 2-oxoglutarate = (R)-2-hydroxyglutarate + acetoacet…
+    grounding: RHEA:23048
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (S)-3-hydroxybutanoate + 2-oxoglutarate = (R)-2-hydroxyglutarate + acetoacetate'
+  - node_id: rxn1_sub1
+    label: (S)-3-hydroxybutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:11047
+    description: Formula C4H7O3.
+  - node_id: rxn1_sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: rxn1_prd1
+    label: (R)-2-hydroxyglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:15801
+    description: Formula C5H6O5.
+  - node_id: rxn1_prd2
+    label: acetoacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:13705
+    description: Formula C4H5O3.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 4-hydroxybutanoate + 2-oxoglutarate = (R)-2-hydroxyglutarate + succinate sem…
+    grounding: RHEA:24734
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 4-hydroxybutanoate + 2-oxoglutarate = (R)-2-hydroxyglutarate + succinate
+      semialdehyde'
+  - node_id: rxn2_sub1
+    label: 4-hydroxybutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16724
+    description: Formula C4H7O3.
+  - node_id: rxn2_sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: rxn2_prd1
+    label: (R)-2-hydroxyglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:15801
+    description: Formula C5H6O5.
+  - node_id: rxn2_prd2
+    label: succinate semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:57706
+    description: Formula C4H5O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxyacid-oxoacid transhydrogenase activity
+    grounding: GO:0047988
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q17EN4
+    node_type: PROTEIN
+    label: HOT_AEDAE
+    grounding: UniProtKB:Q17EN4
+  - node_id: prot_Q7Q547
+    node_type: PROTEIN
+    label: HOT_ANOGA
+    grounding: UniProtKB:Q7Q547
+  - node_id: prot_A6QP15
+    node_type: PROTEIN
+    label: HOT_BOVIN
+    grounding: UniProtKB:A6QP15
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:23048 is one of the 2 curated reactions Rhea assigns to EC 1.1.99.24; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:23048
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.99.24"/>
+      notes: The rh:ec triple on RHEA:23048 in rhea.rdf assigns that reaction to EC 1.1.99.24.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (S)-3-hydroxybutanoate is a substrate consumed by RHEA:23048 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23049
+      snippet: (S)-3-hydroxybutanoate + 2-oxoglutarate => (R)-2-hydroxyglutarate + acetoacetate
+      notes: Rhea's left-to-right directional reaction RHEA:23049 declares side 23048_L as its substrates
+        (rh:substrates); the master reaction RHEA:23048 is undirected. This participant is CHEBI:11047
+        with coefficient 1. Rhea cites PMID:16435184, PMID:3182820 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:23048 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23049
+      snippet: (S)-3-hydroxybutanoate + 2-oxoglutarate => (R)-2-hydroxyglutarate + acetoacetate
+      notes: Rhea's left-to-right directional reaction RHEA:23049 declares side 23048_L as its substrates
+        (rh:substrates); the master reaction RHEA:23048 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:16435184, PMID:3182820 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (R)-2-hydroxyglutarate is a product released by RHEA:23048 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23049
+      snippet: (S)-3-hydroxybutanoate + 2-oxoglutarate => (R)-2-hydroxyglutarate + acetoacetate
+      notes: Rhea's left-to-right directional reaction RHEA:23049 declares side 23048_R as its products
+        (rh:products); the master reaction RHEA:23048 is undirected. This participant is CHEBI:15801 with
+        coefficient 1. Rhea cites PMID:16435184, PMID:3182820 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: acetoacetate is a product released by RHEA:23048 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23049
+      snippet: (S)-3-hydroxybutanoate + 2-oxoglutarate => (R)-2-hydroxyglutarate + acetoacetate
+      notes: Rhea's left-to-right directional reaction RHEA:23049 declares side 23048_R as its products
+        (rh:products); the master reaction RHEA:23048 is undirected. This participant is CHEBI:13705 with
+        coefficient 1. Rhea cites PMID:16435184, PMID:3182820 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:24734 is one of the 2 curated reactions Rhea assigns to EC 1.1.99.24; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24734
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.99.24"/>
+      notes: The rh:ec triple on RHEA:24734 in rhea.rdf assigns that reaction to EC 1.1.99.24.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 4-hydroxybutanoate is a substrate consumed by RHEA:24734 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24735
+      snippet: 4-hydroxybutanoate + 2-oxoglutarate => (R)-2-hydroxyglutarate + succinate semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:24735 declares side 24734_L as its substrates
+        (rh:substrates); the master reaction RHEA:24734 is undirected. This participant is CHEBI:16724
+        with coefficient 1. Rhea cites PMID:16435184, PMID:3182820, PMID:16616524 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:24734 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24735
+      snippet: 4-hydroxybutanoate + 2-oxoglutarate => (R)-2-hydroxyglutarate + succinate semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:24735 declares side 24734_L as its substrates
+        (rh:substrates); the master reaction RHEA:24734 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:16435184, PMID:3182820, PMID:16616524 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (R)-2-hydroxyglutarate is a product released by RHEA:24734 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24735
+      snippet: 4-hydroxybutanoate + 2-oxoglutarate => (R)-2-hydroxyglutarate + succinate semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:24735 declares side 24734_R as its products
+        (rh:products); the master reaction RHEA:24734 is undirected. This participant is CHEBI:15801 with
+        coefficient 1. Rhea cites PMID:16435184, PMID:3182820, PMID:16616524 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: succinate semialdehyde is a product released by RHEA:24734 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24735
+      snippet: 4-hydroxybutanoate + 2-oxoglutarate => (R)-2-hydroxyglutarate + succinate semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:24735 declares side 24734_R as its products
+        (rh:products); the master reaction RHEA:24734 is undirected. This participant is CHEBI:57706 with
+        coefficient 1. Rhea cites PMID:16435184, PMID:3182820, PMID:16616524 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.99.24
+      snippet: EC:1.1.99.24 > GO:hydroxyacid-oxoacid transhydrogenase activity ; GO:0047988
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047988 is itself a record
+        in this KB.
+  - subject: prot_Q17EN4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOT_AEDAE is an exemplar enzyme with EC 1.1.99.24 activity.
+    evidence:
+    - reference: EC:1.1.99.24
+      snippet: DR   Q17EN4, HOT_AEDAE  ;  Q7Q547, HOT_ANOGA  ;  A6QP15, HOT_BOVIN  ;
+      notes: ExPASy ENZYME entry EC 1.1.99.24 cross-references UniProtKB:Q17EN4 (HOT_AEDAE) as a protein
+        with this activity.
+  - subject: prot_Q7Q547
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOT_ANOGA is an exemplar enzyme with EC 1.1.99.24 activity.
+    evidence:
+    - reference: EC:1.1.99.24
+      snippet: DR   Q17EN4, HOT_AEDAE  ;  Q7Q547, HOT_ANOGA  ;  A6QP15, HOT_BOVIN  ;
+      notes: ExPASy ENZYME entry EC 1.1.99.24 cross-references UniProtKB:Q7Q547 (HOT_ANOGA) as a protein
+        with this activity.
+  - subject: prot_A6QP15
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOT_BOVIN is an exemplar enzyme with EC 1.1.99.24 activity.
+    evidence:
+    - reference: EC:1.1.99.24
+      snippet: DR   Q17EN4, HOT_AEDAE  ;  Q7Q547, HOT_ANOGA  ;  A6QP15, HOT_BOVIN  ;
+      notes: ExPASy ENZYME entry EC 1.1.99.24 cross-references UniProtKB:A6QP15 (HOT_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

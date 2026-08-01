@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.99.13
     mapping_source: rhea2ec
@@ -26,4 +26,108 @@ definitions:
       Catalyses the reaction: a cytidine(6-4)thymidine in DNA = a cytidine-thymine dinucleotide in DNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a cytidine(6-4)thymidine in DNA = a cytidine-thymine dinucleotide in DNA
+  description: Substrate-to-product chemistry of RHEA:62244, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62245 (rh:substrates → 62244_L, rh:products → 62244_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a cytidine(6-4)thymidine in DNA = a cytidine-thymine dinucleotide in DNA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62244
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a cytidine(6-4)thymidine in DNA = a cytidine-thymine dinucleotide in DNA'
+  - node_id: sub1
+    label: a cytidine(6-4)thymidine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:16052
+    description: Rhea compound GENERIC:16052.
+  - node_id: sub1_rp1
+    label: cytidine(6-4)thymidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:16052 (a cytidine(6-4)thymidine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:145574
+  - node_id: prd1
+    label: a cytidine-thymine dinucleotide in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:16049
+    description: Rhea compound GENERIC:16049.
+  - node_id: prd1_rp1
+    label: cytidine-thymidine dinucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:16049 (a cytidine-thymine
+      dinucleotide in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:145648
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (6-4)DNA photolyase
+    grounding: EC:4.1.99.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a cytidine(6-4)thymidine in DNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:62245
+      snippet: a cytidine(6-4)thymidine in DNA => a cytidine-thymine dinucleotide in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:62245 declares side 62244_L as its substrates
+        (rh:substrates); the master reaction RHEA:62244 is undirected. This participant is GENERIC:16052
+        with coefficient 1. Rhea cites PMID:17164245, PMID:19359474 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: cytidine(6-4)thymidine residue is the reactive part of a cytidine(6-4)thymidine in DNA.
+    evidence:
+    - reference: RHEA:62244
+      snippet: cytidine(6-4)thymidine residue
+      notes: Rhea compound GENERIC:16052 (a cytidine(6-4)thymidine in DNA) declares rh:reactivePart =
+        cytidine(6-4)thymidine residue (CHEBI:145574), formula C19H23N5O13P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a cytidine-thymine dinucleotide in DNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:62245
+      snippet: a cytidine(6-4)thymidine in DNA => a cytidine-thymine dinucleotide in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:62245 declares side 62244_R as its products
+        (rh:products); the master reaction RHEA:62244 is undirected. This participant is GENERIC:16049
+        with coefficient 1. Rhea cites PMID:17164245, PMID:19359474 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: cytidine-thymidine dinucleotide residue is the reactive part of a cytidine-thymine dinucleotide
+      in DNA.
+    evidence:
+    - reference: RHEA:62244
+      snippet: cytidine-thymidine dinucleotide residue
+      notes: Rhea compound GENERIC:16049 (a cytidine-thymine dinucleotide in DNA) declares rh:reactivePart
+        = cytidine-thymidine dinucleotide residue (CHEBI:145648), formula C19H23N5O13P2.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.99.13; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:62244
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.13"/>
+      notes: The rh:ec triple on RHEA:62244 in rhea.rdf. EC 4.1.99.13 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

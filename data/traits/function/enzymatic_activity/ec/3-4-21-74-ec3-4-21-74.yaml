@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 canonical_examples:
@@ -33,4 +33,67 @@ definitions:
       Catalyses: Selective cleavage of Arg-|-Xaa bond in fibrinogen, to form fibrin, and release fibrinopeptide A. The specificity of further degradation of fibrinogen varies with species origin of the enzyme
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of venombin A
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.74. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Selective
+    cleavage of Arg-|-Xaa bond in fibrinogen, to form fibrin, and release fibrinopeptide A. The specificity
+    of further degradation of fibrinogen varies with species origin of the enzyme".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: venombin A
+    grounding: EC:3.4.21.74
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P05620
+    node_type: PROTEIN
+    label: VSP1_PROFL
+    grounding: UniProtKB:P05620
+  - node_id: prot_P81661
+    node_type: PROTEIN
+    label: VSPA_BOTJA
+    grounding: UniProtKB:P81661
+  - node_id: prot_F8S114
+    node_type: PROTEIN
+    label: VSPCR_CROAD
+    grounding: UniProtKB:F8S114
+  edges:
+  - subject: prot_P05620
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VSP1_PROFL is an exemplar enzyme with EC 3.4.21.74 activity.
+    evidence:
+    - reference: EC:3.4.21.74
+      snippet: DR   P05620, VSP1_PROFL ;  P81661, VSPA_BOTJA ;  F8S114, VSPCR_CROAD;
+      notes: ExPASy ENZYME entry EC 3.4.21.74 cross-references UniProtKB:P05620 (VSP1_PROFL) as a protein
+        with this activity.
+  - subject: prot_P81661
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VSPA_BOTJA is an exemplar enzyme with EC 3.4.21.74 activity.
+    evidence:
+    - reference: EC:3.4.21.74
+      snippet: DR   P05620, VSP1_PROFL ;  P81661, VSPA_BOTJA ;  F8S114, VSPCR_CROAD;
+      notes: ExPASy ENZYME entry EC 3.4.21.74 cross-references UniProtKB:P81661 (VSPA_BOTJA) as a protein
+        with this activity.
+  - subject: prot_F8S114
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VSPCR_CROAD is an exemplar enzyme with EC 3.4.21.74 activity.
+    evidence:
+    - reference: EC:3.4.21.74
+      snippet: DR   P05620, VSP1_PROFL ;  P81661, VSPA_BOTJA ;  F8S114, VSPCR_CROAD;
+      notes: ExPASy ENZYME entry EC 3.4.21.74 cross-references UniProtKB:F8S114 (VSPCR_CROAD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

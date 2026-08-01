@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -40,4 +40,55 @@ definitions:
       Catalyses: Hydrolysis of the alpha-linked peptide bond in the sequence Gly- Gly-|-Ala-Thr-Tyr at the C-terminal end of the small ubiquitin-like modifier (SUMO) propeptide, Smt3, leading to the mature form of the protein. A second reaction involves the cleavage of an epsilon-linked peptide bond between the C-terminal glycine of the mature SUMO and the lysine epsilon-amino group of the target protein
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Ulp1 peptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.68. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of the alpha-linked peptide bond in the sequence Gly- Gly-|-Ala-Thr-Tyr at the C-terminal end of the
+    small ubiquitin-like modifier (SUMO) propeptide, Smt3, leading to the mature form of the protein.
+    A second reaction involves the cleavage of an epsilon-linked peptide bond between the C-terminal glycine
+    of the mature SUMO and the lysine epsilon-amino group of the target protein".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Ulp1 peptidase
+    grounding: EC:3.4.22.68
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q94F30
+    node_type: PROTEIN
+    label: ESD4_ARATH
+    grounding: UniProtKB:Q94F30
+  - node_id: prot_Q02724
+    node_type: PROTEIN
+    label: ULP1_YEAST
+    grounding: UniProtKB:Q02724
+  edges:
+  - subject: prot_Q94F30
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ESD4_ARATH is an exemplar enzyme with EC 3.4.22.68 activity.
+    evidence:
+    - reference: EC:3.4.22.68
+      snippet: DR   Q94F30, ESD4_ARATH ;  Q02724, ULP1_YEAST ;
+      notes: ExPASy ENZYME entry EC 3.4.22.68 cross-references UniProtKB:Q94F30 (ESD4_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q02724
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ULP1_YEAST is an exemplar enzyme with EC 3.4.22.68 activity.
+    evidence:
+    - reference: EC:3.4.22.68
+      snippet: DR   Q94F30, ESD4_ARATH ;  Q02724, ULP1_YEAST ;
+      notes: ExPASy ENZYME entry EC 3.4.22.68 cross-references UniProtKB:Q02724 (ULP1_YEAST) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

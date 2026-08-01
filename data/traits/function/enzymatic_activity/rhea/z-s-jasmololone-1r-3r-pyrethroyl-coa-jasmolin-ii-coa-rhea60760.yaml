@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:143951
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: (Z,S)-jasmololone + (1R,3R)-pyrethroyl-CoA = jasmolin II + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (Z,S)-jasmololone + (1R,3R)-pyrethroyl-CoA = jasmolin II + CoA
+  description: Substrate-to-product chemistry of RHEA:60760, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:60761 (rh:substrates → 60760_L, rh:products → 60760_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (Z,S)-jasmololone + (1R,3R)-pyrethroyl-CoA = jasmolin II + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:60760
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (Z,S)-jasmololone + (1R,3R)-pyrethroyl-CoA = jasmolin II + CoA'
+  - node_id: sub1
+    label: (Z,S)-jasmololone
+    node_type: CHEMICAL
+    grounding: CHEBI:143951
+    description: Formula C11H16O2.
+  - node_id: sub2
+    label: (1R,3R)-pyrethroyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:143953
+    description: Formula C32H46N7O19P3S.
+  - node_id: prd1
+    label: jasmolin II
+    node_type: CHEMICAL
+    grounding: CHEBI:39114
+    description: Formula C22H30O5.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (Z,S)-jasmololone is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60761
+      snippet: (Z,S)-jasmololone + (1R,3R)-pyrethroyl-CoA => jasmolin II + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:60761 declares side 60760_L as its substrates
+        (rh:substrates); the master reaction RHEA:60760 is undirected. This participant is CHEBI:143951
+        with coefficient 1. Rhea cites PMID:22385412 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (1R,3R)-pyrethroyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60761
+      snippet: (Z,S)-jasmololone + (1R,3R)-pyrethroyl-CoA => jasmolin II + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:60761 declares side 60760_L as its substrates
+        (rh:substrates); the master reaction RHEA:60760 is undirected. This participant is CHEBI:143953
+        with coefficient 1. Rhea cites PMID:22385412 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: jasmolin II is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60761
+      snippet: (Z,S)-jasmololone + (1R,3R)-pyrethroyl-CoA => jasmolin II + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:60761 declares side 60760_R as its products
+        (rh:products); the master reaction RHEA:60760 is undirected. This participant is CHEBI:39114 with
+        coefficient 1. Rhea cites PMID:22385412 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60761
+      snippet: (Z,S)-jasmololone + (1R,3R)-pyrethroyl-CoA => jasmolin II + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:60761 declares side 60760_R as its products
+        (rh:products); the master reaction RHEA:60760 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:22385412 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

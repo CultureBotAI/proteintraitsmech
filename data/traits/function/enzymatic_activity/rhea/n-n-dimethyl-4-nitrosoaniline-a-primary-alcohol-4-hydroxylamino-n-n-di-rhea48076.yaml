@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:59990
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,114 @@ definitions:
       Catalyses the reaction: N,N-dimethyl-4-nitrosoaniline + a primary alcohol = 4-(hydroxylamino)-N,N-dimethylaniline + an aldehyde
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N,N-dimethyl-4-nitrosoaniline + a primary alcohol = 4-(hydroxylamino)-N,N-dimethylanili…
+  description: Substrate-to-product chemistry of RHEA:48076, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48077 (rh:substrates → 48076_L, rh:products → 48076_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N,N-dimethyl-4-nitrosoaniline + a primary alcohol = 4-(hydroxylamino)-N,N-di…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48076
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N,N-dimethyl-4-nitrosoaniline + a primary alcohol = 4-(hydroxylamino)-N,N-dimethylaniline
+      + an aldehyde'
+  - node_id: sub1
+    label: N,N-dimethyl-4-nitrosoaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:59990
+    description: Formula C8H10N2O.
+  - node_id: sub2
+    label: a primary alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:15734
+    description: Formula CH3OR.
+  - node_id: prd1
+    label: 4-(hydroxylamino)-N,N-dimethylaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:59991
+    description: Formula C8H12N2O.
+  - node_id: prd2
+    label: an aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+    description: Formula CHOR.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alkan-1-ol dehydrogenase (acceptor) activity
+    grounding: GO:0047645
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N,N-dimethyl-4-nitrosoaniline is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:48077
+      snippet: N,N-dimethyl-4-nitrosoaniline + a primary alcohol => 4-(hydroxylamino)-N,N-dimethylaniline
+        + an aldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:48077 declares side 48076_L as its substrates
+        (rh:substrates); the master reaction RHEA:48076 is undirected. This participant is CHEBI:59990
+        with coefficient 1. Rhea cites PMID:10784035, PMID:8385013 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a primary alcohol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48077
+      snippet: N,N-dimethyl-4-nitrosoaniline + a primary alcohol => 4-(hydroxylamino)-N,N-dimethylaniline
+        + an aldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:48077 declares side 48076_L as its substrates
+        (rh:substrates); the master reaction RHEA:48076 is undirected. This participant is CHEBI:15734
+        with coefficient 1. Rhea cites PMID:10784035, PMID:8385013 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-(hydroxylamino)-N,N-dimethylaniline is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:48077
+      snippet: N,N-dimethyl-4-nitrosoaniline + a primary alcohol => 4-(hydroxylamino)-N,N-dimethylaniline
+        + an aldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:48077 declares side 48076_R as its products
+        (rh:products); the master reaction RHEA:48076 is undirected. This participant is CHEBI:59991 with
+        coefficient 1. Rhea cites PMID:10784035, PMID:8385013 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: an aldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48077
+      snippet: N,N-dimethyl-4-nitrosoaniline + a primary alcohol => 4-(hydroxylamino)-N,N-dimethylaniline
+        + an aldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:48077 declares side 48076_R as its products
+        (rh:products); the master reaction RHEA:48076 is undirected. This participant is CHEBI:17478 with
+        coefficient 1. Rhea cites PMID:10784035, PMID:8385013 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:48076
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047645"/>
+      notes: The rdfs:seeAlso triple on RHEA:48076 in rhea.rdf. GO term GO:0047645 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

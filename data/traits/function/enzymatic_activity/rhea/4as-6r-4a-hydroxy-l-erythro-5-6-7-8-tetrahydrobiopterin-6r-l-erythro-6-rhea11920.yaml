@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.96
     mapping_source: rhea2ec
@@ -26,4 +26,171 @@ definitions:
       Catalyses the reaction: (4aS,6R)-4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin = (6R)-L-erythro-6,7-dihydrobiopterin + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (4aS,6R)-4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin = (6R)-L-erythro-6,7-dihydrob…
+  description: Substrate-to-product chemistry of RHEA:11920, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:11921 (rh:substrates → 11920_L, rh:products → 11920_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (4aS,6R)-4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin = (6R)-L-erythro-6…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:11920
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (4aS,6R)-4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin = (6R)-L-erythro-6,7-dihydrobiopterin
+      + H2O'
+  - node_id: sub1
+    label: (4aS,6R)-4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:15642
+    description: Formula C9H15N5O4.
+  - node_id: prd1
+    label: (6R)-L-erythro-6,7-dihydrobiopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:43120
+    description: Formula C9H13N5O3.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-alpha-hydroxytetrahydrobiopterin dehydratase activity
+    grounding: GO:0008124
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 4a-hydroxytetrahydrobiopterin dehydratase
+    grounding: EC:4.2.1.96
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9LU63
+    node_type: PROTEIN
+    label: ATP1_ARATH
+    grounding: UniProtKB:Q9LU63
+  - node_id: prot_Q6QJ72
+    node_type: PROTEIN
+    label: PDL2_ARATH
+    grounding: UniProtKB:Q6QJ72
+  - node_id: prot_Q475Y4
+    node_type: PROTEIN
+    label: PHS1_CUPPJ
+    grounding: UniProtKB:Q475Y4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (4aS,6R)-4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin is a substrate consumed by
+      this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11921
+      snippet: (4aS,6R)-4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin => (6R)-L-erythro-6,7-dihydrobiopterin
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:11921 declares side 11920_L as its substrates
+        (rh:substrates); the master reaction RHEA:11920 is undirected. This participant is CHEBI:15642
+        with coefficient 1. Rhea cites PMID:8444860 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (6R)-L-erythro-6,7-dihydrobiopterin is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11921
+      snippet: (4aS,6R)-4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin => (6R)-L-erythro-6,7-dihydrobiopterin
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:11921 declares side 11920_R as its products
+        (rh:products); the master reaction RHEA:11920 is undirected. This participant is CHEBI:43120 with
+        coefficient 1. Rhea cites PMID:8444860 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11921
+      snippet: (4aS,6R)-4a-hydroxy-L-erythro-5,6,7,8-tetrahydrobiopterin => (6R)-L-erythro-6,7-dihydrobiopterin
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:11921 declares side 11920_R as its products
+        (rh:products); the master reaction RHEA:11920 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:8444860 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:11920
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008124"/>
+      notes: The rdfs:seeAlso triple on RHEA:11920 in rhea.rdf. GO term GO:0008124 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.96; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:11920
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.96"/>
+      notes: The rh:ec triple on RHEA:11920 in rhea.rdf. EC 4.2.1.96 is itself a record in this KB.
+  - subject: prot_Q9LU63
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATP1_ARATH is an exemplar enzyme carrying EC 4.2.1.96, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.96
+      snippet: DR   Q9LU63, ATP1_ARATH ;  Q6QJ72, PDL2_ARATH ;  Q475Y4, PHS1_CUPPJ ;
+      notes: ExPASy ENZYME entry EC 4.2.1.96 cross-references UniProtKB:Q9LU63 (ATP1_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:11920
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.96"/>
+      notes: Rhea assigns RHEA:11920 to EC 4.2.1.96, and EC 4.2.1.96 maps to exactly one Rhea master reaction
+        (RHEA:11920), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q6QJ72
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDL2_ARATH is an exemplar enzyme carrying EC 4.2.1.96, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.96
+      snippet: DR   Q9LU63, ATP1_ARATH ;  Q6QJ72, PDL2_ARATH ;  Q475Y4, PHS1_CUPPJ ;
+      notes: ExPASy ENZYME entry EC 4.2.1.96 cross-references UniProtKB:Q6QJ72 (PDL2_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:11920
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.96"/>
+      notes: Rhea assigns RHEA:11920 to EC 4.2.1.96, and EC 4.2.1.96 maps to exactly one Rhea master reaction
+        (RHEA:11920), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q475Y4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHS1_CUPPJ is an exemplar enzyme carrying EC 4.2.1.96, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.96
+      snippet: DR   Q9LU63, ATP1_ARATH ;  Q6QJ72, PDL2_ARATH ;  Q475Y4, PHS1_CUPPJ ;
+      notes: ExPASy ENZYME entry EC 4.2.1.96 cross-references UniProtKB:Q475Y4 (PHS1_CUPPJ) as a protein
+        with this activity.
+    - reference: RHEA:11920
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.96"/>
+      notes: Rhea assigns RHEA:11920 to EC 4.2.1.96, and EC 4.2.1.96 maps to exactly one Rhea master reaction
+        (RHEA:11920), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.115
     mapping_source: rhea2ec
@@ -30,4 +30,150 @@ definitions:
       Catalyses the reaction: (2E)-geranyl diphosphate = alpha-terpinene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E)-geranyl diphosphate = alpha-terpinene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:32563, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:32564 (rh:substrates → 32563_L, rh:products → 32563_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E)-geranyl diphosphate = alpha-terpinene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:32563
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E)-geranyl diphosphate = alpha-terpinene + diphosphate'
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: alpha-terpinene
+    node_type: CHEMICAL
+    grounding: CHEBI:10334
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-terpinene synthase
+    grounding: EC:4.2.3.115
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A0M3Q1Q3
+    node_type: PROTEIN
+    label: GTPS1_THYVU
+    grounding: UniProtKB:A0A0M3Q1Q3
+  - node_id: prot_E2E2P0
+    node_type: PROTEIN
+    label: GTPS_ORIVU
+    grounding: UniProtKB:E2E2P0
+  - node_id: prot_A0A1V0QSF4
+    node_type: PROTEIN
+    label: T33PK_CANSA
+    grounding: UniProtKB:A0A1V0QSF4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32564
+      snippet: (2E)-geranyl diphosphate => alpha-terpinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32564 declares side 32563_L as its substrates
+        (rh:substrates); the master reaction RHEA:32563 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:20419468, PMID:736574, PMID:8460944 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-terpinene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32564
+      snippet: (2E)-geranyl diphosphate => alpha-terpinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32564 declares side 32563_R as its products
+        (rh:products); the master reaction RHEA:32563 is undirected. This participant is CHEBI:10334 with
+        coefficient 1. Rhea cites PMID:20419468, PMID:736574, PMID:8460944 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32564
+      snippet: (2E)-geranyl diphosphate => alpha-terpinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32564 declares side 32563_R as its products
+        (rh:products); the master reaction RHEA:32563 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20419468, PMID:736574, PMID:8460944 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.115; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:32563
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.115"/>
+      notes: The rh:ec triple on RHEA:32563 in rhea.rdf. EC 4.2.3.115 is itself a record in this KB.
+  - subject: prot_A0A0M3Q1Q3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GTPS1_THYVU is an exemplar enzyme carrying EC 4.2.3.115, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.115
+      snippet: DR   A0A0M3Q1Q3, GTPS1_THYVU;  E2E2P0, GTPS_ORIVU ;  A0A1V0QSF4, T33PK_CANSA;
+      notes: ExPASy ENZYME entry EC 4.2.3.115 cross-references UniProtKB:A0A0M3Q1Q3 (GTPS1_THYVU) as a
+        protein with this activity.
+    - reference: RHEA:32563
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.115"/>
+      notes: Rhea assigns RHEA:32563 to EC 4.2.3.115, and EC 4.2.3.115 maps to exactly one Rhea master
+        reaction (RHEA:32563), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_E2E2P0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GTPS_ORIVU is an exemplar enzyme carrying EC 4.2.3.115, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.115
+      snippet: DR   A0A0M3Q1Q3, GTPS1_THYVU;  E2E2P0, GTPS_ORIVU ;  A0A1V0QSF4, T33PK_CANSA;
+      notes: ExPASy ENZYME entry EC 4.2.3.115 cross-references UniProtKB:E2E2P0 (GTPS_ORIVU) as a protein
+        with this activity.
+    - reference: RHEA:32563
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.115"/>
+      notes: Rhea assigns RHEA:32563 to EC 4.2.3.115, and EC 4.2.3.115 maps to exactly one Rhea master
+        reaction (RHEA:32563), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0A1V0QSF4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: T33PK_CANSA is an exemplar enzyme carrying EC 4.2.3.115, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.115
+      snippet: DR   A0A0M3Q1Q3, GTPS1_THYVU;  E2E2P0, GTPS_ORIVU ;  A0A1V0QSF4, T33PK_CANSA;
+      notes: ExPASy ENZYME entry EC 4.2.3.115 cross-references UniProtKB:A0A1V0QSF4 (T33PK_CANSA) as a
+        protein with this activity.
+    - reference: RHEA:32563
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.115"/>
+      notes: Rhea assigns RHEA:32563 to EC 4.2.3.115, and EC 4.2.3.115 maps to exactly one Rhea master
+        reaction (RHEA:32563), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 mapped_xrefs:
@@ -25,4 +25,106 @@ definitions:
       Catalyses: thiamine diphosphate + ATP = thiamine triphosphate + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thiamine-diphosphate kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.15. EC 2.7.4.15 maps to exactly
+    one curated Rhea reaction (RHEA:11240), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "thiamine diphosphate
+    + ATP = thiamine triphosphate + ADP". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thiamine-diphosphate kinase
+    grounding: EC:2.7.4.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: thiamine diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58937
+    description: Formula C12H16N4O7P2S.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: thiamine triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58938
+    description: Formula C12H16N4O10P3S.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: thiamine-diphosphate kinase activity
+    grounding: GO:0050331
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: thiamine diphosphate is a substrate consumed by RHEA:11240 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11241
+      snippet: thiamine diphosphate + ATP => thiamine triphosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:11241 declares side 11240_L as its substrates
+        (rh:substrates); the master reaction RHEA:11240 is undirected. This participant is CHEBI:58937
+        with coefficient 1. Rhea cites PMID:5661031 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:11240 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11241
+      snippet: thiamine diphosphate + ATP => thiamine triphosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:11241 declares side 11240_L as its substrates
+        (rh:substrates); the master reaction RHEA:11240 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:5661031 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: thiamine triphosphate is a product released by RHEA:11240 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11241
+      snippet: thiamine diphosphate + ATP => thiamine triphosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:11241 declares side 11240_R as its products
+        (rh:products); the master reaction RHEA:11240 is undirected. This participant is CHEBI:58938 with
+        coefficient 1. Rhea cites PMID:5661031 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:11240 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11241
+      snippet: thiamine diphosphate + ATP => thiamine triphosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:11241 declares side 11240_R as its products
+        (rh:products); the master reaction RHEA:11240 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:5661031 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.4.15
+      snippet: EC:2.7.4.15 > GO:thiamine-diphosphate kinase activity ; GO:0050331
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050331 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

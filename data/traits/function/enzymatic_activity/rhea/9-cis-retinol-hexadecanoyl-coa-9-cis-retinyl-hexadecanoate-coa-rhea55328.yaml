@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78272
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: 9-cis-retinol + hexadecanoyl-CoA = 9-cis-retinyl hexadecanoate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 9-cis-retinol + hexadecanoyl-CoA = 9-cis-retinyl hexadecanoate + CoA
+  description: Substrate-to-product chemistry of RHEA:55328, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:55329 (rh:substrates → 55328_L, rh:products → 55328_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 9-cis-retinol + hexadecanoyl-CoA = 9-cis-retinyl hexadecanoate + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:55328
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 9-cis-retinol + hexadecanoyl-CoA = 9-cis-retinyl hexadecanoate + CoA'
+  - node_id: sub1
+    label: 9-cis-retinol
+    node_type: CHEMICAL
+    grounding: CHEBI:78272
+    description: Formula C20H30O.
+  - node_id: sub2
+    label: hexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57379
+    description: Formula C37H62N7O17P3S.
+  - node_id: prd1
+    label: 9-cis-retinyl hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:138725
+    description: Formula C36H60O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 9-cis-retinol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55329
+      snippet: 9-cis-retinol + hexadecanoyl-CoA => 9-cis-retinyl hexadecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55329 declares side 55328_L as its substrates
+        (rh:substrates); the master reaction RHEA:55328 is undirected. This participant is CHEBI:78272
+        with coefficient 1. Rhea cites PMID:24799687 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hexadecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:55329
+      snippet: 9-cis-retinol + hexadecanoyl-CoA => 9-cis-retinyl hexadecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55329 declares side 55328_L as its substrates
+        (rh:substrates); the master reaction RHEA:55328 is undirected. This participant is CHEBI:57379
+        with coefficient 1. Rhea cites PMID:24799687 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 9-cis-retinyl hexadecanoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:55329
+      snippet: 9-cis-retinol + hexadecanoyl-CoA => 9-cis-retinyl hexadecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55329 declares side 55328_R as its products
+        (rh:products); the master reaction RHEA:55328 is undirected. This participant is CHEBI:138725
+        with coefficient 1. Rhea cites PMID:24799687 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55329
+      snippet: 9-cis-retinol + hexadecanoyl-CoA => 9-cis-retinyl hexadecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55329 declares side 55328_R as its products
+        (rh:products); the master reaction RHEA:55328 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:24799687 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

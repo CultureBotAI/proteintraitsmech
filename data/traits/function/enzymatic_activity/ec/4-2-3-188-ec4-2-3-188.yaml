@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -32,4 +32,237 @@ definitions:
       Catalyses: (1) (2E,6E,10E,14E)-geranylfarnesyl diphosphate = beta-geranylfarnesene + diphosphate. (2) all-trans-hexaprenyl diphosphate = beta-hexaprene + diphosphate. (3) all-trans-heptaprenyl diphosphate = beta-heptaprene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-geranylfarnesene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.188. Rhea assigns 3 curated
+    reactions to EC 4.2.3.188. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (2E,6E,10E,14E)-geranylfarnesyl diphosphate = beta-geranylfarnesene
+    + diphosphate. (2) all-trans-hexaprenyl diphosphate = beta-hexaprene + diphosphate. (3) all-trans-heptaprenyl
+    diphosphate = beta-heptaprene + diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-geranylfarnesene synthase
+    grounding: EC:4.2.3.188
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (2E,6E,10E,14E)-geranylfarnesyl diphosphate = beta-geranylfarnesene + diphos…
+    grounding: RHEA:54500
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (2E,6E,10E,14E)-geranylfarnesyl diphosphate = beta-geranylfarnesene + diphosphate'
+  - node_id: rxn1_sub1
+    label: (2E,6E,10E,14E)-geranylfarnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57907
+    description: Formula C25H41O7P2.
+  - node_id: rxn1_prd1
+    label: beta-geranylfarnesene
+    node_type: CHEMICAL
+    grounding: CHEBI:138226
+    description: Formula C25H40.
+  - node_id: rxn1_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of all-trans-hexaprenyl diphosphate = beta-hexaprene + diphosphate
+    grounding: RHEA:54504
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: all-trans-hexaprenyl diphosphate = beta-hexaprene + diphosphate'
+  - node_id: rxn2_sub1
+    label: all-trans-hexaprenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58179
+    description: Formula C30H49O7P2.
+  - node_id: rxn2_prd1
+    label: beta-hexaprene
+    node_type: CHEMICAL
+    grounding: CHEBI:138227
+    description: Formula C30H48.
+  - node_id: rxn2_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of all-trans-heptaprenyl diphosphate = beta-heptaprene + diphosphate
+    grounding: RHEA:54508
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: all-trans-heptaprenyl diphosphate = beta-heptaprene + diphosphate'
+  - node_id: rxn3_sub1
+    label: all-trans-heptaprenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58206
+    description: Formula C35H57O7P2.
+  - node_id: rxn3_prd1
+    label: beta-heptaprene
+    node_type: CHEMICAL
+    grounding: CHEBI:138228
+    description: Formula C35H56.
+  - node_id: rxn3_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_M5AW86
+    node_type: PROTEIN
+    label: BCLTS_SHOCL
+    grounding: UniProtKB:M5AW86
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:54500 is one of the 3 curated reactions Rhea assigns to EC 4.2.3.188; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:54500
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.188"/>
+      notes: The rh:ec triple on RHEA:54500 in rhea.rdf assigns that reaction to EC 4.2.3.188.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (2E,6E,10E,14E)-geranylfarnesyl diphosphate is a substrate consumed by RHEA:54500 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54501
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => beta-geranylfarnesene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54501 declares side 54500_L as its substrates
+        (rh:substrates); the master reaction RHEA:54500 is undirected. This participant is CHEBI:57907
+        with coefficient 1. Rhea cites PMID:25882275, PMID:23554321 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: beta-geranylfarnesene is a product released by RHEA:54500 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54501
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => beta-geranylfarnesene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54501 declares side 54500_R as its products
+        (rh:products); the master reaction RHEA:54500 is undirected. This participant is CHEBI:138226
+        with coefficient 1. Rhea cites PMID:25882275, PMID:23554321 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: diphosphate is a product released by RHEA:54500 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54501
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => beta-geranylfarnesene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54501 declares side 54500_R as its products
+        (rh:products); the master reaction RHEA:54500 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25882275, PMID:23554321 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:54504 is one of the 3 curated reactions Rhea assigns to EC 4.2.3.188; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:54504
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.188"/>
+      notes: The rh:ec triple on RHEA:54504 in rhea.rdf assigns that reaction to EC 4.2.3.188.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: all-trans-hexaprenyl diphosphate is a substrate consumed by RHEA:54504 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54505
+      snippet: all-trans-hexaprenyl diphosphate => beta-hexaprene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54505 declares side 54504_L as its substrates
+        (rh:substrates); the master reaction RHEA:54504 is undirected. This participant is CHEBI:58179
+        with coefficient 1. Rhea cites PMID:25882275, PMID:23554321 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: beta-hexaprene is a product released by RHEA:54504 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54505
+      snippet: all-trans-hexaprenyl diphosphate => beta-hexaprene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54505 declares side 54504_R as its products
+        (rh:products); the master reaction RHEA:54504 is undirected. This participant is CHEBI:138227
+        with coefficient 1. Rhea cites PMID:25882275, PMID:23554321 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: diphosphate is a product released by RHEA:54504 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54505
+      snippet: all-trans-hexaprenyl diphosphate => beta-hexaprene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54505 declares side 54504_R as its products
+        (rh:products); the master reaction RHEA:54504 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25882275, PMID:23554321 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:54508 is one of the 3 curated reactions Rhea assigns to EC 4.2.3.188; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:54508
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.188"/>
+      notes: The rh:ec triple on RHEA:54508 in rhea.rdf assigns that reaction to EC 4.2.3.188.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: all-trans-heptaprenyl diphosphate is a substrate consumed by RHEA:54508 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54509
+      snippet: all-trans-heptaprenyl diphosphate => beta-heptaprene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54509 declares side 54508_L as its substrates
+        (rh:substrates); the master reaction RHEA:54508 is undirected. This participant is CHEBI:58206
+        with coefficient 1. Rhea cites PMID:25882275, PMID:23554321 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: beta-heptaprene is a product released by RHEA:54508 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54509
+      snippet: all-trans-heptaprenyl diphosphate => beta-heptaprene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54509 declares side 54508_R as its products
+        (rh:products); the master reaction RHEA:54508 is undirected. This participant is CHEBI:138228
+        with coefficient 1. Rhea cites PMID:25882275, PMID:23554321 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: diphosphate is a product released by RHEA:54508 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54509
+      snippet: all-trans-heptaprenyl diphosphate => beta-heptaprene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54509 declares side 54508_R as its products
+        (rh:products); the master reaction RHEA:54508 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25882275, PMID:23554321 for this reaction.
+  - subject: prot_M5AW86
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BCLTS_SHOCL is an exemplar enzyme with EC 4.2.3.188 activity.
+    evidence:
+    - reference: EC:4.2.3.188
+      snippet: DR   M5AW86, BCLTS_SHOCL;
+      notes: ExPASy ENZYME entry EC 4.2.3.188 cross-references UniProtKB:M5AW86 (BCLTS_SHOCL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

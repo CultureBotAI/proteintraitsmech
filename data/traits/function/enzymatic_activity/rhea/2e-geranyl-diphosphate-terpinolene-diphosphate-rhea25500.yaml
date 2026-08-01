@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.113
     mapping_source: rhea2ec
@@ -38,4 +38,153 @@ definitions:
       Catalyses the reaction: (2E)-geranyl diphosphate = terpinolene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E)-geranyl diphosphate = terpinolene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:25500, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:25501 (rh:substrates → 25500_L, rh:products → 25500_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E)-geranyl diphosphate = terpinolene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:25500
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E)-geranyl diphosphate = terpinolene + diphosphate'
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: terpinolene
+    node_type: CHEMICAL
+    grounding: CHEBI:9457
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: terpinolene synthase
+    grounding: EC:4.2.3.113
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_R9QMW4
+    node_type: PROTEIN
+    label: 3CAR1_PINBN
+    grounding: UniProtKB:R9QMW4
+  - node_id: prot_R9QMW8
+    node_type: PROTEIN
+    label: 3CAR1_PINCO
+    grounding: UniProtKB:R9QMW8
+  - node_id: prot_R9QMR5
+    node_type: PROTEIN
+    label: ATERP_PINBN
+    grounding: UniProtKB:R9QMR5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25501
+      snippet: (2E)-geranyl diphosphate => terpinolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25501 declares side 25500_L as its substrates
+        (rh:substrates); the master reaction RHEA:25500 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:38513909, PMID:20419468, PMID:10441373, PMID:12602896 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: terpinolene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25501
+      snippet: (2E)-geranyl diphosphate => terpinolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25501 declares side 25500_R as its products
+        (rh:products); the master reaction RHEA:25500 is undirected. This participant is CHEBI:9457 with
+        coefficient 1. Rhea cites PMID:38513909, PMID:20419468, PMID:10441373, PMID:12602896 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25501
+      snippet: (2E)-geranyl diphosphate => terpinolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25501 declares side 25500_R as its products
+        (rh:products); the master reaction RHEA:25500 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:38513909, PMID:20419468, PMID:10441373, PMID:12602896 for this
+        reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.113; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:25500
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.113"/>
+      notes: The rh:ec triple on RHEA:25500 in rhea.rdf. EC 4.2.3.113 is itself a record in this KB.
+  - subject: prot_R9QMW4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3CAR1_PINBN is an exemplar enzyme carrying EC 4.2.3.113, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.113
+      snippet: DR   R9QMW4, 3CAR1_PINBN;  R9QMW8, 3CAR1_PINCO;  R9QMR5, ATERP_PINBN;
+      notes: ExPASy ENZYME entry EC 4.2.3.113 cross-references UniProtKB:R9QMW4 (3CAR1_PINBN) as a protein
+        with this activity.
+    - reference: RHEA:25500
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.113"/>
+      notes: Rhea assigns RHEA:25500 to EC 4.2.3.113, and EC 4.2.3.113 maps to exactly one Rhea master
+        reaction (RHEA:25500), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_R9QMW8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3CAR1_PINCO is an exemplar enzyme carrying EC 4.2.3.113, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.113
+      snippet: DR   R9QMW4, 3CAR1_PINBN;  R9QMW8, 3CAR1_PINCO;  R9QMR5, ATERP_PINBN;
+      notes: ExPASy ENZYME entry EC 4.2.3.113 cross-references UniProtKB:R9QMW8 (3CAR1_PINCO) as a protein
+        with this activity.
+    - reference: RHEA:25500
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.113"/>
+      notes: Rhea assigns RHEA:25500 to EC 4.2.3.113, and EC 4.2.3.113 maps to exactly one Rhea master
+        reaction (RHEA:25500), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_R9QMR5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATERP_PINBN is an exemplar enzyme carrying EC 4.2.3.113, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.113
+      snippet: DR   R9QMW4, 3CAR1_PINBN;  R9QMW8, 3CAR1_PINCO;  R9QMR5, ATERP_PINBN;
+      notes: ExPASy ENZYME entry EC 4.2.3.113 cross-references UniProtKB:R9QMR5 (ATERP_PINBN) as a protein
+        with this activity.
+    - reference: RHEA:25500
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.113"/>
+      notes: Rhea assigns RHEA:25500 to EC 4.2.3.113, and EC 4.2.3.113 maps to exactly one Rhea master
+        reaction (RHEA:25500), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

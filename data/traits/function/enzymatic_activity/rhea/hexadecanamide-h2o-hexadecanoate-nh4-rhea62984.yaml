@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:74475
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,90 @@ definitions:
       Catalyses the reaction: hexadecanamide + H2O = hexadecanoate + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hexadecanamide + H2O = hexadecanoate + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:62984, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62985 (rh:substrates → 62984_L, rh:products → 62984_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of hexadecanamide + H2O = hexadecanoate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62984
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: hexadecanamide + H2O = hexadecanoate + NH4(+)'
+  - node_id: sub1
+    label: hexadecanamide
+    node_type: CHEMICAL
+    grounding: CHEBI:74475
+    description: Formula C16H33NO.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:7896
+    description: Formula C16H31O2.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hexadecanamide is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62985
+      snippet: hexadecanamide + H2O => hexadecanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62985 declares side 62984_L as its substrates
+        (rh:substrates); the master reaction RHEA:62984 is undirected. This participant is CHEBI:74475
+        with coefficient 1. Rhea cites PMID:11128635, PMID:9122178 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62985
+      snippet: hexadecanamide + H2O => hexadecanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62985 declares side 62984_L as its substrates
+        (rh:substrates); the master reaction RHEA:62984 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11128635, PMID:9122178 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hexadecanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62985
+      snippet: hexadecanamide + H2O => hexadecanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62985 declares side 62984_R as its products
+        (rh:products); the master reaction RHEA:62984 is undirected. This participant is CHEBI:7896 with
+        coefficient 1. Rhea cites PMID:11128635, PMID:9122178 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62985
+      snippet: hexadecanamide + H2O => hexadecanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62985 declares side 62984_R as its products
+        (rh:products); the master reaction RHEA:62984 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:11128635, PMID:9122178 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.3.-
 mapped_xrefs:
@@ -38,4 +38,147 @@ definitions:
       Catalyses: N(1)-(3-aminopropyl)agmatine + H2O = urea + spermidine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(1)-aminopropylagmatine ureohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.3.24. EC 3.5.3.24 maps to exactly
+    one curated Rhea reaction (RHEA:35827), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N(1)-(3-aminopropyl)agmatine
+    + H2O = urea + spermidine". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N(1)-aminopropylagmatine ureohydrolase
+    grounding: EC:3.5.3.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N(1)-(3-aminopropyl)agmatine
+    node_type: CHEMICAL
+    grounding: CHEBI:64335
+    description: Formula C8H24N5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: urea
+    node_type: CHEMICAL
+    grounding: CHEBI:16199
+    description: Formula CH4N2O.
+  - node_id: prd2
+    label: spermidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57834
+    description: Formula C7H22N3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aminopropylagmatine ureohydrolase activity
+    grounding: GO:0043920
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P72703
+    node_type: PROTEIN
+    label: APAUH_SYNY3
+    grounding: UniProtKB:P72703
+  - node_id: prot_Q5JI38
+    node_type: PROTEIN
+    label: APAUH_THEKO
+    grounding: UniProtKB:Q5JI38
+  - node_id: prot_Q72JK8
+    node_type: PROTEIN
+    label: APAUH_THET2
+    grounding: UniProtKB:Q72JK8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(1)-(3-aminopropyl)agmatine is a substrate consumed by RHEA:35827 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35828
+      snippet: N(1)-(3-aminopropyl)agmatine + H2O => urea + spermidine
+      notes: Rhea's left-to-right directional reaction RHEA:35828 declares side 35827_L as its substrates
+        (rh:substrates); the master reaction RHEA:35827 is undirected. This participant is CHEBI:64335
+        with coefficient 1. Rhea cites PMID:15983049, PMID:20675472, PMID:37878710 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:35827 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35828
+      snippet: N(1)-(3-aminopropyl)agmatine + H2O => urea + spermidine
+      notes: Rhea's left-to-right directional reaction RHEA:35828 declares side 35827_L as its substrates
+        (rh:substrates); the master reaction RHEA:35827 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15983049, PMID:20675472, PMID:37878710 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: urea is a product released by RHEA:35827 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35828
+      snippet: N(1)-(3-aminopropyl)agmatine + H2O => urea + spermidine
+      notes: Rhea's left-to-right directional reaction RHEA:35828 declares side 35827_R as its products
+        (rh:products); the master reaction RHEA:35827 is undirected. This participant is CHEBI:16199 with
+        coefficient 1. Rhea cites PMID:15983049, PMID:20675472, PMID:37878710 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: spermidine is a product released by RHEA:35827 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35828
+      snippet: N(1)-(3-aminopropyl)agmatine + H2O => urea + spermidine
+      notes: Rhea's left-to-right directional reaction RHEA:35828 declares side 35827_R as its products
+        (rh:products); the master reaction RHEA:35827 is undirected. This participant is CHEBI:57834 with
+        coefficient 1. Rhea cites PMID:15983049, PMID:20675472, PMID:37878710 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.3.24
+      snippet: EC:3.5.3.24 > GO:aminopropylagmatine ureohydrolase activity ; GO:0043920
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043920 is itself a record
+        in this KB.
+  - subject: prot_P72703
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APAUH_SYNY3 is an exemplar enzyme with EC 3.5.3.24 activity.
+    evidence:
+    - reference: EC:3.5.3.24
+      snippet: DR   P72703, APAUH_SYNY3;  Q5JI38, APAUH_THEKO;  Q72JK8, APAUH_THET2;
+      notes: ExPASy ENZYME entry EC 3.5.3.24 cross-references UniProtKB:P72703 (APAUH_SYNY3) as a protein
+        with this activity.
+  - subject: prot_Q5JI38
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APAUH_THEKO is an exemplar enzyme with EC 3.5.3.24 activity.
+    evidence:
+    - reference: EC:3.5.3.24
+      snippet: DR   P72703, APAUH_SYNY3;  Q5JI38, APAUH_THEKO;  Q72JK8, APAUH_THET2;
+      notes: ExPASy ENZYME entry EC 3.5.3.24 cross-references UniProtKB:Q5JI38 (APAUH_THEKO) as a protein
+        with this activity.
+  - subject: prot_Q72JK8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APAUH_THET2 is an exemplar enzyme with EC 3.5.3.24 activity.
+    evidence:
+    - reference: EC:3.5.3.24
+      snippet: DR   P72703, APAUH_SYNY3;  Q5JI38, APAUH_THEKO;  Q72JK8, APAUH_THET2;
+      notes: ExPASy ENZYME entry EC 3.5.3.24 cross-references UniProtKB:Q72JK8 (APAUH_THET2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

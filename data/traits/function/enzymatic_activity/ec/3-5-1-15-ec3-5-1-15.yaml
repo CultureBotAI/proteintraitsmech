@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -41,4 +41,151 @@ definitions:
       Catalyses: an N-acyl-L-aspartate + H2O = a carboxylate + L-aspartate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aspartoacylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.15. EC 3.5.1.15 maps to exactly
+    one curated Rhea reaction (RHEA:10872), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an N-acyl-L-aspartate
+    + H2O = a carboxylate + L-aspartate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aspartoacylase
+    grounding: EC:3.5.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an N-acyl-L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:58497
+    description: Formula C5H4NO5R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: prd2
+    label: L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+    description: Formula C4H6NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aspartoacylase activity
+    grounding: GO:0019807
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P46446
+    node_type: PROTEIN
+    label: ACY2_BOVIN
+    grounding: UniProtKB:P46446
+  - node_id: prot_A8KB34
+    node_type: PROTEIN
+    label: ACY2_DANRE
+    grounding: UniProtKB:A8KB34
+  - node_id: prot_P45381
+    node_type: PROTEIN
+    label: ACY2_HUMAN
+    grounding: UniProtKB:P45381
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-acyl-L-aspartate is a substrate consumed by RHEA:10872 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10873
+      snippet: an N-acyl-L-aspartate + H2O => a carboxylate + L-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:10873 declares side 10872_L as its substrates
+        (rh:substrates); the master reaction RHEA:10872 is undirected. This participant is CHEBI:58497
+        with coefficient 1. Rhea cites PMID:14927637, PMID:28101991, PMID:17027983, PMID:16935940 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:10872 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10873
+      snippet: an N-acyl-L-aspartate + H2O => a carboxylate + L-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:10873 declares side 10872_L as its substrates
+        (rh:substrates); the master reaction RHEA:10872 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:14927637, PMID:28101991, PMID:17027983, PMID:16935940 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a carboxylate is a product released by RHEA:10872 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10873
+      snippet: an N-acyl-L-aspartate + H2O => a carboxylate + L-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:10873 declares side 10872_R as its products
+        (rh:products); the master reaction RHEA:10872 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. Rhea cites PMID:14927637, PMID:28101991, PMID:17027983, PMID:16935940 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-aspartate is a product released by RHEA:10872 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10873
+      snippet: an N-acyl-L-aspartate + H2O => a carboxylate + L-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:10873 declares side 10872_R as its products
+        (rh:products); the master reaction RHEA:10872 is undirected. This participant is CHEBI:29991 with
+        coefficient 1. Rhea cites PMID:14927637, PMID:28101991, PMID:17027983, PMID:16935940 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.15
+      snippet: EC:3.5.1.15 > GO:aspartoacylase activity ; GO:0019807
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0019807 is itself a record
+        in this KB.
+  - subject: prot_P46446
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACY2_BOVIN is an exemplar enzyme with EC 3.5.1.15 activity.
+    evidence:
+    - reference: EC:3.5.1.15
+      snippet: DR   P46446, ACY2_BOVIN ;  A8KB34, ACY2_DANRE ;  P45381, ACY2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.15 cross-references UniProtKB:P46446 (ACY2_BOVIN) as a protein
+        with this activity.
+  - subject: prot_A8KB34
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACY2_DANRE is an exemplar enzyme with EC 3.5.1.15 activity.
+    evidence:
+    - reference: EC:3.5.1.15
+      snippet: DR   P46446, ACY2_BOVIN ;  A8KB34, ACY2_DANRE ;  P45381, ACY2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.15 cross-references UniProtKB:A8KB34 (ACY2_DANRE) as a protein
+        with this activity.
+  - subject: prot_P45381
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACY2_HUMAN is an exemplar enzyme with EC 3.5.1.15 activity.
+    evidence:
+    - reference: EC:3.5.1.15
+      snippet: DR   P46446, ACY2_BOVIN ;  A8KB34, ACY2_DANRE ;  P45381, ACY2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.15 cross-references UniProtKB:P45381 (ACY2_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

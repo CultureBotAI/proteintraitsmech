@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 synonyms:
@@ -41,4 +41,172 @@ definitions:
       Catalyses: guanosine(15) in tRNA + 7-cyano-7-carbaguanine = 7-cyano-7- carbaguanosine(15) in tRNA + guanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA-guanine(15) transglycosylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.48. EC 2.4.2.48 maps to exactly
+    one curated Rhea reaction (RHEA:43164), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "guanosine(15)
+    in tRNA + 7-cyano-7-carbaguanine = 7-cyano-7- carbaguanosine(15) in tRNA + guanine". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA-guanine(15) transglycosylase
+    grounding: EC:2.4.2.48
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: guanosine(15) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10372
+    description: Rhea compound GENERIC:10372.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: GMP residue at position 15
+    description: The reacting group Rhea names inside the generic participant GENERIC:10372 (guanosine(15)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74269
+  - node_id: sub2
+    label: 7-cyano-7-carbaguanine
+    node_type: CHEMICAL
+    grounding: CHEBI:45075
+    description: Formula C7H5N5O.
+  - node_id: prd1
+    label: 7-cyano-7-carbaguanosine(15) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10371
+    description: Rhea compound GENERIC:10371.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 7-cyano-7-carbaguanine 5'-phosphate residue at position 15
+    description: The reacting group Rhea names inside the generic participant GENERIC:10371 (7-cyano-7-carbaguanosine(15)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82850
+  - node_id: prd2
+    label: guanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16235
+    description: Formula C5H5N5O.
+  - node_id: prot_Q9YAC2
+    node_type: PROTEIN
+    label: ATGT_AERPE
+    grounding: UniProtKB:Q9YAC2
+  - node_id: prot_O29667
+    node_type: PROTEIN
+    label: ATGT_ARCFU
+    grounding: UniProtKB:O29667
+  - node_id: prot_Q5UXP9
+    node_type: PROTEIN
+    label: ATGT_HALMA
+    grounding: UniProtKB:Q5UXP9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: guanosine(15) in tRNA is a substrate consumed by RHEA:43164 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43165
+      snippet: guanosine(15) in tRNA + 7-cyano-7-carbaguanine => 7-cyano-7-carbaguanosine(15) in tRNA
+        + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:43165 declares side 43164_L as its substrates
+        (rh:substrates); the master reaction RHEA:43164 is undirected. This participant is GENERIC:10372
+        with coefficient 1. Rhea cites PMID:10862614 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: GMP residue is the reactive part of guanosine(15) in tRNA.
+    evidence:
+    - reference: RHEA:43164
+      snippet: GMP residue
+      notes: Rhea compound GENERIC:10372 (guanosine(15) in tRNA) declares rh:reactivePart at position
+        15 = GMP residue (CHEBI:74269).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 7-cyano-7-carbaguanine is a substrate consumed by RHEA:43164 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43165
+      snippet: guanosine(15) in tRNA + 7-cyano-7-carbaguanine => 7-cyano-7-carbaguanosine(15) in tRNA
+        + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:43165 declares side 43164_L as its substrates
+        (rh:substrates); the master reaction RHEA:43164 is undirected. This participant is CHEBI:45075
+        with coefficient 1. Rhea cites PMID:10862614 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 7-cyano-7-carbaguanosine(15) in tRNA is a product released by RHEA:43164 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43165
+      snippet: guanosine(15) in tRNA + 7-cyano-7-carbaguanine => 7-cyano-7-carbaguanosine(15) in tRNA
+        + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:43165 declares side 43164_R as its products
+        (rh:products); the master reaction RHEA:43164 is undirected. This participant is GENERIC:10371
+        with coefficient 1. Rhea cites PMID:10862614 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 7-cyano-7-carbaguanine 5'-phosphate residue is the reactive part of 7-cyano-7-carbaguanosine(15)
+      in tRNA.
+    evidence:
+    - reference: RHEA:43164
+      snippet: 7-cyano-7-carbaguanine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10371 (7-cyano-7-carbaguanosine(15) in tRNA) declares rh:reactivePart
+        at position 15 = 7-cyano-7-carbaguanine 5'-phosphate residue (CHEBI:82850).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: guanine is a product released by RHEA:43164 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43165
+      snippet: guanosine(15) in tRNA + 7-cyano-7-carbaguanine => 7-cyano-7-carbaguanosine(15) in tRNA
+        + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:43165 declares side 43164_R as its products
+        (rh:products); the master reaction RHEA:43164 is undirected. This participant is CHEBI:16235 with
+        coefficient 1. Rhea cites PMID:10862614 for this reaction.
+  - subject: prot_Q9YAC2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATGT_AERPE is an exemplar enzyme with EC 2.4.2.48 activity.
+    evidence:
+    - reference: EC:2.4.2.48
+      snippet: DR   Q9YAC2, ATGT_AERPE ;  O29667, ATGT_ARCFU ;  Q5UXP9, ATGT_HALMA ;
+      notes: ExPASy ENZYME entry EC 2.4.2.48 cross-references UniProtKB:Q9YAC2 (ATGT_AERPE) as a protein
+        with this activity.
+  - subject: prot_O29667
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATGT_ARCFU is an exemplar enzyme with EC 2.4.2.48 activity.
+    evidence:
+    - reference: EC:2.4.2.48
+      snippet: DR   Q9YAC2, ATGT_AERPE ;  O29667, ATGT_ARCFU ;  Q5UXP9, ATGT_HALMA ;
+      notes: ExPASy ENZYME entry EC 2.4.2.48 cross-references UniProtKB:O29667 (ATGT_ARCFU) as a protein
+        with this activity.
+  - subject: prot_Q5UXP9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATGT_HALMA is an exemplar enzyme with EC 2.4.2.48 activity.
+    evidence:
+    - reference: EC:2.4.2.48
+      snippet: DR   Q9YAC2, ATGT_AERPE ;  O29667, ATGT_ARCFU ;  Q5UXP9, ATGT_HALMA ;
+      notes: ExPASy ENZYME entry EC 2.4.2.48 cross-references UniProtKB:Q5UXP9 (ATGT_HALMA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

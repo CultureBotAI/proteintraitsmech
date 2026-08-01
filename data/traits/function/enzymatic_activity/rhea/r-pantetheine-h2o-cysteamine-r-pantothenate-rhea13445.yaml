@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.92
     mapping_source: rhea2ec
@@ -32,4 +32,182 @@ definitions:
       Catalyses the reaction: (R)-pantetheine + H2O = cysteamine + (R)-pantothenate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (R)-pantetheine + H2O = cysteamine + (R)-pantothenate
+  description: Substrate-to-product chemistry of RHEA:13445, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:13446 (rh:substrates → 13445_L, rh:products → 13445_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (R)-pantetheine + H2O = cysteamine + (R)-pantothenate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13445
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (R)-pantetheine + H2O = cysteamine + (R)-pantothenate'
+  - node_id: sub1
+    label: (R)-pantetheine
+    node_type: CHEMICAL
+    grounding: CHEBI:16753
+    description: Formula C11H22N2O4S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: cysteamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58029
+    description: Formula C2H8NS.
+  - node_id: prd2
+    label: (R)-pantothenate
+    node_type: CHEMICAL
+    grounding: CHEBI:29032
+    description: Formula C9H16NO5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: pantetheine hydrolase activity
+    grounding: GO:0017159
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: pantetheine hydrolase
+    grounding: EC:3.5.1.92
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q58CQ9
+    node_type: PROTEIN
+    label: VNN1_BOVIN
+    grounding: UniProtKB:Q58CQ9
+  - node_id: prot_Q9TSX8
+    node_type: PROTEIN
+    label: VNN1_CANLF
+    grounding: UniProtKB:Q9TSX8
+  - node_id: prot_O95497
+    node_type: PROTEIN
+    label: VNN1_HUMAN
+    grounding: UniProtKB:O95497
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-pantetheine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13446
+      snippet: (R)-pantetheine + H2O => cysteamine + (R)-pantothenate
+      notes: Rhea's left-to-right directional reaction RHEA:13446 declares side 13445_L as its substrates
+        (rh:substrates); the master reaction RHEA:13445 is undirected. This participant is CHEBI:16753
+        with coefficient 1. Rhea cites PMID:10567687, PMID:11491533, PMID:11042271 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13446
+      snippet: (R)-pantetheine + H2O => cysteamine + (R)-pantothenate
+      notes: Rhea's left-to-right directional reaction RHEA:13446 declares side 13445_L as its substrates
+        (rh:substrates); the master reaction RHEA:13445 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10567687, PMID:11491533, PMID:11042271 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cysteamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13446
+      snippet: (R)-pantetheine + H2O => cysteamine + (R)-pantothenate
+      notes: Rhea's left-to-right directional reaction RHEA:13446 declares side 13445_R as its products
+        (rh:products); the master reaction RHEA:13445 is undirected. This participant is CHEBI:58029 with
+        coefficient 1. Rhea cites PMID:10567687, PMID:11491533, PMID:11042271 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (R)-pantothenate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13446
+      snippet: (R)-pantetheine + H2O => cysteamine + (R)-pantothenate
+      notes: Rhea's left-to-right directional reaction RHEA:13446 declares side 13445_R as its products
+        (rh:products); the master reaction RHEA:13445 is undirected. This participant is CHEBI:29032 with
+        coefficient 1. Rhea cites PMID:10567687, PMID:11491533, PMID:11042271 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:13445
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0017159"/>
+      notes: The rdfs:seeAlso triple on RHEA:13445 in rhea.rdf. GO term GO:0017159 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.92; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:13445
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.92"/>
+      notes: The rh:ec triple on RHEA:13445 in rhea.rdf. EC 3.5.1.92 is itself a record in this KB.
+  - subject: prot_Q58CQ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VNN1_BOVIN is an exemplar enzyme carrying EC 3.5.1.92, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.92
+      snippet: DR   Q58CQ9, VNN1_BOVIN ;  Q9TSX8, VNN1_CANLF ;  O95497, VNN1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.92 cross-references UniProtKB:Q58CQ9 (VNN1_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:13445
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.92"/>
+      notes: Rhea assigns RHEA:13445 to EC 3.5.1.92, and EC 3.5.1.92 maps to exactly one Rhea master reaction
+        (RHEA:13445), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9TSX8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VNN1_CANLF is an exemplar enzyme carrying EC 3.5.1.92, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.92
+      snippet: DR   Q58CQ9, VNN1_BOVIN ;  Q9TSX8, VNN1_CANLF ;  O95497, VNN1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.92 cross-references UniProtKB:Q9TSX8 (VNN1_CANLF) as a protein
+        with this activity.
+    - reference: RHEA:13445
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.92"/>
+      notes: Rhea assigns RHEA:13445 to EC 3.5.1.92, and EC 3.5.1.92 maps to exactly one Rhea master reaction
+        (RHEA:13445), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O95497
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VNN1_HUMAN is an exemplar enzyme carrying EC 3.5.1.92, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.92
+      snippet: DR   Q58CQ9, VNN1_BOVIN ;  Q9TSX8, VNN1_CANLF ;  O95497, VNN1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.92 cross-references UniProtKB:O95497 (VNN1_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:13445
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.92"/>
+      notes: Rhea assigns RHEA:13445 to EC 3.5.1.92, and EC 3.5.1.92 maps to exactly one Rhea master reaction
+        (RHEA:13445), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

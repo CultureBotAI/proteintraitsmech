@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 mapped_xrefs:
@@ -32,4 +32,134 @@ definitions:
       Catalyses: L-threonine + ATP = O-phospho-L-threonine + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-threonine kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.177. EC 2.7.1.177 maps to
+    exactly one curated Rhea reaction (RHEA:33707), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-threonine
+    + ATP = O-phospho-L-threonine + ADP + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-threonine kinase
+    grounding: EC:2.7.1.177
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-threonine
+    node_type: CHEMICAL
+    grounding: CHEBI:57926
+    description: Formula C4H9NO3.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: O-phospho-L-threonine
+    node_type: CHEMICAL
+    grounding: CHEBI:58675
+    description: Formula C4H8NO6P.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_B1VB82
+    node_type: PROTEIN
+    label: PDUX_CITFR
+    grounding: UniProtKB:B1VB82
+  - node_id: prot_Q9XDM4
+    node_type: PROTEIN
+    label: PDUX_SALTY
+    grounding: UniProtKB:Q9XDM4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-threonine is a substrate consumed by RHEA:33707 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33708
+      snippet: L-threonine + ATP => O-phospho-L-threonine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33708 declares side 33707_L as its substrates
+        (rh:substrates); the master reaction RHEA:33707 is undirected. This participant is CHEBI:57926
+        with coefficient 1. Rhea cites PMID:38456538, PMID:18308727, PMID:19509296 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:33707 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33708
+      snippet: L-threonine + ATP => O-phospho-L-threonine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33708 declares side 33707_L as its substrates
+        (rh:substrates); the master reaction RHEA:33707 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:38456538, PMID:18308727, PMID:19509296 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-phospho-L-threonine is a product released by RHEA:33707 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33708
+      snippet: L-threonine + ATP => O-phospho-L-threonine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33708 declares side 33707_R as its products
+        (rh:products); the master reaction RHEA:33707 is undirected. This participant is CHEBI:58675 with
+        coefficient 1. Rhea cites PMID:38456538, PMID:18308727, PMID:19509296 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:33707 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33708
+      snippet: L-threonine + ATP => O-phospho-L-threonine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33708 declares side 33707_R as its products
+        (rh:products); the master reaction RHEA:33707 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:38456538, PMID:18308727, PMID:19509296 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:33707 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33708
+      snippet: L-threonine + ATP => O-phospho-L-threonine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33708 declares side 33707_R as its products
+        (rh:products); the master reaction RHEA:33707 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:38456538, PMID:18308727, PMID:19509296 for this reaction.
+  - subject: prot_B1VB82
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDUX_CITFR is an exemplar enzyme with EC 2.7.1.177 activity.
+    evidence:
+    - reference: EC:2.7.1.177
+      snippet: DR   B1VB82, PDUX_CITFR ;  Q9XDM4, PDUX_SALTY ;
+      notes: ExPASy ENZYME entry EC 2.7.1.177 cross-references UniProtKB:B1VB82 (PDUX_CITFR) as a protein
+        with this activity.
+  - subject: prot_Q9XDM4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDUX_SALTY is an exemplar enzyme with EC 2.7.1.177 activity.
+    evidence:
+    - reference: EC:2.7.1.177
+      snippet: DR   B1VB82, PDUX_CITFR ;  Q9XDM4, PDUX_SALTY ;
+      notes: ExPASy ENZYME entry EC 2.7.1.177 cross-references UniProtKB:Q9XDM4 (PDUX_SALTY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

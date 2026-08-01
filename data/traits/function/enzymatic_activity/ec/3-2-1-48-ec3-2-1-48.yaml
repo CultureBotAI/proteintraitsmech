@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -47,4 +47,243 @@ definitions:
       Catalyses: (1) sucrose + H2O = beta-D-fructose + alpha-D-glucose. (2) D-maltose + H2O = alpha-D-glucose + D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sucrose alpha-glucosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.48. Rhea assigns 2 curated
+    reactions to EC 3.2.1.48. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) sucrose + H2O = beta-D-fructose + alpha-D-glucose. (2)
+    D-maltose + H2O = alpha-D-glucose + D-glucose". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sucrose alpha-glucosidase
+    grounding: EC:3.2.1.48
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of sucrose + H2O = beta-D-fructose + alpha-D-glucose
+    grounding: RHEA:33795
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: sucrose + H2O = beta-D-fructose + alpha-D-glucose'
+  - node_id: rxn1_sub1
+    label: sucrose
+    node_type: CHEMICAL
+    grounding: CHEBI:17992
+    description: Formula C12H22O11.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: beta-D-fructose
+    node_type: CHEMICAL
+    grounding: CHEBI:28645
+    description: Formula C6H12O6.
+  - node_id: rxn1_prd2
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+    description: Formula C6H12O6.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-maltose + H2O = alpha-D-glucose + D-glucose
+    grounding: RHEA:68796
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-maltose + H2O = alpha-D-glucose + D-glucose'
+  - node_id: rxn2_sub1
+    label: D-maltose
+    node_type: CHEMICAL
+    grounding: CHEBI:17306
+    description: Formula C12H22O11.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+    description: Formula C6H12O6.
+  - node_id: rxn2_prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sucrose alpha-glucosidase activity
+    grounding: GO:0004575
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P14410
+    node_type: PROTEIN
+    label: SUIS_HUMAN
+    grounding: UniProtKB:P14410
+  - node_id: prot_B5THE3
+    node_type: PROTEIN
+    label: SUIS_MOUSE
+    grounding: UniProtKB:B5THE3
+  - node_id: prot_P56729
+    node_type: PROTEIN
+    label: SUIS_PIG
+    grounding: UniProtKB:P56729
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:33795 is one of the 2 curated reactions Rhea assigns to EC 3.2.1.48; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:33795
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.48"/>
+      notes: The rh:ec triple on RHEA:33795 in rhea.rdf assigns that reaction to EC 3.2.1.48.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: sucrose is a substrate consumed by RHEA:33795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33796
+      snippet: sucrose + H2O => beta-D-fructose + alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33796 declares side 33795_L as its substrates
+        (rh:substrates); the master reaction RHEA:33795 is undirected. This participant is CHEBI:17992
+        with coefficient 1.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:33795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33796
+      snippet: sucrose + H2O => beta-D-fructose + alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33796 declares side 33795_L as its substrates
+        (rh:substrates); the master reaction RHEA:33795 is undirected. This participant is CHEBI:15377
+        with coefficient 1.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: beta-D-fructose is a product released by RHEA:33795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33796
+      snippet: sucrose + H2O => beta-D-fructose + alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33796 declares side 33795_R as its products
+        (rh:products); the master reaction RHEA:33795 is undirected. This participant is CHEBI:28645 with
+        coefficient 1.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: alpha-D-glucose is a product released by RHEA:33795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33796
+      snippet: sucrose + H2O => beta-D-fructose + alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:33796 declares side 33795_R as its products
+        (rh:products); the master reaction RHEA:33795 is undirected. This participant is CHEBI:17925 with
+        coefficient 1.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:68796 is one of the 2 curated reactions Rhea assigns to EC 3.2.1.48; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:68796
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.48"/>
+      notes: The rh:ec triple on RHEA:68796 in rhea.rdf assigns that reaction to EC 3.2.1.48.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: D-maltose is a substrate consumed by RHEA:68796 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68797
+      snippet: D-maltose + H2O => alpha-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:68797 declares side 68796_L as its substrates
+        (rh:substrates); the master reaction RHEA:68796 is undirected. This participant is CHEBI:17306
+        with coefficient 1. Rhea cites PMID:18036614, PMID:27480812 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:68796 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68797
+      snippet: D-maltose + H2O => alpha-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:68797 declares side 68796_L as its substrates
+        (rh:substrates); the master reaction RHEA:68796 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18036614, PMID:27480812 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: alpha-D-glucose is a product released by RHEA:68796 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68797
+      snippet: D-maltose + H2O => alpha-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:68797 declares side 68796_R as its products
+        (rh:products); the master reaction RHEA:68796 is undirected. This participant is CHEBI:17925 with
+        coefficient 1. Rhea cites PMID:18036614, PMID:27480812 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: D-glucose is a product released by RHEA:68796 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68797
+      snippet: D-maltose + H2O => alpha-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:68797 declares side 68796_R as its products
+        (rh:products); the master reaction RHEA:68796 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:18036614, PMID:27480812 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.48
+      snippet: EC:3.2.1.48 > GO:sucrose alpha-glucosidase activity ; GO:0004575
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004575 is itself a record
+        in this KB.
+  - subject: prot_P14410
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SUIS_HUMAN is an exemplar enzyme with EC 3.2.1.48 activity.
+    evidence:
+    - reference: EC:3.2.1.48
+      snippet: DR   P14410, SUIS_HUMAN ;  B5THE3, SUIS_MOUSE ;  P56729, SUIS_PIG   ;
+      notes: ExPASy ENZYME entry EC 3.2.1.48 cross-references UniProtKB:P14410 (SUIS_HUMAN) as a protein
+        with this activity.
+  - subject: prot_B5THE3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SUIS_MOUSE is an exemplar enzyme with EC 3.2.1.48 activity.
+    evidence:
+    - reference: EC:3.2.1.48
+      snippet: DR   P14410, SUIS_HUMAN ;  B5THE3, SUIS_MOUSE ;  P56729, SUIS_PIG   ;
+      notes: ExPASy ENZYME entry EC 3.2.1.48 cross-references UniProtKB:B5THE3 (SUIS_MOUSE) as a protein
+        with this activity.
+  - subject: prot_P56729
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SUIS_PIG is an exemplar enzyme with EC 3.2.1.48 activity.
+    evidence:
+    - reference: EC:3.2.1.48
+      snippet: DR   P14410, SUIS_HUMAN ;  B5THE3, SUIS_MOUSE ;  P56729, SUIS_PIG   ;
+      notes: ExPASy ENZYME entry EC 3.2.1.48 cross-references UniProtKB:P56729 (SUIS_PIG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

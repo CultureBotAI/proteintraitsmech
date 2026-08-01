@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.8.3.23
     mapping_source: rhea2ec
@@ -28,4 +28,128 @@ definitions:
       Catalyses the reaction: hydrocaffeoyl-CoA + (E)-caffeate = 3-(3,4-dihydroxyphenyl)propanoate + (E)-caffeoyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydrocaffeoyl-CoA + (E)-caffeate = 3-(3,4-dihydroxyphenyl)propanoate +
+    (E)-caffeoyl-CoA
+  description: Substrate-to-product chemistry of RHEA:38027, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:38028 (rh:substrates → 38027_L, rh:products → 38027_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of hydrocaffeoyl-CoA + (E)-caffeate = 3-(3,4-dihydroxyphenyl)propanoate + (E)-c…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:38027
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: hydrocaffeoyl-CoA + (E)-caffeate = 3-(3,4-dihydroxyphenyl)propanoate + (E)-caffeoyl-CoA'
+  - node_id: sub1
+    label: hydrocaffeoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:87137
+    description: Formula C30H40N7O19P3S.
+  - node_id: sub2
+    label: (E)-caffeate
+    node_type: CHEMICAL
+    grounding: CHEBI:57770
+    description: Formula C9H7O4.
+  - node_id: prd1
+    label: 3-(3,4-dihydroxyphenyl)propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58744
+    description: Formula C9H9O4.
+  - node_id: prd2
+    label: (E)-caffeoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:87136
+    description: Formula C30H38N7O19P3S.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: caffeate CoA-transferase
+    grounding: EC:2.8.3.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_F1CYZ5
+    node_type: PROTEIN
+    label: CARA_ACEWO
+    grounding: UniProtKB:F1CYZ5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hydrocaffeoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38028
+      snippet: hydrocaffeoyl-CoA + (E)-caffeate => 3-(3,4-dihydroxyphenyl)propanoate + (E)-caffeoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38028 declares side 38027_L as its substrates
+        (rh:substrates); the master reaction RHEA:38027 is undirected. This participant is CHEBI:87137
+        with coefficient 1. Rhea cites PMID:23315745 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (E)-caffeate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38028
+      snippet: hydrocaffeoyl-CoA + (E)-caffeate => 3-(3,4-dihydroxyphenyl)propanoate + (E)-caffeoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38028 declares side 38027_L as its substrates
+        (rh:substrates); the master reaction RHEA:38027 is undirected. This participant is CHEBI:57770
+        with coefficient 1. Rhea cites PMID:23315745 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-(3,4-dihydroxyphenyl)propanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:38028
+      snippet: hydrocaffeoyl-CoA + (E)-caffeate => 3-(3,4-dihydroxyphenyl)propanoate + (E)-caffeoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38028 declares side 38027_R as its products
+        (rh:products); the master reaction RHEA:38027 is undirected. This participant is CHEBI:58744 with
+        coefficient 1. Rhea cites PMID:23315745 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (E)-caffeoyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38028
+      snippet: hydrocaffeoyl-CoA + (E)-caffeate => 3-(3,4-dihydroxyphenyl)propanoate + (E)-caffeoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38028 declares side 38027_R as its products
+        (rh:products); the master reaction RHEA:38027 is undirected. This participant is CHEBI:87136 with
+        coefficient 1. Rhea cites PMID:23315745 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.8.3.23; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:38027
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.23"/>
+      notes: The rh:ec triple on RHEA:38027 in rhea.rdf. EC 2.8.3.23 is itself a record in this KB.
+  - subject: prot_F1CYZ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARA_ACEWO is an exemplar enzyme carrying EC 2.8.3.23, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.3.23
+      snippet: DR   F1CYZ5, CARA_ACEWO ;
+      notes: ExPASy ENZYME entry EC 2.8.3.23 cross-references UniProtKB:F1CYZ5 (CARA_ACEWO) as a protein
+        with this activity.
+    - reference: RHEA:38027
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.23"/>
+      notes: Rhea assigns RHEA:38027 to EC 2.8.3.23, and EC 2.8.3.23 maps to exactly one Rhea master reaction
+        (RHEA:38027), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

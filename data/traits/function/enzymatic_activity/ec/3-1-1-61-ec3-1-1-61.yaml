@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -55,4 +55,198 @@ definitions:
       Catalyses: [protein]-L-glutamate 5-O-methyl ester + H2O = L-glutamyl-[protein] + methanol + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-glutamate methylesterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.61. EC 3.1.1.61 maps to exactly
+    one curated Rhea reaction (RHEA:23236), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[protein]-L-glutamate
+    5-O-methyl ester + H2O = L-glutamyl-[protein] + methanol + H(+)". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-glutamate methylesterase
+    grounding: EC:3.1.1.61
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[protein]-L-glutamate 5-O-methyl ester'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10311
+    description: Rhea compound GENERIC:10311.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-glutamate O(5)-methyl ester residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10311 ([protein]-L-glutamate
+      5-O-methyl ester); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82795
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-glutamyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10208
+    description: Rhea compound GENERIC:10208.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-glutamate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10208 (L-glutamyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29973
+  - node_id: prd2
+    label: methanol
+    node_type: CHEMICAL
+    grounding: CHEBI:17790
+    description: Formula CH4O.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-glutamate methylesterase activity
+    grounding: GO:0008984
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O85128
+    node_type: PROTEIN
+    label: CHEB1_AGRFC
+    grounding: UniProtKB:O85128
+  - node_id: prot_Q221I1
+    node_type: PROTEIN
+    label: CHEB1_ALBFT
+    grounding: UniProtKB:Q221I1
+  - node_id: prot_Q2INJ8
+    node_type: PROTEIN
+    label: CHEB1_ANADE
+    grounding: UniProtKB:Q2INJ8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[protein]-L-glutamate 5-O-methyl ester is a substrate consumed by RHEA:23236 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:23237
+      snippet: '[protein]-L-glutamate 5-O-methyl ester + H2O => L-glutamyl-[protein] + methanol + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:23237 declares side 23236_L as its substrates
+        (rh:substrates); the master reaction RHEA:23236 is undirected. This participant is GENERIC:10311
+        with coefficient 1. Rhea cites PMID:6384215, PMID:6469959 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-glutamate O(5)-methyl ester residue is the reactive part of [protein]-L-glutamate 5-O-methyl
+      ester.
+    evidence:
+    - reference: RHEA:23236
+      snippet: L-glutamate O(5)-methyl ester residue
+      notes: Rhea compound GENERIC:10311 ([protein]-L-glutamate 5-O-methyl ester) declares rh:reactivePart
+        = L-glutamate O(5)-methyl ester residue (CHEBI:82795).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:23236 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23237
+      snippet: '[protein]-L-glutamate 5-O-methyl ester + H2O => L-glutamyl-[protein] + methanol + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:23237 declares side 23236_L as its substrates
+        (rh:substrates); the master reaction RHEA:23236 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:6384215, PMID:6469959 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-glutamyl-[protein] is a product released by RHEA:23236 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23237
+      snippet: '[protein]-L-glutamate 5-O-methyl ester + H2O => L-glutamyl-[protein] + methanol + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:23237 declares side 23236_R as its products
+        (rh:products); the master reaction RHEA:23236 is undirected. This participant is GENERIC:10208
+        with coefficient 1. Rhea cites PMID:6384215, PMID:6469959 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-glutamate residue is the reactive part of L-glutamyl-[protein].
+    evidence:
+    - reference: RHEA:23236
+      snippet: L-glutamate residue
+      notes: Rhea compound GENERIC:10208 (L-glutamyl-[protein]) declares rh:reactivePart = L-glutamate
+        residue (CHEBI:29973).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: methanol is a product released by RHEA:23236 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23237
+      snippet: '[protein]-L-glutamate 5-O-methyl ester + H2O => L-glutamyl-[protein] + methanol + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:23237 declares side 23236_R as its products
+        (rh:products); the master reaction RHEA:23236 is undirected. This participant is CHEBI:17790 with
+        coefficient 1. Rhea cites PMID:6384215, PMID:6469959 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:23236 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23237
+      snippet: '[protein]-L-glutamate 5-O-methyl ester + H2O => L-glutamyl-[protein] + methanol + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:23237 declares side 23236_R as its products
+        (rh:products); the master reaction RHEA:23236 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:6384215, PMID:6469959 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.61
+      snippet: EC:3.1.1.61 > GO:protein-glutamate methylesterase activity ; GO:0008984
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008984 is itself a record
+        in this KB.
+  - subject: prot_O85128
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHEB1_AGRFC is an exemplar enzyme with EC 3.1.1.61 activity.
+    evidence:
+    - reference: EC:3.1.1.61
+      snippet: DR   O85128, CHEB1_AGRFC;  Q221I1, CHEB1_ALBFT;  Q2INJ8, CHEB1_ANADE;
+      notes: ExPASy ENZYME entry EC 3.1.1.61 cross-references UniProtKB:O85128 (CHEB1_AGRFC) as a protein
+        with this activity.
+  - subject: prot_Q221I1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHEB1_ALBFT is an exemplar enzyme with EC 3.1.1.61 activity.
+    evidence:
+    - reference: EC:3.1.1.61
+      snippet: DR   O85128, CHEB1_AGRFC;  Q221I1, CHEB1_ALBFT;  Q2INJ8, CHEB1_ANADE;
+      notes: ExPASy ENZYME entry EC 3.1.1.61 cross-references UniProtKB:Q221I1 (CHEB1_ALBFT) as a protein
+        with this activity.
+  - subject: prot_Q2INJ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHEB1_ANADE is an exemplar enzyme with EC 3.1.1.61 activity.
+    evidence:
+    - reference: EC:3.1.1.61
+      snippet: DR   O85128, CHEB1_AGRFC;  Q221I1, CHEB1_ALBFT;  Q2INJ8, CHEB1_ANADE;
+      notes: ExPASy ENZYME entry EC 3.1.1.61 cross-references UniProtKB:Q2INJ8 (CHEB1_ANADE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

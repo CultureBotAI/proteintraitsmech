@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -43,4 +43,116 @@ definitions:
       Catalyses: (2R,3S)-beta-methylmalyl-CoA = 2-methylfumaryl-CoA + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-methylfumaryl-CoA hydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.148. EC 4.2.1.148 maps to
+    exactly one curated Rhea reaction (RHEA:38263), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2R,3S)-beta-methylmalyl-CoA
+    = 2-methylfumaryl-CoA + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-methylfumaryl-CoA hydratase
+    grounding: EC:4.2.1.148
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2R,3S)-beta-methylmalyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:75634
+    description: Formula C26H37N7O20P3S.
+  - node_id: prd1
+    label: 2-methylfumaryl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:75635
+    description: Formula C26H35N7O19P3S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q3IZ78
+    node_type: PROTEIN
+    label: MCH_CERS4
+    grounding: UniProtKB:Q3IZ78
+  - node_id: prot_A9WC34
+    node_type: PROTEIN
+    label: MCH_CHLAA
+    grounding: UniProtKB:A9WC34
+  - node_id: prot_G0HQ35
+    node_type: PROTEIN
+    label: MCH_HALHT
+    grounding: UniProtKB:G0HQ35
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2R,3S)-beta-methylmalyl-CoA is a substrate consumed by RHEA:38263 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38264
+      snippet: (2R,3S)-beta-methylmalyl-CoA => 2-methylfumaryl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38264 declares side 38263_L as its substrates
+        (rh:substrates); the master reaction RHEA:38263 is undirected. This participant is CHEBI:75634
+        with coefficient 1. Rhea cites PMID:18065535 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-methylfumaryl-CoA is a product released by RHEA:38263 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38264
+      snippet: (2R,3S)-beta-methylmalyl-CoA => 2-methylfumaryl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38264 declares side 38263_R as its products
+        (rh:products); the master reaction RHEA:38263 is undirected. This participant is CHEBI:75635 with
+        coefficient 1. Rhea cites PMID:18065535 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:38263 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38264
+      snippet: (2R,3S)-beta-methylmalyl-CoA => 2-methylfumaryl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38264 declares side 38263_R as its products
+        (rh:products); the master reaction RHEA:38263 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:18065535 for this reaction.
+  - subject: prot_Q3IZ78
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCH_CERS4 is an exemplar enzyme with EC 4.2.1.148 activity.
+    evidence:
+    - reference: EC:4.2.1.148
+      snippet: DR   Q3IZ78, MCH_CERS4  ;  A9WC34, MCH_CHLAA  ;  G0HQ35, MCH_HALHT  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.148 cross-references UniProtKB:Q3IZ78 (MCH_CERS4) as a protein
+        with this activity.
+  - subject: prot_A9WC34
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCH_CHLAA is an exemplar enzyme with EC 4.2.1.148 activity.
+    evidence:
+    - reference: EC:4.2.1.148
+      snippet: DR   Q3IZ78, MCH_CERS4  ;  A9WC34, MCH_CHLAA  ;  G0HQ35, MCH_HALHT  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.148 cross-references UniProtKB:A9WC34 (MCH_CHLAA) as a protein
+        with this activity.
+  - subject: prot_G0HQ35
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCH_HALHT is an exemplar enzyme with EC 4.2.1.148 activity.
+    evidence:
+    - reference: EC:4.2.1.148
+      snippet: DR   Q3IZ78, MCH_CERS4  ;  A9WC34, MCH_CHLAA  ;  G0HQ35, MCH_HALHT  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.148 cross-references UniProtKB:G0HQ35 (MCH_HALHT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

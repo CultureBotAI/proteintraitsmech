@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.4.-
 synonyms:
@@ -41,4 +41,101 @@ definitions:
       Catalyses: (8R,9Z,12Z)-8-hydroperoxyoctadeca-9,12-dienoate = (5S,8R,9Z,12Z)-5,8- dihydroxyoctadeca-9,12-dienoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 9,12-octadecadienoate 8-hydroperoxide 8R-isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.4.5. EC 5.4.4.5 maps to exactly
+    one curated Rhea reaction (RHEA:31579), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(8R,9Z,12Z)-8-hydroperoxyoctadeca-9,12-dienoate
+    = (5S,8R,9Z,12Z)-5,8- dihydroxyoctadeca-9,12-dienoate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 9,12-octadecadienoate 8-hydroperoxide 8R-isomerase
+    grounding: EC:5.4.4.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (8R,9Z,12Z)-8-hydroperoxyoctadeca-9,12-dienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58659
+    description: Formula C18H31O4.
+  - node_id: prd1
+    label: (5S,8R,9Z,12Z)-5,8-dihydroxyoctadeca-9,12-dienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:63217
+    description: Formula C18H31O4.
+  - node_id: prot_B0Y6R2
+    node_type: PROTEIN
+    label: PPOA_ASPFC
+    grounding: UniProtKB:B0Y6R2
+  - node_id: prot_Q4WPX2
+    node_type: PROTEIN
+    label: PPOA_ASPFU
+    grounding: UniProtKB:Q4WPX2
+  - node_id: prot_Q6RET3
+    node_type: PROTEIN
+    label: PPOA_EMEND
+    grounding: UniProtKB:Q6RET3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (8R,9Z,12Z)-8-hydroperoxyoctadeca-9,12-dienoate is a substrate consumed by RHEA:31579
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31580
+      snippet: (8R,9Z,12Z)-8-hydroperoxyoctadeca-9,12-dienoate => (5S,8R,9Z,12Z)-5,8-dihydroxyoctadeca-9,12-dienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31580 declares side 31579_L as its substrates
+        (rh:substrates); the master reaction RHEA:31579 is undirected. This participant is CHEBI:58659
+        with coefficient 1. Rhea cites PMID:19286665, PMID:20045744, PMID:21130068 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (5S,8R,9Z,12Z)-5,8-dihydroxyoctadeca-9,12-dienoate is a product released by RHEA:31579
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31580
+      snippet: (8R,9Z,12Z)-8-hydroperoxyoctadeca-9,12-dienoate => (5S,8R,9Z,12Z)-5,8-dihydroxyoctadeca-9,12-dienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31580 declares side 31579_R as its products
+        (rh:products); the master reaction RHEA:31579 is undirected. This participant is CHEBI:63217 with
+        coefficient 1. Rhea cites PMID:19286665, PMID:20045744, PMID:21130068 for this reaction.
+  - subject: prot_B0Y6R2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PPOA_ASPFC is an exemplar enzyme with EC 5.4.4.5 activity.
+    evidence:
+    - reference: EC:5.4.4.5
+      snippet: DR   B0Y6R2, PPOA_ASPFC ;  Q4WPX2, PPOA_ASPFU ;  Q6RET3, PPOA_EMEND ;
+      notes: ExPASy ENZYME entry EC 5.4.4.5 cross-references UniProtKB:B0Y6R2 (PPOA_ASPFC) as a protein
+        with this activity.
+  - subject: prot_Q4WPX2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PPOA_ASPFU is an exemplar enzyme with EC 5.4.4.5 activity.
+    evidence:
+    - reference: EC:5.4.4.5
+      snippet: DR   B0Y6R2, PPOA_ASPFC ;  Q4WPX2, PPOA_ASPFU ;  Q6RET3, PPOA_EMEND ;
+      notes: ExPASy ENZYME entry EC 5.4.4.5 cross-references UniProtKB:Q4WPX2 (PPOA_ASPFU) as a protein
+        with this activity.
+  - subject: prot_Q6RET3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PPOA_EMEND is an exemplar enzyme with EC 5.4.4.5 activity.
+    evidence:
+    - reference: EC:5.4.4.5
+      snippet: DR   B0Y6R2, PPOA_ASPFC ;  Q4WPX2, PPOA_ASPFU ;  Q6RET3, PPOA_EMEND ;
+      notes: ExPASy ENZYME entry EC 5.4.4.5 cross-references UniProtKB:Q6RET3 (PPOA_EMEND) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

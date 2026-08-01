@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 canonical_examples:
@@ -33,4 +33,66 @@ definitions:
       Catalyses: Hydrolysis of terminal, non-reducing branched (1->3)-alpha-D-galactosidic residues, producing free D-galactose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of blood group B branched chain alpha-1,3-galactosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.n1. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of terminal, non-reducing branched (1->3)-alpha-D-galactosidic residues, producing free D-galactose".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: blood group B branched chain alpha-1,3-galactosidase
+    grounding: EC:3.2.1.n1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_B2UL12
+    node_type: PROTEIN
+    label: GLAA_AKKM8
+    grounding: UniProtKB:B2UL12
+  - node_id: prot_Q5L7M8
+    node_type: PROTEIN
+    label: GLAA_BACFN
+    grounding: UniProtKB:Q5L7M8
+  - node_id: prot_Q64MU6
+    node_type: PROTEIN
+    label: GLAA_BACFR
+    grounding: UniProtKB:Q64MU6
+  edges:
+  - subject: prot_B2UL12
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLAA_AKKM8 is an exemplar enzyme with EC 3.2.1.n1 activity.
+    evidence:
+    - reference: EC:3.2.1.n1
+      snippet: DR   B2UL12, GLAA_AKKM8 ;  Q5L7M8, GLAA_BACFN ;  Q64MU6, GLAA_BACFR ;
+      notes: ExPASy ENZYME entry EC 3.2.1.n1 cross-references UniProtKB:B2UL12 (GLAA_AKKM8) as a protein
+        with this activity.
+  - subject: prot_Q5L7M8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLAA_BACFN is an exemplar enzyme with EC 3.2.1.n1 activity.
+    evidence:
+    - reference: EC:3.2.1.n1
+      snippet: DR   B2UL12, GLAA_AKKM8 ;  Q5L7M8, GLAA_BACFN ;  Q64MU6, GLAA_BACFR ;
+      notes: ExPASy ENZYME entry EC 3.2.1.n1 cross-references UniProtKB:Q5L7M8 (GLAA_BACFN) as a protein
+        with this activity.
+  - subject: prot_Q64MU6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLAA_BACFR is an exemplar enzyme with EC 3.2.1.n1 activity.
+    evidence:
+    - reference: EC:3.2.1.n1
+      snippet: DR   B2UL12, GLAA_AKKM8 ;  Q5L7M8, GLAA_BACFN ;  Q64MU6, GLAA_BACFR ;
+      notes: ExPASy ENZYME entry EC 3.2.1.n1 cross-references UniProtKB:Q64MU6 (GLAA_BACFR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

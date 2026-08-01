@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 synonyms:
@@ -36,4 +36,68 @@ definitions:
       Catalyses: Hydrolysis of proteins with broad specificity similar to that of pepsin A, preferring hydrophobic residues at P1 and P1'. Clots milk and activates trypsinogen. Does not cleave 4-Gln-|-His-5, but does cleave 10-His-|-Leu-11 and 12-Val-|-Glu-13 in B chain of insulin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of rhizopuspepsin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.21. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of proteins with broad specificity similar to that of pepsin A, preferring hydrophobic residues at
+    P1 and P1''. Clots milk and activates trypsinogen. Does not cleave 4-Gln-|-His-5, but does cleave
+    10-His-|-Leu-11 and 12-Val-|-Glu-13 in B chain of insulin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: rhizopuspepsin
+    grounding: EC:3.4.23.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P10602
+    node_type: PROTEIN
+    label: CARP1_RHINI
+    grounding: UniProtKB:P10602
+  - node_id: prot_P43231
+    node_type: PROTEIN
+    label: CARP2_RHINI
+    grounding: UniProtKB:P43231
+  - node_id: prot_Q03699
+    node_type: PROTEIN
+    label: CARP3_RHINI
+    grounding: UniProtKB:Q03699
+  edges:
+  - subject: prot_P10602
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARP1_RHINI is an exemplar enzyme with EC 3.4.23.21 activity.
+    evidence:
+    - reference: EC:3.4.23.21
+      snippet: DR   P10602, CARP1_RHINI;  P43231, CARP2_RHINI;  Q03699, CARP3_RHINI;
+      notes: ExPASy ENZYME entry EC 3.4.23.21 cross-references UniProtKB:P10602 (CARP1_RHINI) as a protein
+        with this activity.
+  - subject: prot_P43231
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARP2_RHINI is an exemplar enzyme with EC 3.4.23.21 activity.
+    evidence:
+    - reference: EC:3.4.23.21
+      snippet: DR   P10602, CARP1_RHINI;  P43231, CARP2_RHINI;  Q03699, CARP3_RHINI;
+      notes: ExPASy ENZYME entry EC 3.4.23.21 cross-references UniProtKB:P43231 (CARP2_RHINI) as a protein
+        with this activity.
+  - subject: prot_Q03699
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARP3_RHINI is an exemplar enzyme with EC 3.4.23.21 activity.
+    evidence:
+    - reference: EC:3.4.23.21
+      snippet: DR   P10602, CARP1_RHINI;  P43231, CARP2_RHINI;  Q03699, CARP3_RHINI;
+      notes: ExPASy ENZYME entry EC 3.4.23.21 cross-references UniProtKB:Q03699 (CARP3_RHINI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

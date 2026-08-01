@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,132 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate + H2O = tau-cadinol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tau-cadinol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.173. EC 4.2.3.173 maps to
+    exactly one curated Rhea reaction (RHEA:54052), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate + H2O = tau-cadinol + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tau-cadinol synthase
+    grounding: EC:4.2.3.173
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: tau-cadinol
+    node_type: CHEMICAL
+    grounding: CHEBI:138042
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_U3LW50
+    node_type: PROTEIN
+    label: CADS_LAVAN
+    grounding: UniProtKB:U3LW50
+  - node_id: prot_A0A1L2D3T3
+    node_type: PROTEIN
+    label: TPS1_INUHU
+    grounding: UniProtKB:A0A1L2D3T3
+  - node_id: prot_Q5GJ59
+    node_type: PROTEIN
+    label: TPS7_MAIZE
+    grounding: UniProtKB:Q5GJ59
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:54052 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54053
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => tau-cadinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54053 declares side 54052_L as its substrates
+        (rh:substrates); the master reaction RHEA:54052 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:27231873, PMID:24078339, PMID:27421723 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:54052 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54053
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => tau-cadinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54053 declares side 54052_L as its substrates
+        (rh:substrates); the master reaction RHEA:54052 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:27231873, PMID:24078339, PMID:27421723 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tau-cadinol is a product released by RHEA:54052 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54053
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => tau-cadinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54053 declares side 54052_R as its products
+        (rh:products); the master reaction RHEA:54052 is undirected. This participant is CHEBI:138042
+        with coefficient 1. Rhea cites PMID:27231873, PMID:24078339, PMID:27421723 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:54052 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54053
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => tau-cadinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54053 declares side 54052_R as its products
+        (rh:products); the master reaction RHEA:54052 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:27231873, PMID:24078339, PMID:27421723 for this reaction.
+  - subject: prot_U3LW50
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CADS_LAVAN is an exemplar enzyme with EC 4.2.3.173 activity.
+    evidence:
+    - reference: EC:4.2.3.173
+      snippet: DR   U3LW50, CADS_LAVAN ;  A0A1L2D3T3, TPS1_INUHU ;  Q5GJ59, TPS7_MAIZE ;
+      notes: ExPASy ENZYME entry EC 4.2.3.173 cross-references UniProtKB:U3LW50 (CADS_LAVAN) as a protein
+        with this activity.
+  - subject: prot_A0A1L2D3T3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS1_INUHU is an exemplar enzyme with EC 4.2.3.173 activity.
+    evidence:
+    - reference: EC:4.2.3.173
+      snippet: DR   U3LW50, CADS_LAVAN ;  A0A1L2D3T3, TPS1_INUHU ;  Q5GJ59, TPS7_MAIZE ;
+      notes: ExPASy ENZYME entry EC 4.2.3.173 cross-references UniProtKB:A0A1L2D3T3 (TPS1_INUHU) as a
+        protein with this activity.
+  - subject: prot_Q5GJ59
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS7_MAIZE is an exemplar enzyme with EC 4.2.3.173 activity.
+    evidence:
+    - reference: EC:4.2.3.173
+      snippet: DR   U3LW50, CADS_LAVAN ;  A0A1L2D3T3, TPS1_INUHU ;  Q5GJ59, TPS7_MAIZE ;
+      notes: ExPASy ENZYME entry EC 4.2.3.173 cross-references UniProtKB:Q5GJ59 (TPS7_MAIZE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

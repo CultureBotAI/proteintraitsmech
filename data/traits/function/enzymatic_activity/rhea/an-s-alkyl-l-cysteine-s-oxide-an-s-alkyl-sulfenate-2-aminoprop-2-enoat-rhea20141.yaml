@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.4.1.4
     mapping_source: rhea2ec
@@ -28,4 +28,108 @@ definitions:
       Catalyses the reaction: an S-alkyl-L-cysteine S-oxide = an S-alkyl sulfenate + 2-aminoprop-2-enoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an S-alkyl-L-cysteine S-oxide = an S-alkyl sulfenate + 2-aminoprop-2-enoate
+  description: Substrate-to-product chemistry of RHEA:20141, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20142 (rh:substrates → 20141_L, rh:products → 20141_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an S-alkyl-L-cysteine S-oxide = an S-alkyl sulfenate + 2-aminoprop-2-enoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20141
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an S-alkyl-L-cysteine S-oxide = an S-alkyl sulfenate + 2-aminoprop-2-enoate'
+  - node_id: sub1
+    label: an S-alkyl-L-cysteine S-oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:142409
+    description: Formula C3H6NO3SR.
+  - node_id: prd1
+    label: an S-alkyl sulfenate
+    node_type: CHEMICAL
+    grounding: CHEBI:22326
+    description: Formula HOSR.
+  - node_id: prd2
+    label: 2-aminoprop-2-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:76565
+    description: Formula C3H5NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alliin lyase activity
+    grounding: GO:0047654
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: alliin lyase
+    grounding: EC:4.4.1.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an S-alkyl-L-cysteine S-oxide is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20142
+      snippet: an S-alkyl-L-cysteine S-oxide => an S-alkyl sulfenate + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:20142 declares side 20141_L as its substrates
+        (rh:substrates); the master reaction RHEA:20141 is undirected. This participant is CHEBI:142409
+        with coefficient 1. Rhea cites PMID:17174334, PMID:12051663 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an S-alkyl sulfenate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20142
+      snippet: an S-alkyl-L-cysteine S-oxide => an S-alkyl sulfenate + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:20142 declares side 20141_R as its products
+        (rh:products); the master reaction RHEA:20141 is undirected. This participant is CHEBI:22326 with
+        coefficient 1. Rhea cites PMID:17174334, PMID:12051663 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 2-aminoprop-2-enoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20142
+      snippet: an S-alkyl-L-cysteine S-oxide => an S-alkyl sulfenate + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:20142 declares side 20141_R as its products
+        (rh:products); the master reaction RHEA:20141 is undirected. This participant is CHEBI:76565 with
+        coefficient 1. Rhea cites PMID:17174334, PMID:12051663 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20141
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047654"/>
+      notes: The rdfs:seeAlso triple on RHEA:20141 in rhea.rdf. GO term GO:0047654 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.4.1.4; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20141
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.4"/>
+      notes: The rh:ec triple on RHEA:20141 in rhea.rdf. EC 4.4.1.4 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -43,4 +43,81 @@ definitions:
       Catalyses: Random hydrolysis of (1->6)-linkages in (1->6)-beta-D-glucans
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucan endo-1,6-beta-glucosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.75. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Random
+    hydrolysis of (1->6)-linkages in (1->6)-beta-D-glucans".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucan endo-1,6-beta-glucosidase
+    grounding: EC:3.2.1.75
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucan endo-1,6-beta-glucosidase activity
+    grounding: GO:0046557
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9URU6
+    node_type: PROTEIN
+    label: EXG1_SCHPO
+    grounding: UniProtKB:Q9URU6
+  - node_id: prot_Q10444
+    node_type: PROTEIN
+    label: EXG2_SCHPO
+    grounding: UniProtKB:Q10444
+  - node_id: prot_O74799
+    node_type: PROTEIN
+    label: EXG3_SCHPO
+    grounding: UniProtKB:O74799
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.75
+      snippet: EC:3.2.1.75 > GO:glucan endo-1,6-beta-glucosidase activity ; GO:0046557
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0046557 is itself a record
+        in this KB.
+  - subject: prot_Q9URU6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EXG1_SCHPO is an exemplar enzyme with EC 3.2.1.75 activity.
+    evidence:
+    - reference: EC:3.2.1.75
+      snippet: DR   Q9URU6, EXG1_SCHPO ;  Q10444, EXG2_SCHPO ;  O74799, EXG3_SCHPO ;
+      notes: ExPASy ENZYME entry EC 3.2.1.75 cross-references UniProtKB:Q9URU6 (EXG1_SCHPO) as a protein
+        with this activity.
+  - subject: prot_Q10444
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EXG2_SCHPO is an exemplar enzyme with EC 3.2.1.75 activity.
+    evidence:
+    - reference: EC:3.2.1.75
+      snippet: DR   Q9URU6, EXG1_SCHPO ;  Q10444, EXG2_SCHPO ;  O74799, EXG3_SCHPO ;
+      notes: ExPASy ENZYME entry EC 3.2.1.75 cross-references UniProtKB:Q10444 (EXG2_SCHPO) as a protein
+        with this activity.
+  - subject: prot_O74799
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EXG3_SCHPO is an exemplar enzyme with EC 3.2.1.75 activity.
+    evidence:
+    - reference: EC:3.2.1.75
+      snippet: DR   Q9URU6, EXG1_SCHPO ;  Q10444, EXG2_SCHPO ;  O74799, EXG3_SCHPO ;
+      notes: ExPASy ENZYME entry EC 3.2.1.75 cross-references UniProtKB:O74799 (EXG3_SCHPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.11.1.-
 synonyms:
@@ -39,4 +39,119 @@ definitions:
       Catalyses: (S)-2-hydroxypropylphosphonate + H2O2 = (1R,2S)-epoxypropylphosphonate + 2 H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-2-hydroxypropylphosphonic acid epoxidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.11.1.23. EC 1.11.1.23 maps to
+    exactly one curated Rhea reaction (RHEA:10808), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-2-hydroxypropylphosphonate
+    + H2O2 = (1R,2S)-epoxypropylphosphonate + 2 H2O". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (S)-2-hydroxypropylphosphonic acid epoxidase
+    grounding: EC:1.11.1.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-2-hydroxypropylphosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:62246
+    description: Formula C3H8O4P.
+  - node_id: sub2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: prd1
+    label: (1R,2S)-epoxypropylphosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:62247
+    description: Formula C3H6O4P.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q9JN69
+    node_type: PROTEIN
+    label: HPPE_PSESX
+    grounding: UniProtKB:Q9JN69
+  - node_id: prot_Q56185
+    node_type: PROTEIN
+    label: HPPE_STRWE
+    grounding: UniProtKB:Q56185
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-2-hydroxypropylphosphonate is a substrate consumed by RHEA:10808 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:10809
+      snippet: (S)-2-hydroxypropylphosphonate + H2O2 => (1R,2S)-epoxypropylphosphonate + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10809 declares side 10808_L as its substrates
+        (rh:substrates); the master reaction RHEA:10808 is undirected. This participant is CHEBI:62246
+        with coefficient 1. Rhea cites PMID:18656958, PMID:16015285 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O2 is a substrate consumed by RHEA:10808 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10809
+      snippet: (S)-2-hydroxypropylphosphonate + H2O2 => (1R,2S)-epoxypropylphosphonate + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10809 declares side 10808_L as its substrates
+        (rh:substrates); the master reaction RHEA:10808 is undirected. This participant is CHEBI:16240
+        with coefficient 1. Rhea cites PMID:18656958, PMID:16015285 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1R,2S)-epoxypropylphosphonate is a product released by RHEA:10808 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10809
+      snippet: (S)-2-hydroxypropylphosphonate + H2O2 => (1R,2S)-epoxypropylphosphonate + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10809 declares side 10808_R as its products
+        (rh:products); the master reaction RHEA:10808 is undirected. This participant is CHEBI:62247 with
+        coefficient 1. Rhea cites PMID:18656958, PMID:16015285 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:10808 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:10809
+      snippet: (S)-2-hydroxypropylphosphonate + H2O2 => (1R,2S)-epoxypropylphosphonate + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10809 declares side 10808_R as its products
+        (rh:products); the master reaction RHEA:10808 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:18656958, PMID:16015285 for this reaction.
+  - subject: prot_Q9JN69
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPPE_PSESX is an exemplar enzyme with EC 1.11.1.23 activity.
+    evidence:
+    - reference: EC:1.11.1.23
+      snippet: DR   Q9JN69, HPPE_PSESX ;  Q56185, HPPE_STRWE ;
+      notes: ExPASy ENZYME entry EC 1.11.1.23 cross-references UniProtKB:Q9JN69 (HPPE_PSESX) as a protein
+        with this activity.
+  - subject: prot_Q56185
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPPE_STRWE is an exemplar enzyme with EC 1.11.1.23 activity.
+    evidence:
+    - reference: EC:1.11.1.23
+      snippet: DR   Q9JN69, HPPE_PSESX ;  Q56185, HPPE_STRWE ;
+      notes: ExPASy ENZYME entry EC 1.11.1.23 cross-references UniProtKB:Q56185 (HPPE_STRWE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

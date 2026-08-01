@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:15698
     role: SUBSTRATE_OR_PRODUCT
@@ -19,4 +19,62 @@ definitions:
       Catalyses the reaction: 2'-deoxycytidine(in) = 2'-deoxycytidine(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2'-deoxycytidine(in) = 2'-deoxycytidine(out)
+  description: 'Substrate-to-product chemistry of RHEA:75695, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:75696 (rh:substrates → 75695_L, rh:products → 75695_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of 2'-deoxycytidine(in) = 2'-deoxycytidine(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:75695
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2''-deoxycytidine(in) = 2''-deoxycytidine(out)'
+  - node_id: sub1
+    label: 2'-deoxycytidine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15698
+    description: Formula C9H13N3O4.
+  - node_id: prd1
+    label: 2'-deoxycytidine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15698
+    description: Formula C9H13N3O4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2'-deoxycytidine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:75696
+      snippet: 2'-deoxycytidine(in) => 2'-deoxycytidine(out)
+      notes: Rhea's left-to-right directional reaction RHEA:75696 declares side 75695_L as its substrates
+        (rh:substrates); the master reaction RHEA:75695 is undirected. This participant is CHEBI:15698
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:19164483
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2'-deoxycytidine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75696
+      snippet: 2'-deoxycytidine(in) => 2'-deoxycytidine(out)
+      notes: Rhea's left-to-right directional reaction RHEA:75696 declares side 75695_R as its products
+        (rh:products); the master reaction RHEA:75695 is undirected. This participant is CHEBI:15698 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:19164483
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

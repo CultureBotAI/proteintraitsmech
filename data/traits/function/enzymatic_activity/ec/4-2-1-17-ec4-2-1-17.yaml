@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -47,4 +47,282 @@ definitions:
       Catalyses: (1) a 4-saturated-(3S)-3-hydroxyacyl-CoA = a (3E)-enoyl-CoA + H2O. (2) a (3S)-3-hydroxyacyl-CoA = a (2E)-enoyl-CoA + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of enoyl-CoA hydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.17. Rhea assigns 3 curated
+    reactions to EC 4.2.1.17. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) a 4-saturated-(3S)-3-hydroxyacyl-CoA = a (3E)-enoyl-CoA
+    + H2O. (2) a (3S)-3-hydroxyacyl-CoA = a (2E)-enoyl-CoA + H2O". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: enoyl-CoA hydratase
+    grounding: EC:4.2.1.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a (3S)-3-hydroxyacyl-CoA = a (2E)-enoyl-CoA + H2O
+    grounding: RHEA:16105
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a (3S)-3-hydroxyacyl-CoA = a (2E)-enoyl-CoA + H2O'
+  - node_id: rxn1_sub1
+    label: a (3S)-3-hydroxyacyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57318
+    description: Formula C24H35N7O18P3SR.
+  - node_id: rxn1_prd1
+    label: a (2E)-enoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58856
+    description: Formula C24H33N7O17P3SR.
+  - node_id: rxn1_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a 4-saturated-(3S)-3-hydroxyacyl-CoA = a (3E)-enoyl-CoA + H2O
+    grounding: RHEA:20724
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a 4-saturated-(3S)-3-hydroxyacyl-CoA = a (3E)-enoyl-CoA + H2O'
+  - node_id: rxn2_sub1
+    label: a 4-saturated-(3S)-3-hydroxyacyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:137480
+    description: Formula C25H37N7O18P3SR.
+  - node_id: rxn2_prd1
+    label: a (3E)-enoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58521
+    description: Formula C25H35N7O17P3SR.
+  - node_id: rxn2_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (3S)-3-hydroxyadipyl-CoA = (E)-2,3-didehydroadipoyl-CoA + H2O
+    grounding: RHEA:76647
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (3S)-3-hydroxyadipyl-CoA = (E)-2,3-didehydroadipoyl-CoA + H2O'
+  - node_id: rxn3_sub1
+    label: (3S)-3-hydroxyadipyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:132183
+    description: Formula C27H39N7O20P3S.
+  - node_id: rxn3_prd1
+    label: (E)-2,3-didehydroadipoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:195329
+    description: Formula C27H37N7O19P3S.
+  - node_id: rxn3_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: enoyl-CoA hydratase activity
+    grounding: GO:0004300
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q589W8
+    node_type: PROTEIN
+    label: ACTT3_ALTAL
+    grounding: UniProtKB:Q589W8
+  - node_id: prot_Q96VB3
+    node_type: PROTEIN
+    label: AFT31_ALTAL
+    grounding: UniProtKB:Q96VB3
+  - node_id: prot_Q9ZPI6
+    node_type: PROTEIN
+    label: AIM1_ARATH
+    grounding: UniProtKB:Q9ZPI6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:16105 is one of the 3 curated reactions Rhea assigns to EC 4.2.1.17; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:16105
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.17"/>
+      notes: The rh:ec triple on RHEA:16105 in rhea.rdf assigns that reaction to EC 4.2.1.17.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a (3S)-3-hydroxyacyl-CoA is a substrate consumed by RHEA:16105 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16106
+      snippet: a (3S)-3-hydroxyacyl-CoA => a (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:16106 declares side 16105_L as its substrates
+        (rh:substrates); the master reaction RHEA:16105 is undirected. This participant is CHEBI:57318
+        with coefficient 1. Rhea cites PMID:8051146, PMID:26251176, PMID:11706039, PMID:16963641 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a (2E)-enoyl-CoA is a product released by RHEA:16105 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16106
+      snippet: a (3S)-3-hydroxyacyl-CoA => a (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:16106 declares side 16105_R as its products
+        (rh:products); the master reaction RHEA:16105 is undirected. This participant is CHEBI:58856 with
+        coefficient 1. Rhea cites PMID:8051146, PMID:26251176, PMID:11706039, PMID:16963641 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O is a product released by RHEA:16105 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16106
+      snippet: a (3S)-3-hydroxyacyl-CoA => a (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:16106 declares side 16105_R as its products
+        (rh:products); the master reaction RHEA:16105 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:8051146, PMID:26251176, PMID:11706039, PMID:16963641 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:20724 is one of the 3 curated reactions Rhea assigns to EC 4.2.1.17; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:20724
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.17"/>
+      notes: The rh:ec triple on RHEA:20724 in rhea.rdf assigns that reaction to EC 4.2.1.17.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a 4-saturated-(3S)-3-hydroxyacyl-CoA is a substrate consumed by RHEA:20724 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20725
+      snippet: a 4-saturated-(3S)-3-hydroxyacyl-CoA => a (3E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20725 declares side 20724_L as its substrates
+        (rh:substrates); the master reaction RHEA:20724 is undirected. This participant is CHEBI:137480
+        with coefficient 1. Rhea cites PMID:8051146, PMID:26251176, PMID:11706039, PMID:16963641 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a (3E)-enoyl-CoA is a product released by RHEA:20724 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20725
+      snippet: a 4-saturated-(3S)-3-hydroxyacyl-CoA => a (3E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20725 declares side 20724_R as its products
+        (rh:products); the master reaction RHEA:20724 is undirected. This participant is CHEBI:58521 with
+        coefficient 1. Rhea cites PMID:8051146, PMID:26251176, PMID:11706039, PMID:16963641 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O is a product released by RHEA:20724 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20725
+      snippet: a 4-saturated-(3S)-3-hydroxyacyl-CoA => a (3E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20725 declares side 20724_R as its products
+        (rh:products); the master reaction RHEA:20724 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:8051146, PMID:26251176, PMID:11706039, PMID:16963641 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:76647 is one of the 3 curated reactions Rhea assigns to EC 4.2.1.17; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:76647
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.17"/>
+      notes: The rh:ec triple on RHEA:76647 in rhea.rdf assigns that reaction to EC 4.2.1.17.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: (3S)-3-hydroxyadipyl-CoA is a substrate consumed by RHEA:76647 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76648
+      snippet: (3S)-3-hydroxyadipyl-CoA => (E)-2,3-didehydroadipoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:76648 declares side 76647_L as its substrates
+        (rh:substrates); the master reaction RHEA:76647 is undirected. This participant is CHEBI:132183
+        with coefficient 1. Rhea cites PMID:22961985, PMID:36160191, PMID:20660314 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: (E)-2,3-didehydroadipoyl-CoA is a product released by RHEA:76647 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76648
+      snippet: (3S)-3-hydroxyadipyl-CoA => (E)-2,3-didehydroadipoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:76648 declares side 76647_R as its products
+        (rh:products); the master reaction RHEA:76647 is undirected. This participant is CHEBI:195329
+        with coefficient 1. Rhea cites PMID:22961985, PMID:36160191, PMID:20660314 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: H2O is a product released by RHEA:76647 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76648
+      snippet: (3S)-3-hydroxyadipyl-CoA => (E)-2,3-didehydroadipoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:76648 declares side 76647_R as its products
+        (rh:products); the master reaction RHEA:76647 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:22961985, PMID:36160191, PMID:20660314 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.17
+      snippet: EC:4.2.1.17 > GO:enoyl-CoA hydratase activity ; GO:0004300
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004300 is itself a record
+        in this KB.
+  - subject: prot_Q589W8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACTT3_ALTAL is an exemplar enzyme with EC 4.2.1.17 activity.
+    evidence:
+    - reference: EC:4.2.1.17
+      snippet: DR   Q589W8, ACTT3_ALTAL;  Q96VB3, AFT31_ALTAL;  Q9ZPI6, AIM1_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.17 cross-references UniProtKB:Q589W8 (ACTT3_ALTAL) as a protein
+        with this activity.
+  - subject: prot_Q96VB3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFT31_ALTAL is an exemplar enzyme with EC 4.2.1.17 activity.
+    evidence:
+    - reference: EC:4.2.1.17
+      snippet: DR   Q589W8, ACTT3_ALTAL;  Q96VB3, AFT31_ALTAL;  Q9ZPI6, AIM1_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.17 cross-references UniProtKB:Q96VB3 (AFT31_ALTAL) as a protein
+        with this activity.
+  - subject: prot_Q9ZPI6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AIM1_ARATH is an exemplar enzyme with EC 4.2.1.17 activity.
+    evidence:
+    - reference: EC:4.2.1.17
+      snippet: DR   Q589W8, ACTT3_ALTAL;  Q96VB3, AFT31_ALTAL;  Q9ZPI6, AIM1_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.17 cross-references UniProtKB:Q9ZPI6 (AIM1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

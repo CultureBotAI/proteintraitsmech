@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.334
     mapping_source: rhea2ec
@@ -28,4 +28,146 @@ definitions:
       Catalyses the reaction: ecgonine methyl ester + benzoyl-CoA = cocaine + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ecgonine methyl ester + benzoyl-CoA = cocaine + CoA
+  description: Substrate-to-product chemistry of RHEA:81559, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81560 (rh:substrates → 81559_L, rh:products → 81559_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of ecgonine methyl ester + benzoyl-CoA = cocaine + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81559
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: ecgonine methyl ester + benzoyl-CoA = cocaine + CoA'
+  - node_id: sub1
+    label: ecgonine methyl ester
+    node_type: CHEMICAL
+    grounding: CHEBI:59908
+    description: Formula C10H18NO3.
+  - node_id: sub2
+    label: benzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57369
+    description: Formula C28H36N7O17P3S.
+  - node_id: prd1
+    label: cocaine
+    node_type: CHEMICAL
+    grounding: CHEBI:60056
+    description: Formula C17H22NO4.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: cocaine synthase
+    grounding: EC:2.3.1.334
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A059Q4T4
+    node_type: PROTEIN
+    label: CS_ERYCB
+    grounding: UniProtKB:A0A059Q4T4
+  - node_id: prot_A0AAV8T0T3
+    node_type: PROTEIN
+    label: CS_ERYNO
+    grounding: UniProtKB:A0AAV8T0T3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ecgonine methyl ester is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81560
+      snippet: ecgonine methyl ester + benzoyl-CoA => cocaine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:81560 declares side 81559_L as its substrates
+        (rh:substrates); the master reaction RHEA:81559 is undirected. This participant is CHEBI:59908
+        with coefficient 1. Rhea cites PMID:25406120 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: benzoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81560
+      snippet: ecgonine methyl ester + benzoyl-CoA => cocaine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:81560 declares side 81559_L as its substrates
+        (rh:substrates); the master reaction RHEA:81559 is undirected. This participant is CHEBI:57369
+        with coefficient 1. Rhea cites PMID:25406120 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cocaine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81560
+      snippet: ecgonine methyl ester + benzoyl-CoA => cocaine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:81560 declares side 81559_R as its products
+        (rh:products); the master reaction RHEA:81559 is undirected. This participant is CHEBI:60056 with
+        coefficient 1. Rhea cites PMID:25406120 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81560
+      snippet: ecgonine methyl ester + benzoyl-CoA => cocaine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:81560 declares side 81559_R as its products
+        (rh:products); the master reaction RHEA:81559 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:25406120 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.334; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:81559
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.334"/>
+      notes: The rh:ec triple on RHEA:81559 in rhea.rdf. EC 2.3.1.334 is itself a record in this KB.
+  - subject: prot_A0A059Q4T4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CS_ERYCB is an exemplar enzyme carrying EC 2.3.1.334, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.334
+      snippet: DR   A0A059Q4T4, CS_ERYCB   ;  A0AAV8T0T3, CS_ERYNO   ;
+      notes: ExPASy ENZYME entry EC 2.3.1.334 cross-references UniProtKB:A0A059Q4T4 (CS_ERYCB) as a protein
+        with this activity.
+    - reference: RHEA:81559
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.334"/>
+      notes: Rhea assigns RHEA:81559 to EC 2.3.1.334, and EC 2.3.1.334 maps to exactly one Rhea master
+        reaction (RHEA:81559), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0AAV8T0T3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CS_ERYNO is an exemplar enzyme carrying EC 2.3.1.334, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.334
+      snippet: DR   A0A059Q4T4, CS_ERYCB   ;  A0AAV8T0T3, CS_ERYNO   ;
+      notes: ExPASy ENZYME entry EC 2.3.1.334 cross-references UniProtKB:A0AAV8T0T3 (CS_ERYNO) as a protein
+        with this activity.
+    - reference: RHEA:81559
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.334"/>
+      notes: Rhea assigns RHEA:81559 to EC 2.3.1.334, and EC 2.3.1.334 maps to exactly one Rhea master
+        reaction (RHEA:81559), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

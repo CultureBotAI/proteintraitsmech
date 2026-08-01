@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:53753
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,100 @@ definitions:
       Catalyses the reaction: 1,2,3-tri-(9Z-octadecenoyl)-glycerol + all-trans-retinol = all-trans-retinyl 9Z-octadecenoate + di-(9Z)-octadecenoylglycerol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1,2,3-tri-(9Z-octadecenoyl)-glycerol + all-trans-retinol = all-trans-retinyl
+    9Z-octadec…
+  description: Substrate-to-product chemistry of RHEA:39987, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:39988 (rh:substrates → 39987_L, rh:products → 39987_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1,2,3-tri-(9Z-octadecenoyl)-glycerol + all-trans-retinol = all-trans-retinyl…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:39987
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1,2,3-tri-(9Z-octadecenoyl)-glycerol + all-trans-retinol = all-trans-retinyl 9Z-octadecenoate
+      + di-(9Z)-octadecenoylglycerol'
+  - node_id: sub1
+    label: 1,2,3-tri-(9Z-octadecenoyl)-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:53753
+    description: Formula C57H104O6.
+  - node_id: sub2
+    label: all-trans-retinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17336
+    description: Formula C20H30O.
+  - node_id: prd1
+    label: all-trans-retinyl 9Z-octadecenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:70760
+    description: Formula C38H62O2.
+  - node_id: prd2
+    label: di-(9Z)-octadecenoylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:75945
+    description: Formula C39H72O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1,2,3-tri-(9Z-octadecenoyl)-glycerol is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:39988
+      snippet: 1,2,3-tri-(9Z-octadecenoyl)-glycerol + all-trans-retinol => all-trans-retinyl 9Z-octadecenoate
+        + di-(9Z)-octadecenoylglycerol
+      notes: Rhea's left-to-right directional reaction RHEA:39988 declares side 39987_L as its substrates
+        (rh:substrates); the master reaction RHEA:39987 is undirected. This participant is CHEBI:53753
+        with coefficient 1. Rhea cites PMID:17603008 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: all-trans-retinol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39988
+      snippet: 1,2,3-tri-(9Z-octadecenoyl)-glycerol + all-trans-retinol => all-trans-retinyl 9Z-octadecenoate
+        + di-(9Z)-octadecenoylglycerol
+      notes: Rhea's left-to-right directional reaction RHEA:39988 declares side 39987_L as its substrates
+        (rh:substrates); the master reaction RHEA:39987 is undirected. This participant is CHEBI:17336
+        with coefficient 1. Rhea cites PMID:17603008 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: all-trans-retinyl 9Z-octadecenoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:39988
+      snippet: 1,2,3-tri-(9Z-octadecenoyl)-glycerol + all-trans-retinol => all-trans-retinyl 9Z-octadecenoate
+        + di-(9Z)-octadecenoylglycerol
+      notes: Rhea's left-to-right directional reaction RHEA:39988 declares side 39987_R as its products
+        (rh:products); the master reaction RHEA:39987 is undirected. This participant is CHEBI:70760 with
+        coefficient 1. Rhea cites PMID:17603008 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: di-(9Z)-octadecenoylglycerol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39988
+      snippet: 1,2,3-tri-(9Z-octadecenoyl)-glycerol + all-trans-retinol => all-trans-retinyl 9Z-octadecenoate
+        + di-(9Z)-octadecenoylglycerol
+      notes: Rhea's left-to-right directional reaction RHEA:39988 declares side 39987_R as its products
+        (rh:products); the master reaction RHEA:39987 is undirected. This participant is CHEBI:75945 with
+        coefficient 1. Rhea cites PMID:17603008 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -28,4 +28,89 @@ definitions:
       Catalyses: (2S,3S)-hydroxyarginine = (2S,3R)-capreomycidine + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of capreomycidine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.145. EC 4.2.1.145 maps to
+    exactly one curated Rhea reaction (RHEA:38159), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2S,3S)-hydroxyarginine
+    = (2S,3R)-capreomycidine + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: capreomycidine synthase
+    grounding: EC:4.2.1.145
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2S,3S)-hydroxyarginine
+    node_type: CHEMICAL
+    grounding: CHEBI:73938
+    description: Formula C6H15N4O3.
+  - node_id: prd1
+    label: (2S,3R)-capreomycidine
+    node_type: CHEMICAL
+    grounding: CHEBI:75665
+    description: Formula C6H13N4O2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q84CG1
+    node_type: PROTEIN
+    label: CAMYS_STRVI
+    grounding: UniProtKB:Q84CG1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S,3S)-hydroxyarginine is a substrate consumed by RHEA:38159 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38160
+      snippet: (2S,3S)-hydroxyarginine => (2S,3R)-capreomycidine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38160 declares side 38159_L as its substrates
+        (rh:substrates); the master reaction RHEA:38159 is undirected. This participant is CHEBI:73938
+        with coefficient 1. Rhea cites PMID:15368582, PMID:15368581 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S,3R)-capreomycidine is a product released by RHEA:38159 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38160
+      snippet: (2S,3S)-hydroxyarginine => (2S,3R)-capreomycidine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38160 declares side 38159_R as its products
+        (rh:products); the master reaction RHEA:38159 is undirected. This participant is CHEBI:75665 with
+        coefficient 1. Rhea cites PMID:15368582, PMID:15368581 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:38159 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38160
+      snippet: (2S,3S)-hydroxyarginine => (2S,3R)-capreomycidine + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38160 declares side 38159_R as its products
+        (rh:products); the master reaction RHEA:38159 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:15368582, PMID:15368581 for this reaction.
+  - subject: prot_Q84CG1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAMYS_STRVI is an exemplar enzyme with EC 4.2.1.145 activity.
+    evidence:
+    - reference: EC:4.2.1.145
+      snippet: DR   Q84CG1, CAMYS_STRVI;
+      notes: ExPASy ENZYME entry EC 4.2.1.145 cross-references UniProtKB:Q84CG1 (CAMYS_STRVI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

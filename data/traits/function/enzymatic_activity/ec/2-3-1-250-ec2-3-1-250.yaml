@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -41,4 +41,190 @@ definitions:
       Catalyses: [Wnt protein]-L-serine + (9Z)-hexadecenoyl-CoA = [Wnt protein]-O-(9Z)- hexadecenoyl-L-serine + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [Wnt protein] O-palmitoleoyl transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.250. EC 2.3.1.250 maps to
+    exactly one curated Rhea reaction (RHEA:45336), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[Wnt
+    protein]-L-serine + (9Z)-hexadecenoyl-CoA = [Wnt protein]-O-(9Z)- hexadecenoyl-L-serine + CoA". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[Wnt protein] O-palmitoleoyl transferase'
+    grounding: EC:2.3.1.250
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[Wnt protein]-L-serine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11170
+    description: Rhea compound GENERIC:11170.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11170 ([Wnt protein]-L-serine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: (9Z)-hexadecenoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:61540
+    description: Formula C37H60N7O17P3S.
+  - node_id: prd1
+    label: '[Wnt protein]-O-(9Z)-hexadecenoyl-L-serine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11171
+    description: Rhea compound GENERIC:11171.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-[(9Z)-hexadecenoyl]serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11171 ([Wnt protein]-O-(9Z)-hexadecenoyl-L-serine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85189
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: palmitoleoyltransferase activity
+    grounding: GO:1990698
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7Q3N5
+    node_type: PROTEIN
+    label: PORCN_ANOGA
+    grounding: UniProtKB:Q7Q3N5
+  - node_id: prot_A8WZ09
+    node_type: PROTEIN
+    label: PORCN_CAEBR
+    grounding: UniProtKB:A8WZ09
+  - node_id: prot_Q22329
+    node_type: PROTEIN
+    label: PORCN_CAEEL
+    grounding: UniProtKB:Q22329
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[Wnt protein]-L-serine is a substrate consumed by RHEA:45336 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:45337
+      snippet: '[Wnt protein]-L-serine + (9Z)-hexadecenoyl-CoA => [Wnt protein]-O-(9Z)-hexadecenoyl-L-serine
+        + CoA'
+      notes: Rhea's left-to-right directional reaction RHEA:45337 declares side 45336_L as its substrates
+        (rh:substrates); the master reaction RHEA:45336 is undirected. This participant is GENERIC:11170
+        with coefficient 1. Rhea cites PMID:24292069, PMID:17141155, PMID:24798332, PMID:25451226 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of [Wnt protein]-L-serine.
+    evidence:
+    - reference: RHEA:45336
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:11170 ([Wnt protein]-L-serine) declares rh:reactivePart = L-serine
+        residue (CHEBI:29999).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (9Z)-hexadecenoyl-CoA is a substrate consumed by RHEA:45336 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45337
+      snippet: '[Wnt protein]-L-serine + (9Z)-hexadecenoyl-CoA => [Wnt protein]-O-(9Z)-hexadecenoyl-L-serine
+        + CoA'
+      notes: Rhea's left-to-right directional reaction RHEA:45337 declares side 45336_L as its substrates
+        (rh:substrates); the master reaction RHEA:45336 is undirected. This participant is CHEBI:61540
+        with coefficient 1. Rhea cites PMID:24292069, PMID:17141155, PMID:24798332, PMID:25451226 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[Wnt protein]-O-(9Z)-hexadecenoyl-L-serine is a product released by RHEA:45336 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:45337
+      snippet: '[Wnt protein]-L-serine + (9Z)-hexadecenoyl-CoA => [Wnt protein]-O-(9Z)-hexadecenoyl-L-serine
+        + CoA'
+      notes: Rhea's left-to-right directional reaction RHEA:45337 declares side 45336_R as its products
+        (rh:products); the master reaction RHEA:45336 is undirected. This participant is GENERIC:11171
+        with coefficient 1. Rhea cites PMID:24292069, PMID:17141155, PMID:24798332, PMID:25451226 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[(9Z)-hexadecenoyl]serine residue is the reactive part of [Wnt protein]-O-(9Z)-hexadecenoyl-L-serine.
+    evidence:
+    - reference: RHEA:45336
+      snippet: O-[(9Z)-hexadecenoyl]serine residue
+      notes: Rhea compound GENERIC:11171 ([Wnt protein]-O-(9Z)-hexadecenoyl-L-serine) declares rh:reactivePart
+        = O-[(9Z)-hexadecenoyl]serine residue (CHEBI:85189).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:45336 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45337
+      snippet: '[Wnt protein]-L-serine + (9Z)-hexadecenoyl-CoA => [Wnt protein]-O-(9Z)-hexadecenoyl-L-serine
+        + CoA'
+      notes: Rhea's left-to-right directional reaction RHEA:45337 declares side 45336_R as its products
+        (rh:products); the master reaction RHEA:45336 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:24292069, PMID:17141155, PMID:24798332, PMID:25451226 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.250
+      snippet: EC:2.3.1.250 > GO:palmitoleoyltransferase activity ; GO:1990698
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:1990698 is itself a record
+        in this KB.
+  - subject: prot_Q7Q3N5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PORCN_ANOGA is an exemplar enzyme with EC 2.3.1.250 activity.
+    evidence:
+    - reference: EC:2.3.1.250
+      snippet: DR   Q7Q3N5, PORCN_ANOGA;  A8WZ09, PORCN_CAEBR;  Q22329, PORCN_CAEEL;
+      notes: ExPASy ENZYME entry EC 2.3.1.250 cross-references UniProtKB:Q7Q3N5 (PORCN_ANOGA) as a protein
+        with this activity.
+  - subject: prot_A8WZ09
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PORCN_CAEBR is an exemplar enzyme with EC 2.3.1.250 activity.
+    evidence:
+    - reference: EC:2.3.1.250
+      snippet: DR   Q7Q3N5, PORCN_ANOGA;  A8WZ09, PORCN_CAEBR;  Q22329, PORCN_CAEEL;
+      notes: ExPASy ENZYME entry EC 2.3.1.250 cross-references UniProtKB:A8WZ09 (PORCN_CAEBR) as a protein
+        with this activity.
+  - subject: prot_Q22329
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PORCN_CAEEL is an exemplar enzyme with EC 2.3.1.250 activity.
+    evidence:
+    - reference: EC:2.3.1.250
+      snippet: DR   Q7Q3N5, PORCN_ANOGA;  A8WZ09, PORCN_CAEBR;  Q22329, PORCN_CAEEL;
+      notes: ExPASy ENZYME entry EC 2.3.1.250 cross-references UniProtKB:Q22329 (PORCN_CAEEL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

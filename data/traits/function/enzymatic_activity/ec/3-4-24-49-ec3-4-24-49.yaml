@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 canonical_examples:
@@ -25,4 +25,39 @@ definitions:
       Catalyses: Cleavage of 5-His-|-Leu-6, 10-His-|-Leu-11, 14-Ala-|-Leu-15, 16-Tyr-|-Leu-17 and 24-Phe-|-Phe-25 in insulin B chain
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of bothropasin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.49. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleavage
+    of 5-His-|-Leu-6, 10-His-|-Leu-11, 14-Ala-|-Leu-15, 16-Tyr-|-Leu-17 and 24-Phe-|-Phe-25 in insulin
+    B chain".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: bothropasin
+    grounding: EC:3.4.24.49
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_O93523
+    node_type: PROTEIN
+    label: VM3BP_BOTJA
+    grounding: UniProtKB:O93523
+  edges:
+  - subject: prot_O93523
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VM3BP_BOTJA is an exemplar enzyme with EC 3.4.24.49 activity.
+    evidence:
+    - reference: EC:3.4.24.49
+      snippet: DR   O93523, VM3BP_BOTJA;
+      notes: ExPASy ENZYME entry EC 3.4.24.49 cross-references UniProtKB:O93523 (VM3BP_BOTJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

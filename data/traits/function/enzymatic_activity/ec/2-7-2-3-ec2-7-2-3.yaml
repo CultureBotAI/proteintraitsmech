@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.2.-
 xrefs:
@@ -40,4 +40,152 @@ definitions:
       Catalyses: (2R)-3-phosphoglycerate + ATP = (2R)-3-phospho-glyceroyl phosphate + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphoglycerate kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.2.3. EC 2.7.2.3 maps to exactly
+    one curated Rhea reaction (RHEA:14801), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2R)-3-phosphoglycerate
+    + ATP = (2R)-3-phospho-glyceroyl phosphate + ADP". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoglycerate kinase
+    grounding: EC:2.7.2.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2R)-3-phosphoglycerate
+    node_type: CHEMICAL
+    grounding: CHEBI:58272
+    description: Formula C3H4O7P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: (2R)-3-phospho-glyceroyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57604
+    description: Formula C3H4O10P2.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoglycerate kinase activity
+    grounding: GO:0004618
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A7G5KET3
+    node_type: PROTEIN
+    label: PGK1_ASPFN
+    grounding: UniProtKB:A0A7G5KET3
+  - node_id: prot_Q3T0P6
+    node_type: PROTEIN
+    label: PGK1_BOVIN
+    grounding: UniProtKB:Q3T0P6
+  - node_id: prot_P50310
+    node_type: PROTEIN
+    label: PGK1_CRIGR
+    grounding: UniProtKB:P50310
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2R)-3-phosphoglycerate is a substrate consumed by RHEA:14801 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14802
+      snippet: (2R)-3-phosphoglycerate + ATP => (2R)-3-phospho-glyceroyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:14802 declares side 14801_L as its substrates
+        (rh:substrates); the master reaction RHEA:14801 is undirected. This participant is CHEBI:58272
+        with coefficient 1. Rhea cites PMID:33234025, PMID:13117871, PMID:13960866, PMID:14490315 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:14801 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14802
+      snippet: (2R)-3-phosphoglycerate + ATP => (2R)-3-phospho-glyceroyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:14802 declares side 14801_L as its substrates
+        (rh:substrates); the master reaction RHEA:14801 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:33234025, PMID:13117871, PMID:13960866, PMID:14490315 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2R)-3-phospho-glyceroyl phosphate is a product released by RHEA:14801 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14802
+      snippet: (2R)-3-phosphoglycerate + ATP => (2R)-3-phospho-glyceroyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:14802 declares side 14801_R as its products
+        (rh:products); the master reaction RHEA:14801 is undirected. This participant is CHEBI:57604 with
+        coefficient 1. Rhea cites PMID:33234025, PMID:13117871, PMID:13960866, PMID:14490315 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:14801 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14802
+      snippet: (2R)-3-phosphoglycerate + ATP => (2R)-3-phospho-glyceroyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:14802 declares side 14801_R as its products
+        (rh:products); the master reaction RHEA:14801 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:33234025, PMID:13117871, PMID:13960866, PMID:14490315 for
+        this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.2.3
+      snippet: EC:2.7.2.3 > GO:phosphoglycerate kinase activity ; GO:0004618
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004618 is itself a record
+        in this KB.
+  - subject: prot_A0A7G5KET3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGK1_ASPFN is an exemplar enzyme with EC 2.7.2.3 activity.
+    evidence:
+    - reference: EC:2.7.2.3
+      snippet: DR   A0A7G5KET3, PGK1_ASPFN ;  Q3T0P6, PGK1_BOVIN ;  P50310, PGK1_CRIGR ;
+      notes: ExPASy ENZYME entry EC 2.7.2.3 cross-references UniProtKB:A0A7G5KET3 (PGK1_ASPFN) as a protein
+        with this activity.
+  - subject: prot_Q3T0P6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGK1_BOVIN is an exemplar enzyme with EC 2.7.2.3 activity.
+    evidence:
+    - reference: EC:2.7.2.3
+      snippet: DR   A0A7G5KET3, PGK1_ASPFN ;  Q3T0P6, PGK1_BOVIN ;  P50310, PGK1_CRIGR ;
+      notes: ExPASy ENZYME entry EC 2.7.2.3 cross-references UniProtKB:Q3T0P6 (PGK1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P50310
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGK1_CRIGR is an exemplar enzyme with EC 2.7.2.3 activity.
+    evidence:
+    - reference: EC:2.7.2.3
+      snippet: DR   A0A7G5KET3, PGK1_ASPFN ;  Q3T0P6, PGK1_BOVIN ;  P50310, PGK1_CRIGR ;
+      notes: ExPASy ENZYME entry EC 2.7.2.3 cross-references UniProtKB:P50310 (PGK1_CRIGR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

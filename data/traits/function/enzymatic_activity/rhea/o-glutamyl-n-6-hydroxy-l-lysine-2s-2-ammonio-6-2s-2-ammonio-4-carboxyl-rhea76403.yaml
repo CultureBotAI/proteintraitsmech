@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:195216
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,60 @@ definitions:
       Catalyses the reaction: O-glutamyl-N(6)-hydroxy-L-lysine = (2S)-2-ammonio-6-[(2S)-2-ammonio-4-carboxylato-N-hydroxybutanamido]hexanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of O-glutamyl-N(6)-hydroxy-L-lysine = (2S)-2-ammonio-6-[(2S)-2-ammonio-4-carboxylato-N-hyd…
+  description: Substrate-to-product chemistry of RHEA:76403, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:76404 (rh:substrates → 76403_L, rh:products → 76403_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of O-glutamyl-N(6)-hydroxy-L-lysine = (2S)-2-ammonio-6-[(2S)-2-ammonio-4-carbox…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:76403
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: O-glutamyl-N(6)-hydroxy-L-lysine = (2S)-2-ammonio-6-[(2S)-2-ammonio-4-carboxylato-N-hydroxybutanamido]hexanoate'
+  - node_id: sub1
+    label: O-glutamyl-N(6)-hydroxy-L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:195216
+    description: Formula C11H21N3O6.
+  - node_id: prd1
+    label: (2S)-2-ammonio-6-[(2S)-2-ammonio-4-carboxylato-N-hydroxybutanamido]hexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:195217
+    description: Formula C11H21N3O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: O-glutamyl-N(6)-hydroxy-L-lysine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:76404
+      snippet: O-glutamyl-N(6)-hydroxy-L-lysine => (2S)-2-ammonio-6-[(2S)-2-ammonio-4-carboxylato-N-hydroxybutanamido]hexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:76404 declares side 76403_L as its substrates
+        (rh:substrates); the master reaction RHEA:76403 is undirected. This participant is CHEBI:195216
+        with coefficient 1. Rhea cites PMID:34893622 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-2-ammonio-6-[(2S)-2-ammonio-4-carboxylato-N-hydroxybutanamido]hexanoate is a product
+      released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76404
+      snippet: O-glutamyl-N(6)-hydroxy-L-lysine => (2S)-2-ammonio-6-[(2S)-2-ammonio-4-carboxylato-N-hydroxybutanamido]hexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:76404 declares side 76403_R as its products
+        (rh:products); the master reaction RHEA:76403 is undirected. This participant is CHEBI:195217
+        with coefficient 1. Rhea cites PMID:34893622 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

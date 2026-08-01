@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.3.2.-
 synonyms:
@@ -28,4 +28,89 @@ definitions:
       Catalyses: trans-2,3-epoxysuccinate + H2O = (2R,3S)-tartrate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of trans-epoxysuccinate hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.3.2.4. EC 3.3.2.4 maps to exactly
+    one curated Rhea reaction (RHEA:20740), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "trans-2,3-epoxysuccinate
+    + H2O = (2R,3S)-tartrate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: trans-epoxysuccinate hydrolase
+    grounding: EC:3.3.2.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: trans-2,3-epoxysuccinate
+    node_type: CHEMICAL
+    grounding: CHEBI:57558
+    description: Formula C4H2O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (2R,3S)-tartrate
+    node_type: CHEMICAL
+    grounding: CHEBI:30928
+    description: Formula C4H4O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: trans-epoxysuccinate hydrolase activity
+    grounding: GO:0050345
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: trans-2,3-epoxysuccinate is a substrate consumed by RHEA:20740 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20741
+      snippet: trans-2,3-epoxysuccinate + H2O => (2R,3S)-tartrate
+      notes: Rhea's left-to-right directional reaction RHEA:20741 declares side 20740_L as its substrates
+        (rh:substrates); the master reaction RHEA:20740 is undirected. This participant is CHEBI:57558
+        with coefficient 1. Rhea cites PMID:5782001 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:20740 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20741
+      snippet: trans-2,3-epoxysuccinate + H2O => (2R,3S)-tartrate
+      notes: Rhea's left-to-right directional reaction RHEA:20741 declares side 20740_L as its substrates
+        (rh:substrates); the master reaction RHEA:20740 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:5782001 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2R,3S)-tartrate is a product released by RHEA:20740 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20741
+      snippet: trans-2,3-epoxysuccinate + H2O => (2R,3S)-tartrate
+      notes: Rhea's left-to-right directional reaction RHEA:20741 declares side 20740_R as its products
+        (rh:products); the master reaction RHEA:20740 is undirected. This participant is CHEBI:30928 with
+        coefficient 1. Rhea cites PMID:5782001 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.3.2.4
+      snippet: EC:3.3.2.4 > GO:trans-epoxysuccinate hydrolase activity ; GO:0050345
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050345 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:232077
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,141 @@ definitions:
       Catalyses the reaction: L-alpha-aminoacyl-tRNA + acetyl-CoA = N-acetyl-L-alpha-aminoacyl-tRNA + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-alpha-aminoacyl-tRNA + acetyl-CoA = N-acetyl-L-alpha-aminoacyl-tRNA +
+    CoA + H(+)
+  description: Substrate-to-product chemistry of RHEA:82059, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:82060 (rh:substrates → 82059_L, rh:products → 82059_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-alpha-aminoacyl-tRNA + acetyl-CoA = N-acetyl-L-alpha-aminoacyl-tRNA + CoA…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:82059
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-alpha-aminoacyl-tRNA + acetyl-CoA = N-acetyl-L-alpha-aminoacyl-tRNA + CoA + H(+)'
+  - node_id: sub1
+    label: L-alpha-aminoacyl-tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19811
+    description: Rhea compound GENERIC:19811.
+  - node_id: sub1_rp1
+    label: 3'-(L-alpha-aminoacyl)adenylyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19811 (L-alpha-aminoacyl-tRNA);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:232077
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: N-acetyl-L-alpha-aminoacyl-tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19812
+    description: Rhea compound GENERIC:19812.
+  - node_id: prd1_rp1
+    label: 3'-(N-acetyl-L-alpha-aminoacyl)adenylyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19812 (N-acetyl-L-alpha-aminoacyl-tRNA);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:232070
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-alpha-aminoacyl-tRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82060
+      snippet: L-alpha-aminoacyl-tRNA + acetyl-CoA => N-acetyl-L-alpha-aminoacyl-tRNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82060 declares side 82059_L as its substrates
+        (rh:substrates); the master reaction RHEA:82059 is undirected. This participant is GENERIC:19811
+        with coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-alpha-aminoacyl)adenylyl residue is the reactive part of L-alpha-aminoacyl-tRNA.
+    evidence:
+    - reference: RHEA:82059
+      snippet: 3'-(L-alpha-aminoacyl)adenylyl residue
+      notes: Rhea compound GENERIC:19811 (L-alpha-aminoacyl-tRNA) declares rh:reactivePart = 3'-(L-alpha-aminoacyl)adenylyl
+        residue (CHEBI:232077), formula C12H15N6O7PR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82060
+      snippet: L-alpha-aminoacyl-tRNA + acetyl-CoA => N-acetyl-L-alpha-aminoacyl-tRNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82060 declares side 82059_L as its substrates
+        (rh:substrates); the master reaction RHEA:82059 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-L-alpha-aminoacyl-tRNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:82060
+      snippet: L-alpha-aminoacyl-tRNA + acetyl-CoA => N-acetyl-L-alpha-aminoacyl-tRNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82060 declares side 82059_R as its products
+        (rh:products); the master reaction RHEA:82059 is undirected. This participant is GENERIC:19812
+        with coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(N-acetyl-L-alpha-aminoacyl)adenylyl residue is the reactive part of N-acetyl-L-alpha-aminoacyl-tRNA.
+    evidence:
+    - reference: RHEA:82059
+      snippet: 3'-(N-acetyl-L-alpha-aminoacyl)adenylyl residue
+      notes: Rhea compound GENERIC:19812 (N-acetyl-L-alpha-aminoacyl-tRNA) declares rh:reactivePart =
+        3'-(N-acetyl-L-alpha-aminoacyl)adenylyl residue (CHEBI:232070), formula C14H16N6O8PR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82060
+      snippet: L-alpha-aminoacyl-tRNA + acetyl-CoA => N-acetyl-L-alpha-aminoacyl-tRNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82060 declares side 82059_R as its products
+        (rh:products); the master reaction RHEA:82059 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82060
+      snippet: L-alpha-aminoacyl-tRNA + acetyl-CoA => N-acetyl-L-alpha-aminoacyl-tRNA + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82060 declares side 82059_R as its products
+        (rh:products); the master reaction RHEA:82059 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29777131 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

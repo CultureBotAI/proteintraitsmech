@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:193599
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,133 @@ definitions:
       Catalyses the reaction: N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein] + H2O = N-terminal L-aspartyl-[protein] + N-acetyl-L-cysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein] + H2O = N-terminal
+    L-aspart…
+  description: Substrate-to-product chemistry of RHEA:74579, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:74580 (rh:substrates → 74579_L, rh:products → 74579_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein] + H2O = N-termin…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:74579
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein] + H2O = N-terminal L-aspartyl-[protein]
+      + N-acetyl-L-cysteine'
+  - node_id: sub1
+    label: N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18395
+    description: Rhea compound GENERIC:18395.
+  - node_id: sub1_rp1
+    label: N(alpha)-acetyl-L-cysteinyl-L-aspartyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18395 (N-terminal
+      N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein]); no position on any specific protein sequence
+      is asserted.
+    grounding: CHEBI:193599
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-terminal L-aspartyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12669
+    description: Rhea compound GENERIC:12669.
+  - node_id: prd1_rp1
+    label: L-aspartyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12669 (N-terminal
+      L-aspartyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64720
+  - node_id: prd2
+    label: N-acetyl-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:78236
+    description: Formula C5H8NO3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein] is a substrate consumed by
+      this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74580
+      snippet: N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein] + H2O => N-terminal L-aspartyl-[protein]
+        + N-acetyl-L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:74580 declares side 74579_L as its substrates
+        (rh:substrates); the master reaction RHEA:74579 is undirected. This participant is GENERIC:18395
+        with coefficient 1. Rhea cites PMID:36173861 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(alpha)-acetyl-L-cysteinyl-L-aspartyl residue is the reactive part of N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein].
+    evidence:
+    - reference: RHEA:74579
+      snippet: N(alpha)-acetyl-L-cysteinyl-L-aspartyl residue
+      notes: Rhea compound GENERIC:18395 (N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein])
+        declares rh:reactivePart = N(alpha)-acetyl-L-cysteinyl-L-aspartyl residue (CHEBI:193599), formula
+        C9H12N2O5S.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74580
+      snippet: N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein] + H2O => N-terminal L-aspartyl-[protein]
+        + N-acetyl-L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:74580 declares side 74579_L as its substrates
+        (rh:substrates); the master reaction RHEA:74579 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:36173861 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-terminal L-aspartyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:74580
+      snippet: N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein] + H2O => N-terminal L-aspartyl-[protein]
+        + N-acetyl-L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:74580 declares side 74579_R as its products
+        (rh:products); the master reaction RHEA:74579 is undirected. This participant is GENERIC:12669
+        with coefficient 1. Rhea cites PMID:36173861 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-aspartyl group is the reactive part of N-terminal L-aspartyl-[protein].
+    evidence:
+    - reference: RHEA:74579
+      snippet: L-aspartyl group
+      notes: Rhea compound GENERIC:12669 (N-terminal L-aspartyl-[protein]) declares rh:reactivePart =
+        L-aspartyl group (CHEBI:64720), formula C4H6NO3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N-acetyl-L-cysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74580
+      snippet: N-terminal N(alpha)-acetyl-L-cysteinyl-L-aspartyl-[protein] + H2O => N-terminal L-aspartyl-[protein]
+        + N-acetyl-L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:74580 declares side 74579_R as its products
+        (rh:products); the master reaction RHEA:74579 is undirected. This participant is CHEBI:78236 with
+        coefficient 1. Rhea cites PMID:36173861 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -37,4 +37,188 @@ definitions:
       Catalyses: N(6)-(D-fructosyl)-L-lysyl-[protein] + ATP = N(6)-(3-O-phospho-D- fructosyl)-L-lysyl-[protein] + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-fructosamine 3-kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.171. EC 2.7.1.171 maps to
+    exactly one curated Rhea reaction (RHEA:59832), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N(6)-(D-fructosyl)-L-lysyl-[protein]
+    + ATP = N(6)-(3-O-phospho-D- fructosyl)-L-lysyl-[protein] + ADP + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-fructosamine 3-kinase
+    grounding: EC:2.7.1.171
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N(6)-(D-fructosyl)-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15451
+    description: Rhea compound GENERIC:15451.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: N(6)-(D-fructosyl)-L-lysine(1+) residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:15451 (N(6)-(D-fructosyl)-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:143253
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15452
+    description: Rhea compound GENERIC:15452.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(6)-(3-O-phospho-D-fructosyl)-L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:15452 (N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:143254
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-fructosamine 3-kinase activity
+    grounding: GO:0102194
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9H479
+    node_type: PROTEIN
+    label: FN3K_HUMAN
+    grounding: UniProtKB:Q9H479
+  - node_id: prot_Q9ER35
+    node_type: PROTEIN
+    label: FN3K_MOUSE
+    grounding: UniProtKB:Q9ER35
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(6)-(D-fructosyl)-L-lysyl-[protein] is a substrate consumed by RHEA:59832 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59833
+      snippet: N(6)-(D-fructosyl)-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59833 declares side 59832_L as its substrates
+        (rh:substrates); the master reaction RHEA:59832 is undirected. This participant is GENERIC:15451
+        with coefficient 1. Rhea cites PMID:11975663, PMID:11522682, PMID:11016445 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(6)-(D-fructosyl)-L-lysine(1+) residue is the reactive part of N(6)-(D-fructosyl)-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:59832
+      snippet: N(6)-(D-fructosyl)-L-lysine(1+) residue
+      notes: Rhea compound GENERIC:15451 (N(6)-(D-fructosyl)-L-lysyl-[protein]) declares rh:reactivePart
+        = N(6)-(D-fructosyl)-L-lysine(1+) residue (CHEBI:143253).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:59832 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59833
+      snippet: N(6)-(D-fructosyl)-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59833 declares side 59832_L as its substrates
+        (rh:substrates); the master reaction RHEA:59832 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:11975663, PMID:11522682, PMID:11016445 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein] is a product released by RHEA:59832
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59833
+      snippet: N(6)-(D-fructosyl)-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59833 declares side 59832_R as its products
+        (rh:products); the master reaction RHEA:59832 is undirected. This participant is GENERIC:15452
+        with coefficient 1. Rhea cites PMID:11975663, PMID:11522682, PMID:11016445 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-(3-O-phospho-D-fructosyl)-L-lysine residue is the reactive part of N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:59832
+      snippet: N(6)-(3-O-phospho-D-fructosyl)-L-lysine residue
+      notes: Rhea compound GENERIC:15452 (N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein]) declares rh:reactivePart
+        = N(6)-(3-O-phospho-D-fructosyl)-L-lysine residue (CHEBI:143254).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:59832 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59833
+      snippet: N(6)-(D-fructosyl)-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59833 declares side 59832_R as its products
+        (rh:products); the master reaction RHEA:59832 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:11975663, PMID:11522682, PMID:11016445 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:59832 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59833
+      snippet: N(6)-(D-fructosyl)-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-fructosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59833 declares side 59832_R as its products
+        (rh:products); the master reaction RHEA:59832 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11975663, PMID:11522682, PMID:11016445 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.1.171
+      snippet: EC:2.7.1.171 > GO:protein-fructosamine 3-kinase activity ; GO:0102194
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102194 is itself a record
+        in this KB.
+  - subject: prot_Q9H479
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FN3K_HUMAN is an exemplar enzyme with EC 2.7.1.171 activity.
+    evidence:
+    - reference: EC:2.7.1.171
+      snippet: DR   Q9H479, FN3K_HUMAN ;  Q9ER35, FN3K_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.7.1.171 cross-references UniProtKB:Q9H479 (FN3K_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9ER35
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FN3K_MOUSE is an exemplar enzyme with EC 2.7.1.171 activity.
+    evidence:
+    - reference: EC:2.7.1.171
+      snippet: DR   Q9H479, FN3K_HUMAN ;  Q9ER35, FN3K_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.7.1.171 cross-references UniProtKB:Q9ER35 (FN3K_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

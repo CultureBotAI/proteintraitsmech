@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.3.-
 synonyms:
@@ -41,4 +41,148 @@ definitions:
       Catalyses: L-arginine + H2O = L-citrulline + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of arginine deiminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.3.6. EC 3.5.3.6 maps to exactly
+    one curated Rhea reaction (RHEA:19597), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-arginine +
+    H2O = L-citrulline + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: arginine deiminase
+    grounding: EC:3.5.3.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-citrulline
+    node_type: CHEMICAL
+    grounding: CHEBI:57743
+    description: Formula C6H13N3O3.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: arginine deiminase activity
+    grounding: GO:0016990
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q92ZT2
+    node_type: PROTEIN
+    label: ARCA1_RHIME
+    grounding: UniProtKB:Q92ZT2
+  - node_id: prot_Q8CQG5
+    node_type: PROTEIN
+    label: ARCA1_STAES
+    grounding: UniProtKB:Q8CQG5
+  - node_id: prot_Q8FAD9
+    node_type: PROTEIN
+    label: ARCA2_ECOL6
+    grounding: UniProtKB:Q8FAD9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginine is a substrate consumed by RHEA:19597 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19598
+      snippet: L-arginine + H2O => L-citrulline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19598 declares side 19597_L as its substrates
+        (rh:substrates); the master reaction RHEA:19597 is undirected. This participant is CHEBI:32682
+        with coefficient 1. Rhea cites PMID:29202526, PMID:13158183, PMID:681335, PMID:27538511 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:19597 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19598
+      snippet: L-arginine + H2O => L-citrulline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19598 declares side 19597_L as its substrates
+        (rh:substrates); the master reaction RHEA:19597 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:29202526, PMID:13158183, PMID:681335, PMID:27538511 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-citrulline is a product released by RHEA:19597 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19598
+      snippet: L-arginine + H2O => L-citrulline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19598 declares side 19597_R as its products
+        (rh:products); the master reaction RHEA:19597 is undirected. This participant is CHEBI:57743 with
+        coefficient 1. Rhea cites PMID:29202526, PMID:13158183, PMID:681335, PMID:27538511 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:19597 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19598
+      snippet: L-arginine + H2O => L-citrulline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19598 declares side 19597_R as its products
+        (rh:products); the master reaction RHEA:19597 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:29202526, PMID:13158183, PMID:681335, PMID:27538511 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.3.6
+      snippet: EC:3.5.3.6 > GO:arginine deiminase activity ; GO:0016990
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016990 is itself a record
+        in this KB.
+  - subject: prot_Q92ZT2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARCA1_RHIME is an exemplar enzyme with EC 3.5.3.6 activity.
+    evidence:
+    - reference: EC:3.5.3.6
+      snippet: DR   Q92ZT2, ARCA1_RHIME;  Q8CQG5, ARCA1_STAES;  Q8FAD9, ARCA2_ECOL6;
+      notes: ExPASy ENZYME entry EC 3.5.3.6 cross-references UniProtKB:Q92ZT2 (ARCA1_RHIME) as a protein
+        with this activity.
+  - subject: prot_Q8CQG5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARCA1_STAES is an exemplar enzyme with EC 3.5.3.6 activity.
+    evidence:
+    - reference: EC:3.5.3.6
+      snippet: DR   Q92ZT2, ARCA1_RHIME;  Q8CQG5, ARCA1_STAES;  Q8FAD9, ARCA2_ECOL6;
+      notes: ExPASy ENZYME entry EC 3.5.3.6 cross-references UniProtKB:Q8CQG5 (ARCA1_STAES) as a protein
+        with this activity.
+  - subject: prot_Q8FAD9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARCA2_ECOL6 is an exemplar enzyme with EC 3.5.3.6 activity.
+    evidence:
+    - reference: EC:3.5.3.6
+      snippet: DR   Q92ZT2, ARCA1_RHIME;  Q8CQG5, ARCA1_STAES;  Q8FAD9, ARCA2_ECOL6;
+      notes: ExPASy ENZYME entry EC 3.5.3.6 cross-references UniProtKB:Q8FAD9 (ARCA2_ECOL6) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

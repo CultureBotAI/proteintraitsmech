@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.114
     mapping_source: rhea2ec
@@ -28,4 +28,124 @@ definitions:
       Catalyses the reaction: 3,4-dichloroaniline + malonyl-CoA = N-(3,4-dichlorophenyl)malonamate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3,4-dichloroaniline + malonyl-CoA = N-(3,4-dichlorophenyl)malonamate +
+    CoA
+  description: Substrate-to-product chemistry of RHEA:21060, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:21061 (rh:substrates → 21060_L, rh:products → 21060_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3,4-dichloroaniline + malonyl-CoA = N-(3,4-dichlorophenyl)malonamate + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21060
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3,4-dichloroaniline + malonyl-CoA = N-(3,4-dichlorophenyl)malonamate + CoA'
+  - node_id: sub1
+    label: 3,4-dichloroaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:16767
+    description: Formula C6H5Cl2N.
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: prd1
+    label: N-(3,4-dichlorophenyl)malonamate
+    node_type: CHEMICAL
+    grounding: CHEBI:17318
+    description: Formula C9H6Cl2NO3.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3,4-dichloroaniline N-malonyltransferase activity
+    grounding: GO:0047163
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 3,4-dichloroaniline N-malonyltransferase
+    grounding: EC:2.3.1.114
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3,4-dichloroaniline is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21061
+      snippet: 3,4-dichloroaniline + malonyl-CoA => N-(3,4-dichlorophenyl)malonamate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21061 declares side 21060_L as its substrates
+        (rh:substrates); the master reaction RHEA:21060 is undirected. This participant is CHEBI:16767
+        with coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21061
+      snippet: 3,4-dichloroaniline + malonyl-CoA => N-(3,4-dichlorophenyl)malonamate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21061 declares side 21060_L as its substrates
+        (rh:substrates); the master reaction RHEA:21060 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-(3,4-dichlorophenyl)malonamate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21061
+      snippet: 3,4-dichloroaniline + malonyl-CoA => N-(3,4-dichlorophenyl)malonamate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21061 declares side 21060_R as its products
+        (rh:products); the master reaction RHEA:21060 is undirected. This participant is CHEBI:17318 with
+        coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21061
+      snippet: 3,4-dichloroaniline + malonyl-CoA => N-(3,4-dichlorophenyl)malonamate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21061 declares side 21060_R as its products
+        (rh:products); the master reaction RHEA:21060 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:6497391 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:21060
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047163"/>
+      notes: The rdfs:seeAlso triple on RHEA:21060 in rhea.rdf. GO term GO:0047163 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.114; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:21060
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.114"/>
+      notes: The rh:ec triple on RHEA:21060 in rhea.rdf. EC 2.3.1.114 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

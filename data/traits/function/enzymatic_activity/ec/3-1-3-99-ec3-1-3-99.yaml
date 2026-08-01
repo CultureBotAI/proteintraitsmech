@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.3.-
 mapped_xrefs:
@@ -36,4 +36,131 @@ definitions:
       Catalyses: IMP + H2O = inosine + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of IMP-specific 5'-nucleotidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.3.99. EC 3.1.3.99 maps to exactly
+    one curated Rhea reaction (RHEA:27718), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "IMP + H2O = inosine
+    + phosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: IMP-specific 5'-nucleotidase
+    grounding: EC:3.1.3.99
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: IMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58053
+    description: Formula C10H11N4O8P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: inosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17596
+    description: Formula C10H12N4O5.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prot_Q9BXI3
+    node_type: PROTEIN
+    label: 5NT1A_HUMAN
+    grounding: UniProtKB:Q9BXI3
+  - node_id: prot_A3KFX0
+    node_type: PROTEIN
+    label: 5NT1A_MOUSE
+    grounding: UniProtKB:A3KFX0
+  - node_id: prot_O46411
+    node_type: PROTEIN
+    label: 5NTC_BOVIN
+    grounding: UniProtKB:O46411
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: IMP is a substrate consumed by RHEA:27718 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27719
+      snippet: IMP + H2O => inosine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27719 declares side 27718_L as its substrates
+        (rh:substrates); the master reaction RHEA:27718 is undirected. This participant is CHEBI:58053
+        with coefficient 1. Rhea cites PMID:8141771, PMID:12735798 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:27718 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27719
+      snippet: IMP + H2O => inosine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27719 declares side 27718_L as its substrates
+        (rh:substrates); the master reaction RHEA:27718 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8141771, PMID:12735798 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: inosine is a product released by RHEA:27718 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27719
+      snippet: IMP + H2O => inosine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27719 declares side 27718_R as its products
+        (rh:products); the master reaction RHEA:27718 is undirected. This participant is CHEBI:17596 with
+        coefficient 1. Rhea cites PMID:8141771, PMID:12735798 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:27718 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27719
+      snippet: IMP + H2O => inosine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27719 declares side 27718_R as its products
+        (rh:products); the master reaction RHEA:27718 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:8141771, PMID:12735798 for this reaction.
+  - subject: prot_Q9BXI3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5NT1A_HUMAN is an exemplar enzyme with EC 3.1.3.99 activity.
+    evidence:
+    - reference: EC:3.1.3.99
+      snippet: DR   Q9BXI3, 5NT1A_HUMAN;  A3KFX0, 5NT1A_MOUSE;  O46411, 5NTC_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.1.3.99 cross-references UniProtKB:Q9BXI3 (5NT1A_HUMAN) as a protein
+        with this activity.
+  - subject: prot_A3KFX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5NT1A_MOUSE is an exemplar enzyme with EC 3.1.3.99 activity.
+    evidence:
+    - reference: EC:3.1.3.99
+      snippet: DR   Q9BXI3, 5NT1A_HUMAN;  A3KFX0, 5NT1A_MOUSE;  O46411, 5NTC_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.1.3.99 cross-references UniProtKB:A3KFX0 (5NT1A_MOUSE) as a protein
+        with this activity.
+  - subject: prot_O46411
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5NTC_BOVIN is an exemplar enzyme with EC 3.1.3.99 activity.
+    evidence:
+    - reference: EC:3.1.3.99
+      snippet: DR   Q9BXI3, 5NT1A_HUMAN;  A3KFX0, 5NT1A_MOUSE;  O46411, 5NTC_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.1.3.99 cross-references UniProtKB:O46411 (5NTC_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

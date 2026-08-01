@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:147381
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: dynorphin A-(1-13) + H2O = dynorphin A-(1-12) + L-lysine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dynorphin A-(1-13) + H2O = dynorphin A-(1-12) + L-lysine
+  description: Substrate-to-product chemistry of RHEA:63556, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63557 (rh:substrates → 63556_L, rh:products → 63556_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dynorphin A-(1-13) + H2O = dynorphin A-(1-12) + L-lysine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63556
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dynorphin A-(1-13) + H2O = dynorphin A-(1-12) + L-lysine'
+  - node_id: sub1
+    label: dynorphin A-(1-13)
+    node_type: CHEMICAL
+    grounding: CHEBI:147381
+    description: Formula C75H131N24O15.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: dynorphin A-(1-12)
+    node_type: CHEMICAL
+    grounding: CHEBI:147383
+    description: Formula C69H118N22O14.
+  - node_id: prd2
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32551
+    description: Formula C6H15N2O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dynorphin A-(1-13) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63557
+      snippet: dynorphin A-(1-13) + H2O => dynorphin A-(1-12) + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:63557 declares side 63556_L as its substrates
+        (rh:substrates); the master reaction RHEA:63556 is undirected. This participant is CHEBI:147381
+        with coefficient 1. Rhea cites PMID:11815627 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63557
+      snippet: dynorphin A-(1-13) + H2O => dynorphin A-(1-12) + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:63557 declares side 63556_L as its substrates
+        (rh:substrates); the master reaction RHEA:63556 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11815627 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dynorphin A-(1-12) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63557
+      snippet: dynorphin A-(1-13) + H2O => dynorphin A-(1-12) + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:63557 declares side 63556_R as its products
+        (rh:products); the master reaction RHEA:63556 is undirected. This participant is CHEBI:147383
+        with coefficient 1. Rhea cites PMID:11815627 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-lysine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63557
+      snippet: dynorphin A-(1-13) + H2O => dynorphin A-(1-12) + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:63557 declares side 63556_R as its products
+        (rh:products); the master reaction RHEA:63556 is undirected. This participant is CHEBI:32551 with
+        coefficient 1. Rhea cites PMID:11815627 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

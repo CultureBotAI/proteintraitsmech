@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.5.1.25
     mapping_source: rhea2ec
@@ -34,4 +34,181 @@ definitions:
       Catalyses the reaction: a uridine in tRNA + S-adenosyl-L-methionine = a 3-[(3S)-3-amino-3-carboxypropyl]uridine in tRNA + S-methyl-5'-thioadenosine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a uridine in tRNA + S-adenosyl-L-methionine = a 3-[(3S)-3-amino-3-carboxypropyl]uridine…
+  description: Substrate-to-product chemistry of RHEA:62432, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62433 (rh:substrates → 62432_L, rh:products → 62432_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a uridine in tRNA + S-adenosyl-L-methionine = a 3-[(3S)-3-amino-3-carboxypro…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62432
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a uridine in tRNA + S-adenosyl-L-methionine = a 3-[(3S)-3-amino-3-carboxypropyl]uridine
+      in tRNA + S-methyl-5''-thioadenosine + H(+)'
+  - node_id: sub1
+    label: a uridine in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13339
+    description: Rhea compound GENERIC:13339.
+  - node_id: sub1_rp1
+    label: UMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13339 (a uridine
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: a 3-[(3S)-3-amino-3-carboxypropyl]uridine in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:16092
+    description: Rhea compound GENERIC:16092.
+  - node_id: prd1_rp1
+    label: 3-[(3S)-3-amino-3-carboxypropyl]-uridine 5'-phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:16092 (a 3-[(3S)-3-amino-3-carboxypropyl]uridine
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82930
+  - node_id: prd2
+    label: S-methyl-5'-thioadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17509
+    description: Formula C11H15N5O3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA-uridine aminocarboxypropyltransferase activity
+    grounding: GO:0016432
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA-uridine aminocarboxypropyltransferase
+    grounding: EC:2.5.1.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a uridine in tRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62433
+      snippet: a uridine in tRNA + S-adenosyl-L-methionine => a 3-[(3S)-3-amino-3-carboxypropyl]uridine
+        in tRNA + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62433 declares side 62432_L as its substrates
+        (rh:substrates); the master reaction RHEA:62432 is undirected. This participant is GENERIC:13339
+        with coefficient 1. Rhea cites PMID:31804502, PMID:4597321, PMID:31863583 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of a uridine in tRNA.
+    evidence:
+    - reference: RHEA:62432
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:13339 (a uridine in tRNA) declares rh:reactivePart = UMP residue (CHEBI:65315),
+        formula C9H10N2O8P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62433
+      snippet: a uridine in tRNA + S-adenosyl-L-methionine => a 3-[(3S)-3-amino-3-carboxypropyl]uridine
+        in tRNA + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62433 declares side 62432_L as its substrates
+        (rh:substrates); the master reaction RHEA:62432 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:31804502, PMID:4597321, PMID:31863583 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3-[(3S)-3-amino-3-carboxypropyl]uridine in tRNA is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62433
+      snippet: a uridine in tRNA + S-adenosyl-L-methionine => a 3-[(3S)-3-amino-3-carboxypropyl]uridine
+        in tRNA + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62433 declares side 62432_R as its products
+        (rh:products); the master reaction RHEA:62432 is undirected. This participant is GENERIC:16092
+        with coefficient 1. Rhea cites PMID:31804502, PMID:4597321, PMID:31863583 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3-[(3S)-3-amino-3-carboxypropyl]-uridine 5'-phosphate residue is the reactive part of
+      a 3-[(3S)-3-amino-3-carboxypropyl]uridine in tRNA.
+    evidence:
+    - reference: RHEA:62432
+      snippet: 3-[(3S)-3-amino-3-carboxypropyl]-uridine 5'-phosphate residue
+      notes: Rhea compound GENERIC:16092 (a 3-[(3S)-3-amino-3-carboxypropyl]uridine in tRNA) declares
+        rh:reactivePart = 3-[(3S)-3-amino-3-carboxypropyl]-uridine 5'-phosphate residue (CHEBI:82930),
+        formula C13H17N3O10P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-methyl-5'-thioadenosine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62433
+      snippet: a uridine in tRNA + S-adenosyl-L-methionine => a 3-[(3S)-3-amino-3-carboxypropyl]uridine
+        in tRNA + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62433 declares side 62432_R as its products
+        (rh:products); the master reaction RHEA:62432 is undirected. This participant is CHEBI:17509 with
+        coefficient 1. Rhea cites PMID:31804502, PMID:4597321, PMID:31863583 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62433
+      snippet: a uridine in tRNA + S-adenosyl-L-methionine => a 3-[(3S)-3-amino-3-carboxypropyl]uridine
+        in tRNA + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62433 declares side 62432_R as its products
+        (rh:products); the master reaction RHEA:62432 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:31804502, PMID:4597321, PMID:31863583 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:62432
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0016432"/>
+      notes: The rdfs:seeAlso triple on RHEA:62432 in rhea.rdf. GO term GO:0016432 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.5.1.25; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:62432
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.25"/>
+      notes: The rh:ec triple on RHEA:62432 in rhea.rdf. EC 2.5.1.25 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

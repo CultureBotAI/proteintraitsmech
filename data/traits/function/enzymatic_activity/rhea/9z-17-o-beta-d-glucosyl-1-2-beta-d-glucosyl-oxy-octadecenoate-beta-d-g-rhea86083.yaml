@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:235371
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,81 @@ definitions:
       Catalyses the reaction: (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D-glucosyl-(1->2)-beta-D-glucoside = (9Z)-17-[(beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadec-9-eno-1,4''-lactone + beta-sophorose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D-glucosyl-(…
+  description: Substrate-to-product chemistry of RHEA:86083, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:86084 (rh:substrates → 86083_L, rh:products → 86083_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:86083
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D-glucosyl-(1->2)-beta-D-glucoside
+      = (9Z)-17-[(beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadec-9-eno-1,4''''-lactone + beta-sophorose'
+  - node_id: sub1
+    label: (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D-glucosyl-(1-…
+    node_type: CHEMICAL
+    grounding: CHEBI:235371
+    description: 'Full Rhea name: (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D-glucosyl-(1->2)-beta-D-glucoside
+      Formula C42H74O23.'
+  - node_id: prd1
+    label: (9Z)-17-[(beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadec-9-eno-1,4''-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:235372
+    description: Formula C30H52O12.
+  - node_id: prd2
+    label: beta-sophorose
+    node_type: CHEMICAL
+    grounding: CHEBI:167474
+    description: Formula C12H22O11.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D-glucosyl-(1->2)-beta-D-glucoside
+      is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86084
+      snippet: (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D-glucosyl-(1->2)-beta-D-glucoside
+        => (9Z)-17-[(beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadec-9-eno-1,4''-lactone + beta-sophorose
+      notes: Rhea's left-to-right directional reaction RHEA:86084 declares side 86083_L as its substrates
+        (rh:substrates); the master reaction RHEA:86083 is undirected. This participant is CHEBI:235371
+        with coefficient 1. Rhea cites PMID:38937850 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (9Z)-17-[(beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadec-9-eno-1,4''-lactone is
+      a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86084
+      snippet: (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D-glucosyl-(1->2)-beta-D-glucoside
+        => (9Z)-17-[(beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadec-9-eno-1,4''-lactone + beta-sophorose
+      notes: Rhea's left-to-right directional reaction RHEA:86084 declares side 86083_R as its products
+        (rh:products); the master reaction RHEA:86083 is undirected. This participant is CHEBI:235372
+        with coefficient 1. Rhea cites PMID:38937850 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: beta-sophorose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86084
+      snippet: (9Z)-17-[(O-beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadecenoate-beta-D-glucosyl-(1->2)-beta-D-glucoside
+        => (9Z)-17-[(beta-D-glucosyl-(1->2)-beta-D-glucosyl)oxy]-octadec-9-eno-1,4''-lactone + beta-sophorose
+      notes: Rhea's left-to-right directional reaction RHEA:86084 declares side 86083_R as its products
+        (rh:products); the master reaction RHEA:86083 is undirected. This participant is CHEBI:167474
+        with coefficient 1. Rhea cites PMID:38937850 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

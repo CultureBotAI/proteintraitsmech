@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.99.11
     mapping_source: rhea2ec
@@ -26,4 +26,73 @@ definitions:
       Catalyses the reaction: sucrose = trehalulose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sucrose = trehalulose
+  description: Substrate-to-product chemistry of RHEA:32951, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:32952 (rh:substrates → 32951_L, rh:products → 32951_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of sucrose = trehalulose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:32951
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: sucrose = trehalulose'
+  - node_id: sub1
+    label: sucrose
+    node_type: CHEMICAL
+    grounding: CHEBI:17992
+    description: Formula C12H22O11.
+  - node_id: prd1
+    label: trehalulose
+    node_type: CHEMICAL
+    grounding: CHEBI:79284
+    description: Formula C12H22O11.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: isomaltulose synthase
+    grounding: EC:5.4.99.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sucrose is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32952
+      snippet: sucrose => trehalulose
+      notes: Rhea's left-to-right directional reaction RHEA:32952 declares side 32951_L as its substrates
+        (rh:substrates); the master reaction RHEA:32951 is undirected. This participant is CHEBI:17992
+        with coefficient 1. Rhea cites PMID:17597061, PMID:12039719 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: trehalulose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32952
+      snippet: sucrose => trehalulose
+      notes: Rhea's left-to-right directional reaction RHEA:32952 declares side 32951_R as its products
+        (rh:products); the master reaction RHEA:32951 is undirected. This participant is CHEBI:79284 with
+        coefficient 1. Rhea cites PMID:17597061, PMID:12039719 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.99.11; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:32951
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.11"/>
+      notes: The rh:ec triple on RHEA:32951 in rhea.rdf. EC 5.4.99.11 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

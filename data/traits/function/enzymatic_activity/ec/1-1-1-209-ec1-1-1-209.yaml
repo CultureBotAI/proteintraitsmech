@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 mapped_xrefs:
@@ -40,4 +40,285 @@ definitions:
       Catalyses: (1) androsterone + NADP(+) = 5alpha-androstan-3,17-dione + NADPH + H(+). (2) androsterone + NAD(+) = 5alpha-androstan-3,17-dione + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3(or 17)alpha-hydroxysteroid dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.209. Rhea assigns 2 curated
+    reactions to EC 1.1.1.209. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) androsterone + NADP(+) = 5alpha-androstan-3,17-dione
+    + NADPH + H(+). (2) androsterone + NAD(+) = 5alpha-androstan-3,17-dione + NADH + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3(or 17)alpha-hydroxysteroid dehydrogenase
+    grounding: EC:1.1.1.209
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of androsterone + NADP(+) = 5alpha-androstan-3,17-dione + NADPH + H(+)
+    grounding: RHEA:20377
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: androsterone + NADP(+) = 5alpha-androstan-3,17-dione + NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: androsterone
+    node_type: CHEMICAL
+    grounding: CHEBI:16032
+    description: Formula C19H30O2.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: 5alpha-androstan-3,17-dione
+    node_type: CHEMICAL
+    grounding: CHEBI:15994
+    description: Formula C19H28O2.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of androsterone + NAD(+) = 5alpha-androstan-3,17-dione + NADH + H(+)
+    grounding: RHEA:20381
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: androsterone + NAD(+) = 5alpha-androstan-3,17-dione + NADH + H(+)'
+  - node_id: rxn2_sub1
+    label: androsterone
+    node_type: CHEMICAL
+    grounding: CHEBI:16032
+    description: Formula C19H30O2.
+  - node_id: rxn2_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2_prd1
+    label: 5alpha-androstan-3,17-dione
+    node_type: CHEMICAL
+    grounding: CHEBI:15994
+    description: Formula C19H28O2.
+  - node_id: rxn2_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: androsterone dehydrogenase [NAD(P)+] activity
+    grounding: GO:0047023
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q04828
+    node_type: PROTEIN
+    label: AK1C1_HUMAN
+    grounding: UniProtKB:Q04828
+  - node_id: prot_Q95JH7
+    node_type: PROTEIN
+    label: AK1C1_MACFA
+    grounding: UniProtKB:Q95JH7
+  - node_id: prot_Q95JH6
+    node_type: PROTEIN
+    label: AK1C1_MACFU
+    grounding: UniProtKB:Q95JH6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:20377 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.209; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:20377
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.209"/>
+      notes: The rh:ec triple on RHEA:20377 in rhea.rdf assigns that reaction to EC 1.1.1.209.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: androsterone is a substrate consumed by RHEA:20377 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20378
+      snippet: androsterone + NADP(+) => 5alpha-androstan-3,17-dione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20378 declares side 20377_L as its substrates
+        (rh:substrates); the master reaction RHEA:20377 is undirected. This participant is CHEBI:16032
+        with coefficient 1. Rhea cites PMID:10998348, PMID:17442338, PMID:20124700, PMID:15577209 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:20377 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20378
+      snippet: androsterone + NADP(+) => 5alpha-androstan-3,17-dione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20378 declares side 20377_L as its substrates
+        (rh:substrates); the master reaction RHEA:20377 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:10998348, PMID:17442338, PMID:20124700, PMID:15577209 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 5alpha-androstan-3,17-dione is a product released by RHEA:20377 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20378
+      snippet: androsterone + NADP(+) => 5alpha-androstan-3,17-dione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20378 declares side 20377_R as its products
+        (rh:products); the master reaction RHEA:20377 is undirected. This participant is CHEBI:15994 with
+        coefficient 1. Rhea cites PMID:10998348, PMID:17442338, PMID:20124700, PMID:15577209 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:20377 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20378
+      snippet: androsterone + NADP(+) => 5alpha-androstan-3,17-dione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20378 declares side 20377_R as its products
+        (rh:products); the master reaction RHEA:20377 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:10998348, PMID:17442338, PMID:20124700, PMID:15577209 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:20377 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20378
+      snippet: androsterone + NADP(+) => 5alpha-androstan-3,17-dione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20378 declares side 20377_R as its products
+        (rh:products); the master reaction RHEA:20377 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:10998348, PMID:17442338, PMID:20124700, PMID:15577209 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:20381 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.209; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:20381
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.209"/>
+      notes: The rh:ec triple on RHEA:20381 in rhea.rdf assigns that reaction to EC 1.1.1.209.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: androsterone is a substrate consumed by RHEA:20381 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20382
+      snippet: androsterone + NAD(+) => 5alpha-androstan-3,17-dione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20382 declares side 20381_L as its substrates
+        (rh:substrates); the master reaction RHEA:20381 is undirected. This participant is CHEBI:16032
+        with coefficient 1. Rhea cites PMID:9407098, PMID:11294878, PMID:11360992, PMID:12524453 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NAD(+) is a substrate consumed by RHEA:20381 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20382
+      snippet: androsterone + NAD(+) => 5alpha-androstan-3,17-dione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20382 declares side 20381_L as its substrates
+        (rh:substrates); the master reaction RHEA:20381 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:9407098, PMID:11294878, PMID:11360992, PMID:12524453 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 5alpha-androstan-3,17-dione is a product released by RHEA:20381 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20382
+      snippet: androsterone + NAD(+) => 5alpha-androstan-3,17-dione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20382 declares side 20381_R as its products
+        (rh:products); the master reaction RHEA:20381 is undirected. This participant is CHEBI:15994 with
+        coefficient 1. Rhea cites PMID:9407098, PMID:11294878, PMID:11360992, PMID:12524453 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADH is a product released by RHEA:20381 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20382
+      snippet: androsterone + NAD(+) => 5alpha-androstan-3,17-dione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20382 declares side 20381_R as its products
+        (rh:products); the master reaction RHEA:20381 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:9407098, PMID:11294878, PMID:11360992, PMID:12524453 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:20381 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20382
+      snippet: androsterone + NAD(+) => 5alpha-androstan-3,17-dione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20382 declares side 20381_R as its products
+        (rh:products); the master reaction RHEA:20381 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9407098, PMID:11294878, PMID:11360992, PMID:12524453 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.1.209
+      snippet: EC:1.1.1.209 > GO:androsterone dehydrogenase [NAD(P)+] activity ; GO:0047023
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047023 is itself a record
+        in this KB.
+  - subject: prot_Q04828
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AK1C1_HUMAN is an exemplar enzyme with EC 1.1.1.209 activity.
+    evidence:
+    - reference: EC:1.1.1.209
+      snippet: DR   Q04828, AK1C1_HUMAN;  Q95JH7, AK1C1_MACFA;  Q95JH6, AK1C1_MACFU;
+      notes: ExPASy ENZYME entry EC 1.1.1.209 cross-references UniProtKB:Q04828 (AK1C1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q95JH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AK1C1_MACFA is an exemplar enzyme with EC 1.1.1.209 activity.
+    evidence:
+    - reference: EC:1.1.1.209
+      snippet: DR   Q04828, AK1C1_HUMAN;  Q95JH7, AK1C1_MACFA;  Q95JH6, AK1C1_MACFU;
+      notes: ExPASy ENZYME entry EC 1.1.1.209 cross-references UniProtKB:Q95JH7 (AK1C1_MACFA) as a protein
+        with this activity.
+  - subject: prot_Q95JH6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AK1C1_MACFU is an exemplar enzyme with EC 1.1.1.209 activity.
+    evidence:
+    - reference: EC:1.1.1.209
+      snippet: DR   Q04828, AK1C1_HUMAN;  Q95JH7, AK1C1_MACFA;  Q95JH6, AK1C1_MACFU;
+      notes: ExPASy ENZYME entry EC 1.1.1.209 cross-references UniProtKB:Q95JH6 (AK1C1_MACFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

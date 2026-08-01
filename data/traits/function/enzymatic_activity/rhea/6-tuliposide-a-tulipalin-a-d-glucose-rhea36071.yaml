@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.99.22
     mapping_source: rhea2ec
@@ -28,4 +28,149 @@ definitions:
       Catalyses the reaction: 6-tuliposide A = tulipalin A + D-glucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-tuliposide A = tulipalin A + D-glucose
+  description: Substrate-to-product chemistry of RHEA:36071, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:36072 (rh:substrates → 36071_L, rh:products → 36071_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 6-tuliposide A = tulipalin A + D-glucose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:36071
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 6-tuliposide A = tulipalin A + D-glucose'
+  - node_id: sub1
+    label: 6-tuliposide A
+    node_type: CHEMICAL
+    grounding: CHEBI:72781
+    description: Formula C11H18O8.
+  - node_id: prd1
+    label: tulipalin A
+    node_type: CHEMICAL
+    grounding: CHEBI:104120
+    description: Formula C5H6O2.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: tuliposide A-converting enzyme
+    grounding: EC:4.2.99.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_R4X244
+    node_type: PROTEIN
+    label: TCAB1_TULGE
+    grounding: UniProtKB:R4X244
+  - node_id: prot_R4X4V6
+    node_type: PROTEIN
+    label: TCAB2_TULGE
+    grounding: UniProtKB:R4X4V6
+  - node_id: prot_R4X5P0
+    node_type: PROTEIN
+    label: TCAB3_TULGE
+    grounding: UniProtKB:R4X5P0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 6-tuliposide A is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36072
+      snippet: 6-tuliposide A => tulipalin A + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:36072 declares side 36071_L as its substrates
+        (rh:substrates); the master reaction RHEA:36071 is undirected. This participant is CHEBI:72781
+        with coefficient 1. Rhea cites PMID:19661715, PMID:22474185 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tulipalin A is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36072
+      snippet: 6-tuliposide A => tulipalin A + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:36072 declares side 36071_R as its products
+        (rh:products); the master reaction RHEA:36071 is undirected. This participant is CHEBI:104120
+        with coefficient 1. Rhea cites PMID:19661715, PMID:22474185 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36072
+      snippet: 6-tuliposide A => tulipalin A + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:36072 declares side 36071_R as its products
+        (rh:products); the master reaction RHEA:36071 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:19661715, PMID:22474185 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.99.22; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:36071
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.99.22"/>
+      notes: The rh:ec triple on RHEA:36071 in rhea.rdf. EC 4.2.99.22 is itself a record in this KB.
+  - subject: prot_R4X244
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TCAB1_TULGE is an exemplar enzyme carrying EC 4.2.99.22, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.99.22
+      snippet: DR   R4X244, TCAB1_TULGE;  R4X4V6, TCAB2_TULGE;  R4X5P0, TCAB3_TULGE;
+      notes: ExPASy ENZYME entry EC 4.2.99.22 cross-references UniProtKB:R4X244 (TCAB1_TULGE) as a protein
+        with this activity.
+    - reference: RHEA:36071
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.99.22"/>
+      notes: Rhea assigns RHEA:36071 to EC 4.2.99.22, and EC 4.2.99.22 maps to exactly one Rhea master
+        reaction (RHEA:36071), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_R4X4V6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TCAB2_TULGE is an exemplar enzyme carrying EC 4.2.99.22, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.99.22
+      snippet: DR   R4X244, TCAB1_TULGE;  R4X4V6, TCAB2_TULGE;  R4X5P0, TCAB3_TULGE;
+      notes: ExPASy ENZYME entry EC 4.2.99.22 cross-references UniProtKB:R4X4V6 (TCAB2_TULGE) as a protein
+        with this activity.
+    - reference: RHEA:36071
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.99.22"/>
+      notes: Rhea assigns RHEA:36071 to EC 4.2.99.22, and EC 4.2.99.22 maps to exactly one Rhea master
+        reaction (RHEA:36071), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_R4X5P0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TCAB3_TULGE is an exemplar enzyme carrying EC 4.2.99.22, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.99.22
+      snippet: DR   R4X244, TCAB1_TULGE;  R4X4V6, TCAB2_TULGE;  R4X5P0, TCAB3_TULGE;
+      notes: ExPASy ENZYME entry EC 4.2.99.22 cross-references UniProtKB:R4X5P0 (TCAB3_TULGE) as a protein
+        with this activity.
+    - reference: RHEA:36071
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.99.22"/>
+      notes: Rhea assigns RHEA:36071 to EC 4.2.99.22, and EC 4.2.99.22 maps to exactly one Rhea master
+        reaction (RHEA:36071), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

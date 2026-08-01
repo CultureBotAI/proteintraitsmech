@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -43,4 +43,54 @@ definitions:
       Catalyses: Produces alpha-D-fructofuranose beta-D-fructofuranose 1,2':2,1'-dianhydride (DFA I) by successively eliminating the diminishing (2->1)-beta-D-fructan (inulin) chain from the terminal D-fructosyl-D- fructosyl disaccharide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of inulin fructotransferase (DFA-I-forming)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.17. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Produces
+    alpha-D-fructofuranose beta-D-fructofuranose 1,2'':2,1''-dianhydride (DFA I) by successively eliminating
+    the diminishing (2->1)-beta-D-fructan (inulin) chain from the terminal D-fructosyl-D- fructosyl disaccharide".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: inulin fructotransferase (DFA-I-forming)
+    grounding: EC:4.2.2.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: inulin fructotransferase (DFA-I-forming) activity
+    grounding: GO:0033997
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P19870
+    node_type: PROTEIN
+    label: INU2_ARTGO
+    grounding: UniProtKB:P19870
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.17
+      snippet: EC:4.2.2.17 > GO:inulin fructotransferase (DFA-I-forming) activity ; GO:0033997
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033997 is itself a record
+        in this KB.
+  - subject: prot_P19870
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INU2_ARTGO is an exemplar enzyme with EC 4.2.2.17 activity.
+    evidence:
+    - reference: EC:4.2.2.17
+      snippet: DR   P19870, INU2_ARTGO ;
+      notes: ExPASy ENZYME entry EC 4.2.2.17 cross-references UniProtKB:P19870 (INU2_ARTGO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

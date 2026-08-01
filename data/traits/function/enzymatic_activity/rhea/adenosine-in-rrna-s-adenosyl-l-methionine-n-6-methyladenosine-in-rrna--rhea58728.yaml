@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:74411
     role: SUBSTRATE_OR_PRODUCT
@@ -24,4 +24,166 @@ definitions:
       Catalyses the reaction: adenosine in rRNA + S-adenosyl-L-methionine = N(6)-methyladenosine in rRNA + S-adenosyl-L-homocysteine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of adenosine in rRNA + S-adenosyl-L-methionine = N(6)-methyladenosine in rRNA
+    + S-adenosyl…
+  description: Substrate-to-product chemistry of RHEA:58728, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58729 (rh:substrates → 58728_L, rh:products → 58728_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of adenosine in rRNA + S-adenosyl-L-methionine = N(6)-methyladenosine in rRNA +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58728
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: adenosine in rRNA + S-adenosyl-L-methionine = N(6)-methyladenosine in rRNA + S-adenosyl-L-homocysteine
+      + H(+)'
+  - node_id: sub1
+    label: adenosine in rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15198
+    description: Rhea compound GENERIC:15198.
+  - node_id: sub1_rp1
+    label: AMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15198 (adenosine
+      in rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74411
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: N(6)-methyladenosine in rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15199
+    description: Rhea compound GENERIC:15199.
+  - node_id: prd1_rp1
+    label: N(6)-methyladenosine 5'-phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15199 (N(6)-methyladenosine
+      in rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74449
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: rRNA (adenine-N6-)-methyltransferase activity
+    grounding: GO:0008988
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: adenosine in rRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58729
+      snippet: adenosine in rRNA + S-adenosyl-L-methionine => N(6)-methyladenosine in rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58729 declares side 58728_L as its substrates
+        (rh:substrates); the master reaction RHEA:58728 is undirected. This participant is GENERIC:15198
+        with coefficient 1.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP residue is the reactive part of adenosine in rRNA.
+    evidence:
+    - reference: RHEA:58728
+      snippet: AMP residue
+      notes: Rhea compound GENERIC:15198 (adenosine in rRNA) declares rh:reactivePart = AMP residue (CHEBI:74411),
+        formula C10H11N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58729
+      snippet: adenosine in rRNA + S-adenosyl-L-methionine => N(6)-methyladenosine in rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58729 declares side 58728_L as its substrates
+        (rh:substrates); the master reaction RHEA:58728 is undirected. This participant is CHEBI:59789
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-methyladenosine in rRNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58729
+      snippet: adenosine in rRNA + S-adenosyl-L-methionine => N(6)-methyladenosine in rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58729 declares side 58728_R as its products
+        (rh:products); the master reaction RHEA:58728 is undirected. This participant is GENERIC:15199
+        with coefficient 1.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-methyladenosine 5'-phosphate residue is the reactive part of N(6)-methyladenosine
+      in rRNA.
+    evidence:
+    - reference: RHEA:58728
+      snippet: N(6)-methyladenosine 5'-phosphate residue
+      notes: Rhea compound GENERIC:15199 (N(6)-methyladenosine in rRNA) declares rh:reactivePart = N(6)-methyladenosine
+        5'-phosphate residue (CHEBI:74449), formula C11H13N5O6P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58729
+      snippet: adenosine in rRNA + S-adenosyl-L-methionine => N(6)-methyladenosine in rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58729 declares side 58728_R as its products
+        (rh:products); the master reaction RHEA:58728 is undirected. This participant is CHEBI:57856 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58729
+      snippet: adenosine in rRNA + S-adenosyl-L-methionine => N(6)-methyladenosine in rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58729 declares side 58728_R as its products
+        (rh:products); the master reaction RHEA:58728 is undirected. This participant is CHEBI:15378 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:58728
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008988"/>
+      notes: The rdfs:seeAlso triple on RHEA:58728 in rhea.rdf. GO term GO:0008988 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

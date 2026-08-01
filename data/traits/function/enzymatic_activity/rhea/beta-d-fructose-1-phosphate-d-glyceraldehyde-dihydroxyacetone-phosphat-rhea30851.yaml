@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:138881
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,92 @@ definitions:
       Catalyses the reaction: beta-D-fructose 1-phosphate = D-glyceraldehyde + dihydroxyacetone phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-D-fructose 1-phosphate = D-glyceraldehyde + dihydroxyacetone phosphate
+  description: Substrate-to-product chemistry of RHEA:30851, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30852 (rh:substrates → 30851_L, rh:products → 30851_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of beta-D-fructose 1-phosphate = D-glyceraldehyde + dihydroxyacetone phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30851
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: beta-D-fructose 1-phosphate = D-glyceraldehyde + dihydroxyacetone phosphate'
+  - node_id: sub1
+    label: beta-D-fructose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138881
+    description: Formula C6H11O9P.
+  - node_id: prd1
+    label: D-glyceraldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17378
+    description: Formula C3H6O3.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: fructose-1-phosphate aldolase activity
+    grounding: GO:0061609
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: beta-D-fructose 1-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:30852
+      snippet: beta-D-fructose 1-phosphate => D-glyceraldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30852 declares side 30851_L as its substrates
+        (rh:substrates); the master reaction RHEA:30851 is undirected. This participant is CHEBI:138881
+        with coefficient 1. Rhea cites PMID:2649077 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-glyceraldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30852
+      snippet: beta-D-fructose 1-phosphate => D-glyceraldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30852 declares side 30851_R as its products
+        (rh:products); the master reaction RHEA:30851 is undirected. This participant is CHEBI:17378 with
+        coefficient 1. Rhea cites PMID:2649077 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30852
+      snippet: beta-D-fructose 1-phosphate => D-glyceraldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:30852 declares side 30851_R as its products
+        (rh:products); the master reaction RHEA:30851 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:2649077 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:30851
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0061609"/>
+      notes: The rdfs:seeAlso triple on RHEA:30851 in rhea.rdf. GO term GO:0061609 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

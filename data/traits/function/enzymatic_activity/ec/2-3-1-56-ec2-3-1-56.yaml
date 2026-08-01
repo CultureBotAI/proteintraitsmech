@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -25,4 +25,74 @@ definitions:
       Catalyses: N-hydroxy-4-acetylaminobiphenyl = N-acetoxy-4-aminobiphenyl
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aromatic-hydroxylamine O-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.56. EC 2.3.1.56 maps to exactly
+    one curated Rhea reaction (RHEA:20325), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-hydroxy-4-acetylaminobiphenyl
+    = N-acetoxy-4-aminobiphenyl". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aromatic-hydroxylamine O-acetyltransferase
+    grounding: EC:2.3.1.56
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-hydroxy-4-acetylaminobiphenyl
+    node_type: CHEMICAL
+    grounding: CHEBI:16434
+    description: Formula C14H13NO2.
+  - node_id: prd1
+    label: N-acetoxy-4-aminobiphenyl
+    node_type: CHEMICAL
+    grounding: CHEBI:16395
+    description: Formula C14H13NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aromatic-hydroxylamine O-acetyltransferase activity
+    grounding: GO:0047188
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-hydroxy-4-acetylaminobiphenyl is a substrate consumed by RHEA:20325 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20326
+      snippet: N-hydroxy-4-acetylaminobiphenyl => N-acetoxy-4-aminobiphenyl
+      notes: Rhea's left-to-right directional reaction RHEA:20326 declares side 20325_L as its substrates
+        (rh:substrates); the master reaction RHEA:20325 is undirected. This participant is CHEBI:16434
+        with coefficient 1. Rhea cites PMID:4699998 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetoxy-4-aminobiphenyl is a product released by RHEA:20325 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20326
+      snippet: N-hydroxy-4-acetylaminobiphenyl => N-acetoxy-4-aminobiphenyl
+      notes: Rhea's left-to-right directional reaction RHEA:20326 declares side 20325_R as its products
+        (rh:products); the master reaction RHEA:20325 is undirected. This participant is CHEBI:16395 with
+        coefficient 1. Rhea cites PMID:4699998 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.56
+      snippet: EC:2.3.1.56 > GO:aromatic-hydroxylamine O-acetyltransferase activity ; GO:0047188
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047188 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

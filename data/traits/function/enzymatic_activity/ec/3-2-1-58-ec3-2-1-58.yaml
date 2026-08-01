@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -41,4 +41,82 @@ definitions:
       Catalyses: Successive hydrolysis of beta-D-glucose units from the non-reducing ends of (1->3)-beta-D-glucans, releasing alpha-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucan 1,3-beta-glucosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.58. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Successive
+    hydrolysis of beta-D-glucose units from the non-reducing ends of (1->3)-beta-D-glucans, releasing
+    alpha-glucose".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucan 1,3-beta-glucosidase
+    grounding: EC:3.2.1.58
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucan exo-1,3-beta-glucosidase activity
+    grounding: GO:0004338
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_D4B2W4
+    node_type: PROTEIN
+    label: BGL2_ARTBC
+    grounding: UniProtKB:D4B2W4
+  - node_id: prot_Q5AMT2
+    node_type: PROTEIN
+    label: BGL2_CANAL
+    grounding: UniProtKB:Q5AMT2
+  - node_id: prot_P43070
+    node_type: PROTEIN
+    label: BGL2_CANAX
+    grounding: UniProtKB:P43070
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.58
+      snippet: EC:3.2.1.58 > GO:glucan exo-1,3-beta-glucosidase activity ; GO:0004338
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004338 is itself a record
+        in this KB.
+  - subject: prot_D4B2W4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BGL2_ARTBC is an exemplar enzyme with EC 3.2.1.58 activity.
+    evidence:
+    - reference: EC:3.2.1.58
+      snippet: DR   D4B2W4, BGL2_ARTBC ;  Q5AMT2, BGL2_CANAL ;  P43070, BGL2_CANAX ;
+      notes: ExPASy ENZYME entry EC 3.2.1.58 cross-references UniProtKB:D4B2W4 (BGL2_ARTBC) as a protein
+        with this activity.
+  - subject: prot_Q5AMT2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BGL2_CANAL is an exemplar enzyme with EC 3.2.1.58 activity.
+    evidence:
+    - reference: EC:3.2.1.58
+      snippet: DR   D4B2W4, BGL2_ARTBC ;  Q5AMT2, BGL2_CANAL ;  P43070, BGL2_CANAX ;
+      notes: ExPASy ENZYME entry EC 3.2.1.58 cross-references UniProtKB:Q5AMT2 (BGL2_CANAL) as a protein
+        with this activity.
+  - subject: prot_P43070
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BGL2_CANAX is an exemplar enzyme with EC 3.2.1.58 activity.
+    evidence:
+    - reference: EC:3.2.1.58
+      snippet: DR   D4B2W4, BGL2_ARTBC ;  Q5AMT2, BGL2_CANAL ;  P43070, BGL2_CANAX ;
+      notes: ExPASy ENZYME entry EC 3.2.1.58 cross-references UniProtKB:P43070 (BGL2_CANAX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

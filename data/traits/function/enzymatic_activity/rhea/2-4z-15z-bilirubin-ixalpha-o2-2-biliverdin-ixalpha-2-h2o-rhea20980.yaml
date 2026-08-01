@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.3.3.5
     mapping_source: rhea2ec
@@ -32,4 +32,163 @@ definitions:
       Catalyses the reaction: 2 (4Z,15Z)-bilirubin IXalpha + O2 = 2 biliverdin IXalpha + 2 H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 (4Z,15Z)-bilirubin IXalpha + O2 = 2 biliverdin IXalpha + 2 H2O
+  description: Substrate-to-product chemistry of RHEA:20980, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20981 (rh:substrates → 20980_L, rh:products → 20980_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 (4Z,15Z)-bilirubin IXalpha + O2 = 2 biliverdin IXalpha + 2 H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20980
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 (4Z,15Z)-bilirubin IXalpha + O2 = 2 biliverdin IXalpha + 2 H2O'
+  - node_id: sub1
+    label: (4Z,15Z)-bilirubin IXalpha
+    node_type: CHEMICAL
+    grounding: CHEBI:57977
+    description: Formula C33H34N4O6.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: biliverdin IXalpha
+    node_type: CHEMICAL
+    grounding: CHEBI:57991
+    description: Formula C33H32N4O6.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: bilirubin oxidase activity
+    grounding: GO:0047705
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: bilirubin oxidase
+    grounding: EC:1.3.3.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q12737
+    node_type: PROTEIN
+    label: BLRO_ALBVE
+    grounding: UniProtKB:Q12737
+  - node_id: prot_P07788
+    node_type: PROTEIN
+    label: COTA_BACSU
+    grounding: UniProtKB:P07788
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (4Z,15Z)-bilirubin IXalpha is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:20981
+      snippet: 2 (4Z,15Z)-bilirubin IXalpha + O2 => 2 biliverdin IXalpha + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20981 declares side 20980_L as its substrates
+        (rh:substrates); the master reaction RHEA:20980 is undirected. This participant is CHEBI:57977
+        with coefficient 2. Rhea cites PMID:8360171, PMID:21544308, PMID:20606269 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20981
+      snippet: 2 (4Z,15Z)-bilirubin IXalpha + O2 => 2 biliverdin IXalpha + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20981 declares side 20980_L as its substrates
+        (rh:substrates); the master reaction RHEA:20980 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:8360171, PMID:21544308, PMID:20606269 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: biliverdin IXalpha is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:20981
+      snippet: 2 (4Z,15Z)-bilirubin IXalpha + O2 => 2 biliverdin IXalpha + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20981 declares side 20980_R as its products
+        (rh:products); the master reaction RHEA:20980 is undirected. This participant is CHEBI:57991 with
+        coefficient 2. Rhea cites PMID:8360171, PMID:21544308, PMID:20606269 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:20981
+      snippet: 2 (4Z,15Z)-bilirubin IXalpha + O2 => 2 biliverdin IXalpha + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:20981 declares side 20980_R as its products
+        (rh:products); the master reaction RHEA:20980 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:8360171, PMID:21544308, PMID:20606269 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20980
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047705"/>
+      notes: The rdfs:seeAlso triple on RHEA:20980 in rhea.rdf. GO term GO:0047705 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.3.3.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20980
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.3.5"/>
+      notes: The rh:ec triple on RHEA:20980 in rhea.rdf. EC 1.3.3.5 is itself a record in this KB.
+  - subject: prot_Q12737
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BLRO_ALBVE is an exemplar enzyme carrying EC 1.3.3.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.3.3.5
+      snippet: DR   Q12737, BLRO_ALBVE ;  P07788, COTA_BACSU ;
+      notes: ExPASy ENZYME entry EC 1.3.3.5 cross-references UniProtKB:Q12737 (BLRO_ALBVE) as a protein
+        with this activity.
+    - reference: RHEA:20980
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.3.5"/>
+      notes: Rhea assigns RHEA:20980 to EC 1.3.3.5, and EC 1.3.3.5 maps to exactly one Rhea master reaction
+        (RHEA:20980), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P07788
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COTA_BACSU is an exemplar enzyme carrying EC 1.3.3.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.3.3.5
+      snippet: DR   Q12737, BLRO_ALBVE ;  P07788, COTA_BACSU ;
+      notes: ExPASy ENZYME entry EC 1.3.3.5 cross-references UniProtKB:P07788 (COTA_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:20980
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.3.5"/>
+      notes: Rhea assigns RHEA:20980 to EC 1.3.3.5, and EC 1.3.3.5 maps to exactly one Rhea master reaction
+        (RHEA:20980), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

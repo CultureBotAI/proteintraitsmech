@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.3.-
 synonyms:
@@ -33,4 +33,143 @@ definitions:
       Catalyses: (1) 5-(methylsulfanyl)-D-ribulose 1-phosphate = S-methyl-1-thio-D- xylulose 5-phosphate. (2) 5-(methylsulfanyl)-D-ribulose 1-phosphate = 1-(methylsulfanyl)ribulose 5-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-methyl-5-thioribulose 1-phosphate isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.3.23. Rhea assigns 2 curated
+    reactions to EC 5.3.3.23. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 5-(methylsulfanyl)-D-ribulose 1-phosphate = S-methyl-1-thio-D-
+    xylulose 5-phosphate. (2) 5-(methylsulfanyl)-D-ribulose 1-phosphate = 1-(methylsulfanyl)ribulose 5-phosphate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: S-methyl-5-thioribulose 1-phosphate isomerase
+    grounding: EC:5.3.3.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 5-(methylsulfanyl)-D-ribulose 1-phosphate = S-methyl-1-thio-D-xylulose 5-pho…
+    grounding: RHEA:57100
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 5-(methylsulfanyl)-D-ribulose 1-phosphate = S-methyl-1-thio-D-xylulose
+      5-phosphate'
+  - node_id: rxn1_sub1
+    label: 5-(methylsulfanyl)-D-ribulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58548
+    description: Formula C6H11O7PS.
+  - node_id: rxn1_prd1
+    label: S-methyl-1-thio-D-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:141466
+    description: Formula C6H11O7PS.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 5-(methylsulfanyl)-D-ribulose 1-phosphate = 1-(methylsulfanyl)ribulose 5-pho…
+    grounding: RHEA:57580
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 5-(methylsulfanyl)-D-ribulose 1-phosphate = 1-(methylsulfanyl)ribulose
+      5-phosphate'
+  - node_id: rxn2_sub1
+    label: 5-(methylsulfanyl)-D-ribulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58548
+    description: Formula C6H11O7PS.
+  - node_id: rxn2_prd1
+    label: 1-(methylsulfanyl)ribulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:85606
+    description: Formula C6H11O7PS.
+  - node_id: prot_Q2RSU7
+    node_type: PROTEIN
+    label: RLP_RHORT
+    grounding: UniProtKB:Q2RSU7
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:57100 is one of the 2 curated reactions Rhea assigns to EC 5.3.3.23; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:57100
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.23"/>
+      notes: The rh:ec triple on RHEA:57100 in rhea.rdf assigns that reaction to EC 5.3.3.23.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 5-(methylsulfanyl)-D-ribulose 1-phosphate is a substrate consumed by RHEA:57100 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57101
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => S-methyl-1-thio-D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57101 declares side 57100_L as its substrates
+        (rh:substrates); the master reaction RHEA:57100 is undirected. This participant is CHEBI:58548
+        with coefficient 1. Rhea cites PMID:23042035, PMID:18826254, PMID:29636438 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: S-methyl-1-thio-D-xylulose 5-phosphate is a product released by RHEA:57100 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57101
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => S-methyl-1-thio-D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57101 declares side 57100_R as its products
+        (rh:products); the master reaction RHEA:57100 is undirected. This participant is CHEBI:141466
+        with coefficient 1. Rhea cites PMID:23042035, PMID:18826254, PMID:29636438 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:57580 is one of the 2 curated reactions Rhea assigns to EC 5.3.3.23; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:57580
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.23"/>
+      notes: The rh:ec triple on RHEA:57580 in rhea.rdf assigns that reaction to EC 5.3.3.23.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 5-(methylsulfanyl)-D-ribulose 1-phosphate is a substrate consumed by RHEA:57580 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57581
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => 1-(methylsulfanyl)ribulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57581 declares side 57580_L as its substrates
+        (rh:substrates); the master reaction RHEA:57580 is undirected. This participant is CHEBI:58548
+        with coefficient 1. Rhea cites PMID:23042035, PMID:18826254, PMID:29636438 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 1-(methylsulfanyl)ribulose 5-phosphate is a product released by RHEA:57580 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57581
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => 1-(methylsulfanyl)ribulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57581 declares side 57580_R as its products
+        (rh:products); the master reaction RHEA:57580 is undirected. This participant is CHEBI:85606 with
+        coefficient 1. Rhea cites PMID:23042035, PMID:18826254, PMID:29636438 for this reaction.
+  - subject: prot_Q2RSU7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RLP_RHORT is an exemplar enzyme with EC 5.3.3.23 activity.
+    evidence:
+    - reference: EC:5.3.3.23
+      snippet: DR   Q2RSU7, RLP_RHORT  ;
+      notes: ExPASy ENZYME entry EC 5.3.3.23 cross-references UniProtKB:Q2RSU7 (RLP_RHORT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

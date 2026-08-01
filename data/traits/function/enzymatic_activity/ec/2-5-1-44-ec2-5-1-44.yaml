@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 mapped_xrefs:
@@ -34,4 +34,198 @@ definitions:
       Catalyses: (1) 2 putrescine = sym-homospermidine + NH4(+). (2) putrescine + spermidine = sym-homospermidine + propane-1,3-diamine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of homospermidine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.44. Rhea assigns 2 curated
+    reactions to EC 2.5.1.44. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 2 putrescine = sym-homospermidine + NH4(+). (2) putrescine
+    + spermidine = sym-homospermidine + propane-1,3-diamine". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: homospermidine synthase
+    grounding: EC:2.5.1.44
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of putrescine + spermidine = sym-homospermidine + propane-1,3-diamine
+    grounding: RHEA:11236
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: putrescine + spermidine = sym-homospermidine + propane-1,3-diamine'
+  - node_id: rxn1_sub1
+    label: putrescine
+    node_type: CHEMICAL
+    grounding: CHEBI:326268
+    description: Formula C4H14N2.
+  - node_id: rxn1_sub2
+    label: spermidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57834
+    description: Formula C7H22N3.
+  - node_id: rxn1_prd1
+    label: sym-homospermidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57811
+    description: Formula C8H24N3.
+  - node_id: rxn1_prd2
+    label: propane-1,3-diamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57484
+    description: Formula C3H12N2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2 putrescine = sym-homospermidine + NH4(+)
+    grounding: RHEA:18645
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2 putrescine = sym-homospermidine + NH4(+)'
+  - node_id: rxn2_sub1
+    label: putrescine
+    node_type: CHEMICAL
+    grounding: CHEBI:326268
+    description: Formula C4H14N2.
+  - node_id: rxn2_prd1
+    label: sym-homospermidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57811
+    description: Formula C8H24N3.
+  - node_id: rxn2_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prot_O32323
+    node_type: PROTEIN
+    label: HSS_BLAVI
+    grounding: UniProtKB:O32323
+  - node_id: prot_Q98H64
+    node_type: PROTEIN
+    label: HSS_RHILO
+    grounding: UniProtKB:Q98H64
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:11236 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.44; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:11236
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.44"/>
+      notes: The rh:ec triple on RHEA:11236 in rhea.rdf assigns that reaction to EC 2.5.1.44.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: putrescine is a substrate consumed by RHEA:11236 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11237
+      snippet: putrescine + spermidine => sym-homospermidine + propane-1,3-diamine
+      notes: Rhea's left-to-right directional reaction RHEA:11237 declares side 11236_L as its substrates
+        (rh:substrates); the master reaction RHEA:11236 is undirected. This participant is CHEBI:326268
+        with coefficient 1. Rhea cites PMID:26776105, PMID:11117877, PMID:10611289 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: spermidine is a substrate consumed by RHEA:11236 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11237
+      snippet: putrescine + spermidine => sym-homospermidine + propane-1,3-diamine
+      notes: Rhea's left-to-right directional reaction RHEA:11237 declares side 11236_L as its substrates
+        (rh:substrates); the master reaction RHEA:11236 is undirected. This participant is CHEBI:57834
+        with coefficient 1. Rhea cites PMID:26776105, PMID:11117877, PMID:10611289 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: sym-homospermidine is a product released by RHEA:11236 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11237
+      snippet: putrescine + spermidine => sym-homospermidine + propane-1,3-diamine
+      notes: Rhea's left-to-right directional reaction RHEA:11237 declares side 11236_R as its products
+        (rh:products); the master reaction RHEA:11236 is undirected. This participant is CHEBI:57811 with
+        coefficient 1. Rhea cites PMID:26776105, PMID:11117877, PMID:10611289 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: propane-1,3-diamine is a product released by RHEA:11236 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11237
+      snippet: putrescine + spermidine => sym-homospermidine + propane-1,3-diamine
+      notes: Rhea's left-to-right directional reaction RHEA:11237 declares side 11236_R as its products
+        (rh:products); the master reaction RHEA:11236 is undirected. This participant is CHEBI:57484 with
+        coefficient 1. Rhea cites PMID:26776105, PMID:11117877, PMID:10611289 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:18645 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.44; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:18645
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.44"/>
+      notes: The rh:ec triple on RHEA:18645 in rhea.rdf assigns that reaction to EC 2.5.1.44.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: putrescine is a substrate consumed by RHEA:18645 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:18646
+      snippet: 2 putrescine => sym-homospermidine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18646 declares side 18645_L as its substrates
+        (rh:substrates); the master reaction RHEA:18645 is undirected. This participant is CHEBI:326268
+        with coefficient 2. Rhea cites PMID:26776105, PMID:8407874 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: sym-homospermidine is a product released by RHEA:18645 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18646
+      snippet: 2 putrescine => sym-homospermidine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18646 declares side 18645_R as its products
+        (rh:products); the master reaction RHEA:18645 is undirected. This participant is CHEBI:57811 with
+        coefficient 1. Rhea cites PMID:26776105, PMID:8407874 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NH4(+) is a product released by RHEA:18645 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18646
+      snippet: 2 putrescine => sym-homospermidine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18646 declares side 18645_R as its products
+        (rh:products); the master reaction RHEA:18645 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:26776105, PMID:8407874 for this reaction.
+  - subject: prot_O32323
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HSS_BLAVI is an exemplar enzyme with EC 2.5.1.44 activity.
+    evidence:
+    - reference: EC:2.5.1.44
+      snippet: DR   O32323, HSS_BLAVI  ;  Q98H64, HSS_RHILO  ;
+      notes: ExPASy ENZYME entry EC 2.5.1.44 cross-references UniProtKB:O32323 (HSS_BLAVI) as a protein
+        with this activity.
+  - subject: prot_Q98H64
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HSS_RHILO is an exemplar enzyme with EC 2.5.1.44 activity.
+    evidence:
+    - reference: EC:2.5.1.44
+      snippet: DR   O32323, HSS_BLAVI  ;  Q98H64, HSS_RHILO  ;
+      notes: ExPASy ENZYME entry EC 2.5.1.44 cross-references UniProtKB:Q98H64 (HSS_RHILO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

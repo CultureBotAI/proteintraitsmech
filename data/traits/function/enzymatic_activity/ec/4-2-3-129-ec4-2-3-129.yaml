@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -35,4 +35,102 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = (+)-sativene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (+)-sativene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.129. EC 4.2.3.129 maps to
+    exactly one curated Rhea reaction (RHEA:33119), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = (+)-sativene + diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-sativene synthase
+    grounding: EC:4.2.3.129
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (+)-sativene
+    node_type: CHEMICAL
+    grounding: CHEBI:231783
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A8NU13
+    node_type: PROTEIN
+    label: COP4_COPC7
+    grounding: UniProtKB:A8NU13
+  - node_id: prot_A0A8H8CMW1
+    node_type: PROTEIN
+    label: CUBA_PSICU
+    grounding: UniProtKB:A0A8H8CMW1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:33119 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33120
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-sativene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33120 declares side 33119_L as its substrates
+        (rh:substrates); the master reaction RHEA:33119 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:20419721, PMID:19400802, PMID:20889795 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-sativene is a product released by RHEA:33119 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33120
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-sativene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33120 declares side 33119_R as its products
+        (rh:products); the master reaction RHEA:33119 is undirected. This participant is CHEBI:231783
+        with coefficient 1. Rhea cites PMID:20419721, PMID:19400802, PMID:20889795 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:33119 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33120
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-sativene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33120 declares side 33119_R as its products
+        (rh:products); the master reaction RHEA:33119 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20419721, PMID:19400802, PMID:20889795 for this reaction.
+  - subject: prot_A8NU13
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COP4_COPC7 is an exemplar enzyme with EC 4.2.3.129 activity.
+    evidence:
+    - reference: EC:4.2.3.129
+      snippet: DR   A8NU13, COP4_COPC7 ;  A0A8H8CMW1, CUBA_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.129 cross-references UniProtKB:A8NU13 (COP4_COPC7) as a protein
+        with this activity.
+  - subject: prot_A0A8H8CMW1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CUBA_PSICU is an exemplar enzyme with EC 4.2.3.129 activity.
+    evidence:
+    - reference: EC:4.2.3.129
+      snippet: DR   A8NU13, COP4_COPC7 ;  A0A8H8CMW1, CUBA_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.129 cross-references UniProtKB:A0A8H8CMW1 (CUBA_PSICU) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

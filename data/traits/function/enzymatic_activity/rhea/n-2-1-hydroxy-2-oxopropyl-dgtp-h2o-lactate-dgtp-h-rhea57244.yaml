@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:141569
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,107 @@ definitions:
       Catalyses the reaction: N(2)-(1-hydroxy-2-oxopropyl)-dGTP + H2O = lactate + dGTP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(2)-(1-hydroxy-2-oxopropyl)-dGTP + H2O = lactate + dGTP + H(+)
+  description: Substrate-to-product chemistry of RHEA:57244, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57245 (rh:substrates → 57244_L, rh:products → 57244_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N(2)-(1-hydroxy-2-oxopropyl)-dGTP + H2O = lactate + dGTP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57244
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N(2)-(1-hydroxy-2-oxopropyl)-dGTP + H2O = lactate + dGTP + H(+)'
+  - node_id: sub1
+    label: N(2)-(1-hydroxy-2-oxopropyl)-dGTP
+    node_type: CHEMICAL
+    grounding: CHEBI:141569
+    description: Formula C13H16N5O15P3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:24996
+    description: Formula C3H5O3.
+  - node_id: prd2
+    label: dGTP
+    node_type: CHEMICAL
+    grounding: CHEBI:61429
+    description: Formula C10H12N5O13P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(2)-(1-hydroxy-2-oxopropyl)-dGTP is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57245
+      snippet: N(2)-(1-hydroxy-2-oxopropyl)-dGTP + H2O => lactate + dGTP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57245 declares side 57244_L as its substrates
+        (rh:substrates); the master reaction RHEA:57244 is undirected. This participant is CHEBI:141569
+        with coefficient 1. Rhea cites PMID:23334546, PMID:28596309 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57245
+      snippet: N(2)-(1-hydroxy-2-oxopropyl)-dGTP + H2O => lactate + dGTP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57245 declares side 57244_L as its substrates
+        (rh:substrates); the master reaction RHEA:57244 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:23334546, PMID:28596309 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: lactate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57245
+      snippet: N(2)-(1-hydroxy-2-oxopropyl)-dGTP + H2O => lactate + dGTP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57245 declares side 57244_R as its products
+        (rh:products); the master reaction RHEA:57244 is undirected. This participant is CHEBI:24996 with
+        coefficient 1. Rhea cites PMID:23334546, PMID:28596309 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dGTP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57245
+      snippet: N(2)-(1-hydroxy-2-oxopropyl)-dGTP + H2O => lactate + dGTP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57245 declares side 57244_R as its products
+        (rh:products); the master reaction RHEA:57244 is undirected. This participant is CHEBI:61429 with
+        coefficient 1. Rhea cites PMID:23334546, PMID:28596309 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57245
+      snippet: N(2)-(1-hydroxy-2-oxopropyl)-dGTP + H2O => lactate + dGTP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57245 declares side 57244_R as its products
+        (rh:products); the master reaction RHEA:57244 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:23334546, PMID:28596309 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

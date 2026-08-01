@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 mapped_xrefs:
@@ -25,4 +25,165 @@ definitions:
       Catalyses: a di-trans,poly-cis-dolichyl D-xylosyl phosphate + L-seryl-[protein] = 3-O-(beta-D-xylosyl)-L-seryl-[protein] + a di-trans,poly-cis-dolichyl phosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dolichyl-xylosyl-phosphate--protein xylosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.33. EC 2.4.2.33 maps to exactly
+    one curated Rhea reaction (RHEA:18361), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a di-trans,poly-cis-dolichyl
+    D-xylosyl phosphate  + L-seryl-[protein] = 3-O-(beta-D-xylosyl)-L-seryl-[protein] + a di-trans,poly-cis-dolichyl
+    phosphate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dolichyl-xylosyl-phosphate--protein xylosyltransferase
+    grounding: EC:2.4.2.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a di-trans,poly-cis-dolichyl D-xylosyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58096
+    xrefs:
+    - RHEA-COMP:19500
+    description: Rhea compound POLYMER:19500. Formula C25H44O8P(C5H8)<i><sub>n-1</sub></i>.
+  - node_id: sub2
+    label: L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9863
+    description: Rhea compound GENERIC:9863.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9863 (L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: prd1
+    label: 3-O-(beta-D-xylosyl)-L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12567
+    description: Rhea compound GENERIC:12567.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O(3)-(beta-D-xylosyl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12567 (3-O-(beta-D-xylosyl)-L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:132085
+  - node_id: prd2
+    label: a di-trans,poly-cis-dolichyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57683
+    xrefs:
+    - RHEA-COMP:19498
+    description: Rhea compound POLYMER:19498. Formula C20H35O4P(C5H8)<i><sub>n-1</sub></i>.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dolichyl-xylosyl-phosphate-protein xylosyltransferase activity
+    grounding: GO:0047284
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a di-trans,poly-cis-dolichyl D-xylosyl phosphate is a substrate consumed by RHEA:18361
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18362
+      snippet: a di-trans,poly-cis-dolichyl D-xylosyl phosphate + L-seryl-[protein] => 3-O-(beta-D-xylosyl)-L-seryl-[protein]
+        + a di-trans,poly-cis-dolichyl phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18362 declares side 18361_L as its substrates
+        (rh:substrates); the master reaction RHEA:18361 is undirected. This participant is POLYMER:19500
+        with coefficient 1. Rhea cites PMID:4823870 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-seryl-[protein] is a substrate consumed by RHEA:18361 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18362
+      snippet: a di-trans,poly-cis-dolichyl D-xylosyl phosphate + L-seryl-[protein] => 3-O-(beta-D-xylosyl)-L-seryl-[protein]
+        + a di-trans,poly-cis-dolichyl phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18362 declares side 18361_L as its substrates
+        (rh:substrates); the master reaction RHEA:18361 is undirected. This participant is GENERIC:9863
+        with coefficient 1. Rhea cites PMID:4823870 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-serine residue is the reactive part of L-seryl-[protein].
+    evidence:
+    - reference: RHEA:18361
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:9863 (L-seryl-[protein]) declares rh:reactivePart = L-serine residue
+        (CHEBI:29999).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-O-(beta-D-xylosyl)-L-seryl-[protein] is a product released by RHEA:18361 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18362
+      snippet: a di-trans,poly-cis-dolichyl D-xylosyl phosphate + L-seryl-[protein] => 3-O-(beta-D-xylosyl)-L-seryl-[protein]
+        + a di-trans,poly-cis-dolichyl phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18362 declares side 18361_R as its products
+        (rh:products); the master reaction RHEA:18361 is undirected. This participant is GENERIC:12567
+        with coefficient 1. Rhea cites PMID:4823870 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O(3)-(beta-D-xylosyl)-L-serine residue is the reactive part of 3-O-(beta-D-xylosyl)-L-seryl-[protein].
+    evidence:
+    - reference: RHEA:18361
+      snippet: O(3)-(beta-D-xylosyl)-L-serine residue
+      notes: Rhea compound GENERIC:12567 (3-O-(beta-D-xylosyl)-L-seryl-[protein]) declares rh:reactivePart
+        = O(3)-(beta-D-xylosyl)-L-serine residue (CHEBI:132085).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a di-trans,poly-cis-dolichyl phosphate is a product released by RHEA:18361 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18362
+      snippet: a di-trans,poly-cis-dolichyl D-xylosyl phosphate + L-seryl-[protein] => 3-O-(beta-D-xylosyl)-L-seryl-[protein]
+        + a di-trans,poly-cis-dolichyl phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18362 declares side 18361_R as its products
+        (rh:products); the master reaction RHEA:18361 is undirected. This participant is POLYMER:19498
+        with coefficient 1. Rhea cites PMID:4823870 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:18361 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18362
+      snippet: a di-trans,poly-cis-dolichyl D-xylosyl phosphate + L-seryl-[protein] => 3-O-(beta-D-xylosyl)-L-seryl-[protein]
+        + a di-trans,poly-cis-dolichyl phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18362 declares side 18361_R as its products
+        (rh:products); the master reaction RHEA:18361 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4823870 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.2.33
+      snippet: EC:2.4.2.33 > GO:dolichyl-xylosyl-phosphate-protein xylosyltransferase activity ; GO:0047284
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047284 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

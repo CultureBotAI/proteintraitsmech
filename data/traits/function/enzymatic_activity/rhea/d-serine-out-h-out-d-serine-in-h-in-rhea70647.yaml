@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:35247
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,95 @@ definitions:
       Catalyses the reaction: D-serine(out) + H(+)(out) = D-serine(in) + H(+)(in)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-serine(out) + H(+)(out) = D-serine(in) + H(+)(in)
+  description: 'Substrate-to-product chemistry of RHEA:70647, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:70648 (rh:substrates → 70647_L, rh:products → 70647_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of D-serine(out) + H(+)(out) = D-serine(in) + H(+)(in)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:70647
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-serine(out) + H(+)(out) = D-serine(in) + H(+)(in)'
+  - node_id: sub1
+    label: D-serine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:35247
+    description: Formula C3H7NO3.
+  - node_id: sub2
+    label: H(+) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: D-serine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:35247
+    description: Formula C3H7NO3.
+  - node_id: prd2
+    label: H(+) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-serine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70648
+      snippet: D-serine(out) + H(+)(out) => D-serine(in) + H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:70648 declares side 70647_L as its substrates
+        (rh:substrates); the master reaction RHEA:70647 is undirected. This participant is CHEBI:35247
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:12893527, PMID:11959859 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70648
+      snippet: D-serine(out) + H(+)(out) => D-serine(in) + H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:70648 declares side 70647_L as its substrates
+        (rh:substrates); the master reaction RHEA:70647 is undirected. This participant is CHEBI:15378
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:12893527, PMID:11959859 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-serine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70648
+      snippet: D-serine(out) + H(+)(out) => D-serine(in) + H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:70648 declares side 70647_R as its products
+        (rh:products); the master reaction RHEA:70647 is undirected. This participant is CHEBI:35247 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:12893527,
+        PMID:11959859 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70648
+      snippet: D-serine(out) + H(+)(out) => D-serine(in) + H(+)(in)
+      notes: Rhea's left-to-right directional reaction RHEA:70648 declares side 70647_R as its products
+        (rh:products); the master reaction RHEA:70647 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:12893527,
+        PMID:11959859 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

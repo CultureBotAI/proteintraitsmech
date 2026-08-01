@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.3.-
 synonyms:
@@ -49,4 +49,182 @@ definitions:
       Catalyses: (1) (3S)-3,6-diaminohexanoate = (3S,5S)-3,5-diaminohexanoate. (2) D-lysine = (2R,5S)-2,5-diaminohexanoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lysine 5,6-aminomutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.3.3. Rhea assigns 2 curated
+    reactions to EC 5.4.3.3. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "(1) (3S)-3,6-diaminohexanoate = (3S,5S)-3,5-diaminohexanoate. (2)
+    D-lysine = (2R,5S)-2,5-diaminohexanoate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lysine 5,6-aminomutase
+    grounding: EC:5.4.3.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-lysine = (2R,5S)-2,5-diaminohexanoate
+    grounding: RHEA:18241
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-lysine = (2R,5S)-2,5-diaminohexanoate'
+  - node_id: rxn1_sub1
+    label: D-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32557
+    description: Formula C6H15N2O2.
+  - node_id: rxn1_prd1
+    label: (2R,5S)-2,5-diaminohexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:137487
+    description: Formula C6H15N2O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (3S)-3,6-diaminohexanoate = (3S,5S)-3,5-diaminohexanoate
+    grounding: RHEA:21736
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (3S)-3,6-diaminohexanoate = (3S,5S)-3,5-diaminohexanoate'
+  - node_id: rxn2_sub1
+    label: (3S)-3,6-diaminohexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57434
+    description: Formula C6H15N2O2.
+  - node_id: rxn2_prd1
+    label: (3S,5S)-3,5-diaminohexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57436
+    description: Formula C6H15N2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: D-lysine 5,6-aminomutase activity
+    grounding: GO:0047826
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_E3PRJ5
+    node_type: PROTEIN
+    label: KAMD_ACESD
+    grounding: UniProtKB:E3PRJ5
+  - node_id: prot_Q8RHX7
+    node_type: PROTEIN
+    label: KAMD_FUSNN
+    grounding: UniProtKB:Q8RHX7
+  - node_id: prot_E3PRJ4
+    node_type: PROTEIN
+    label: KAME_ACESD
+    grounding: UniProtKB:E3PRJ4
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:18241 is one of the 2 curated reactions Rhea assigns to EC 5.4.3.3; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:18241
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.3.3"/>
+      notes: The rh:ec triple on RHEA:18241 in rhea.rdf assigns that reaction to EC 5.4.3.3.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: D-lysine is a substrate consumed by RHEA:18241 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18242
+      snippet: D-lysine => (2R,5S)-2,5-diaminohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:18242 declares side 18241_L as its substrates
+        (rh:substrates); the master reaction RHEA:18241 is undirected. This participant is CHEBI:32557
+        with coefficient 1. Rhea cites PMID:12093296, PMID:19634897 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (2R,5S)-2,5-diaminohexanoate is a product released by RHEA:18241 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18242
+      snippet: D-lysine => (2R,5S)-2,5-diaminohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:18242 declares side 18241_R as its products
+        (rh:products); the master reaction RHEA:18241 is undirected. This participant is CHEBI:137487
+        with coefficient 1. Rhea cites PMID:12093296, PMID:19634897 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:21736 is one of the 2 curated reactions Rhea assigns to EC 5.4.3.3; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:21736
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.3.3"/>
+      notes: The rh:ec triple on RHEA:21736 in rhea.rdf assigns that reaction to EC 5.4.3.3.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (3S)-3,6-diaminohexanoate is a substrate consumed by RHEA:21736 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21737
+      snippet: (3S)-3,6-diaminohexanoate => (3S,5S)-3,5-diaminohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:21737 declares side 21736_L as its substrates
+        (rh:substrates); the master reaction RHEA:21736 is undirected. This participant is CHEBI:57434
+        with coefficient 1. Rhea cites PMID:24562332, PMID:6811551, PMID:21939264 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (3S,5S)-3,5-diaminohexanoate is a product released by RHEA:21736 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21737
+      snippet: (3S)-3,6-diaminohexanoate => (3S,5S)-3,5-diaminohexanoate
+      notes: Rhea's left-to-right directional reaction RHEA:21737 declares side 21736_R as its products
+        (rh:products); the master reaction RHEA:21736 is undirected. This participant is CHEBI:57436 with
+        coefficient 1. Rhea cites PMID:24562332, PMID:6811551, PMID:21939264 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.3.3
+      snippet: EC:5.4.3.3 > GO:D-lysine 5,6-aminomutase activity ; GO:0047826
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047826 is itself a record
+        in this KB.
+  - subject: prot_E3PRJ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KAMD_ACESD is an exemplar enzyme with EC 5.4.3.3 activity.
+    evidence:
+    - reference: EC:5.4.3.3
+      snippet: DR   E3PRJ5, KAMD_ACESD ;  Q8RHX7, KAMD_FUSNN ;  E3PRJ4, KAME_ACESD ;
+      notes: ExPASy ENZYME entry EC 5.4.3.3 cross-references UniProtKB:E3PRJ5 (KAMD_ACESD) as a protein
+        with this activity.
+  - subject: prot_Q8RHX7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KAMD_FUSNN is an exemplar enzyme with EC 5.4.3.3 activity.
+    evidence:
+    - reference: EC:5.4.3.3
+      snippet: DR   E3PRJ5, KAMD_ACESD ;  Q8RHX7, KAMD_FUSNN ;  E3PRJ4, KAME_ACESD ;
+      notes: ExPASy ENZYME entry EC 5.4.3.3 cross-references UniProtKB:Q8RHX7 (KAMD_FUSNN) as a protein
+        with this activity.
+  - subject: prot_E3PRJ4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KAME_ACESD is an exemplar enzyme with EC 5.4.3.3 activity.
+    evidence:
+    - reference: EC:5.4.3.3
+      snippet: DR   E3PRJ5, KAMD_ACESD ;  Q8RHX7, KAMD_FUSNN ;  E3PRJ4, KAME_ACESD ;
+      notes: ExPASy ENZYME entry EC 5.4.3.3 cross-references UniProtKB:E3PRJ4 (KAME_ACESD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -28,4 +28,89 @@ definitions:
       Catalyses: indole + O2 = 2-formamidobenzaldehyde
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of indole 2,3-dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.17. EC 1.13.11.17 maps to
+    exactly one curated Rhea reaction (RHEA:11212), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "indole
+    + O2 = 2-formamidobenzaldehyde". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: indole 2,3-dioxygenase
+    grounding: EC:1.13.11.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: indole
+    node_type: CHEMICAL
+    grounding: CHEBI:16881
+    description: Formula C8H7N.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 2-formamidobenzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:18033
+    description: Formula C8H7NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: indole 2,3-dioxygenase activity
+    grounding: GO:0047719
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: indole is a substrate consumed by RHEA:11212 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11213
+      snippet: indole + O2 => 2-formamidobenzaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:11213 declares side 11212_L as its substrates
+        (rh:substrates); the master reaction RHEA:11212 is undirected. This participant is CHEBI:16881
+        with coefficient 1. Rhea cites PMID:14170321, PMID:16662784, PMID:697856 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:11212 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11213
+      snippet: indole + O2 => 2-formamidobenzaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:11213 declares side 11212_L as its substrates
+        (rh:substrates); the master reaction RHEA:11212 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:14170321, PMID:16662784, PMID:697856 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-formamidobenzaldehyde is a product released by RHEA:11212 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11213
+      snippet: indole + O2 => 2-formamidobenzaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:11213 declares side 11212_R as its products
+        (rh:products); the master reaction RHEA:11212 is undirected. This participant is CHEBI:18033 with
+        coefficient 1. Rhea cites PMID:14170321, PMID:16662784, PMID:697856 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.17
+      snippet: EC:1.13.11.17 > GO:indole 2,3-dioxygenase activity ; GO:0047719
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047719 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

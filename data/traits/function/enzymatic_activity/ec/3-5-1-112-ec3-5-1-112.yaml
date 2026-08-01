@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 mapped_xrefs:
@@ -32,4 +32,118 @@ definitions:
       Catalyses: 2'-N-acetylparomamine + H2O = paromamine + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2'-N-acetylparomamine deacetylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.112. EC 3.5.1.112 maps to
+    exactly one curated Rhea reaction (RHEA:34031), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2''-N-acetylparomamine
+    + H2O = paromamine + acetate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2'-N-acetylparomamine deacetylase
+    grounding: EC:3.5.1.112
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2'-N-acetylparomamine
+    node_type: CHEMICAL
+    grounding: CHEBI:65010
+    description: Formula C14H29N3O8.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: paromamine
+    node_type: CHEMICAL
+    grounding: CHEBI:65015
+    description: Formula C12H28N3O7.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prot_Q4H4F3
+    node_type: PROTEIN
+    label: BTRD_NIACI
+    grounding: UniProtKB:Q4H4F3
+  - node_id: prot_Q53U10
+    node_type: PROTEIN
+    label: NEOL_STRFR
+    grounding: UniProtKB:Q53U10
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2'-N-acetylparomamine is a substrate consumed by RHEA:34031 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34032
+      snippet: 2'-N-acetylparomamine + H2O => paromamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:34032 declares side 34031_L as its substrates
+        (rh:substrates); the master reaction RHEA:34031 is undirected. This participant is CHEBI:65010
+        with coefficient 1. Rhea cites PMID:17226887, PMID:18311744 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:34031 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34032
+      snippet: 2'-N-acetylparomamine + H2O => paromamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:34032 declares side 34031_L as its substrates
+        (rh:substrates); the master reaction RHEA:34031 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17226887, PMID:18311744 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: paromamine is a product released by RHEA:34031 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34032
+      snippet: 2'-N-acetylparomamine + H2O => paromamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:34032 declares side 34031_R as its products
+        (rh:products); the master reaction RHEA:34031 is undirected. This participant is CHEBI:65015 with
+        coefficient 1. Rhea cites PMID:17226887, PMID:18311744 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:34031 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34032
+      snippet: 2'-N-acetylparomamine + H2O => paromamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:34032 declares side 34031_R as its products
+        (rh:products); the master reaction RHEA:34031 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:17226887, PMID:18311744 for this reaction.
+  - subject: prot_Q4H4F3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BTRD_NIACI is an exemplar enzyme with EC 3.5.1.112 activity.
+    evidence:
+    - reference: EC:3.5.1.112
+      snippet: DR   Q4H4F3, BTRD_NIACI ;  Q53U10, NEOL_STRFR ;
+      notes: ExPASy ENZYME entry EC 3.5.1.112 cross-references UniProtKB:Q4H4F3 (BTRD_NIACI) as a protein
+        with this activity.
+  - subject: prot_Q53U10
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEOL_STRFR is an exemplar enzyme with EC 3.5.1.112 activity.
+    evidence:
+    - reference: EC:3.5.1.112
+      snippet: DR   Q4H4F3, BTRD_NIACI ;  Q53U10, NEOL_STRFR ;
+      notes: ExPASy ENZYME entry EC 3.5.1.112 cross-references UniProtKB:Q53U10 (NEOL_STRFR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

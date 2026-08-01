@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -30,4 +30,122 @@ definitions:
       Catalyses: a 6-sulfo-alpha-D-quinovosyldiacylglycerol + H2O = 6-sulfo-alpha-D- quinovose + a 1,2-diacyl-sn-glycerol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sulfoquinovosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.199. EC 3.2.1.199 maps to
+    exactly one curated Rhea reaction (RHEA:49452), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 6-sulfo-alpha-D-quinovosyldiacylglycerol
+    + H2O = 6-sulfo-alpha-D- quinovose + a 1,2-diacyl-sn-glycerol". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sulfoquinovosidase
+    grounding: EC:3.2.1.199
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 6-sulfo-alpha-D-quinovosyldiacylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:131487
+    description: Formula C11H15O12SR2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 6-sulfo-alpha-D-quinovose
+    node_type: CHEMICAL
+    grounding: CHEBI:142956
+    description: Formula C6H11O8S.
+  - node_id: prd2
+    label: a 1,2-diacyl-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17815
+    description: Formula C5H6O5R2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sulfoquinovosidase activity
+    grounding: GO:1990929
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P32138
+    node_type: PROTEIN
+    label: SQASE_ECOLI
+    grounding: UniProtKB:P32138
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 6-sulfo-alpha-D-quinovosyldiacylglycerol is a substrate consumed by RHEA:49452 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49453
+      snippet: a 6-sulfo-alpha-D-quinovosyldiacylglycerol + H2O => 6-sulfo-alpha-D-quinovose + a 1,2-diacyl-sn-glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:49453 declares side 49452_L as its substrates
+        (rh:substrates); the master reaction RHEA:49452 is undirected. This participant is CHEBI:131487
+        with coefficient 1. Rhea cites PMID:26878550 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:49452 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49453
+      snippet: a 6-sulfo-alpha-D-quinovosyldiacylglycerol + H2O => 6-sulfo-alpha-D-quinovose + a 1,2-diacyl-sn-glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:49453 declares side 49452_L as its substrates
+        (rh:substrates); the master reaction RHEA:49452 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:26878550 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 6-sulfo-alpha-D-quinovose is a product released by RHEA:49452 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49453
+      snippet: a 6-sulfo-alpha-D-quinovosyldiacylglycerol + H2O => 6-sulfo-alpha-D-quinovose + a 1,2-diacyl-sn-glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:49453 declares side 49452_R as its products
+        (rh:products); the master reaction RHEA:49452 is undirected. This participant is CHEBI:142956
+        with coefficient 1. Rhea cites PMID:26878550 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 1,2-diacyl-sn-glycerol is a product released by RHEA:49452 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49453
+      snippet: a 6-sulfo-alpha-D-quinovosyldiacylglycerol + H2O => 6-sulfo-alpha-D-quinovose + a 1,2-diacyl-sn-glycerol
+      notes: Rhea's left-to-right directional reaction RHEA:49453 declares side 49452_R as its products
+        (rh:products); the master reaction RHEA:49452 is undirected. This participant is CHEBI:17815 with
+        coefficient 1. Rhea cites PMID:26878550 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.199
+      snippet: EC:3.2.1.199 > GO:sulfoquinovosidase activity ; GO:1990929
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:1990929 is itself a record
+        in this KB.
+  - subject: prot_P32138
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQASE_ECOLI is an exemplar enzyme with EC 3.2.1.199 activity.
+    evidence:
+    - reference: EC:3.2.1.199
+      snippet: DR   P32138, SQASE_ECOLI;
+      notes: ExPASy ENZYME entry EC 3.2.1.199 cross-references UniProtKB:P32138 (SQASE_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

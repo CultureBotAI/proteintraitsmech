@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.1.5.3
     mapping_source: rhea2ec
@@ -32,4 +32,123 @@ definitions:
       Catalyses the reaction: a quinone + sn-glycerol 3-phosphate = dihydroxyacetone phosphate + a quinol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a quinone + sn-glycerol 3-phosphate = dihydroxyacetone phosphate + a quinol
+  description: Substrate-to-product chemistry of RHEA:18977, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:18978 (rh:substrates → 18977_L, rh:products → 18977_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a quinone + sn-glycerol 3-phosphate = dihydroxyacetone phosphate + a quinol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:18977
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a quinone + sn-glycerol 3-phosphate = dihydroxyacetone phosphate + a quinol'
+  - node_id: sub1
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: sub2
+    label: sn-glycerol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+    description: Formula C3H7O6P.
+  - node_id: prd1
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: prd2
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glycerol-3-phosphate dehydrogenase (quinone) activity
+    grounding: GO:0004368
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: glycerol-3-phosphate dehydrogenase
+    grounding: EC:1.1.5.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a quinone is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18978
+      snippet: a quinone + sn-glycerol 3-phosphate => dihydroxyacetone phosphate + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:18978 declares side 18977_L as its substrates
+        (rh:substrates); the master reaction RHEA:18977 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:12586344, PMID:9244403, PMID:11955283 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sn-glycerol 3-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18978
+      snippet: a quinone + sn-glycerol 3-phosphate => dihydroxyacetone phosphate + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:18978 declares side 18977_L as its substrates
+        (rh:substrates); the master reaction RHEA:18977 is undirected. This participant is CHEBI:57597
+        with coefficient 1. Rhea cites PMID:12586344, PMID:9244403, PMID:11955283 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dihydroxyacetone phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18978
+      snippet: a quinone + sn-glycerol 3-phosphate => dihydroxyacetone phosphate + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:18978 declares side 18977_R as its products
+        (rh:products); the master reaction RHEA:18977 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:12586344, PMID:9244403, PMID:11955283 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a quinol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18978
+      snippet: a quinone + sn-glycerol 3-phosphate => dihydroxyacetone phosphate + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:18978 declares side 18977_R as its products
+        (rh:products); the master reaction RHEA:18977 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:12586344, PMID:9244403, PMID:11955283 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:18977
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004368"/>
+      notes: The rdfs:seeAlso triple on RHEA:18977 in rhea.rdf. GO term GO:0004368 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.1.5.3; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:18977
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.5.3"/>
+      notes: The rh:ec triple on RHEA:18977 in rhea.rdf. EC 1.1.5.3 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.6.1.-
 mapped_xrefs:
@@ -36,4 +36,115 @@ definitions:
       Catalyses: UTP = 3',5'-cyclic UMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of uridylate cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.6.1.26. EC 4.6.1.26 maps to exactly
+    one curated Rhea reaction (RHEA:69603), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "UTP = 3'',5''-cyclic
+    UMP + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: uridylate cyclase
+    grounding: EC:4.6.1.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: UTP
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  - node_id: prd1
+    label: 3',5'-cyclic UMP
+    node_type: CHEMICAL
+    grounding: CHEBI:184387
+    description: Formula C9H10N2O8P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A0J5ZXG5
+    node_type: PROTEIN
+    label: PYCC_BURCE
+    grounding: UniProtKB:A0A0J5ZXG5
+  - node_id: prot_P0DV42
+    node_type: PROTEIN
+    label: PYCC_GULMO
+    grounding: UniProtKB:P0DV42
+  - node_id: prot_A0A1C5G2V9
+    node_type: PROTEIN
+    label: PYCC_MICEH
+    grounding: UniProtKB:A0A1C5G2V9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UTP is a substrate consumed by RHEA:69603 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69604
+      snippet: UTP => 3',5'-cyclic UMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:69604 declares side 69603_L as its substrates
+        (rh:substrates); the master reaction RHEA:69603 is undirected. This participant is CHEBI:46398
+        with coefficient 1. Rhea cites PMID:34644530, PMID:20521845 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3',5'-cyclic UMP is a product released by RHEA:69603 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69604
+      snippet: UTP => 3',5'-cyclic UMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:69604 declares side 69603_R as its products
+        (rh:products); the master reaction RHEA:69603 is undirected. This participant is CHEBI:184387
+        with coefficient 1. Rhea cites PMID:34644530, PMID:20521845 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:69603 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69604
+      snippet: UTP => 3',5'-cyclic UMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:69604 declares side 69603_R as its products
+        (rh:products); the master reaction RHEA:69603 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:34644530, PMID:20521845 for this reaction.
+  - subject: prot_A0A0J5ZXG5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYCC_BURCE is an exemplar enzyme with EC 4.6.1.26 activity.
+    evidence:
+    - reference: EC:4.6.1.26
+      snippet: DR   A0A0J5ZXG5, PYCC_BURCE ;  P0DV42, PYCC_GULMO ;  A0A1C5G2V9, PYCC_MICEH ;
+      notes: ExPASy ENZYME entry EC 4.6.1.26 cross-references UniProtKB:A0A0J5ZXG5 (PYCC_BURCE) as a protein
+        with this activity.
+  - subject: prot_P0DV42
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYCC_GULMO is an exemplar enzyme with EC 4.6.1.26 activity.
+    evidence:
+    - reference: EC:4.6.1.26
+      snippet: DR   A0A0J5ZXG5, PYCC_BURCE ;  P0DV42, PYCC_GULMO ;  A0A1C5G2V9, PYCC_MICEH ;
+      notes: ExPASy ENZYME entry EC 4.6.1.26 cross-references UniProtKB:P0DV42 (PYCC_GULMO) as a protein
+        with this activity.
+  - subject: prot_A0A1C5G2V9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYCC_MICEH is an exemplar enzyme with EC 4.6.1.26 activity.
+    evidence:
+    - reference: EC:4.6.1.26
+      snippet: DR   A0A0J5ZXG5, PYCC_BURCE ;  P0DV42, PYCC_GULMO ;  A0A1C5G2V9, PYCC_MICEH ;
+      notes: ExPASy ENZYME entry EC 4.6.1.26 cross-references UniProtKB:A0A1C5G2V9 (PYCC_MICEH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

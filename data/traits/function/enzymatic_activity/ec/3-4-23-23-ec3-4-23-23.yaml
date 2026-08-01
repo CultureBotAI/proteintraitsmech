@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 synonyms:
@@ -36,4 +36,67 @@ definitions:
       Catalyses: Hydrolysis of proteins, favoring hydrophobic residues at P1 and P1'. Clots milk. Does not accept Lys at P1, and hence does not activate trypsinogen
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mucorpepsin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.23. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of proteins, favoring hydrophobic residues at P1 and P1''. Clots milk. Does not accept Lys at P1,
+    and hence does not activate trypsinogen".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mucorpepsin
+    grounding: EC:3.4.23.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_C0HLM5
+    node_type: PROTEIN
+    label: CARP_MUCTH
+    grounding: UniProtKB:C0HLM5
+  - node_id: prot_P00799
+    node_type: PROTEIN
+    label: CARP_RHIMI
+    grounding: UniProtKB:P00799
+  - node_id: prot_P09177
+    node_type: PROTEIN
+    label: CARP_RHIPU
+    grounding: UniProtKB:P09177
+  edges:
+  - subject: prot_C0HLM5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARP_MUCTH is an exemplar enzyme with EC 3.4.23.23 activity.
+    evidence:
+    - reference: EC:3.4.23.23
+      snippet: DR   C0HLM5, CARP_MUCTH ;  P00799, CARP_RHIMI ;  P09177, CARP_RHIPU ;
+      notes: ExPASy ENZYME entry EC 3.4.23.23 cross-references UniProtKB:C0HLM5 (CARP_MUCTH) as a protein
+        with this activity.
+  - subject: prot_P00799
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARP_RHIMI is an exemplar enzyme with EC 3.4.23.23 activity.
+    evidence:
+    - reference: EC:3.4.23.23
+      snippet: DR   C0HLM5, CARP_MUCTH ;  P00799, CARP_RHIMI ;  P09177, CARP_RHIPU ;
+      notes: ExPASy ENZYME entry EC 3.4.23.23 cross-references UniProtKB:P00799 (CARP_RHIMI) as a protein
+        with this activity.
+  - subject: prot_P09177
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARP_RHIPU is an exemplar enzyme with EC 3.4.23.23 activity.
+    evidence:
+    - reference: EC:3.4.23.23
+      snippet: DR   C0HLM5, CARP_MUCTH ;  P00799, CARP_RHIMI ;  P09177, CARP_RHIPU ;
+      notes: ExPASy ENZYME entry EC 3.4.23.23 cross-references UniProtKB:P09177 (CARP_RHIPU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

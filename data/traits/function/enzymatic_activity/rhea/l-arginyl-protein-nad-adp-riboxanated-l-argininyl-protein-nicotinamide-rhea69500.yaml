@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29965
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,181 @@ definitions:
       Catalyses the reaction: L-arginyl-[protein] + NAD(+) = ADP-riboxanated L-argininyl-[protein] + nicotinamide + NH4(+) + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-arginyl-[protein] + NAD(+) = ADP-riboxanated L-argininyl-[protein] +
+    nicotinamide + N…
+  description: Substrate-to-product chemistry of RHEA:69500, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69501 (rh:substrates → 69500_L, rh:products → 69500_R), and Rhea
+    curates the reverse direction too. 2 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-arginyl-[protein] + NAD(+) = ADP-riboxanated L-argininyl-[protein] + nicot…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69500
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-arginyl-[protein] + NAD(+) = ADP-riboxanated L-argininyl-[protein] + nicotinamide
+      + NH4(+) + H(+)'
+  - node_id: sub1
+    label: L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10532
+    description: Rhea compound GENERIC:10532.
+  - node_id: sub1_rp1
+    label: L-arginine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10532 (L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29965
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: ADP-riboxanated L-argininyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17719
+    description: Rhea compound GENERIC:17719.
+  - node_id: prd1_rp1
+    label: ADP-2'-imine-ribofurano[1',2':4,5]oxazolidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17719 (ADP-riboxanated
+      L-argininyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:184300
+  - node_id: prd2
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+    description: Formula C6H6N2O.
+  - node_id: prd3
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ADP-riboxanase-[protein] activity
+    grounding: GO:0140740
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69501
+      snippet: L-arginyl-[protein] + NAD(+) => ADP-riboxanated L-argininyl-[protein] + nicotinamide +
+        NH4(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69501 declares side 69500_L as its substrates
+        (rh:substrates); the master reaction RHEA:69500 is undirected. This participant is GENERIC:10532
+        with coefficient 1. Rhea cites PMID:34671164, PMID:36423631 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-arginine residue is the reactive part of L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:69500
+      snippet: L-arginine residue
+      notes: Rhea compound GENERIC:10532 (L-arginyl-[protein]) declares rh:reactivePart = L-arginine residue
+        (CHEBI:29965), formula C6H13N4O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69501
+      snippet: L-arginyl-[protein] + NAD(+) => ADP-riboxanated L-argininyl-[protein] + nicotinamide +
+        NH4(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69501 declares side 69500_L as its substrates
+        (rh:substrates); the master reaction RHEA:69500 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:34671164, PMID:36423631 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ADP-riboxanated L-argininyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69501
+      snippet: L-arginyl-[protein] + NAD(+) => ADP-riboxanated L-argininyl-[protein] + nicotinamide +
+        NH4(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69501 declares side 69500_R as its products
+        (rh:products); the master reaction RHEA:69500 is undirected. This participant is GENERIC:17719
+        with coefficient 1. Rhea cites PMID:34671164, PMID:36423631 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: ADP-2'-imine-ribofurano[1',2':4,5]oxazolidine residue is the reactive part of ADP-riboxanated
+      L-argininyl-[protein].
+    evidence:
+    - reference: RHEA:69500
+      snippet: ADP-2'-imine-ribofurano[1',2':4,5]oxazolidine residue
+      notes: Rhea compound GENERIC:17719 (ADP-riboxanated L-argininyl-[protein]) declares rh:reactivePart
+        = ADP-2'-imine-ribofurano[1',2':4,5]oxazolidine residue (CHEBI:184300), formula C21H28N8O14P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nicotinamide is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69501
+      snippet: L-arginyl-[protein] + NAD(+) => ADP-riboxanated L-argininyl-[protein] + nicotinamide +
+        NH4(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69501 declares side 69500_R as its products
+        (rh:products); the master reaction RHEA:69500 is undirected. This participant is CHEBI:17154 with
+        coefficient 1. Rhea cites PMID:34671164, PMID:36423631 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69501
+      snippet: L-arginyl-[protein] + NAD(+) => ADP-riboxanated L-argininyl-[protein] + nicotinamide +
+        NH4(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69501 declares side 69500_R as its products
+        (rh:products); the master reaction RHEA:69500 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:34671164, PMID:36423631 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69501
+      snippet: L-arginyl-[protein] + NAD(+) => ADP-riboxanated L-argininyl-[protein] + nicotinamide +
+        NH4(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:69501 declares side 69500_R as its products
+        (rh:products); the master reaction RHEA:69500 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:34671164, PMID:36423631 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:69500
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0140740"/>
+      notes: The rdfs:seeAlso triple on RHEA:69500 in rhea.rdf. GO term GO:0140740 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

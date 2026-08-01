@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.2.-
 mapped_xrefs:
@@ -38,4 +38,131 @@ definitions:
       Catalyses: epsilon-(gamma-L-glutamyl)-L-lysine = 5-oxo-L-proline + L-lysine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gamma-glutamylamine cyclotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.2.8. EC 4.3.2.8 maps to exactly
+    one curated Rhea reaction (RHEA:16961), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "epsilon-(gamma-L-glutamyl)-L-lysine
+    = 5-oxo-L-proline + L-lysine". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-glutamylamine cyclotransferase
+    grounding: EC:4.3.2.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: epsilon-(gamma-L-glutamyl)-L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:133752
+    description: Formula C11H21N3O5.
+  - node_id: prd1
+    label: 5-oxo-L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:58402
+    description: Formula C5H6NO3.
+  - node_id: prd2
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32551
+    description: Formula C6H15N2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-glutamylaminecyclotransferase activity
+    grounding: GO:0061929
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0JMM9
+    node_type: PROTEIN
+    label: GGACA_DANRE
+    grounding: UniProtKB:A0JMM9
+  - node_id: prot_Q66I06
+    node_type: PROTEIN
+    label: GGACB_DANRE
+    grounding: UniProtKB:Q66I06
+  - node_id: prot_A3KNL6
+    node_type: PROTEIN
+    label: GGACC_DANRE
+    grounding: UniProtKB:A3KNL6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: epsilon-(gamma-L-glutamyl)-L-lysine is a substrate consumed by RHEA:16961 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16962
+      snippet: epsilon-(gamma-L-glutamyl)-L-lysine => 5-oxo-L-proline + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:16962 declares side 16961_L as its substrates
+        (rh:substrates); the master reaction RHEA:16961 is undirected. This participant is CHEBI:133752
+        with coefficient 1. Rhea cites PMID:6107907, PMID:20110353 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-oxo-L-proline is a product released by RHEA:16961 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16962
+      snippet: epsilon-(gamma-L-glutamyl)-L-lysine => 5-oxo-L-proline + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:16962 declares side 16961_R as its products
+        (rh:products); the master reaction RHEA:16961 is undirected. This participant is CHEBI:58402 with
+        coefficient 1. Rhea cites PMID:6107907, PMID:20110353 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-lysine is a product released by RHEA:16961 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16962
+      snippet: epsilon-(gamma-L-glutamyl)-L-lysine => 5-oxo-L-proline + L-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:16962 declares side 16961_R as its products
+        (rh:products); the master reaction RHEA:16961 is undirected. This participant is CHEBI:32551 with
+        coefficient 1. Rhea cites PMID:6107907, PMID:20110353 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.3.2.8
+      snippet: EC:4.3.2.8 > GO:gamma-glutamylaminecyclotransferase activity ; GO:0061929
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0061929 is itself a record
+        in this KB.
+  - subject: prot_A0JMM9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GGACA_DANRE is an exemplar enzyme with EC 4.3.2.8 activity.
+    evidence:
+    - reference: EC:4.3.2.8
+      snippet: DR   A0JMM9, GGACA_DANRE;  Q66I06, GGACB_DANRE;  A3KNL6, GGACC_DANRE;
+      notes: ExPASy ENZYME entry EC 4.3.2.8 cross-references UniProtKB:A0JMM9 (GGACA_DANRE) as a protein
+        with this activity.
+  - subject: prot_Q66I06
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GGACB_DANRE is an exemplar enzyme with EC 4.3.2.8 activity.
+    evidence:
+    - reference: EC:4.3.2.8
+      snippet: DR   A0JMM9, GGACA_DANRE;  Q66I06, GGACB_DANRE;  A3KNL6, GGACC_DANRE;
+      notes: ExPASy ENZYME entry EC 4.3.2.8 cross-references UniProtKB:Q66I06 (GGACB_DANRE) as a protein
+        with this activity.
+  - subject: prot_A3KNL6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GGACC_DANRE is an exemplar enzyme with EC 4.3.2.8 activity.
+    evidence:
+    - reference: EC:4.3.2.8
+      snippet: DR   A0JMM9, GGACA_DANRE;  Q66I06, GGACB_DANRE;  A3KNL6, GGACC_DANRE;
+      notes: ExPASy ENZYME entry EC 4.3.2.8 cross-references UniProtKB:A3KNL6 (GGACC_DANRE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -39,4 +39,120 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = (1S,5S,6R)-alpha-bergamotene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of exo-alpha-bergamotene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.81. EC 4.2.3.81 maps to exactly
+    one curated Rhea reaction (RHEA:31427), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = (1S,5S,6R)-alpha-bergamotene + diphosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: exo-alpha-bergamotene synthase
+    grounding: EC:4.2.3.81
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (1S,5S,6R)-alpha-bergamotene
+    node_type: CHEMICAL
+    grounding: CHEBI:62756
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q2NM15
+    node_type: PROTEIN
+    label: FARS_MAIZE
+    grounding: UniProtKB:Q2NM15
+  - node_id: prot_Q2XSC4
+    node_type: PROTEIN
+    label: LABER_LAVAN
+    grounding: UniProtKB:Q2XSC4
+  - node_id: prot_E3W202
+    node_type: PROTEIN
+    label: SASY_SANAL
+    grounding: UniProtKB:E3W202
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:31427 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31428
+      snippet: (2E,6E)-farnesyl diphosphate => (1S,5S,6R)-alpha-bergamotene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31428 declares side 31427_L as its substrates
+        (rh:substrates); the master reaction RHEA:31427 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:21818683, PMID:16418295, PMID:21454632, PMID:22867794 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1S,5S,6R)-alpha-bergamotene is a product released by RHEA:31427 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31428
+      snippet: (2E,6E)-farnesyl diphosphate => (1S,5S,6R)-alpha-bergamotene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31428 declares side 31427_R as its products
+        (rh:products); the master reaction RHEA:31427 is undirected. This participant is CHEBI:62756 with
+        coefficient 1. Rhea cites PMID:21818683, PMID:16418295, PMID:21454632, PMID:22867794 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:31427 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31428
+      snippet: (2E,6E)-farnesyl diphosphate => (1S,5S,6R)-alpha-bergamotene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31428 declares side 31427_R as its products
+        (rh:products); the master reaction RHEA:31427 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21818683, PMID:16418295, PMID:21454632, PMID:22867794 for this
+        reaction.
+  - subject: prot_Q2NM15
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FARS_MAIZE is an exemplar enzyme with EC 4.2.3.81 activity.
+    evidence:
+    - reference: EC:4.2.3.81
+      snippet: DR   Q2NM15, FARS_MAIZE ;  Q2XSC4, LABER_LAVAN;  E3W202, SASY_SANAL ;
+      notes: ExPASy ENZYME entry EC 4.2.3.81 cross-references UniProtKB:Q2NM15 (FARS_MAIZE) as a protein
+        with this activity.
+  - subject: prot_Q2XSC4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LABER_LAVAN is an exemplar enzyme with EC 4.2.3.81 activity.
+    evidence:
+    - reference: EC:4.2.3.81
+      snippet: DR   Q2NM15, FARS_MAIZE ;  Q2XSC4, LABER_LAVAN;  E3W202, SASY_SANAL ;
+      notes: ExPASy ENZYME entry EC 4.2.3.81 cross-references UniProtKB:Q2XSC4 (LABER_LAVAN) as a protein
+        with this activity.
+  - subject: prot_E3W202
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SASY_SANAL is an exemplar enzyme with EC 4.2.3.81 activity.
+    evidence:
+    - reference: EC:4.2.3.81
+      snippet: DR   Q2NM15, FARS_MAIZE ;  Q2XSC4, LABER_LAVAN;  E3W202, SASY_SANAL ;
+      notes: ExPASy ENZYME entry EC 4.2.3.81 cross-references UniProtKB:E3W202 (SASY_SANAL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -28,4 +28,121 @@ definitions:
       Catalyses: 3-oxo-3-ureidopropanoate + H2O = malonate + urea + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-malonylurea hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.95. EC 3.5.1.95 maps to exactly
+    one curated Rhea reaction (RHEA:17361), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-oxo-3-ureidopropanoate
+    + H2O = malonate + urea + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-malonylurea hydrolase
+    grounding: EC:3.5.1.95
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-oxo-3-ureidopropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58775
+    description: Formula C4H5N2O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: malonate
+    node_type: CHEMICAL
+    grounding: CHEBI:15792
+    description: Formula C3H2O4.
+  - node_id: prd2
+    label: urea
+    node_type: CHEMICAL
+    grounding: CHEBI:16199
+    description: Formula CH4N2O.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-malonylurea hydrolase activity
+    grounding: GO:0033970
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-oxo-3-ureidopropanoate is a substrate consumed by RHEA:17361 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17362
+      snippet: 3-oxo-3-ureidopropanoate + H2O => malonate + urea + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17362 declares side 17361_L as its substrates
+        (rh:substrates); the master reaction RHEA:17361 is undirected. This participant is CHEBI:58775
+        with coefficient 1. Rhea cites PMID:11485332, PMID:11748240 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:17361 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17362
+      snippet: 3-oxo-3-ureidopropanoate + H2O => malonate + urea + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17362 declares side 17361_L as its substrates
+        (rh:substrates); the master reaction RHEA:17361 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11485332, PMID:11748240 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: malonate is a product released by RHEA:17361 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17362
+      snippet: 3-oxo-3-ureidopropanoate + H2O => malonate + urea + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17362 declares side 17361_R as its products
+        (rh:products); the master reaction RHEA:17361 is undirected. This participant is CHEBI:15792 with
+        coefficient 1. Rhea cites PMID:11485332, PMID:11748240 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: urea is a product released by RHEA:17361 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17362
+      snippet: 3-oxo-3-ureidopropanoate + H2O => malonate + urea + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17362 declares side 17361_R as its products
+        (rh:products); the master reaction RHEA:17361 is undirected. This participant is CHEBI:16199 with
+        coefficient 1. Rhea cites PMID:11485332, PMID:11748240 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:17361 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17362
+      snippet: 3-oxo-3-ureidopropanoate + H2O => malonate + urea + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17362 declares side 17361_R as its products
+        (rh:products); the master reaction RHEA:17361 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11485332, PMID:11748240 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.95
+      snippet: EC:3.5.1.95 > GO:N-malonylurea hydrolase activity ; GO:0033970
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033970 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 synonyms:
@@ -31,4 +31,111 @@ definitions:
       Catalyses: [phosphate](n) + GTP = [phosphate](n+1) + GDP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of GDP-polyphosphate phosphotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.34. EC 2.7.4.34 maps to exactly
+    one curated Rhea reaction (RHEA:55412), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[phosphate](n)
+    + GTP = [phosphate](n+1) + GDP". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: GDP-polyphosphate phosphotransferase
+    grounding: EC:2.7.4.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[phosphate](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:16838
+    xrefs:
+    - RHEA-COMP:9859
+    description: Rhea compound POLYMER:9859. Formula HO(O3P)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: prd1
+    label: '[phosphate](n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:16838
+    xrefs:
+    - RHEA-COMP:14280
+    description: Rhea compound POLYMER:14280. Formula HO(O3P)<i><sub>n+1</sub></i>.
+  - node_id: prd2
+    label: GDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  - node_id: prot_Q9I6Z1
+    node_type: PROTEIN
+    label: PK21A_PSEAE
+    grounding: UniProtKB:Q9I6Z1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[phosphate](n) is a substrate consumed by RHEA:55412 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:55413
+      snippet: '[phosphate](n) + GTP => [phosphate](n+1) + GDP'
+      notes: Rhea's left-to-right directional reaction RHEA:55413 declares side 55412_L as its substrates
+        (rh:substrates); the master reaction RHEA:55412 is undirected. This participant is POLYMER:9859
+        with coefficient 1. Rhea cites PMID:17545325, PMID:12482933, PMID:24930102, PMID:19843229 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GTP is a substrate consumed by RHEA:55412 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55413
+      snippet: '[phosphate](n) + GTP => [phosphate](n+1) + GDP'
+      notes: Rhea's left-to-right directional reaction RHEA:55413 declares side 55412_L as its substrates
+        (rh:substrates); the master reaction RHEA:55412 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:17545325, PMID:12482933, PMID:24930102, PMID:19843229 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[phosphate](n+1) is a product released by RHEA:55412 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:55413
+      snippet: '[phosphate](n) + GTP => [phosphate](n+1) + GDP'
+      notes: Rhea's left-to-right directional reaction RHEA:55413 declares side 55412_R as its products
+        (rh:products); the master reaction RHEA:55412 is undirected. This participant is POLYMER:14280
+        with coefficient 1. Rhea cites PMID:17545325, PMID:12482933, PMID:24930102, PMID:19843229 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: GDP is a product released by RHEA:55412 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55413
+      snippet: '[phosphate](n) + GTP => [phosphate](n+1) + GDP'
+      notes: Rhea's left-to-right directional reaction RHEA:55413 declares side 55412_R as its products
+        (rh:products); the master reaction RHEA:55412 is undirected. This participant is CHEBI:58189 with
+        coefficient 1. Rhea cites PMID:17545325, PMID:12482933, PMID:24930102, PMID:19843229 for this
+        reaction.
+  - subject: prot_Q9I6Z1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PK21A_PSEAE is an exemplar enzyme with EC 2.7.4.34 activity.
+    evidence:
+    - reference: EC:2.7.4.34
+      snippet: DR   Q9I6Z1, PK21A_PSEAE;
+      notes: ExPASy ENZYME entry EC 2.7.4.34 cross-references UniProtKB:Q9I6Z1 (PK21A_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

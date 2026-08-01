@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -45,4 +45,195 @@ definitions:
       Catalyses: an N-acyl-L-alpha-aminoacyl-tRNA + H2O = an N-acyl-L-amino acid + a tRNA + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidyl-tRNA hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.29. EC 3.1.1.29 maps to exactly
+    one curated Rhea reaction (RHEA:54448), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an N-acyl-L-alpha-aminoacyl-tRNA
+    + H2O = an N-acyl-L-amino acid + a tRNA + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-tRNA hydrolase
+    grounding: EC:3.1.1.29
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an N-acyl-L-alpha-aminoacyl-tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13883
+    description: Rhea compound GENERIC:13883.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: 3'-(N-acyl-L-alpha-aminoacyl)adenylyl 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13883 (an N-acyl-L-alpha-aminoacyl-tRNA);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138191
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an N-acyl-L-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59874
+    description: Formula C3H2NO3R2.
+  - node_id: prd2
+    label: a tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10123
+    description: Rhea compound GENERIC:10123.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10123 (a tRNA);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-tRNA hydrolase activity
+    grounding: GO:0004045
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P40711
+    node_type: PROTEIN
+    label: ARFB_ECOLI
+    grounding: UniProtKB:P40711
+  - node_id: prot_P45388
+    node_type: PROTEIN
+    label: ARFB_PSEPU
+    grounding: UniProtKB:P45388
+  - node_id: prot_D2HD32
+    node_type: PROTEIN
+    label: ICT1_AILME
+    grounding: UniProtKB:D2HD32
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-acyl-L-alpha-aminoacyl-tRNA is a substrate consumed by RHEA:54448 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54449
+      snippet: an N-acyl-L-alpha-aminoacyl-tRNA + H2O => an N-acyl-L-amino acid + a tRNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54449 declares side 54448_L as its substrates
+        (rh:substrates); the master reaction RHEA:54448 is undirected. This participant is GENERIC:13883
+        with coefficient 1. Rhea cites PMID:21418110, PMID:4981785, PMID:21051357 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(N-acyl-L-alpha-aminoacyl)adenylyl 3'-end residue is the reactive part of an N-acyl-L-alpha-aminoacyl-tRNA.
+    evidence:
+    - reference: RHEA:54448
+      snippet: 3'-(N-acyl-L-alpha-aminoacyl)adenylyl 3'-end residue
+      notes: Rhea compound GENERIC:13883 (an N-acyl-L-alpha-aminoacyl-tRNA) declares rh:reactivePart =
+        3'-(N-acyl-L-alpha-aminoacyl)adenylyl 3'-end residue (CHEBI:138191).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:54448 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54449
+      snippet: an N-acyl-L-alpha-aminoacyl-tRNA + H2O => an N-acyl-L-amino acid + a tRNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54449 declares side 54448_L as its substrates
+        (rh:substrates); the master reaction RHEA:54448 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21418110, PMID:4981785, PMID:21051357 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N-acyl-L-amino acid is a product released by RHEA:54448 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54449
+      snippet: an N-acyl-L-alpha-aminoacyl-tRNA + H2O => an N-acyl-L-amino acid + a tRNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54449 declares side 54448_R as its products
+        (rh:products); the master reaction RHEA:54448 is undirected. This participant is CHEBI:59874 with
+        coefficient 1. Rhea cites PMID:21418110, PMID:4981785, PMID:21051357 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a tRNA is a product released by RHEA:54448 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54449
+      snippet: an N-acyl-L-alpha-aminoacyl-tRNA + H2O => an N-acyl-L-amino acid + a tRNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54449 declares side 54448_R as its products
+        (rh:products); the master reaction RHEA:54448 is undirected. This participant is GENERIC:10123
+        with coefficient 1. Rhea cites PMID:21418110, PMID:4981785, PMID:21051357 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: AMP 3'-end residue is the reactive part of a tRNA.
+    evidence:
+    - reference: RHEA:54448
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:10123 (a tRNA) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:54448 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54449
+      snippet: an N-acyl-L-alpha-aminoacyl-tRNA + H2O => an N-acyl-L-amino acid + a tRNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54449 declares side 54448_R as its products
+        (rh:products); the master reaction RHEA:54448 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21418110, PMID:4981785, PMID:21051357 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.29
+      snippet: EC:3.1.1.29 > GO:peptidyl-tRNA hydrolase activity ; GO:0004045
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004045 is itself a record
+        in this KB.
+  - subject: prot_P40711
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARFB_ECOLI is an exemplar enzyme with EC 3.1.1.29 activity.
+    evidence:
+    - reference: EC:3.1.1.29
+      snippet: DR   P40711, ARFB_ECOLI ;  P45388, ARFB_PSEPU ;  D2HD32, ICT1_AILME ;
+      notes: ExPASy ENZYME entry EC 3.1.1.29 cross-references UniProtKB:P40711 (ARFB_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P45388
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARFB_PSEPU is an exemplar enzyme with EC 3.1.1.29 activity.
+    evidence:
+    - reference: EC:3.1.1.29
+      snippet: DR   P40711, ARFB_ECOLI ;  P45388, ARFB_PSEPU ;  D2HD32, ICT1_AILME ;
+      notes: ExPASy ENZYME entry EC 3.1.1.29 cross-references UniProtKB:P45388 (ARFB_PSEPU) as a protein
+        with this activity.
+  - subject: prot_D2HD32
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ICT1_AILME is an exemplar enzyme with EC 3.1.1.29 activity.
+    evidence:
+    - reference: EC:3.1.1.29
+      snippet: DR   P40711, ARFB_ECOLI ;  P45388, ARFB_PSEPU ;  D2HD32, ICT1_AILME ;
+      notes: ExPASy ENZYME entry EC 3.1.1.29 cross-references UniProtKB:D2HD32 (ICT1_AILME) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

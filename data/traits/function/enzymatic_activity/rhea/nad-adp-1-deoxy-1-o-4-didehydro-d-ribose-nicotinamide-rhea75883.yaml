@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57540
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,91 @@ definitions:
       Catalyses the reaction: NAD(+) = ADP-1-deoxy-1,O(4)-didehydro-D-ribose + nicotinamide
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of NAD(+) = ADP-1-deoxy-1,O(4)-didehydro-D-ribose + nicotinamide
+  description: Substrate-to-product chemistry of RHEA:75883, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:75884 (rh:substrates → 75883_L, rh:products → 75883_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of NAD(+) = ADP-1-deoxy-1,O(4)-didehydro-D-ribose + nicotinamide
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:75883
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: NAD(+) = ADP-1-deoxy-1,O(4)-didehydro-D-ribose + nicotinamide'
+  - node_id: sub1
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: ADP-1-deoxy-1,O(4)-didehydro-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:194486
+    description: Formula C15H20N5O13P2.
+  - node_id: prd2
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+    description: Formula C6H6N2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ADP-riboxanase-[protein] activity
+    grounding: GO:0140740
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75884
+      snippet: NAD(+) => ADP-1-deoxy-1,O(4)-didehydro-D-ribose + nicotinamide
+      notes: Rhea's left-to-right directional reaction RHEA:75884 declares side 75883_L as its substrates
+        (rh:substrates); the master reaction RHEA:75883 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:36423631 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ADP-1-deoxy-1,O(4)-didehydro-D-ribose is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:75884
+      snippet: NAD(+) => ADP-1-deoxy-1,O(4)-didehydro-D-ribose + nicotinamide
+      notes: Rhea's left-to-right directional reaction RHEA:75884 declares side 75883_R as its products
+        (rh:products); the master reaction RHEA:75883 is undirected. This participant is CHEBI:194486
+        with coefficient 1. Rhea cites PMID:36423631 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nicotinamide is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75884
+      snippet: NAD(+) => ADP-1-deoxy-1,O(4)-didehydro-D-ribose + nicotinamide
+      notes: Rhea's left-to-right directional reaction RHEA:75884 declares side 75883_R as its products
+        (rh:products); the master reaction RHEA:75883 is undirected. This participant is CHEBI:17154 with
+        coefficient 1. Rhea cites PMID:36423631 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:75883
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0140740"/>
+      notes: The rdfs:seeAlso triple on RHEA:75883 in rhea.rdf. GO term GO:0140740 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

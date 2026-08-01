@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.11.1.7
     mapping_source: rhea2ec
@@ -46,4 +46,187 @@ definitions:
       Catalyses the reaction: 2 a phenolic donor + H2O2 = 2 a phenolic radical donor + 2 H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 a phenolic donor + H2O2 = 2 a phenolic radical donor + 2 H2O
+  description: Substrate-to-product chemistry of RHEA:56136, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:56137 (rh:substrates → 56136_L, rh:products → 56136_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 a phenolic donor + H2O2 = 2 a phenolic radical donor + 2 H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:56136
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 a phenolic donor + H2O2 = 2 a phenolic radical donor + 2 H2O'
+  - node_id: sub1
+    label: a phenolic donor
+    node_type: CHEMICAL
+    grounding: CHEBI:139520
+    description: Formula C6H5OR.
+  - node_id: sub2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: prd1
+    label: a phenolic radical donor
+    node_type: CHEMICAL
+    grounding: CHEBI:139521
+    description: Formula C6H4OR.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: lactoperoxidase activity
+    grounding: GO:0140825
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: peroxidase
+    grounding: EC:1.11.1.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q55080
+    node_type: PROTEIN
+    label: CP119_SULAC
+    grounding: UniProtKB:Q55080
+  - node_id: prot_K7N5M8
+    node_type: PROTEIN
+    label: DYP2_AMYS7
+    grounding: UniProtKB:K7N5M8
+  - node_id: prot_I2DBY1
+    node_type: PROTEIN
+    label: DYP_AURAJ
+    grounding: UniProtKB:I2DBY1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a phenolic donor is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:56137
+      snippet: 2 a phenolic donor + H2O2 => 2 a phenolic radical donor + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:56137 declares side 56136_L as its substrates
+        (rh:substrates); the master reaction RHEA:56136 is undirected. This participant is CHEBI:139520
+        with coefficient 2. Rhea cites PMID:19055540, PMID:17936696, PMID:23054399, PMID:19406744 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56137
+      snippet: 2 a phenolic donor + H2O2 => 2 a phenolic radical donor + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:56137 declares side 56136_L as its substrates
+        (rh:substrates); the master reaction RHEA:56136 is undirected. This participant is CHEBI:16240
+        with coefficient 1. Rhea cites PMID:19055540, PMID:17936696, PMID:23054399, PMID:19406744 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a phenolic radical donor is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:56137
+      snippet: 2 a phenolic donor + H2O2 => 2 a phenolic radical donor + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:56137 declares side 56136_R as its products
+        (rh:products); the master reaction RHEA:56136 is undirected. This participant is CHEBI:139521
+        with coefficient 2. Rhea cites PMID:19055540, PMID:17936696, PMID:23054399, PMID:19406744 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:56137
+      snippet: 2 a phenolic donor + H2O2 => 2 a phenolic radical donor + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:56137 declares side 56136_R as its products
+        (rh:products); the master reaction RHEA:56136 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:19055540, PMID:17936696, PMID:23054399, PMID:19406744 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:56136
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0140825"/>
+      notes: The rdfs:seeAlso triple on RHEA:56136 in rhea.rdf. GO term GO:0140825 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.11.1.7; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:56136
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.1.7"/>
+      notes: The rh:ec triple on RHEA:56136 in rhea.rdf. EC 1.11.1.7 is itself a record in this KB.
+  - subject: prot_Q55080
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP119_SULAC is an exemplar enzyme carrying EC 1.11.1.7, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.11.1.7
+      snippet: DR   Q55080, CP119_SULAC;  K7N5M8, DYP2_AMYS7 ;  I2DBY1, DYP_AURAJ  ;
+      notes: ExPASy ENZYME entry EC 1.11.1.7 cross-references UniProtKB:Q55080 (CP119_SULAC) as a protein
+        with this activity.
+    - reference: RHEA:56136
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.1.7"/>
+      notes: Rhea assigns RHEA:56136 to EC 1.11.1.7, and EC 1.11.1.7 maps to exactly one Rhea master reaction
+        (RHEA:56136), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_K7N5M8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DYP2_AMYS7 is an exemplar enzyme carrying EC 1.11.1.7, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.11.1.7
+      snippet: DR   Q55080, CP119_SULAC;  K7N5M8, DYP2_AMYS7 ;  I2DBY1, DYP_AURAJ  ;
+      notes: ExPASy ENZYME entry EC 1.11.1.7 cross-references UniProtKB:K7N5M8 (DYP2_AMYS7) as a protein
+        with this activity.
+    - reference: RHEA:56136
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.1.7"/>
+      notes: Rhea assigns RHEA:56136 to EC 1.11.1.7, and EC 1.11.1.7 maps to exactly one Rhea master reaction
+        (RHEA:56136), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_I2DBY1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DYP_AURAJ is an exemplar enzyme carrying EC 1.11.1.7, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.11.1.7
+      snippet: DR   Q55080, CP119_SULAC;  K7N5M8, DYP2_AMYS7 ;  I2DBY1, DYP_AURAJ  ;
+      notes: ExPASy ENZYME entry EC 1.11.1.7 cross-references UniProtKB:I2DBY1 (DYP_AURAJ) as a protein
+        with this activity.
+    - reference: RHEA:56136
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.1.7"/>
+      notes: Rhea assigns RHEA:56136 to EC 1.11.1.7, and EC 1.11.1.7 maps to exactly one Rhea master reaction
+        (RHEA:56136), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

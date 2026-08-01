@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 synonyms:
@@ -45,4 +45,153 @@ definitions:
       Catalyses: 1-(5-phospho-beta-D-ribosyl)-ATP + diphosphate = 5-phospho-alpha-D-ribose 1-diphosphate + ATP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ATP phosphoribosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.17. EC 2.4.2.17 maps to exactly
+    one curated Rhea reaction (RHEA:18473), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "1-(5-phospho-beta-D-ribosyl)-ATP
+    + diphosphate = 5-phospho-alpha-D-ribose 1-diphosphate + ATP". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ATP phosphoribosyltransferase
+    grounding: EC:2.4.2.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 1-(5-phospho-beta-D-ribosyl)-ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:73183
+    description: Formula C15H19N5O20P4.
+  - node_id: sub2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd1
+    label: 5-phospho-alpha-D-ribose 1-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58017
+    description: Formula C5H8O14P3.
+  - node_id: prd2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ATP phosphoribosyltransferase activity
+    grounding: GO:0003879
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P60804
+    node_type: PROTEIN
+    label: HIS11_GEOSL
+    grounding: UniProtKB:P60804
+  - node_id: prot_P60836
+    node_type: PROTEIN
+    label: HIS12_GEOSL
+    grounding: UniProtKB:P60836
+  - node_id: prot_Q9S762
+    node_type: PROTEIN
+    label: HIS1A_ARATH
+    grounding: UniProtKB:Q9S762
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-(5-phospho-beta-D-ribosyl)-ATP is a substrate consumed by RHEA:18473 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18474
+      snippet: 1-(5-phospho-beta-D-ribosyl)-ATP + diphosphate => 5-phospho-alpha-D-ribose 1-diphosphate
+        + ATP
+      notes: Rhea's left-to-right directional reaction RHEA:18474 declares side 18473_L as its substrates
+        (rh:substrates); the master reaction RHEA:18473 is undirected. This participant is CHEBI:73183
+        with coefficient 1. Rhea cites PMID:14741209, PMID:12511575 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: diphosphate is a substrate consumed by RHEA:18473 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18474
+      snippet: 1-(5-phospho-beta-D-ribosyl)-ATP + diphosphate => 5-phospho-alpha-D-ribose 1-diphosphate
+        + ATP
+      notes: Rhea's left-to-right directional reaction RHEA:18474 declares side 18473_L as its substrates
+        (rh:substrates); the master reaction RHEA:18473 is undirected. This participant is CHEBI:33019
+        with coefficient 1. Rhea cites PMID:14741209, PMID:12511575 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-phospho-alpha-D-ribose 1-diphosphate is a product released by RHEA:18473 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18474
+      snippet: 1-(5-phospho-beta-D-ribosyl)-ATP + diphosphate => 5-phospho-alpha-D-ribose 1-diphosphate
+        + ATP
+      notes: Rhea's left-to-right directional reaction RHEA:18474 declares side 18473_R as its products
+        (rh:products); the master reaction RHEA:18473 is undirected. This participant is CHEBI:58017 with
+        coefficient 1. Rhea cites PMID:14741209, PMID:12511575 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ATP is a product released by RHEA:18473 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18474
+      snippet: 1-(5-phospho-beta-D-ribosyl)-ATP + diphosphate => 5-phospho-alpha-D-ribose 1-diphosphate
+        + ATP
+      notes: Rhea's left-to-right directional reaction RHEA:18474 declares side 18473_R as its products
+        (rh:products); the master reaction RHEA:18473 is undirected. This participant is CHEBI:30616 with
+        coefficient 1. Rhea cites PMID:14741209, PMID:12511575 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.2.17
+      snippet: EC:2.4.2.17 > GO:ATP phosphoribosyltransferase activity ; GO:0003879
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003879 is itself a record
+        in this KB.
+  - subject: prot_P60804
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS11_GEOSL is an exemplar enzyme with EC 2.4.2.17 activity.
+    evidence:
+    - reference: EC:2.4.2.17
+      snippet: DR   P60804, HIS11_GEOSL;  P60836, HIS12_GEOSL;  Q9S762, HIS1A_ARATH;
+      notes: ExPASy ENZYME entry EC 2.4.2.17 cross-references UniProtKB:P60804 (HIS11_GEOSL) as a protein
+        with this activity.
+  - subject: prot_P60836
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS12_GEOSL is an exemplar enzyme with EC 2.4.2.17 activity.
+    evidence:
+    - reference: EC:2.4.2.17
+      snippet: DR   P60804, HIS11_GEOSL;  P60836, HIS12_GEOSL;  Q9S762, HIS1A_ARATH;
+      notes: ExPASy ENZYME entry EC 2.4.2.17 cross-references UniProtKB:P60836 (HIS12_GEOSL) as a protein
+        with this activity.
+  - subject: prot_Q9S762
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS1A_ARATH is an exemplar enzyme with EC 2.4.2.17 activity.
+    evidence:
+    - reference: EC:2.4.2.17
+      snippet: DR   P60804, HIS11_GEOSL;  P60836, HIS12_GEOSL;  Q9S762, HIS1A_ARATH;
+      notes: ExPASy ENZYME entry EC 2.4.2.17 cross-references UniProtKB:Q9S762 (HIS1A_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

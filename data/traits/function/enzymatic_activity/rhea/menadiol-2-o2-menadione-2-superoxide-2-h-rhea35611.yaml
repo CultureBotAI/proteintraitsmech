@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:6746
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,106 @@ definitions:
       Catalyses the reaction: menadiol + 2 O2 = menadione + 2 superoxide + 2 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of menadiol + 2 O2 = menadione + 2 superoxide + 2 H(+)
+  description: Substrate-to-product chemistry of RHEA:35611, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35612 (rh:substrates → 35611_L, rh:products → 35611_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of menadiol + 2 O2 = menadione + 2 superoxide + 2 H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:35611
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: menadiol + 2 O2 = menadione + 2 superoxide + 2 H(+)'
+  - node_id: sub1
+    label: menadiol
+    node_type: CHEMICAL
+    grounding: CHEBI:6746
+    description: Formula C11H10O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: menadione
+    node_type: CHEMICAL
+    grounding: CHEBI:28869
+    description: Formula C11H8O2.
+  - node_id: prd2
+    label: superoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:18421
+    description: Formula O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: menadiol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35612
+      snippet: menadiol + 2 O2 => menadione + 2 superoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35612 declares side 35611_L as its substrates
+        (rh:substrates); the master reaction RHEA:35611 is undirected. This participant is CHEBI:6746
+        with coefficient 1. Rhea cites PMID:15613473 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:35612
+      snippet: menadiol + 2 O2 => menadione + 2 superoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35612 declares side 35611_L as its substrates
+        (rh:substrates); the master reaction RHEA:35611 is undirected. This participant is CHEBI:15379
+        with coefficient 2. Rhea cites PMID:15613473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: menadione is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35612
+      snippet: menadiol + 2 O2 => menadione + 2 superoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35612 declares side 35611_R as its products
+        (rh:products); the master reaction RHEA:35611 is undirected. This participant is CHEBI:28869 with
+        coefficient 1. Rhea cites PMID:15613473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: superoxide is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:35612
+      snippet: menadiol + 2 O2 => menadione + 2 superoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35612 declares side 35611_R as its products
+        (rh:products); the master reaction RHEA:35611 is undirected. This participant is CHEBI:18421 with
+        coefficient 2. Rhea cites PMID:15613473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:35612
+      snippet: menadiol + 2 O2 => menadione + 2 superoxide + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35612 declares side 35611_R as its products
+        (rh:products); the master reaction RHEA:35611 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:15613473 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

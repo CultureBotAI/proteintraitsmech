@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.1.1.96
     mapping_source: rhea2ec
@@ -32,4 +32,154 @@ definitions:
       Catalyses the reaction: D-tyrosyl-tRNA(Tyr) + H2O = D-tyrosine + tRNA(Tyr)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-tyrosyl-tRNA(Tyr) + H2O = D-tyrosine + tRNA(Tyr)
+  description: Substrate-to-product chemistry of RHEA:25347, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:25348 (rh:substrates → 25347_L, rh:products → 25347_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-tyrosyl-tRNA(Tyr) + H2O = D-tyrosine + tRNA(Tyr)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:25347
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-tyrosyl-tRNA(Tyr) + H2O = D-tyrosine + tRNA(Tyr)'
+  - node_id: sub1
+    label: D-tyrosyl-tRNA(Tyr)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9872
+    description: Rhea compound GENERIC:9872.
+  - node_id: sub1_rp1
+    label: 3-O-adenylyl-D-tyrosine group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9872 (D-tyrosyl-tRNA(Tyr));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78723
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58570
+    description: Formula C9H11NO3.
+  - node_id: prd2
+    label: tRNA(Tyr)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9707
+    description: Rhea compound GENERIC:9707.
+  - node_id: prd2_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9707 (tRNA(Tyr));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: D-tyrosyl-tRNA(Tyr) deacylase activity
+    grounding: GO:0051500
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: D-aminoacyl-tRNA deacylase
+    grounding: EC:3.1.1.96
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-tyrosyl-tRNA(Tyr) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25348
+      snippet: D-tyrosyl-tRNA(Tyr) + H2O => D-tyrosine + tRNA(Tyr)
+      notes: Rhea's left-to-right directional reaction RHEA:25348 declares side 25347_L as its substrates
+        (rh:substrates); the master reaction RHEA:25347 is undirected. This participant is GENERIC:9872
+        with coefficient 1. Rhea cites PMID:10383414, PMID:11568181, PMID:10918062 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3-O-adenylyl-D-tyrosine group is the reactive part of D-tyrosyl-tRNA(Tyr).
+    evidence:
+    - reference: RHEA:25347
+      snippet: 3-O-adenylyl-D-tyrosine group
+      notes: Rhea compound GENERIC:9872 (D-tyrosyl-tRNA(Tyr)) declares rh:reactivePart = 3-O-adenylyl-D-tyrosine
+        group (CHEBI:78723), formula C19H21N6O8P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25348
+      snippet: D-tyrosyl-tRNA(Tyr) + H2O => D-tyrosine + tRNA(Tyr)
+      notes: Rhea's left-to-right directional reaction RHEA:25348 declares side 25347_L as its substrates
+        (rh:substrates); the master reaction RHEA:25347 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10383414, PMID:11568181, PMID:10918062 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-tyrosine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25348
+      snippet: D-tyrosyl-tRNA(Tyr) + H2O => D-tyrosine + tRNA(Tyr)
+      notes: Rhea's left-to-right directional reaction RHEA:25348 declares side 25347_R as its products
+        (rh:products); the master reaction RHEA:25347 is undirected. This participant is CHEBI:58570 with
+        coefficient 1. Rhea cites PMID:10383414, PMID:11568181, PMID:10918062 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: tRNA(Tyr) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25348
+      snippet: D-tyrosyl-tRNA(Tyr) + H2O => D-tyrosine + tRNA(Tyr)
+      notes: Rhea's left-to-right directional reaction RHEA:25348 declares side 25347_R as its products
+        (rh:products); the master reaction RHEA:25347 is undirected. This participant is GENERIC:9707
+        with coefficient 1. Rhea cites PMID:10383414, PMID:11568181, PMID:10918062 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: AMP 3'-end residue is the reactive part of tRNA(Tyr).
+    evidence:
+    - reference: RHEA:25347
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9707 (tRNA(Tyr)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:25347
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0051500"/>
+      notes: The rdfs:seeAlso triple on RHEA:25347 in rhea.rdf. GO term GO:0051500 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.1.1.96; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:25347
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.96"/>
+      notes: The rh:ec triple on RHEA:25347 in rhea.rdf. EC 3.1.1.96 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

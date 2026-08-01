@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:180903
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,75 @@ definitions:
       Catalyses the reaction: spermine monoaldehyde = acrolein + spermidine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of spermine monoaldehyde = acrolein + spermidine
+  description: Substrate-to-product chemistry of RHEA:69152, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69153 (rh:substrates → 69152_L, rh:products → 69152_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of spermine monoaldehyde = acrolein + spermidine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69152
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: spermine monoaldehyde = acrolein + spermidine'
+  - node_id: sub1
+    label: spermine monoaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:180903
+    description: Formula C10H26N3O.
+  - node_id: prd1
+    label: acrolein
+    node_type: CHEMICAL
+    grounding: CHEBI:15368
+    description: Formula C3H4O.
+  - node_id: prd2
+    label: spermidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57834
+    description: Formula C7H22N3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: spermine monoaldehyde is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69153
+      snippet: spermine monoaldehyde => acrolein + spermidine
+      notes: Rhea's left-to-right directional reaction RHEA:69153 declares side 69152_L as its substrates
+        (rh:substrates); the master reaction RHEA:69152 is undirected. This participant is CHEBI:180903
+        with coefficient 1. Rhea cites PMID:2071588 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: acrolein is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69153
+      snippet: spermine monoaldehyde => acrolein + spermidine
+      notes: Rhea's left-to-right directional reaction RHEA:69153 declares side 69152_R as its products
+        (rh:products); the master reaction RHEA:69152 is undirected. This participant is CHEBI:15368 with
+        coefficient 1. Rhea cites PMID:2071588 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: spermidine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69153
+      snippet: spermine monoaldehyde => acrolein + spermidine
+      notes: Rhea's left-to-right directional reaction RHEA:69153 declares side 69152_R as its products
+        (rh:products); the master reaction RHEA:69152 is undirected. This participant is CHEBI:57834 with
+        coefficient 1. Rhea cites PMID:2071588 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

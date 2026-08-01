@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.8.1.8
     mapping_source: rhea2ec
@@ -26,4 +26,91 @@ definitions:
       Catalyses the reaction: (Z)-N-(sulfonatooxy)prop-2-enimidothioate = allyl thiocyanate + sulfate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (Z)-N-(sulfonatooxy)prop-2-enimidothioate = allyl thiocyanate + sulfate
+  description: Substrate-to-product chemistry of RHEA:69316, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69317 (rh:substrates → 69316_L, rh:products → 69316_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (Z)-N-(sulfonatooxy)prop-2-enimidothioate = allyl thiocyanate + sulfate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69316
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (Z)-N-(sulfonatooxy)prop-2-enimidothioate = allyl thiocyanate + sulfate'
+  - node_id: sub1
+    label: (Z)-N-(sulfonatooxy)prop-2-enimidothioate
+    node_type: CHEMICAL
+    grounding: CHEBI:183062
+    description: Formula C4H5NO4S2.
+  - node_id: prd1
+    label: allyl thiocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:183082
+    description: Formula C4H5NS.
+  - node_id: prd2
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: N-(sulfonatooxy)prop-2-enimidothioate sulfolyase
+    grounding: EC:4.8.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (Z)-N-(sulfonatooxy)prop-2-enimidothioate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69317
+      snippet: (Z)-N-(sulfonatooxy)prop-2-enimidothioate => allyl thiocyanate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69317 declares side 69316_L as its substrates
+        (rh:substrates); the master reaction RHEA:69316 is undirected. This participant is CHEBI:183062
+        with coefficient 1. Rhea cites PMID:21783213 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: allyl thiocyanate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69317
+      snippet: (Z)-N-(sulfonatooxy)prop-2-enimidothioate => allyl thiocyanate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69317 declares side 69316_R as its products
+        (rh:products); the master reaction RHEA:69316 is undirected. This participant is CHEBI:183082
+        with coefficient 1. Rhea cites PMID:21783213 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69317
+      snippet: (Z)-N-(sulfonatooxy)prop-2-enimidothioate => allyl thiocyanate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69317 declares side 69316_R as its products
+        (rh:products); the master reaction RHEA:69316 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:21783213 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.8.1.8; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:69316
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.8.1.8"/>
+      notes: The rh:ec triple on RHEA:69316 in rhea.rdf. EC 4.8.1.8 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

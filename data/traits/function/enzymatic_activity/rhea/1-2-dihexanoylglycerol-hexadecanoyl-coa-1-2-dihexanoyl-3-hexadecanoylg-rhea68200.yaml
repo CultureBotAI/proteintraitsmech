@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:177077
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,95 @@ definitions:
       Catalyses the reaction: 1,2-dihexanoylglycerol + hexadecanoyl-CoA = 1,2-dihexanoyl-3-hexadecanoylglycerol + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1,2-dihexanoylglycerol + hexadecanoyl-CoA = 1,2-dihexanoyl-3-hexadecanoylglycerol
+    + CoA
+  description: Substrate-to-product chemistry of RHEA:68200, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:68201 (rh:substrates → 68200_L, rh:products → 68200_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1,2-dihexanoylglycerol + hexadecanoyl-CoA = 1,2-dihexanoyl-3-hexadecanoylgly…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:68200
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1,2-dihexanoylglycerol + hexadecanoyl-CoA = 1,2-dihexanoyl-3-hexadecanoylglycerol
+      + CoA'
+  - node_id: sub1
+    label: 1,2-dihexanoylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:177077
+    description: Formula C15H28O5.
+  - node_id: sub2
+    label: hexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57379
+    description: Formula C37H62N7O17P3S.
+  - node_id: prd1
+    label: 1,2-dihexanoyl-3-hexadecanoylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:177079
+    description: Formula C31H58O6.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1,2-dihexanoylglycerol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68201
+      snippet: 1,2-dihexanoylglycerol + hexadecanoyl-CoA => 1,2-dihexanoyl-3-hexadecanoylglycerol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:68201 declares side 68200_L as its substrates
+        (rh:substrates); the master reaction RHEA:68200 is undirected. This participant is CHEBI:177077
+        with coefficient 1. Rhea cites PMID:22623494 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hexadecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68201
+      snippet: 1,2-dihexanoylglycerol + hexadecanoyl-CoA => 1,2-dihexanoyl-3-hexadecanoylglycerol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:68201 declares side 68200_L as its substrates
+        (rh:substrates); the master reaction RHEA:68200 is undirected. This participant is CHEBI:57379
+        with coefficient 1. Rhea cites PMID:22623494 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1,2-dihexanoyl-3-hexadecanoylglycerol is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68201
+      snippet: 1,2-dihexanoylglycerol + hexadecanoyl-CoA => 1,2-dihexanoyl-3-hexadecanoylglycerol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:68201 declares side 68200_R as its products
+        (rh:products); the master reaction RHEA:68200 is undirected. This participant is CHEBI:177079
+        with coefficient 1. Rhea cites PMID:22623494 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68201
+      snippet: 1,2-dihexanoylglycerol + hexadecanoyl-CoA => 1,2-dihexanoyl-3-hexadecanoylglycerol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:68201 declares side 68200_R as its products
+        (rh:products); the master reaction RHEA:68200 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:22623494 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

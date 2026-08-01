@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.194
     mapping_source: rhea2ec
@@ -28,4 +28,107 @@ definitions:
       Catalyses the reaction: (20S)-ginsenoside R1 + H2O = (20S)-ginsenoside Rg1 + D-xylose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (20S)-ginsenoside R1 + H2O = (20S)-ginsenoside Rg1 + D-xylose
+  description: Substrate-to-product chemistry of RHEA:40767, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:40768 (rh:substrates → 40767_L, rh:products → 40767_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (20S)-ginsenoside R1 + H2O = (20S)-ginsenoside Rg1 + D-xylose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:40767
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (20S)-ginsenoside R1 + H2O = (20S)-ginsenoside Rg1 + D-xylose'
+  - node_id: sub1
+    label: (20S)-ginsenoside R1
+    node_type: CHEMICAL
+    grounding: CHEBI:77149
+    description: Formula C47H80O18.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (20S)-ginsenoside Rg1
+    node_type: CHEMICAL
+    grounding: CHEBI:67987
+    description: Formula C42H72O14.
+  - node_id: prd2
+    label: D-xylose
+    node_type: CHEMICAL
+    grounding: CHEBI:53455
+    description: Formula C5H10O5.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: ginsenosidase type IV
+    grounding: EC:3.2.1.194
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (20S)-ginsenoside R1 is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:40768
+      snippet: (20S)-ginsenoside R1 + H2O => (20S)-ginsenoside Rg1 + D-xylose
+      notes: Rhea's left-to-right directional reaction RHEA:40768 declares side 40767_L as its substrates
+        (rh:substrates); the master reaction RHEA:40767 is undirected. This participant is CHEBI:77149
+        with coefficient 1. Rhea cites PMID:22031031 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40768
+      snippet: (20S)-ginsenoside R1 + H2O => (20S)-ginsenoside Rg1 + D-xylose
+      notes: Rhea's left-to-right directional reaction RHEA:40768 declares side 40767_L as its substrates
+        (rh:substrates); the master reaction RHEA:40767 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:22031031 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (20S)-ginsenoside Rg1 is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:40768
+      snippet: (20S)-ginsenoside R1 + H2O => (20S)-ginsenoside Rg1 + D-xylose
+      notes: Rhea's left-to-right directional reaction RHEA:40768 declares side 40767_R as its products
+        (rh:products); the master reaction RHEA:40767 is undirected. This participant is CHEBI:67987 with
+        coefficient 1. Rhea cites PMID:22031031 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-xylose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40768
+      snippet: (20S)-ginsenoside R1 + H2O => (20S)-ginsenoside Rg1 + D-xylose
+      notes: Rhea's left-to-right directional reaction RHEA:40768 declares side 40767_R as its products
+        (rh:products); the master reaction RHEA:40767 is undirected. This participant is CHEBI:53455 with
+        coefficient 1. Rhea cites PMID:22031031 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.194; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:40767
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.194"/>
+      notes: The rh:ec triple on RHEA:40767 in rhea.rdf. EC 3.2.1.194 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

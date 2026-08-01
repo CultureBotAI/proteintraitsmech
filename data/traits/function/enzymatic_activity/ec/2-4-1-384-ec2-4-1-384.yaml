@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 canonical_examples:
@@ -29,4 +29,52 @@ definitions:
       Catalyses: an NDP-glycose + an acceptor = a glycosylated acceptor + NDP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of NDP-glycosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.384. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "an NDP-glycose
+    + an acceptor = a glycosylated acceptor + NDP".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: NDP-glycosyltransferase
+    grounding: EC:2.4.1.384
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q65JC2
+    node_type: PROTEIN
+    label: NDPGT_BACLD
+    grounding: UniProtKB:Q65JC2
+  - node_id: prot_O34539
+    node_type: PROTEIN
+    label: NDPGT_BACSU
+    grounding: UniProtKB:O34539
+  edges:
+  - subject: prot_Q65JC2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NDPGT_BACLD is an exemplar enzyme with EC 2.4.1.384 activity.
+    evidence:
+    - reference: EC:2.4.1.384
+      snippet: DR   Q65JC2, NDPGT_BACLD;  O34539, NDPGT_BACSU;
+      notes: ExPASy ENZYME entry EC 2.4.1.384 cross-references UniProtKB:Q65JC2 (NDPGT_BACLD) as a protein
+        with this activity.
+  - subject: prot_O34539
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NDPGT_BACSU is an exemplar enzyme with EC 2.4.1.384 activity.
+    evidence:
+    - reference: EC:2.4.1.384
+      snippet: DR   Q65JC2, NDPGT_BACLD;  O34539, NDPGT_BACSU;
+      notes: ExPASy ENZYME entry EC 2.4.1.384 cross-references UniProtKB:O34539 (NDPGT_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

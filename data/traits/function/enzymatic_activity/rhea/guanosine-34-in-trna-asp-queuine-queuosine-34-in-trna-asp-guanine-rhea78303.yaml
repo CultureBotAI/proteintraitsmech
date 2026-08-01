@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:74269
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,140 @@ definitions:
       Catalyses the reaction: guanosine(34) in tRNA(Asp) + queuine = queuosine(34) in tRNA(Asp) + guanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of guanosine(34) in tRNA(Asp) + queuine = queuosine(34) in tRNA(Asp) + guanine
+  description: Substrate-to-product chemistry of RHEA:78303, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78304 (rh:substrates → 78303_L, rh:products → 78303_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of guanosine(34) in tRNA(Asp) + queuine = queuosine(34) in tRNA(Asp) + guanine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78303
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: guanosine(34) in tRNA(Asp) + queuine = queuosine(34) in tRNA(Asp) + guanine'
+  - node_id: sub1
+    label: guanosine(34) in tRNA(Asp)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19056
+    description: Rhea compound GENERIC:19056.
+  - node_id: sub1_rp1
+    label: GMP residue at position 34
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19056 (guanosine(34)
+      in tRNA(Asp)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74269
+  - node_id: sub2
+    label: queuine
+    node_type: CHEMICAL
+    grounding: CHEBI:17433
+    description: Formula C12H15N5O3.
+  - node_id: prd1
+    label: queuosine(34) in tRNA(Asp)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18572
+    description: Rhea compound GENERIC:18572.
+  - node_id: prd1_rp1
+    label: queuosine 5'-phosphate residue at position 34
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18572 (queuosine(34)
+      in tRNA(Asp)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:194431
+  - node_id: prd2
+    label: guanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16235
+    description: Formula C5H5N5O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA-guanosine(34) queuine transglycosylase activity
+    grounding: GO:0008479
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: guanosine(34) in tRNA(Asp) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78304
+      snippet: guanosine(34) in tRNA(Asp) + queuine => queuosine(34) in tRNA(Asp) + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:78304 declares side 78303_L as its substrates
+        (rh:substrates); the master reaction RHEA:78303 is undirected. This participant is GENERIC:19056
+        with coefficient 1. Rhea cites PMID:7601103 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: GMP residue is the reactive part of guanosine(34) in tRNA(Asp).
+    evidence:
+    - reference: RHEA:78303
+      snippet: GMP residue
+      notes: Rhea compound GENERIC:19056 (guanosine(34) in tRNA(Asp)) declares rh:reactivePart at position
+        34 = GMP residue (CHEBI:74269), formula C10H11N5O7P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: queuine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78304
+      snippet: guanosine(34) in tRNA(Asp) + queuine => queuosine(34) in tRNA(Asp) + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:78304 declares side 78303_L as its substrates
+        (rh:substrates); the master reaction RHEA:78303 is undirected. This participant is CHEBI:17433
+        with coefficient 1. Rhea cites PMID:7601103 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: queuosine(34) in tRNA(Asp) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78304
+      snippet: guanosine(34) in tRNA(Asp) + queuine => queuosine(34) in tRNA(Asp) + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:78304 declares side 78303_R as its products
+        (rh:products); the master reaction RHEA:78303 is undirected. This participant is GENERIC:18572
+        with coefficient 1. Rhea cites PMID:7601103 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: queuosine 5'-phosphate residue is the reactive part of queuosine(34) in tRNA(Asp).
+    evidence:
+    - reference: RHEA:78303
+      snippet: queuosine 5'-phosphate residue
+      notes: Rhea compound GENERIC:18572 (queuosine(34) in tRNA(Asp)) declares rh:reactivePart at position
+        34 = queuosine 5'-phosphate residue (CHEBI:194431), formula C17H21N5O9P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: guanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78304
+      snippet: guanosine(34) in tRNA(Asp) + queuine => queuosine(34) in tRNA(Asp) + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:78304 declares side 78303_R as its products
+        (rh:products); the master reaction RHEA:78303 is undirected. This participant is CHEBI:16235 with
+        coefficient 1. Rhea cites PMID:7601103 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:78303
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008479"/>
+      notes: The rdfs:seeAlso triple on RHEA:78303 in rhea.rdf. GO term GO:0008479 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

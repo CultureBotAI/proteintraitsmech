@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 synonyms:
@@ -43,4 +43,295 @@ definitions:
       Catalyses: phenylethanolamine + S-adenosyl-L-methionine = N-methylphenylethanolamine + S-adenosyl-L-homocysteine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenylethanolamine N-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.28. Rhea assigns 2 curated
+    reactions to EC 2.1.1.28. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "phenylethanolamine + S-adenosyl-L-methionine = N-methylphenylethanolamine
+    + S-adenosyl-L-homocysteine + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phenylethanolamine N-methyltransferase
+    grounding: EC:2.1.1.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of phenylethanolamine + S-adenosyl-L-methionine = N-methylphenylethanolamine +…
+    grounding: RHEA:12176
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: phenylethanolamine + S-adenosyl-L-methionine = N-methylphenylethanolamine
+      + S-adenosyl-L-homocysteine + H(+)'
+  - node_id: rxn1_sub1
+    label: phenylethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57741
+    description: Formula C8H12NO.
+  - node_id: rxn1_sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: rxn1_prd1
+    label: N-methylphenylethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57946
+    description: Formula C9H14NO.
+  - node_id: rxn1_prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (R)-noradrenaline + S-adenosyl-L-methionine = (R)-adrenaline + S-adenosyl-L-…
+    grounding: RHEA:25269
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (R)-noradrenaline + S-adenosyl-L-methionine = (R)-adrenaline + S-adenosyl-L-homocysteine
+      + H(+)'
+  - node_id: rxn2_sub1
+    label: (R)-noradrenaline
+    node_type: CHEMICAL
+    grounding: CHEBI:72587
+    description: Formula C8H12NO3.
+  - node_id: rxn2_sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: rxn2_prd1
+    label: (R)-adrenaline
+    node_type: CHEMICAL
+    grounding: CHEBI:71406
+    description: Formula C9H14NO3.
+  - node_id: rxn2_prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phenylethanolamine N-methyltransferase activity
+    grounding: GO:0004603
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P10938
+    node_type: PROTEIN
+    label: PNMT_BOVIN
+    grounding: UniProtKB:P10938
+  - node_id: prot_P11086
+    node_type: PROTEIN
+    label: PNMT_HUMAN
+    grounding: UniProtKB:P11086
+  - node_id: prot_A0A5F8AH41
+    node_type: PROTEIN
+    label: PNMT_MACMU
+    grounding: UniProtKB:A0A5F8AH41
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:12176 is one of the 2 curated reactions Rhea assigns to EC 2.1.1.28; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:12176
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.28"/>
+      notes: The rh:ec triple on RHEA:12176 in rhea.rdf assigns that reaction to EC 2.1.1.28.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: phenylethanolamine is a substrate consumed by RHEA:12176 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12177
+      snippet: phenylethanolamine + S-adenosyl-L-methionine => N-methylphenylethanolamine + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12177 declares side 12176_L as its substrates
+        (rh:substrates); the master reaction RHEA:12176 is undirected. This participant is CHEBI:57741
+        with coefficient 1. Rhea cites PMID:22326747, PMID:16363801, PMID:5412063 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:12176 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12177
+      snippet: phenylethanolamine + S-adenosyl-L-methionine => N-methylphenylethanolamine + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12177 declares side 12176_L as its substrates
+        (rh:substrates); the master reaction RHEA:12176 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:22326747, PMID:16363801, PMID:5412063 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: N-methylphenylethanolamine is a product released by RHEA:12176 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12177
+      snippet: phenylethanolamine + S-adenosyl-L-methionine => N-methylphenylethanolamine + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12177 declares side 12176_R as its products
+        (rh:products); the master reaction RHEA:12176 is undirected. This participant is CHEBI:57946 with
+        coefficient 1. Rhea cites PMID:22326747, PMID:16363801, PMID:5412063 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:12176 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12177
+      snippet: phenylethanolamine + S-adenosyl-L-methionine => N-methylphenylethanolamine + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12177 declares side 12176_R as its products
+        (rh:products); the master reaction RHEA:12176 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:22326747, PMID:16363801, PMID:5412063 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:12176 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12177
+      snippet: phenylethanolamine + S-adenosyl-L-methionine => N-methylphenylethanolamine + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12177 declares side 12176_R as its products
+        (rh:products); the master reaction RHEA:12176 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22326747, PMID:16363801, PMID:5412063 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:25269 is one of the 2 curated reactions Rhea assigns to EC 2.1.1.28; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25269
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.28"/>
+      notes: The rh:ec triple on RHEA:25269 in rhea.rdf assigns that reaction to EC 2.1.1.28.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (R)-noradrenaline is a substrate consumed by RHEA:25269 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25270
+      snippet: (R)-noradrenaline + S-adenosyl-L-methionine => (R)-adrenaline + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25270 declares side 25269_L as its substrates
+        (rh:substrates); the master reaction RHEA:25269 is undirected. This participant is CHEBI:72587
+        with coefficient 1. Rhea cites PMID:22326747, PMID:16277617, PMID:16363801, PMID:5412063 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:25269 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25270
+      snippet: (R)-noradrenaline + S-adenosyl-L-methionine => (R)-adrenaline + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25270 declares side 25269_L as its substrates
+        (rh:substrates); the master reaction RHEA:25269 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:22326747, PMID:16277617, PMID:16363801, PMID:5412063 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (R)-adrenaline is a product released by RHEA:25269 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25270
+      snippet: (R)-noradrenaline + S-adenosyl-L-methionine => (R)-adrenaline + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25270 declares side 25269_R as its products
+        (rh:products); the master reaction RHEA:25269 is undirected. This participant is CHEBI:71406 with
+        coefficient 1. Rhea cites PMID:22326747, PMID:16277617, PMID:16363801, PMID:5412063 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:25269 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25270
+      snippet: (R)-noradrenaline + S-adenosyl-L-methionine => (R)-adrenaline + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25270 declares side 25269_R as its products
+        (rh:products); the master reaction RHEA:25269 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:22326747, PMID:16277617, PMID:16363801, PMID:5412063 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:25269 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25270
+      snippet: (R)-noradrenaline + S-adenosyl-L-methionine => (R)-adrenaline + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25270 declares side 25269_R as its products
+        (rh:products); the master reaction RHEA:25269 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22326747, PMID:16277617, PMID:16363801, PMID:5412063 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.1.1.28
+      snippet: EC:2.1.1.28 > GO:phenylethanolamine N-methyltransferase activity ; GO:0004603
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004603 is itself a record
+        in this KB.
+  - subject: prot_P10938
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PNMT_BOVIN is an exemplar enzyme with EC 2.1.1.28 activity.
+    evidence:
+    - reference: EC:2.1.1.28
+      snippet: DR   P10938, PNMT_BOVIN ;  P11086, PNMT_HUMAN ;  A0A5F8AH41, PNMT_MACMU ;
+      notes: ExPASy ENZYME entry EC 2.1.1.28 cross-references UniProtKB:P10938 (PNMT_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P11086
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PNMT_HUMAN is an exemplar enzyme with EC 2.1.1.28 activity.
+    evidence:
+    - reference: EC:2.1.1.28
+      snippet: DR   P10938, PNMT_BOVIN ;  P11086, PNMT_HUMAN ;  A0A5F8AH41, PNMT_MACMU ;
+      notes: ExPASy ENZYME entry EC 2.1.1.28 cross-references UniProtKB:P11086 (PNMT_HUMAN) as a protein
+        with this activity.
+  - subject: prot_A0A5F8AH41
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PNMT_MACMU is an exemplar enzyme with EC 2.1.1.28 activity.
+    evidence:
+    - reference: EC:2.1.1.28
+      snippet: DR   P10938, PNMT_BOVIN ;  P11086, PNMT_HUMAN ;  A0A5F8AH41, PNMT_MACMU ;
+      notes: ExPASy ENZYME entry EC 2.1.1.28 cross-references UniProtKB:A0A5F8AH41 (PNMT_MACMU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

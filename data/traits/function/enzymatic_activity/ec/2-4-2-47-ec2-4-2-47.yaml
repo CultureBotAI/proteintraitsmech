@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 canonical_examples:
@@ -33,4 +33,67 @@ definitions:
       Catalyses: Adds an alpha-D-arabinofuranosyl group from trans,octacis- decaprenylphospho-beta-D-arabinofuranose at the 3-O-position of an alpha- (1->5)-arabinofuranan chain attached to a beta-(1->5)-galactofuranan chain
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of arabinofuranan 3-O-arabinosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.47. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Adds an
+    alpha-D-arabinofuranosyl group from trans,octacis- decaprenylphospho-beta-D-arabinofuranose at the
+    3-O-position of an alpha- (1->5)-arabinofuranan chain attached to a beta-(1->5)-galactofuranan chain".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: arabinofuranan 3-O-arabinosyltransferase
+    grounding: EC:2.4.2.47
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q8NPB7
+    node_type: PROTEIN
+    label: AFTC_CORGL
+    grounding: UniProtKB:Q8NPB7
+  - node_id: prot_A0QW28
+    node_type: PROTEIN
+    label: AFTC_MYCS2
+    grounding: UniProtKB:A0QW28
+  - node_id: prot_P9WMZ6
+    node_type: PROTEIN
+    label: AFTC_MYCTO
+    grounding: UniProtKB:P9WMZ6
+  edges:
+  - subject: prot_Q8NPB7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFTC_CORGL is an exemplar enzyme with EC 2.4.2.47 activity.
+    evidence:
+    - reference: EC:2.4.2.47
+      snippet: DR   Q8NPB7, AFTC_CORGL ;  A0QW28, AFTC_MYCS2 ;  P9WMZ6, AFTC_MYCTO ;
+      notes: ExPASy ENZYME entry EC 2.4.2.47 cross-references UniProtKB:Q8NPB7 (AFTC_CORGL) as a protein
+        with this activity.
+  - subject: prot_A0QW28
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFTC_MYCS2 is an exemplar enzyme with EC 2.4.2.47 activity.
+    evidence:
+    - reference: EC:2.4.2.47
+      snippet: DR   Q8NPB7, AFTC_CORGL ;  A0QW28, AFTC_MYCS2 ;  P9WMZ6, AFTC_MYCTO ;
+      notes: ExPASy ENZYME entry EC 2.4.2.47 cross-references UniProtKB:A0QW28 (AFTC_MYCS2) as a protein
+        with this activity.
+  - subject: prot_P9WMZ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFTC_MYCTO is an exemplar enzyme with EC 2.4.2.47 activity.
+    evidence:
+    - reference: EC:2.4.2.47
+      snippet: DR   Q8NPB7, AFTC_CORGL ;  A0QW28, AFTC_MYCS2 ;  P9WMZ6, AFTC_MYCTO ;
+      notes: ExPASy ENZYME entry EC 2.4.2.47 cross-references UniProtKB:P9WMZ6 (AFTC_MYCTO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

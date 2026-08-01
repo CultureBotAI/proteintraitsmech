@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 synonyms:
@@ -49,4 +49,283 @@ definitions:
       Catalyses: (1) N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + H2O = ADP-D-ribose + L-arginyl-[protein]. (2) N(omega)-(ADP-D-ribosyl)-L-arginine + H2O = ADP-D-ribose + L-arginine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [protein ADP-ribosylarginine] hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.19. Rhea assigns 2 curated
+    reactions to EC 3.2.2.19. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + H2O =
+    ADP-D-ribose + L-arginyl-[protein]. (2) N(omega)-(ADP-D-ribosyl)-L-arginine + H2O = ADP-D-ribose +
+    L-arginine". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[protein ADP-ribosylarginine] hydrolase'
+    grounding: EC:3.2.2.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + H2O = ADP-D-ribose + L-arginy…
+    grounding: RHEA:14885
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + H2O = ADP-D-ribose + L-arginyl-[protein]'
+  - node_id: rxn1_sub1
+    label: N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15087
+    description: Rhea compound GENERIC:15087.
+  - node_id: rxn1_sub1_rp1
+    node_type: RESIDUE
+    label: N(omega)-(ADP-D-ribosyl)-L-arginine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:15087 (N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142554
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: ADP-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:57967
+    description: Formula C15H21N5O14P2.
+  - node_id: rxn1_prd2
+    label: L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10532
+    description: Rhea compound GENERIC:10532.
+  - node_id: rxn1_prd2_rp1
+    node_type: RESIDUE
+    label: L-arginine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10532 (L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29965
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of N(omega)-(ADP-D-ribosyl)-L-arginine + H2O = ADP-D-ribose + L-arginine
+    grounding: RHEA:20784
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O = ADP-D-ribose + L-arginine'
+  - node_id: rxn2_sub1
+    label: N(omega)-(ADP-D-ribosyl)-L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:60267
+    description: Formula C21H34N9O15P2.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: ADP-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:57967
+    description: Formula C15H21N5O14P2.
+  - node_id: rxn2_prd2
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ADP-ribosylarginine-[protein] hydrolase activity
+    grounding: GO:0003875
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9W2W5
+    node_type: PROTEIN
+    label: ADPR1_DROME
+    grounding: UniProtKB:Q9W2W5
+  - node_id: prot_Q9W4J9
+    node_type: PROTEIN
+    label: ADPR2_DROME
+    grounding: UniProtKB:Q9W4J9
+  - node_id: prot_Q32KR8
+    node_type: PROTEIN
+    label: ADPRH_BOVIN
+    grounding: UniProtKB:Q32KR8
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:14885 is one of the 2 curated reactions Rhea assigns to EC 3.2.2.19; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:14885
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.2.19"/>
+      notes: The rh:ec triple on RHEA:14885 in rhea.rdf assigns that reaction to EC 3.2.2.19.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] is a substrate consumed by RHEA:14885 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14886
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + H2O => ADP-D-ribose + L-arginyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:14886 declares side 14885_L as its substrates
+        (rh:substrates); the master reaction RHEA:14885 is undirected. This participant is GENERIC:15087
+        with coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:1375222, PMID:10358013 for this
+        reaction.
+  - subject: rxn1_sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: rxn1_sub1
+    description: N(omega)-(ADP-D-ribosyl)-L-arginine residue is the reactive part of N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:14885
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine residue
+      notes: Rhea compound GENERIC:15087 (N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein]) declares rh:reactivePart
+        = N(omega)-(ADP-D-ribosyl)-L-arginine residue (CHEBI:142554).
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:14885 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14886
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + H2O => ADP-D-ribose + L-arginyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:14886 declares side 14885_L as its substrates
+        (rh:substrates); the master reaction RHEA:14885 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:1375222, PMID:10358013 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: ADP-D-ribose is a product released by RHEA:14885 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14886
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + H2O => ADP-D-ribose + L-arginyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:14886 declares side 14885_R as its products
+        (rh:products); the master reaction RHEA:14885 is undirected. This participant is CHEBI:57967 with
+        coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:1375222, PMID:10358013 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: L-arginyl-[protein] is a product released by RHEA:14885 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14886
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + H2O => ADP-D-ribose + L-arginyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:14886 declares side 14885_R as its products
+        (rh:products); the master reaction RHEA:14885 is undirected. This participant is GENERIC:10532
+        with coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:1375222, PMID:10358013 for this
+        reaction.
+  - subject: rxn1_prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: rxn1_prd2
+    description: L-arginine residue is the reactive part of L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:14885
+      snippet: L-arginine residue
+      notes: Rhea compound GENERIC:10532 (L-arginyl-[protein]) declares rh:reactivePart = L-arginine residue
+        (CHEBI:29965).
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:20784 is one of the 2 curated reactions Rhea assigns to EC 3.2.2.19; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:20784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.2.19"/>
+      notes: The rh:ec triple on RHEA:20784 in rhea.rdf assigns that reaction to EC 3.2.2.19.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: N(omega)-(ADP-D-ribosyl)-L-arginine is a substrate consumed by RHEA:20784 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20785
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O => ADP-D-ribose + L-arginine
+      notes: Rhea's left-to-right directional reaction RHEA:20785 declares side 20784_L as its substrates
+        (rh:substrates); the master reaction RHEA:20784 is undirected. This participant is CHEBI:60267
+        with coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:10358013, PMID:8349667 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:20784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20785
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O => ADP-D-ribose + L-arginine
+      notes: Rhea's left-to-right directional reaction RHEA:20785 declares side 20784_L as its substrates
+        (rh:substrates); the master reaction RHEA:20784 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:10358013, PMID:8349667 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: ADP-D-ribose is a product released by RHEA:20784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20785
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O => ADP-D-ribose + L-arginine
+      notes: Rhea's left-to-right directional reaction RHEA:20785 declares side 20784_R as its products
+        (rh:products); the master reaction RHEA:20784 is undirected. This participant is CHEBI:57967 with
+        coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:10358013, PMID:8349667 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: L-arginine is a product released by RHEA:20784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20785
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O => ADP-D-ribose + L-arginine
+      notes: Rhea's left-to-right directional reaction RHEA:20785 declares side 20784_R as its products
+        (rh:products); the master reaction RHEA:20784 is undirected. This participant is CHEBI:32682 with
+        coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:10358013, PMID:8349667 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.19
+      snippet: EC:3.2.2.19 > GO:ADP-ribosylarginine-[protein] hydrolase activity ; GO:0003875
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003875 is itself a record
+        in this KB.
+  - subject: prot_Q9W2W5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADPR1_DROME is an exemplar enzyme with EC 3.2.2.19 activity.
+    evidence:
+    - reference: EC:3.2.2.19
+      snippet: DR   Q9W2W5, ADPR1_DROME;  Q9W4J9, ADPR2_DROME;  Q32KR8, ADPRH_BOVIN;
+      notes: ExPASy ENZYME entry EC 3.2.2.19 cross-references UniProtKB:Q9W2W5 (ADPR1_DROME) as a protein
+        with this activity.
+  - subject: prot_Q9W4J9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADPR2_DROME is an exemplar enzyme with EC 3.2.2.19 activity.
+    evidence:
+    - reference: EC:3.2.2.19
+      snippet: DR   Q9W2W5, ADPR1_DROME;  Q9W4J9, ADPR2_DROME;  Q32KR8, ADPRH_BOVIN;
+      notes: ExPASy ENZYME entry EC 3.2.2.19 cross-references UniProtKB:Q9W4J9 (ADPR2_DROME) as a protein
+        with this activity.
+  - subject: prot_Q32KR8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADPRH_BOVIN is an exemplar enzyme with EC 3.2.2.19 activity.
+    evidence:
+    - reference: EC:3.2.2.19
+      snippet: DR   Q9W2W5, ADPR1_DROME;  Q9W4J9, ADPR2_DROME;  Q32KR8, ADPRH_BOVIN;
+      notes: ExPASy ENZYME entry EC 3.2.2.19 cross-references UniProtKB:Q32KR8 (ADPRH_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

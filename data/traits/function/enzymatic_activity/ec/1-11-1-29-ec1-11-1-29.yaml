@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.11.1.-
 mapped_xrefs:
@@ -36,4 +36,208 @@ definitions:
       Catalyses: [mycoredoxin]-L-dithiol + a hydroperoxide = [mycoredoxin]-L-disulfide + an alcohol + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mycoredoxin-dependent peroxiredoxin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.11.1.29. EC 1.11.1.29 maps to
+    exactly one curated Rhea reaction (RHEA:62640), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[mycoredoxin]-L-dithiol
+    + a hydroperoxide = [mycoredoxin]-L-disulfide + an alcohol + H2O". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mycoredoxin-dependent peroxiredoxin
+    grounding: EC:1.11.1.29
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[mycoredoxin]-L-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:16138
+    description: Rhea compound GENERIC:16138.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue at position n
+    description: The reacting group Rhea names inside the generic participant GENERIC:16138 ([mycoredoxin]-L-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub1_rp2
+    node_type: RESIDUE
+    label: L-cysteine residue at position n+3
+    description: The reacting group Rhea names inside the generic participant GENERIC:16138 ([mycoredoxin]-L-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: a hydroperoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:35924
+    description: Formula HO2R.
+  - node_id: prd1
+    label: '[mycoredoxin]-L-disulfide'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:16137
+    description: Rhea compound GENERIC:16137.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-cystine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:16137 ([mycoredoxin]-L-disulfide);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:50058
+  - node_id: prd2
+    label: an alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+    description: Formula HOR.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_P65689
+    node_type: PROTEIN
+    label: AHPE_MYCBO
+    grounding: UniProtKB:P65689
+  - node_id: prot_P9WIE2
+    node_type: PROTEIN
+    label: AHPE_MYCTO
+    grounding: UniProtKB:P9WIE2
+  - node_id: prot_P9WIE3
+    node_type: PROTEIN
+    label: AHPE_MYCTU
+    grounding: UniProtKB:P9WIE3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[mycoredoxin]-L-dithiol is a substrate consumed by RHEA:62640 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:62641
+      snippet: '[mycoredoxin]-L-dithiol + a hydroperoxide => [mycoredoxin]-L-disulfide + an alcohol +
+        H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:62641 declares side 62640_L as its substrates
+        (rh:substrates); the master reaction RHEA:62640 is undirected. This participant is GENERIC:16138
+        with coefficient 1. Rhea cites PMID:27417938, PMID:24379404, PMID:27471753, PMID:19737009 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [mycoredoxin]-L-dithiol.
+    evidence:
+    - reference: RHEA:62640
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:16138 ([mycoredoxin]-L-dithiol) declares rh:reactivePart at position
+        n = L-cysteine residue (CHEBI:29950).
+  - subject: sub1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [mycoredoxin]-L-dithiol.
+    evidence:
+    - reference: RHEA:62640
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:16138 ([mycoredoxin]-L-dithiol) declares rh:reactivePart at position
+        n+3 = L-cysteine residue (CHEBI:29950).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a hydroperoxide is a substrate consumed by RHEA:62640 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62641
+      snippet: '[mycoredoxin]-L-dithiol + a hydroperoxide => [mycoredoxin]-L-disulfide + an alcohol +
+        H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:62641 declares side 62640_L as its substrates
+        (rh:substrates); the master reaction RHEA:62640 is undirected. This participant is CHEBI:35924
+        with coefficient 1. Rhea cites PMID:27417938, PMID:24379404, PMID:27471753, PMID:19737009 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[mycoredoxin]-L-disulfide is a product released by RHEA:62640 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:62641
+      snippet: '[mycoredoxin]-L-dithiol + a hydroperoxide => [mycoredoxin]-L-disulfide + an alcohol +
+        H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:62641 declares side 62640_R as its products
+        (rh:products); the master reaction RHEA:62640 is undirected. This participant is GENERIC:16137
+        with coefficient 1. Rhea cites PMID:27417938, PMID:24379404, PMID:27471753, PMID:19737009 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cystine residue is the reactive part of [mycoredoxin]-L-disulfide.
+    evidence:
+    - reference: RHEA:62640
+      snippet: L-cystine residue
+      notes: Rhea compound GENERIC:16137 ([mycoredoxin]-L-disulfide) declares rh:reactivePart = L-cystine
+        residue (CHEBI:50058).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: an alcohol is a product released by RHEA:62640 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62641
+      snippet: '[mycoredoxin]-L-dithiol + a hydroperoxide => [mycoredoxin]-L-disulfide + an alcohol +
+        H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:62641 declares side 62640_R as its products
+        (rh:products); the master reaction RHEA:62640 is undirected. This participant is CHEBI:30879 with
+        coefficient 1. Rhea cites PMID:27417938, PMID:24379404, PMID:27471753, PMID:19737009 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:62640 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62641
+      snippet: '[mycoredoxin]-L-dithiol + a hydroperoxide => [mycoredoxin]-L-disulfide + an alcohol +
+        H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:62641 declares side 62640_R as its products
+        (rh:products); the master reaction RHEA:62640 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:27417938, PMID:24379404, PMID:27471753, PMID:19737009 for this
+        reaction.
+  - subject: prot_P65689
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHPE_MYCBO is an exemplar enzyme with EC 1.11.1.29 activity.
+    evidence:
+    - reference: EC:1.11.1.29
+      snippet: DR   P65689, AHPE_MYCBO ;  P9WIE2, AHPE_MYCTO ;  P9WIE3, AHPE_MYCTU ;
+      notes: ExPASy ENZYME entry EC 1.11.1.29 cross-references UniProtKB:P65689 (AHPE_MYCBO) as a protein
+        with this activity.
+  - subject: prot_P9WIE2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHPE_MYCTO is an exemplar enzyme with EC 1.11.1.29 activity.
+    evidence:
+    - reference: EC:1.11.1.29
+      snippet: DR   P65689, AHPE_MYCBO ;  P9WIE2, AHPE_MYCTO ;  P9WIE3, AHPE_MYCTU ;
+      notes: ExPASy ENZYME entry EC 1.11.1.29 cross-references UniProtKB:P9WIE2 (AHPE_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WIE3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHPE_MYCTU is an exemplar enzyme with EC 1.11.1.29 activity.
+    evidence:
+    - reference: EC:1.11.1.29
+      snippet: DR   P65689, AHPE_MYCBO ;  P9WIE2, AHPE_MYCTO ;  P9WIE3, AHPE_MYCTU ;
+      notes: ExPASy ENZYME entry EC 1.11.1.29 cross-references UniProtKB:P9WIE3 (AHPE_MYCTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

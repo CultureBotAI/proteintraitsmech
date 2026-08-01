@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -43,4 +43,81 @@ definitions:
       Catalyses: (1,4-alpha-D-galacturonosyl)n+m + H2O = (1,4-alpha-D-galacturonosyl)n + (1,4-alpha-D-galacturonosyl)m
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of endo-polygalacturonase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.15. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "(1,4-alpha-D-galacturonosyl)n+m
+    + H2O = (1,4-alpha-D-galacturonosyl)n + (1,4-alpha-D-galacturonosyl)m".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: endo-polygalacturonase
+    grounding: EC:3.2.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: polygalacturonase activity
+    grounding: GO:0004650
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O23147
+    node_type: PROTEIN
+    label: ADPG1_ARATH
+    grounding: UniProtKB:O23147
+  - node_id: prot_Q8RY29
+    node_type: PROTEIN
+    label: ADPG2_ARATH
+    grounding: UniProtKB:Q8RY29
+  - node_id: prot_O74213
+    node_type: PROTEIN
+    label: PGLR1_ASPAC
+    grounding: UniProtKB:O74213
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.15
+      snippet: EC:3.2.1.15 > GO:polygalacturonase activity ; GO:0004650
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004650 is itself a record
+        in this KB.
+  - subject: prot_O23147
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADPG1_ARATH is an exemplar enzyme with EC 3.2.1.15 activity.
+    evidence:
+    - reference: EC:3.2.1.15
+      snippet: DR   O23147, ADPG1_ARATH;  Q8RY29, ADPG2_ARATH;  O74213, PGLR1_ASPAC;
+      notes: ExPASy ENZYME entry EC 3.2.1.15 cross-references UniProtKB:O23147 (ADPG1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q8RY29
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADPG2_ARATH is an exemplar enzyme with EC 3.2.1.15 activity.
+    evidence:
+    - reference: EC:3.2.1.15
+      snippet: DR   O23147, ADPG1_ARATH;  Q8RY29, ADPG2_ARATH;  O74213, PGLR1_ASPAC;
+      notes: ExPASy ENZYME entry EC 3.2.1.15 cross-references UniProtKB:Q8RY29 (ADPG2_ARATH) as a protein
+        with this activity.
+  - subject: prot_O74213
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGLR1_ASPAC is an exemplar enzyme with EC 3.2.1.15 activity.
+    evidence:
+    - reference: EC:3.2.1.15
+      snippet: DR   O23147, ADPG1_ARATH;  Q8RY29, ADPG2_ARATH;  O74213, PGLR1_ASPAC;
+      notes: ExPASy ENZYME entry EC 3.2.1.15 cross-references UniProtKB:O74213 (PGLR1_ASPAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

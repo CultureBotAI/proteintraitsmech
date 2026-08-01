@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -39,4 +39,216 @@ definitions:
       Catalyses: (1) (S)-piperazine-2-carboxamide + H2O = (S)-piperazine-2-carboxylate + NH4(+). (2) L-prolinamide + H2O = L-proline + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-proline amide hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.101. Rhea assigns 2 curated
+    reactions to EC 3.5.1.101. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (S)-piperazine-2-carboxamide + H2O = (S)-piperazine-2-carboxylate
+    + NH4(+). (2) L-prolinamide + H2O = L-proline + NH4(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-proline amide hydrolase
+    grounding: EC:3.5.1.101
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-prolinamide + H2O = L-proline + NH4(+)
+    grounding: RHEA:26510
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-prolinamide + H2O = L-proline + NH4(+)'
+  - node_id: rxn1_sub1
+    label: L-prolinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:58495
+    description: Formula C5H11N2O.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:60039
+    description: Formula C5H9NO2.
+  - node_id: rxn1_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (S)-piperazine-2-carboxamide + H2O = (S)-piperazine-2-carboxylate + NH4(+)
+    grounding: RHEA:26550
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (S)-piperazine-2-carboxamide + H2O = (S)-piperazine-2-carboxylate + NH4(+)'
+  - node_id: rxn2_sub1
+    label: (S)-piperazine-2-carboxamide
+    node_type: CHEMICAL
+    grounding: CHEBI:58919
+    description: Formula C5H12N3O.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: (S)-piperazine-2-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:58920
+    description: Formula C5H10N2O2.
+  - node_id: rxn2_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prot_Q76KX0
+    node_type: PROTEIN
+    label: LAAA_PSEAZ
+    grounding: UniProtKB:Q76KX0
+  - node_id: prot_C3K630
+    node_type: PROTEIN
+    label: LAAA_PSEFS
+    grounding: UniProtKB:C3K630
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:26510 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.101; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:26510
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.101"/>
+      notes: The rh:ec triple on RHEA:26510 in rhea.rdf assigns that reaction to EC 3.5.1.101.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: L-prolinamide is a substrate consumed by RHEA:26510 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26511
+      snippet: L-prolinamide + H2O => L-proline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26511 declares side 26510_L as its substrates
+        (rh:substrates); the master reaction RHEA:26510 is undirected. This participant is CHEBI:58495
+        with coefficient 1. Rhea cites PMID:15066172 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:26510 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26511
+      snippet: L-prolinamide + H2O => L-proline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26511 declares side 26510_L as its substrates
+        (rh:substrates); the master reaction RHEA:26510 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15066172 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: L-proline is a product released by RHEA:26510 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26511
+      snippet: L-prolinamide + H2O => L-proline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26511 declares side 26510_R as its products
+        (rh:products); the master reaction RHEA:26510 is undirected. This participant is CHEBI:60039 with
+        coefficient 1. Rhea cites PMID:15066172 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NH4(+) is a product released by RHEA:26510 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26511
+      snippet: L-prolinamide + H2O => L-proline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26511 declares side 26510_R as its products
+        (rh:products); the master reaction RHEA:26510 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:15066172 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:26550 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.101; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:26550
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.101"/>
+      notes: The rh:ec triple on RHEA:26550 in rhea.rdf assigns that reaction to EC 3.5.1.101.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (S)-piperazine-2-carboxamide is a substrate consumed by RHEA:26550 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26551
+      snippet: (S)-piperazine-2-carboxamide + H2O => (S)-piperazine-2-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26551 declares side 26550_L as its substrates
+        (rh:substrates); the master reaction RHEA:26550 is undirected. This participant is CHEBI:58919
+        with coefficient 1. Rhea cites PMID:15066172 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:26550 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26551
+      snippet: (S)-piperazine-2-carboxamide + H2O => (S)-piperazine-2-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26551 declares side 26550_L as its substrates
+        (rh:substrates); the master reaction RHEA:26550 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15066172 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (S)-piperazine-2-carboxylate is a product released by RHEA:26550 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26551
+      snippet: (S)-piperazine-2-carboxamide + H2O => (S)-piperazine-2-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26551 declares side 26550_R as its products
+        (rh:products); the master reaction RHEA:26550 is undirected. This participant is CHEBI:58920 with
+        coefficient 1. Rhea cites PMID:15066172 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NH4(+) is a product released by RHEA:26550 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26551
+      snippet: (S)-piperazine-2-carboxamide + H2O => (S)-piperazine-2-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26551 declares side 26550_R as its products
+        (rh:products); the master reaction RHEA:26550 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:15066172 for this reaction.
+  - subject: prot_Q76KX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LAAA_PSEAZ is an exemplar enzyme with EC 3.5.1.101 activity.
+    evidence:
+    - reference: EC:3.5.1.101
+      snippet: DR   Q76KX0, LAAA_PSEAZ ;  C3K630, LAAA_PSEFS ;
+      notes: ExPASy ENZYME entry EC 3.5.1.101 cross-references UniProtKB:Q76KX0 (LAAA_PSEAZ) as a protein
+        with this activity.
+  - subject: prot_C3K630
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LAAA_PSEFS is an exemplar enzyme with EC 3.5.1.101 activity.
+    evidence:
+    - reference: EC:3.5.1.101
+      snippet: DR   Q76KX0, LAAA_PSEAZ ;  C3K630, LAAA_PSEFS ;
+      notes: ExPASy ENZYME entry EC 3.5.1.101 cross-references UniProtKB:C3K630 (LAAA_PSEFS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.16.-
 synonyms:
@@ -43,4 +43,82 @@ definitions:
       Catalyses: Preferential cleavage: (Ac)2-L-Lys-D-Ala-|-D-Ala. Also transpeptidation of peptidyl-alanyl moieties that are N-acyl substituents of D-alanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of serine-type D-Ala-D-Ala carboxypeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.16.4. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage: (Ac)2-L-Lys-D-Ala-|-D-Ala. Also transpeptidation of peptidyl-alanyl moieties that are N-acyl
+    substituents of D-alanine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: serine-type D-Ala-D-Ala carboxypeptidase
+    grounding: EC:3.4.16.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: serine-type D-Ala-D-Ala carboxypeptidase activity
+    grounding: GO:0009002
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P08750
+    node_type: PROTEIN
+    label: DACA_BACSU
+    grounding: UniProtKB:P08750
+  - node_id: prot_P0AEB4
+    node_type: PROTEIN
+    label: DACA_ECO57
+    grounding: UniProtKB:P0AEB4
+  - node_id: prot_P0AEB3
+    node_type: PROTEIN
+    label: DACA_ECOL6
+    grounding: UniProtKB:P0AEB3
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.16.4
+      snippet: EC:3.4.16.4 > GO:serine-type D-Ala-D-Ala carboxypeptidase activity ; GO:0009002
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0009002 is itself a record
+        in this KB.
+  - subject: prot_P08750
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DACA_BACSU is an exemplar enzyme with EC 3.4.16.4 activity.
+    evidence:
+    - reference: EC:3.4.16.4
+      snippet: DR   P08750, DACA_BACSU ;  P0AEB4, DACA_ECO57 ;  P0AEB3, DACA_ECOL6 ;
+      notes: ExPASy ENZYME entry EC 3.4.16.4 cross-references UniProtKB:P08750 (DACA_BACSU) as a protein
+        with this activity.
+  - subject: prot_P0AEB4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DACA_ECO57 is an exemplar enzyme with EC 3.4.16.4 activity.
+    evidence:
+    - reference: EC:3.4.16.4
+      snippet: DR   P08750, DACA_BACSU ;  P0AEB4, DACA_ECO57 ;  P0AEB3, DACA_ECOL6 ;
+      notes: ExPASy ENZYME entry EC 3.4.16.4 cross-references UniProtKB:P0AEB4 (DACA_ECO57) as a protein
+        with this activity.
+  - subject: prot_P0AEB3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DACA_ECOL6 is an exemplar enzyme with EC 3.4.16.4 activity.
+    evidence:
+    - reference: EC:3.4.16.4
+      snippet: DR   P08750, DACA_BACSU ;  P0AEB4, DACA_ECO57 ;  P0AEB3, DACA_ECOL6 ;
+      notes: ExPASy ENZYME entry EC 3.4.16.4 cross-references UniProtKB:P0AEB3 (DACA_ECOL6) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

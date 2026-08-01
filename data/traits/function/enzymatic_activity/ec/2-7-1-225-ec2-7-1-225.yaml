@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 mapped_xrefs:
@@ -36,4 +36,147 @@ definitions:
       Catalyses: L-serine + ATP = O-phospho-L-serine + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-serine kinase (ATP)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.225. EC 2.7.1.225 maps to
+    exactly one curated Rhea reaction (RHEA:59112), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-serine
+    + ATP = O-phospho-L-serine + ADP + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-serine kinase (ATP)
+    grounding: EC:2.7.1.225
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:33384
+    description: Formula C3H7NO3.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: O-phospho-L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:57524
+    description: Formula C3H6NO6P.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q2G1M5
+    node_type: PROTEIN
+    label: SBNI_STAA8
+    grounding: UniProtKB:Q2G1M5
+  - node_id: prot_B8D503
+    node_type: PROTEIN
+    label: SERK_DESA1
+    grounding: UniProtKB:B8D503
+  - node_id: prot_E8R9N2
+    node_type: PROTEIN
+    label: SERK_DESM0
+    grounding: UniProtKB:E8R9N2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-serine is a substrate consumed by RHEA:59112 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59113
+      snippet: L-serine + ATP => O-phospho-L-serine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59113 declares side 59112_L as its substrates
+        (rh:substrates); the master reaction RHEA:59112 is undirected. This participant is CHEBI:33384
+        with coefficient 1. Rhea cites PMID:29483190 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:59112 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59113
+      snippet: L-serine + ATP => O-phospho-L-serine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59113 declares side 59112_L as its substrates
+        (rh:substrates); the master reaction RHEA:59112 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:29483190 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-phospho-L-serine is a product released by RHEA:59112 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59113
+      snippet: L-serine + ATP => O-phospho-L-serine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59113 declares side 59112_R as its products
+        (rh:products); the master reaction RHEA:59112 is undirected. This participant is CHEBI:57524 with
+        coefficient 1. Rhea cites PMID:29483190 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:59112 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59113
+      snippet: L-serine + ATP => O-phospho-L-serine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59113 declares side 59112_R as its products
+        (rh:products); the master reaction RHEA:59112 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:29483190 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:59112 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59113
+      snippet: L-serine + ATP => O-phospho-L-serine + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59113 declares side 59112_R as its products
+        (rh:products); the master reaction RHEA:59112 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29483190 for this reaction.
+  - subject: prot_Q2G1M5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SBNI_STAA8 is an exemplar enzyme with EC 2.7.1.225 activity.
+    evidence:
+    - reference: EC:2.7.1.225
+      snippet: DR   Q2G1M5, SBNI_STAA8 ;  B8D503, SERK_DESA1 ;  E8R9N2, SERK_DESM0 ;
+      notes: ExPASy ENZYME entry EC 2.7.1.225 cross-references UniProtKB:Q2G1M5 (SBNI_STAA8) as a protein
+        with this activity.
+  - subject: prot_B8D503
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SERK_DESA1 is an exemplar enzyme with EC 2.7.1.225 activity.
+    evidence:
+    - reference: EC:2.7.1.225
+      snippet: DR   Q2G1M5, SBNI_STAA8 ;  B8D503, SERK_DESA1 ;  E8R9N2, SERK_DESM0 ;
+      notes: ExPASy ENZYME entry EC 2.7.1.225 cross-references UniProtKB:B8D503 (SERK_DESA1) as a protein
+        with this activity.
+  - subject: prot_E8R9N2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SERK_DESM0 is an exemplar enzyme with EC 2.7.1.225 activity.
+    evidence:
+    - reference: EC:2.7.1.225
+      snippet: DR   Q2G1M5, SBNI_STAA8 ;  B8D503, SERK_DESA1 ;  E8R9N2, SERK_DESM0 ;
+      notes: ExPASy ENZYME entry EC 2.7.1.225 cross-references UniProtKB:E8R9N2 (SERK_DESM0) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

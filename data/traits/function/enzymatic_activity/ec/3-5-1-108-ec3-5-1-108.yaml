@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -47,4 +47,263 @@ definitions:
       Catalyses: a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine + H2O = a UDP-3-O-[(3R)-3-hydroxyacyl]-alpha-D-glucosamine + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-3-O-acyl-N-acetylglucosamine deacetylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.108. Rhea assigns 2 curated
+    reactions to EC 3.5.1.108. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine
+    + H2O = a UDP-3-O-[(3R)-3-hydroxyacyl]-alpha-D-glucosamine + acetate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-3-O-acyl-N-acetylglucosamine deacetylase
+    grounding: EC:3.5.1.108
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-alpha-D-glucosamine + H2O = U…
+    grounding: RHEA:25209
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-alpha-D-glucosamine + H2O
+      = UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-alpha-D-glucosamine + acetate'
+  - node_id: rxn1_sub1
+    label: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-alpha-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:61494
+    description: Formula C31H51N3O19P2.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-alpha-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:71573
+    description: Formula C29H50N3O18P2.
+  - node_id: rxn1_prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine + H2O = a UDP-3-…
+    grounding: RHEA:67816
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine + H2O = a UDP-3-O-[(3R)-3-hydroxyacyl]-alpha-D-glucosamine
+      + acetate'
+  - node_id: rxn2_sub1
+    label: a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:173225
+    description: Formula C20H28N3O19P2R.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: a UDP-3-O-[(3R)-3-hydroxyacyl]-alpha-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:137740
+    description: Formula C18H27N3O18P2R.
+  - node_id: rxn2_prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-3-O-acyl-N-acetylglucosamine deacetylase activity
+    grounding: GO:0103117
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_F4IAT8
+    node_type: PROTEIN
+    label: LPXC1_ARATH
+    grounding: UniProtKB:F4IAT8
+  - node_id: prot_P0DKB7
+    node_type: PROTEIN
+    label: LPXC2_ARATH
+    grounding: UniProtKB:P0DKB7
+  - node_id: prot_P0DKB8
+    node_type: PROTEIN
+    label: LPXC3_ARATH
+    grounding: UniProtKB:P0DKB8
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:25209 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.108; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25209
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.108"/>
+      notes: The rh:ec triple on RHEA:25209 in rhea.rdf assigns that reaction to EC 3.5.1.108.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-alpha-D-glucosamine is a substrate consumed
+      by RHEA:25209 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25210
+      snippet: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-alpha-D-glucosamine + H2O => UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-alpha-D-glucosamine
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:25210 declares side 25209_L as its substrates
+        (rh:substrates); the master reaction RHEA:25209 is undirected. This participant is CHEBI:61494
+        with coefficient 1. Rhea cites PMID:10026271, PMID:12819349, PMID:8824222, PMID:8530464 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:25209 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25210
+      snippet: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-alpha-D-glucosamine + H2O => UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-alpha-D-glucosamine
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:25210 declares side 25209_L as its substrates
+        (rh:substrates); the master reaction RHEA:25209 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10026271, PMID:12819349, PMID:8824222, PMID:8530464 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-alpha-D-glucosamine is a product released by RHEA:25209
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25210
+      snippet: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-alpha-D-glucosamine + H2O => UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-alpha-D-glucosamine
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:25210 declares side 25209_R as its products
+        (rh:products); the master reaction RHEA:25209 is undirected. This participant is CHEBI:71573 with
+        coefficient 1. Rhea cites PMID:10026271, PMID:12819349, PMID:8824222, PMID:8530464 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: acetate is a product released by RHEA:25209 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25210
+      snippet: UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-N-acetyl-alpha-D-glucosamine + H2O => UDP-3-O-[(3R)-3-hydroxytetradecanoyl]-alpha-D-glucosamine
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:25210 declares side 25209_R as its products
+        (rh:products); the master reaction RHEA:25209 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:10026271, PMID:12819349, PMID:8824222, PMID:8530464 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:67816 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.108; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:67816
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.108"/>
+      notes: The rh:ec triple on RHEA:67816 in rhea.rdf assigns that reaction to EC 3.5.1.108.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine is a substrate consumed by
+      RHEA:67816 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67817
+      snippet: a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine + H2O => a UDP-3-O-[(3R)-3-hydroxyacyl]-alpha-D-glucosamine
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:67817 declares side 67816_L as its substrates
+        (rh:substrates); the master reaction RHEA:67816 is undirected. This participant is CHEBI:173225
+        with coefficient 1. Rhea cites PMID:11148046, PMID:12819349, PMID:9068651, PMID:8530464 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:67816 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67817
+      snippet: a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine + H2O => a UDP-3-O-[(3R)-3-hydroxyacyl]-alpha-D-glucosamine
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:67817 declares side 67816_L as its substrates
+        (rh:substrates); the master reaction RHEA:67816 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11148046, PMID:12819349, PMID:9068651, PMID:8530464 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a UDP-3-O-[(3R)-3-hydroxyacyl]-alpha-D-glucosamine is a product released by RHEA:67816
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67817
+      snippet: a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine + H2O => a UDP-3-O-[(3R)-3-hydroxyacyl]-alpha-D-glucosamine
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:67817 declares side 67816_R as its products
+        (rh:products); the master reaction RHEA:67816 is undirected. This participant is CHEBI:137740
+        with coefficient 1. Rhea cites PMID:11148046, PMID:12819349, PMID:9068651, PMID:8530464 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: acetate is a product released by RHEA:67816 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67817
+      snippet: a UDP-3-O-[(3R)-3-hydroxyacyl]-N-acetyl-alpha-D-glucosamine + H2O => a UDP-3-O-[(3R)-3-hydroxyacyl]-alpha-D-glucosamine
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:67817 declares side 67816_R as its products
+        (rh:products); the master reaction RHEA:67816 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:11148046, PMID:12819349, PMID:9068651, PMID:8530464 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.108
+      snippet: EC:3.5.1.108 > GO:UDP-3-O-acyl-N-acetylglucosamine deacetylase activity ; GO:0103117
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0103117 is itself a record
+        in this KB.
+  - subject: prot_F4IAT8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LPXC1_ARATH is an exemplar enzyme with EC 3.5.1.108 activity.
+    evidence:
+    - reference: EC:3.5.1.108
+      snippet: DR   F4IAT8, LPXC1_ARATH;  P0DKB7, LPXC2_ARATH;  P0DKB8, LPXC3_ARATH;
+      notes: ExPASy ENZYME entry EC 3.5.1.108 cross-references UniProtKB:F4IAT8 (LPXC1_ARATH) as a protein
+        with this activity.
+  - subject: prot_P0DKB7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LPXC2_ARATH is an exemplar enzyme with EC 3.5.1.108 activity.
+    evidence:
+    - reference: EC:3.5.1.108
+      snippet: DR   F4IAT8, LPXC1_ARATH;  P0DKB7, LPXC2_ARATH;  P0DKB8, LPXC3_ARATH;
+      notes: ExPASy ENZYME entry EC 3.5.1.108 cross-references UniProtKB:P0DKB7 (LPXC2_ARATH) as a protein
+        with this activity.
+  - subject: prot_P0DKB8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LPXC3_ARATH is an exemplar enzyme with EC 3.5.1.108 activity.
+    evidence:
+    - reference: EC:3.5.1.108
+      snippet: DR   F4IAT8, LPXC1_ARATH;  P0DKB7, LPXC2_ARATH;  P0DKB8, LPXC3_ARATH;
+      notes: ExPASy ENZYME entry EC 3.5.1.108 cross-references UniProtKB:P0DKB8 (LPXC3_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

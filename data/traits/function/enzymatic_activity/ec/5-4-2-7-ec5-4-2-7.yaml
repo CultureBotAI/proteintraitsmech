@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.2.-
 synonyms:
@@ -47,4 +47,183 @@ definitions:
       Catalyses: alpha-D-ribose 1-phosphate = D-ribose 5-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphopentomutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.2.7. Rhea assigns 2 curated
+    reactions to EC 5.4.2.7. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "alpha-D-ribose 1-phosphate = D-ribose 5-phosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphopentomutase
+    grounding: EC:5.4.2.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of alpha-D-ribose 1-phosphate = D-ribose 5-phosphate
+    grounding: RHEA:18793
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: alpha-D-ribose 1-phosphate = D-ribose 5-phosphate'
+  - node_id: rxn1_sub1
+    label: alpha-D-ribose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57720
+    description: Formula C5H9O8P.
+  - node_id: rxn1_prd1
+    label: D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:78346
+    description: Formula C5H9O8P.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2-deoxy-alpha-D-ribose 1-phosphate = 2-deoxy-D-ribose 5-phosphate
+    grounding: RHEA:27658
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2-deoxy-alpha-D-ribose 1-phosphate = 2-deoxy-D-ribose 5-phosphate'
+  - node_id: rxn2_sub1
+    label: 2-deoxy-alpha-D-ribose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57259
+    description: Formula C5H9O7P.
+  - node_id: rxn2_prd1
+    label: 2-deoxy-D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:62877
+    description: Formula C5H9O7P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphopentomutase activity
+    grounding: GO:0008973
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q3K0S1
+    node_type: PROTEIN
+    label: DEOB1_STRA1
+    grounding: UniProtKB:Q3K0S1
+  - node_id: prot_Q3JYQ5
+    node_type: PROTEIN
+    label: DEOB2_STRA1
+    grounding: UniProtKB:Q3JYQ5
+  - node_id: prot_A3DD83
+    node_type: PROTEIN
+    label: DEOB_ACET2
+    grounding: UniProtKB:A3DD83
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:18793 is one of the 2 curated reactions Rhea assigns to EC 5.4.2.7; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:18793
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.7"/>
+      notes: The rh:ec triple on RHEA:18793 in rhea.rdf assigns that reaction to EC 5.4.2.7.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: alpha-D-ribose 1-phosphate is a substrate consumed by RHEA:18793 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18794
+      snippet: alpha-D-ribose 1-phosphate => D-ribose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18794 declares side 18793_L as its substrates
+        (rh:substrates); the master reaction RHEA:18793 is undirected. This participant is CHEBI:57720
+        with coefficient 1. Rhea cites PMID:23103740, PMID:15205420, PMID:17804405 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: D-ribose 5-phosphate is a product released by RHEA:18793 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18794
+      snippet: alpha-D-ribose 1-phosphate => D-ribose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18794 declares side 18793_R as its products
+        (rh:products); the master reaction RHEA:18793 is undirected. This participant is CHEBI:78346 with
+        coefficient 1. Rhea cites PMID:23103740, PMID:15205420, PMID:17804405 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:27658 is one of the 2 curated reactions Rhea assigns to EC 5.4.2.7; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:27658
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.7"/>
+      notes: The rh:ec triple on RHEA:27658 in rhea.rdf assigns that reaction to EC 5.4.2.7.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 2-deoxy-alpha-D-ribose 1-phosphate is a substrate consumed by RHEA:27658 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27659
+      snippet: 2-deoxy-alpha-D-ribose 1-phosphate => 2-deoxy-D-ribose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27659 declares side 27658_L as its substrates
+        (rh:substrates); the master reaction RHEA:27658 is undirected. This participant is CHEBI:57259
+        with coefficient 1. Rhea cites PMID:4992818, PMID:17804405, PMID:5824563 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2-deoxy-D-ribose 5-phosphate is a product released by RHEA:27658 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27659
+      snippet: 2-deoxy-alpha-D-ribose 1-phosphate => 2-deoxy-D-ribose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27659 declares side 27658_R as its products
+        (rh:products); the master reaction RHEA:27658 is undirected. This participant is CHEBI:62877 with
+        coefficient 1. Rhea cites PMID:4992818, PMID:17804405, PMID:5824563 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.2.7
+      snippet: EC:5.4.2.7 > GO:phosphopentomutase activity ; GO:0008973
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008973 is itself a record
+        in this KB.
+  - subject: prot_Q3K0S1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DEOB1_STRA1 is an exemplar enzyme with EC 5.4.2.7 activity.
+    evidence:
+    - reference: EC:5.4.2.7
+      snippet: DR   Q3K0S1, DEOB1_STRA1;  Q3JYQ5, DEOB2_STRA1;  A3DD83, DEOB_ACET2 ;
+      notes: ExPASy ENZYME entry EC 5.4.2.7 cross-references UniProtKB:Q3K0S1 (DEOB1_STRA1) as a protein
+        with this activity.
+  - subject: prot_Q3JYQ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DEOB2_STRA1 is an exemplar enzyme with EC 5.4.2.7 activity.
+    evidence:
+    - reference: EC:5.4.2.7
+      snippet: DR   Q3K0S1, DEOB1_STRA1;  Q3JYQ5, DEOB2_STRA1;  A3DD83, DEOB_ACET2 ;
+      notes: ExPASy ENZYME entry EC 5.4.2.7 cross-references UniProtKB:Q3JYQ5 (DEOB2_STRA1) as a protein
+        with this activity.
+  - subject: prot_A3DD83
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DEOB_ACET2 is an exemplar enzyme with EC 5.4.2.7 activity.
+    evidence:
+    - reference: EC:5.4.2.7
+      snippet: DR   Q3K0S1, DEOB1_STRA1;  Q3JYQ5, DEOB2_STRA1;  A3DD83, DEOB_ACET2 ;
+      notes: ExPASy ENZYME entry EC 5.4.2.7 cross-references UniProtKB:A3DD83 (DEOB_ACET2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

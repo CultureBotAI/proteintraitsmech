@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29969
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,165 @@ definitions:
       Catalyses the reaction: L-lysyl-[protein] + S-adenosyl-L-methionine = N(6)-methyl-L-lysyl-[protein] + S-adenosyl-L-homocysteine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-lysyl-[protein] + S-adenosyl-L-methionine = N(6)-methyl-L-lysyl-[protein]
+    + S-adenosy…
+  description: Substrate-to-product chemistry of RHEA:51736, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:51737 (rh:substrates → 51736_L, rh:products → 51736_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-lysyl-[protein] + S-adenosyl-L-methionine = N(6)-methyl-L-lysyl-[protein]…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:51736
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-lysyl-[protein] + S-adenosyl-L-methionine = N(6)-methyl-L-lysyl-[protein] + S-adenosyl-L-homocysteine
+      + H(+)'
+  - node_id: sub1
+    label: L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9752
+    description: Rhea compound GENERIC:9752.
+  - node_id: sub1_rp1
+    label: L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9752 (L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29969
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: N(6)-methyl-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13053
+    description: Rhea compound GENERIC:13053.
+  - node_id: prd1_rp1
+    label: N(6)-methyl-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13053 (N(6)-methyl-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:61929
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-lysine N-methyltransferase activity
+    grounding: GO:0016279
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-lysyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51737
+      snippet: L-lysyl-[protein] + S-adenosyl-L-methionine => N(6)-methyl-L-lysyl-[protein] + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51737 declares side 51736_L as its substrates
+        (rh:substrates); the master reaction RHEA:51736 is undirected. This participant is GENERIC:9752
+        with coefficient 1. Rhea cites PMID:27518565, PMID:23086207, PMID:30143613 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-lysine residue is the reactive part of L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:51736
+      snippet: L-lysine residue
+      notes: Rhea compound GENERIC:9752 (L-lysyl-[protein]) declares rh:reactivePart = L-lysine residue
+        (CHEBI:29969), formula C6H13N2O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51737
+      snippet: L-lysyl-[protein] + S-adenosyl-L-methionine => N(6)-methyl-L-lysyl-[protein] + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51737 declares side 51736_L as its substrates
+        (rh:substrates); the master reaction RHEA:51736 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:27518565, PMID:23086207, PMID:30143613 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-methyl-L-lysyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:51737
+      snippet: L-lysyl-[protein] + S-adenosyl-L-methionine => N(6)-methyl-L-lysyl-[protein] + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51737 declares side 51736_R as its products
+        (rh:products); the master reaction RHEA:51736 is undirected. This participant is GENERIC:13053
+        with coefficient 1. Rhea cites PMID:27518565, PMID:23086207, PMID:30143613 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-methyl-L-lysine residue is the reactive part of N(6)-methyl-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:51736
+      snippet: N(6)-methyl-L-lysine residue
+      notes: Rhea compound GENERIC:13053 (N(6)-methyl-L-lysyl-[protein]) declares rh:reactivePart = N(6)-methyl-L-lysine
+        residue (CHEBI:61929), formula C7H15N2O.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51737
+      snippet: L-lysyl-[protein] + S-adenosyl-L-methionine => N(6)-methyl-L-lysyl-[protein] + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51737 declares side 51736_R as its products
+        (rh:products); the master reaction RHEA:51736 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:27518565, PMID:23086207, PMID:30143613 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51737
+      snippet: L-lysyl-[protein] + S-adenosyl-L-methionine => N(6)-methyl-L-lysyl-[protein] + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51737 declares side 51736_R as its products
+        (rh:products); the master reaction RHEA:51736 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:27518565, PMID:23086207, PMID:30143613 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:51736
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0016279"/>
+      notes: The rdfs:seeAlso triple on RHEA:51736 in rhea.rdf. GO term GO:0016279 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

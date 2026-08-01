@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: 17,18-epoxy-17-hydroxycur-19-ene + malonyl-CoA = prestrychnine + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 17,18-epoxy-17-hydroxycur-19-ene N-malonyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.325. EC 2.3.1.325 maps to
+    exactly one curated Rhea reaction (RHEA:80919), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "17,18-epoxy-17-hydroxycur-19-ene
+    + malonyl-CoA = prestrychnine + CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 17,18-epoxy-17-hydroxycur-19-ene N-malonyltransferase
+    grounding: EC:2.3.1.325
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 17,18-epoxy-17-hydroxycur-19-ene
+    node_type: CHEMICAL
+    grounding: CHEBI:231746
+    description: Formula C19H23N2O2.
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: prd1
+    label: prestrychnine
+    node_type: CHEMICAL
+    grounding: CHEBI:231748
+    description: Formula C22H24N2O5.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_P0DO84
+    node_type: PROTEIN
+    label: AT_STRNX
+    grounding: UniProtKB:P0DO84
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 17,18-epoxy-17-hydroxycur-19-ene is a substrate consumed by RHEA:80919 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:80920
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + malonyl-CoA => prestrychnine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80920 declares side 80919_L as its substrates
+        (rh:substrates); the master reaction RHEA:80919 is undirected. This participant is CHEBI:231746
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by RHEA:80919 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80920
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + malonyl-CoA => prestrychnine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80920 declares side 80919_L as its substrates
+        (rh:substrates); the master reaction RHEA:80919 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: prestrychnine is a product released by RHEA:80919 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80920
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + malonyl-CoA => prestrychnine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80920 declares side 80919_R as its products
+        (rh:products); the master reaction RHEA:80919 is undirected. This participant is CHEBI:231748
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:80919 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80920
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + malonyl-CoA => prestrychnine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80920 declares side 80919_R as its products
+        (rh:products); the master reaction RHEA:80919 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: prot_P0DO84
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AT_STRNX is an exemplar enzyme with EC 2.3.1.325 activity.
+    evidence:
+    - reference: EC:2.3.1.325
+      snippet: DR   P0DO84, AT_STRNX   ;
+      notes: ExPASy ENZYME entry EC 2.3.1.325 cross-references UniProtKB:P0DO84 (AT_STRNX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

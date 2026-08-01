@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -31,4 +31,120 @@ definitions:
       Catalyses: (2R)-3-sulfolactate + NADP(+) = 3-sulfopyruvate + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2R)-3-sulfolactate dehydrogenase (NADP(+))
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.338. EC 1.1.1.338 maps to
+    exactly one curated Rhea reaction (RHEA:15537), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2R)-3-sulfolactate
+    + NADP(+) = 3-sulfopyruvate + NADPH + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (2R)-3-sulfolactate dehydrogenase (NADP(+))
+    grounding: EC:1.1.1.338
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2R)-3-sulfolactate
+    node_type: CHEMICAL
+    grounding: CHEBI:58738
+    description: Formula C3H4O6S.
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: 3-sulfopyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:57940
+    description: Formula C3H2O6S.
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q1QWN5
+    node_type: PROTEIN
+    label: COMC_CHRI1
+    grounding: UniProtKB:Q1QWN5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2R)-3-sulfolactate is a substrate consumed by RHEA:15537 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15538
+      snippet: (2R)-3-sulfolactate + NADP(+) => 3-sulfopyruvate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15538 declares side 15537_L as its substrates
+        (rh:substrates); the master reaction RHEA:15537 is undirected. This participant is CHEBI:58738
+        with coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by RHEA:15537 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15538
+      snippet: (2R)-3-sulfolactate + NADP(+) => 3-sulfopyruvate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15538 declares side 15537_L as its substrates
+        (rh:substrates); the master reaction RHEA:15537 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-sulfopyruvate is a product released by RHEA:15537 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15538
+      snippet: (2R)-3-sulfolactate + NADP(+) => 3-sulfopyruvate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15538 declares side 15537_R as its products
+        (rh:products); the master reaction RHEA:15537 is undirected. This participant is CHEBI:57940 with
+        coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by RHEA:15537 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15538
+      snippet: (2R)-3-sulfolactate + NADP(+) => 3-sulfopyruvate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15538 declares side 15537_R as its products
+        (rh:products); the master reaction RHEA:15537 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:15537 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15538
+      snippet: (2R)-3-sulfolactate + NADP(+) => 3-sulfopyruvate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15538 declares side 15537_R as its products
+        (rh:products); the master reaction RHEA:15537 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:20007648 for this reaction.
+  - subject: prot_Q1QWN5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COMC_CHRI1 is an exemplar enzyme with EC 1.1.1.338 activity.
+    evidence:
+    - reference: EC:1.1.1.338
+      snippet: DR   Q1QWN5, COMC_CHRI1 ;
+      notes: ExPASy ENZYME entry EC 1.1.1.338 cross-references UniProtKB:Q1QWN5 (COMC_CHRI1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

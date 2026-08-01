@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 synonyms:
@@ -65,4 +65,149 @@ definitions:
       Catalyses: a purine D-ribonucleoside + H2O = a purine nucleobase + D-ribose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of purine nucleosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.1. EC 3.2.2.1 maps to exactly
+    one curated Rhea reaction (RHEA:23344), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a purine D-ribonucleoside
+    + H2O = a purine nucleobase + D-ribose". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: purine nucleosidase
+    grounding: EC:3.2.2.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a purine D-ribonucleoside
+    node_type: CHEMICAL
+    grounding: CHEBI:142355
+    description: Formula C10H11N4O4R2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a purine nucleobase
+    node_type: CHEMICAL
+    grounding: CHEBI:26386
+    description: Formula C5H3N4R2.
+  - node_id: prd2
+    label: D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:47013
+    description: Formula C5H10O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: purine nucleosidase activity
+    grounding: GO:0008477
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9XWN7
+    node_type: PROTEIN
+    label: NSH1_CAEEL
+    grounding: UniProtKB:Q9XWN7
+  - node_id: prot_Q8RY23
+    node_type: PROTEIN
+    label: NSH3_ARATH
+    grounding: UniProtKB:Q8RY23
+  - node_id: prot_Q7KWM9
+    node_type: PROTEIN
+    label: RIH_DICDI
+    grounding: UniProtKB:Q7KWM9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a purine D-ribonucleoside is a substrate consumed by RHEA:23344 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23345
+      snippet: a purine D-ribonucleoside + H2O => a purine nucleobase + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:23345 declares side 23344_L as its substrates
+        (rh:substrates); the master reaction RHEA:23344 is undirected. This participant is CHEBI:142355
+        with coefficient 1. Rhea cites PMID:16630632, PMID:11282633, PMID:8702965, PMID:11854281 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:23344 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23345
+      snippet: a purine D-ribonucleoside + H2O => a purine nucleobase + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:23345 declares side 23344_L as its substrates
+        (rh:substrates); the master reaction RHEA:23344 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16630632, PMID:11282633, PMID:8702965, PMID:11854281 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a purine nucleobase is a product released by RHEA:23344 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23345
+      snippet: a purine D-ribonucleoside + H2O => a purine nucleobase + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:23345 declares side 23344_R as its products
+        (rh:products); the master reaction RHEA:23344 is undirected. This participant is CHEBI:26386 with
+        coefficient 1. Rhea cites PMID:16630632, PMID:11282633, PMID:8702965, PMID:11854281 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-ribose is a product released by RHEA:23344 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23345
+      snippet: a purine D-ribonucleoside + H2O => a purine nucleobase + D-ribose
+      notes: Rhea's left-to-right directional reaction RHEA:23345 declares side 23344_R as its products
+        (rh:products); the master reaction RHEA:23344 is undirected. This participant is CHEBI:47013 with
+        coefficient 1. Rhea cites PMID:16630632, PMID:11282633, PMID:8702965, PMID:11854281 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.1
+      snippet: EC:3.2.2.1 > GO:purine nucleosidase activity ; GO:0008477
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008477 is itself a record
+        in this KB.
+  - subject: prot_Q9XWN7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NSH1_CAEEL is an exemplar enzyme with EC 3.2.2.1 activity.
+    evidence:
+    - reference: EC:3.2.2.1
+      snippet: DR   Q9XWN7, NSH1_CAEEL ;  Q8RY23, NSH3_ARATH ;  Q7KWM9, RIH_DICDI  ;
+      notes: ExPASy ENZYME entry EC 3.2.2.1 cross-references UniProtKB:Q9XWN7 (NSH1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_Q8RY23
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NSH3_ARATH is an exemplar enzyme with EC 3.2.2.1 activity.
+    evidence:
+    - reference: EC:3.2.2.1
+      snippet: DR   Q9XWN7, NSH1_CAEEL ;  Q8RY23, NSH3_ARATH ;  Q7KWM9, RIH_DICDI  ;
+      notes: ExPASy ENZYME entry EC 3.2.2.1 cross-references UniProtKB:Q8RY23 (NSH3_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q7KWM9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIH_DICDI is an exemplar enzyme with EC 3.2.2.1 activity.
+    evidence:
+    - reference: EC:3.2.2.1
+      snippet: DR   Q9XWN7, NSH1_CAEEL ;  Q8RY23, NSH3_ARATH ;  Q7KWM9, RIH_DICDI  ;
+      notes: ExPASy ENZYME entry EC 3.2.2.1 cross-references UniProtKB:Q7KWM9 (RIH_DICDI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

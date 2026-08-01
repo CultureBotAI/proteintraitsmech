@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -33,4 +33,108 @@ definitions:
       Catalyses: 3-sulfanylpropanoate + O2 = 3-sulfinopropanoate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-mercaptopropionate dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.91. EC 1.13.11.91 maps to
+    exactly one curated Rhea reaction (RHEA:53776), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-sulfanylpropanoate
+    + O2 = 3-sulfinopropanoate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-mercaptopropionate dioxygenase
+    grounding: EC:1.13.11.91
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-sulfanylpropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:86386
+    description: Formula C3H5O2S.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 3-sulfinopropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:137673
+    description: Formula C3H4O4S.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q9I0N5
+    node_type: PROTEIN
+    label: 3MDO_PSEAE
+    grounding: UniProtKB:Q9I0N5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-sulfanylpropanoate is a substrate consumed by RHEA:53776 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53777
+      snippet: 3-sulfanylpropanoate + O2 => 3-sulfinopropanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53777 declares side 53776_L as its substrates
+        (rh:substrates); the master reaction RHEA:53776 is undirected. This participant is CHEBI:86386
+        with coefficient 1. Rhea cites PMID:25307852, PMID:31045343, PMID:19001372, PMID:26878277 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:53776 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53777
+      snippet: 3-sulfanylpropanoate + O2 => 3-sulfinopropanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53777 declares side 53776_L as its substrates
+        (rh:substrates); the master reaction RHEA:53776 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:25307852, PMID:31045343, PMID:19001372, PMID:26878277 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-sulfinopropanoate is a product released by RHEA:53776 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53777
+      snippet: 3-sulfanylpropanoate + O2 => 3-sulfinopropanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53777 declares side 53776_R as its products
+        (rh:products); the master reaction RHEA:53776 is undirected. This participant is CHEBI:137673
+        with coefficient 1. Rhea cites PMID:25307852, PMID:31045343, PMID:19001372, PMID:26878277 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:53776 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53777
+      snippet: 3-sulfanylpropanoate + O2 => 3-sulfinopropanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53777 declares side 53776_R as its products
+        (rh:products); the master reaction RHEA:53776 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25307852, PMID:31045343, PMID:19001372, PMID:26878277 for this
+        reaction.
+  - subject: prot_Q9I0N5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3MDO_PSEAE is an exemplar enzyme with EC 1.13.11.91 activity.
+    evidence:
+    - reference: EC:1.13.11.91
+      snippet: DR   Q9I0N5, 3MDO_PSEAE ;
+      notes: ExPASy ENZYME entry EC 1.13.11.91 cross-references UniProtKB:Q9I0N5 (3MDO_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

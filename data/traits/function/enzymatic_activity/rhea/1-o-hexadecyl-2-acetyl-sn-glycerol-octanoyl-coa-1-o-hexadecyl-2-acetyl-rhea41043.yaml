@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:75936
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,97 @@ definitions:
       Catalyses the reaction: 1-O-hexadecyl-2-acetyl-sn-glycerol + octanoyl-CoA = 1-O-hexadecyl-2-acetyl-3-octanoyl-sn-glycerol + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-O-hexadecyl-2-acetyl-sn-glycerol + octanoyl-CoA = 1-O-hexadecyl-2-acetyl-3-octanoyl-s…
+  description: Substrate-to-product chemistry of RHEA:41043, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:41044 (rh:substrates → 41043_L, rh:products → 41043_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1-O-hexadecyl-2-acetyl-sn-glycerol + octanoyl-CoA = 1-O-hexadecyl-2-acetyl-3…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:41043
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1-O-hexadecyl-2-acetyl-sn-glycerol + octanoyl-CoA = 1-O-hexadecyl-2-acetyl-3-octanoyl-sn-glycerol
+      + CoA'
+  - node_id: sub1
+    label: 1-O-hexadecyl-2-acetyl-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:75936
+    description: Formula C21H42O4.
+  - node_id: sub2
+    label: octanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57386
+    description: Formula C29H46N7O17P3S.
+  - node_id: prd1
+    label: 1-O-hexadecyl-2-acetyl-3-octanoyl-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:77682
+    description: Formula C29H56O5.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-O-hexadecyl-2-acetyl-sn-glycerol is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:41044
+      snippet: 1-O-hexadecyl-2-acetyl-sn-glycerol + octanoyl-CoA => 1-O-hexadecyl-2-acetyl-3-octanoyl-sn-glycerol
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:41044 declares side 41043_L as its substrates
+        (rh:substrates); the master reaction RHEA:41043 is undirected. This participant is CHEBI:75936
+        with coefficient 1. Rhea cites PMID:3422635 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: octanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41044
+      snippet: 1-O-hexadecyl-2-acetyl-sn-glycerol + octanoyl-CoA => 1-O-hexadecyl-2-acetyl-3-octanoyl-sn-glycerol
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:41044 declares side 41043_L as its substrates
+        (rh:substrates); the master reaction RHEA:41043 is undirected. This participant is CHEBI:57386
+        with coefficient 1. Rhea cites PMID:3422635 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-O-hexadecyl-2-acetyl-3-octanoyl-sn-glycerol is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41044
+      snippet: 1-O-hexadecyl-2-acetyl-sn-glycerol + octanoyl-CoA => 1-O-hexadecyl-2-acetyl-3-octanoyl-sn-glycerol
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:41044 declares side 41043_R as its products
+        (rh:products); the master reaction RHEA:41043 is undirected. This participant is CHEBI:77682 with
+        coefficient 1. Rhea cites PMID:3422635 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41044
+      snippet: 1-O-hexadecyl-2-acetyl-sn-glycerol + octanoyl-CoA => 1-O-hexadecyl-2-acetyl-3-octanoyl-sn-glycerol
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:41044 declares side 41043_R as its products
+        (rh:products); the master reaction RHEA:41043 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:3422635 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

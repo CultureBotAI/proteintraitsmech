@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:133039
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,76 @@ definitions:
       Catalyses the reaction: 1-(2-aminophenyl)decane-1,3-dione = 2-heptyl-4(1H)-quinolone + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-(2-aminophenyl)decane-1,3-dione = 2-heptyl-4(1H)-quinolone + H2O
+  description: Substrate-to-product chemistry of RHEA:50408, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50409 (rh:substrates → 50408_L, rh:products → 50408_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1-(2-aminophenyl)decane-1,3-dione = 2-heptyl-4(1H)-quinolone + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50408
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1-(2-aminophenyl)decane-1,3-dione = 2-heptyl-4(1H)-quinolone + H2O'
+  - node_id: sub1
+    label: 1-(2-aminophenyl)decane-1,3-dione
+    node_type: CHEMICAL
+    grounding: CHEBI:133039
+    description: Formula C16H23NO2.
+  - node_id: prd1
+    label: 2-heptyl-4(1H)-quinolone
+    node_type: CHEMICAL
+    grounding: CHEBI:62219
+    description: Formula C16H21NO.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-(2-aminophenyl)decane-1,3-dione is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:50409
+      snippet: 1-(2-aminophenyl)decane-1,3-dione => 2-heptyl-4(1H)-quinolone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50409 declares side 50408_L as its substrates
+        (rh:substrates); the master reaction RHEA:50408 is undirected. This participant is CHEBI:133039
+        with coefficient 1. Rhea cites PMID:26811339, PMID:24239007 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-heptyl-4(1H)-quinolone is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50409
+      snippet: 1-(2-aminophenyl)decane-1,3-dione => 2-heptyl-4(1H)-quinolone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50409 declares side 50408_R as its products
+        (rh:products); the master reaction RHEA:50408 is undirected. This participant is CHEBI:62219 with
+        coefficient 1. Rhea cites PMID:26811339, PMID:24239007 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50409
+      snippet: 1-(2-aminophenyl)decane-1,3-dione => 2-heptyl-4(1H)-quinolone + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50409 declares side 50408_R as its products
+        (rh:products); the master reaction RHEA:50408 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:26811339, PMID:24239007 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

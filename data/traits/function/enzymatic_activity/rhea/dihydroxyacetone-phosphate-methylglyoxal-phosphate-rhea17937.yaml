@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.3
     mapping_source: rhea2ec
@@ -30,4 +30,360 @@ definitions:
       Catalyses the reaction: dihydroxyacetone phosphate = methylglyoxal + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dihydroxyacetone phosphate = methylglyoxal + phosphate
+  description: Substrate-to-product chemistry of RHEA:17937, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17938 (rh:substrates → 17937_L, rh:products → 17937_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dihydroxyacetone phosphate = methylglyoxal + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17937
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dihydroxyacetone phosphate = methylglyoxal + phosphate'
+  - node_id: sub1
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: prd1
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methylglyoxal synthase activity
+    grounding: GO:0008929
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: methylglyoxal synthase
+    grounding: EC:4.2.3.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A9NF94
+    node_type: PROTEIN
+    label: MGSA_ACHLI
+    grounding: UniProtKB:A9NF94
+  - node_id: prot_A3N2E6
+    node_type: PROTEIN
+    label: MGSA_ACTP2
+    grounding: UniProtKB:A3N2E6
+  - node_id: prot_B3H2I5
+    node_type: PROTEIN
+    label: MGSA_ACTP7
+    grounding: UniProtKB:B3H2I5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dihydroxyacetone phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17938
+      snippet: dihydroxyacetone phosphate => methylglyoxal + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17938 declares side 17937_L as its substrates
+        (rh:substrates); the master reaction RHEA:17937 is undirected. This participant is CHEBI:57642
+        with coefficient 1. Rhea cites PMID:11945670, PMID:7240200, PMID:11945504 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: methylglyoxal is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17938
+      snippet: dihydroxyacetone phosphate => methylglyoxal + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17938 declares side 17937_R as its products
+        (rh:products); the master reaction RHEA:17937 is undirected. This participant is CHEBI:17158 with
+        coefficient 1. Rhea cites PMID:11945670, PMID:7240200, PMID:11945504 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17938
+      snippet: dihydroxyacetone phosphate => methylglyoxal + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17938 declares side 17937_R as its products
+        (rh:products); the master reaction RHEA:17937 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:11945670, PMID:7240200, PMID:11945504 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17937
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008929"/>
+      notes: The rdfs:seeAlso triple on RHEA:17937 in rhea.rdf. GO term GO:0008929 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.3; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17937
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.3"/>
+      notes: The rh:ec triple on RHEA:17937 in rhea.rdf. EC 4.2.3.3 is itself a record in this KB.
+  - subject: prot_A9NF94
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MGSA_ACHLI is an exemplar enzyme carrying EC 4.2.3.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.3
+      snippet: DR   A9NF94, MGSA_ACHLI ;  A3N2E6, MGSA_ACTP2 ;  B3H2I5, MGSA_ACTP7 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.3 cross-references UniProtKB:A9NF94 (MGSA_ACHLI) as a protein
+        with this activity.
+    - reference: RHEA:17937
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.3"/>
+      notes: Rhea assigns RHEA:17937 to EC 4.2.3.3, and EC 4.2.3.3 maps to exactly one Rhea master reaction
+        (RHEA:17937), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A3N2E6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MGSA_ACTP2 is an exemplar enzyme carrying EC 4.2.3.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.3
+      snippet: DR   A9NF94, MGSA_ACHLI ;  A3N2E6, MGSA_ACTP2 ;  B3H2I5, MGSA_ACTP7 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.3 cross-references UniProtKB:A3N2E6 (MGSA_ACTP2) as a protein
+        with this activity.
+    - reference: RHEA:17937
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.3"/>
+      notes: Rhea assigns RHEA:17937 to EC 4.2.3.3, and EC 4.2.3.3 maps to exactly one Rhea master reaction
+        (RHEA:17937), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B3H2I5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MGSA_ACTP7 is an exemplar enzyme carrying EC 4.2.3.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.3
+      snippet: DR   A9NF94, MGSA_ACHLI ;  A3N2E6, MGSA_ACTP2 ;  B3H2I5, MGSA_ACTP7 ;
+      notes: ExPASy ENZYME entry EC 4.2.3.3 cross-references UniProtKB:B3H2I5 (MGSA_ACTP7) as a protein
+        with this activity.
+    - reference: RHEA:17937
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.3"/>
+      notes: Rhea assigns RHEA:17937 to EC 4.2.3.3, and EC 4.2.3.3 maps to exactly one Rhea master reaction
+        (RHEA:17937), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa85
+  title: Catalytic residues of RHEA:17937 (from MCSA:85)
+  description: 'The catalytic residues that carry out RHEA:17937, joined from M-CSA entry 85. 7 residues,
+    reused verbatim from the MCSA:85 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 85''s reactant set (CHEBI:57642) equals Rhea side 17937_L exactly, and its product
+    set (CHEBI:17158, CHEBI:43474) equals side 17937_R exactly. EC agreement bounded the candidates but
+    was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of dihydroxyacetone phosphate = methylglyoxal + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17937
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: dihydroxyacetone phosphate = methylglyoxal + phosphate'
+  - node_id: mcsa
+    label: methylglyoxal synthase
+    node_type: MOTIF
+    grounding: MCSA:85
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: his19
+    label: catalytic His19 (M-CSA/PDB numbering; UniProt residue 19)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A731
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor,
+      proton acceptor, proton donor. Reused verbatim from the MCSA:85 record''s catalysis graph, where
+      the UniProt position was resolved through SIFTS.'
+  - node_id: gly66
+    label: catalytic Gly66 (M-CSA/PDB numbering; UniProt residue 66)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A731
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor, steric role. Reused verbatim
+      from the MCSA:85 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: asp71
+    label: catalytic Asp71 (M-CSA/PDB numbering; UniProt residue 71)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A731
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.
+      Reused verbatim from the MCSA:85 record''s catalysis graph, where the UniProt position was resolved
+      through SIFTS.'
+  - node_id: asp91
+    label: catalytic Asp91 (M-CSA/PDB numbering; UniProt residue 91)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A731
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor. Reused verbatim
+      from the MCSA:85 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: his98
+    label: catalytic His98 (M-CSA/PDB numbering; UniProt residue 98)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A731
+    description: 'M-CSA roles: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor.
+      Reused verbatim from the MCSA:85 record''s catalysis graph, where the UniProt position was resolved
+      through SIFTS.'
+  - node_id: asp101
+    label: catalytic Asp101 (M-CSA/PDB numbering; UniProt residue 101)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A731
+    description: 'M-CSA roles: activator, electrostatic stabiliser, hydrogen bond acceptor, repulsive
+      charge-charge interaction. Reused verbatim from the MCSA:85 record''s catalysis graph, where the
+      UniProt position was resolved through SIFTS.'
+  - node_id: arg107
+    label: catalytic Arg107 (M-CSA/PDB numbering; UniProt residue 107)
+    node_type: RESIDUE
+    grounding: UniProtKB:P0A731
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:85 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 85 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:85
+      snippet: hydrogenphosphate [product]; glycerone phosphate(2-) [reactant]; methylglyoxal [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 85, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 85''s reactant
+        set (CHEBI:57642) equals Rhea side 17937_L exactly, and its product set (CHEBI:17158, CHEBI:43474)
+        equals side 17937_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: his19
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:85
+      snippet: electrostatic stabiliser, hydrogen bond acceptor, hydrogen bond donor, proton acceptor,
+        proton donor
+      notes: 'M-CSA entry 85 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 24 interaction, 14 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 85''s reactant
+        set (CHEBI:57642) equals Rhea side 17937_L exactly, and its product set (CHEBI:17158, CHEBI:43474)
+        equals side 17937_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: gly66
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:85
+      snippet: electrostatic stabiliser, hydrogen bond donor, steric role
+      notes: 'M-CSA entry 85 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 24 interaction, 14 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 85''s reactant
+        set (CHEBI:57642) equals Rhea side 17937_L exactly, and its product set (CHEBI:17158, CHEBI:43474)
+        equals side 17937_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: asp71
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:85
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: 'M-CSA entry 85 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 24 interaction, 14 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 85''s reactant
+        set (CHEBI:57642) equals Rhea side 17937_L exactly, and its product set (CHEBI:17158, CHEBI:43474)
+        equals side 17937_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: asp91
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:85
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor
+      notes: 'M-CSA entry 85 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 24 interaction, 14 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 85''s reactant
+        set (CHEBI:57642) equals Rhea side 17937_L exactly, and its product set (CHEBI:17158, CHEBI:43474)
+        equals side 17937_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: his98
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:85
+      snippet: hydrogen bond acceptor, hydrogen bond donor, proton acceptor, proton donor
+      notes: 'M-CSA entry 85 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 24 interaction, 14 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 85''s reactant
+        set (CHEBI:57642) equals Rhea side 17937_L exactly, and its product set (CHEBI:17158, CHEBI:43474)
+        equals side 17937_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: asp101
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:85
+      snippet: activator, electrostatic stabiliser, hydrogen bond acceptor, repulsive charge-charge interaction
+      notes: 'M-CSA entry 85 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 24 interaction, 14 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 85''s reactant
+        set (CHEBI:57642) equals Rhea side 17937_L exactly, and its product set (CHEBI:17158, CHEBI:43474)
+        equals side 17937_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: arg107
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:85
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 85 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 24 interaction, 14 spectator, 6 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 85''s reactant
+        set (CHEBI:57642) equals Rhea side 17937_L exactly, and its product set (CHEBI:17158, CHEBI:43474)
+        equals side 17937_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa85' (8 evidence-backed edges) joining MCSA:85 on
+    exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.1.310
     mapping_source: rhea2ec
@@ -30,4 +30,129 @@ definitions:
       Catalyses the reaction: vancomycin aglycone + UDP-alpha-D-glucose = devancoaminyl-vancomycin + UDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of vancomycin aglycone + UDP-alpha-D-glucose = devancoaminyl-vancomycin +
+    UDP
+  description: Substrate-to-product chemistry of RHEA:38587, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:38588 (rh:substrates → 38587_L, rh:products → 38587_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of vancomycin aglycone + UDP-alpha-D-glucose = devancoaminyl-vancomycin + UDP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:38587
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: vancomycin aglycone + UDP-alpha-D-glucose = devancoaminyl-vancomycin + UDP'
+  - node_id: sub1
+    label: vancomycin aglycone
+    node_type: CHEMICAL
+    grounding: CHEBI:77981
+    description: Formula C53H51Cl2N8O17.
+  - node_id: sub2
+    label: UDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+    description: Formula C15H22N2O17P2.
+  - node_id: prd1
+    label: devancoaminyl-vancomycin
+    node_type: CHEMICAL
+    grounding: CHEBI:75953
+    description: Formula C59H62Cl2N8O22.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: vancomycin aglycone glucosyltransferase
+    grounding: EC:2.4.1.310
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P96559
+    node_type: PROTEIN
+    label: GTFB_AMYOR
+    grounding: UniProtKB:P96559
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: vancomycin aglycone is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38588
+      snippet: vancomycin aglycone + UDP-alpha-D-glucose => devancoaminyl-vancomycin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:38588 declares side 38587_L as its substrates
+        (rh:substrates); the master reaction RHEA:38587 is undirected. This participant is CHEBI:77981
+        with coefficient 1. Rhea cites PMID:11470430, PMID:11294642 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38588
+      snippet: vancomycin aglycone + UDP-alpha-D-glucose => devancoaminyl-vancomycin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:38588 declares side 38587_L as its substrates
+        (rh:substrates); the master reaction RHEA:38587 is undirected. This participant is CHEBI:58885
+        with coefficient 1. Rhea cites PMID:11470430, PMID:11294642 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: devancoaminyl-vancomycin is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38588
+      snippet: vancomycin aglycone + UDP-alpha-D-glucose => devancoaminyl-vancomycin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:38588 declares side 38587_R as its products
+        (rh:products); the master reaction RHEA:38587 is undirected. This participant is CHEBI:75953 with
+        coefficient 1. Rhea cites PMID:11470430, PMID:11294642 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38588
+      snippet: vancomycin aglycone + UDP-alpha-D-glucose => devancoaminyl-vancomycin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:38588 declares side 38587_R as its products
+        (rh:products); the master reaction RHEA:38587 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:11470430, PMID:11294642 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.1.310; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:38587
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.310"/>
+      notes: The rh:ec triple on RHEA:38587 in rhea.rdf. EC 2.4.1.310 is itself a record in this KB.
+  - subject: prot_P96559
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GTFB_AMYOR is an exemplar enzyme carrying EC 2.4.1.310, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.4.1.310
+      snippet: DR   P96559, GTFB_AMYOR ;
+      notes: ExPASy ENZYME entry EC 2.4.1.310 cross-references UniProtKB:P96559 (GTFB_AMYOR) as a protein
+        with this activity.
+    - reference: RHEA:38587
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.310"/>
+      notes: Rhea assigns RHEA:38587 to EC 2.4.1.310, and EC 2.4.1.310 maps to exactly one Rhea master
+        reaction (RHEA:38587), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

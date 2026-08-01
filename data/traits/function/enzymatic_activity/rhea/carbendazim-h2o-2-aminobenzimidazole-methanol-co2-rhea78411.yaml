@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.1.1.122
     mapping_source: rhea2ec
@@ -30,4 +30,142 @@ definitions:
       Catalyses the reaction: carbendazim + H2O = 2-aminobenzimidazole + methanol + CO2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carbendazim + H2O = 2-aminobenzimidazole + methanol + CO2
+  description: Substrate-to-product chemistry of RHEA:78411, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78412 (rh:substrates → 78411_L, rh:products → 78411_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of carbendazim + H2O = 2-aminobenzimidazole + methanol + CO2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78411
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: carbendazim + H2O = 2-aminobenzimidazole + methanol + CO2'
+  - node_id: sub1
+    label: carbendazim
+    node_type: CHEMICAL
+    grounding: CHEBI:3392
+    description: Formula C9H9N3O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 2-aminobenzimidazole
+    node_type: CHEMICAL
+    grounding: CHEBI:27822
+    description: Formula C7H7N3.
+  - node_id: prd2
+    label: methanol
+    node_type: CHEMICAL
+    grounding: CHEBI:17790
+    description: Formula CH4O.
+  - node_id: prd3
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: carbendazim hydrolysing esterase
+    grounding: EC:3.1.1.122
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_C8CP46
+    node_type: PROTEIN
+    label: MHEI_NOCS4
+    grounding: UniProtKB:C8CP46
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: carbendazim is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78412
+      snippet: carbendazim + H2O => 2-aminobenzimidazole + methanol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:78412 declares side 78411_L as its substrates
+        (rh:substrates); the master reaction RHEA:78411 is undirected. This participant is CHEBI:3392
+        with coefficient 1. Rhea cites PMID:20228105 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78412
+      snippet: carbendazim + H2O => 2-aminobenzimidazole + methanol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:78412 declares side 78411_L as its substrates
+        (rh:substrates); the master reaction RHEA:78411 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:20228105 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-aminobenzimidazole is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78412
+      snippet: carbendazim + H2O => 2-aminobenzimidazole + methanol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:78412 declares side 78411_R as its products
+        (rh:products); the master reaction RHEA:78411 is undirected. This participant is CHEBI:27822 with
+        coefficient 1. Rhea cites PMID:20228105 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: methanol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78412
+      snippet: carbendazim + H2O => 2-aminobenzimidazole + methanol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:78412 declares side 78411_R as its products
+        (rh:products); the master reaction RHEA:78411 is undirected. This participant is CHEBI:17790 with
+        coefficient 1. Rhea cites PMID:20228105 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78412
+      snippet: carbendazim + H2O => 2-aminobenzimidazole + methanol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:78412 declares side 78411_R as its products
+        (rh:products); the master reaction RHEA:78411 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:20228105 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.1.1.122; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:78411
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.122"/>
+      notes: The rh:ec triple on RHEA:78411 in rhea.rdf. EC 3.1.1.122 is itself a record in this KB.
+  - subject: prot_C8CP46
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MHEI_NOCS4 is an exemplar enzyme carrying EC 3.1.1.122, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.1.1.122
+      snippet: DR   C8CP46, MHEI_NOCS4 ;
+      notes: ExPASy ENZYME entry EC 3.1.1.122 cross-references UniProtKB:C8CP46 (MHEI_NOCS4) as a protein
+        with this activity.
+    - reference: RHEA:78411
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.122"/>
+      notes: Rhea assigns RHEA:78411 to EC 3.1.1.122, and EC 3.1.1.122 maps to exactly one Rhea master
+        reaction (RHEA:78411), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

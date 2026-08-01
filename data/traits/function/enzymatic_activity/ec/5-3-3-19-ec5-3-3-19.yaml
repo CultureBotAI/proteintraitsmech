@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.3.-
 mapped_xrefs:
@@ -36,4 +36,103 @@ definitions:
       Catalyses: 3-[(4R)-4-hydroxycyclohexa-1,5-dien-1-yl]-2-oxopropanoate = 3-[(1E,4R)-4- hydroxycyclohex-2-en-1-ylidene]pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-[(4R)-4-hydroxycyclohexa-1,5-dien-1-yl]-2-oxopropanoate isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.3.19. EC 5.3.3.19 maps to exactly
+    one curated Rhea reaction (RHEA:33819), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-[(4R)-4-hydroxycyclohexa-1,5-dien-1-yl]-2-oxopropanoate
+    = 3-[(1E,4R)-4- hydroxycyclohex-2-en-1-ylidene]pyruvate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-[(4R)-4-hydroxycyclohexa-1,5-dien-1-yl]-2-oxopropanoate isomerase
+    grounding: EC:5.3.3.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-[(4R)-4-hydroxycyclohexa-1,5-dien-1-yl]-2-oxopropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:84354
+    description: Formula C9H9O4.
+  - node_id: prd1
+    label: 3-[(1E,4R)-4-hydroxycyclohex-2-en-1-ylidene]pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:84355
+    description: Formula C9H9O4.
+  - node_id: prot_Q8KWT0
+    node_type: PROTEIN
+    label: BACB_BACAM
+    grounding: UniProtKB:Q8KWT0
+  - node_id: prot_Q8KWT5
+    node_type: PROTEIN
+    label: BACB_BACIU
+    grounding: UniProtKB:Q8KWT5
+  - node_id: prot_P39639
+    node_type: PROTEIN
+    label: BACB_BACSU
+    grounding: UniProtKB:P39639
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-[(4R)-4-hydroxycyclohexa-1,5-dien-1-yl]-2-oxopropanoate is a substrate consumed by
+      RHEA:33819 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33820
+      snippet: 3-[(4R)-4-hydroxycyclohexa-1,5-dien-1-yl]-2-oxopropanoate => 3-[(1E,4R)-4-hydroxycyclohex-2-en-1-ylidene]pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:33820 declares side 33819_L as its substrates
+        (rh:substrates); the master reaction RHEA:33819 is undirected. This participant is CHEBI:84354
+        with coefficient 1. Rhea cites PMID:20052993, PMID:19776011, PMID:23317005, PMID:22483065 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-[(1E,4R)-4-hydroxycyclohex-2-en-1-ylidene]pyruvate is a product released by RHEA:33819
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33820
+      snippet: 3-[(4R)-4-hydroxycyclohexa-1,5-dien-1-yl]-2-oxopropanoate => 3-[(1E,4R)-4-hydroxycyclohex-2-en-1-ylidene]pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:33820 declares side 33819_R as its products
+        (rh:products); the master reaction RHEA:33819 is undirected. This participant is CHEBI:84355 with
+        coefficient 1. Rhea cites PMID:20052993, PMID:19776011, PMID:23317005, PMID:22483065 for this
+        reaction.
+  - subject: prot_Q8KWT0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACB_BACAM is an exemplar enzyme with EC 5.3.3.19 activity.
+    evidence:
+    - reference: EC:5.3.3.19
+      snippet: DR   Q8KWT0, BACB_BACAM ;  Q8KWT5, BACB_BACIU ;  P39639, BACB_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.3.3.19 cross-references UniProtKB:Q8KWT0 (BACB_BACAM) as a protein
+        with this activity.
+  - subject: prot_Q8KWT5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACB_BACIU is an exemplar enzyme with EC 5.3.3.19 activity.
+    evidence:
+    - reference: EC:5.3.3.19
+      snippet: DR   Q8KWT0, BACB_BACAM ;  Q8KWT5, BACB_BACIU ;  P39639, BACB_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.3.3.19 cross-references UniProtKB:Q8KWT5 (BACB_BACIU) as a protein
+        with this activity.
+  - subject: prot_P39639
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACB_BACSU is an exemplar enzyme with EC 5.3.3.19 activity.
+    evidence:
+    - reference: EC:5.3.3.19
+      snippet: DR   Q8KWT0, BACB_BACAM ;  Q8KWT5, BACB_BACIU ;  P39639, BACB_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.3.3.19 cross-references UniProtKB:P39639 (BACB_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.2.1.-
 synonyms:
@@ -45,4 +45,155 @@ definitions:
       Catalyses: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate = D-erythrose 4-phosphate + beta-D-fructose 6-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of transaldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.2.1.2. EC 2.2.1.2 maps to exactly
+    one curated Rhea reaction (RHEA:17053), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-sedoheptulose
+    7-phosphate + D-glyceraldehyde 3-phosphate = D-erythrose 4-phosphate + beta-D-fructose 6-phosphate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: transaldolase
+    grounding: EC:2.2.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-sedoheptulose 7-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57483
+    description: Formula C7H13O10P.
+  - node_id: sub2
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: prd1
+    label: D-erythrose 4-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:16897
+    description: Formula C4H7O7P.
+  - node_id: prd2
+    label: beta-D-fructose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57634
+    description: Formula C6H11O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: transaldolase activity
+    grounding: GO:0004801
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q81V33
+    node_type: PROTEIN
+    label: TAL1_BACAN
+    grounding: UniProtKB:Q81V33
+  - node_id: prot_Q81HW6
+    node_type: PROTEIN
+    label: TAL1_BACCR
+    grounding: UniProtKB:Q81HW6
+  - node_id: prot_P17440
+    node_type: PROTEIN
+    label: TAL1_CYBJA
+    grounding: UniProtKB:P17440
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-sedoheptulose 7-phosphate is a substrate consumed by RHEA:17053 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17054
+      snippet: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate => D-erythrose 4-phosphate +
+        beta-D-fructose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17054 declares side 17053_L as its substrates
+        (rh:substrates); the master reaction RHEA:17053 is undirected. This participant is CHEBI:57483
+        with coefficient 1. Rhea cites PMID:7592346, PMID:15810435 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: D-glyceraldehyde 3-phosphate is a substrate consumed by RHEA:17053 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17054
+      snippet: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate => D-erythrose 4-phosphate +
+        beta-D-fructose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17054 declares side 17053_L as its substrates
+        (rh:substrates); the master reaction RHEA:17053 is undirected. This participant is CHEBI:59776
+        with coefficient 1. Rhea cites PMID:7592346, PMID:15810435 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-erythrose 4-phosphate is a product released by RHEA:17053 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17054
+      snippet: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate => D-erythrose 4-phosphate +
+        beta-D-fructose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17054 declares side 17053_R as its products
+        (rh:products); the master reaction RHEA:17053 is undirected. This participant is CHEBI:16897 with
+        coefficient 1. Rhea cites PMID:7592346, PMID:15810435 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: beta-D-fructose 6-phosphate is a product released by RHEA:17053 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17054
+      snippet: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate => D-erythrose 4-phosphate +
+        beta-D-fructose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17054 declares side 17053_R as its products
+        (rh:products); the master reaction RHEA:17053 is undirected. This participant is CHEBI:57634 with
+        coefficient 1. Rhea cites PMID:7592346, PMID:15810435 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.2.1.2
+      snippet: EC:2.2.1.2 > GO:transaldolase activity ; GO:0004801
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004801 is itself a record
+        in this KB.
+  - subject: prot_Q81V33
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAL1_BACAN is an exemplar enzyme with EC 2.2.1.2 activity.
+    evidence:
+    - reference: EC:2.2.1.2
+      snippet: DR   Q81V33, TAL1_BACAN ;  Q81HW6, TAL1_BACCR ;  P17440, TAL1_CYBJA ;
+      notes: ExPASy ENZYME entry EC 2.2.1.2 cross-references UniProtKB:Q81V33 (TAL1_BACAN) as a protein
+        with this activity.
+  - subject: prot_Q81HW6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAL1_BACCR is an exemplar enzyme with EC 2.2.1.2 activity.
+    evidence:
+    - reference: EC:2.2.1.2
+      snippet: DR   Q81V33, TAL1_BACAN ;  Q81HW6, TAL1_BACCR ;  P17440, TAL1_CYBJA ;
+      notes: ExPASy ENZYME entry EC 2.2.1.2 cross-references UniProtKB:Q81HW6 (TAL1_BACCR) as a protein
+        with this activity.
+  - subject: prot_P17440
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAL1_CYBJA is an exemplar enzyme with EC 2.2.1.2 activity.
+    evidence:
+    - reference: EC:2.2.1.2
+      snippet: DR   Q81V33, TAL1_BACAN ;  Q81HW6, TAL1_BACCR ;  P17440, TAL1_CYBJA ;
+      notes: ExPASy ENZYME entry EC 2.2.1.2 cross-references UniProtKB:P17440 (TAL1_CYBJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

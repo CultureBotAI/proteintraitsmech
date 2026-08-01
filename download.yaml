@@ -740,6 +740,31 @@
   status: rejected
   note: 4.4M orthologous groups across 379 taxonomic levels — too large and mostly uncharacterised. Use COG instead. (url is a placeholder; do not fetch.)
 
+-
+  url: http://data.pantherdb.org/ftp/hmm_classifications/current_release/PANTHER19.0_HMM_classifications
+  name: PANTHER (protein families, HMM classifications)
+  source: panther
+  local_name: panther/PANTHER19.0_HMM_classifications
+  license: CC-BY 4.0
+  status: seeded
+  seeder: seed_panther.py
+  hierarchy: true (family -> subfamily; only families are seeded)
+  trait_categories: [SEQ_FAMILY]
+  note: >-
+    15,489 full-length protein families (PANTHER 19.0). Sequence-signature
+    classification (profile HMM), so SEQUENCE/SEQ_FAMILY per axis-follows-
+    representation, not FUNC_PROTEIN_FAMILY. SCOPE - families only - the release
+    also holds 128,012 subfamilies; seeding all 143,695 entries would take the
+    repo past the ~500k tracked-file threshold (docs-scalability-audit-1.md), and
+    InterPro integrates PANTHER at family level only (all 10,460 integrated
+    signatures are families). 194 families that PANTHER leaves unnamed and
+    InterPro does not integrate are skipped; 229 unnamed ones are named from
+    InterPro. Definitions - 7,691 use the curated abstract of the integrating
+    InterPro entry, 7,798 are composed from the PANTHER name + GO + protein
+    class. InterPro flags LLM-written abstracts - 2,746 unreviewed ones are kept
+    in definitions[] with method GENERATED but never promoted to `definition`.
+    GO and panther.pathway ids -> mapped_xrefs; InterPro entry -> mapped_xrefs.
+
 # ========================================================== DEFERRED =========
 
 -

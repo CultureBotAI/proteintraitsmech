@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 synonyms:
@@ -57,4 +57,314 @@ definitions:
       Catalyses: (1) CMP + ATP = CDP + ADP. (2) dCMP + ATP = dCDP + ADP. (3) UMP + ATP = UDP + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UMP/CMP kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.14. Rhea assigns 3 curated
+    reactions to EC 2.7.4.14. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) CMP + ATP = CDP + ADP. (2) dCMP + ATP = dCDP + ADP.
+    (3) UMP + ATP = UDP + ADP". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: UMP/CMP kinase
+    grounding: EC:2.7.4.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of CMP + ATP = CDP + ADP
+    grounding: RHEA:11600
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: CMP + ATP = CDP + ADP'
+  - node_id: rxn1_sub1
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_prd1
+    label: CDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58069
+    description: Formula C9H12N3O11P2.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of UMP + ATP = UDP + ADP
+    grounding: RHEA:24400
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: UMP + ATP = UDP + ADP'
+  - node_id: rxn2_sub1
+    label: UMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57865
+    description: Formula C9H11N2O9P.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_prd1
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: rxn2_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of dCMP + ATP = dCDP + ADP
+    grounding: RHEA:25094
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: dCMP + ATP = dCDP + ADP'
+  - node_id: rxn3_sub1
+    label: dCMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57566
+    description: Formula C9H12N3O7P.
+  - node_id: rxn3_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn3_prd1
+    label: dCDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58593
+    description: Formula C9H12N3O10P2.
+  - node_id: rxn3_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prot_Q5EBM0
+    node_type: PROTEIN
+    label: CMPK2_HUMAN
+    grounding: UniProtKB:Q5EBM0
+  - node_id: prot_Q3U5Q7
+    node_type: PROTEIN
+    label: CMPK2_MOUSE
+    grounding: UniProtKB:Q3U5Q7
+  - node_id: prot_Q8VY84
+    node_type: PROTEIN
+    label: KCY1_ARATH
+    grounding: UniProtKB:Q8VY84
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:11600 is one of the 3 curated reactions Rhea assigns to EC 2.7.4.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:11600
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.4.14"/>
+      notes: The rh:ec triple on RHEA:11600 in rhea.rdf assigns that reaction to EC 2.7.4.14.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: CMP is a substrate consumed by RHEA:11600 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11601
+      snippet: CMP + ATP => CDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:11601 declares side 11600_L as its substrates
+        (rh:substrates); the master reaction RHEA:11600 is undirected. This participant is CHEBI:60377
+        with coefficient 1. Rhea cites PMID:19181797, PMID:23416111, PMID:7836281, PMID:11827479 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:11600 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11601
+      snippet: CMP + ATP => CDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:11601 declares side 11600_L as its substrates
+        (rh:substrates); the master reaction RHEA:11600 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:19181797, PMID:23416111, PMID:7836281, PMID:11827479 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: CDP is a product released by RHEA:11600 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11601
+      snippet: CMP + ATP => CDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:11601 declares side 11600_R as its products
+        (rh:products); the master reaction RHEA:11600 is undirected. This participant is CHEBI:58069 with
+        coefficient 1. Rhea cites PMID:19181797, PMID:23416111, PMID:7836281, PMID:11827479 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:11600 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11601
+      snippet: CMP + ATP => CDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:11601 declares side 11600_R as its products
+        (rh:products); the master reaction RHEA:11600 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:19181797, PMID:23416111, PMID:7836281, PMID:11827479 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:24400 is one of the 3 curated reactions Rhea assigns to EC 2.7.4.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24400
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.4.14"/>
+      notes: The rh:ec triple on RHEA:24400 in rhea.rdf assigns that reaction to EC 2.7.4.14.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: UMP is a substrate consumed by RHEA:24400 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24401
+      snippet: UMP + ATP => UDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:24401 declares side 24400_L as its substrates
+        (rh:substrates); the master reaction RHEA:24400 is undirected. This participant is CHEBI:57865
+        with coefficient 1. Rhea cites PMID:16095620 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:24400 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24401
+      snippet: UMP + ATP => UDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:24401 declares side 24400_L as its substrates
+        (rh:substrates); the master reaction RHEA:24400 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:16095620 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: UDP is a product released by RHEA:24400 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24401
+      snippet: UMP + ATP => UDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:24401 declares side 24400_R as its products
+        (rh:products); the master reaction RHEA:24400 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:16095620 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: ADP is a product released by RHEA:24400 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24401
+      snippet: UMP + ATP => UDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:24401 declares side 24400_R as its products
+        (rh:products); the master reaction RHEA:24400 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:16095620 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:25094 is one of the 3 curated reactions Rhea assigns to EC 2.7.4.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25094
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.4.14"/>
+      notes: The rh:ec triple on RHEA:25094 in rhea.rdf assigns that reaction to EC 2.7.4.14.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: dCMP is a substrate consumed by RHEA:25094 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25095
+      snippet: dCMP + ATP => dCDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:25095 declares side 25094_L as its substrates
+        (rh:substrates); the master reaction RHEA:25094 is undirected. This participant is CHEBI:57566
+        with coefficient 1. Rhea cites PMID:19181797, PMID:8576266, PMID:23416111, PMID:7836281 for this
+        reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: ATP is a substrate consumed by RHEA:25094 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25095
+      snippet: dCMP + ATP => dCDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:25095 declares side 25094_L as its substrates
+        (rh:substrates); the master reaction RHEA:25094 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:19181797, PMID:8576266, PMID:23416111, PMID:7836281 for this
+        reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: dCDP is a product released by RHEA:25094 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25095
+      snippet: dCMP + ATP => dCDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:25095 declares side 25094_R as its products
+        (rh:products); the master reaction RHEA:25094 is undirected. This participant is CHEBI:58593 with
+        coefficient 1. Rhea cites PMID:19181797, PMID:8576266, PMID:23416111, PMID:7836281 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: ADP is a product released by RHEA:25094 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25095
+      snippet: dCMP + ATP => dCDP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:25095 declares side 25094_R as its products
+        (rh:products); the master reaction RHEA:25094 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:19181797, PMID:8576266, PMID:23416111, PMID:7836281 for this
+        reaction.
+  - subject: prot_Q5EBM0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CMPK2_HUMAN is an exemplar enzyme with EC 2.7.4.14 activity.
+    evidence:
+    - reference: EC:2.7.4.14
+      snippet: DR   Q5EBM0, CMPK2_HUMAN;  Q3U5Q7, CMPK2_MOUSE;  Q8VY84, KCY1_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.7.4.14 cross-references UniProtKB:Q5EBM0 (CMPK2_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q3U5Q7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CMPK2_MOUSE is an exemplar enzyme with EC 2.7.4.14 activity.
+    evidence:
+    - reference: EC:2.7.4.14
+      snippet: DR   Q5EBM0, CMPK2_HUMAN;  Q3U5Q7, CMPK2_MOUSE;  Q8VY84, KCY1_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.7.4.14 cross-references UniProtKB:Q3U5Q7 (CMPK2_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q8VY84
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KCY1_ARATH is an exemplar enzyme with EC 2.7.4.14 activity.
+    evidence:
+    - reference: EC:2.7.4.14
+      snippet: DR   Q5EBM0, CMPK2_HUMAN;  Q3U5Q7, CMPK2_MOUSE;  Q8VY84, KCY1_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.7.4.14 cross-references UniProtKB:Q8VY84 (KCY1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (18 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

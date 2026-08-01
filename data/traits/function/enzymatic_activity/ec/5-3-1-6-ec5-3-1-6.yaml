@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 synonyms:
@@ -53,4 +53,117 @@ definitions:
       Catalyses: aldehydo-D-ribose 5-phosphate = D-ribulose 5-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ribose-5-phosphate isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.6. EC 5.3.1.6 maps to exactly
+    one curated Rhea reaction (RHEA:14657), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "aldehydo-D-ribose
+    5-phosphate = D-ribulose 5-phosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ribose-5-phosphate isomerase
+    grounding: EC:5.3.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: aldehydo-D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58273
+    description: Formula C5H9O8P.
+  - node_id: prd1
+    label: D-ribulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58121
+    description: Formula C5H9O8P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ribose-5-phosphate isomerase activity
+    grounding: GO:0004751
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P83534
+    node_type: PROTEIN
+    label: RBSKI_FRUSL
+    grounding: UniProtKB:P83534
+  - node_id: prot_Q9C998
+    node_type: PROTEIN
+    label: RPI1_ARATH
+    grounding: UniProtKB:Q9C998
+  - node_id: prot_Q9ZU38
+    node_type: PROTEIN
+    label: RPI2_ARATH
+    grounding: UniProtKB:Q9ZU38
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: aldehydo-D-ribose 5-phosphate is a substrate consumed by RHEA:14657 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14658
+      snippet: aldehydo-D-ribose 5-phosphate => D-ribulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14658 declares side 14657_L as its substrates
+        (rh:substrates); the master reaction RHEA:14657 is undirected. This participant is CHEBI:58273
+        with coefficient 1. Rhea cites PMID:18640127, PMID:13373810, PMID:13295229, PMID:1104357 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-ribulose 5-phosphate is a product released by RHEA:14657 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14658
+      snippet: aldehydo-D-ribose 5-phosphate => D-ribulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14658 declares side 14657_R as its products
+        (rh:products); the master reaction RHEA:14657 is undirected. This participant is CHEBI:58121 with
+        coefficient 1. Rhea cites PMID:18640127, PMID:13373810, PMID:13295229, PMID:1104357 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.6
+      snippet: EC:5.3.1.6 > GO:ribose-5-phosphate isomerase activity ; GO:0004751
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004751 is itself a record
+        in this KB.
+  - subject: prot_P83534
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RBSKI_FRUSL is an exemplar enzyme with EC 5.3.1.6 activity.
+    evidence:
+    - reference: EC:5.3.1.6
+      snippet: DR   P83534, RBSKI_FRUSL;  Q9C998, RPI1_ARATH ;  Q9ZU38, RPI2_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.3.1.6 cross-references UniProtKB:P83534 (RBSKI_FRUSL) as a protein
+        with this activity.
+  - subject: prot_Q9C998
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RPI1_ARATH is an exemplar enzyme with EC 5.3.1.6 activity.
+    evidence:
+    - reference: EC:5.3.1.6
+      snippet: DR   P83534, RBSKI_FRUSL;  Q9C998, RPI1_ARATH ;  Q9ZU38, RPI2_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.3.1.6 cross-references UniProtKB:Q9C998 (RPI1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9ZU38
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RPI2_ARATH is an exemplar enzyme with EC 5.3.1.6 activity.
+    evidence:
+    - reference: EC:5.3.1.6
+      snippet: DR   P83534, RBSKI_FRUSL;  Q9C998, RPI1_ARATH ;  Q9ZU38, RPI2_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.3.1.6 cross-references UniProtKB:Q9ZU38 (RPI2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

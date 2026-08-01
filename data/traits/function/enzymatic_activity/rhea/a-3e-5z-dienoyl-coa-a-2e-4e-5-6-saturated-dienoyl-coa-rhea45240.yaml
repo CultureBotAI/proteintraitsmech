@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.3.21
     mapping_source: rhea2ec
@@ -26,4 +26,151 @@ definitions:
       Catalyses the reaction: a (3E,5Z)-dienoyl-CoA = a (2E,4E)-(5,6-saturated)-dienoyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a (3E,5Z)-dienoyl-CoA = a (2E,4E)-(5,6-saturated)-dienoyl-CoA
+  description: Substrate-to-product chemistry of RHEA:45240, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:45241 (rh:substrates → 45240_L, rh:products → 45240_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a (3E,5Z)-dienoyl-CoA = a (2E,4E)-(5,6-saturated)-dienoyl-CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:45240
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a (3E,5Z)-dienoyl-CoA = a (2E,4E)-(5,6-saturated)-dienoyl-CoA'
+  - node_id: sub1
+    label: a (3E,5Z)-dienoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:85110
+    description: Formula C27H37N7O17P3SR.
+  - node_id: prd1
+    label: a (2E,4E)-(5,6-saturated)-dienoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:85111
+    description: Formula C27H37N7O17P3SR.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: delta(3,5)-delta(2,4)-dienoyl-CoA isomerase activity
+    grounding: GO:0051750
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: Delta(3,5)-Delta(2,4)-dienoyl-CoA isomerase
+    grounding: EC:5.3.3.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9FHR8
+    node_type: PROTEIN
+    label: DCI1_ARATH
+    grounding: UniProtKB:Q9FHR8
+  - node_id: prot_G4NCP4
+    node_type: PROTEIN
+    label: DCI1_PYRO7
+    grounding: UniProtKB:G4NCP4
+  - node_id: prot_Q08558
+    node_type: PROTEIN
+    label: DCI1_YEAST
+    grounding: UniProtKB:Q08558
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a (3E,5Z)-dienoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45241
+      snippet: a (3E,5Z)-dienoyl-CoA => a (2E,4E)-(5,6-saturated)-dienoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:45241 declares side 45240_L as its substrates
+        (rh:substrates); the master reaction RHEA:45240 is undirected. This participant is CHEBI:85110
+        with coefficient 1. Rhea cites PMID:9417087, PMID:11278886 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a (2E,4E)-(5,6-saturated)-dienoyl-CoA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45241
+      snippet: a (3E,5Z)-dienoyl-CoA => a (2E,4E)-(5,6-saturated)-dienoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:45241 declares side 45240_R as its products
+        (rh:products); the master reaction RHEA:45240 is undirected. This participant is CHEBI:85111 with
+        coefficient 1. Rhea cites PMID:9417087, PMID:11278886 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:45240
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0051750"/>
+      notes: The rdfs:seeAlso triple on RHEA:45240 in rhea.rdf. GO term GO:0051750 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.3.21; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:45240
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.21"/>
+      notes: The rh:ec triple on RHEA:45240 in rhea.rdf. EC 5.3.3.21 is itself a record in this KB.
+  - subject: prot_Q9FHR8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DCI1_ARATH is an exemplar enzyme carrying EC 5.3.3.21, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.3.21
+      snippet: DR   Q9FHR8, DCI1_ARATH ;  G4NCP4, DCI1_PYRO7 ;  Q08558, DCI1_YEAST ;
+      notes: ExPASy ENZYME entry EC 5.3.3.21 cross-references UniProtKB:Q9FHR8 (DCI1_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:45240
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.21"/>
+      notes: Rhea assigns RHEA:45240 to EC 5.3.3.21, and EC 5.3.3.21 maps to exactly one Rhea master reaction
+        (RHEA:45240), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_G4NCP4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DCI1_PYRO7 is an exemplar enzyme carrying EC 5.3.3.21, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.3.21
+      snippet: DR   Q9FHR8, DCI1_ARATH ;  G4NCP4, DCI1_PYRO7 ;  Q08558, DCI1_YEAST ;
+      notes: ExPASy ENZYME entry EC 5.3.3.21 cross-references UniProtKB:G4NCP4 (DCI1_PYRO7) as a protein
+        with this activity.
+    - reference: RHEA:45240
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.21"/>
+      notes: Rhea assigns RHEA:45240 to EC 5.3.3.21, and EC 5.3.3.21 maps to exactly one Rhea master reaction
+        (RHEA:45240), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q08558
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DCI1_YEAST is an exemplar enzyme carrying EC 5.3.3.21, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.3.21
+      snippet: DR   Q9FHR8, DCI1_ARATH ;  G4NCP4, DCI1_PYRO7 ;  Q08558, DCI1_YEAST ;
+      notes: ExPASy ENZYME entry EC 5.3.3.21 cross-references UniProtKB:Q08558 (DCI1_YEAST) as a protein
+        with this activity.
+    - reference: RHEA:45240
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.21"/>
+      notes: Rhea assigns RHEA:45240 to EC 5.3.3.21, and EC 5.3.3.21 maps to exactly one Rhea master reaction
+        (RHEA:45240), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

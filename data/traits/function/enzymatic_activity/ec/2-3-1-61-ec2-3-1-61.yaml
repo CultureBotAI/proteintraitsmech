@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -59,4 +59,188 @@ definitions:
       Catalyses: N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] + succinyl-CoA = N(6)-[(R)- S(8)-succinyldihydrolipoyl]-L-lysyl-[protein] + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dihydrolipoyllysine-residue succinyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.61. EC 2.3.1.61 maps to exactly
+    one curated Rhea reaction (RHEA:15213), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein]
+    + succinyl-CoA = N(6)-[(R)- S(8)-succinyldihydrolipoyl]-L-lysyl-[protein] + CoA". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dihydrolipoyllysine-residue succinyltransferase
+    grounding: EC:2.3.1.61
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10475
+    description: Rhea compound GENERIC:10475.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: N(6)-[(R)-dihydrolipoyl]-L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10475 (N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83100
+  - node_id: sub2
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: prd1
+    label: N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:20092
+    description: Rhea compound GENERIC:20092.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:20092 (N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83120
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dihydrolipoyllysine-residue succinyltransferase activity
+    grounding: GO:0004149
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7U0A6
+    node_type: PROTEIN
+    label: KGD_MYCBO
+    grounding: UniProtKB:Q7U0A6
+  - node_id: prot_A1KI36
+    node_type: PROTEIN
+    label: KGD_MYCBP
+    grounding: UniProtKB:A1KI36
+  - node_id: prot_Q9CC97
+    node_type: PROTEIN
+    label: KGD_MYCLE
+    grounding: UniProtKB:Q9CC97
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] is a substrate consumed by RHEA:15213 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:15214
+      snippet: N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] + succinyl-CoA => N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysyl-[protein]
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15214 declares side 15213_L as its substrates
+        (rh:substrates); the master reaction RHEA:15213 is undirected. This participant is GENERIC:10475
+        with coefficient 1. Rhea cites PMID:20675489, PMID:9677295, PMID:10966480, PMID:21867916 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(6)-[(R)-dihydrolipoyl]-L-lysine residue is the reactive part of N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:15213
+      snippet: N(6)-[(R)-dihydrolipoyl]-L-lysine residue
+      notes: Rhea compound GENERIC:10475 (N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein]) declares rh:reactivePart
+        = N(6)-[(R)-dihydrolipoyl]-L-lysine residue (CHEBI:83100).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: succinyl-CoA is a substrate consumed by RHEA:15213 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15214
+      snippet: N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] + succinyl-CoA => N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysyl-[protein]
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15214 declares side 15213_L as its substrates
+        (rh:substrates); the master reaction RHEA:15213 is undirected. This participant is CHEBI:57292
+        with coefficient 1. Rhea cites PMID:20675489, PMID:9677295, PMID:10966480, PMID:21867916 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysyl-[protein] is a product released by RHEA:15213
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15214
+      snippet: N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] + succinyl-CoA => N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysyl-[protein]
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15214 declares side 15213_R as its products
+        (rh:products); the master reaction RHEA:15213 is undirected. This participant is GENERIC:20092
+        with coefficient 1. Rhea cites PMID:20675489, PMID:9677295, PMID:10966480, PMID:21867916 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysine residue is the reactive part of N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:15213
+      snippet: N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysine residue
+      notes: Rhea compound GENERIC:20092 (N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysyl-[protein]) declares
+        rh:reactivePart = N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysine residue (CHEBI:83120).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:15213 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15214
+      snippet: N(6)-[(R)-dihydrolipoyl]-L-lysyl-[protein] + succinyl-CoA => N(6)-[(R)-S(8)-succinyldihydrolipoyl]-L-lysyl-[protein]
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15214 declares side 15213_R as its products
+        (rh:products); the master reaction RHEA:15213 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:20675489, PMID:9677295, PMID:10966480, PMID:21867916 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.61
+      snippet: EC:2.3.1.61 > GO:dihydrolipoyllysine-residue succinyltransferase activity ; GO:0004149
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004149 is itself a record
+        in this KB.
+  - subject: prot_Q7U0A6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KGD_MYCBO is an exemplar enzyme with EC 2.3.1.61 activity.
+    evidence:
+    - reference: EC:2.3.1.61
+      snippet: DR   Q7U0A6, KGD_MYCBO  ;  A1KI36, KGD_MYCBP  ;  Q9CC97, KGD_MYCLE  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.61 cross-references UniProtKB:Q7U0A6 (KGD_MYCBO) as a protein
+        with this activity.
+  - subject: prot_A1KI36
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KGD_MYCBP is an exemplar enzyme with EC 2.3.1.61 activity.
+    evidence:
+    - reference: EC:2.3.1.61
+      snippet: DR   Q7U0A6, KGD_MYCBO  ;  A1KI36, KGD_MYCBP  ;  Q9CC97, KGD_MYCLE  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.61 cross-references UniProtKB:A1KI36 (KGD_MYCBP) as a protein
+        with this activity.
+  - subject: prot_Q9CC97
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KGD_MYCLE is an exemplar enzyme with EC 2.3.1.61 activity.
+    evidence:
+    - reference: EC:2.3.1.61
+      snippet: DR   Q7U0A6, KGD_MYCBO  ;  A1KI36, KGD_MYCBP  ;  Q9CC97, KGD_MYCLE  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.61 cross-references UniProtKB:Q9CC97 (KGD_MYCLE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

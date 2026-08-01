@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: Endohydrolysis of beta-(1->4)-linkages between D-glucosamine residues in a partly acetylated chitosan
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chitosanase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.132. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endohydrolysis
+    of beta-(1->4)-linkages between D-glucosamine residues in a partly acetylated chitosan".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: chitosanase
+    grounding: EC:3.2.1.132
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: chitosanase activity
+    grounding: GO:0016977
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O07921
+    node_type: PROTEIN
+    label: CHIS_BACSU
+    grounding: UniProtKB:O07921
+  - node_id: prot_P33673
+    node_type: PROTEIN
+    label: CHIS_NIACI
+    grounding: UniProtKB:P33673
+  - node_id: prot_P48846
+    node_type: PROTEIN
+    label: CHIS_NOCSP
+    grounding: UniProtKB:P48846
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.132
+      snippet: EC:3.2.1.132 > GO:chitosanase activity ; GO:0016977
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016977 is itself a record
+        in this KB.
+  - subject: prot_O07921
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHIS_BACSU is an exemplar enzyme with EC 3.2.1.132 activity.
+    evidence:
+    - reference: EC:3.2.1.132
+      snippet: DR   O07921, CHIS_BACSU ;  P33673, CHIS_NIACI ;  P48846, CHIS_NOCSP ;
+      notes: ExPASy ENZYME entry EC 3.2.1.132 cross-references UniProtKB:O07921 (CHIS_BACSU) as a protein
+        with this activity.
+  - subject: prot_P33673
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHIS_NIACI is an exemplar enzyme with EC 3.2.1.132 activity.
+    evidence:
+    - reference: EC:3.2.1.132
+      snippet: DR   O07921, CHIS_BACSU ;  P33673, CHIS_NIACI ;  P48846, CHIS_NOCSP ;
+      notes: ExPASy ENZYME entry EC 3.2.1.132 cross-references UniProtKB:P33673 (CHIS_NIACI) as a protein
+        with this activity.
+  - subject: prot_P48846
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHIS_NOCSP is an exemplar enzyme with EC 3.2.1.132 activity.
+    evidence:
+    - reference: EC:3.2.1.132
+      snippet: DR   O07921, CHIS_BACSU ;  P33673, CHIS_NIACI ;  P48846, CHIS_NOCSP ;
+      notes: ExPASy ENZYME entry EC 3.2.1.132 cross-references UniProtKB:P48846 (CHIS_NOCSP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.302
     mapping_source: rhea2ec
@@ -30,4 +30,107 @@ definitions:
       Catalyses the reaction: 5-hydroxyanthranilate + (E)-4-coumaroyl-CoA = avenanthramide A + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-hydroxyanthranilate + (E)-4-coumaroyl-CoA = avenanthramide A + CoA
+  description: Substrate-to-product chemistry of RHEA:66932, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:66933 (rh:substrates → 66932_L, rh:products → 66932_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-hydroxyanthranilate + (E)-4-coumaroyl-CoA = avenanthramide A + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:66932
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-hydroxyanthranilate + (E)-4-coumaroyl-CoA = avenanthramide A + CoA'
+  - node_id: sub1
+    label: 5-hydroxyanthranilate
+    node_type: CHEMICAL
+    grounding: CHEBI:167463
+    description: Formula C7H6NO3.
+  - node_id: sub2
+    label: (E)-4-coumaroyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:85008
+    description: Formula C30H38N7O18P3S.
+  - node_id: prd1
+    label: avenanthramide A
+    node_type: CHEMICAL
+    grounding: CHEBI:167464
+    description: Formula C16H12NO5.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxycinnamoyl-CoA:5-hydroxyanthranilate N-hydroxycinnamoyltransferase
+    grounding: EC:2.3.1.302
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-hydroxyanthranilate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66933
+      snippet: 5-hydroxyanthranilate + (E)-4-coumaroyl-CoA => avenanthramide A + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:66933 declares side 66932_L as its substrates
+        (rh:substrates); the master reaction RHEA:66932 is undirected. This participant is CHEBI:167463
+        with coefficient 1. Rhea cites PMID:14714871, PMID:31394723 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (E)-4-coumaroyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66933
+      snippet: 5-hydroxyanthranilate + (E)-4-coumaroyl-CoA => avenanthramide A + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:66933 declares side 66932_L as its substrates
+        (rh:substrates); the master reaction RHEA:66932 is undirected. This participant is CHEBI:85008
+        with coefficient 1. Rhea cites PMID:14714871, PMID:31394723 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: avenanthramide A is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66933
+      snippet: 5-hydroxyanthranilate + (E)-4-coumaroyl-CoA => avenanthramide A + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:66933 declares side 66932_R as its products
+        (rh:products); the master reaction RHEA:66932 is undirected. This participant is CHEBI:167464
+        with coefficient 1. Rhea cites PMID:14714871, PMID:31394723 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66933
+      snippet: 5-hydroxyanthranilate + (E)-4-coumaroyl-CoA => avenanthramide A + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:66933 declares side 66932_R as its products
+        (rh:products); the master reaction RHEA:66932 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:14714871, PMID:31394723 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.302; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:66932
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.302"/>
+      notes: The rh:ec triple on RHEA:66932 in rhea.rdf. EC 2.3.1.302 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

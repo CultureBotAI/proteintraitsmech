@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.8.-
 mapped_xrefs:
@@ -32,4 +32,258 @@ definitions:
       Catalyses: (1) CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol + L-serine = archaetidylserine + CMP + H(+). (2) CDP-2,3-bis-O-(phytanyl)-sn-glycerol + L-serine = 2,3-bis-O-phytanyl- sn-glycero-3-phospho-L-serine + CMP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of archaetidylserine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.8.38. Rhea assigns 2 curated
+    reactions to EC 2.7.8.38. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol + L-serine
+    = archaetidylserine + CMP + H(+). (2) CDP-2,3-bis-O-(phytanyl)-sn-glycerol + L-serine = 2,3-bis-O-phytanyl-
+    sn-glycero-3-phospho-L-serine + CMP + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: archaetidylserine synthase
+    grounding: EC:2.7.8.38
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol + L-serine = archaetidylserine +…
+    grounding: RHEA:35439
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol + L-serine = archaetidylserine
+      + CMP + H(+)'
+  - node_id: rxn1_sub1
+    label: CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:58838
+    description: Formula C52H83N3O13P2.
+  - node_id: rxn1_sub2
+    label: L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:33384
+    description: Formula C3H7NO3.
+  - node_id: rxn1_prd1
+    label: archaetidylserine
+    node_type: CHEMICAL
+    grounding: CHEBI:71517
+    description: Formula C46H77NO8P.
+  - node_id: rxn1_prd2
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of CDP-2,3-bis-O-(phytanyl)-sn-glycerol + L-serine = 2,3-bis-O-phytanyl-sn-glyc…
+    grounding: RHEA:37367
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: CDP-2,3-bis-O-(phytanyl)-sn-glycerol + L-serine = 2,3-bis-O-phytanyl-sn-glycero-3-phospho-L-serine
+      + CMP + H(+)'
+  - node_id: rxn2_sub1
+    label: CDP-2,3-bis-O-(phytanyl)-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:74004
+    description: Formula C52H99N3O13P2.
+  - node_id: rxn2_sub2
+    label: L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:33384
+    description: Formula C3H7NO3.
+  - node_id: rxn2_prd1
+    label: 2,3-bis-O-phytanyl-sn-glycero-3-phospho-L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:74853
+    description: Formula C46H93NO8P.
+  - node_id: rxn2_prd2
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: archaetidylserine synthase activity
+    grounding: GO:0043761
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O27106
+    node_type: PROTEIN
+    label: ARSS_METTH
+    grounding: UniProtKB:O27106
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:35439 is one of the 2 curated reactions Rhea assigns to EC 2.7.8.38; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:35439
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.8.38"/>
+      notes: The rh:ec triple on RHEA:35439 in rhea.rdf assigns that reaction to EC 2.7.8.38.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol is a substrate consumed by RHEA:35439 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:35440
+      snippet: CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol + L-serine => archaetidylserine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35440 declares side 35439_L as its substrates
+        (rh:substrates); the master reaction RHEA:35439 is undirected. This participant is CHEBI:58838
+        with coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: L-serine is a substrate consumed by RHEA:35439 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35440
+      snippet: CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol + L-serine => archaetidylserine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35440 declares side 35439_L as its substrates
+        (rh:substrates); the master reaction RHEA:35439 is undirected. This participant is CHEBI:33384
+        with coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: archaetidylserine is a product released by RHEA:35439 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35440
+      snippet: CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol + L-serine => archaetidylserine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35440 declares side 35439_R as its products
+        (rh:products); the master reaction RHEA:35439 is undirected. This participant is CHEBI:71517 with
+        coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: CMP is a product released by RHEA:35439 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35440
+      snippet: CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol + L-serine => archaetidylserine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35440 declares side 35439_R as its products
+        (rh:products); the master reaction RHEA:35439 is undirected. This participant is CHEBI:60377 with
+        coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:35439 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35440
+      snippet: CDP-2,3-bis-O-(geranylgeranyl)-sn-glycerol + L-serine => archaetidylserine + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35440 declares side 35439_R as its products
+        (rh:products); the master reaction RHEA:35439 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:37367 is one of the 2 curated reactions Rhea assigns to EC 2.7.8.38; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:37367
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.8.38"/>
+      notes: The rh:ec triple on RHEA:37367 in rhea.rdf assigns that reaction to EC 2.7.8.38.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: CDP-2,3-bis-O-(phytanyl)-sn-glycerol is a substrate consumed by RHEA:37367 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:37368
+      snippet: CDP-2,3-bis-O-(phytanyl)-sn-glycerol + L-serine => 2,3-bis-O-phytanyl-sn-glycero-3-phospho-L-serine
+        + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37368 declares side 37367_L as its substrates
+        (rh:substrates); the master reaction RHEA:37367 is undirected. This participant is CHEBI:74004
+        with coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: L-serine is a substrate consumed by RHEA:37367 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37368
+      snippet: CDP-2,3-bis-O-(phytanyl)-sn-glycerol + L-serine => 2,3-bis-O-phytanyl-sn-glycero-3-phospho-L-serine
+        + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37368 declares side 37367_L as its substrates
+        (rh:substrates); the master reaction RHEA:37367 is undirected. This participant is CHEBI:33384
+        with coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2,3-bis-O-phytanyl-sn-glycero-3-phospho-L-serine is a product released by RHEA:37367
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37368
+      snippet: CDP-2,3-bis-O-(phytanyl)-sn-glycerol + L-serine => 2,3-bis-O-phytanyl-sn-glycero-3-phospho-L-serine
+        + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37368 declares side 37367_R as its products
+        (rh:products); the master reaction RHEA:37367 is undirected. This participant is CHEBI:74853 with
+        coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: CMP is a product released by RHEA:37367 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37368
+      snippet: CDP-2,3-bis-O-(phytanyl)-sn-glycerol + L-serine => 2,3-bis-O-phytanyl-sn-glycero-3-phospho-L-serine
+        + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37368 declares side 37367_R as its products
+        (rh:products); the master reaction RHEA:37367 is undirected. This participant is CHEBI:60377 with
+        coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:37367 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37368
+      snippet: CDP-2,3-bis-O-(phytanyl)-sn-glycerol + L-serine => 2,3-bis-O-phytanyl-sn-glycero-3-phospho-L-serine
+        + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37368 declares side 37367_R as its products
+        (rh:products); the master reaction RHEA:37367 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12562787 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.8.38
+      snippet: EC:2.7.8.38 > GO:archaetidylserine synthase activity ; GO:0043761
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043761 is itself a record
+        in this KB.
+  - subject: prot_O27106
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSS_METTH is an exemplar enzyme with EC 2.7.8.38 activity.
+    evidence:
+    - reference: EC:2.7.8.38
+      snippet: DR   O27106, ARSS_METTH ;
+      notes: ExPASy ENZYME entry EC 2.7.8.38 cross-references UniProtKB:O27106 (ARSS_METTH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

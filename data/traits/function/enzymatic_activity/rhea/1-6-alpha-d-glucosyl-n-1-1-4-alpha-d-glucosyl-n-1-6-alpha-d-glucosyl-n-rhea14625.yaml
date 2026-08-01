@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.1.2
     mapping_source: rhea2ec
@@ -28,4 +28,142 @@ definitions:
       Catalyses the reaction: [(1->6)-alpha-D-glucosyl](n+1) + [(1->4)-alpha-D-glucosyl](n) = [(1->6)-alpha-D-glucosyl](n) + [(1->4)-alpha-D-glucosyl](n+1)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [(1->6)-alpha-D-glucosyl](n+1) + [(1->4)-alpha-D-glucosyl](n) = [(1->6)-alpha-D-glucosy…
+  description: Substrate-to-product chemistry of RHEA:14625, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:14626 (rh:substrates → 14625_L, rh:products → 14625_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [(1->6)-alpha-D-glucosyl](n+1) + [(1->4)-alpha-D-glucosyl](n) = [(1->6)-alph…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14625
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [(1->6)-alpha-D-glucosyl](n+1) + [(1->4)-alpha-D-glucosyl](n) = [(1->6)-alpha-D-glucosyl](n)
+      + [(1->4)-alpha-D-glucosyl](n+1)'
+  - node_id: sub1
+    label: '[(1->6)-alpha-D-glucosyl](n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:18269
+    xrefs:
+    - RHEA-COMP:11144
+    description: Rhea compound POLYMER:11144. Formula H2O(C6H10O5)<i><sub>n+1</sub></i>. Polymerisation
+      index n+1.
+  - node_id: sub2
+    label: '[(1->4)-alpha-D-glucosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:15444
+    xrefs:
+    - RHEA-COMP:9584
+    description: Rhea compound POLYMER:9584. Formula H2O(C6H10O5)<i><sub>n</sub></i>. Polymerisation index
+      n.
+  - node_id: prd1
+    label: '[(1->6)-alpha-D-glucosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:18269
+    xrefs:
+    - RHEA-COMP:11145
+    description: Rhea compound POLYMER:11145. Formula H2O(C6H10O5)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: prd2
+    label: '[(1->4)-alpha-D-glucosyl](n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:15444
+    xrefs:
+    - RHEA-COMP:9587
+    description: Rhea compound POLYMER:9587. Formula H2O(C6H10O5)<i><sub>n+1</sub></i>. Polymerisation
+      index n+1.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dextrin dextranase activity
+    grounding: GO:0050103
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: dextrin dextranase
+    grounding: EC:2.4.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[(1->6)-alpha-D-glucosyl](n+1) is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:14626
+      snippet: '[(1->6)-alpha-D-glucosyl](n+1) + [(1->4)-alpha-D-glucosyl](n) => [(1->6)-alpha-D-glucosyl](n)
+        + [(1->4)-alpha-D-glucosyl](n+1)'
+      notes: Rhea's left-to-right directional reaction RHEA:14626 declares side 14625_L as its substrates
+        (rh:substrates); the master reaction RHEA:14625 is undirected. This participant is POLYMER:11144
+        with coefficient 1. Rhea cites PMID:24540594, PMID:14917661, PMID:18136472 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: '[(1->4)-alpha-D-glucosyl](n) is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:14626
+      snippet: '[(1->6)-alpha-D-glucosyl](n+1) + [(1->4)-alpha-D-glucosyl](n) => [(1->6)-alpha-D-glucosyl](n)
+        + [(1->4)-alpha-D-glucosyl](n+1)'
+      notes: Rhea's left-to-right directional reaction RHEA:14626 declares side 14625_L as its substrates
+        (rh:substrates); the master reaction RHEA:14625 is undirected. This participant is POLYMER:9584
+        with coefficient 1. Rhea cites PMID:24540594, PMID:14917661, PMID:18136472 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[(1->6)-alpha-D-glucosyl](n) is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:14626
+      snippet: '[(1->6)-alpha-D-glucosyl](n+1) + [(1->4)-alpha-D-glucosyl](n) => [(1->6)-alpha-D-glucosyl](n)
+        + [(1->4)-alpha-D-glucosyl](n+1)'
+      notes: Rhea's left-to-right directional reaction RHEA:14626 declares side 14625_R as its products
+        (rh:products); the master reaction RHEA:14625 is undirected. This participant is POLYMER:11145
+        with coefficient 1. Rhea cites PMID:24540594, PMID:14917661, PMID:18136472 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: '[(1->4)-alpha-D-glucosyl](n+1) is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:14626
+      snippet: '[(1->6)-alpha-D-glucosyl](n+1) + [(1->4)-alpha-D-glucosyl](n) => [(1->6)-alpha-D-glucosyl](n)
+        + [(1->4)-alpha-D-glucosyl](n+1)'
+      notes: Rhea's left-to-right directional reaction RHEA:14626 declares side 14625_R as its products
+        (rh:products); the master reaction RHEA:14625 is undirected. This participant is POLYMER:9587
+        with coefficient 1. Rhea cites PMID:24540594, PMID:14917661, PMID:18136472 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:14625
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050103"/>
+      notes: The rdfs:seeAlso triple on RHEA:14625 in rhea.rdf. GO term GO:0050103 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.1.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:14625
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.2"/>
+      notes: The rh:ec triple on RHEA:14625 in rhea.rdf. EC 2.4.1.2 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

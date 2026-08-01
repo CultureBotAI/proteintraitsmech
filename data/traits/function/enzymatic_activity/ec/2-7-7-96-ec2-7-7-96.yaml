@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -43,4 +43,148 @@ definitions:
       Catalyses: D-ribose 5-phosphate + ATP + H(+) = ADP-D-ribose + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ADP-D-ribose pyrophosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.96. EC 2.7.7.96 maps to exactly
+    one curated Rhea reaction (RHEA:50248), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-ribose 5-phosphate
+    + ATP + H(+) = ADP-D-ribose + diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ADP-D-ribose pyrophosphorylase
+    grounding: EC:2.7.7.96
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:78346
+    description: Formula C5H9O8P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: ADP-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:57967
+    description: Formula C15H21N5O14P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q9UKK9
+    node_type: PROTEIN
+    label: NUDT5_HUMAN
+    grounding: UniProtKB:Q9UKK9
+  - node_id: prot_Q9JKX6
+    node_type: PROTEIN
+    label: NUDT5_MOUSE
+    grounding: UniProtKB:Q9JKX6
+  - node_id: prot_Q5RCY2
+    node_type: PROTEIN
+    label: NUDT5_PONAB
+    grounding: UniProtKB:Q5RCY2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-ribose 5-phosphate is a substrate consumed by RHEA:50248 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50249
+      snippet: D-ribose 5-phosphate + ATP + H(+) => ADP-D-ribose + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50249 declares side 50248_L as its substrates
+        (rh:substrates); the master reaction RHEA:50248 is undirected. This participant is CHEBI:78346
+        with coefficient 1. Rhea cites PMID:27257257 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:50248 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50249
+      snippet: D-ribose 5-phosphate + ATP + H(+) => ADP-D-ribose + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50249 declares side 50248_L as its substrates
+        (rh:substrates); the master reaction RHEA:50248 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:27257257 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:50248 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50249
+      snippet: D-ribose 5-phosphate + ATP + H(+) => ADP-D-ribose + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50249 declares side 50248_L as its substrates
+        (rh:substrates); the master reaction RHEA:50248 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:27257257 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ADP-D-ribose is a product released by RHEA:50248 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50249
+      snippet: D-ribose 5-phosphate + ATP + H(+) => ADP-D-ribose + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50249 declares side 50248_R as its products
+        (rh:products); the master reaction RHEA:50248 is undirected. This participant is CHEBI:57967 with
+        coefficient 1. Rhea cites PMID:27257257 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:50248 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50249
+      snippet: D-ribose 5-phosphate + ATP + H(+) => ADP-D-ribose + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50249 declares side 50248_R as its products
+        (rh:products); the master reaction RHEA:50248 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:27257257 for this reaction.
+  - subject: prot_Q9UKK9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUDT5_HUMAN is an exemplar enzyme with EC 2.7.7.96 activity.
+    evidence:
+    - reference: EC:2.7.7.96
+      snippet: DR   Q9UKK9, NUDT5_HUMAN;  Q9JKX6, NUDT5_MOUSE;  Q5RCY2, NUDT5_PONAB;
+      notes: ExPASy ENZYME entry EC 2.7.7.96 cross-references UniProtKB:Q9UKK9 (NUDT5_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9JKX6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUDT5_MOUSE is an exemplar enzyme with EC 2.7.7.96 activity.
+    evidence:
+    - reference: EC:2.7.7.96
+      snippet: DR   Q9UKK9, NUDT5_HUMAN;  Q9JKX6, NUDT5_MOUSE;  Q5RCY2, NUDT5_PONAB;
+      notes: ExPASy ENZYME entry EC 2.7.7.96 cross-references UniProtKB:Q9JKX6 (NUDT5_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q5RCY2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUDT5_PONAB is an exemplar enzyme with EC 2.7.7.96 activity.
+    evidence:
+    - reference: EC:2.7.7.96
+      snippet: DR   Q9UKK9, NUDT5_HUMAN;  Q9JKX6, NUDT5_MOUSE;  Q5RCY2, NUDT5_PONAB;
+      notes: ExPASy ENZYME entry EC 2.7.7.96 cross-references UniProtKB:Q5RCY2 (NUDT5_PONAB) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

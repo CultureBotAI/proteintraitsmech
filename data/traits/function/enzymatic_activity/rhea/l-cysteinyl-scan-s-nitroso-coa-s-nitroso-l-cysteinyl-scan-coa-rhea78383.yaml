@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29950
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,124 @@ definitions:
       Catalyses the reaction: L-cysteinyl-[SCAN] + S-nitroso-CoA = S-nitroso-L-cysteinyl-[SCAN] + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-cysteinyl-[SCAN] + S-nitroso-CoA = S-nitroso-L-cysteinyl-[SCAN] + CoA
+  description: Substrate-to-product chemistry of RHEA:78383, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78384 (rh:substrates → 78383_L, rh:products → 78383_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-cysteinyl-[SCAN] + S-nitroso-CoA = S-nitroso-L-cysteinyl-[SCAN] + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78383
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-cysteinyl-[SCAN] + S-nitroso-CoA = S-nitroso-L-cysteinyl-[SCAN] + CoA'
+  - node_id: sub1
+    label: L-cysteinyl-[SCAN]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19068
+    description: Rhea compound GENERIC:19068.
+  - node_id: sub1_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19068 (L-cysteinyl-[SCAN]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: S-nitroso-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:145546
+    description: Formula C21H31N8O17P3S.
+  - node_id: prd1
+    label: S-nitroso-L-cysteinyl-[SCAN]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19069
+    description: Rhea compound GENERIC:19069.
+  - node_id: prd1_rp1
+    label: S-nitroso-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19069 (S-nitroso-L-cysteinyl-[SCAN]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:149494
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteinyl-[SCAN] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78384
+      snippet: L-cysteinyl-[SCAN] + S-nitroso-CoA => S-nitroso-L-cysteinyl-[SCAN] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:78384 declares side 78383_L as its substrates
+        (rh:substrates); the master reaction RHEA:78383 is undirected. This participant is GENERIC:19068
+        with coefficient 1. Rhea cites PMID:38056462 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[SCAN].
+    evidence:
+    - reference: RHEA:78383
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:19068 (L-cysteinyl-[SCAN]) declares rh:reactivePart = L-cysteine residue
+        (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-nitroso-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78384
+      snippet: L-cysteinyl-[SCAN] + S-nitroso-CoA => S-nitroso-L-cysteinyl-[SCAN] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:78384 declares side 78383_L as its substrates
+        (rh:substrates); the master reaction RHEA:78383 is undirected. This participant is CHEBI:145546
+        with coefficient 1. Rhea cites PMID:38056462 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-nitroso-L-cysteinyl-[SCAN] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78384
+      snippet: L-cysteinyl-[SCAN] + S-nitroso-CoA => S-nitroso-L-cysteinyl-[SCAN] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:78384 declares side 78383_R as its products
+        (rh:products); the master reaction RHEA:78383 is undirected. This participant is GENERIC:19069
+        with coefficient 1. Rhea cites PMID:38056462 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-nitroso-L-cysteine residue is the reactive part of S-nitroso-L-cysteinyl-[SCAN].
+    evidence:
+    - reference: RHEA:78383
+      snippet: S-nitroso-L-cysteine residue
+      notes: Rhea compound GENERIC:19069 (S-nitroso-L-cysteinyl-[SCAN]) declares rh:reactivePart = S-nitroso-L-cysteine
+        residue (CHEBI:149494), formula C3H4N2O2S.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78384
+      snippet: L-cysteinyl-[SCAN] + S-nitroso-CoA => S-nitroso-L-cysteinyl-[SCAN] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:78384 declares side 78383_R as its products
+        (rh:products); the master reaction RHEA:78383 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:38056462 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

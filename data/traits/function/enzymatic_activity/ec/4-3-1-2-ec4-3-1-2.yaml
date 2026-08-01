@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.1.-
 synonyms:
@@ -41,4 +41,132 @@ definitions:
       Catalyses: (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methylaspartate ammonia-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.1.2. EC 4.3.1.2 maps to exactly
+    one curated Rhea reaction (RHEA:12829), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2S,3S)-3-methyl-L-aspartate
+    = mesaconate + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: methylaspartate ammonia-lyase
+    grounding: EC:4.3.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2S,3S)-3-methyl-L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:58724
+    description: Formula C5H8NO4.
+  - node_id: prd1
+    label: mesaconate
+    node_type: CHEMICAL
+    grounding: CHEBI:36986
+    description: Formula C5H4O4.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methylaspartate ammonia-lyase activity
+    grounding: GO:0050096
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q3AEU2
+    node_type: PROTEIN
+    label: MAAL1_CARHZ
+    grounding: UniProtKB:Q3AEU2
+  - node_id: prot_Q3AEJ6
+    node_type: PROTEIN
+    label: MAAL2_CARHZ
+    grounding: UniProtKB:Q3AEJ6
+  - node_id: prot_O66145
+    node_type: PROTEIN
+    label: MAAL_CITAM
+    grounding: UniProtKB:O66145
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S,3S)-3-methyl-L-aspartate is a substrate consumed by RHEA:12829 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12830
+      snippet: (2S,3S)-3-methyl-L-aspartate => mesaconate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12830 declares side 12829_L as its substrates
+        (rh:substrates); the master reaction RHEA:12829 is undirected. This participant is CHEBI:58724
+        with coefficient 1. Rhea cites PMID:9385136, PMID:22614383, PMID:1531295, PMID:19670200 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: mesaconate is a product released by RHEA:12829 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12830
+      snippet: (2S,3S)-3-methyl-L-aspartate => mesaconate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12830 declares side 12829_R as its products
+        (rh:products); the master reaction RHEA:12829 is undirected. This participant is CHEBI:36986 with
+        coefficient 1. Rhea cites PMID:9385136, PMID:22614383, PMID:1531295, PMID:19670200 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:12829 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12830
+      snippet: (2S,3S)-3-methyl-L-aspartate => mesaconate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12830 declares side 12829_R as its products
+        (rh:products); the master reaction RHEA:12829 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:9385136, PMID:22614383, PMID:1531295, PMID:19670200 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: EC:4.3.1.2 > GO:methylaspartate ammonia-lyase activity ; GO:0050096
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050096 is itself a record
+        in this KB.
+  - subject: prot_Q3AEU2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAAL1_CARHZ is an exemplar enzyme with EC 4.3.1.2 activity.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: DR   Q3AEU2, MAAL1_CARHZ;  Q3AEJ6, MAAL2_CARHZ;  O66145, MAAL_CITAM ;
+      notes: ExPASy ENZYME entry EC 4.3.1.2 cross-references UniProtKB:Q3AEU2 (MAAL1_CARHZ) as a protein
+        with this activity.
+  - subject: prot_Q3AEJ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAAL2_CARHZ is an exemplar enzyme with EC 4.3.1.2 activity.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: DR   Q3AEU2, MAAL1_CARHZ;  Q3AEJ6, MAAL2_CARHZ;  O66145, MAAL_CITAM ;
+      notes: ExPASy ENZYME entry EC 4.3.1.2 cross-references UniProtKB:Q3AEJ6 (MAAL2_CARHZ) as a protein
+        with this activity.
+  - subject: prot_O66145
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAAL_CITAM is an exemplar enzyme with EC 4.3.1.2 activity.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: DR   Q3AEU2, MAAL1_CARHZ;  Q3AEJ6, MAAL2_CARHZ;  O66145, MAAL_CITAM ;
+      notes: ExPASy ENZYME entry EC 4.3.1.2 cross-references UniProtKB:O66145 (MAAL_CITAM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

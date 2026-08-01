@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:73316
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,98 @@ definitions:
       Catalyses the reaction: a 2'-deoxyribonucleoside 5'-diphosphate + GTP = a 2'-deoxyribonucleoside 5'-triphosphate + GDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2'-deoxyribonucleoside 5'-diphosphate + GTP = a 2'-deoxyribonucleoside
+    5'-triphosphat…
+  description: Substrate-to-product chemistry of RHEA:79883, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79884 (rh:substrates → 79883_L, rh:products → 79883_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2'-deoxyribonucleoside 5'-diphosphate + GTP = a 2'-deoxyribonucleoside 5'-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79883
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2''-deoxyribonucleoside 5''-diphosphate + GTP = a 2''-deoxyribonucleoside 5''-triphosphate
+      + GDP'
+  - node_id: sub1
+    label: a 2'-deoxyribonucleoside 5'-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:73316
+    description: Formula C5H8O9P2R.
+  - node_id: sub2
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: prd1
+    label: a 2'-deoxyribonucleoside 5'-triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61560
+    description: Formula C5H8O12P3R.
+  - node_id: prd2
+    label: GDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2'-deoxyribonucleoside 5'-diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79884
+      snippet: a 2'-deoxyribonucleoside 5'-diphosphate + GTP => a 2'-deoxyribonucleoside 5'-triphosphate
+        + GDP
+      notes: Rhea's left-to-right directional reaction RHEA:79884 declares side 79883_L as its substrates
+        (rh:substrates); the master reaction RHEA:79883 is undirected. This participant is CHEBI:73316
+        with coefficient 1. Rhea cites PMID:23416111 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79884
+      snippet: a 2'-deoxyribonucleoside 5'-diphosphate + GTP => a 2'-deoxyribonucleoside 5'-triphosphate
+        + GDP
+      notes: Rhea's left-to-right directional reaction RHEA:79884 declares side 79883_L as its substrates
+        (rh:substrates); the master reaction RHEA:79883 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:23416111 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 2'-deoxyribonucleoside 5'-triphosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79884
+      snippet: a 2'-deoxyribonucleoside 5'-diphosphate + GTP => a 2'-deoxyribonucleoside 5'-triphosphate
+        + GDP
+      notes: Rhea's left-to-right directional reaction RHEA:79884 declares side 79883_R as its products
+        (rh:products); the master reaction RHEA:79883 is undirected. This participant is CHEBI:61560 with
+        coefficient 1. Rhea cites PMID:23416111 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: GDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79884
+      snippet: a 2'-deoxyribonucleoside 5'-diphosphate + GTP => a 2'-deoxyribonucleoside 5'-triphosphate
+        + GDP
+      notes: Rhea's left-to-right directional reaction RHEA:79884 declares side 79883_R as its products
+        (rh:products); the master reaction RHEA:79883 is undirected. This participant is CHEBI:58189 with
+        coefficient 1. Rhea cites PMID:23416111 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

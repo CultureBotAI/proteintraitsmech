@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.13.11.92
     mapping_source: rhea2ec
@@ -26,4 +26,106 @@ definitions:
       Catalyses the reaction: octadecanoate + O2 = (2R)-2-hydroperoxyoctadecanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of octadecanoate + O2 = (2R)-2-hydroperoxyoctadecanoate
+  description: Substrate-to-product chemistry of RHEA:63864, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63865 (rh:substrates → 63864_L, rh:products → 63864_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of octadecanoate + O2 = (2R)-2-hydroperoxyoctadecanoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63864
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: octadecanoate + O2 = (2R)-2-hydroperoxyoctadecanoate'
+  - node_id: sub1
+    label: octadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:25629
+    description: Formula C18H35O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (2R)-2-hydroperoxyoctadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:149622
+    description: Formula C18H35O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: fatty acid alpha-dioxygenase activity
+    grounding: GO:0102672
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: fatty acid alpha-dioxygenase
+    grounding: EC:1.13.11.92
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: octadecanoate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63865
+      snippet: octadecanoate + O2 => (2R)-2-hydroperoxyoctadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:63865 declares side 63864_L as its substrates
+        (rh:substrates); the master reaction RHEA:63864 is undirected. This participant is CHEBI:25629
+        with coefficient 1. Rhea cites PMID:11909851 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63865
+      snippet: octadecanoate + O2 => (2R)-2-hydroperoxyoctadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:63865 declares side 63864_L as its substrates
+        (rh:substrates); the master reaction RHEA:63864 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:11909851 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2R)-2-hydroperoxyoctadecanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:63865
+      snippet: octadecanoate + O2 => (2R)-2-hydroperoxyoctadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:63865 declares side 63864_R as its products
+        (rh:products); the master reaction RHEA:63864 is undirected. This participant is CHEBI:149622
+        with coefficient 1. Rhea cites PMID:11909851 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:63864
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102672"/>
+      notes: The rdfs:seeAlso triple on RHEA:63864 in rhea.rdf. GO term GO:0102672 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.13.11.92; the EC class covers the chemistry, this
+      reaction is one curated instance of it.
+    evidence:
+    - reference: RHEA:63864
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.92"/>
+      notes: The rh:ec triple on RHEA:63864 in rhea.rdf. EC 1.13.11.92 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -23,4 +23,77 @@ definitions:
       Catalyses: pre-sodorifen diphosphate = sodorifen + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sodorifen synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.205. EC 4.2.3.205 maps to
+    exactly one curated Rhea reaction (RHEA:60124), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "pre-sodorifen
+    diphosphate = sodorifen + diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sodorifen synthase
+    grounding: EC:4.2.3.205
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: pre-sodorifen diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:143612
+    description: Formula C16H27O7P2.
+  - node_id: prd1
+    label: sodorifen
+    node_type: CHEMICAL
+    grounding: CHEBI:143611
+    description: Formula C16H26.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: pre-sodorifen diphosphate is a substrate consumed by RHEA:60124 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60125
+      snippet: pre-sodorifen diphosphate => sodorifen + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60125 declares side 60124_L as its substrates
+        (rh:substrates); the master reaction RHEA:60124 is undirected. This participant is CHEBI:143612
+        with coefficient 1. Rhea cites PMID:39332411, PMID:28408760, PMID:30133268, PMID:27231241 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sodorifen is a product released by RHEA:60124 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60125
+      snippet: pre-sodorifen diphosphate => sodorifen + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60125 declares side 60124_R as its products
+        (rh:products); the master reaction RHEA:60124 is undirected. This participant is CHEBI:143611
+        with coefficient 1. Rhea cites PMID:39332411, PMID:28408760, PMID:30133268, PMID:27231241 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:60124 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60125
+      snippet: pre-sodorifen diphosphate => sodorifen + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60125 declares side 60124_R as its products
+        (rh:products); the master reaction RHEA:60124 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:39332411, PMID:28408760, PMID:30133268, PMID:27231241 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

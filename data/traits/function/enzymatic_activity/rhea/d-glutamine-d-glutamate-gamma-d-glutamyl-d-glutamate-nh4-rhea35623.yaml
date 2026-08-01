@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.2.1
     mapping_source: rhea2ec
@@ -30,4 +30,122 @@ definitions:
       Catalyses the reaction: D-glutamine + D-glutamate = gamma-D-glutamyl-D-glutamate + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-glutamine + D-glutamate = gamma-D-glutamyl-D-glutamate + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:35623, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35624 (rh:substrates → 35623_L, rh:products → 35623_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-glutamine + D-glutamate = gamma-D-glutamyl-D-glutamate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:35623
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-glutamine + D-glutamate = gamma-D-glutamyl-D-glutamate + NH4(+)'
+  - node_id: sub1
+    label: D-glutamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58000
+    description: Formula C5H10N2O3.
+  - node_id: sub2
+    label: D-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29986
+    description: Formula C5H8NO4.
+  - node_id: prd1
+    label: gamma-D-glutamyl-D-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:71681
+    description: Formula C10H14N2O7.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: D-glutamyltransferase activity
+    grounding: GO:0047823
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: D-glutamyltransferase
+    grounding: EC:2.3.2.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-glutamine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35624
+      snippet: D-glutamine + D-glutamate => gamma-D-glutamyl-D-glutamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35624 declares side 35623_L as its substrates
+        (rh:substrates); the master reaction RHEA:35623 is undirected. This participant is CHEBI:58000
+        with coefficient 1. Rhea cites PMID:13233245, PMID:13201582 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: D-glutamate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35624
+      snippet: D-glutamine + D-glutamate => gamma-D-glutamyl-D-glutamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35624 declares side 35623_L as its substrates
+        (rh:substrates); the master reaction RHEA:35623 is undirected. This participant is CHEBI:29986
+        with coefficient 1. Rhea cites PMID:13233245, PMID:13201582 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: gamma-D-glutamyl-D-glutamate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35624
+      snippet: D-glutamine + D-glutamate => gamma-D-glutamyl-D-glutamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35624 declares side 35623_R as its products
+        (rh:products); the master reaction RHEA:35623 is undirected. This participant is CHEBI:71681 with
+        coefficient 1. Rhea cites PMID:13233245, PMID:13201582 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35624
+      snippet: D-glutamine + D-glutamate => gamma-D-glutamyl-D-glutamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35624 declares side 35623_R as its products
+        (rh:products); the master reaction RHEA:35623 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:13233245, PMID:13201582 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:35623
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047823"/>
+      notes: The rdfs:seeAlso triple on RHEA:35623 in rhea.rdf. GO term GO:0047823 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.2.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:35623
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.2.1"/>
+      notes: The rh:ec triple on RHEA:35623 in rhea.rdf. EC 2.3.2.1 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

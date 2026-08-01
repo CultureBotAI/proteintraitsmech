@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.6.1.-
 mapped_xrefs:
@@ -38,4 +38,150 @@ definitions:
       Catalyses: triphosphate + H2O = phosphate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of triphosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.6.1.25. EC 3.6.1.25 maps to exactly
+    one curated Rhea reaction (RHEA:14157), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "triphosphate
+    + H2O = phosphate + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: triphosphatase
+    grounding: EC:3.6.1.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:18036
+    description: Formula O10P3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: inorganic triphosphate phosphatase activity
+    grounding: GO:0050355
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A3DIJ8
+    node_type: PROTEIN
+    label: 3PASE_ACET2
+    grounding: UniProtKB:A3DIJ8
+  - node_id: prot_P30871
+    node_type: PROTEIN
+    label: 3PASE_ECOLI
+    grounding: UniProtKB:P30871
+  - node_id: prot_P45267
+    node_type: PROTEIN
+    label: 3PASE_HAEIN
+    grounding: UniProtKB:P45267
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: triphosphate is a substrate consumed by RHEA:14157 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14158
+      snippet: triphosphate + H2O => phosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14158 declares side 14157_L as its substrates
+        (rh:substrates); the master reaction RHEA:14157 is undirected. This participant is CHEBI:18036
+        with coefficient 1. Rhea cites PMID:22984449, PMID:18700747, PMID:24004165, PMID:17303560 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:14157 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14158
+      snippet: triphosphate + H2O => phosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14158 declares side 14157_L as its substrates
+        (rh:substrates); the master reaction RHEA:14157 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:22984449, PMID:18700747, PMID:24004165, PMID:17303560 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phosphate is a product released by RHEA:14157 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14158
+      snippet: triphosphate + H2O => phosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14158 declares side 14157_R as its products
+        (rh:products); the master reaction RHEA:14157 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:22984449, PMID:18700747, PMID:24004165, PMID:17303560 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:14157 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14158
+      snippet: triphosphate + H2O => phosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14158 declares side 14157_R as its products
+        (rh:products); the master reaction RHEA:14157 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:22984449, PMID:18700747, PMID:24004165, PMID:17303560 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.6.1.25
+      snippet: EC:3.6.1.25 > GO:inorganic triphosphate phosphatase activity ; GO:0050355
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050355 is itself a record
+        in this KB.
+  - subject: prot_A3DIJ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3PASE_ACET2 is an exemplar enzyme with EC 3.6.1.25 activity.
+    evidence:
+    - reference: EC:3.6.1.25
+      snippet: DR   A3DIJ8, 3PASE_ACET2;  P30871, 3PASE_ECOLI;  P45267, 3PASE_HAEIN;
+      notes: ExPASy ENZYME entry EC 3.6.1.25 cross-references UniProtKB:A3DIJ8 (3PASE_ACET2) as a protein
+        with this activity.
+  - subject: prot_P30871
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3PASE_ECOLI is an exemplar enzyme with EC 3.6.1.25 activity.
+    evidence:
+    - reference: EC:3.6.1.25
+      snippet: DR   A3DIJ8, 3PASE_ACET2;  P30871, 3PASE_ECOLI;  P45267, 3PASE_HAEIN;
+      notes: ExPASy ENZYME entry EC 3.6.1.25 cross-references UniProtKB:P30871 (3PASE_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P45267
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3PASE_HAEIN is an exemplar enzyme with EC 3.6.1.25 activity.
+    evidence:
+    - reference: EC:3.6.1.25
+      snippet: DR   A3DIJ8, 3PASE_ACET2;  P30871, 3PASE_ECOLI;  P45267, 3PASE_HAEIN;
+      notes: ExPASy ENZYME entry EC 3.6.1.25 cross-references UniProtKB:P45267 (3PASE_HAEIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

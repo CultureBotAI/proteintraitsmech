@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:145009
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,107 @@ definitions:
       Catalyses the reaction: steviolbioside + UDP-alpha-D-glucose = stevioside + UDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of steviolbioside + UDP-alpha-D-glucose = stevioside + UDP
+  description: Substrate-to-product chemistry of RHEA:61744, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:61745 (rh:substrates → 61744_L, rh:products → 61744_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of steviolbioside + UDP-alpha-D-glucose = stevioside + UDP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:61744
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: steviolbioside + UDP-alpha-D-glucose = stevioside + UDP'
+  - node_id: sub1
+    label: steviolbioside
+    node_type: CHEMICAL
+    grounding: CHEBI:145009
+    description: Formula C32H49O13.
+  - node_id: sub2
+    label: UDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+    description: Formula C15H22N2O17P2.
+  - node_id: prd1
+    label: stevioside
+    node_type: CHEMICAL
+    grounding: CHEBI:9271
+    description: Formula C38H60O18.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: steviolbioside glucosyltransferase activity (stevioside forming)
+    grounding: GO:0102379
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: steviolbioside is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61745
+      snippet: steviolbioside + UDP-alpha-D-glucose => stevioside + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:61745 declares side 61744_L as its substrates
+        (rh:substrates); the master reaction RHEA:61744 is undirected. This participant is CHEBI:145009
+        with coefficient 1. Rhea cites PMID:15610349 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61745
+      snippet: steviolbioside + UDP-alpha-D-glucose => stevioside + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:61745 declares side 61744_L as its substrates
+        (rh:substrates); the master reaction RHEA:61744 is undirected. This participant is CHEBI:58885
+        with coefficient 1. Rhea cites PMID:15610349 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: stevioside is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61745
+      snippet: steviolbioside + UDP-alpha-D-glucose => stevioside + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:61745 declares side 61744_R as its products
+        (rh:products); the master reaction RHEA:61744 is undirected. This participant is CHEBI:9271 with
+        coefficient 1. Rhea cites PMID:15610349 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61745
+      snippet: steviolbioside + UDP-alpha-D-glucose => stevioside + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:61745 declares side 61744_R as its products
+        (rh:products); the master reaction RHEA:61744 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:15610349 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:61744
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102379"/>
+      notes: The rdfs:seeAlso triple on RHEA:61744 in rhea.rdf. GO term GO:0102379 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

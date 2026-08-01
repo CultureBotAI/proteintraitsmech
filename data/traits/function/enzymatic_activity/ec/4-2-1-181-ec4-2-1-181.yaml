@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -26,4 +26,109 @@ definitions:
       Catalyses: a 3-carboxymethyl-3-hydroxyacyl-[ACP] = a 4-carboxy-3-alkylbut-(2E)- enoyl-[ACP] + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-carboxymethyl-3-hydroxy-acyl-[ACP] dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.181. EC 4.2.1.181 maps to
+    exactly one curated Rhea reaction (RHEA:78995), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 3-carboxymethyl-3-hydroxyacyl-[ACP]
+    = a 4-carboxy-3-alkylbut-(2E)- enoyl-[ACP] + H2O". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-carboxymethyl-3-hydroxy-acyl-[ACP] dehydratase
+    grounding: EC:4.2.1.181
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 3-carboxymethyl-3-hydroxyacyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19173
+    description: Rhea compound GENERIC:19173.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: an O-[S-(3-carboxymethyl-3-hydroxyacyl)-pantetheine-4'-phosphoryl]-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:19173 (a 3-carboxymethyl-3-hydroxyacyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:229667
+  - node_id: prd1
+    label: a 4-carboxy-3-alkylbut-(2E)-enoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19171
+    description: Rhea compound GENERIC:19171.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: an O-[S-(4-carboxy-3-alkylbut-(2E)-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:19171 (a 4-carboxy-3-alkylbut-(2E)-enoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:229663
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3-carboxymethyl-3-hydroxyacyl-[ACP] is a substrate consumed by RHEA:78995 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78996
+      snippet: a 3-carboxymethyl-3-hydroxyacyl-[ACP] => a 4-carboxy-3-alkylbut-(2E)-enoyl-[ACP] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:78996 declares side 78995_L as its substrates
+        (rh:substrates); the master reaction RHEA:78995 is undirected. This participant is GENERIC:19173
+        with coefficient 1. Rhea cites PMID:16834357, PMID:19494914, PMID:17928301 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: an O-[S-(3-carboxymethyl-3-hydroxyacyl)-pantetheine-4'-phosphoryl]-L-serine residue is
+      the reactive part of a 3-carboxymethyl-3-hydroxyacyl-[ACP].
+    evidence:
+    - reference: RHEA:78995
+      snippet: an O-[S-(3-carboxymethyl-3-hydroxyacyl)-pantetheine-4'-phosphoryl]-L-serine residue
+      notes: Rhea compound GENERIC:19173 (a 3-carboxymethyl-3-hydroxyacyl-[ACP]) declares rh:reactivePart
+        = an O-[S-(3-carboxymethyl-3-hydroxyacyl)-pantetheine-4'-phosphoryl]-L-serine residue (CHEBI:229667).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 4-carboxy-3-alkylbut-(2E)-enoyl-[ACP] is a product released by RHEA:78995 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78996
+      snippet: a 3-carboxymethyl-3-hydroxyacyl-[ACP] => a 4-carboxy-3-alkylbut-(2E)-enoyl-[ACP] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:78996 declares side 78995_R as its products
+        (rh:products); the master reaction RHEA:78995 is undirected. This participant is GENERIC:19171
+        with coefficient 1. Rhea cites PMID:16834357, PMID:19494914, PMID:17928301 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: an O-[S-(4-carboxy-3-alkylbut-(2E)-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue
+      is the reactive part of a 4-carboxy-3-alkylbut-(2E)-enoyl-[ACP].
+    evidence:
+    - reference: RHEA:78995
+      snippet: an O-[S-(4-carboxy-3-alkylbut-(2E)-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue
+      notes: Rhea compound GENERIC:19171 (a 4-carboxy-3-alkylbut-(2E)-enoyl-[ACP]) declares rh:reactivePart
+        = an O-[S-(4-carboxy-3-alkylbut-(2E)-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue (CHEBI:229663).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:78995 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78996
+      snippet: a 3-carboxymethyl-3-hydroxyacyl-[ACP] => a 4-carboxy-3-alkylbut-(2E)-enoyl-[ACP] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:78996 declares side 78995_R as its products
+        (rh:products); the master reaction RHEA:78995 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:16834357, PMID:19494914, PMID:17928301 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

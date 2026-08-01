@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.12.5.-
 synonyms:
@@ -43,4 +43,120 @@ definitions:
       Catalyses: H2 + a menaquinone = a menaquinol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydrogen:quinone oxidoreductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.12.5.1. EC 1.12.5.1 maps to exactly
+    one curated Rhea reaction (RHEA:18641), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "H2 + a menaquinone
+    = a menaquinol". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydrogen:quinone oxidoreductase
+    grounding: EC:1.12.5.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: H2
+    node_type: CHEMICAL
+    grounding: CHEBI:18276
+    description: Formula H2.
+  - node_id: sub2
+    label: a menaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16374
+    xrefs:
+    - RHEA-COMP:9537
+    description: Rhea compound POLYMER:9537. Formula C11H8O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: prd1
+    label: a menaquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:18151
+    xrefs:
+    - RHEA-COMP:9539
+    description: Rhea compound POLYMER:9539. Formula C11H10O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hydrogen:quinone oxidoreductase activity
+    grounding: GO:0047067
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P31883
+    node_type: PROTEIN
+    label: MBHL_WOLSU
+    grounding: UniProtKB:P31883
+  - node_id: prot_P31884
+    node_type: PROTEIN
+    label: MBHS_WOLSU
+    grounding: UniProtKB:P31884
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: H2 is a substrate consumed by RHEA:18641 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18642
+      snippet: H2 + a menaquinone => a menaquinol
+      notes: Rhea's left-to-right directional reaction RHEA:18642 declares side 18641_L as its substrates
+        (rh:substrates); the master reaction RHEA:18641 is undirected. This participant is CHEBI:18276
+        with coefficient 1. Rhea cites PMID:8319698, PMID:9822828, PMID:1587288 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a menaquinone is a substrate consumed by RHEA:18641 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18642
+      snippet: H2 + a menaquinone => a menaquinol
+      notes: Rhea's left-to-right directional reaction RHEA:18642 declares side 18641_L as its substrates
+        (rh:substrates); the master reaction RHEA:18641 is undirected. This participant is POLYMER:9537
+        with coefficient 1. Rhea cites PMID:8319698, PMID:9822828, PMID:1587288 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a menaquinol is a product released by RHEA:18641 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18642
+      snippet: H2 + a menaquinone => a menaquinol
+      notes: Rhea's left-to-right directional reaction RHEA:18642 declares side 18641_R as its products
+        (rh:products); the master reaction RHEA:18641 is undirected. This participant is POLYMER:9539
+        with coefficient 1. Rhea cites PMID:8319698, PMID:9822828, PMID:1587288 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.12.5.1
+      snippet: EC:1.12.5.1 > GO:hydrogen:quinone oxidoreductase activity ; GO:0047067
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047067 is itself a record
+        in this KB.
+  - subject: prot_P31883
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MBHL_WOLSU is an exemplar enzyme with EC 1.12.5.1 activity.
+    evidence:
+    - reference: EC:1.12.5.1
+      snippet: DR   P31883, MBHL_WOLSU ;  P31884, MBHS_WOLSU ;
+      notes: ExPASy ENZYME entry EC 1.12.5.1 cross-references UniProtKB:P31883 (MBHL_WOLSU) as a protein
+        with this activity.
+  - subject: prot_P31884
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MBHS_WOLSU is an exemplar enzyme with EC 1.12.5.1 activity.
+    evidence:
+    - reference: EC:1.12.5.1
+      snippet: DR   P31883, MBHL_WOLSU ;  P31884, MBHS_WOLSU ;
+      notes: ExPASy ENZYME entry EC 1.12.5.1 cross-references UniProtKB:P31884 (MBHS_WOLSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

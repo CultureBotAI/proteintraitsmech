@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:76315
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,108 @@ definitions:
       Catalyses the reaction: dodecanedioyl-CoA + O2 = (2E)-dodecenedioyl-CoA + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dodecanedioyl-CoA + O2 = (2E)-dodecenedioyl-CoA + H2O2
+  description: Substrate-to-product chemistry of RHEA:39071, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:39072 (rh:substrates → 39071_L, rh:products → 39071_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dodecanedioyl-CoA + O2 = (2E)-dodecenedioyl-CoA + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:39071
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dodecanedioyl-CoA + O2 = (2E)-dodecenedioyl-CoA + H2O2'
+  - node_id: sub1
+    label: dodecanedioyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:76315
+    description: Formula C33H51N7O19P3S.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (2E)-dodecenedioyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:76340
+    description: Formula C33H49N7O19P3S.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acyl-CoA oxidase activity
+    grounding: GO:0003997
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dodecanedioyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39072
+      snippet: dodecanedioyl-CoA + O2 => (2E)-dodecenedioyl-CoA + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:39072 declares side 39071_L as its substrates
+        (rh:substrates); the master reaction RHEA:39071 is undirected. This participant is CHEBI:76315
+        with coefficient 1. Rhea cites PMID:4062873, PMID:24075987, PMID:2705528 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39072
+      snippet: dodecanedioyl-CoA + O2 => (2E)-dodecenedioyl-CoA + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:39072 declares side 39071_L as its substrates
+        (rh:substrates); the master reaction RHEA:39071 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:4062873, PMID:24075987, PMID:2705528 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-dodecenedioyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39072
+      snippet: dodecanedioyl-CoA + O2 => (2E)-dodecenedioyl-CoA + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:39072 declares side 39071_R as its products
+        (rh:products); the master reaction RHEA:39071 is undirected. This participant is CHEBI:76340 with
+        coefficient 1. Rhea cites PMID:4062873, PMID:24075987, PMID:2705528 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39072
+      snippet: dodecanedioyl-CoA + O2 => (2E)-dodecenedioyl-CoA + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:39072 declares side 39071_R as its products
+        (rh:products); the master reaction RHEA:39071 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:4062873, PMID:24075987, PMID:2705528 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:39071
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003997"/>
+      notes: The rdfs:seeAlso triple on RHEA:39071 in rhea.rdf. GO term GO:0003997 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

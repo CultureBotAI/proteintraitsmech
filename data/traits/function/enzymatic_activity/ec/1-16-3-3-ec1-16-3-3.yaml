@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.16.3.-
 mapped_xrefs:
@@ -23,4 +23,110 @@ definitions:
       Catalyses: 2 Mn(2+) + O2 + 2 H2O = 2 MnO2 + 4 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of manganese oxidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.16.3.3. EC 1.16.3.3 maps to exactly
+    one curated Rhea reaction (RHEA:52240), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 Mn(2+) + O2
+    + 2 H2O = 2 MnO2 + 4 H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: manganese oxidase
+    grounding: EC:1.16.3.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: Mn(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29035
+    description: Formula Mn.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: MnO2
+    node_type: CHEMICAL
+    grounding: CHEBI:136511
+    description: Formula MnO2.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Mn(2+) is a substrate consumed by RHEA:52240 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:52241
+      snippet: 2 Mn(2+) + O2 + 2 H2O => 2 MnO2 + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52241 declares side 52240_L as its substrates
+        (rh:substrates); the master reaction RHEA:52240 is undirected. This participant is CHEBI:29035
+        with coefficient 2. Rhea cites PMID:23124227, PMID:23577125, PMID:12420165, PMID:17359266 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:52240 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52241
+      snippet: 2 Mn(2+) + O2 + 2 H2O => 2 MnO2 + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52241 declares side 52240_L as its substrates
+        (rh:substrates); the master reaction RHEA:52240 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:23124227, PMID:23577125, PMID:12420165, PMID:17359266 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:52240 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:52241
+      snippet: 2 Mn(2+) + O2 + 2 H2O => 2 MnO2 + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52241 declares side 52240_L as its substrates
+        (rh:substrates); the master reaction RHEA:52240 is undirected. This participant is CHEBI:15377
+        with coefficient 2. Rhea cites PMID:23124227, PMID:23577125, PMID:12420165, PMID:17359266 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: MnO2 is a product released by RHEA:52240 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:52241
+      snippet: 2 Mn(2+) + O2 + 2 H2O => 2 MnO2 + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52241 declares side 52240_R as its products
+        (rh:products); the master reaction RHEA:52240 is undirected. This participant is CHEBI:136511
+        with coefficient 2. Rhea cites PMID:23124227, PMID:23577125, PMID:12420165, PMID:17359266 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:52240 (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:52241
+      snippet: 2 Mn(2+) + O2 + 2 H2O => 2 MnO2 + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52241 declares side 52240_R as its products
+        (rh:products); the master reaction RHEA:52240 is undirected. This participant is CHEBI:15378 with
+        coefficient 4. Rhea cites PMID:23124227, PMID:23577125, PMID:12420165, PMID:17359266 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

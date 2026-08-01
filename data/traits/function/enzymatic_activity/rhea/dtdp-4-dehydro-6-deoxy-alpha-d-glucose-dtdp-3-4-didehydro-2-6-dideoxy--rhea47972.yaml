@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.159
     mapping_source: rhea2ec
@@ -36,4 +36,158 @@ definitions:
       Catalyses the reaction: dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose…
+  description: Substrate-to-product chemistry of RHEA:47972, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:47973 (rh:substrates → 47972_L, rh:products → 47972_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-3,4-didehydro-2,6-dideoxy-alph…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:47972
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose
+      + H2O'
+  - node_id: sub1
+    label: dTDP-4-dehydro-6-deoxy-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:57649
+    description: Formula C16H22N2O15P2.
+  - node_id: prd1
+    label: dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:84540
+    description: Formula C16H20N2O14P2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: dTDP-4-dehydro-6-deoxy-alpha-D-glucopyranose 2,3-dehydratase
+    grounding: EC:4.2.1.159
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O52793
+    node_type: PROTEIN
+    label: EVAA_AMYOR
+    grounding: UniProtKB:O52793
+  - node_id: prot_Q9ZA32
+    node_type: PROTEIN
+    label: GRA27_STRVN
+    grounding: UniProtKB:Q9ZA32
+  - node_id: prot_Q9RR31
+    node_type: PROTEIN
+    label: OLEV_STRAT
+    grounding: UniProtKB:Q9RR31
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTDP-4-dehydro-6-deoxy-alpha-D-glucose is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:47973
+      snippet: dTDP-4-dehydro-6-deoxy-alpha-D-glucose => dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:47973 declares side 47972_L as its substrates
+        (rh:substrates); the master reaction RHEA:47972 is undirected. This participant is CHEBI:57649
+        with coefficient 1. Rhea cites PMID:11035791, PMID:18345667, PMID:20418422, PMID:10770761 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47973
+      snippet: dTDP-4-dehydro-6-deoxy-alpha-D-glucose => dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:47973 declares side 47972_R as its products
+        (rh:products); the master reaction RHEA:47972 is undirected. This participant is CHEBI:84540 with
+        coefficient 1. Rhea cites PMID:11035791, PMID:18345667, PMID:20418422, PMID:10770761 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47973
+      snippet: dTDP-4-dehydro-6-deoxy-alpha-D-glucose => dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:47973 declares side 47972_R as its products
+        (rh:products); the master reaction RHEA:47972 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:11035791, PMID:18345667, PMID:20418422, PMID:10770761 for this
+        reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.159; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:47972
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.159"/>
+      notes: The rh:ec triple on RHEA:47972 in rhea.rdf. EC 4.2.1.159 is itself a record in this KB.
+  - subject: prot_O52793
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EVAA_AMYOR is an exemplar enzyme carrying EC 4.2.1.159, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.159
+      snippet: DR   O52793, EVAA_AMYOR ;  Q9ZA32, GRA27_STRVN;  Q9RR31, OLEV_STRAT ;
+      notes: ExPASy ENZYME entry EC 4.2.1.159 cross-references UniProtKB:O52793 (EVAA_AMYOR) as a protein
+        with this activity.
+    - reference: RHEA:47972
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.159"/>
+      notes: Rhea assigns RHEA:47972 to EC 4.2.1.159, and EC 4.2.1.159 maps to exactly one Rhea master
+        reaction (RHEA:47972), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9ZA32
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRA27_STRVN is an exemplar enzyme carrying EC 4.2.1.159, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.159
+      snippet: DR   O52793, EVAA_AMYOR ;  Q9ZA32, GRA27_STRVN;  Q9RR31, OLEV_STRAT ;
+      notes: ExPASy ENZYME entry EC 4.2.1.159 cross-references UniProtKB:Q9ZA32 (GRA27_STRVN) as a protein
+        with this activity.
+    - reference: RHEA:47972
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.159"/>
+      notes: Rhea assigns RHEA:47972 to EC 4.2.1.159, and EC 4.2.1.159 maps to exactly one Rhea master
+        reaction (RHEA:47972), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9RR31
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLEV_STRAT is an exemplar enzyme carrying EC 4.2.1.159, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.159
+      snippet: DR   O52793, EVAA_AMYOR ;  Q9ZA32, GRA27_STRVN;  Q9RR31, OLEV_STRAT ;
+      notes: ExPASy ENZYME entry EC 4.2.1.159 cross-references UniProtKB:Q9RR31 (OLEV_STRAT) as a protein
+        with this activity.
+    - reference: RHEA:47972
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.159"/>
+      notes: Rhea assigns RHEA:47972 to EC 4.2.1.159, and EC 4.2.1.159 maps to exactly one Rhea master
+        reaction (RHEA:47972), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

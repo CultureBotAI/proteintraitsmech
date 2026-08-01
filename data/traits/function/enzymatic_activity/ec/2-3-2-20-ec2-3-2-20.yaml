@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 mapped_xrefs:
@@ -28,4 +28,207 @@ definitions:
       Catalyses: L-phenylalanyl-tRNA(Phe) + L-leucyl-tRNA(Leu) = cyclo(L-phenylalanyl-L- leucyl) + tRNA(Phe) + tRNA(Leu) + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclo(L-leucyl-L-phenylalanyl) synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.20. EC 2.3.2.20 maps to exactly
+    one curated Rhea reaction (RHEA:50940), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-phenylalanyl-tRNA(Phe)
+    + L-leucyl-tRNA(Leu) = cyclo(L-phenylalanyl-L- leucyl) + tRNA(Phe) + tRNA(Leu) + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cyclo(L-leucyl-L-phenylalanyl) synthase
+    grounding: EC:2.3.2.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-phenylalanyl-tRNA(Phe)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9699
+    description: Rhea compound GENERIC:9699.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: 3'-(L-phenylalanyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9699 (L-phenylalanyl-tRNA(Phe));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78531
+  - node_id: sub2
+    label: L-leucyl-tRNA(Leu)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9622
+    description: Rhea compound GENERIC:9622.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: 3'-(L-leucyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9622 (L-leucyl-tRNA(Leu));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78494
+  - node_id: prd1
+    label: cyclo(L-phenylalanyl-L-leucyl)
+    node_type: CHEMICAL
+    grounding: CHEBI:71608
+    description: Formula C15H20N2O2.
+  - node_id: prd2
+    label: tRNA(Phe)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9668
+    description: Rhea compound GENERIC:9668.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9668 (tRNA(Phe));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd3
+    label: tRNA(Leu)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9613
+    description: Rhea compound GENERIC:9613.
+  - node_id: prd3_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9613 (tRNA(Leu));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q8GED7
+    node_type: PROTEIN
+    label: CLPS_STRNR
+    grounding: UniProtKB:Q8GED7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-phenylalanyl-tRNA(Phe) is a substrate consumed by RHEA:50940 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50941
+      snippet: L-phenylalanyl-tRNA(Phe) + L-leucyl-tRNA(Leu) => cyclo(L-phenylalanyl-L-leucyl) + tRNA(Phe)
+        + tRNA(Leu) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50941 declares side 50940_L as its substrates
+        (rh:substrates); the master reaction RHEA:50940 is undirected. This participant is GENERIC:9699
+        with coefficient 1. Rhea cites PMID:21296757, PMID:19430487 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-phenylalanyl)adenylyl group is the reactive part of L-phenylalanyl-tRNA(Phe).
+    evidence:
+    - reference: RHEA:50940
+      snippet: 3'-(L-phenylalanyl)adenylyl group
+      notes: Rhea compound GENERIC:9699 (L-phenylalanyl-tRNA(Phe)) declares rh:reactivePart = 3'-(L-phenylalanyl)adenylyl
+        group (CHEBI:78531).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-leucyl-tRNA(Leu) is a substrate consumed by RHEA:50940 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50941
+      snippet: L-phenylalanyl-tRNA(Phe) + L-leucyl-tRNA(Leu) => cyclo(L-phenylalanyl-L-leucyl) + tRNA(Phe)
+        + tRNA(Leu) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50941 declares side 50940_L as its substrates
+        (rh:substrates); the master reaction RHEA:50940 is undirected. This participant is GENERIC:9622
+        with coefficient 1. Rhea cites PMID:21296757, PMID:19430487 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: 3'-(L-leucyl)adenylyl group is the reactive part of L-leucyl-tRNA(Leu).
+    evidence:
+    - reference: RHEA:50940
+      snippet: 3'-(L-leucyl)adenylyl group
+      notes: Rhea compound GENERIC:9622 (L-leucyl-tRNA(Leu)) declares rh:reactivePart = 3'-(L-leucyl)adenylyl
+        group (CHEBI:78494).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cyclo(L-phenylalanyl-L-leucyl) is a product released by RHEA:50940 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50941
+      snippet: L-phenylalanyl-tRNA(Phe) + L-leucyl-tRNA(Leu) => cyclo(L-phenylalanyl-L-leucyl) + tRNA(Phe)
+        + tRNA(Leu) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50941 declares side 50940_R as its products
+        (rh:products); the master reaction RHEA:50940 is undirected. This participant is CHEBI:71608 with
+        coefficient 1. Rhea cites PMID:21296757, PMID:19430487 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: tRNA(Phe) is a product released by RHEA:50940 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50941
+      snippet: L-phenylalanyl-tRNA(Phe) + L-leucyl-tRNA(Leu) => cyclo(L-phenylalanyl-L-leucyl) + tRNA(Phe)
+        + tRNA(Leu) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50941 declares side 50940_R as its products
+        (rh:products); the master reaction RHEA:50940 is undirected. This participant is GENERIC:9668
+        with coefficient 1. Rhea cites PMID:21296757, PMID:19430487 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: AMP 3'-end residue is the reactive part of tRNA(Phe).
+    evidence:
+    - reference: RHEA:50940
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9668 (tRNA(Phe)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: tRNA(Leu) is a product released by RHEA:50940 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50941
+      snippet: L-phenylalanyl-tRNA(Phe) + L-leucyl-tRNA(Leu) => cyclo(L-phenylalanyl-L-leucyl) + tRNA(Phe)
+        + tRNA(Leu) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50941 declares side 50940_R as its products
+        (rh:products); the master reaction RHEA:50940 is undirected. This participant is GENERIC:9613
+        with coefficient 1. Rhea cites PMID:21296757, PMID:19430487 for this reaction.
+  - subject: prd3_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd3
+    description: AMP 3'-end residue is the reactive part of tRNA(Leu).
+    evidence:
+    - reference: RHEA:50940
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9613 (tRNA(Leu)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:50940 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50941
+      snippet: L-phenylalanyl-tRNA(Phe) + L-leucyl-tRNA(Leu) => cyclo(L-phenylalanyl-L-leucyl) + tRNA(Phe)
+        + tRNA(Leu) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50941 declares side 50940_R as its products
+        (rh:products); the master reaction RHEA:50940 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21296757, PMID:19430487 for this reaction.
+  - subject: prot_Q8GED7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLPS_STRNR is an exemplar enzyme with EC 2.3.2.20 activity.
+    evidence:
+    - reference: EC:2.3.2.20
+      snippet: DR   Q8GED7, CLPS_STRNR ;
+      notes: ExPASy ENZYME entry EC 2.3.2.20 cross-references UniProtKB:Q8GED7 (CLPS_STRNR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

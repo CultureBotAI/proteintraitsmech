@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.4.-
 mapped_xrefs:
@@ -30,4 +30,216 @@ definitions:
       Catalyses: L-lysine + L-arginine = L-homoarginine + L-ornithine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-arginine:L-lysine amidinotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.4.3. Rhea assigns 2 curated
+    reactions to EC 2.1.4.3. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "L-lysine + L-arginine = L-homoarginine + L-ornithine". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-arginine:L-lysine amidinotransferase
+    grounding: EC:2.1.4.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-lysine + L-arginine = L-homoarginine + L-ornithine
+    grounding: RHEA:59240
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-lysine + L-arginine = L-homoarginine + L-ornithine'
+  - node_id: rxn1_sub1
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32551
+    description: Formula C6H15N2O2.
+  - node_id: rxn1_sub2
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: rxn1_prd1
+    label: L-homoarginine
+    node_type: CHEMICAL
+    grounding: CHEBI:143006
+    description: Formula C7H17N4O2.
+  - node_id: rxn1_prd2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-canavanine + L-ornithine = L-canaline + L-arginine + H(+)
+    grounding: RHEA:62444
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-canavanine + L-ornithine = L-canaline + L-arginine + H(+)'
+  - node_id: rxn2_sub1
+    label: L-canavanine
+    node_type: CHEMICAL
+    grounding: CHEBI:78902
+    description: Formula C5H13N4O3.
+  - node_id: rxn2_sub2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: rxn2_prd1
+    label: L-canaline
+    node_type: CHEMICAL
+    grounding: CHEBI:145769
+    description: Formula C4H10N2O3.
+  - node_id: rxn2_prd2
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q9RBU1
+    node_type: PROTEIN
+    label: AMTA_PSESH
+    grounding: UniProtKB:Q9RBU1
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:59240 is one of the 2 curated reactions Rhea assigns to EC 2.1.4.3; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:59240
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.4.3"/>
+      notes: The rh:ec triple on RHEA:59240 in rhea.rdf assigns that reaction to EC 2.1.4.3.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: L-lysine is a substrate consumed by RHEA:59240 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59241
+      snippet: L-lysine + L-arginine => L-homoarginine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:59241 declares side 59240_L as its substrates
+        (rh:substrates); the master reaction RHEA:59240 is undirected. This participant is CHEBI:32551
+        with coefficient 1. Rhea cites PMID:11310742, PMID:27419063 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: L-arginine is a substrate consumed by RHEA:59240 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59241
+      snippet: L-lysine + L-arginine => L-homoarginine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:59241 declares side 59240_L as its substrates
+        (rh:substrates); the master reaction RHEA:59240 is undirected. This participant is CHEBI:32682
+        with coefficient 1. Rhea cites PMID:11310742, PMID:27419063 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: L-homoarginine is a product released by RHEA:59240 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59241
+      snippet: L-lysine + L-arginine => L-homoarginine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:59241 declares side 59240_R as its products
+        (rh:products); the master reaction RHEA:59240 is undirected. This participant is CHEBI:143006
+        with coefficient 1. Rhea cites PMID:11310742, PMID:27419063 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: L-ornithine is a product released by RHEA:59240 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59241
+      snippet: L-lysine + L-arginine => L-homoarginine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:59241 declares side 59240_R as its products
+        (rh:products); the master reaction RHEA:59240 is undirected. This participant is CHEBI:46911 with
+        coefficient 1. Rhea cites PMID:11310742, PMID:27419063 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:62444 is one of the 2 curated reactions Rhea assigns to EC 2.1.4.3; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:62444
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.4.3"/>
+      notes: The rh:ec triple on RHEA:62444 in rhea.rdf assigns that reaction to EC 2.1.4.3.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: L-canavanine is a substrate consumed by RHEA:62444 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62445
+      snippet: L-canavanine + L-ornithine => L-canaline + L-arginine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62445 declares side 62444_L as its substrates
+        (rh:substrates); the master reaction RHEA:62444 is undirected. This participant is CHEBI:78902
+        with coefficient 1. Rhea cites PMID:27419063 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: L-ornithine is a substrate consumed by RHEA:62444 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62445
+      snippet: L-canavanine + L-ornithine => L-canaline + L-arginine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62445 declares side 62444_L as its substrates
+        (rh:substrates); the master reaction RHEA:62444 is undirected. This participant is CHEBI:46911
+        with coefficient 1. Rhea cites PMID:27419063 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: L-canaline is a product released by RHEA:62444 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62445
+      snippet: L-canavanine + L-ornithine => L-canaline + L-arginine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62445 declares side 62444_R as its products
+        (rh:products); the master reaction RHEA:62444 is undirected. This participant is CHEBI:145769
+        with coefficient 1. Rhea cites PMID:27419063 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: L-arginine is a product released by RHEA:62444 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62445
+      snippet: L-canavanine + L-ornithine => L-canaline + L-arginine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62445 declares side 62444_R as its products
+        (rh:products); the master reaction RHEA:62444 is undirected. This participant is CHEBI:32682 with
+        coefficient 1. Rhea cites PMID:27419063 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:62444 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62445
+      snippet: L-canavanine + L-ornithine => L-canaline + L-arginine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62445 declares side 62444_R as its products
+        (rh:products); the master reaction RHEA:62444 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:27419063 for this reaction.
+  - subject: prot_Q9RBU1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMTA_PSESH is an exemplar enzyme with EC 2.1.4.3 activity.
+    evidence:
+    - reference: EC:2.1.4.3
+      snippet: DR   Q9RBU1, AMTA_PSESH ;
+      notes: ExPASy ENZYME entry EC 2.1.4.3 cross-references UniProtKB:Q9RBU1 (AMTA_PSESH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

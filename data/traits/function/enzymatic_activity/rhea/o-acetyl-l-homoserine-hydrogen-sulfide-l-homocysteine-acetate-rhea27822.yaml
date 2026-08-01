@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.5.1.49
     mapping_source: rhea2ec
@@ -32,4 +32,123 @@ definitions:
       Catalyses the reaction: O-acetyl-L-homoserine + hydrogen sulfide = L-homocysteine + acetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of O-acetyl-L-homoserine + hydrogen sulfide = L-homocysteine + acetate
+  description: Substrate-to-product chemistry of RHEA:27822, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27823 (rh:substrates → 27822_L, rh:products → 27822_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of O-acetyl-L-homoserine + hydrogen sulfide = L-homocysteine + acetate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27822
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: O-acetyl-L-homoserine + hydrogen sulfide = L-homocysteine + acetate'
+  - node_id: sub1
+    label: O-acetyl-L-homoserine
+    node_type: CHEMICAL
+    grounding: CHEBI:57716
+    description: Formula C6H11NO4.
+  - node_id: sub2
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: prd1
+    label: L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58199
+    description: Formula C4H9NO2S.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: O-acetylhomoserine sulfhydrylase activity
+    grounding: GO:0051009
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: O-acetylhomoserine aminocarboxypropyltransferase
+    grounding: EC:2.5.1.49
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: O-acetyl-L-homoserine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27823
+      snippet: O-acetyl-L-homoserine + hydrogen sulfide => L-homocysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:27823 declares side 27822_L as its substrates
+        (rh:substrates); the master reaction RHEA:27822 is undirected. This participant is CHEBI:57716
+        with coefficient 1. Rhea cites PMID:11832514, PMID:2517474, PMID:11566369 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen sulfide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27823
+      snippet: O-acetyl-L-homoserine + hydrogen sulfide => L-homocysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:27823 declares side 27822_L as its substrates
+        (rh:substrates); the master reaction RHEA:27822 is undirected. This participant is CHEBI:29919
+        with coefficient 1. Rhea cites PMID:11832514, PMID:2517474, PMID:11566369 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-homocysteine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27823
+      snippet: O-acetyl-L-homoserine + hydrogen sulfide => L-homocysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:27823 declares side 27822_R as its products
+        (rh:products); the master reaction RHEA:27822 is undirected. This participant is CHEBI:58199 with
+        coefficient 1. Rhea cites PMID:11832514, PMID:2517474, PMID:11566369 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27823
+      snippet: O-acetyl-L-homoserine + hydrogen sulfide => L-homocysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:27823 declares side 27822_R as its products
+        (rh:products); the master reaction RHEA:27822 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:11832514, PMID:2517474, PMID:11566369 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:27822
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0051009"/>
+      notes: The rdfs:seeAlso triple on RHEA:27822 in rhea.rdf. GO term GO:0051009 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.5.1.49; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:27822
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.49"/>
+      notes: The rh:ec triple on RHEA:27822 in rhea.rdf. EC 2.5.1.49 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

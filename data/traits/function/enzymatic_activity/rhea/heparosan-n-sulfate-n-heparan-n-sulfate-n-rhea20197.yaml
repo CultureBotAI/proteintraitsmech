@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.3.17
     mapping_source: rhea2ec
@@ -34,4 +34,159 @@ definitions:
       Catalyses the reaction: [heparosan-N-sulfate](n) = [heparan-N-sulfate](n)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [heparosan-N-sulfate](n) = [heparan-N-sulfate](n)
+  description: Substrate-to-product chemistry of RHEA:20197, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20198 (rh:substrates → 20197_L, rh:products → 20197_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [heparosan-N-sulfate](n) = [heparan-N-sulfate](n)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20197
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [heparosan-N-sulfate](n) = [heparan-N-sulfate](n)'
+  - node_id: sub1
+    label: '[heparosan-N-sulfate](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:58287
+    xrefs:
+    - RHEA-COMP:9556
+    description: Rhea compound POLYMER:9556. Formula H2O(C12H17NO13S)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: prd1
+    label: '[heparan-N-sulfate](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:58041
+    xrefs:
+    - RHEA-COMP:9557
+    description: Rhea compound POLYMER:9557. Formula H2O(C12H17NO13S)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: heparosan-N-sulfate-glucuronate 5-epimerase activity
+    grounding: GO:0047464
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: heparosan-N-sulfate-glucuronate 5-epimerase
+    grounding: EC:5.1.3.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_F1QR43
+    node_type: PROTEIN
+    label: GLCEB_DANRE
+    grounding: UniProtKB:F1QR43
+  - node_id: prot_O18756
+    node_type: PROTEIN
+    label: GLCE_BOVIN
+    grounding: UniProtKB:O18756
+  - node_id: prot_P46555
+    node_type: PROTEIN
+    label: GLCE_CAEEL
+    grounding: UniProtKB:P46555
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[heparosan-N-sulfate](n) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:20198
+      snippet: '[heparosan-N-sulfate](n) => [heparan-N-sulfate](n)'
+      notes: Rhea's left-to-right directional reaction RHEA:20198 declares side 20197_L as its substrates
+        (rh:substrates); the master reaction RHEA:20197 is undirected. This participant is POLYMER:9556
+        with coefficient 1. Rhea cites PMID:107165, PMID:10727403, PMID:16532012, PMID:11279150 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[heparan-N-sulfate](n) is a product released by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:20198
+      snippet: '[heparosan-N-sulfate](n) => [heparan-N-sulfate](n)'
+      notes: Rhea's left-to-right directional reaction RHEA:20198 declares side 20197_R as its products
+        (rh:products); the master reaction RHEA:20197 is undirected. This participant is POLYMER:9557
+        with coefficient 1. Rhea cites PMID:107165, PMID:10727403, PMID:16532012, PMID:11279150 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20197
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047464"/>
+      notes: The rdfs:seeAlso triple on RHEA:20197 in rhea.rdf. GO term GO:0047464 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.3.17; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20197
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.17"/>
+      notes: The rh:ec triple on RHEA:20197 in rhea.rdf. EC 5.1.3.17 is itself a record in this KB.
+  - subject: prot_F1QR43
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLCEB_DANRE is an exemplar enzyme carrying EC 5.1.3.17, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.17
+      snippet: DR   F1QR43, GLCEB_DANRE;  O18756, GLCE_BOVIN ;  P46555, GLCE_CAEEL ;
+      notes: ExPASy ENZYME entry EC 5.1.3.17 cross-references UniProtKB:F1QR43 (GLCEB_DANRE) as a protein
+        with this activity.
+    - reference: RHEA:20197
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.17"/>
+      notes: Rhea assigns RHEA:20197 to EC 5.1.3.17, and EC 5.1.3.17 maps to exactly one Rhea master reaction
+        (RHEA:20197), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O18756
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLCE_BOVIN is an exemplar enzyme carrying EC 5.1.3.17, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.17
+      snippet: DR   F1QR43, GLCEB_DANRE;  O18756, GLCE_BOVIN ;  P46555, GLCE_CAEEL ;
+      notes: ExPASy ENZYME entry EC 5.1.3.17 cross-references UniProtKB:O18756 (GLCE_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:20197
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.17"/>
+      notes: Rhea assigns RHEA:20197 to EC 5.1.3.17, and EC 5.1.3.17 maps to exactly one Rhea master reaction
+        (RHEA:20197), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P46555
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLCE_CAEEL is an exemplar enzyme carrying EC 5.1.3.17, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.17
+      snippet: DR   F1QR43, GLCEB_DANRE;  O18756, GLCE_BOVIN ;  P46555, GLCE_CAEEL ;
+      notes: ExPASy ENZYME entry EC 5.1.3.17 cross-references UniProtKB:P46555 (GLCE_CAEEL) as a protein
+        with this activity.
+    - reference: RHEA:20197
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.17"/>
+      notes: Rhea assigns RHEA:20197 to EC 5.1.3.17, and EC 5.1.3.17 maps to exactly one Rhea master reaction
+        (RHEA:20197), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

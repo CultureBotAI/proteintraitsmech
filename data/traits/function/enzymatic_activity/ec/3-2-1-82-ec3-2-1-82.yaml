@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -35,4 +35,130 @@ definitions:
       Catalyses: [(1->4)-alpha-D-galacturonosyl](n) + H2O = alpha-D-galacturonosyl-(1->4)- D-galacturonate + [(1->4)-alpha-D-galacturonosyl](n-2)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of exo-poly-alpha-digalacturonosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.82. EC 3.2.1.82 maps to exactly
+    one curated Rhea reaction (RHEA:56232), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[(1->4)-alpha-D-galacturonosyl](n)
+    + H2O = alpha-D-galacturonosyl-(1->4)- D-galacturonate + [(1->4)-alpha-D-galacturonosyl](n-2)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: exo-poly-alpha-digalacturonosidase
+    grounding: EC:3.2.1.82
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[(1->4)-alpha-D-galacturonosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:140523
+    xrefs:
+    - RHEA-COMP:14570
+    description: Rhea compound POLYMER:14570. Formula H2O(C6H7O6)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: alpha-D-galacturonosyl-(1->4)-D-galacturonate
+    node_type: CHEMICAL
+    grounding: CHEBI:141004
+    description: Formula C12H16O13.
+  - node_id: prd2
+    label: '[(1->4)-alpha-D-galacturonosyl](n-2)'
+    node_type: CHEMICAL
+    grounding: CHEBI:140523
+    xrefs:
+    - RHEA-COMP:14734
+    description: Rhea compound POLYMER:14734. Formula H2O(C6H7O6)<i><sub>n-2</sub></i>.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: exo-poly-alpha-galacturonosidase activity
+    grounding: GO:0033917
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P15922
+    node_type: PROTEIN
+    label: PEHX_DICCH
+    grounding: UniProtKB:P15922
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[(1->4)-alpha-D-galacturonosyl](n) is a substrate consumed by RHEA:56232 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:56233
+      snippet: '[(1->4)-alpha-D-galacturonosyl](n) + H2O => alpha-D-galacturonosyl-(1->4)-D-galacturonate
+        + [(1->4)-alpha-D-galacturonosyl](n-2)'
+      notes: Rhea's left-to-right directional reaction RHEA:56233 declares side 56232_L as its substrates
+        (rh:substrates); the master reaction RHEA:56232 is undirected. This participant is POLYMER:14570
+        with coefficient 1. Rhea cites PMID:2168372, PMID:5661621 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:56232 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56233
+      snippet: '[(1->4)-alpha-D-galacturonosyl](n) + H2O => alpha-D-galacturonosyl-(1->4)-D-galacturonate
+        + [(1->4)-alpha-D-galacturonosyl](n-2)'
+      notes: Rhea's left-to-right directional reaction RHEA:56233 declares side 56232_L as its substrates
+        (rh:substrates); the master reaction RHEA:56232 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2168372, PMID:5661621 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-galacturonosyl-(1->4)-D-galacturonate is a product released by RHEA:56232 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56233
+      snippet: '[(1->4)-alpha-D-galacturonosyl](n) + H2O => alpha-D-galacturonosyl-(1->4)-D-galacturonate
+        + [(1->4)-alpha-D-galacturonosyl](n-2)'
+      notes: Rhea's left-to-right directional reaction RHEA:56233 declares side 56232_R as its products
+        (rh:products); the master reaction RHEA:56232 is undirected. This participant is CHEBI:141004
+        with coefficient 1. Rhea cites PMID:2168372, PMID:5661621 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: '[(1->4)-alpha-D-galacturonosyl](n-2) is a product released by RHEA:56232 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:56233
+      snippet: '[(1->4)-alpha-D-galacturonosyl](n) + H2O => alpha-D-galacturonosyl-(1->4)-D-galacturonate
+        + [(1->4)-alpha-D-galacturonosyl](n-2)'
+      notes: Rhea's left-to-right directional reaction RHEA:56233 declares side 56232_R as its products
+        (rh:products); the master reaction RHEA:56232 is undirected. This participant is POLYMER:14734
+        with coefficient 1. Rhea cites PMID:2168372, PMID:5661621 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.82
+      snippet: EC:3.2.1.82 > GO:exo-poly-alpha-galacturonosidase activity ; GO:0033917
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033917 is itself a record
+        in this KB.
+  - subject: prot_P15922
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEHX_DICCH is an exemplar enzyme with EC 3.2.1.82 activity.
+    evidence:
+    - reference: EC:3.2.1.82
+      snippet: DR   P15922, PEHX_DICCH ;
+      notes: ExPASy ENZYME entry EC 3.2.1.82 cross-references UniProtKB:P15922 (PEHX_DICCH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

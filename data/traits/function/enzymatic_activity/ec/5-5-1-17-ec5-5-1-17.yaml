@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 mapped_xrefs:
@@ -32,4 +32,87 @@ definitions:
       Catalyses: (S)-beta-bisabolene = (S)-beta-macrocarpene
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-beta-macrocarpene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.17. EC 5.5.1.17 maps to exactly
+    one curated Rhea reaction (RHEA:28282), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-beta-bisabolene
+    = (S)-beta-macrocarpene". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (S)-beta-macrocarpene synthase
+    grounding: EC:5.5.1.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-beta-bisabolene
+    node_type: CHEMICAL
+    grounding: CHEBI:49263
+    description: Formula C15H24.
+  - node_id: prd1
+    label: (S)-beta-macrocarpene
+    node_type: CHEMICAL
+    grounding: CHEBI:61344
+    description: Formula C15H24.
+  - node_id: prot_Q1EG72
+    node_type: PROTEIN
+    label: TPS11_MAIZE
+    grounding: UniProtKB:Q1EG72
+  - node_id: prot_Q5GJ60
+    node_type: PROTEIN
+    label: TPS6_MAIZE
+    grounding: UniProtKB:Q5GJ60
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-beta-bisabolene is a substrate consumed by RHEA:28282 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28283
+      snippet: (S)-beta-bisabolene => (S)-beta-macrocarpene
+      notes: Rhea's left-to-right directional reaction RHEA:28283 declares side 28282_L as its substrates
+        (rh:substrates); the master reaction RHEA:28282 is undirected. This participant is CHEBI:49263
+        with coefficient 1. Rhea cites PMID:18524777 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-beta-macrocarpene is a product released by RHEA:28282 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28283
+      snippet: (S)-beta-bisabolene => (S)-beta-macrocarpene
+      notes: Rhea's left-to-right directional reaction RHEA:28283 declares side 28282_R as its products
+        (rh:products); the master reaction RHEA:28282 is undirected. This participant is CHEBI:61344 with
+        coefficient 1. Rhea cites PMID:18524777 for this reaction.
+  - subject: prot_Q1EG72
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS11_MAIZE is an exemplar enzyme with EC 5.5.1.17 activity.
+    evidence:
+    - reference: EC:5.5.1.17
+      snippet: DR   Q1EG72, TPS11_MAIZE;  Q5GJ60, TPS6_MAIZE ;
+      notes: ExPASy ENZYME entry EC 5.5.1.17 cross-references UniProtKB:Q1EG72 (TPS11_MAIZE) as a protein
+        with this activity.
+  - subject: prot_Q5GJ60
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS6_MAIZE is an exemplar enzyme with EC 5.5.1.17 activity.
+    evidence:
+    - reference: EC:5.5.1.17
+      snippet: DR   Q1EG72, TPS11_MAIZE;  Q5GJ60, TPS6_MAIZE ;
+      notes: ExPASy ENZYME entry EC 5.5.1.17 cross-references UniProtKB:Q5GJ60 (TPS6_MAIZE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

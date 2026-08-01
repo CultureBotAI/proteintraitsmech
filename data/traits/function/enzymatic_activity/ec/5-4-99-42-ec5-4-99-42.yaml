@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -38,4 +38,148 @@ definitions:
       Catalyses: uridine(31) in tRNA = pseudouridine(31) in tRNA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA pseudouridine(31) synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.42. EC 5.4.99.42 maps to
+    exactly one curated Rhea reaction (RHEA:42552), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "uridine(31)
+    in tRNA = pseudouridine(31) in tRNA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA pseudouridine(31) synthase
+    grounding: EC:5.4.99.42
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: uridine(31) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10111
+    description: Rhea compound GENERIC:10111.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: UMP residue at position 31
+    description: The reacting group Rhea names inside the generic participant GENERIC:10111 (uridine(31)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd1
+    label: pseudouridine(31) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10112
+    description: Rhea compound GENERIC:10112.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: psi-uridine residue at position 31
+    description: The reacting group Rhea names inside the generic participant GENERIC:10112 (pseudouridine(31)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65314
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA pseudouridine(31) synthase activity
+    grounding: GO:0160152
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P53294
+    node_type: PROTEIN
+    label: PUS6_YEAST
+    grounding: UniProtKB:P53294
+  - node_id: prot_Q8IZ73
+    node_type: PROTEIN
+    label: RUSD2_HUMAN
+    grounding: UniProtKB:Q8IZ73
+  - node_id: prot_Q149F1
+    node_type: PROTEIN
+    label: RUSD2_MOUSE
+    grounding: UniProtKB:Q149F1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine(31) in tRNA is a substrate consumed by RHEA:42552 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42553
+      snippet: uridine(31) in tRNA => pseudouridine(31) in tRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42553 declares side 42552_L as its substrates
+        (rh:substrates); the master reaction RHEA:42552 is undirected. This participant is GENERIC:10111
+        with coefficient 1. Rhea cites PMID:11406626 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(31) in tRNA.
+    evidence:
+    - reference: RHEA:42552
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10111 (uridine(31) in tRNA) declares rh:reactivePart at position 31
+        = UMP residue (CHEBI:65315).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pseudouridine(31) in tRNA is a product released by RHEA:42552 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42553
+      snippet: uridine(31) in tRNA => pseudouridine(31) in tRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42553 declares side 42552_R as its products
+        (rh:products); the master reaction RHEA:42552 is undirected. This participant is GENERIC:10112
+        with coefficient 1. Rhea cites PMID:11406626 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: psi-uridine residue is the reactive part of pseudouridine(31) in tRNA.
+    evidence:
+    - reference: RHEA:42552
+      snippet: psi-uridine residue
+      notes: Rhea compound GENERIC:10112 (pseudouridine(31) in tRNA) declares rh:reactivePart at position
+        31 = psi-uridine residue (CHEBI:65314).
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.42
+      snippet: EC:5.4.99.42 > GO:tRNA pseudouridine(31) synthase activity ; GO:0160152
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0160152 is itself a record
+        in this KB.
+  - subject: prot_P53294
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PUS6_YEAST is an exemplar enzyme with EC 5.4.99.42 activity.
+    evidence:
+    - reference: EC:5.4.99.42
+      snippet: DR   P53294, PUS6_YEAST ;  Q8IZ73, RUSD2_HUMAN;  Q149F1, RUSD2_MOUSE;
+      notes: ExPASy ENZYME entry EC 5.4.99.42 cross-references UniProtKB:P53294 (PUS6_YEAST) as a protein
+        with this activity.
+  - subject: prot_Q8IZ73
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RUSD2_HUMAN is an exemplar enzyme with EC 5.4.99.42 activity.
+    evidence:
+    - reference: EC:5.4.99.42
+      snippet: DR   P53294, PUS6_YEAST ;  Q8IZ73, RUSD2_HUMAN;  Q149F1, RUSD2_MOUSE;
+      notes: ExPASy ENZYME entry EC 5.4.99.42 cross-references UniProtKB:Q8IZ73 (RUSD2_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q149F1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RUSD2_MOUSE is an exemplar enzyme with EC 5.4.99.42 activity.
+    evidence:
+    - reference: EC:5.4.99.42
+      snippet: DR   P53294, PUS6_YEAST ;  Q8IZ73, RUSD2_HUMAN;  Q149F1, RUSD2_MOUSE;
+      notes: ExPASy ENZYME entry EC 5.4.99.42 cross-references UniProtKB:Q149F1 (RUSD2_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -47,4 +47,277 @@ definitions:
       Catalyses: (1) a monosubstituted aliphatic (S)-hydroxynitrile = an aldehyde + hydrogen cyanide. (2) a disubstituted aliphatic (S)-hydroxynitrile = a ketone + hydrogen cyanide. (3) an aromatic (S)-hydroxynitrile = an aromatic aldehyde + hydrogen cyanide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-hydroxynitrile lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.47. Rhea assigns 3 curated
+    reactions to EC 4.1.2.47. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) a monosubstituted aliphatic (S)-hydroxynitrile = an
+    aldehyde + hydrogen cyanide. (2) a disubstituted aliphatic (S)-hydroxynitrile = a ketone + hydrogen
+    cyanide. (3) an aromatic (S)-hydroxynitrile = an aromatic aldehyde + hydrogen cyanide". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (S)-hydroxynitrile lyase
+    grounding: EC:4.1.2.47
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an aromatic (S)-hydroxynitrile = an aromatic aldehyde + hydrogen cyanide
+    grounding: RHEA:54660
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an aromatic (S)-hydroxynitrile = an aromatic aldehyde + hydrogen cyanide'
+  - node_id: rxn1_sub1
+    label: an aromatic (S)-hydroxynitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:138306
+    description: Formula C2H2NOR.
+  - node_id: rxn1_prd1
+    label: an aromatic aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:33855
+    description: Formula CHOR.
+  - node_id: rxn1_prd2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a monosubstituted aliphatic (S)-hydroxynitrile = an aldehyde + hydrogen cyan…
+    grounding: RHEA:56588
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a monosubstituted aliphatic (S)-hydroxynitrile = an aldehyde + hydrogen
+      cyanide'
+  - node_id: rxn2_sub1
+    label: a monosubstituted aliphatic (S)-hydroxynitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:140596
+    description: Formula C2H2NOR.
+  - node_id: rxn2_prd1
+    label: an aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+    description: Formula CHOR.
+  - node_id: rxn2_prd2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a disubstituted aliphatic (S)-hydroxynitrile = a ketone + hydrogen cyanide
+    grounding: RHEA:56592
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a disubstituted aliphatic (S)-hydroxynitrile = a ketone + hydrogen cyanide'
+  - node_id: rxn3_sub1
+    label: a disubstituted aliphatic (S)-hydroxynitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:140597
+    description: Formula C2HNOR2.
+  - node_id: rxn3_prd1
+    label: a ketone
+    node_type: CHEMICAL
+    grounding: CHEBI:17087
+    description: Formula COR2.
+  - node_id: rxn3_prd2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (S)-hydroxynitrile lyase activity
+    grounding: GO:0047606
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P52704
+    node_type: PROTEIN
+    label: HNL_HEVBR
+    grounding: UniProtKB:P52704
+  - node_id: prot_P52705
+    node_type: PROTEIN
+    label: HNL_MANES
+    grounding: UniProtKB:P52705
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:54660 is one of the 3 curated reactions Rhea assigns to EC 4.1.2.47; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:54660
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.47"/>
+      notes: The rh:ec triple on RHEA:54660 in rhea.rdf assigns that reaction to EC 4.1.2.47.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: an aromatic (S)-hydroxynitrile is a substrate consumed by RHEA:54660 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54661
+      snippet: an aromatic (S)-hydroxynitrile => an aromatic aldehyde + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:54661 declares side 54660_L as its substrates
+        (rh:substrates); the master reaction RHEA:54660 is undirected. This participant is CHEBI:138306
+        with coefficient 1. Rhea cites PMID:19006143, PMID:18540112, PMID:18524775, PMID:12616635 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: an aromatic aldehyde is a product released by RHEA:54660 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54661
+      snippet: an aromatic (S)-hydroxynitrile => an aromatic aldehyde + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:54661 declares side 54660_R as its products
+        (rh:products); the master reaction RHEA:54660 is undirected. This participant is CHEBI:33855 with
+        coefficient 1. Rhea cites PMID:19006143, PMID:18540112, PMID:18524775, PMID:12616635 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: hydrogen cyanide is a product released by RHEA:54660 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54661
+      snippet: an aromatic (S)-hydroxynitrile => an aromatic aldehyde + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:54661 declares side 54660_R as its products
+        (rh:products); the master reaction RHEA:54660 is undirected. This participant is CHEBI:18407 with
+        coefficient 1. Rhea cites PMID:19006143, PMID:18540112, PMID:18524775, PMID:12616635 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:56588 is one of the 3 curated reactions Rhea assigns to EC 4.1.2.47; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:56588
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.47"/>
+      notes: The rh:ec triple on RHEA:56588 in rhea.rdf assigns that reaction to EC 4.1.2.47.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a monosubstituted aliphatic (S)-hydroxynitrile is a substrate consumed by RHEA:56588
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56589
+      snippet: a monosubstituted aliphatic (S)-hydroxynitrile => an aldehyde + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:56589 declares side 56588_L as its substrates
+        (rh:substrates); the master reaction RHEA:56588 is undirected. This participant is CHEBI:140596
+        with coefficient 1. Rhea cites PMID:19006143, PMID:18540112, PMID:18524775, PMID:12616635 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: an aldehyde is a product released by RHEA:56588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56589
+      snippet: a monosubstituted aliphatic (S)-hydroxynitrile => an aldehyde + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:56589 declares side 56588_R as its products
+        (rh:products); the master reaction RHEA:56588 is undirected. This participant is CHEBI:17478 with
+        coefficient 1. Rhea cites PMID:19006143, PMID:18540112, PMID:18524775, PMID:12616635 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: hydrogen cyanide is a product released by RHEA:56588 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56589
+      snippet: a monosubstituted aliphatic (S)-hydroxynitrile => an aldehyde + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:56589 declares side 56588_R as its products
+        (rh:products); the master reaction RHEA:56588 is undirected. This participant is CHEBI:18407 with
+        coefficient 1. Rhea cites PMID:19006143, PMID:18540112, PMID:18524775, PMID:12616635 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:56592 is one of the 3 curated reactions Rhea assigns to EC 4.1.2.47; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:56592
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.47"/>
+      notes: The rh:ec triple on RHEA:56592 in rhea.rdf assigns that reaction to EC 4.1.2.47.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: a disubstituted aliphatic (S)-hydroxynitrile is a substrate consumed by RHEA:56592 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56593
+      snippet: a disubstituted aliphatic (S)-hydroxynitrile => a ketone + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:56593 declares side 56592_L as its substrates
+        (rh:substrates); the master reaction RHEA:56592 is undirected. This participant is CHEBI:140597
+        with coefficient 1. Rhea cites PMID:19006143, PMID:18540112, PMID:18524775, PMID:12616635 for
+        this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: a ketone is a product released by RHEA:56592 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56593
+      snippet: a disubstituted aliphatic (S)-hydroxynitrile => a ketone + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:56593 declares side 56592_R as its products
+        (rh:products); the master reaction RHEA:56592 is undirected. This participant is CHEBI:17087 with
+        coefficient 1. Rhea cites PMID:19006143, PMID:18540112, PMID:18524775, PMID:12616635 for this
+        reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: hydrogen cyanide is a product released by RHEA:56592 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56593
+      snippet: a disubstituted aliphatic (S)-hydroxynitrile => a ketone + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:56593 declares side 56592_R as its products
+        (rh:products); the master reaction RHEA:56592 is undirected. This participant is CHEBI:18407 with
+        coefficient 1. Rhea cites PMID:19006143, PMID:18540112, PMID:18524775, PMID:12616635 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.2.47
+      snippet: EC:4.1.2.47 > GO:(S)-hydroxynitrile lyase activity ; GO:0047606
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047606 is itself a record
+        in this KB.
+  - subject: prot_P52704
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HNL_HEVBR is an exemplar enzyme with EC 4.1.2.47 activity.
+    evidence:
+    - reference: EC:4.1.2.47
+      snippet: DR   P52704, HNL_HEVBR  ;  P52705, HNL_MANES  ;
+      notes: ExPASy ENZYME entry EC 4.1.2.47 cross-references UniProtKB:P52704 (HNL_HEVBR) as a protein
+        with this activity.
+  - subject: prot_P52705
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HNL_MANES is an exemplar enzyme with EC 4.1.2.47 activity.
+    evidence:
+    - reference: EC:4.1.2.47
+      snippet: DR   P52704, HNL_HEVBR  ;  P52705, HNL_MANES  ;
+      notes: ExPASy ENZYME entry EC 4.1.2.47 cross-references UniProtKB:P52705 (HNL_MANES) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

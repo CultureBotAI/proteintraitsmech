@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.99.1.-
 synonyms:
@@ -39,4 +39,121 @@ definitions:
       Catalyses: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide = pyridinium-3,5- bisthiocarboxylate mononucleotide + Ni(2+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pyridinium-3,5-bisthiocarboxylic acid mononucleotide nickel chelatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.99.1.12. EC 4.99.1.12 maps to
+    exactly one curated Rhea reaction (RHEA:54784), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "Ni(II)-pyridinium-3,5-bisthiocarboxylate
+    mononucleotide = pyridinium-3,5- bisthiocarboxylate mononucleotide + Ni(2+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: pyridinium-3,5-bisthiocarboxylic acid mononucleotide nickel chelatase
+    grounding: EC:4.99.1.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide
+    node_type: CHEMICAL
+    grounding: CHEBI:137373
+    description: Formula C12H11NNiO9PS2.
+  - node_id: prd1
+    label: pyridinium-3,5-bisthiocarboxylate mononucleotide
+    node_type: CHEMICAL
+    grounding: CHEBI:137372
+    description: Formula C12H11NO9PS2.
+  - node_id: prd2
+    label: Ni(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:49786
+    description: Formula Ni.
+  - node_id: prot_A3DCC8
+    node_type: PROTEIN
+    label: LARC_ACET2
+    grounding: UniProtKB:A3DCC8
+  - node_id: prot_B2ULM9
+    node_type: PROTEIN
+    label: LARC_AKKM8
+    grounding: UniProtKB:B2ULM9
+  - node_id: prot_A6TKJ0
+    node_type: PROTEIN
+    label: LARC_ALKMQ
+    grounding: UniProtKB:A6TKJ0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide is a substrate consumed by RHEA:54784
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54785
+      snippet: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide => pyridinium-3,5-bisthiocarboxylate
+        mononucleotide + Ni(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:54785 declares side 54784_L as its substrates
+        (rh:substrates); the master reaction RHEA:54784 is undirected. This participant is CHEBI:137373
+        with coefficient 1. Rhea cites PMID:27114550 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pyridinium-3,5-bisthiocarboxylate mononucleotide is a product released by RHEA:54784
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54785
+      snippet: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide => pyridinium-3,5-bisthiocarboxylate
+        mononucleotide + Ni(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:54785 declares side 54784_R as its products
+        (rh:products); the master reaction RHEA:54784 is undirected. This participant is CHEBI:137372
+        with coefficient 1. Rhea cites PMID:27114550 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Ni(2+) is a product released by RHEA:54784 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54785
+      snippet: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide => pyridinium-3,5-bisthiocarboxylate
+        mononucleotide + Ni(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:54785 declares side 54784_R as its products
+        (rh:products); the master reaction RHEA:54784 is undirected. This participant is CHEBI:49786 with
+        coefficient 1. Rhea cites PMID:27114550 for this reaction.
+  - subject: prot_A3DCC8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LARC_ACET2 is an exemplar enzyme with EC 4.99.1.12 activity.
+    evidence:
+    - reference: EC:4.99.1.12
+      snippet: DR   A3DCC8, LARC_ACET2 ;  B2ULM9, LARC_AKKM8 ;  A6TKJ0, LARC_ALKMQ ;
+      notes: ExPASy ENZYME entry EC 4.99.1.12 cross-references UniProtKB:A3DCC8 (LARC_ACET2) as a protein
+        with this activity.
+  - subject: prot_B2ULM9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LARC_AKKM8 is an exemplar enzyme with EC 4.99.1.12 activity.
+    evidence:
+    - reference: EC:4.99.1.12
+      snippet: DR   A3DCC8, LARC_ACET2 ;  B2ULM9, LARC_AKKM8 ;  A6TKJ0, LARC_ALKMQ ;
+      notes: ExPASy ENZYME entry EC 4.99.1.12 cross-references UniProtKB:B2ULM9 (LARC_AKKM8) as a protein
+        with this activity.
+  - subject: prot_A6TKJ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LARC_ALKMQ is an exemplar enzyme with EC 4.99.1.12 activity.
+    evidence:
+    - reference: EC:4.99.1.12
+      snippet: DR   A3DCC8, LARC_ACET2 ;  B2ULM9, LARC_AKKM8 ;  A6TKJ0, LARC_ALKMQ ;
+      notes: ExPASy ENZYME entry EC 4.99.1.12 cross-references UniProtKB:A6TKJ0 (LARC_ALKMQ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

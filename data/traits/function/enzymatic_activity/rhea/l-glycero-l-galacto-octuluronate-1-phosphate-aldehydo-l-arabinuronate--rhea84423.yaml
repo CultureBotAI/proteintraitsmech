@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:146211
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,82 @@ definitions:
       Catalyses the reaction: L-glycero-L-galacto-octuluronate-1-phosphate = aldehydo-L-arabinuronate + dihydroxyacetone phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-glycero-L-galacto-octuluronate-1-phosphate = aldehydo-L-arabinuronate
+    + dihydroxyacet…
+  description: Substrate-to-product chemistry of RHEA:84423, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:84424 (rh:substrates → 84423_L, rh:products → 84423_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-glycero-L-galacto-octuluronate-1-phosphate = aldehydo-L-arabinuronate + di…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:84423
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-glycero-L-galacto-octuluronate-1-phosphate = aldehydo-L-arabinuronate + dihydroxyacetone
+      phosphate'
+  - node_id: sub1
+    label: L-glycero-L-galacto-octuluronate-1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:146211
+    description: Formula C8H12O12P.
+  - node_id: prd1
+    label: aldehydo-L-arabinuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:149672
+    description: Formula C5H7O6.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-glycero-L-galacto-octuluronate-1-phosphate is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84424
+      snippet: L-glycero-L-galacto-octuluronate-1-phosphate => aldehydo-L-arabinuronate + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:84424 declares side 84423_L as its substrates
+        (rh:substrates); the master reaction RHEA:84423 is undirected. This participant is CHEBI:146211
+        with coefficient 1. Rhea cites PMID:31322866 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: aldehydo-L-arabinuronate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:84424
+      snippet: L-glycero-L-galacto-octuluronate-1-phosphate => aldehydo-L-arabinuronate + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:84424 declares side 84423_R as its products
+        (rh:products); the master reaction RHEA:84423 is undirected. This participant is CHEBI:149672
+        with coefficient 1. Rhea cites PMID:31322866 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:84424
+      snippet: L-glycero-L-galacto-octuluronate-1-phosphate => aldehydo-L-arabinuronate + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:84424 declares side 84423_R as its products
+        (rh:products); the master reaction RHEA:84423 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:31322866 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

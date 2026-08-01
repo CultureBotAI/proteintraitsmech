@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -43,4 +43,249 @@ definitions:
       Catalyses: (2R)-homocitrate = (2R,3S)-homoisocitrate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methanogen homoaconitase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.114. Rhea assigns 3 curated
+    reactions to EC 4.2.1.114. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(2R)-homocitrate = (2R,3S)-homoisocitrate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: methanogen homoaconitase
+    grounding: EC:4.2.1.114
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (2R)-homocitrate = (2R,3S)-homoisocitrate
+    grounding: RHEA:32303
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (2R)-homocitrate = (2R,3S)-homoisocitrate'
+  - node_id: rxn1_sub1
+    label: (2R)-homocitrate
+    node_type: CHEMICAL
+    grounding: CHEBI:58884
+    description: Formula C7H7O7.
+  - node_id: rxn1_prd1
+    label: (2R,3S)-homoisocitrate
+    node_type: CHEMICAL
+    grounding: CHEBI:15404
+    description: Formula C7H7O7.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of cis-(homo)2aconitate + H2O = (2R,3S)-iso(homo)2citrate
+    grounding: RHEA:68416
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: cis-(homo)2aconitate + H2O = (2R,3S)-iso(homo)2citrate'
+  - node_id: rxn2_sub1
+    label: cis-(homo)2aconitate
+    node_type: CHEMICAL
+    grounding: CHEBI:72710
+    description: Formula C8H7O6.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: (2R,3S)-iso(homo)2citrate
+    node_type: CHEMICAL
+    grounding: CHEBI:72722
+    description: Formula C8H9O7.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of cis-(homo)3aconitate + H2O = (2R,3S)-iso(homo)3citrate
+    grounding: RHEA:68420
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: cis-(homo)3aconitate + H2O = (2R,3S)-iso(homo)3citrate'
+  - node_id: rxn3_sub1
+    label: cis-(homo)3aconitate
+    node_type: CHEMICAL
+    grounding: CHEBI:72712
+    description: Formula C9H9O6.
+  - node_id: rxn3_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3_prd1
+    label: (2R,3S)-iso(homo)3citrate
+    node_type: CHEMICAL
+    grounding: CHEBI:177881
+    description: Formula C9H11O7.
+  - node_id: prot_Q8TLF1
+    node_type: PROTEIN
+    label: HACA_METAC
+    grounding: UniProtKB:Q8TLF1
+  - node_id: prot_Q58409
+    node_type: PROTEIN
+    label: HACA_METJA
+    grounding: UniProtKB:Q58409
+  - node_id: prot_Q8PZT3
+    node_type: PROTEIN
+    label: HACA_METMA
+    grounding: UniProtKB:Q8PZT3
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:32303 is one of the 3 curated reactions Rhea assigns to EC 4.2.1.114; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:32303
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.114"/>
+      notes: The rh:ec triple on RHEA:32303 in rhea.rdf assigns that reaction to EC 4.2.1.114.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (2R)-homocitrate is a substrate consumed by RHEA:32303 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32304
+      snippet: (2R)-homocitrate => (2R,3S)-homoisocitrate
+      notes: Rhea's left-to-right directional reaction RHEA:32304 declares side 32303_L as its substrates
+        (rh:substrates); the master reaction RHEA:32303 is undirected. This participant is CHEBI:58884
+        with coefficient 1. Rhea cites PMID:18765671 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (2R,3S)-homoisocitrate is a product released by RHEA:32303 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32304
+      snippet: (2R)-homocitrate => (2R,3S)-homoisocitrate
+      notes: Rhea's left-to-right directional reaction RHEA:32304 declares side 32303_R as its products
+        (rh:products); the master reaction RHEA:32303 is undirected. This participant is CHEBI:15404 with
+        coefficient 1. Rhea cites PMID:18765671 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:68416 is one of the 3 curated reactions Rhea assigns to EC 4.2.1.114; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:68416
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.114"/>
+      notes: The rh:ec triple on RHEA:68416 in rhea.rdf assigns that reaction to EC 4.2.1.114.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: cis-(homo)2aconitate is a substrate consumed by RHEA:68416 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68417
+      snippet: cis-(homo)2aconitate + H2O => (2R,3S)-iso(homo)2citrate
+      notes: Rhea's left-to-right directional reaction RHEA:68417 declares side 68416_L as its substrates
+        (rh:substrates); the master reaction RHEA:68416 is undirected. This participant is CHEBI:72710
+        with coefficient 1. Rhea cites PMID:18765671 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:68416 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68417
+      snippet: cis-(homo)2aconitate + H2O => (2R,3S)-iso(homo)2citrate
+      notes: Rhea's left-to-right directional reaction RHEA:68417 declares side 68416_L as its substrates
+        (rh:substrates); the master reaction RHEA:68416 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18765671 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (2R,3S)-iso(homo)2citrate is a product released by RHEA:68416 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68417
+      snippet: cis-(homo)2aconitate + H2O => (2R,3S)-iso(homo)2citrate
+      notes: Rhea's left-to-right directional reaction RHEA:68417 declares side 68416_R as its products
+        (rh:products); the master reaction RHEA:68416 is undirected. This participant is CHEBI:72722 with
+        coefficient 1. Rhea cites PMID:18765671 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:68420 is one of the 3 curated reactions Rhea assigns to EC 4.2.1.114; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:68420
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.114"/>
+      notes: The rh:ec triple on RHEA:68420 in rhea.rdf assigns that reaction to EC 4.2.1.114.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: cis-(homo)3aconitate is a substrate consumed by RHEA:68420 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68421
+      snippet: cis-(homo)3aconitate + H2O => (2R,3S)-iso(homo)3citrate
+      notes: Rhea's left-to-right directional reaction RHEA:68421 declares side 68420_L as its substrates
+        (rh:substrates); the master reaction RHEA:68420 is undirected. This participant is CHEBI:72712
+        with coefficient 1. Rhea cites PMID:18765671 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: H2O is a substrate consumed by RHEA:68420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68421
+      snippet: cis-(homo)3aconitate + H2O => (2R,3S)-iso(homo)3citrate
+      notes: Rhea's left-to-right directional reaction RHEA:68421 declares side 68420_L as its substrates
+        (rh:substrates); the master reaction RHEA:68420 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18765671 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: (2R,3S)-iso(homo)3citrate is a product released by RHEA:68420 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68421
+      snippet: cis-(homo)3aconitate + H2O => (2R,3S)-iso(homo)3citrate
+      notes: Rhea's left-to-right directional reaction RHEA:68421 declares side 68420_R as its products
+        (rh:products); the master reaction RHEA:68420 is undirected. This participant is CHEBI:177881
+        with coefficient 1. Rhea cites PMID:18765671 for this reaction.
+  - subject: prot_Q8TLF1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HACA_METAC is an exemplar enzyme with EC 4.2.1.114 activity.
+    evidence:
+    - reference: EC:4.2.1.114
+      snippet: DR   Q8TLF1, HACA_METAC ;  Q58409, HACA_METJA ;  Q8PZT3, HACA_METMA ;
+      notes: ExPASy ENZYME entry EC 4.2.1.114 cross-references UniProtKB:Q8TLF1 (HACA_METAC) as a protein
+        with this activity.
+  - subject: prot_Q58409
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HACA_METJA is an exemplar enzyme with EC 4.2.1.114 activity.
+    evidence:
+    - reference: EC:4.2.1.114
+      snippet: DR   Q8TLF1, HACA_METAC ;  Q58409, HACA_METJA ;  Q8PZT3, HACA_METMA ;
+      notes: ExPASy ENZYME entry EC 4.2.1.114 cross-references UniProtKB:Q58409 (HACA_METJA) as a protein
+        with this activity.
+  - subject: prot_Q8PZT3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HACA_METMA is an exemplar enzyme with EC 4.2.1.114 activity.
+    evidence:
+    - reference: EC:4.2.1.114
+      snippet: DR   Q8TLF1, HACA_METAC ;  Q58409, HACA_METJA ;  Q8PZT3, HACA_METMA ;
+      notes: ExPASy ENZYME entry EC 4.2.1.114 cross-references UniProtKB:Q8PZT3 (HACA_METMA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

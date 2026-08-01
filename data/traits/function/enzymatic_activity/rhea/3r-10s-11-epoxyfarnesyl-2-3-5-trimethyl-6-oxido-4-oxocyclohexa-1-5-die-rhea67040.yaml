@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:167682
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,80 @@ definitions:
       Catalyses the reaction: (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-diene-1-carboxylate + H(+) = asnovolin H
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-diene-1-carbox…
+  description: Substrate-to-product chemistry of RHEA:67040, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67041 (rh:substrates → 67040_L, rh:products → 67040_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-die…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67040
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-diene-1-carboxylate
+      + H(+) = asnovolin H'
+  - node_id: sub1
+    label: (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-diene-1-carboxyl…
+    node_type: CHEMICAL
+    grounding: CHEBI:167682
+    description: 'Full Rhea name: (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-diene-1-carboxylate
+      Formula C25H34O5.'
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: asnovolin H
+    node_type: CHEMICAL
+    grounding: CHEBI:156465
+    description: Formula C25H35O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-diene-1-carboxylate
+      is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67041
+      snippet: (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-diene-1-carboxylate
+        + H(+) => asnovolin H
+      notes: Rhea's left-to-right directional reaction RHEA:67041 declares side 67040_L as its substrates
+        (rh:substrates); the master reaction RHEA:67040 is undirected. This participant is CHEBI:167682
+        with coefficient 1. Rhea cites PMID:29968715 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67041
+      snippet: (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-diene-1-carboxylate
+        + H(+) => asnovolin H
+      notes: Rhea's left-to-right directional reaction RHEA:67041 declares side 67040_L as its substrates
+        (rh:substrates); the master reaction RHEA:67040 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:29968715 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: asnovolin H is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67041
+      snippet: (3R)-[(10S)-11-epoxyfarnesyl]-2,3,5-trimethyl-6-oxido-4-oxocyclohexa-1,5-diene-1-carboxylate
+        + H(+) => asnovolin H
+      notes: Rhea's left-to-right directional reaction RHEA:67041 declares side 67040_R as its products
+        (rh:products); the master reaction RHEA:67040 is undirected. This participant is CHEBI:156465
+        with coefficient 1. Rhea cites PMID:29968715 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

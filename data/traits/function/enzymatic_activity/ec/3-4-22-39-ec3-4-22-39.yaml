@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 canonical_examples:
@@ -33,4 +33,67 @@ definitions:
       Catalyses: Cleaves proteins of the adenovirus and its host cell at two consensus sites: -Yaa-Xaa-Gly-Gly-|-Xaa- and -Yaa-Xaa-Gly-Xaa-|-Gly- (in which Yaa is Met, Ile or Leu, and Xaa is any amino acid)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of adenain
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.39. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleaves
+    proteins of the adenovirus and its host cell at two consensus sites: -Yaa-Xaa-Gly-Gly-|-Xaa- and -Yaa-Xaa-Gly-Xaa-|-Gly-
+    (in which Yaa is Met, Ile or Leu, and Xaa is any amino acid)".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: adenain
+    grounding: EC:3.4.22.39
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P03252
+    node_type: PROTEIN
+    label: PRO_ADE02
+    grounding: UniProtKB:P03252
+  - node_id: prot_P10381
+    node_type: PROTEIN
+    label: PRO_ADE03
+    grounding: UniProtKB:P10381
+  - node_id: prot_P07885
+    node_type: PROTEIN
+    label: PRO_ADE04
+    grounding: UniProtKB:P07885
+  edges:
+  - subject: prot_P03252
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRO_ADE02 is an exemplar enzyme with EC 3.4.22.39 activity.
+    evidence:
+    - reference: EC:3.4.22.39
+      snippet: DR   P03252, PRO_ADE02  ;  P10381, PRO_ADE03  ;  P07885, PRO_ADE04  ;
+      notes: ExPASy ENZYME entry EC 3.4.22.39 cross-references UniProtKB:P03252 (PRO_ADE02) as a protein
+        with this activity.
+  - subject: prot_P10381
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRO_ADE03 is an exemplar enzyme with EC 3.4.22.39 activity.
+    evidence:
+    - reference: EC:3.4.22.39
+      snippet: DR   P03252, PRO_ADE02  ;  P10381, PRO_ADE03  ;  P07885, PRO_ADE04  ;
+      notes: ExPASy ENZYME entry EC 3.4.22.39 cross-references UniProtKB:P10381 (PRO_ADE03) as a protein
+        with this activity.
+  - subject: prot_P07885
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRO_ADE04 is an exemplar enzyme with EC 3.4.22.39 activity.
+    evidence:
+    - reference: EC:3.4.22.39
+      snippet: DR   P03252, PRO_ADE02  ;  P10381, PRO_ADE03  ;  P07885, PRO_ADE04  ;
+      notes: ExPASy ENZYME entry EC 3.4.22.39 cross-references UniProtKB:P07885 (PRO_ADE04) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

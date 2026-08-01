@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -42,4 +42,268 @@ definitions:
       Catalyses: (1) rhodopin = all-trans-lycopene + H2O. (2) 1,1'-dihydroxy-1,1',2,2'-tetrahydrolycopene = rhodopin + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carotenoid 1,2-hydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.131. Rhea assigns 4 curated
+    reactions to EC 4.2.1.131 (the first 3 are shown). No one substrate set is the class''s chemistry,
+    so each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "(1) rhodopin = all-trans-lycopene +
+    H2O. (2) 1,1''-dihydroxy-1,1'',2,2''-tetrahydrolycopene = rhodopin + H2O". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: carotenoid 1,2-hydratase
+    grounding: EC:4.2.1.131
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of rhodopin = all-trans-lycopene + H2O
+    grounding: RHEA:31607
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: rhodopin = all-trans-lycopene + H2O'
+  - node_id: rxn1_sub1
+    label: rhodopin
+    node_type: CHEMICAL
+    grounding: CHEBI:35331
+    description: Formula C40H58O.
+  - node_id: rxn1_prd1
+    label: all-trans-lycopene
+    node_type: CHEMICAL
+    grounding: CHEBI:15948
+    description: Formula C40H56.
+  - node_id: rxn1_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 1,1'-dihydroxy-1,1',2,2'-tetrahydrolycopene = rhodopin + H2O
+    grounding: RHEA:31611
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 1,1''-dihydroxy-1,1'',2,2''-tetrahydrolycopene = rhodopin + H2O'
+  - node_id: rxn2_sub1
+    label: 1,1'-dihydroxy-1,1',2,2'-tetrahydrolycopene
+    node_type: CHEMICAL
+    grounding: CHEBI:63065
+    description: Formula C40H60O2.
+  - node_id: rxn2_prd1
+    label: rhodopin
+    node_type: CHEMICAL
+    grounding: CHEBI:35331
+    description: Formula C40H58O.
+  - node_id: rxn2_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 1,1'-dihydroxy-1,1',2,2'-tetrahydroneurosporene = 1-hydroxy-all-trans-1,2-di…
+    grounding: RHEA:54148
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 1,1''-dihydroxy-1,1'',2,2''-tetrahydroneurosporene = 1-hydroxy-all-trans-1,2-dihydro-neurosporene
+      + H2O'
+  - node_id: rxn3_sub1
+    label: 1,1'-dihydroxy-1,1',2,2'-tetrahydroneurosporene
+    node_type: CHEMICAL
+    grounding: CHEBI:138076
+    description: Formula C40H62O2.
+  - node_id: rxn3_prd1
+    label: 1-hydroxy-all-trans-1,2-dihydro-neurosporene
+    node_type: CHEMICAL
+    grounding: CHEBI:138077
+    description: Formula C40H60O.
+  - node_id: rxn3_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q01670
+    node_type: PROTEIN
+    label: CRTC_CERS4
+    grounding: UniProtKB:Q01670
+  - node_id: prot_P17058
+    node_type: PROTEIN
+    label: CRTC_RHOCB
+    grounding: UniProtKB:P17058
+  - node_id: prot_P95619
+    node_type: PROTEIN
+    label: CRTC_RUBGE
+    grounding: UniProtKB:P95619
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:31607 is one of the 4 curated reactions Rhea assigns to EC 4.2.1.131; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31607
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.131"/>
+      notes: The rh:ec triple on RHEA:31607 in rhea.rdf assigns that reaction to EC 4.2.1.131.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: rhodopin is a substrate consumed by RHEA:31607 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31608
+      snippet: rhodopin => all-trans-lycopene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31608 declares side 31607_L as its substrates
+        (rh:substrates); the master reaction RHEA:31607 is undirected. This participant is CHEBI:35331
+        with coefficient 1. Rhea cites PMID:21590288, PMID:12745254 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: all-trans-lycopene is a product released by RHEA:31607 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31608
+      snippet: rhodopin => all-trans-lycopene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31608 declares side 31607_R as its products
+        (rh:products); the master reaction RHEA:31607 is undirected. This participant is CHEBI:15948 with
+        coefficient 1. Rhea cites PMID:21590288, PMID:12745254 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O is a product released by RHEA:31607 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31608
+      snippet: rhodopin => all-trans-lycopene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31608 declares side 31607_R as its products
+        (rh:products); the master reaction RHEA:31607 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:21590288, PMID:12745254 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:31611 is one of the 4 curated reactions Rhea assigns to EC 4.2.1.131; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31611
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.131"/>
+      notes: The rh:ec triple on RHEA:31611 in rhea.rdf assigns that reaction to EC 4.2.1.131.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 1,1'-dihydroxy-1,1',2,2'-tetrahydrolycopene is a substrate consumed by RHEA:31611 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31612
+      snippet: 1,1'-dihydroxy-1,1',2,2'-tetrahydrolycopene => rhodopin + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31612 declares side 31611_L as its substrates
+        (rh:substrates); the master reaction RHEA:31611 is undirected. This participant is CHEBI:63065
+        with coefficient 1. Rhea cites PMID:21590288, PMID:12745254 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: rhodopin is a product released by RHEA:31611 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31612
+      snippet: 1,1'-dihydroxy-1,1',2,2'-tetrahydrolycopene => rhodopin + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31612 declares side 31611_R as its products
+        (rh:products); the master reaction RHEA:31611 is undirected. This participant is CHEBI:35331 with
+        coefficient 1. Rhea cites PMID:21590288, PMID:12745254 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O is a product released by RHEA:31611 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31612
+      snippet: 1,1'-dihydroxy-1,1',2,2'-tetrahydrolycopene => rhodopin + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31612 declares side 31611_R as its products
+        (rh:products); the master reaction RHEA:31611 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:21590288, PMID:12745254 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:54148 is one of the 4 curated reactions Rhea assigns to EC 4.2.1.131; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:54148
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.131"/>
+      notes: The rh:ec triple on RHEA:54148 in rhea.rdf assigns that reaction to EC 4.2.1.131.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: 1,1'-dihydroxy-1,1',2,2'-tetrahydroneurosporene is a substrate consumed by RHEA:54148
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54149
+      snippet: 1,1'-dihydroxy-1,1',2,2'-tetrahydroneurosporene => 1-hydroxy-all-trans-1,2-dihydro-neurosporene
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:54149 declares side 54148_L as its substrates
+        (rh:substrates); the master reaction RHEA:54148 is undirected. This participant is CHEBI:138076
+        with coefficient 1. Rhea cites PMID:21590288, PMID:12745254 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: 1-hydroxy-all-trans-1,2-dihydro-neurosporene is a product released by RHEA:54148 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54149
+      snippet: 1,1'-dihydroxy-1,1',2,2'-tetrahydroneurosporene => 1-hydroxy-all-trans-1,2-dihydro-neurosporene
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:54149 declares side 54148_R as its products
+        (rh:products); the master reaction RHEA:54148 is undirected. This participant is CHEBI:138077
+        with coefficient 1. Rhea cites PMID:21590288, PMID:12745254 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: H2O is a product released by RHEA:54148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54149
+      snippet: 1,1'-dihydroxy-1,1',2,2'-tetrahydroneurosporene => 1-hydroxy-all-trans-1,2-dihydro-neurosporene
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:54149 declares side 54148_R as its products
+        (rh:products); the master reaction RHEA:54148 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:21590288, PMID:12745254 for this reaction.
+  - subject: prot_Q01670
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTC_CERS4 is an exemplar enzyme with EC 4.2.1.131 activity.
+    evidence:
+    - reference: EC:4.2.1.131
+      snippet: DR   Q01670, CRTC_CERS4 ;  P17058, CRTC_RHOCB ;  P95619, CRTC_RUBGE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.131 cross-references UniProtKB:Q01670 (CRTC_CERS4) as a protein
+        with this activity.
+  - subject: prot_P17058
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTC_RHOCB is an exemplar enzyme with EC 4.2.1.131 activity.
+    evidence:
+    - reference: EC:4.2.1.131
+      snippet: DR   Q01670, CRTC_CERS4 ;  P17058, CRTC_RHOCB ;  P95619, CRTC_RUBGE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.131 cross-references UniProtKB:P17058 (CRTC_RHOCB) as a protein
+        with this activity.
+  - subject: prot_P95619
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTC_RUBGE is an exemplar enzyme with EC 4.2.1.131 activity.
+    evidence:
+    - reference: EC:4.2.1.131
+      snippet: DR   Q01670, CRTC_CERS4 ;  P17058, CRTC_RHOCB ;  P95619, CRTC_RUBGE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.131 cross-references UniProtKB:P95619 (CRTC_RUBGE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -45,4 +45,81 @@ definitions:
       Catalyses: Transfers a segment of a (1->4)-alpha-D-glucan chain to a primary hydroxy group in a similar glucan chain
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1,4-alpha-glucan branching enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.18. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Transfers
+    a segment of a (1->4)-alpha-D-glucan chain to a primary hydroxy group in a similar glucan chain".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1,4-alpha-glucan branching enzyme
+    grounding: EC:2.4.1.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 1,4-alpha-glucan branching enzyme activity
+    grounding: GO:0003844
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P9WQ26
+    node_type: PROTEIN
+    label: BE_MYCTO
+    grounding: UniProtKB:P9WQ26
+  - node_id: prot_P9WQ27
+    node_type: PROTEIN
+    label: BE_MYCTU
+    grounding: UniProtKB:P9WQ27
+  - node_id: prot_Q5JDJ7
+    node_type: PROTEIN
+    label: BE_THEKO
+    grounding: UniProtKB:Q5JDJ7
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.18
+      snippet: EC:2.4.1.18 > GO:1,4-alpha-glucan branching enzyme activity ; GO:0003844
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003844 is itself a record
+        in this KB.
+  - subject: prot_P9WQ26
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BE_MYCTO is an exemplar enzyme with EC 2.4.1.18 activity.
+    evidence:
+    - reference: EC:2.4.1.18
+      snippet: DR   P9WQ26, BE_MYCTO   ;  P9WQ27, BE_MYCTU   ;  Q5JDJ7, BE_THEKO   ;
+      notes: ExPASy ENZYME entry EC 2.4.1.18 cross-references UniProtKB:P9WQ26 (BE_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WQ27
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BE_MYCTU is an exemplar enzyme with EC 2.4.1.18 activity.
+    evidence:
+    - reference: EC:2.4.1.18
+      snippet: DR   P9WQ26, BE_MYCTO   ;  P9WQ27, BE_MYCTU   ;  Q5JDJ7, BE_THEKO   ;
+      notes: ExPASy ENZYME entry EC 2.4.1.18 cross-references UniProtKB:P9WQ27 (BE_MYCTU) as a protein
+        with this activity.
+  - subject: prot_Q5JDJ7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BE_THEKO is an exemplar enzyme with EC 2.4.1.18 activity.
+    evidence:
+    - reference: EC:2.4.1.18
+      snippet: DR   P9WQ26, BE_MYCTO   ;  P9WQ27, BE_MYCTU   ;  Q5JDJ7, BE_THEKO   ;
+      notes: ExPASy ENZYME entry EC 2.4.1.18 cross-references UniProtKB:Q5JDJ7 (BE_THEKO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

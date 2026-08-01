@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.2.1.-
 synonyms:
@@ -28,4 +28,107 @@ definitions:
       Catalyses: aldehydo-D-ribose 5-phosphate + acetoin = 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetoin--ribose-5-phosphate transaldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.2.1.4. EC 2.2.1.4 maps to exactly
+    one curated Rhea reaction (RHEA:21504), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "aldehydo-D-ribose
+    5-phosphate + acetoin = 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acetoin--ribose-5-phosphate transaldolase
+    grounding: EC:2.2.1.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: aldehydo-D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58273
+    description: Formula C5H9O8P.
+  - node_id: sub2
+    label: acetoin
+    node_type: CHEMICAL
+    grounding: CHEBI:15688
+    description: Formula C4H8O2.
+  - node_id: prd1
+    label: 1-deoxy-D-altro-heptulose 7-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57764
+    description: Formula C7H13O9P.
+  - node_id: prd2
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acetoin-ribose-5-phosphate transaldolase activity
+    grounding: GO:0047156
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: aldehydo-D-ribose 5-phosphate is a substrate consumed by RHEA:21504 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21505
+      snippet: aldehydo-D-ribose 5-phosphate + acetoin => 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21505 declares side 21504_L as its substrates
+        (rh:substrates); the master reaction RHEA:21504 is undirected. This participant is CHEBI:58273
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetoin is a substrate consumed by RHEA:21504 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21505
+      snippet: aldehydo-D-ribose 5-phosphate + acetoin => 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21505 declares side 21504_L as its substrates
+        (rh:substrates); the master reaction RHEA:21504 is undirected. This participant is CHEBI:15688
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-deoxy-D-altro-heptulose 7-phosphate is a product released by RHEA:21504 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21505
+      snippet: aldehydo-D-ribose 5-phosphate + acetoin => 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21505 declares side 21504_R as its products
+        (rh:products); the master reaction RHEA:21504 is undirected. This participant is CHEBI:57764 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetaldehyde is a product released by RHEA:21504 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21505
+      snippet: aldehydo-D-ribose 5-phosphate + acetoin => 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21505 declares side 21504_R as its products
+        (rh:products); the master reaction RHEA:21504 is undirected. This participant is CHEBI:15343 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.2.1.4
+      snippet: EC:2.2.1.4 > GO:acetoin-ribose-5-phosphate transaldolase activity ; GO:0047156
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047156 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

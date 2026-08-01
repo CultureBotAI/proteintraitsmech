@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -28,4 +28,93 @@ definitions:
       Catalyses: UDP-N-acetyl-alpha-D-glucosamine = UDP-2-acetamido-2,6-dideoxy-alpha-D- xylo-hex-4-ulose + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-N-acetylglucosamine 4,6-dehydratase (configuration-retaining)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.135. EC 4.2.1.135 maps to
+    exactly one curated Rhea reaction (RHEA:30823), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "UDP-N-acetyl-alpha-D-glucosamine
+    = UDP-2-acetamido-2,6-dideoxy-alpha-D- xylo-hex-4-ulose + H2O". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-N-acetylglucosamine 4,6-dehydratase (configuration-retaining)
+    grounding: EC:4.2.1.135
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: UDP-N-acetyl-alpha-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+    description: Formula C17H25N3O17P2.
+  - node_id: prd1
+    label: UDP-2-acetamido-2,6-dideoxy-alpha-D-xylo-hex-4-ulose
+    node_type: CHEMICAL
+    grounding: CHEBI:62375
+    description: Formula C17H23N3O16P2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q0P9D4
+    node_type: PROTEIN
+    label: PGLF_CAMJE
+    grounding: UniProtKB:Q0P9D4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-N-acetyl-alpha-D-glucosamine is a substrate consumed by RHEA:30823 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:30824
+      snippet: UDP-N-acetyl-alpha-D-glucosamine => UDP-2-acetamido-2,6-dideoxy-alpha-D-xylo-hex-4-ulose
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:30824 declares side 30823_L as its substrates
+        (rh:substrates); the master reaction RHEA:30823 is undirected. This participant is CHEBI:57705
+        with coefficient 1. Rhea cites PMID:16286454, PMID:17087520, PMID:15778500 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UDP-2-acetamido-2,6-dideoxy-alpha-D-xylo-hex-4-ulose is a product released by RHEA:30823
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30824
+      snippet: UDP-N-acetyl-alpha-D-glucosamine => UDP-2-acetamido-2,6-dideoxy-alpha-D-xylo-hex-4-ulose
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:30824 declares side 30823_R as its products
+        (rh:products); the master reaction RHEA:30823 is undirected. This participant is CHEBI:62375 with
+        coefficient 1. Rhea cites PMID:16286454, PMID:17087520, PMID:15778500 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:30823 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30824
+      snippet: UDP-N-acetyl-alpha-D-glucosamine => UDP-2-acetamido-2,6-dideoxy-alpha-D-xylo-hex-4-ulose
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:30824 declares side 30823_R as its products
+        (rh:products); the master reaction RHEA:30823 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:16286454, PMID:17087520, PMID:15778500 for this reaction.
+  - subject: prot_Q0P9D4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGLF_CAMJE is an exemplar enzyme with EC 4.2.1.135 activity.
+    evidence:
+    - reference: EC:4.2.1.135
+      snippet: DR   Q0P9D4, PGLF_CAMJE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.135 cross-references UniProtKB:Q0P9D4 (PGLF_CAMJE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.52
     mapping_source: rhea2ec
@@ -28,4 +28,167 @@ definitions:
       Catalyses the reaction: 4-hydroxy-2-oxoheptanedioate = succinate semialdehyde + pyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-hydroxy-2-oxoheptanedioate = succinate semialdehyde + pyruvate
+  description: Substrate-to-product chemistry of RHEA:25788, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:25789 (rh:substrates → 25788_L, rh:products → 25788_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-hydroxy-2-oxoheptanedioate = succinate semialdehyde + pyruvate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:25788
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-hydroxy-2-oxoheptanedioate = succinate semialdehyde + pyruvate'
+  - node_id: sub1
+    label: 4-hydroxy-2-oxoheptanedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:73036
+    description: Formula C7H8O6.
+  - node_id: prd1
+    label: succinate semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:57706
+    description: Formula C4H5O3.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxy-2-ketopimelate aldolase activity
+    grounding: GO:0043863
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxy-2-oxoheptanedioate aldolase
+    grounding: EC:4.1.2.52
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A8A876
+    node_type: PROTEIN
+    label: HPCH_ECOHS
+    grounding: UniProtKB:A8A876
+  - node_id: prot_B1IS70
+    node_type: PROTEIN
+    label: HPCH_ECOLC
+    grounding: UniProtKB:B1IS70
+  - node_id: prot_Q47098
+    node_type: PROTEIN
+    label: HPCH_ECOLX
+    grounding: UniProtKB:Q47098
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-hydroxy-2-oxoheptanedioate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:25789
+      snippet: 4-hydroxy-2-oxoheptanedioate => succinate semialdehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:25789 declares side 25788_L as its substrates
+        (rh:substrates); the master reaction RHEA:25788 is undirected. This participant is CHEBI:73036
+        with coefficient 1. Rhea cites PMID:15996099, PMID:20364820 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: succinate semialdehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25789
+      snippet: 4-hydroxy-2-oxoheptanedioate => succinate semialdehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:25789 declares side 25788_R as its products
+        (rh:products); the master reaction RHEA:25788 is undirected. This participant is CHEBI:57706 with
+        coefficient 1. Rhea cites PMID:15996099, PMID:20364820 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25789
+      snippet: 4-hydroxy-2-oxoheptanedioate => succinate semialdehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:25789 declares side 25788_R as its products
+        (rh:products); the master reaction RHEA:25788 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:15996099, PMID:20364820 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:25788
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0043863"/>
+      notes: The rdfs:seeAlso triple on RHEA:25788 in rhea.rdf. GO term GO:0043863 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.52; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:25788
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.52"/>
+      notes: The rh:ec triple on RHEA:25788 in rhea.rdf. EC 4.1.2.52 is itself a record in this KB.
+  - subject: prot_A8A876
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPCH_ECOHS is an exemplar enzyme carrying EC 4.1.2.52, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.52
+      snippet: DR   A8A876, HPCH_ECOHS ;  B1IS70, HPCH_ECOLC ;  Q47098, HPCH_ECOLX ;
+      notes: ExPASy ENZYME entry EC 4.1.2.52 cross-references UniProtKB:A8A876 (HPCH_ECOHS) as a protein
+        with this activity.
+    - reference: RHEA:25788
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.52"/>
+      notes: Rhea assigns RHEA:25788 to EC 4.1.2.52, and EC 4.1.2.52 maps to exactly one Rhea master reaction
+        (RHEA:25788), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B1IS70
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPCH_ECOLC is an exemplar enzyme carrying EC 4.1.2.52, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.52
+      snippet: DR   A8A876, HPCH_ECOHS ;  B1IS70, HPCH_ECOLC ;  Q47098, HPCH_ECOLX ;
+      notes: ExPASy ENZYME entry EC 4.1.2.52 cross-references UniProtKB:B1IS70 (HPCH_ECOLC) as a protein
+        with this activity.
+    - reference: RHEA:25788
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.52"/>
+      notes: Rhea assigns RHEA:25788 to EC 4.1.2.52, and EC 4.1.2.52 maps to exactly one Rhea master reaction
+        (RHEA:25788), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q47098
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPCH_ECOLX is an exemplar enzyme carrying EC 4.1.2.52, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.52
+      snippet: DR   A8A876, HPCH_ECOHS ;  B1IS70, HPCH_ECOLC ;  Q47098, HPCH_ECOLX ;
+      notes: ExPASy ENZYME entry EC 4.1.2.52 cross-references UniProtKB:Q47098 (HPCH_ECOLX) as a protein
+        with this activity.
+    - reference: RHEA:25788
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.52"/>
+      notes: Rhea assigns RHEA:25788 to EC 4.1.2.52, and EC 4.1.2.52 maps to exactly one Rhea master reaction
+        (RHEA:25788), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:134408
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,91 @@ definitions:
       Catalyses the reaction: N-acetylcadaverine + H2O = cadaverine + acetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acetylcadaverine + H2O = cadaverine + acetate
+  description: Substrate-to-product chemistry of RHEA:51892, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:51893 (rh:substrates → 51892_L, rh:products → 51892_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-acetylcadaverine + H2O = cadaverine + acetate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:51892
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-acetylcadaverine + H2O = cadaverine + acetate'
+  - node_id: sub1
+    label: N-acetylcadaverine
+    node_type: CHEMICAL
+    grounding: CHEBI:134408
+    description: Formula C7H17N2O.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: cadaverine
+    node_type: CHEMICAL
+    grounding: CHEBI:58384
+    description: Formula C5H16N2.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-acetylcadaverine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51893
+      snippet: N-acetylcadaverine + H2O => cadaverine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:51893 declares side 51892_L as its substrates
+        (rh:substrates); the master reaction RHEA:51892 is undirected. This participant is CHEBI:134408
+        with coefficient 1. Rhea cites PMID:3207420, PMID:8824626, PMID:26956223 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51893
+      snippet: N-acetylcadaverine + H2O => cadaverine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:51893 declares side 51892_L as its substrates
+        (rh:substrates); the master reaction RHEA:51892 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:3207420, PMID:8824626, PMID:26956223 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cadaverine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51893
+      snippet: N-acetylcadaverine + H2O => cadaverine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:51893 declares side 51892_R as its products
+        (rh:products); the master reaction RHEA:51892 is undirected. This participant is CHEBI:58384 with
+        coefficient 1. Rhea cites PMID:3207420, PMID:8824626, PMID:26956223 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51893
+      snippet: N-acetylcadaverine + H2O => cadaverine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:51893 declares side 51892_R as its products
+        (rh:products); the master reaction RHEA:51892 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:3207420, PMID:8824626, PMID:26956223 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

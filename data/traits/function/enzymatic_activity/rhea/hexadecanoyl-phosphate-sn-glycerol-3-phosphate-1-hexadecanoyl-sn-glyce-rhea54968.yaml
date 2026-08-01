@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:138436
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,98 @@ definitions:
       Catalyses the reaction: hexadecanoyl phosphate + sn-glycerol 3-phosphate = 1-hexadecanoyl-sn-glycero-3-phosphate + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hexadecanoyl phosphate + sn-glycerol 3-phosphate = 1-hexadecanoyl-sn-glycero-3-phosphat…
+  description: Substrate-to-product chemistry of RHEA:54968, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:54969 (rh:substrates → 54968_L, rh:products → 54968_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of hexadecanoyl phosphate + sn-glycerol 3-phosphate = 1-hexadecanoyl-sn-glycero…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:54968
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: hexadecanoyl phosphate + sn-glycerol 3-phosphate = 1-hexadecanoyl-sn-glycero-3-phosphate
+      + phosphate'
+  - node_id: sub1
+    label: hexadecanoyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138436
+    description: Formula C16H31O5P.
+  - node_id: sub2
+    label: sn-glycerol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+    description: Formula C3H7O6P.
+  - node_id: prd1
+    label: 1-hexadecanoyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57518
+    description: Formula C19H37O7P.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hexadecanoyl phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54969
+      snippet: hexadecanoyl phosphate + sn-glycerol 3-phosphate => 1-hexadecanoyl-sn-glycero-3-phosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54969 declares side 54968_L as its substrates
+        (rh:substrates); the master reaction RHEA:54968 is undirected. This participant is CHEBI:138436
+        with coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sn-glycerol 3-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54969
+      snippet: hexadecanoyl phosphate + sn-glycerol 3-phosphate => 1-hexadecanoyl-sn-glycero-3-phosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54969 declares side 54968_L as its substrates
+        (rh:substrates); the master reaction RHEA:54968 is undirected. This participant is CHEBI:57597
+        with coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-hexadecanoyl-sn-glycero-3-phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54969
+      snippet: hexadecanoyl phosphate + sn-glycerol 3-phosphate => 1-hexadecanoyl-sn-glycero-3-phosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54969 declares side 54968_R as its products
+        (rh:products); the master reaction RHEA:54968 is undirected. This participant is CHEBI:57518 with
+        coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54969
+      snippet: hexadecanoyl phosphate + sn-glycerol 3-phosphate => 1-hexadecanoyl-sn-glycero-3-phosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54969 declares side 54968_R as its products
+        (rh:products); the master reaction RHEA:54968 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:16949372 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

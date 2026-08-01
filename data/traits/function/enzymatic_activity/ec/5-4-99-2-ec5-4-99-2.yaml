@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 synonyms:
@@ -49,4 +49,116 @@ definitions:
       Catalyses: (R)-methylmalonyl-CoA = succinyl-CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methylmalonyl-CoA mutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.2. EC 5.4.99.2 maps to exactly
+    one curated Rhea reaction (RHEA:22888), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-methylmalonyl-CoA
+    = succinyl-CoA". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: methylmalonyl-CoA mutase
+    grounding: EC:5.4.99.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-methylmalonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57326
+    description: Formula C25H35N7O19P3S.
+  - node_id: prd1
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methylmalonyl-CoA mutase activity
+    grounding: GO:0004494
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q3J4D7
+    node_type: PROTEIN
+    label: MCM_CERS4
+    grounding: UniProtKB:Q3J4D7
+  - node_id: prot_O86028
+    node_type: PROTEIN
+    label: MCM_RHIME
+    grounding: UniProtKB:O86028
+  - node_id: prot_Q9GK13
+    node_type: PROTEIN
+    label: MUTA_BOVIN
+    grounding: UniProtKB:Q9GK13
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-methylmalonyl-CoA is a substrate consumed by RHEA:22888 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22889
+      snippet: (R)-methylmalonyl-CoA => succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22889 declares side 22888_L as its substrates
+        (rh:substrates); the master reaction RHEA:22888 is undirected. This participant is CHEBI:57326
+        with coefficient 1. Rhea cites PMID:1346616, PMID:12589497, PMID:21138732, PMID:2453061 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: succinyl-CoA is a product released by RHEA:22888 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22889
+      snippet: (R)-methylmalonyl-CoA => succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22889 declares side 22888_R as its products
+        (rh:products); the master reaction RHEA:22888 is undirected. This participant is CHEBI:57292 with
+        coefficient 1. Rhea cites PMID:1346616, PMID:12589497, PMID:21138732, PMID:2453061 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.2
+      snippet: EC:5.4.99.2 > GO:methylmalonyl-CoA mutase activity ; GO:0004494
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004494 is itself a record
+        in this KB.
+  - subject: prot_Q3J4D7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCM_CERS4 is an exemplar enzyme with EC 5.4.99.2 activity.
+    evidence:
+    - reference: EC:5.4.99.2
+      snippet: DR   Q3J4D7, MCM_CERS4  ;  O86028, MCM_RHIME  ;  Q9GK13, MUTA_BOVIN ;
+      notes: ExPASy ENZYME entry EC 5.4.99.2 cross-references UniProtKB:Q3J4D7 (MCM_CERS4) as a protein
+        with this activity.
+  - subject: prot_O86028
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCM_RHIME is an exemplar enzyme with EC 5.4.99.2 activity.
+    evidence:
+    - reference: EC:5.4.99.2
+      snippet: DR   Q3J4D7, MCM_CERS4  ;  O86028, MCM_RHIME  ;  Q9GK13, MUTA_BOVIN ;
+      notes: ExPASy ENZYME entry EC 5.4.99.2 cross-references UniProtKB:O86028 (MCM_RHIME) as a protein
+        with this activity.
+  - subject: prot_Q9GK13
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MUTA_BOVIN is an exemplar enzyme with EC 5.4.99.2 activity.
+    evidence:
+    - reference: EC:5.4.99.2
+      snippet: DR   Q3J4D7, MCM_CERS4  ;  O86028, MCM_RHIME  ;  Q9GK13, MUTA_BOVIN ;
+      notes: ExPASy ENZYME entry EC 5.4.99.2 cross-references UniProtKB:Q9GK13 (MUTA_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

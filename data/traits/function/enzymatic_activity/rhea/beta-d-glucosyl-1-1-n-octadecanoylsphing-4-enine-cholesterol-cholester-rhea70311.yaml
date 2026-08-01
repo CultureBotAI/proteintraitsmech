@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:84719
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,99 @@ definitions:
       Catalyses the reaction: beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine + cholesterol = cholesteryl 3-beta-D-glucoside + N-octadecanoylsphing-4-enine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine + cholesterol = cholesteryl
+    3-beta…
+  description: Substrate-to-product chemistry of RHEA:70311, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:70312 (rh:substrates → 70311_L, rh:products → 70311_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine + cholesterol = cholest…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:70311
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine + cholesterol = cholesteryl
+      3-beta-D-glucoside + N-octadecanoylsphing-4-enine'
+  - node_id: sub1
+    label: beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine
+    node_type: CHEMICAL
+    grounding: CHEBI:84719
+    description: Formula C42H81NO8.
+  - node_id: sub2
+    label: cholesterol
+    node_type: CHEMICAL
+    grounding: CHEBI:16113
+    description: Formula C27H46O.
+  - node_id: prd1
+    label: cholesteryl 3-beta-D-glucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:17495
+    description: Formula C33H56O6.
+  - node_id: prd2
+    label: N-octadecanoylsphing-4-enine
+    node_type: CHEMICAL
+    grounding: CHEBI:72961
+    description: Formula C36H71NO3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70312
+      snippet: beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine + cholesterol => cholesteryl 3-beta-D-glucoside
+        + N-octadecanoylsphing-4-enine
+      notes: Rhea's left-to-right directional reaction RHEA:70312 declares side 70311_L as its substrates
+        (rh:substrates); the master reaction RHEA:70311 is undirected. This participant is CHEBI:84719
+        with coefficient 1. Rhea cites PMID:24211208 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: cholesterol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70312
+      snippet: beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine + cholesterol => cholesteryl 3-beta-D-glucoside
+        + N-octadecanoylsphing-4-enine
+      notes: Rhea's left-to-right directional reaction RHEA:70312 declares side 70311_L as its substrates
+        (rh:substrates); the master reaction RHEA:70311 is undirected. This participant is CHEBI:16113
+        with coefficient 1. Rhea cites PMID:24211208 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cholesteryl 3-beta-D-glucoside is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:70312
+      snippet: beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine + cholesterol => cholesteryl 3-beta-D-glucoside
+        + N-octadecanoylsphing-4-enine
+      notes: Rhea's left-to-right directional reaction RHEA:70312 declares side 70311_R as its products
+        (rh:products); the master reaction RHEA:70311 is undirected. This participant is CHEBI:17495 with
+        coefficient 1. Rhea cites PMID:24211208 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N-octadecanoylsphing-4-enine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70312
+      snippet: beta-D-glucosyl-(1<->1)-N-octadecanoylsphing-4-enine + cholesterol => cholesteryl 3-beta-D-glucoside
+        + N-octadecanoylsphing-4-enine
+      notes: Rhea's left-to-right directional reaction RHEA:70312 declares side 70311_R as its products
+        (rh:products); the master reaction RHEA:70311 is undirected. This participant is CHEBI:72961 with
+        coefficient 1. Rhea cites PMID:24211208 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

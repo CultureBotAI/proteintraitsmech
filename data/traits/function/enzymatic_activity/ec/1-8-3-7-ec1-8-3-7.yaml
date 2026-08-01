@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.3.-
 synonyms:
@@ -43,4 +43,258 @@ definitions:
       Catalyses: L-cysteinyl-[sulfatase] + 2 a thiol + O2 = an organic disulfide + 3-oxo- L-alanyl-[sulfatase] + hydrogen sulfide + H2O + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of formylglycine-generating enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.3.7. EC 1.8.3.7 maps to exactly
+    one curated Rhea reaction (RHEA:51152), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-cysteinyl-[sulfatase]
+    + 2 a thiol + O2 = an organic disulfide + 3-oxo- L-alanyl-[sulfatase] + hydrogen sulfide + H2O + H(+)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: formylglycine-generating enzyme
+    grounding: EC:1.8.3.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-cysteinyl-[sulfatase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12900
+    description: Rhea compound GENERIC:12900.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12900 (L-cysteinyl-[sulfatase]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: a thiol
+    node_type: CHEMICAL
+    grounding: CHEBI:29256
+    description: Formula HSR.
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: an organic disulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:35489
+    description: Formula S2R2.
+  - node_id: prd2
+    label: 3-oxo-L-alanyl-[sulfatase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12901
+    description: Rhea compound GENERIC:12901.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: L-3-oxoalanine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12901 (3-oxo-L-alanyl-[sulfatase]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85621
+  - node_id: prd3
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: prd4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd5
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: formylglycine-generating oxidase activity
+    grounding: GO:0120147
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_I6Y8I5
+    node_type: PROTEIN
+    label: FGE_MYCTU
+    grounding: UniProtKB:I6Y8I5
+  - node_id: prot_Q9F3C7
+    node_type: PROTEIN
+    label: FGE_STRCO
+    grounding: UniProtKB:Q9F3C7
+  - node_id: prot_D1A7C3
+    node_type: PROTEIN
+    label: FGE_THECD
+    grounding: UniProtKB:D1A7C3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteinyl-[sulfatase] is a substrate consumed by RHEA:51152 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51153
+      snippet: L-cysteinyl-[sulfatase] + 2 a thiol + O2 => an organic disulfide + 3-oxo-L-alanyl-[sulfatase]
+        + hydrogen sulfide + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51153 declares side 51152_L as its substrates
+        (rh:substrates); the master reaction RHEA:51152 is undirected. This participant is GENERIC:12900
+        with coefficient 1. Rhea cites PMID:15657036, PMID:9342345, PMID:26403223, PMID:27862795 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[sulfatase].
+    evidence:
+    - reference: RHEA:51152
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:12900 (L-cysteinyl-[sulfatase]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a thiol is a substrate consumed by RHEA:51152 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:51153
+      snippet: L-cysteinyl-[sulfatase] + 2 a thiol + O2 => an organic disulfide + 3-oxo-L-alanyl-[sulfatase]
+        + hydrogen sulfide + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51153 declares side 51152_L as its substrates
+        (rh:substrates); the master reaction RHEA:51152 is undirected. This participant is CHEBI:29256
+        with coefficient 2. Rhea cites PMID:15657036, PMID:9342345, PMID:26403223, PMID:27862795 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:51152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51153
+      snippet: L-cysteinyl-[sulfatase] + 2 a thiol + O2 => an organic disulfide + 3-oxo-L-alanyl-[sulfatase]
+        + hydrogen sulfide + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51153 declares side 51152_L as its substrates
+        (rh:substrates); the master reaction RHEA:51152 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:15657036, PMID:9342345, PMID:26403223, PMID:27862795 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an organic disulfide is a product released by RHEA:51152 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51153
+      snippet: L-cysteinyl-[sulfatase] + 2 a thiol + O2 => an organic disulfide + 3-oxo-L-alanyl-[sulfatase]
+        + hydrogen sulfide + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51153 declares side 51152_R as its products
+        (rh:products); the master reaction RHEA:51152 is undirected. This participant is CHEBI:35489 with
+        coefficient 1. Rhea cites PMID:15657036, PMID:9342345, PMID:26403223, PMID:27862795 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 3-oxo-L-alanyl-[sulfatase] is a product released by RHEA:51152 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51153
+      snippet: L-cysteinyl-[sulfatase] + 2 a thiol + O2 => an organic disulfide + 3-oxo-L-alanyl-[sulfatase]
+        + hydrogen sulfide + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51153 declares side 51152_R as its products
+        (rh:products); the master reaction RHEA:51152 is undirected. This participant is GENERIC:12901
+        with coefficient 1. Rhea cites PMID:15657036, PMID:9342345, PMID:26403223, PMID:27862795 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-3-oxoalanine residue is the reactive part of 3-oxo-L-alanyl-[sulfatase].
+    evidence:
+    - reference: RHEA:51152
+      snippet: L-3-oxoalanine residue
+      notes: Rhea compound GENERIC:12901 (3-oxo-L-alanyl-[sulfatase]) declares rh:reactivePart = L-3-oxoalanine
+        residue (CHEBI:85621).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: hydrogen sulfide is a product released by RHEA:51152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51153
+      snippet: L-cysteinyl-[sulfatase] + 2 a thiol + O2 => an organic disulfide + 3-oxo-L-alanyl-[sulfatase]
+        + hydrogen sulfide + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51153 declares side 51152_R as its products
+        (rh:products); the master reaction RHEA:51152 is undirected. This participant is CHEBI:29919 with
+        coefficient 1. Rhea cites PMID:15657036, PMID:9342345, PMID:26403223, PMID:27862795 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H2O is a product released by RHEA:51152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51153
+      snippet: L-cysteinyl-[sulfatase] + 2 a thiol + O2 => an organic disulfide + 3-oxo-L-alanyl-[sulfatase]
+        + hydrogen sulfide + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51153 declares side 51152_R as its products
+        (rh:products); the master reaction RHEA:51152 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:15657036, PMID:9342345, PMID:26403223, PMID:27862795 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd5
+    description: H(+) is a product released by RHEA:51152 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51153
+      snippet: L-cysteinyl-[sulfatase] + 2 a thiol + O2 => an organic disulfide + 3-oxo-L-alanyl-[sulfatase]
+        + hydrogen sulfide + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51153 declares side 51152_R as its products
+        (rh:products); the master reaction RHEA:51152 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15657036, PMID:9342345, PMID:26403223, PMID:27862795 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.8.3.7
+      snippet: EC:1.8.3.7 > GO:formylglycine-generating oxidase activity ; GO:0120147
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0120147 is itself a record
+        in this KB.
+  - subject: prot_I6Y8I5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FGE_MYCTU is an exemplar enzyme with EC 1.8.3.7 activity.
+    evidence:
+    - reference: EC:1.8.3.7
+      snippet: DR   I6Y8I5, FGE_MYCTU  ;  Q9F3C7, FGE_STRCO  ;  D1A7C3, FGE_THECD  ;
+      notes: ExPASy ENZYME entry EC 1.8.3.7 cross-references UniProtKB:I6Y8I5 (FGE_MYCTU) as a protein
+        with this activity.
+  - subject: prot_Q9F3C7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FGE_STRCO is an exemplar enzyme with EC 1.8.3.7 activity.
+    evidence:
+    - reference: EC:1.8.3.7
+      snippet: DR   I6Y8I5, FGE_MYCTU  ;  Q9F3C7, FGE_STRCO  ;  D1A7C3, FGE_THECD  ;
+      notes: ExPASy ENZYME entry EC 1.8.3.7 cross-references UniProtKB:Q9F3C7 (FGE_STRCO) as a protein
+        with this activity.
+  - subject: prot_D1A7C3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FGE_THECD is an exemplar enzyme with EC 1.8.3.7 activity.
+    evidence:
+    - reference: EC:1.8.3.7
+      snippet: DR   I6Y8I5, FGE_MYCTU  ;  Q9F3C7, FGE_STRCO  ;  D1A7C3, FGE_THECD  ;
+      notes: ExPASy ENZYME entry EC 1.8.3.7 cross-references UniProtKB:D1A7C3 (FGE_THECD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

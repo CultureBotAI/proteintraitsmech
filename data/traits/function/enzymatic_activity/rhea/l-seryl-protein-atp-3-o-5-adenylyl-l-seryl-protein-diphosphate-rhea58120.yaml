@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.7.108
     mapping_source: rhea2ec
@@ -28,4 +28,155 @@ definitions:
       Catalyses the reaction: L-seryl-[protein] + ATP = 3-O-(5'-adenylyl)-L-seryl-[protein] + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-seryl-[protein] + ATP = 3-O-(5'-adenylyl)-L-seryl-[protein] + diphosphate
+  description: Substrate-to-product chemistry of RHEA:58120, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58121 (rh:substrates → 58120_L, rh:products → 58120_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-seryl-[protein] + ATP = 3-O-(5'-adenylyl)-L-seryl-[protein] + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58120
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-seryl-[protein] + ATP = 3-O-(5''-adenylyl)-L-seryl-[protein] + diphosphate'
+  - node_id: sub1
+    label: L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9863
+    description: Rhea compound GENERIC:9863.
+  - node_id: sub1_rp1
+    label: L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9863 (L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: 3-O-(5'-adenylyl)-L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15073
+    description: Rhea compound GENERIC:15073.
+  - node_id: prd1_rp1
+    label: 3-O-adenylyl-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15073 (3-O-(5'-adenylyl)-L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142516
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: AMPylase activity
+    grounding: GO:0070733
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: protein adenylyltransferase
+    grounding: EC:2.7.7.108
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-seryl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58121
+      snippet: L-seryl-[protein] + ATP => 3-O-(5'-adenylyl)-L-seryl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58121 declares side 58120_L as its substrates
+        (rh:substrates); the master reaction RHEA:58120 is undirected. This participant is GENERIC:9863
+        with coefficient 1. Rhea cites PMID:30270044 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of L-seryl-[protein].
+    evidence:
+    - reference: RHEA:58120
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:9863 (L-seryl-[protein]) declares rh:reactivePart = L-serine residue
+        (CHEBI:29999), formula C3H5NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58121
+      snippet: L-seryl-[protein] + ATP => 3-O-(5'-adenylyl)-L-seryl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58121 declares side 58120_L as its substrates
+        (rh:substrates); the master reaction RHEA:58120 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:30270044 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-O-(5'-adenylyl)-L-seryl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:58121
+      snippet: L-seryl-[protein] + ATP => 3-O-(5'-adenylyl)-L-seryl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58121 declares side 58120_R as its products
+        (rh:products); the master reaction RHEA:58120 is undirected. This participant is GENERIC:15073
+        with coefficient 1. Rhea cites PMID:30270044 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3-O-adenylyl-L-serine residue is the reactive part of 3-O-(5'-adenylyl)-L-seryl-[protein].
+    evidence:
+    - reference: RHEA:58120
+      snippet: 3-O-adenylyl-L-serine residue
+      notes: Rhea compound GENERIC:15073 (3-O-(5'-adenylyl)-L-seryl-[protein]) declares rh:reactivePart
+        = 3-O-adenylyl-L-serine residue (CHEBI:142516), formula C13H16N6O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58121
+      snippet: L-seryl-[protein] + ATP => 3-O-(5'-adenylyl)-L-seryl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58121 declares side 58120_R as its products
+        (rh:products); the master reaction RHEA:58120 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:30270044 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:58120
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0070733"/>
+      notes: The rdfs:seeAlso triple on RHEA:58120 in rhea.rdf. GO term GO:0070733 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.7.108; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:58120
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.7.108"/>
+      notes: The rh:ec triple on RHEA:58120 in rhea.rdf. EC 2.7.7.108 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

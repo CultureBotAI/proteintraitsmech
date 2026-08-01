@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 mapped_xrefs:
@@ -38,4 +38,146 @@ definitions:
       Catalyses: GTP + ATP = 2',3'-cGAMP + 2 diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclic GMP-AMP synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.86. EC 2.7.7.86 maps to exactly
+    one curated Rhea reaction (RHEA:42064), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "GTP + ATP = 2'',3''-cGAMP
+    + 2 diphosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cyclic GMP-AMP synthase
+    grounding: EC:2.7.7.86
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: 2',3'-cGAMP
+    node_type: CHEMICAL
+    grounding: CHEBI:143093
+    description: Formula C20H22N10O13P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2',3'-cyclic GMP-AMP synthase activity
+    grounding: GO:0061501
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_E1BGN7
+    node_type: PROTEIN
+    label: CGAS_BOVIN
+    grounding: UniProtKB:E1BGN7
+  - node_id: prot_Q8N884
+    node_type: PROTEIN
+    label: CGAS_HUMAN
+    grounding: UniProtKB:Q8N884
+  - node_id: prot_Q8C6L5
+    node_type: PROTEIN
+    label: CGAS_MOUSE
+    grounding: UniProtKB:Q8C6L5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: GTP is a substrate consumed by RHEA:42064 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42065
+      snippet: GTP + ATP => 2',3'-cGAMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:42065 declares side 42064_L as its substrates
+        (rh:substrates); the master reaction RHEA:42064 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:23722158, PMID:23258413, PMID:26300263 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:42064 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42065
+      snippet: GTP + ATP => 2',3'-cGAMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:42065 declares side 42064_L as its substrates
+        (rh:substrates); the master reaction RHEA:42064 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:23722158, PMID:23258413, PMID:26300263 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2',3'-cGAMP is a product released by RHEA:42064 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42065
+      snippet: GTP + ATP => 2',3'-cGAMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:42065 declares side 42064_R as its products
+        (rh:products); the master reaction RHEA:42064 is undirected. This participant is CHEBI:143093
+        with coefficient 1. Rhea cites PMID:23722158, PMID:23258413, PMID:26300263 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:42064 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:42065
+      snippet: GTP + ATP => 2',3'-cGAMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:42065 declares side 42064_R as its products
+        (rh:products); the master reaction RHEA:42064 is undirected. This participant is CHEBI:33019 with
+        coefficient 2. Rhea cites PMID:23722158, PMID:23258413, PMID:26300263 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.7.86
+      snippet: EC:2.7.7.86 > GO:2',3'-cyclic GMP-AMP synthase activity ; GO:0061501
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0061501 is itself a record
+        in this KB.
+  - subject: prot_E1BGN7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGAS_BOVIN is an exemplar enzyme with EC 2.7.7.86 activity.
+    evidence:
+    - reference: EC:2.7.7.86
+      snippet: DR   E1BGN7, CGAS_BOVIN ;  Q8N884, CGAS_HUMAN ;  Q8C6L5, CGAS_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.7.7.86 cross-references UniProtKB:E1BGN7 (CGAS_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q8N884
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGAS_HUMAN is an exemplar enzyme with EC 2.7.7.86 activity.
+    evidence:
+    - reference: EC:2.7.7.86
+      snippet: DR   E1BGN7, CGAS_BOVIN ;  Q8N884, CGAS_HUMAN ;  Q8C6L5, CGAS_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.7.7.86 cross-references UniProtKB:Q8N884 (CGAS_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q8C6L5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGAS_MOUSE is an exemplar enzyme with EC 2.7.7.86 activity.
+    evidence:
+    - reference: EC:2.7.7.86
+      snippet: DR   E1BGN7, CGAS_BOVIN ;  Q8N884, CGAS_HUMAN ;  Q8C6L5, CGAS_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.7.7.86 cross-references UniProtKB:Q8C6L5 (CGAS_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

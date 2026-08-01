@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:147292
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,78 @@ definitions:
       Catalyses the reaction: Fe(II)-hydroxyheme i = Fe(II)-heme a + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Fe(II)-hydroxyheme i = Fe(II)-heme a + H2O
+  description: Substrate-to-product chemistry of RHEA:63400, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63401 (rh:substrates → 63400_L, rh:products → 63400_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of Fe(II)-hydroxyheme i = Fe(II)-heme a + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63400
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: Fe(II)-hydroxyheme i = Fe(II)-heme a + H2O'
+  - node_id: sub1
+    label: Fe(II)-hydroxyheme i
+    node_type: CHEMICAL
+    grounding: CHEBI:147292
+    description: Formula C49H56FeN4O7.
+  - node_id: prd1
+    label: Fe(II)-heme a
+    node_type: CHEMICAL
+    grounding: CHEBI:61715
+    description: Formula C49H54FeN4O6.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(II)-hydroxyheme i is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63401
+      snippet: Fe(II)-hydroxyheme i => Fe(II)-heme a + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:63401 declares side 63400_L as its substrates
+        (rh:substrates); the master reaction RHEA:63400 is undirected. This participant is CHEBI:147292
+        with coefficient 1. Rhea cites PMID:16321940, PMID:30397130, PMID:12206660, PMID:15236569 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(II)-heme a is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63401
+      snippet: Fe(II)-hydroxyheme i => Fe(II)-heme a + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:63401 declares side 63400_R as its products
+        (rh:products); the master reaction RHEA:63400 is undirected. This participant is CHEBI:61715 with
+        coefficient 1. Rhea cites PMID:16321940, PMID:30397130, PMID:12206660, PMID:15236569 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63401
+      snippet: Fe(II)-hydroxyheme i => Fe(II)-heme a + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:63401 declares side 63400_R as its products
+        (rh:products); the master reaction RHEA:63400 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:16321940, PMID:30397130, PMID:12206660, PMID:15236569 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

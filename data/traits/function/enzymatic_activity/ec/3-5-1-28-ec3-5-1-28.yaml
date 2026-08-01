@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: Hydrolyzes the link between N-acetylmuramoyl residues and L-amino acid residues in certain cell-wall glycopeptides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acetylmuramoyl-L-alanine amidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.28. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolyzes
+    the link between N-acetylmuramoyl residues and L-amino acid residues in certain cell-wall glycopeptides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-acetylmuramoyl-L-alanine amidase
+    grounding: EC:3.5.1.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-acetylmuramoyl-L-alanine amidase activity
+    grounding: GO:0008745
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O03979
+    node_type: PROTEIN
+    label: ALYS_BPDP1
+    grounding: UniProtKB:O03979
+  - node_id: prot_P32762
+    node_type: PROTEIN
+    label: ALYS_BPHB3
+    grounding: UniProtKB:P32762
+  - node_id: prot_Q38135
+    node_type: PROTEIN
+    label: ALYS_BPR1T
+    grounding: UniProtKB:Q38135
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.28
+      snippet: EC:3.5.1.28 > GO:N-acetylmuramoyl-L-alanine amidase activity ; GO:0008745
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008745 is itself a record
+        in this KB.
+  - subject: prot_O03979
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALYS_BPDP1 is an exemplar enzyme with EC 3.5.1.28 activity.
+    evidence:
+    - reference: EC:3.5.1.28
+      snippet: DR   O03979, ALYS_BPDP1 ;  P32762, ALYS_BPHB3 ;  Q38135, ALYS_BPR1T ;
+      notes: ExPASy ENZYME entry EC 3.5.1.28 cross-references UniProtKB:O03979 (ALYS_BPDP1) as a protein
+        with this activity.
+  - subject: prot_P32762
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALYS_BPHB3 is an exemplar enzyme with EC 3.5.1.28 activity.
+    evidence:
+    - reference: EC:3.5.1.28
+      snippet: DR   O03979, ALYS_BPDP1 ;  P32762, ALYS_BPHB3 ;  Q38135, ALYS_BPR1T ;
+      notes: ExPASy ENZYME entry EC 3.5.1.28 cross-references UniProtKB:P32762 (ALYS_BPHB3) as a protein
+        with this activity.
+  - subject: prot_Q38135
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALYS_BPR1T is an exemplar enzyme with EC 3.5.1.28 activity.
+    evidence:
+    - reference: EC:3.5.1.28
+      snippet: DR   O03979, ALYS_BPDP1 ;  P32762, ALYS_BPHB3 ;  Q38135, ALYS_BPR1T ;
+      notes: ExPASy ENZYME entry EC 3.5.1.28 cross-references UniProtKB:Q38135 (ALYS_BPR1T) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.2.-
 synonyms:
@@ -26,4 +26,196 @@ definitions:
       Catalyses: S-disulfanyl-L-cysteinyl-[SoxY protein] + 6 Fe(III)-[cytochrome c] + 3 H2O = S-sulfosulfanyl-L-cysteinyl-[SoxY protein] + 6 Fe(II)-[cytochrome c] + 7 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-disulfanyl-L-cysteine oxidoreductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.2.6. EC 1.8.2.6 maps to exactly
+    one curated Rhea reaction (RHEA:16993), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "S-disulfanyl-L-cysteinyl-[SoxY
+    protein] + 6 Fe(III)-[cytochrome c] + 3 H2O = S-sulfosulfanyl-L-cysteinyl-[SoxY protein] + 6 Fe(II)-[cytochrome
+    c] + 7 H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: S-disulfanyl-L-cysteine oxidoreductase
+    grounding: EC:1.8.2.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: S-disulfanyl-L-cysteinyl-[SoxY protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14327
+    description: Rhea compound GENERIC:14327.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: an S-disulfanyl-L-cysteine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14327 (S-disulfanyl-L-cysteinyl-[SoxY
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:139319
+  - node_id: sub2
+    label: Fe(III)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14399
+    description: Rhea compound GENERIC:14399.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: Fe(3+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:14399 (Fe(III)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: S-sulfosulfanyl-L-cysteinyl-[SoxY protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14328
+    description: Rhea compound GENERIC:14328.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: an S-sulfosulfanyl-L-cysteine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14328 (S-sulfosulfanyl-L-cysteinyl-[SoxY
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:139321
+  - node_id: prd2
+    label: Fe(II)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10350
+    description: Rhea compound GENERIC:10350.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: Fe(2+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:10350 (Fe(II)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-disulfanyl-L-cysteinyl-[SoxY protein] is a substrate consumed by RHEA:16993 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16994
+      snippet: S-disulfanyl-L-cysteinyl-[SoxY protein] + 6 Fe(III)-[cytochrome c] + 3 H2O => S-sulfosulfanyl-L-cysteinyl-[SoxY
+        protein] + 6 Fe(II)-[cytochrome c] + 7 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16994 declares side 16993_L as its substrates
+        (rh:substrates); the master reaction RHEA:16993 is undirected. This participant is GENERIC:14327
+        with coefficient 1. Rhea cites PMID:15865447, PMID:28257465, PMID:11425697 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: an S-disulfanyl-L-cysteine residue is the reactive part of S-disulfanyl-L-cysteinyl-[SoxY
+      protein].
+    evidence:
+    - reference: RHEA:16993
+      snippet: an S-disulfanyl-L-cysteine residue
+      notes: Rhea compound GENERIC:14327 (S-disulfanyl-L-cysteinyl-[SoxY protein]) declares rh:reactivePart
+        = an S-disulfanyl-L-cysteine residue (CHEBI:139319).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: Fe(III)-[cytochrome c] is a substrate consumed by RHEA:16993 (stoichiometric coefficient
+      6).
+    evidence:
+    - reference: RHEA:16994
+      snippet: S-disulfanyl-L-cysteinyl-[SoxY protein] + 6 Fe(III)-[cytochrome c] + 3 H2O => S-sulfosulfanyl-L-cysteinyl-[SoxY
+        protein] + 6 Fe(II)-[cytochrome c] + 7 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16994 declares side 16993_L as its substrates
+        (rh:substrates); the master reaction RHEA:16993 is undirected. This participant is GENERIC:14399
+        with coefficient 6. Rhea cites PMID:15865447, PMID:28257465, PMID:11425697 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c].
+    evidence:
+    - reference: RHEA:16993
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:14399 (Fe(III)-[cytochrome c]) declares rh:reactivePart = Fe(3+) (CHEBI:29034).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:16993 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:16994
+      snippet: S-disulfanyl-L-cysteinyl-[SoxY protein] + 6 Fe(III)-[cytochrome c] + 3 H2O => S-sulfosulfanyl-L-cysteinyl-[SoxY
+        protein] + 6 Fe(II)-[cytochrome c] + 7 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16994 declares side 16993_L as its substrates
+        (rh:substrates); the master reaction RHEA:16993 is undirected. This participant is CHEBI:15377
+        with coefficient 3. Rhea cites PMID:15865447, PMID:28257465, PMID:11425697 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-sulfosulfanyl-L-cysteinyl-[SoxY protein] is a product released by RHEA:16993 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16994
+      snippet: S-disulfanyl-L-cysteinyl-[SoxY protein] + 6 Fe(III)-[cytochrome c] + 3 H2O => S-sulfosulfanyl-L-cysteinyl-[SoxY
+        protein] + 6 Fe(II)-[cytochrome c] + 7 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16994 declares side 16993_R as its products
+        (rh:products); the master reaction RHEA:16993 is undirected. This participant is GENERIC:14328
+        with coefficient 1. Rhea cites PMID:15865447, PMID:28257465, PMID:11425697 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: an S-sulfosulfanyl-L-cysteine residue is the reactive part of S-sulfosulfanyl-L-cysteinyl-[SoxY
+      protein].
+    evidence:
+    - reference: RHEA:16993
+      snippet: an S-sulfosulfanyl-L-cysteine residue
+      notes: Rhea compound GENERIC:14328 (S-sulfosulfanyl-L-cysteinyl-[SoxY protein]) declares rh:reactivePart
+        = an S-sulfosulfanyl-L-cysteine residue (CHEBI:139321).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Fe(II)-[cytochrome c] is a product released by RHEA:16993 (stoichiometric coefficient
+      6).
+    evidence:
+    - reference: RHEA:16994
+      snippet: S-disulfanyl-L-cysteinyl-[SoxY protein] + 6 Fe(III)-[cytochrome c] + 3 H2O => S-sulfosulfanyl-L-cysteinyl-[SoxY
+        protein] + 6 Fe(II)-[cytochrome c] + 7 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16994 declares side 16993_R as its products
+        (rh:products); the master reaction RHEA:16993 is undirected. This participant is GENERIC:10350
+        with coefficient 6. Rhea cites PMID:15865447, PMID:28257465, PMID:11425697 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome c].
+    evidence:
+    - reference: RHEA:16993
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:10350 (Fe(II)-[cytochrome c]) declares rh:reactivePart = Fe(2+) (CHEBI:29033).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:16993 (stoichiometric coefficient 7).
+    evidence:
+    - reference: RHEA:16994
+      snippet: S-disulfanyl-L-cysteinyl-[SoxY protein] + 6 Fe(III)-[cytochrome c] + 3 H2O => S-sulfosulfanyl-L-cysteinyl-[SoxY
+        protein] + 6 Fe(II)-[cytochrome c] + 7 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16994 declares side 16993_R as its products
+        (rh:products); the master reaction RHEA:16993 is undirected. This participant is CHEBI:15378 with
+        coefficient 7. Rhea cites PMID:15865447, PMID:28257465, PMID:11425697 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.4.1.26
     mapping_source: rhea2ec
@@ -30,4 +30,126 @@ definitions:
       Catalyses the reaction: 3,5,7-trioxododecanoyl-CoA = olivetolate + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3,5,7-trioxododecanoyl-CoA = olivetolate + CoA + H(+)
+  description: Substrate-to-product chemistry of RHEA:34123, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34124 (rh:substrates → 34123_L, rh:products → 34123_R), and Rhea
+    curates the reverse direction too. 1 substrate, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3,5,7-trioxododecanoyl-CoA = olivetolate + CoA + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34123
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3,5,7-trioxododecanoyl-CoA = olivetolate + CoA + H(+)'
+  - node_id: sub1
+    label: 3,5,7-trioxododecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:66957
+    description: Formula C33H48N7O20P3S.
+  - node_id: prd1
+    label: olivetolate
+    node_type: CHEMICAL
+    grounding: CHEBI:66950
+    description: Formula C12H15O4.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: olivetolic acid cyclase
+    grounding: EC:4.4.1.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_I6WU39
+    node_type: PROTEIN
+    label: OLIAC_CANSA
+    grounding: UniProtKB:I6WU39
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3,5,7-trioxododecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34124
+      snippet: 3,5,7-trioxododecanoyl-CoA => olivetolate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34124 declares side 34123_L as its substrates
+        (rh:substrates); the master reaction RHEA:34123 is undirected. This participant is CHEBI:66957
+        with coefficient 1. Rhea cites PMID:22802619, PMID:19454282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: olivetolate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34124
+      snippet: 3,5,7-trioxododecanoyl-CoA => olivetolate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34124 declares side 34123_R as its products
+        (rh:products); the master reaction RHEA:34123 is undirected. This participant is CHEBI:66950 with
+        coefficient 1. Rhea cites PMID:22802619, PMID:19454282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34124
+      snippet: 3,5,7-trioxododecanoyl-CoA => olivetolate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34124 declares side 34123_R as its products
+        (rh:products); the master reaction RHEA:34123 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:22802619, PMID:19454282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34124
+      snippet: 3,5,7-trioxododecanoyl-CoA => olivetolate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34124 declares side 34123_R as its products
+        (rh:products); the master reaction RHEA:34123 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22802619, PMID:19454282 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.4.1.26; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34123
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.26"/>
+      notes: The rh:ec triple on RHEA:34123 in rhea.rdf. EC 4.4.1.26 is itself a record in this KB.
+  - subject: prot_I6WU39
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLIAC_CANSA is an exemplar enzyme carrying EC 4.4.1.26, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.4.1.26
+      snippet: DR   I6WU39, OLIAC_CANSA;
+      notes: ExPASy ENZYME entry EC 4.4.1.26 cross-references UniProtKB:I6WU39 (OLIAC_CANSA) as a protein
+        with this activity.
+    - reference: RHEA:34123
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.26"/>
+      notes: Rhea assigns RHEA:34123 to EC 4.4.1.26, and EC 4.4.1.26 maps to exactly one Rhea master reaction
+        (RHEA:34123), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

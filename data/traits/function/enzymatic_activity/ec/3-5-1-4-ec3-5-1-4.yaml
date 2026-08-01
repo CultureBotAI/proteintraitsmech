@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -47,4 +47,325 @@ definitions:
       Catalyses: a monocarboxylic acid amide + H2O = a monocarboxylate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of amidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.4. Rhea assigns 3 curated
+    reactions to EC 3.5.1.4. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "a monocarboxylic acid amide + H2O = a monocarboxylate + NH4(+)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: amidase
+    grounding: EC:3.5.1.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a monocarboxylic acid amide + H2O = a monocarboxylate + NH4(+)
+    grounding: RHEA:12020
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a monocarboxylic acid amide + H2O = a monocarboxylate + NH4(+)'
+  - node_id: rxn1_sub1
+    label: a monocarboxylic acid amide
+    node_type: CHEMICAL
+    grounding: CHEBI:83628
+    description: Formula CH2NOR.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: a monocarboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:35757
+    description: Formula CO2R.
+  - node_id: rxn1_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of indole-3-acetamide + H2O = (indol-3-yl)acetate + NH4(+)
+    grounding: RHEA:34371
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: indole-3-acetamide + H2O = (indol-3-yl)acetate + NH4(+)'
+  - node_id: rxn2_sub1
+    label: indole-3-acetamide
+    node_type: CHEMICAL
+    grounding: CHEBI:16031
+    description: Formula C10H10N2O.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: (indol-3-yl)acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30854
+    description: Formula C10H8NO2.
+  - node_id: rxn2_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of acetamide + H2O = acetate + NH4(+)
+    grounding: RHEA:45048
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: acetamide + H2O = acetate + NH4(+)'
+  - node_id: rxn3_sub1
+    label: acetamide
+    node_type: CHEMICAL
+    grounding: CHEBI:27856
+    description: Formula C2H5NO.
+  - node_id: rxn3_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3_prd1
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: rxn3_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: amidase activity
+    grounding: GO:0004040
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_K9NBS6
+    node_type: PROTEIN
+    label: AAM_RHOER
+    grounding: UniProtKB:K9NBS6
+  - node_id: prot_P9WEP6
+    node_type: PROTEIN
+    label: AMD1_GIBM7
+    grounding: UniProtKB:P9WEP6
+  - node_id: prot_W7MTI6
+    node_type: PROTEIN
+    label: AMD2_GIBM7
+    grounding: UniProtKB:W7MTI6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:12020 is one of the 3 curated reactions Rhea assigns to EC 3.5.1.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:12020
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.4"/>
+      notes: The rh:ec triple on RHEA:12020 in rhea.rdf assigns that reaction to EC 3.5.1.4.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a monocarboxylic acid amide is a substrate consumed by RHEA:12020 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12021
+      snippet: a monocarboxylic acid amide + H2O => a monocarboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12021 declares side 12020_L as its substrates
+        (rh:substrates); the master reaction RHEA:12020 is undirected. This participant is CHEBI:83628
+        with coefficient 1. Rhea cites PMID:16748573, PMID:14800883 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:12020 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12021
+      snippet: a monocarboxylic acid amide + H2O => a monocarboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12021 declares side 12020_L as its substrates
+        (rh:substrates); the master reaction RHEA:12020 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16748573, PMID:14800883 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a monocarboxylate is a product released by RHEA:12020 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12021
+      snippet: a monocarboxylic acid amide + H2O => a monocarboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12021 declares side 12020_R as its products
+        (rh:products); the master reaction RHEA:12020 is undirected. This participant is CHEBI:35757 with
+        coefficient 1. Rhea cites PMID:16748573, PMID:14800883 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NH4(+) is a product released by RHEA:12020 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12021
+      snippet: a monocarboxylic acid amide + H2O => a monocarboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12021 declares side 12020_R as its products
+        (rh:products); the master reaction RHEA:12020 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:16748573, PMID:14800883 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:34371 is one of the 3 curated reactions Rhea assigns to EC 3.5.1.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:34371
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.4"/>
+      notes: The rh:ec triple on RHEA:34371 in rhea.rdf assigns that reaction to EC 3.5.1.4.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: indole-3-acetamide is a substrate consumed by RHEA:34371 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34372
+      snippet: indole-3-acetamide + H2O => (indol-3-yl)acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34372 declares side 34371_L as its substrates
+        (rh:substrates); the master reaction RHEA:34371 is undirected. This participant is CHEBI:16031
+        with coefficient 1. Rhea cites PMID:12620340 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:34371 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34372
+      snippet: indole-3-acetamide + H2O => (indol-3-yl)acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34372 declares side 34371_L as its substrates
+        (rh:substrates); the master reaction RHEA:34371 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12620340 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (indol-3-yl)acetate is a product released by RHEA:34371 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34372
+      snippet: indole-3-acetamide + H2O => (indol-3-yl)acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34372 declares side 34371_R as its products
+        (rh:products); the master reaction RHEA:34371 is undirected. This participant is CHEBI:30854 with
+        coefficient 1. Rhea cites PMID:12620340 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NH4(+) is a product released by RHEA:34371 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34372
+      snippet: indole-3-acetamide + H2O => (indol-3-yl)acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34372 declares side 34371_R as its products
+        (rh:products); the master reaction RHEA:34371 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:12620340 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:45048 is one of the 3 curated reactions Rhea assigns to EC 3.5.1.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:45048
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.4"/>
+      notes: The rh:ec triple on RHEA:45048 in rhea.rdf assigns that reaction to EC 3.5.1.4.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: acetamide is a substrate consumed by RHEA:45048 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45049
+      snippet: acetamide + H2O => acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45049 declares side 45048_L as its substrates
+        (rh:substrates); the master reaction RHEA:45048 is undirected. This participant is CHEBI:27856
+        with coefficient 1. Rhea cites PMID:8473863, PMID:11359566 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: H2O is a substrate consumed by RHEA:45048 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45049
+      snippet: acetamide + H2O => acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45049 declares side 45048_L as its substrates
+        (rh:substrates); the master reaction RHEA:45048 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8473863, PMID:11359566 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: acetate is a product released by RHEA:45048 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45049
+      snippet: acetamide + H2O => acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45049 declares side 45048_R as its products
+        (rh:products); the master reaction RHEA:45048 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:8473863, PMID:11359566 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: NH4(+) is a product released by RHEA:45048 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45049
+      snippet: acetamide + H2O => acetate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45049 declares side 45048_R as its products
+        (rh:products); the master reaction RHEA:45048 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:8473863, PMID:11359566 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.4
+      snippet: EC:3.5.1.4 > GO:amidase activity ; GO:0004040
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004040 is itself a record
+        in this KB.
+  - subject: prot_K9NBS6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAM_RHOER is an exemplar enzyme with EC 3.5.1.4 activity.
+    evidence:
+    - reference: EC:3.5.1.4
+      snippet: DR   K9NBS6, AAM_RHOER  ;  P9WEP6, AMD1_GIBM7 ;  W7MTI6, AMD2_GIBM7 ;
+      notes: ExPASy ENZYME entry EC 3.5.1.4 cross-references UniProtKB:K9NBS6 (AAM_RHOER) as a protein
+        with this activity.
+  - subject: prot_P9WEP6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMD1_GIBM7 is an exemplar enzyme with EC 3.5.1.4 activity.
+    evidence:
+    - reference: EC:3.5.1.4
+      snippet: DR   K9NBS6, AAM_RHOER  ;  P9WEP6, AMD1_GIBM7 ;  W7MTI6, AMD2_GIBM7 ;
+      notes: ExPASy ENZYME entry EC 3.5.1.4 cross-references UniProtKB:P9WEP6 (AMD1_GIBM7) as a protein
+        with this activity.
+  - subject: prot_W7MTI6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMD2_GIBM7 is an exemplar enzyme with EC 3.5.1.4 activity.
+    evidence:
+    - reference: EC:3.5.1.4
+      snippet: DR   K9NBS6, AAM_RHOER  ;  P9WEP6, AMD1_GIBM7 ;  W7MTI6, AMD2_GIBM7 ;
+      notes: ExPASy ENZYME entry EC 3.5.1.4 cross-references UniProtKB:W7MTI6 (AMD2_GIBM7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (19 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29108
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,145 @@ definitions:
       Catalyses the reaction: Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) = Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) = Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)
+  description: 'Substrate-to-product chemistry of RHEA:69967, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69968 (rh:substrates → 69967_L, rh:products → 69967_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) = Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69967
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) = Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)'
+  - node_id: sub1
+    label: Ca(2+) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29108
+    description: Formula Ca.
+  - node_id: sub2
+    label: K(+) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29103
+    description: Formula K.
+  - node_id: sub3
+    label: Na(+) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29101
+    description: Formula Na.
+  - node_id: prd1
+    label: Ca(2+) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29108
+    description: Formula Ca.
+  - node_id: prd2
+    label: K(+) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29103
+    description: Formula K.
+  - node_id: prd3
+    label: Na(+) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29101
+    description: Formula Na.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: calcium, potassium:sodium antiporter activity
+    grounding: GO:0008273
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Ca(2+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69968
+      snippet: Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) => Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:69968 declares side 69967_L as its substrates
+        (rh:substrates); the master reaction RHEA:69967 is undirected. This participant is CHEBI:29108
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:11342562, PMID:2537471, PMID:11352736, PMID:2502022 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: K(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69968
+      snippet: Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) => Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:69968 declares side 69967_L as its substrates
+        (rh:substrates); the master reaction RHEA:69967 is undirected. This participant is CHEBI:29103
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:11342562, PMID:2537471, PMID:11352736, PMID:2502022 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: Na(+) is a substrate consumed by this reaction (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:69968
+      snippet: Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) => Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:69968 declares side 69967_L as its substrates
+        (rh:substrates); the master reaction RHEA:69967 is undirected. This participant is CHEBI:29101
+        with coefficient 4. It is transported, and appears on the inside of the membrane. Rhea cites PMID:11342562,
+        PMID:2537471, PMID:11352736, PMID:2502022 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Ca(2+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69968
+      snippet: Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) => Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:69968 declares side 69967_R as its products
+        (rh:products); the master reaction RHEA:69967 is undirected. This participant is CHEBI:29108 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:11342562,
+        PMID:2537471, PMID:11352736, PMID:2502022 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: K(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69968
+      snippet: Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) => Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:69968 declares side 69967_R as its products
+        (rh:products); the master reaction RHEA:69967 is undirected. This participant is CHEBI:29103 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:11342562,
+        PMID:2537471, PMID:11352736, PMID:2502022 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: Na(+) is a product released by this reaction (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:69968
+      snippet: Ca(2+)(out) + K(+)(out) + 4 Na(+)(in) => Ca(2+)(in) + K(+)(in) + 4 Na(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:69968 declares side 69967_R as its products
+        (rh:products); the master reaction RHEA:69967 is undirected. This participant is CHEBI:29101 with
+        coefficient 4. It is transported, and appears on the outside of the membrane. Rhea cites PMID:11342562,
+        PMID:2537471, PMID:11352736, PMID:2502022 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:69967
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008273"/>
+      notes: The rdfs:seeAlso triple on RHEA:69967 in rhea.rdf. GO term GO:0008273 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

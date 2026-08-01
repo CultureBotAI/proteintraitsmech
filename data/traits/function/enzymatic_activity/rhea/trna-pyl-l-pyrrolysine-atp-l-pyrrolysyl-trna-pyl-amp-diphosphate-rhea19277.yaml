@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:6.1.1.26
     mapping_source: rhea2ec
@@ -38,4 +38,251 @@ definitions:
       Catalyses the reaction: tRNA(Pyl) + L-pyrrolysine + ATP = L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(Pyl) + L-pyrrolysine + ATP = L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate
+  description: Substrate-to-product chemistry of RHEA:19277, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:19278 (rh:substrates → 19277_L, rh:products → 19277_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tRNA(Pyl) + L-pyrrolysine + ATP = L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:19277
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tRNA(Pyl) + L-pyrrolysine + ATP = L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate'
+  - node_id: sub1
+    label: tRNA(Pyl)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9720
+    description: Rhea compound GENERIC:9720.
+  - node_id: sub1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9720 (tRNA(Pyl));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-pyrrolysine
+    node_type: CHEMICAL
+    grounding: CHEBI:58499
+    description: Formula C12H21N3O3.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-pyrrolysyl-tRNA(Pyl)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9721
+    description: Rhea compound GENERIC:9721.
+  - node_id: prd1_rp1
+    label: 3'-(L-pyrrolysyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9721 (L-pyrrolysyl-tRNA(Pyl));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78556
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: pyrrolysyl-tRNA synthetase activity
+    grounding: GO:0043767
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: pyrrolysine--tRNA(Pyl) ligase
+    grounding: EC:6.1.1.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8TUB8
+    node_type: PROTEIN
+    label: PYLS_METAC
+    grounding: UniProtKB:Q8TUB8
+  - node_id: prot_Q6WRH6
+    node_type: PROTEIN
+    label: PYLS_METBA
+    grounding: UniProtKB:Q6WRH6
+  - node_id: prot_Q46E77
+    node_type: PROTEIN
+    label: PYLS_METBF
+    grounding: UniProtKB:Q46E77
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Pyl) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19278
+      snippet: tRNA(Pyl) + L-pyrrolysine + ATP => L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19278 declares side 19277_L as its substrates
+        (rh:substrates); the master reaction RHEA:19277 is undirected. This participant is GENERIC:9720
+        with coefficient 1. Rhea cites PMID:5372017, PMID:15372017, PMID:15329732, PMID:15314242 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Pyl).
+    evidence:
+    - reference: RHEA:19277
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9720 (tRNA(Pyl)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-pyrrolysine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19278
+      snippet: tRNA(Pyl) + L-pyrrolysine + ATP => L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19278 declares side 19277_L as its substrates
+        (rh:substrates); the master reaction RHEA:19277 is undirected. This participant is CHEBI:58499
+        with coefficient 1. Rhea cites PMID:5372017, PMID:15372017, PMID:15329732, PMID:15314242 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19278
+      snippet: tRNA(Pyl) + L-pyrrolysine + ATP => L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19278 declares side 19277_L as its substrates
+        (rh:substrates); the master reaction RHEA:19277 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:5372017, PMID:15372017, PMID:15329732, PMID:15314242 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-pyrrolysyl-tRNA(Pyl) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19278
+      snippet: tRNA(Pyl) + L-pyrrolysine + ATP => L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19278 declares side 19277_R as its products
+        (rh:products); the master reaction RHEA:19277 is undirected. This participant is GENERIC:9721
+        with coefficient 1. Rhea cites PMID:5372017, PMID:15372017, PMID:15329732, PMID:15314242 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-pyrrolysyl)adenylyl group is the reactive part of L-pyrrolysyl-tRNA(Pyl).
+    evidence:
+    - reference: RHEA:19277
+      snippet: 3'-(L-pyrrolysyl)adenylyl group
+      notes: Rhea compound GENERIC:9721 (L-pyrrolysyl-tRNA(Pyl)) declares rh:reactivePart = 3'-(L-pyrrolysyl)adenylyl
+        group (CHEBI:78556), formula C22H32N8O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19278
+      snippet: tRNA(Pyl) + L-pyrrolysine + ATP => L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19278 declares side 19277_R as its products
+        (rh:products); the master reaction RHEA:19277 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:5372017, PMID:15372017, PMID:15329732, PMID:15314242 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19278
+      snippet: tRNA(Pyl) + L-pyrrolysine + ATP => L-pyrrolysyl-tRNA(Pyl) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19278 declares side 19277_R as its products
+        (rh:products); the master reaction RHEA:19277 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:5372017, PMID:15372017, PMID:15329732, PMID:15314242 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:19277
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0043767"/>
+      notes: The rdfs:seeAlso triple on RHEA:19277 in rhea.rdf. GO term GO:0043767 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 6.1.1.26; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:19277
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.26"/>
+      notes: The rh:ec triple on RHEA:19277 in rhea.rdf. EC 6.1.1.26 is itself a record in this KB.
+  - subject: prot_Q8TUB8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYLS_METAC is an exemplar enzyme carrying EC 6.1.1.26, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.26
+      snippet: DR   Q8TUB8, PYLS_METAC ;  Q6WRH6, PYLS_METBA ;  Q46E77, PYLS_METBF ;
+      notes: ExPASy ENZYME entry EC 6.1.1.26 cross-references UniProtKB:Q8TUB8 (PYLS_METAC) as a protein
+        with this activity.
+    - reference: RHEA:19277
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.26"/>
+      notes: Rhea assigns RHEA:19277 to EC 6.1.1.26, and EC 6.1.1.26 maps to exactly one Rhea master reaction
+        (RHEA:19277), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q6WRH6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYLS_METBA is an exemplar enzyme carrying EC 6.1.1.26, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.26
+      snippet: DR   Q8TUB8, PYLS_METAC ;  Q6WRH6, PYLS_METBA ;  Q46E77, PYLS_METBF ;
+      notes: ExPASy ENZYME entry EC 6.1.1.26 cross-references UniProtKB:Q6WRH6 (PYLS_METBA) as a protein
+        with this activity.
+    - reference: RHEA:19277
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.26"/>
+      notes: Rhea assigns RHEA:19277 to EC 6.1.1.26, and EC 6.1.1.26 maps to exactly one Rhea master reaction
+        (RHEA:19277), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q46E77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYLS_METBF is an exemplar enzyme carrying EC 6.1.1.26, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.26
+      snippet: DR   Q8TUB8, PYLS_METAC ;  Q6WRH6, PYLS_METBA ;  Q46E77, PYLS_METBF ;
+      notes: ExPASy ENZYME entry EC 6.1.1.26 cross-references UniProtKB:Q46E77 (PYLS_METBF) as a protein
+        with this activity.
+    - reference: RHEA:19277
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.26"/>
+      notes: Rhea assigns RHEA:19277 to EC 6.1.1.26, and EC 6.1.1.26 maps to exactly one Rhea master reaction
+        (RHEA:19277), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

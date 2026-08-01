@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -45,4 +45,134 @@ definitions:
       Catalyses: 3-hydroxyanthranilate + O2 = (2Z,4Z)-2-amino-3-carboxymuconate 6-semialdehyde
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hydroxyanthranilate 3,4-dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.6. EC 1.13.11.6 maps to
+    exactly one curated Rhea reaction (RHEA:17953), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-hydroxyanthranilate
+    + O2 = (2Z,4Z)-2-amino-3-carboxymuconate 6-semialdehyde". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-hydroxyanthranilate 3,4-dioxygenase
+    grounding: EC:1.13.11.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-hydroxyanthranilate
+    node_type: CHEMICAL
+    grounding: CHEBI:36559
+    description: Formula C7H6NO3.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (2Z,4Z)-2-amino-3-carboxymuconate 6-semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:77612
+    description: Formula C7H6NO5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3-hydroxyanthranilate 3,4-dioxygenase activity
+    grounding: GO:0000334
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A1C408
+    node_type: PROTEIN
+    label: 3HAO1_ASPCL
+    grounding: UniProtKB:A1C408
+  - node_id: prot_B0Y9Z9
+    node_type: PROTEIN
+    label: 3HAO1_ASPFC
+    grounding: UniProtKB:B0Y9Z9
+  - node_id: prot_Q4WCF1
+    node_type: PROTEIN
+    label: 3HAO1_ASPFU
+    grounding: UniProtKB:Q4WCF1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxyanthranilate is a substrate consumed by RHEA:17953 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17954
+      snippet: 3-hydroxyanthranilate + O2 => (2Z,4Z)-2-amino-3-carboxymuconate 6-semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:17954 declares side 17953_L as its substrates
+        (rh:substrates); the master reaction RHEA:17953 is undirected. This participant is CHEBI:36559
+        with coefficient 1. Rhea cites PMID:16522801, PMID:15909978, PMID:32732435, PMID:9539135 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:17953 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17954
+      snippet: 3-hydroxyanthranilate + O2 => (2Z,4Z)-2-amino-3-carboxymuconate 6-semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:17954 declares side 17953_L as its substrates
+        (rh:substrates); the master reaction RHEA:17953 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:16522801, PMID:15909978, PMID:32732435, PMID:9539135 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2Z,4Z)-2-amino-3-carboxymuconate 6-semialdehyde is a product released by RHEA:17953
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17954
+      snippet: 3-hydroxyanthranilate + O2 => (2Z,4Z)-2-amino-3-carboxymuconate 6-semialdehyde
+      notes: Rhea's left-to-right directional reaction RHEA:17954 declares side 17953_R as its products
+        (rh:products); the master reaction RHEA:17953 is undirected. This participant is CHEBI:77612 with
+        coefficient 1. Rhea cites PMID:16522801, PMID:15909978, PMID:32732435, PMID:9539135 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.6
+      snippet: EC:1.13.11.6 > GO:3-hydroxyanthranilate 3,4-dioxygenase activity ; GO:0000334
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0000334 is itself a record
+        in this KB.
+  - subject: prot_A1C408
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3HAO1_ASPCL is an exemplar enzyme with EC 1.13.11.6 activity.
+    evidence:
+    - reference: EC:1.13.11.6
+      snippet: DR   A1C408, 3HAO1_ASPCL;  B0Y9Z9, 3HAO1_ASPFC;  Q4WCF1, 3HAO1_ASPFU;
+      notes: ExPASy ENZYME entry EC 1.13.11.6 cross-references UniProtKB:A1C408 (3HAO1_ASPCL) as a protein
+        with this activity.
+  - subject: prot_B0Y9Z9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3HAO1_ASPFC is an exemplar enzyme with EC 1.13.11.6 activity.
+    evidence:
+    - reference: EC:1.13.11.6
+      snippet: DR   A1C408, 3HAO1_ASPCL;  B0Y9Z9, 3HAO1_ASPFC;  Q4WCF1, 3HAO1_ASPFU;
+      notes: ExPASy ENZYME entry EC 1.13.11.6 cross-references UniProtKB:B0Y9Z9 (3HAO1_ASPFC) as a protein
+        with this activity.
+  - subject: prot_Q4WCF1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3HAO1_ASPFU is an exemplar enzyme with EC 1.13.11.6 activity.
+    evidence:
+    - reference: EC:1.13.11.6
+      snippet: DR   A1C408, 3HAO1_ASPCL;  B0Y9Z9, 3HAO1_ASPFC;  Q4WCF1, 3HAO1_ASPFU;
+      notes: ExPASy ENZYME entry EC 1.13.11.6 cross-references UniProtKB:Q4WCF1 (3HAO1_ASPFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

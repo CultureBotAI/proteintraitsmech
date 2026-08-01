@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.1.1.50
     mapping_source: rhea2ec
@@ -36,4 +36,168 @@ definitions:
       Catalyses the reaction: a 3alpha-hydroxysteroid + NAD(+) = a 3-oxosteroid + NADH + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 3alpha-hydroxysteroid + NAD(+) = a 3-oxosteroid + NADH + H(+)
+  description: Substrate-to-product chemistry of RHEA:34779, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34780 (rh:substrates → 34779_L, rh:products → 34779_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 3alpha-hydroxysteroid + NAD(+) = a 3-oxosteroid + NADH + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34779
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 3alpha-hydroxysteroid + NAD(+) = a 3-oxosteroid + NADH + H(+)'
+  - node_id: sub1
+    label: a 3alpha-hydroxysteroid
+    node_type: CHEMICAL
+    grounding: CHEBI:36835
+    description: Formula C19H31OR.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: a 3-oxosteroid
+    node_type: CHEMICAL
+    grounding: CHEBI:47788
+    description: Formula C19H29OR.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3-alpha-hydroxysteroid 3-dehydrogenase [NAD(P)+] activity
+    grounding: GO:0140169
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 3alpha-hydroxysteroid dehydrogenase (Re-specific)
+    grounding: EC:1.1.1.213
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec2
+    node_type: MOLECULAR_FUNCTION
+    label: 3alpha-hydroxysteroid 3-dehydrogenase
+    grounding: EC:1.1.1.357
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec3
+    node_type: MOLECULAR_FUNCTION
+    label: 3alpha-hydroxysteroid 3-dehydrogenase (Si-specific)
+    grounding: EC:1.1.1.50
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3alpha-hydroxysteroid is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34780
+      snippet: a 3alpha-hydroxysteroid + NAD(+) => a 3-oxosteroid + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34780 declares side 34779_L as its substrates
+        (rh:substrates); the master reaction RHEA:34779 is undirected. This participant is CHEBI:36835
+        with coefficient 1. Rhea cites PMID:11165022, PMID:9415401 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34780
+      snippet: a 3alpha-hydroxysteroid + NAD(+) => a 3-oxosteroid + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34780 declares side 34779_L as its substrates
+        (rh:substrates); the master reaction RHEA:34779 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:11165022, PMID:9415401 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3-oxosteroid is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34780
+      snippet: a 3alpha-hydroxysteroid + NAD(+) => a 3-oxosteroid + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34780 declares side 34779_R as its products
+        (rh:products); the master reaction RHEA:34779 is undirected. This participant is CHEBI:47788 with
+        coefficient 1. Rhea cites PMID:11165022, PMID:9415401 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34780
+      snippet: a 3alpha-hydroxysteroid + NAD(+) => a 3-oxosteroid + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34780 declares side 34779_R as its products
+        (rh:products); the master reaction RHEA:34779 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:11165022, PMID:9415401 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34780
+      snippet: a 3alpha-hydroxysteroid + NAD(+) => a 3-oxosteroid + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34780 declares side 34779_R as its products
+        (rh:products); the master reaction RHEA:34779 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11165022, PMID:9415401 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:34779
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0140169"/>
+      notes: The rdfs:seeAlso triple on RHEA:34779 in rhea.rdf. GO term GO:0140169 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.1.1.213; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34779
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.213"/>
+      notes: The rh:ec triple on RHEA:34779 in rhea.rdf. EC 1.1.1.213 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec2
+    description: Rhea assigns this reaction to EC 1.1.1.357; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34779
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.357"/>
+      notes: The rh:ec triple on RHEA:34779 in rhea.rdf. EC 1.1.1.357 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec3
+    description: Rhea assigns this reaction to EC 1.1.1.50; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34779
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.50"/>
+      notes: The rh:ec triple on RHEA:34779 in rhea.rdf. EC 1.1.1.50 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

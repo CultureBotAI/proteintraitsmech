@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:90602
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,141 @@ definitions:
       Catalyses the reaction: [protein-PII]-uridylyl-L-tyrosine + H2O = [protein-PII]-L-tyrosine + UMP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [protein-PII]-uridylyl-L-tyrosine + H2O = [protein-PII]-L-tyrosine + UMP
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:48600, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48601 (rh:substrates → 48600_L, rh:products → 48600_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [protein-PII]-uridylyl-L-tyrosine + H2O = [protein-PII]-L-tyrosine + UMP + H…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48600
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [protein-PII]-uridylyl-L-tyrosine + H2O = [protein-PII]-L-tyrosine + UMP + H(+)'
+  - node_id: sub1
+    label: '[protein-PII]-uridylyl-L-tyrosine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12148
+    description: Rhea compound GENERIC:12148.
+  - node_id: sub1_rp1
+    label: uridylyl-L-tyrosine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12148 ([protein-PII]-uridylyl-L-tyrosine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90602
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: '[protein-PII]-L-tyrosine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12147
+    description: Rhea compound GENERIC:12147.
+  - node_id: prd1_rp1
+    label: L-tyrosine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12147 ([protein-PII]-L-tyrosine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:46858
+  - node_id: prd2
+    label: UMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57865
+    description: Formula C9H11N2O9P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[protein-PII]-uridylyl-L-tyrosine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:48601
+      snippet: '[protein-PII]-uridylyl-L-tyrosine + H2O => [protein-PII]-L-tyrosine + UMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:48601 declares side 48600_L as its substrates
+        (rh:substrates); the master reaction RHEA:48600 is undirected. This participant is GENERIC:12148
+        with coefficient 1. Rhea cites PMID:18392451 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: uridylyl-L-tyrosine residue is the reactive part of [protein-PII]-uridylyl-L-tyrosine.
+    evidence:
+    - reference: RHEA:48600
+      snippet: uridylyl-L-tyrosine residue
+      notes: Rhea compound GENERIC:12148 ([protein-PII]-uridylyl-L-tyrosine) declares rh:reactivePart
+        = uridylyl-L-tyrosine residue (CHEBI:90602), formula C18H19N3O10P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48601
+      snippet: '[protein-PII]-uridylyl-L-tyrosine + H2O => [protein-PII]-L-tyrosine + UMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:48601 declares side 48600_L as its substrates
+        (rh:substrates); the master reaction RHEA:48600 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18392451 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[protein-PII]-L-tyrosine is a product released by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:48601
+      snippet: '[protein-PII]-uridylyl-L-tyrosine + H2O => [protein-PII]-L-tyrosine + UMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:48601 declares side 48600_R as its products
+        (rh:products); the master reaction RHEA:48600 is undirected. This participant is GENERIC:12147
+        with coefficient 1. Rhea cites PMID:18392451 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-tyrosine residue is the reactive part of [protein-PII]-L-tyrosine.
+    evidence:
+    - reference: RHEA:48600
+      snippet: L-tyrosine residue
+      notes: Rhea compound GENERIC:12147 ([protein-PII]-L-tyrosine) declares rh:reactivePart = L-tyrosine
+        residue (CHEBI:46858), formula C9H9NO2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48601
+      snippet: '[protein-PII]-uridylyl-L-tyrosine + H2O => [protein-PII]-L-tyrosine + UMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:48601 declares side 48600_R as its products
+        (rh:products); the master reaction RHEA:48600 is undirected. This participant is CHEBI:57865 with
+        coefficient 1. Rhea cites PMID:18392451 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48601
+      snippet: '[protein-PII]-uridylyl-L-tyrosine + H2O => [protein-PII]-L-tyrosine + UMP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:48601 declares side 48600_R as its products
+        (rh:products); the master reaction RHEA:48600 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18392451 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:6.1.1.9
     mapping_source: rhea2ec
@@ -38,4 +38,251 @@ definitions:
       Catalyses the reaction: tRNA(Val) + L-valine + ATP = L-valyl-tRNA(Val) + AMP + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(Val) + L-valine + ATP = L-valyl-tRNA(Val) + AMP + diphosphate
+  description: Substrate-to-product chemistry of RHEA:10704, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10705 (rh:substrates → 10704_L, rh:products → 10704_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tRNA(Val) + L-valine + ATP = L-valyl-tRNA(Val) + AMP + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10704
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tRNA(Val) + L-valine + ATP = L-valyl-tRNA(Val) + AMP + diphosphate'
+  - node_id: sub1
+    label: tRNA(Val)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9672
+    description: Rhea compound GENERIC:9672.
+  - node_id: sub1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9672 (tRNA(Val));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-valine
+    node_type: CHEMICAL
+    grounding: CHEBI:57762
+    description: Formula C5H11NO2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-valyl-tRNA(Val)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9708
+    description: Rhea compound GENERIC:9708.
+  - node_id: prd1_rp1
+    label: 3'-(L-valyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9708 (L-valyl-tRNA(Val));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78537
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: valine-tRNA ligase activity
+    grounding: GO:0004832
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: valine--tRNA ligase
+    grounding: EC:6.1.1.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q86KU2
+    node_type: PROTEIN
+    label: SYVC_DICDI
+    grounding: UniProtKB:Q86KU2
+  - node_id: prot_Q8SS27
+    node_type: PROTEIN
+    label: SYVC_ENCCU
+    grounding: UniProtKB:Q8SS27
+  - node_id: prot_P26640
+    node_type: PROTEIN
+    label: SYVC_HUMAN
+    grounding: UniProtKB:P26640
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Val) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10705
+      snippet: tRNA(Val) + L-valine + ATP => L-valyl-tRNA(Val) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10705 declares side 10704_L as its substrates
+        (rh:substrates); the master reaction RHEA:10704 is undirected. This participant is GENERIC:9672
+        with coefficient 1. Rhea cites PMID:165186, PMID:7647112, PMID:166643, PMID:10966471 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Val).
+    evidence:
+    - reference: RHEA:10704
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9672 (tRNA(Val)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-valine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10705
+      snippet: tRNA(Val) + L-valine + ATP => L-valyl-tRNA(Val) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10705 declares side 10704_L as its substrates
+        (rh:substrates); the master reaction RHEA:10704 is undirected. This participant is CHEBI:57762
+        with coefficient 1. Rhea cites PMID:165186, PMID:7647112, PMID:166643, PMID:10966471 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10705
+      snippet: tRNA(Val) + L-valine + ATP => L-valyl-tRNA(Val) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10705 declares side 10704_L as its substrates
+        (rh:substrates); the master reaction RHEA:10704 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:165186, PMID:7647112, PMID:166643, PMID:10966471 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-valyl-tRNA(Val) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10705
+      snippet: tRNA(Val) + L-valine + ATP => L-valyl-tRNA(Val) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10705 declares side 10704_R as its products
+        (rh:products); the master reaction RHEA:10704 is undirected. This participant is GENERIC:9708
+        with coefficient 1. Rhea cites PMID:165186, PMID:7647112, PMID:166643, PMID:10966471 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-valyl)adenylyl group is the reactive part of L-valyl-tRNA(Val).
+    evidence:
+    - reference: RHEA:10704
+      snippet: 3'-(L-valyl)adenylyl group
+      notes: Rhea compound GENERIC:9708 (L-valyl-tRNA(Val)) declares rh:reactivePart = 3'-(L-valyl)adenylyl
+        group (CHEBI:78537), formula C15H22N6O7P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10705
+      snippet: tRNA(Val) + L-valine + ATP => L-valyl-tRNA(Val) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10705 declares side 10704_R as its products
+        (rh:products); the master reaction RHEA:10704 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:165186, PMID:7647112, PMID:166643, PMID:10966471 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10705
+      snippet: tRNA(Val) + L-valine + ATP => L-valyl-tRNA(Val) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10705 declares side 10704_R as its products
+        (rh:products); the master reaction RHEA:10704 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:165186, PMID:7647112, PMID:166643, PMID:10966471 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10704
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004832"/>
+      notes: The rdfs:seeAlso triple on RHEA:10704 in rhea.rdf. GO term GO:0004832 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 6.1.1.9; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10704
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.9"/>
+      notes: The rh:ec triple on RHEA:10704 in rhea.rdf. EC 6.1.1.9 is itself a record in this KB.
+  - subject: prot_Q86KU2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYVC_DICDI is an exemplar enzyme carrying EC 6.1.1.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.9
+      snippet: DR   Q86KU2, SYVC_DICDI ;  Q8SS27, SYVC_ENCCU ;  P26640, SYVC_HUMAN ;
+      notes: ExPASy ENZYME entry EC 6.1.1.9 cross-references UniProtKB:Q86KU2 (SYVC_DICDI) as a protein
+        with this activity.
+    - reference: RHEA:10704
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.9"/>
+      notes: Rhea assigns RHEA:10704 to EC 6.1.1.9, and EC 6.1.1.9 maps to exactly one Rhea master reaction
+        (RHEA:10704), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q8SS27
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYVC_ENCCU is an exemplar enzyme carrying EC 6.1.1.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.9
+      snippet: DR   Q86KU2, SYVC_DICDI ;  Q8SS27, SYVC_ENCCU ;  P26640, SYVC_HUMAN ;
+      notes: ExPASy ENZYME entry EC 6.1.1.9 cross-references UniProtKB:Q8SS27 (SYVC_ENCCU) as a protein
+        with this activity.
+    - reference: RHEA:10704
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.9"/>
+      notes: Rhea assigns RHEA:10704 to EC 6.1.1.9, and EC 6.1.1.9 maps to exactly one Rhea master reaction
+        (RHEA:10704), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P26640
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYVC_HUMAN is an exemplar enzyme carrying EC 6.1.1.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.9
+      snippet: DR   Q86KU2, SYVC_DICDI ;  Q8SS27, SYVC_ENCCU ;  P26640, SYVC_HUMAN ;
+      notes: ExPASy ENZYME entry EC 6.1.1.9 cross-references UniProtKB:P26640 (SYVC_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:10704
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.9"/>
+      notes: Rhea assigns RHEA:10704 to EC 6.1.1.9, and EC 6.1.1.9 maps to exactly one Rhea master reaction
+        (RHEA:10704), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

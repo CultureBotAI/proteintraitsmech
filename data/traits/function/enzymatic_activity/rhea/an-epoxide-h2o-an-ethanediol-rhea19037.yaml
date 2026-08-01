@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.3.2.10
     mapping_source: rhea2ec
@@ -44,4 +44,168 @@ definitions:
       Catalyses the reaction: an epoxide + H2O = an ethanediol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an epoxide + H2O = an ethanediol
+  description: Substrate-to-product chemistry of RHEA:19037, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:19038 (rh:substrates → 19037_L, rh:products → 19037_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an epoxide + H2O = an ethanediol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:19037
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an epoxide + H2O = an ethanediol'
+  - node_id: sub1
+    label: an epoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:32955
+    description: Formula C2OR4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an ethanediol
+    node_type: CHEMICAL
+    grounding: CHEBI:140594
+    description: Formula C2H2O2R4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: epoxide hydrolase activity
+    grounding: GO:0004301
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: soluble epoxide hydrolase
+    grounding: EC:3.3.2.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_G5EBI4
+    node_type: PROTEIN
+    label: CEEH1_CAEEL
+    grounding: UniProtKB:G5EBI4
+  - node_id: prot_G5EDL5
+    node_type: PROTEIN
+    label: CEEH2_CAEEL
+    grounding: UniProtKB:G5EDL5
+  - node_id: prot_P0DY66
+    node_type: PROTEIN
+    label: CIF_ACIX2
+    grounding: UniProtKB:P0DY66
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an epoxide is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19038
+      snippet: an epoxide + H2O => an ethanediol
+      notes: Rhea's left-to-right directional reaction RHEA:19038 declares side 19037_L as its substrates
+        (rh:substrates); the master reaction RHEA:19037 is undirected. This participant is CHEBI:32955
+        with coefficient 1. Rhea cites PMID:11090543, PMID:12574510, PMID:11154734, PMID:7840649 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19038
+      snippet: an epoxide + H2O => an ethanediol
+      notes: Rhea's left-to-right directional reaction RHEA:19038 declares side 19037_L as its substrates
+        (rh:substrates); the master reaction RHEA:19037 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11090543, PMID:12574510, PMID:11154734, PMID:7840649 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an ethanediol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19038
+      snippet: an epoxide + H2O => an ethanediol
+      notes: Rhea's left-to-right directional reaction RHEA:19038 declares side 19037_R as its products
+        (rh:products); the master reaction RHEA:19037 is undirected. This participant is CHEBI:140594
+        with coefficient 1. Rhea cites PMID:11090543, PMID:12574510, PMID:11154734, PMID:7840649 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:19037
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004301"/>
+      notes: The rdfs:seeAlso triple on RHEA:19037 in rhea.rdf. GO term GO:0004301 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.3.2.10; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:19037
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.3.2.10"/>
+      notes: The rh:ec triple on RHEA:19037 in rhea.rdf. EC 3.3.2.10 is itself a record in this KB.
+  - subject: prot_G5EBI4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEEH1_CAEEL is an exemplar enzyme carrying EC 3.3.2.10, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.3.2.10
+      snippet: DR   G5EBI4, CEEH1_CAEEL;  G5EDL5, CEEH2_CAEEL;  P0DY66, CIF_ACIX2  ;
+      notes: ExPASy ENZYME entry EC 3.3.2.10 cross-references UniProtKB:G5EBI4 (CEEH1_CAEEL) as a protein
+        with this activity.
+    - reference: RHEA:19037
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.3.2.10"/>
+      notes: Rhea assigns RHEA:19037 to EC 3.3.2.10, and EC 3.3.2.10 maps to exactly one Rhea master reaction
+        (RHEA:19037), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_G5EDL5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEEH2_CAEEL is an exemplar enzyme carrying EC 3.3.2.10, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.3.2.10
+      snippet: DR   G5EBI4, CEEH1_CAEEL;  G5EDL5, CEEH2_CAEEL;  P0DY66, CIF_ACIX2  ;
+      notes: ExPASy ENZYME entry EC 3.3.2.10 cross-references UniProtKB:G5EDL5 (CEEH2_CAEEL) as a protein
+        with this activity.
+    - reference: RHEA:19037
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.3.2.10"/>
+      notes: Rhea assigns RHEA:19037 to EC 3.3.2.10, and EC 3.3.2.10 maps to exactly one Rhea master reaction
+        (RHEA:19037), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P0DY66
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CIF_ACIX2 is an exemplar enzyme carrying EC 3.3.2.10, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.3.2.10
+      snippet: DR   G5EBI4, CEEH1_CAEEL;  G5EDL5, CEEH2_CAEEL;  P0DY66, CIF_ACIX2  ;
+      notes: ExPASy ENZYME entry EC 3.3.2.10 cross-references UniProtKB:P0DY66 (CIF_ACIX2) as a protein
+        with this activity.
+    - reference: RHEA:19037
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.3.2.10"/>
+      notes: Rhea assigns RHEA:19037 to EC 3.3.2.10, and EC 3.3.2.10 maps to exactly one Rhea master reaction
+        (RHEA:19037), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

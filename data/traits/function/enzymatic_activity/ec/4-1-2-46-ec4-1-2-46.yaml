@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -35,4 +35,103 @@ definitions:
       Catalyses: (2R)-2-hydroxy-2-methylbutanenitrile = butan-2-one + hydrogen cyanide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aliphatic (R)-hydroxynitrile lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.46. EC 4.1.2.46 maps to exactly
+    one curated Rhea reaction (RHEA:28170), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2R)-2-hydroxy-2-methylbutanenitrile
+    = butan-2-one + hydrogen cyanide". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aliphatic (R)-hydroxynitrile lyase
+    grounding: EC:4.1.2.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2R)-2-hydroxy-2-methylbutanenitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:60908
+    description: Formula C5H9NO.
+  - node_id: prd1
+    label: butan-2-one
+    node_type: CHEMICAL
+    grounding: CHEBI:28398
+    description: Formula C4H8O.
+  - node_id: prd2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aliphatic (R)-hydroxynitrile lyase activity
+    grounding: GO:0052919
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P93243
+    node_type: PROTEIN
+    label: AHNL_LINUS
+    grounding: UniProtKB:P93243
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2R)-2-hydroxy-2-methylbutanenitrile is a substrate consumed by RHEA:28170 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:28171
+      snippet: (2R)-2-hydroxy-2-methylbutanenitrile => butan-2-one + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:28171 declares side 28170_L as its substrates
+        (rh:substrates); the master reaction RHEA:28170 is undirected. This participant is CHEBI:60908
+        with coefficient 1. Rhea cites PMID:3377504, PMID:9030531 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: butan-2-one is a product released by RHEA:28170 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28171
+      snippet: (2R)-2-hydroxy-2-methylbutanenitrile => butan-2-one + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:28171 declares side 28170_R as its products
+        (rh:products); the master reaction RHEA:28170 is undirected. This participant is CHEBI:28398 with
+        coefficient 1. Rhea cites PMID:3377504, PMID:9030531 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hydrogen cyanide is a product released by RHEA:28170 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28171
+      snippet: (2R)-2-hydroxy-2-methylbutanenitrile => butan-2-one + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:28171 declares side 28170_R as its products
+        (rh:products); the master reaction RHEA:28170 is undirected. This participant is CHEBI:18407 with
+        coefficient 1. Rhea cites PMID:3377504, PMID:9030531 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.2.46
+      snippet: EC:4.1.2.46 > GO:aliphatic (R)-hydroxynitrile lyase activity ; GO:0052919
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0052919 is itself a record
+        in this KB.
+  - subject: prot_P93243
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHNL_LINUS is an exemplar enzyme with EC 4.1.2.46 activity.
+    evidence:
+    - reference: EC:4.1.2.46
+      snippet: DR   P93243, AHNL_LINUS ;
+      notes: ExPASy ENZYME entry EC 4.1.2.46 cross-references UniProtKB:P93243 (AHNL_LINUS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

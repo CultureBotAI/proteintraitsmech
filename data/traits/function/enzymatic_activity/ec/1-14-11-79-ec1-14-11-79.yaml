@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.11.-
 synonyms:
@@ -41,4 +41,219 @@ definitions:
       Catalyses: L-histidyl-[protein] + 2-oxoglutarate + O2 = (3S)-3-hydroxy-L-histidyl- [protein] + succinate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-L-histidine (3S)-3-hydroxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.11.79. EC 1.14.11.79 maps to
+    exactly one curated Rhea reaction (RHEA:54256), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-histidyl-[protein]
+    + 2-oxoglutarate + O2 = (3S)-3-hydroxy-L-histidyl- [protein] + succinate + CO2". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-L-histidine (3S)-3-hydroxylase
+    grounding: EC:1.14.11.79
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (3S)-3-hydroxy-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13840
+    description: Rhea compound GENERIC:13840.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: (3S)-3-hydroxy-L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13840 ((3S)-3-hydroxy-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138021
+  - node_id: prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: prd3
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-histidine dioxygenase activity
+    grounding: GO:0036139
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A5PK74
+    node_type: PROTEIN
+    label: RIOX1_BOVIN
+    grounding: UniProtKB:A5PK74
+  - node_id: prot_Q5ZMM1
+    node_type: PROTEIN
+    label: RIOX1_CHICK
+    grounding: UniProtKB:Q5ZMM1
+  - node_id: prot_A3KP59
+    node_type: PROTEIN
+    label: RIOX1_DANRE
+    grounding: UniProtKB:A3KP59
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-histidyl-[protein] is a substrate consumed by RHEA:54256 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54257
+      snippet: L-histidyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-histidyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:54257 declares side 54256_L as its substrates
+        (rh:substrates); the master reaction RHEA:54256 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:23103944, PMID:19927124 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:54256
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:54256 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54257
+      snippet: L-histidyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-histidyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:54257 declares side 54256_L as its substrates
+        (rh:substrates); the master reaction RHEA:54256 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:23103944, PMID:19927124 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:54256 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54257
+      snippet: L-histidyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-histidyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:54257 declares side 54256_L as its substrates
+        (rh:substrates); the master reaction RHEA:54256 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:23103944, PMID:19927124 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3S)-3-hydroxy-L-histidyl-[protein] is a product released by RHEA:54256 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54257
+      snippet: L-histidyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-histidyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:54257 declares side 54256_R as its products
+        (rh:products); the master reaction RHEA:54256 is undirected. This participant is GENERIC:13840
+        with coefficient 1. Rhea cites PMID:23103944, PMID:19927124 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: (3S)-3-hydroxy-L-histidine residue is the reactive part of (3S)-3-hydroxy-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:54256
+      snippet: (3S)-3-hydroxy-L-histidine residue
+      notes: Rhea compound GENERIC:13840 ((3S)-3-hydroxy-L-histidyl-[protein]) declares rh:reactivePart
+        = (3S)-3-hydroxy-L-histidine residue (CHEBI:138021).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinate is a product released by RHEA:54256 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54257
+      snippet: L-histidyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-histidyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:54257 declares side 54256_R as its products
+        (rh:products); the master reaction RHEA:54256 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:23103944, PMID:19927124 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CO2 is a product released by RHEA:54256 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54257
+      snippet: L-histidyl-[protein] + 2-oxoglutarate + O2 => (3S)-3-hydroxy-L-histidyl-[protein] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:54257 declares side 54256_R as its products
+        (rh:products); the master reaction RHEA:54256 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:23103944, PMID:19927124 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.14.11.79
+      snippet: EC:1.14.11.79 > GO:peptidyl-histidine dioxygenase activity ; GO:0036139
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0036139 is itself a record
+        in this KB.
+  - subject: prot_A5PK74
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIOX1_BOVIN is an exemplar enzyme with EC 1.14.11.79 activity.
+    evidence:
+    - reference: EC:1.14.11.79
+      snippet: DR   A5PK74, RIOX1_BOVIN;  Q5ZMM1, RIOX1_CHICK;  A3KP59, RIOX1_DANRE;
+      notes: ExPASy ENZYME entry EC 1.14.11.79 cross-references UniProtKB:A5PK74 (RIOX1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q5ZMM1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIOX1_CHICK is an exemplar enzyme with EC 1.14.11.79 activity.
+    evidence:
+    - reference: EC:1.14.11.79
+      snippet: DR   A5PK74, RIOX1_BOVIN;  Q5ZMM1, RIOX1_CHICK;  A3KP59, RIOX1_DANRE;
+      notes: ExPASy ENZYME entry EC 1.14.11.79 cross-references UniProtKB:Q5ZMM1 (RIOX1_CHICK) as a protein
+        with this activity.
+  - subject: prot_A3KP59
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIOX1_DANRE is an exemplar enzyme with EC 1.14.11.79 activity.
+    evidence:
+    - reference: EC:1.14.11.79
+      snippet: DR   A5PK74, RIOX1_BOVIN;  Q5ZMM1, RIOX1_CHICK;  A3KP59, RIOX1_DANRE;
+      notes: ExPASy ENZYME entry EC 1.14.11.79 cross-references UniProtKB:A3KP59 (RIOX1_DANRE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:62611
     role: SUBSTRATE_OR_PRODUCT
@@ -24,4 +24,125 @@ definitions:
       Catalyses the reaction: (S)-3-hydroxyisobutanoyl-CoA + H2O = (S)-3-hydroxy-2-methylpropanoate + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-3-hydroxyisobutanoyl-CoA + H2O = (S)-3-hydroxy-2-methylpropanoate +
+    CoA + H(+)
+  description: Substrate-to-product chemistry of RHEA:31251, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31252 (rh:substrates → 31251_L, rh:products → 31251_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (S)-3-hydroxyisobutanoyl-CoA + H2O = (S)-3-hydroxy-2-methylpropanoate + CoA…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31251
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (S)-3-hydroxyisobutanoyl-CoA + H2O = (S)-3-hydroxy-2-methylpropanoate + CoA + H(+)'
+  - node_id: sub1
+    label: (S)-3-hydroxyisobutanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:62611
+    description: Formula C25H38N7O18P3S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (S)-3-hydroxy-2-methylpropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:62638
+    description: Formula C4H7O3.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: short-chain fatty acyl-CoA hydrolase activity
+    grounding: GO:0141126
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-3-hydroxyisobutanoyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31252
+      snippet: (S)-3-hydroxyisobutanoyl-CoA + H2O => (S)-3-hydroxy-2-methylpropanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31252 declares side 31251_L as its substrates
+        (rh:substrates); the master reaction RHEA:31251 is undirected. This participant is CHEBI:62611
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31252
+      snippet: (S)-3-hydroxyisobutanoyl-CoA + H2O => (S)-3-hydroxy-2-methylpropanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31252 declares side 31251_L as its substrates
+        (rh:substrates); the master reaction RHEA:31251 is undirected. This participant is CHEBI:15377
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-3-hydroxy-2-methylpropanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31252
+      snippet: (S)-3-hydroxyisobutanoyl-CoA + H2O => (S)-3-hydroxy-2-methylpropanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31252 declares side 31251_R as its products
+        (rh:products); the master reaction RHEA:31251 is undirected. This participant is CHEBI:62638 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31252
+      snippet: (S)-3-hydroxyisobutanoyl-CoA + H2O => (S)-3-hydroxy-2-methylpropanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31252 declares side 31251_R as its products
+        (rh:products); the master reaction RHEA:31251 is undirected. This participant is CHEBI:57287 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31252
+      snippet: (S)-3-hydroxyisobutanoyl-CoA + H2O => (S)-3-hydroxy-2-methylpropanoate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31252 declares side 31251_R as its products
+        (rh:products); the master reaction RHEA:31251 is undirected. This participant is CHEBI:15378 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:31251
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0141126"/>
+      notes: The rdfs:seeAlso triple on RHEA:31251 in rhea.rdf. GO term GO:0141126 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

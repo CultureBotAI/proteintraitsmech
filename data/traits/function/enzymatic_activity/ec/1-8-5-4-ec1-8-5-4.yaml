@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.5.-
 synonyms:
@@ -41,4 +41,164 @@ definitions:
       Catalyses: n a quinone + n hydrogen sulfide + n H(+) = polysulfur(n-2) + n a quinol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of bacterial sulfide:quinone reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.5.4. EC 1.8.5.4 maps to exactly
+    one curated Rhea reaction (RHEA:30239), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "n a quinone +
+    n hydrogen sulfide + n H(+) = polysulfur(n-2) + n a quinol". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: bacterial sulfide:quinone reductase
+    grounding: EC:1.8.5.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: sub2
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: polysulfur(n-2)
+    node_type: CHEMICAL
+    grounding: CHEBI:17909
+    xrefs:
+    - RHEA-COMP:19475
+    description: Rhea compound POLYMER:19475. Formula S2(S)<i><sub>n-2</sub></i>.
+  - node_id: prd2
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sulfide:quinone oxidoreductase activity
+    grounding: GO:0070224
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7ZAG8
+    node_type: PROTEIN
+    label: SQRD_ACIAM
+    grounding: UniProtKB:Q7ZAG8
+  - node_id: prot_B7JBP8
+    node_type: PROTEIN
+    label: SQRD_ACIF2
+    grounding: UniProtKB:B7JBP8
+  - node_id: prot_O67931
+    node_type: PROTEIN
+    label: SQRD_AQUAE
+    grounding: UniProtKB:O67931
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a quinone is a substrate consumed by RHEA:30239 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:30240
+      snippet: n a quinone + n hydrogen sulfide + n H(+) => polysulfur(n-2) + n a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:30240 declares side 30239_L as its substrates
+        (rh:substrates); the master reaction RHEA:30239 is undirected. This participant is CHEBI:132124
+        with coefficient n. Rhea cites PMID:9639604, PMID:8119908 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen sulfide is a substrate consumed by RHEA:30239 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:30240
+      snippet: n a quinone + n hydrogen sulfide + n H(+) => polysulfur(n-2) + n a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:30240 declares side 30239_L as its substrates
+        (rh:substrates); the master reaction RHEA:30239 is undirected. This participant is CHEBI:29919
+        with coefficient n. Rhea cites PMID:9639604, PMID:8119908 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:30239 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:30240
+      snippet: n a quinone + n hydrogen sulfide + n H(+) => polysulfur(n-2) + n a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:30240 declares side 30239_L as its substrates
+        (rh:substrates); the master reaction RHEA:30239 is undirected. This participant is CHEBI:15378
+        with coefficient n. Rhea cites PMID:9639604, PMID:8119908 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: polysulfur(n-2) is a product released by RHEA:30239 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30240
+      snippet: n a quinone + n hydrogen sulfide + n H(+) => polysulfur(n-2) + n a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:30240 declares side 30239_R as its products
+        (rh:products); the master reaction RHEA:30239 is undirected. This participant is POLYMER:19475
+        with coefficient 1. Rhea cites PMID:9639604, PMID:8119908 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a quinol is a product released by RHEA:30239 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:30240
+      snippet: n a quinone + n hydrogen sulfide + n H(+) => polysulfur(n-2) + n a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:30240 declares side 30239_R as its products
+        (rh:products); the master reaction RHEA:30239 is undirected. This participant is CHEBI:24646 with
+        coefficient n. Rhea cites PMID:9639604, PMID:8119908 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.8.5.4
+      snippet: EC:1.8.5.4 > GO:sulfide:quinone oxidoreductase activity ; GO:0070224
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0070224 is itself a record
+        in this KB.
+  - subject: prot_Q7ZAG8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQRD_ACIAM is an exemplar enzyme with EC 1.8.5.4 activity.
+    evidence:
+    - reference: EC:1.8.5.4
+      snippet: DR   Q7ZAG8, SQRD_ACIAM ;  B7JBP8, SQRD_ACIF2 ;  O67931, SQRD_AQUAE ;
+      notes: ExPASy ENZYME entry EC 1.8.5.4 cross-references UniProtKB:Q7ZAG8 (SQRD_ACIAM) as a protein
+        with this activity.
+  - subject: prot_B7JBP8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQRD_ACIF2 is an exemplar enzyme with EC 1.8.5.4 activity.
+    evidence:
+    - reference: EC:1.8.5.4
+      snippet: DR   Q7ZAG8, SQRD_ACIAM ;  B7JBP8, SQRD_ACIF2 ;  O67931, SQRD_AQUAE ;
+      notes: ExPASy ENZYME entry EC 1.8.5.4 cross-references UniProtKB:B7JBP8 (SQRD_ACIF2) as a protein
+        with this activity.
+  - subject: prot_O67931
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQRD_AQUAE is an exemplar enzyme with EC 1.8.5.4 activity.
+    evidence:
+    - reference: EC:1.8.5.4
+      snippet: DR   Q7ZAG8, SQRD_ACIAM ;  B7JBP8, SQRD_ACIF2 ;  O67931, SQRD_AQUAE ;
+      notes: ExPASy ENZYME entry EC 1.8.5.4 cross-references UniProtKB:O67931 (SQRD_AQUAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

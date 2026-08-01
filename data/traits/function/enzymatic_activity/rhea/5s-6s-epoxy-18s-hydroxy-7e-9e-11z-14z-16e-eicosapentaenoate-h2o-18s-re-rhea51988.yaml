@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:134661
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,80 @@ definitions:
       Catalyses the reaction: (5S,6S)-epoxy-(18S)-hydroxy-(7E,9E,11Z,14Z,16E)-eicosapentaenoate + H2O = 18S-resolvin E1
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (5S,6S)-epoxy-(18S)-hydroxy-(7E,9E,11Z,14Z,16E)-eicosapentaenoate + H2O
+    = 18S-resolvin…
+  description: Substrate-to-product chemistry of RHEA:51988, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:51989 (rh:substrates → 51988_L, rh:products → 51988_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (5S,6S)-epoxy-(18S)-hydroxy-(7E,9E,11Z,14Z,16E)-eicosapentaenoate + H2O = 18…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:51988
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (5S,6S)-epoxy-(18S)-hydroxy-(7E,9E,11Z,14Z,16E)-eicosapentaenoate + H2O = 18S-resolvin
+      E1'
+  - node_id: sub1
+    label: (5S,6S)-epoxy-(18S)-hydroxy-(7E,9E,11Z,14Z,16E)-eicosapentaenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:134661
+    description: Formula C20H27O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 18S-resolvin E1
+    node_type: CHEMICAL
+    grounding: CHEBI:136057
+    description: Formula C20H29O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (5S,6S)-epoxy-(18S)-hydroxy-(7E,9E,11Z,14Z,16E)-eicosapentaenoate is a substrate consumed
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51989
+      snippet: (5S,6S)-epoxy-(18S)-hydroxy-(7E,9E,11Z,14Z,16E)-eicosapentaenoate + H2O => 18S-resolvin
+        E1
+      notes: Rhea's left-to-right directional reaction RHEA:51989 declares side 51988_L as its substrates
+        (rh:substrates); the master reaction RHEA:51988 is undirected. This participant is CHEBI:134661
+        with coefficient 1. Rhea cites PMID:21206090 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51989
+      snippet: (5S,6S)-epoxy-(18S)-hydroxy-(7E,9E,11Z,14Z,16E)-eicosapentaenoate + H2O => 18S-resolvin
+        E1
+      notes: Rhea's left-to-right directional reaction RHEA:51989 declares side 51988_L as its substrates
+        (rh:substrates); the master reaction RHEA:51988 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21206090 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 18S-resolvin E1 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51989
+      snippet: (5S,6S)-epoxy-(18S)-hydroxy-(7E,9E,11Z,14Z,16E)-eicosapentaenoate + H2O => 18S-resolvin
+        E1
+      notes: Rhea's left-to-right directional reaction RHEA:51989 declares side 51988_R as its products
+        (rh:products); the master reaction RHEA:51988 is undirected. This participant is CHEBI:136057
+        with coefficient 1. Rhea cites PMID:21206090 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

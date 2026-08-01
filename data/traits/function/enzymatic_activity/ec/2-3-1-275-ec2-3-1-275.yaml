@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -51,4 +51,134 @@ definitions:
       Catalyses: an acyl phosphate + sn-glycerol 3-phosphate = a 1-acyl-sn-glycero-3- phosphate + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acyl phosphate:glycerol-3-phosphate acyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.275. EC 2.3.1.275 maps to
+    exactly one curated Rhea reaction (RHEA:34075), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an acyl
+    phosphate + sn-glycerol 3-phosphate = a 1-acyl-sn-glycero-3- phosphate + phosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acyl phosphate:glycerol-3-phosphate acyltransferase
+    grounding: EC:2.3.1.275
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an acyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59918
+    description: Formula CO5PR.
+  - node_id: sub2
+    label: sn-glycerol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+    description: Formula C3H7O6P.
+  - node_id: prd1
+    label: a 1-acyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57970
+    description: Formula C4H6O7PR.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prot_Q81QF8
+    node_type: PROTEIN
+    label: PLSY1_BACAN
+    grounding: UniProtKB:Q81QF8
+  - node_id: prot_Q737Z5
+    node_type: PROTEIN
+    label: PLSY1_BACC1
+    grounding: UniProtKB:Q737Z5
+  - node_id: prot_Q81DG8
+    node_type: PROTEIN
+    label: PLSY1_BACCR
+    grounding: UniProtKB:Q81DG8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an acyl phosphate is a substrate consumed by RHEA:34075 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34076
+      snippet: an acyl phosphate + sn-glycerol 3-phosphate => a 1-acyl-sn-glycero-3-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34076 declares side 34075_L as its substrates
+        (rh:substrates); the master reaction RHEA:34075 is undirected. This participant is CHEBI:59918
+        with coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sn-glycerol 3-phosphate is a substrate consumed by RHEA:34075 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34076
+      snippet: an acyl phosphate + sn-glycerol 3-phosphate => a 1-acyl-sn-glycero-3-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34076 declares side 34075_L as its substrates
+        (rh:substrates); the master reaction RHEA:34075 is undirected. This participant is CHEBI:57597
+        with coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 1-acyl-sn-glycero-3-phosphate is a product released by RHEA:34075 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34076
+      snippet: an acyl phosphate + sn-glycerol 3-phosphate => a 1-acyl-sn-glycero-3-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34076 declares side 34075_R as its products
+        (rh:products); the master reaction RHEA:34075 is undirected. This participant is CHEBI:57970 with
+        coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:34075 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34076
+      snippet: an acyl phosphate + sn-glycerol 3-phosphate => a 1-acyl-sn-glycero-3-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34076 declares side 34075_R as its products
+        (rh:products); the master reaction RHEA:34075 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: prot_Q81QF8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLSY1_BACAN is an exemplar enzyme with EC 2.3.1.275 activity.
+    evidence:
+    - reference: EC:2.3.1.275
+      snippet: DR   Q81QF8, PLSY1_BACAN;  Q737Z5, PLSY1_BACC1;  Q81DG8, PLSY1_BACCR;
+      notes: ExPASy ENZYME entry EC 2.3.1.275 cross-references UniProtKB:Q81QF8 (PLSY1_BACAN) as a protein
+        with this activity.
+  - subject: prot_Q737Z5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLSY1_BACC1 is an exemplar enzyme with EC 2.3.1.275 activity.
+    evidence:
+    - reference: EC:2.3.1.275
+      snippet: DR   Q81QF8, PLSY1_BACAN;  Q737Z5, PLSY1_BACC1;  Q81DG8, PLSY1_BACCR;
+      notes: ExPASy ENZYME entry EC 2.3.1.275 cross-references UniProtKB:Q737Z5 (PLSY1_BACC1) as a protein
+        with this activity.
+  - subject: prot_Q81DG8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLSY1_BACCR is an exemplar enzyme with EC 2.3.1.275 activity.
+    evidence:
+    - reference: EC:2.3.1.275
+      snippet: DR   Q81QF8, PLSY1_BACAN;  Q737Z5, PLSY1_BACC1;  Q81DG8, PLSY1_BACCR;
+      notes: ExPASy ENZYME entry EC 2.3.1.275 cross-references UniProtKB:Q81DG8 (PLSY1_BACCR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -25,4 +25,104 @@ definitions:
       Catalyses: hydrogen sulfide + acetyl-CoA = thioacetate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydrogen-sulfide S-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.10. EC 2.3.1.10 maps to exactly
+    one curated Rhea reaction (RHEA:16625), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "hydrogen sulfide
+    + acetyl-CoA = thioacetate + CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydrogen-sulfide S-acetyltransferase
+    grounding: EC:2.3.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: thioacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30320
+    description: Formula C2H3OS.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hydrogen-sulfide S-acetyltransferase activity
+    grounding: GO:0047986
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hydrogen sulfide is a substrate consumed by RHEA:16625 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16626
+      snippet: hydrogen sulfide + acetyl-CoA => thioacetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:16626 declares side 16625_L as its substrates
+        (rh:substrates); the master reaction RHEA:16625 is undirected. This participant is CHEBI:29919
+        with coefficient 1. Rhea cites PMID:13221570 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:16625 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16626
+      snippet: hydrogen sulfide + acetyl-CoA => thioacetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:16626 declares side 16625_L as its substrates
+        (rh:substrates); the master reaction RHEA:16625 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:13221570 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: thioacetate is a product released by RHEA:16625 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16626
+      snippet: hydrogen sulfide + acetyl-CoA => thioacetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:16626 declares side 16625_R as its products
+        (rh:products); the master reaction RHEA:16625 is undirected. This participant is CHEBI:30320 with
+        coefficient 1. Rhea cites PMID:13221570 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:16625 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16626
+      snippet: hydrogen sulfide + acetyl-CoA => thioacetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:16626 declares side 16625_R as its products
+        (rh:products); the master reaction RHEA:16625 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:13221570 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.10
+      snippet: EC:2.3.1.10 > GO:hydrogen-sulfide S-acetyltransferase activity ; GO:0047986
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047986 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

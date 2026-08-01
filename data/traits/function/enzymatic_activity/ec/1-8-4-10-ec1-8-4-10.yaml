@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.4.-
 synonyms:
@@ -41,4 +41,230 @@ definitions:
       Catalyses: [thioredoxin]-disulfide + sulfite + AMP + 2 H(+) = adenosine 5'-phosphosulfate + [thioredoxin]-dithiol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of adenylyl-sulfate reductase (thioredoxin)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.4.10. EC 1.8.4.10 maps to exactly
+    one curated Rhea reaction (RHEA:21976), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[thioredoxin]-disulfide
+    + sulfite + AMP + 2 H(+) = adenosine 5''-phosphosulfate + [thioredoxin]-dithiol". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: adenylyl-sulfate reductase (thioredoxin)
+    grounding: EC:1.8.4.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[thioredoxin]-disulfide'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10700
+    description: Rhea compound GENERIC:10700.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-cystine residue at position n/n+3
+    description: The reacting group Rhea names inside the generic participant GENERIC:10700 ([thioredoxin]-disulfide);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:50058
+  - node_id: sub2
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: sub3
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: adenosine 5'-phosphosulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:58243
+    description: Formula C10H12N5O10PS.
+  - node_id: prd2
+    label: '[thioredoxin]-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10698
+    description: Rhea compound GENERIC:10698.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue at position n
+    description: The reacting group Rhea names inside the generic participant GENERIC:10698 ([thioredoxin]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd2_rp2
+    node_type: RESIDUE
+    label: L-cysteine residue at position n+3
+    description: The reacting group Rhea names inside the generic participant GENERIC:10698 ([thioredoxin]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: adenylyl-sulfate reductase (thioredoxin) activity
+    grounding: GO:0043866
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P94498
+    node_type: PROTEIN
+    label: CYSH1_BACSU
+    grounding: UniProtKB:P94498
+  - node_id: prot_O06737
+    node_type: PROTEIN
+    label: CYSH2_BACSU
+    grounding: UniProtKB:O06737
+  - node_id: prot_Q8UH67
+    node_type: PROTEIN
+    label: CYSH_AGRFC
+    grounding: UniProtKB:Q8UH67
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[thioredoxin]-disulfide is a substrate consumed by RHEA:21976 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:21977
+      snippet: '[thioredoxin]-disulfide + sulfite + AMP + 2 H(+) => adenosine 5''-phosphosulfate + [thioredoxin]-dithiol'
+      notes: Rhea's left-to-right directional reaction RHEA:21977 declares side 21976_L as its substrates
+        (rh:substrates); the master reaction RHEA:21976 is undirected. This participant is GENERIC:10700
+        with coefficient 1. Rhea cites PMID:10613872 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cystine residue is the reactive part of [thioredoxin]-disulfide.
+    evidence:
+    - reference: RHEA:21976
+      snippet: L-cystine residue
+      notes: Rhea compound GENERIC:10700 ([thioredoxin]-disulfide) declares rh:reactivePart at position
+        n/n+3 = L-cystine residue (CHEBI:50058).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sulfite is a substrate consumed by RHEA:21976 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21977
+      snippet: '[thioredoxin]-disulfide + sulfite + AMP + 2 H(+) => adenosine 5''-phosphosulfate + [thioredoxin]-dithiol'
+      notes: Rhea's left-to-right directional reaction RHEA:21977 declares side 21976_L as its substrates
+        (rh:substrates); the master reaction RHEA:21976 is undirected. This participant is CHEBI:17359
+        with coefficient 1. Rhea cites PMID:10613872 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: AMP is a substrate consumed by RHEA:21976 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21977
+      snippet: '[thioredoxin]-disulfide + sulfite + AMP + 2 H(+) => adenosine 5''-phosphosulfate + [thioredoxin]-dithiol'
+      notes: Rhea's left-to-right directional reaction RHEA:21977 declares side 21976_L as its substrates
+        (rh:substrates); the master reaction RHEA:21976 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:10613872 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by RHEA:21976 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:21977
+      snippet: '[thioredoxin]-disulfide + sulfite + AMP + 2 H(+) => adenosine 5''-phosphosulfate + [thioredoxin]-dithiol'
+      notes: Rhea's left-to-right directional reaction RHEA:21977 declares side 21976_L as its substrates
+        (rh:substrates); the master reaction RHEA:21976 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:10613872 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: adenosine 5'-phosphosulfate is a product released by RHEA:21976 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21977
+      snippet: '[thioredoxin]-disulfide + sulfite + AMP + 2 H(+) => adenosine 5''-phosphosulfate + [thioredoxin]-dithiol'
+      notes: Rhea's left-to-right directional reaction RHEA:21977 declares side 21976_R as its products
+        (rh:products); the master reaction RHEA:21976 is undirected. This participant is CHEBI:58243 with
+        coefficient 1. Rhea cites PMID:10613872 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: '[thioredoxin]-dithiol is a product released by RHEA:21976 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:21977
+      snippet: '[thioredoxin]-disulfide + sulfite + AMP + 2 H(+) => adenosine 5''-phosphosulfate + [thioredoxin]-dithiol'
+      notes: Rhea's left-to-right directional reaction RHEA:21977 declares side 21976_R as its products
+        (rh:products); the master reaction RHEA:21976 is undirected. This participant is GENERIC:10698
+        with coefficient 1. Rhea cites PMID:10613872 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-cysteine residue is the reactive part of [thioredoxin]-dithiol.
+    evidence:
+    - reference: RHEA:21976
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10698 ([thioredoxin]-dithiol) declares rh:reactivePart at position
+        n = L-cysteine residue (CHEBI:29950).
+  - subject: prd2_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-cysteine residue is the reactive part of [thioredoxin]-dithiol.
+    evidence:
+    - reference: RHEA:21976
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10698 ([thioredoxin]-dithiol) declares rh:reactivePart at position
+        n+3 = L-cysteine residue (CHEBI:29950).
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.8.4.10
+      snippet: EC:1.8.4.10 > GO:adenylyl-sulfate reductase (thioredoxin) activity ; GO:0043866
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043866 is itself a record
+        in this KB.
+  - subject: prot_P94498
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYSH1_BACSU is an exemplar enzyme with EC 1.8.4.10 activity.
+    evidence:
+    - reference: EC:1.8.4.10
+      snippet: DR   P94498, CYSH1_BACSU;  O06737, CYSH2_BACSU;  Q8UH67, CYSH_AGRFC ;
+      notes: ExPASy ENZYME entry EC 1.8.4.10 cross-references UniProtKB:P94498 (CYSH1_BACSU) as a protein
+        with this activity.
+  - subject: prot_O06737
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYSH2_BACSU is an exemplar enzyme with EC 1.8.4.10 activity.
+    evidence:
+    - reference: EC:1.8.4.10
+      snippet: DR   P94498, CYSH1_BACSU;  O06737, CYSH2_BACSU;  Q8UH67, CYSH_AGRFC ;
+      notes: ExPASy ENZYME entry EC 1.8.4.10 cross-references UniProtKB:O06737 (CYSH2_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q8UH67
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYSH_AGRFC is an exemplar enzyme with EC 1.8.4.10 activity.
+    evidence:
+    - reference: EC:1.8.4.10
+      snippet: DR   P94498, CYSH1_BACSU;  O06737, CYSH2_BACSU;  Q8UH67, CYSH_AGRFC ;
+      notes: ExPASy ENZYME entry EC 1.8.4.10 cross-references UniProtKB:Q8UH67 (CYSH_AGRFC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

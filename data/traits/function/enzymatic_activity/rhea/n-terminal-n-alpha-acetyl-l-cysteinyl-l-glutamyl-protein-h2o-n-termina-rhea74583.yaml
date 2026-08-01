@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:193601
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,133 @@ definitions:
       Catalyses the reaction: N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein] + H2O = N-terminal L-glutamyl-[protein] + N-acetyl-L-cysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein] + H2O = N-terminal
+    L-glutam…
+  description: Substrate-to-product chemistry of RHEA:74583, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:74584 (rh:substrates → 74583_L, rh:products → 74583_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein] + H2O = N-termin…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:74583
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein] + H2O = N-terminal L-glutamyl-[protein]
+      + N-acetyl-L-cysteine'
+  - node_id: sub1
+    label: N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18396
+    description: Rhea compound GENERIC:18396.
+  - node_id: sub1_rp1
+    label: N(alpha)-acetyl-L-cysteinyl-L-glutamyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18396 (N-terminal
+      N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein]); no position on any specific protein sequence
+      is asserted.
+    grounding: CHEBI:193601
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-terminal L-glutamyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12668
+    description: Rhea compound GENERIC:12668.
+  - node_id: prd1_rp1
+    label: L-glutamyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12668 (N-terminal
+      L-glutamyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64721
+  - node_id: prd2
+    label: N-acetyl-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:78236
+    description: Formula C5H8NO3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein] is a substrate consumed by
+      this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74584
+      snippet: N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein] + H2O => N-terminal L-glutamyl-[protein]
+        + N-acetyl-L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:74584 declares side 74583_L as its substrates
+        (rh:substrates); the master reaction RHEA:74583 is undirected. This participant is GENERIC:18396
+        with coefficient 1. Rhea cites PMID:36173861 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(alpha)-acetyl-L-cysteinyl-L-glutamyl residue is the reactive part of N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein].
+    evidence:
+    - reference: RHEA:74583
+      snippet: N(alpha)-acetyl-L-cysteinyl-L-glutamyl residue
+      notes: Rhea compound GENERIC:18396 (N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein])
+        declares rh:reactivePart = N(alpha)-acetyl-L-cysteinyl-L-glutamyl residue (CHEBI:193601), formula
+        C10H14N2O5S.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74584
+      snippet: N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein] + H2O => N-terminal L-glutamyl-[protein]
+        + N-acetyl-L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:74584 declares side 74583_L as its substrates
+        (rh:substrates); the master reaction RHEA:74583 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:36173861 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-terminal L-glutamyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:74584
+      snippet: N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein] + H2O => N-terminal L-glutamyl-[protein]
+        + N-acetyl-L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:74584 declares side 74583_R as its products
+        (rh:products); the master reaction RHEA:74583 is undirected. This participant is GENERIC:12668
+        with coefficient 1. Rhea cites PMID:36173861 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-glutamyl group is the reactive part of N-terminal L-glutamyl-[protein].
+    evidence:
+    - reference: RHEA:74583
+      snippet: L-glutamyl group
+      notes: Rhea compound GENERIC:12668 (N-terminal L-glutamyl-[protein]) declares rh:reactivePart =
+        L-glutamyl group (CHEBI:64721), formula C5H8NO3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N-acetyl-L-cysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74584
+      snippet: N-terminal N(alpha)-acetyl-L-cysteinyl-L-glutamyl-[protein] + H2O => N-terminal L-glutamyl-[protein]
+        + N-acetyl-L-cysteine
+      notes: Rhea's left-to-right directional reaction RHEA:74584 declares side 74583_R as its products
+        (rh:products); the master reaction RHEA:74583 is undirected. This participant is CHEBI:78236 with
+        coefficient 1. Rhea cites PMID:36173861 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.11.-
 synonyms:
@@ -38,4 +38,67 @@ definitions:
       Catalyses: Release of an N-terminal amino acid, Xaa, from a peptide or arylamide. Xaa is preferably Glu or Asp but may be other amino acids, including Leu, Met, His, Cys and Gln
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of PepB aminopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.11.23. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of an N-terminal amino acid, Xaa, from a peptide or arylamide. Xaa is preferably Glu or Asp but may
+    be other amino acids, including Leu, Met, His, Cys and Gln".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: PepB aminopeptidase
+    grounding: EC:3.4.11.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_A8AD60
+    node_type: PROTEIN
+    label: PEPB_CITK8
+    grounding: UniProtKB:A8AD60
+  - node_id: prot_A7MGW9
+    node_type: PROTEIN
+    label: PEPB_CROS8
+    grounding: UniProtKB:A7MGW9
+  - node_id: prot_A7ZPW6
+    node_type: PROTEIN
+    label: PEPB_ECO24
+    grounding: UniProtKB:A7ZPW6
+  edges:
+  - subject: prot_A8AD60
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPB_CITK8 is an exemplar enzyme with EC 3.4.11.23 activity.
+    evidence:
+    - reference: EC:3.4.11.23
+      snippet: DR   A8AD60, PEPB_CITK8 ;  A7MGW9, PEPB_CROS8 ;  A7ZPW6, PEPB_ECO24 ;
+      notes: ExPASy ENZYME entry EC 3.4.11.23 cross-references UniProtKB:A8AD60 (PEPB_CITK8) as a protein
+        with this activity.
+  - subject: prot_A7MGW9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPB_CROS8 is an exemplar enzyme with EC 3.4.11.23 activity.
+    evidence:
+    - reference: EC:3.4.11.23
+      snippet: DR   A8AD60, PEPB_CITK8 ;  A7MGW9, PEPB_CROS8 ;  A7ZPW6, PEPB_ECO24 ;
+      notes: ExPASy ENZYME entry EC 3.4.11.23 cross-references UniProtKB:A7MGW9 (PEPB_CROS8) as a protein
+        with this activity.
+  - subject: prot_A7ZPW6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPB_ECO24 is an exemplar enzyme with EC 3.4.11.23 activity.
+    evidence:
+    - reference: EC:3.4.11.23
+      snippet: DR   A8AD60, PEPB_CITK8 ;  A7MGW9, PEPB_CROS8 ;  A7ZPW6, PEPB_ECO24 ;
+      notes: ExPASy ENZYME entry EC 3.4.11.23 cross-references UniProtKB:A7ZPW6 (PEPB_ECO24) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

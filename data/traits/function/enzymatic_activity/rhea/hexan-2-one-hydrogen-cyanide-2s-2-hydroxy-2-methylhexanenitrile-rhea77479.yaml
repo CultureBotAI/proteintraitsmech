@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:89206
     role: SUBSTRATE_OR_PRODUCT
@@ -20,4 +20,76 @@ definitions:
       Catalyses the reaction: hexan-2-one + hydrogen cyanide = (2S)-2-hydroxy-2-methylhexanenitrile
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hexan-2-one + hydrogen cyanide = (2S)-2-hydroxy-2-methylhexanenitrile
+  description: Substrate-to-product chemistry of RHEA:77479, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77480 (rh:substrates → 77479_L, rh:products → 77479_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of hexan-2-one + hydrogen cyanide = (2S)-2-hydroxy-2-methylhexanenitrile
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77479
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: hexan-2-one + hydrogen cyanide = (2S)-2-hydroxy-2-methylhexanenitrile'
+  - node_id: sub1
+    label: hexan-2-one
+    node_type: CHEMICAL
+    grounding: CHEBI:89206
+    description: Formula C6H12O.
+  - node_id: sub2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: prd1
+    label: (2S)-2-hydroxy-2-methylhexanenitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:197345
+    description: Formula C7H13NO.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hexan-2-one is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77480
+      snippet: hexan-2-one + hydrogen cyanide => (2S)-2-hydroxy-2-methylhexanenitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77480 declares side 77479_L as its substrates
+        (rh:substrates); the master reaction RHEA:77479 is undirected. This participant is CHEBI:89206
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen cyanide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77480
+      snippet: hexan-2-one + hydrogen cyanide => (2S)-2-hydroxy-2-methylhexanenitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77480 declares side 77479_L as its substrates
+        (rh:substrates); the master reaction RHEA:77479 is undirected. This participant is CHEBI:18407
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-2-hydroxy-2-methylhexanenitrile is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77480
+      snippet: hexan-2-one + hydrogen cyanide => (2S)-2-hydroxy-2-methylhexanenitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77480 declares side 77479_R as its products
+        (rh:products); the master reaction RHEA:77479 is undirected. This participant is CHEBI:197345
+        with coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

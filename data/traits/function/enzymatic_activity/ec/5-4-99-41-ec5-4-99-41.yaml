@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -38,4 +38,117 @@ definitions:
       Catalyses: (S)-2,3-epoxysqualene = lupeol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lupeol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.41. EC 5.4.99.41 maps to
+    exactly one curated Rhea reaction (RHEA:31383), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-2,3-epoxysqualene
+    = lupeol". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lupeol synthase
+    grounding: EC:5.4.99.41
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-2,3-epoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:15441
+    description: Formula C30H50O.
+  - node_id: prd1
+    label: lupeol
+    node_type: CHEMICAL
+    grounding: CHEBI:6570
+    description: Formula C30H50O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: lupeol synthase activity
+    grounding: GO:0042299
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9C5M3
+    node_type: PROTEIN
+    label: LUP1_ARATH
+    grounding: UniProtKB:Q9C5M3
+  - node_id: prot_Q8RWT0
+    node_type: PROTEIN
+    label: LUP2_ARATH
+    grounding: UniProtKB:Q8RWT0
+  - node_id: prot_Q8W3Z2
+    node_type: PROTEIN
+    label: LUPS_BETPL
+    grounding: UniProtKB:Q8W3Z2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-2,3-epoxysqualene is a substrate consumed by RHEA:31383 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31384
+      snippet: (S)-2,3-epoxysqualene => lupeol
+      notes: Rhea's left-to-right directional reaction RHEA:31384 declares side 31383_L as its substrates
+        (rh:substrates); the master reaction RHEA:31383 is undirected. This participant is CHEBI:15441
+        with coefficient 1. Rhea cites PMID:12736505, PMID:10930257, PMID:15256745, PMID:17803686 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: lupeol is a product released by RHEA:31383 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31384
+      snippet: (S)-2,3-epoxysqualene => lupeol
+      notes: Rhea's left-to-right directional reaction RHEA:31384 declares side 31383_R as its products
+        (rh:products); the master reaction RHEA:31383 is undirected. This participant is CHEBI:6570 with
+        coefficient 1. Rhea cites PMID:12736505, PMID:10930257, PMID:15256745, PMID:17803686 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.41
+      snippet: EC:5.4.99.41 > GO:lupeol synthase activity ; GO:0042299
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0042299 is itself a record
+        in this KB.
+  - subject: prot_Q9C5M3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LUP1_ARATH is an exemplar enzyme with EC 5.4.99.41 activity.
+    evidence:
+    - reference: EC:5.4.99.41
+      snippet: DR   Q9C5M3, LUP1_ARATH ;  Q8RWT0, LUP2_ARATH ;  Q8W3Z2, LUPS_BETPL ;
+      notes: ExPASy ENZYME entry EC 5.4.99.41 cross-references UniProtKB:Q9C5M3 (LUP1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q8RWT0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LUP2_ARATH is an exemplar enzyme with EC 5.4.99.41 activity.
+    evidence:
+    - reference: EC:5.4.99.41
+      snippet: DR   Q9C5M3, LUP1_ARATH ;  Q8RWT0, LUP2_ARATH ;  Q8W3Z2, LUPS_BETPL ;
+      notes: ExPASy ENZYME entry EC 5.4.99.41 cross-references UniProtKB:Q8RWT0 (LUP2_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q8W3Z2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LUPS_BETPL is an exemplar enzyme with EC 5.4.99.41 activity.
+    evidence:
+    - reference: EC:5.4.99.41
+      snippet: DR   Q9C5M3, LUP1_ARATH ;  Q8RWT0, LUP2_ARATH ;  Q8W3Z2, LUPS_BETPL ;
+      notes: ExPASy ENZYME entry EC 5.4.99.41 cross-references UniProtKB:Q8W3Z2 (LUPS_BETPL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

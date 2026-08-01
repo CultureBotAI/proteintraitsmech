@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -41,4 +41,148 @@ definitions:
       Catalyses: 3-(4-hydroxyphenyl)pyruvate + O2 = (S)-4-hydroxymandelate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-hydroxymandelate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.46. EC 1.13.11.46 maps to
+    exactly one curated Rhea reaction (RHEA:21376), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-(4-hydroxyphenyl)pyruvate
+    + O2 = (S)-4-hydroxymandelate + CO2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxymandelate synthase
+    grounding: EC:1.13.11.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-(4-hydroxyphenyl)pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:36242
+    description: Formula C9H7O4.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (S)-4-hydroxymandelate
+    node_type: CHEMICAL
+    grounding: CHEBI:17210
+    description: Formula C8H7O4.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxymandelate synthase activity
+    grounding: GO:0050585
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O52791
+    node_type: PROTEIN
+    label: HMAS_AMYOR
+    grounding: UniProtKB:O52791
+  - node_id: prot_Q96IR7
+    node_type: PROTEIN
+    label: HPDL_HUMAN
+    grounding: UniProtKB:Q96IR7
+  - node_id: prot_Q8K248
+    node_type: PROTEIN
+    label: HPDL_MOUSE
+    grounding: UniProtKB:Q8K248
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-(4-hydroxyphenyl)pyruvate is a substrate consumed by RHEA:21376 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21377
+      snippet: 3-(4-hydroxyphenyl)pyruvate + O2 => (S)-4-hydroxymandelate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:21377 declares side 21376_L as its substrates
+        (rh:substrates); the master reaction RHEA:21376 is undirected. This participant is CHEBI:36242
+        with coefficient 1. Rhea cites PMID:34471290, PMID:11137816 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:21376 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21377
+      snippet: 3-(4-hydroxyphenyl)pyruvate + O2 => (S)-4-hydroxymandelate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:21377 declares side 21376_L as its substrates
+        (rh:substrates); the master reaction RHEA:21376 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:34471290, PMID:11137816 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-4-hydroxymandelate is a product released by RHEA:21376 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21377
+      snippet: 3-(4-hydroxyphenyl)pyruvate + O2 => (S)-4-hydroxymandelate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:21377 declares side 21376_R as its products
+        (rh:products); the master reaction RHEA:21376 is undirected. This participant is CHEBI:17210 with
+        coefficient 1. Rhea cites PMID:34471290, PMID:11137816 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:21376 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21377
+      snippet: 3-(4-hydroxyphenyl)pyruvate + O2 => (S)-4-hydroxymandelate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:21377 declares side 21376_R as its products
+        (rh:products); the master reaction RHEA:21376 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:34471290, PMID:11137816 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.46
+      snippet: EC:1.13.11.46 > GO:4-hydroxymandelate synthase activity ; GO:0050585
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050585 is itself a record
+        in this KB.
+  - subject: prot_O52791
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HMAS_AMYOR is an exemplar enzyme with EC 1.13.11.46 activity.
+    evidence:
+    - reference: EC:1.13.11.46
+      snippet: DR   O52791, HMAS_AMYOR ;  Q96IR7, HPDL_HUMAN ;  Q8K248, HPDL_MOUSE ;
+      notes: ExPASy ENZYME entry EC 1.13.11.46 cross-references UniProtKB:O52791 (HMAS_AMYOR) as a protein
+        with this activity.
+  - subject: prot_Q96IR7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPDL_HUMAN is an exemplar enzyme with EC 1.13.11.46 activity.
+    evidence:
+    - reference: EC:1.13.11.46
+      snippet: DR   O52791, HMAS_AMYOR ;  Q96IR7, HPDL_HUMAN ;  Q8K248, HPDL_MOUSE ;
+      notes: ExPASy ENZYME entry EC 1.13.11.46 cross-references UniProtKB:Q96IR7 (HPDL_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q8K248
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPDL_MOUSE is an exemplar enzyme with EC 1.13.11.46 activity.
+    evidence:
+    - reference: EC:1.13.11.46
+      snippet: DR   O52791, HMAS_AMYOR ;  Q96IR7, HPDL_HUMAN ;  Q8K248, HPDL_MOUSE ;
+      notes: ExPASy ENZYME entry EC 1.13.11.46 cross-references UniProtKB:Q8K248 (HPDL_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

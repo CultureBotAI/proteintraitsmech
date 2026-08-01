@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.6.2.-
 synonyms:
@@ -40,4 +40,67 @@ definitions:
       Catalyses: ATP + H2O + (2R,4S)-2-methyl-2,3,3,4-tetrahydroxytetrahydrofuran-[AI-2- binding protein]Side 1 = ADP + phosphate + (2R,4S)-2-methyl-2,3,3,4- tetrahydroxytetrahydrofuranSide 2 + [AI-2-binding protein]Side 1
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ABC-type autoinducer-2 transporter
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.6.2.13. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + H2O
+    + (2R,4S)-2-methyl-2,3,3,4-tetrahydroxytetrahydrofuran-[AI-2- binding protein]Side 1 = ADP + phosphate
+    + (2R,4S)-2-methyl-2,3,3,4- tetrahydroxytetrahydrofuranSide 2 + [AI-2-binding protein]Side 1".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type autoinducer-2 transporter
+    grounding: EC:7.6.2.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q8XAY7
+    node_type: PROTEIN
+    label: LSRA_ECO57
+    grounding: UniProtKB:Q8XAY7
+  - node_id: prot_B1XEA1
+    node_type: PROTEIN
+    label: LSRA_ECODH
+    grounding: UniProtKB:B1XEA1
+  - node_id: prot_A8A066
+    node_type: PROTEIN
+    label: LSRA_ECOHS
+    grounding: UniProtKB:A8A066
+  edges:
+  - subject: prot_Q8XAY7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LSRA_ECO57 is an exemplar enzyme with EC 7.6.2.13 activity.
+    evidence:
+    - reference: EC:7.6.2.13
+      snippet: DR   Q8XAY7, LSRA_ECO57 ;  B1XEA1, LSRA_ECODH ;  A8A066, LSRA_ECOHS ;
+      notes: ExPASy ENZYME entry EC 7.6.2.13 cross-references UniProtKB:Q8XAY7 (LSRA_ECO57) as a protein
+        with this activity.
+  - subject: prot_B1XEA1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LSRA_ECODH is an exemplar enzyme with EC 7.6.2.13 activity.
+    evidence:
+    - reference: EC:7.6.2.13
+      snippet: DR   Q8XAY7, LSRA_ECO57 ;  B1XEA1, LSRA_ECODH ;  A8A066, LSRA_ECOHS ;
+      notes: ExPASy ENZYME entry EC 7.6.2.13 cross-references UniProtKB:B1XEA1 (LSRA_ECODH) as a protein
+        with this activity.
+  - subject: prot_A8A066
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LSRA_ECOHS is an exemplar enzyme with EC 7.6.2.13 activity.
+    evidence:
+    - reference: EC:7.6.2.13
+      snippet: DR   Q8XAY7, LSRA_ECO57 ;  B1XEA1, LSRA_ECODH ;  A8A066, LSRA_ECOHS ;
+      notes: ExPASy ENZYME entry EC 7.6.2.13 cross-references UniProtKB:A8A066 (LSRA_ECOHS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

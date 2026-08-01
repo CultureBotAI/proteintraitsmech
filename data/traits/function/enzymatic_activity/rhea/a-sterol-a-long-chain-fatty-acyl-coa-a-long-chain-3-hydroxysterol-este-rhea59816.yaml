@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.26
     mapping_source: rhea2ec
@@ -38,4 +38,124 @@ definitions:
       Catalyses the reaction: a sterol + a long-chain fatty acyl-CoA = a long-chain 3-hydroxysterol ester + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a sterol + a long-chain fatty acyl-CoA = a long-chain 3-hydroxysterol ester
+    + CoA
+  description: Substrate-to-product chemistry of RHEA:59816, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59817 (rh:substrates → 59816_L, rh:products → 59816_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a sterol + a long-chain fatty acyl-CoA = a long-chain 3-hydroxysterol ester…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59816
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a sterol + a long-chain fatty acyl-CoA = a long-chain 3-hydroxysterol ester + CoA'
+  - node_id: sub1
+    label: a sterol
+    node_type: CHEMICAL
+    grounding: CHEBI:15889
+    description: Formula C19H31OR.
+  - node_id: sub2
+    label: a long-chain fatty acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:83139
+    description: Formula C22H31N7O17P3SR.
+  - node_id: prd1
+    label: a long-chain 3-hydroxysterol ester
+    node_type: CHEMICAL
+    grounding: CHEBI:232093
+    description: Formula C20H30O2R2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sterol O-acyltransferase activity
+    grounding: GO:0004772
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: sterol O-acyltransferase
+    grounding: EC:2.3.1.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a sterol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59817
+      snippet: a sterol + a long-chain fatty acyl-CoA => a long-chain 3-hydroxysterol ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:59817 declares side 59816_L as its substrates
+        (rh:substrates); the master reaction RHEA:59816 is undirected. This participant is CHEBI:15889
+        with coefficient 1. Rhea cites PMID:9857049, PMID:42927, PMID:389289, PMID:9020103 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a long-chain fatty acyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59817
+      snippet: a sterol + a long-chain fatty acyl-CoA => a long-chain 3-hydroxysterol ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:59817 declares side 59816_L as its substrates
+        (rh:substrates); the master reaction RHEA:59816 is undirected. This participant is CHEBI:83139
+        with coefficient 1. Rhea cites PMID:9857049, PMID:42927, PMID:389289, PMID:9020103 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a long-chain 3-hydroxysterol ester is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59817
+      snippet: a sterol + a long-chain fatty acyl-CoA => a long-chain 3-hydroxysterol ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:59817 declares side 59816_R as its products
+        (rh:products); the master reaction RHEA:59816 is undirected. This participant is CHEBI:232093
+        with coefficient 1. Rhea cites PMID:9857049, PMID:42927, PMID:389289, PMID:9020103 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59817
+      snippet: a sterol + a long-chain fatty acyl-CoA => a long-chain 3-hydroxysterol ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:59817 declares side 59816_R as its products
+        (rh:products); the master reaction RHEA:59816 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:9857049, PMID:42927, PMID:389289, PMID:9020103 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:59816
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004772"/>
+      notes: The rdfs:seeAlso triple on RHEA:59816 in rhea.rdf. GO term GO:0004772 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.26; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:59816
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.26"/>
+      notes: The rh:ec triple on RHEA:59816 in rhea.rdf. EC 2.3.1.26 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

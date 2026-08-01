@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.1.99.36
     mapping_source: rhea2ec
@@ -32,4 +32,109 @@ definitions:
       Catalyses the reaction: N,N-dimethyl-4-nitrosoaniline + ethanol = 4-(hydroxylamino)-N,N-dimethylaniline + acetaldehyde
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N,N-dimethyl-4-nitrosoaniline + ethanol = 4-(hydroxylamino)-N,N-dimethylaniline
+    + aceta…
+  description: Substrate-to-product chemistry of RHEA:27538, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27539 (rh:substrates → 27538_L, rh:products → 27538_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N,N-dimethyl-4-nitrosoaniline + ethanol = 4-(hydroxylamino)-N,N-dimethylanil…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27538
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N,N-dimethyl-4-nitrosoaniline + ethanol = 4-(hydroxylamino)-N,N-dimethylaniline +
+      acetaldehyde'
+  - node_id: sub1
+    label: N,N-dimethyl-4-nitrosoaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:59990
+    description: Formula C8H10N2O.
+  - node_id: sub2
+    label: ethanol
+    node_type: CHEMICAL
+    grounding: CHEBI:16236
+    description: Formula C2H6O.
+  - node_id: prd1
+    label: 4-(hydroxylamino)-N,N-dimethylaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:59991
+    description: Formula C8H12N2O.
+  - node_id: prd2
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: alcohol dehydrogenase (nicotinoprotein)
+    grounding: EC:1.1.99.36
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N,N-dimethyl-4-nitrosoaniline is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27539
+      snippet: N,N-dimethyl-4-nitrosoaniline + ethanol => 4-(hydroxylamino)-N,N-dimethylaniline + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27539 declares side 27538_L as its substrates
+        (rh:substrates); the master reaction RHEA:27538 is undirected. This participant is CHEBI:59990
+        with coefficient 1. Rhea cites PMID:14690248, PMID:9485460, PMID:12827287 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ethanol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27539
+      snippet: N,N-dimethyl-4-nitrosoaniline + ethanol => 4-(hydroxylamino)-N,N-dimethylaniline + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27539 declares side 27538_L as its substrates
+        (rh:substrates); the master reaction RHEA:27538 is undirected. This participant is CHEBI:16236
+        with coefficient 1. Rhea cites PMID:14690248, PMID:9485460, PMID:12827287 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-(hydroxylamino)-N,N-dimethylaniline is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27539
+      snippet: N,N-dimethyl-4-nitrosoaniline + ethanol => 4-(hydroxylamino)-N,N-dimethylaniline + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27539 declares side 27538_R as its products
+        (rh:products); the master reaction RHEA:27538 is undirected. This participant is CHEBI:59991 with
+        coefficient 1. Rhea cites PMID:14690248, PMID:9485460, PMID:12827287 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetaldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27539
+      snippet: N,N-dimethyl-4-nitrosoaniline + ethanol => 4-(hydroxylamino)-N,N-dimethylaniline + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27539 declares side 27538_R as its products
+        (rh:products); the master reaction RHEA:27538 is undirected. This participant is CHEBI:15343 with
+        coefficient 1. Rhea cites PMID:14690248, PMID:9485460, PMID:12827287 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.1.99.36; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:27538
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.99.36"/>
+      notes: The rh:ec triple on RHEA:27538 in rhea.rdf. EC 1.1.99.36 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

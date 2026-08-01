@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.5.1.57
     mapping_source: rhea2ec
@@ -30,4 +30,123 @@ definitions:
       Catalyses the reaction: (19E)-cur-19-en-17-al + NADP(+) = norfluorocurarine + NADPH + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (19E)-cur-19-en-17-al + NADP(+) = norfluorocurarine + NADPH + H(+)
+  description: Substrate-to-product chemistry of RHEA:80903, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80904 (rh:substrates → 80903_L, rh:products → 80903_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (19E)-cur-19-en-17-al + NADP(+) = norfluorocurarine + NADPH + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80903
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (19E)-cur-19-en-17-al + NADP(+) = norfluorocurarine + NADPH + H(+)'
+  - node_id: sub1
+    label: (19E)-cur-19-en-17-al
+    node_type: CHEMICAL
+    grounding: CHEBI:231653
+    description: Formula C19H23N2O.
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: norfluorocurarine
+    node_type: CHEMICAL
+    grounding: CHEBI:231650
+    description: Formula C19H21N2O.
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 18-hydroxynorfluorocurarine reductase
+    grounding: EC:1.5.1.57
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (19E)-cur-19-en-17-al is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_L as its substrates
+        (rh:substrates); the master reaction RHEA:80903 is undirected. This participant is CHEBI:231653
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_L as its substrates
+        (rh:substrates); the master reaction RHEA:80903 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: norfluorocurarine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_R as its products
+        (rh:products); the master reaction RHEA:80903 is undirected. This participant is CHEBI:231650
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_R as its products
+        (rh:products); the master reaction RHEA:80903 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_R as its products
+        (rh:products); the master reaction RHEA:80903 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.5.1.57; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:80903
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.1.57"/>
+      notes: The rh:ec triple on RHEA:80903 in rhea.rdf. EC 1.5.1.57 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

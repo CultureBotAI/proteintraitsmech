@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.99.-
 synonyms:
@@ -36,4 +36,67 @@ definitions:
       Catalyses: starch + reduced acceptor + O2 = D-glucono-1,5-lactone-terminated malto- oligosaccharides + short-chain malto-oligosaccharides + acceptor + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lytic starch monooxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.99.55. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "starch + reduced acceptor + O2 = D-glucono-1,5-lactone-terminated malto- oligosaccharides + short-chain
+    malto-oligosaccharides + acceptor + H2O".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lytic starch monooxygenase
+    grounding: EC:1.14.99.55
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q0CGA6
+    node_type: PROTEIN
+    label: AA13_ASPTN
+    grounding: UniProtKB:Q0CGA6
+  - node_id: prot_Q5B1W7
+    node_type: PROTEIN
+    label: AA13_EMENI
+    grounding: UniProtKB:Q5B1W7
+  - node_id: prot_Q7SCE9
+    node_type: PROTEIN
+    label: AA13_NEUCR
+    grounding: UniProtKB:Q7SCE9
+  edges:
+  - subject: prot_Q0CGA6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AA13_ASPTN is an exemplar enzyme with EC 1.14.99.55 activity.
+    evidence:
+    - reference: EC:1.14.99.55
+      snippet: DR   Q0CGA6, AA13_ASPTN ;  Q5B1W7, AA13_EMENI ;  Q7SCE9, AA13_NEUCR ;
+      notes: ExPASy ENZYME entry EC 1.14.99.55 cross-references UniProtKB:Q0CGA6 (AA13_ASPTN) as a protein
+        with this activity.
+  - subject: prot_Q5B1W7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AA13_EMENI is an exemplar enzyme with EC 1.14.99.55 activity.
+    evidence:
+    - reference: EC:1.14.99.55
+      snippet: DR   Q0CGA6, AA13_ASPTN ;  Q5B1W7, AA13_EMENI ;  Q7SCE9, AA13_NEUCR ;
+      notes: ExPASy ENZYME entry EC 1.14.99.55 cross-references UniProtKB:Q5B1W7 (AA13_EMENI) as a protein
+        with this activity.
+  - subject: prot_Q7SCE9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AA13_NEUCR is an exemplar enzyme with EC 1.14.99.55 activity.
+    evidence:
+    - reference: EC:1.14.99.55
+      snippet: DR   Q0CGA6, AA13_ASPTN ;  Q5B1W7, AA13_EMENI ;  Q7SCE9, AA13_NEUCR ;
+      notes: ExPASy ENZYME entry EC 1.14.99.55 cross-references UniProtKB:Q7SCE9 (AA13_NEUCR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

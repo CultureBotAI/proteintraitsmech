@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.1.-
 synonyms:
@@ -45,4 +45,131 @@ definitions:
       Catalyses: L-ornithine = L-proline + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ornithine cyclodeaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.1.12. EC 4.3.1.12 maps to exactly
+    one curated Rhea reaction (RHEA:24368), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-ornithine =
+    L-proline + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ornithine cyclodeaminase
+    grounding: EC:4.3.1.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: prd1
+    label: L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:60039
+    description: Formula C5H9NO2.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ornithine cyclodeaminase activity
+    grounding: GO:0008473
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8YMD9
+    node_type: PROTEIN
+    label: AGRE_NOSS1
+    grounding: UniProtKB:Q8YMD9
+  - node_id: prot_O28990
+    node_type: PROTEIN
+    label: AOCD_ARCFU
+    grounding: UniProtKB:O28990
+  - node_id: prot_Q58875
+    node_type: PROTEIN
+    label: AOCD_METJA
+    grounding: UniProtKB:Q58875
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-ornithine is a substrate consumed by RHEA:24368 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24369
+      snippet: L-ornithine => L-proline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24369 declares side 24368_L as its substrates
+        (rh:substrates); the master reaction RHEA:24368 is undirected. This participant is CHEBI:46911
+        with coefficient 1. Rhea cites PMID:15518536, PMID:4399881, PMID:15103146, PMID:4154941 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-proline is a product released by RHEA:24368 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24369
+      snippet: L-ornithine => L-proline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24369 declares side 24368_R as its products
+        (rh:products); the master reaction RHEA:24368 is undirected. This participant is CHEBI:60039 with
+        coefficient 1. Rhea cites PMID:15518536, PMID:4399881, PMID:15103146, PMID:4154941 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:24368 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24369
+      snippet: L-ornithine => L-proline + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24369 declares side 24368_R as its products
+        (rh:products); the master reaction RHEA:24368 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:15518536, PMID:4399881, PMID:15103146, PMID:4154941 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.3.1.12
+      snippet: EC:4.3.1.12 > GO:ornithine cyclodeaminase activity ; GO:0008473
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008473 is itself a record
+        in this KB.
+  - subject: prot_Q8YMD9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGRE_NOSS1 is an exemplar enzyme with EC 4.3.1.12 activity.
+    evidence:
+    - reference: EC:4.3.1.12
+      snippet: DR   Q8YMD9, AGRE_NOSS1 ;  O28990, AOCD_ARCFU ;  Q58875, AOCD_METJA ;
+      notes: ExPASy ENZYME entry EC 4.3.1.12 cross-references UniProtKB:Q8YMD9 (AGRE_NOSS1) as a protein
+        with this activity.
+  - subject: prot_O28990
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AOCD_ARCFU is an exemplar enzyme with EC 4.3.1.12 activity.
+    evidence:
+    - reference: EC:4.3.1.12
+      snippet: DR   Q8YMD9, AGRE_NOSS1 ;  O28990, AOCD_ARCFU ;  Q58875, AOCD_METJA ;
+      notes: ExPASy ENZYME entry EC 4.3.1.12 cross-references UniProtKB:O28990 (AOCD_ARCFU) as a protein
+        with this activity.
+  - subject: prot_Q58875
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AOCD_METJA is an exemplar enzyme with EC 4.3.1.12 activity.
+    evidence:
+    - reference: EC:4.3.1.12
+      snippet: DR   Q8YMD9, AGRE_NOSS1 ;  O28990, AOCD_ARCFU ;  Q58875, AOCD_METJA ;
+      notes: ExPASy ENZYME entry EC 4.3.1.12 cross-references UniProtKB:Q58875 (AOCD_METJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

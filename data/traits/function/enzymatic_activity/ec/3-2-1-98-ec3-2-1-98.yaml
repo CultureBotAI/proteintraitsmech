@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -35,4 +35,54 @@ definitions:
       Catalyses: Hydrolysis of (1->4)-alpha-D-glucosidic linkages in amylaceous polysaccharides, to remove successive maltohexaose residues from the non- reducing chain ends
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucan 1,4-alpha-maltohexaosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.98. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of (1->4)-alpha-D-glucosidic linkages in amylaceous polysaccharides, to remove successive maltohexaose
+    residues from the non- reducing chain ends".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucan 1,4-alpha-maltohexaosidase
+    grounding: EC:3.2.1.98
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucan 1,4-alpha-maltohexaosidase activity
+    grounding: GO:0033927
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P19571
+    node_type: PROTEIN
+    label: AMT6_BACS7
+    grounding: UniProtKB:P19571
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.98
+      snippet: EC:3.2.1.98 > GO:glucan 1,4-alpha-maltohexaosidase activity ; GO:0033927
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033927 is itself a record
+        in this KB.
+  - subject: prot_P19571
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMT6_BACS7 is an exemplar enzyme with EC 3.2.1.98 activity.
+    evidence:
+    - reference: EC:3.2.1.98
+      snippet: DR   P19571, AMT6_BACS7 ;
+      notes: ExPASy ENZYME entry EC 3.2.1.98 cross-references UniProtKB:P19571 (AMT6_BACS7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

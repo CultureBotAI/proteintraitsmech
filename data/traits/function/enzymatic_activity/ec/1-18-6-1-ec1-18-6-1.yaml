@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.18.6.-
 mapped_xrefs:
@@ -38,4 +38,293 @@ definitions:
       Catalyses: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O = H2 + 8 oxidized [2Fe-2S]-[ferredoxin] + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nitrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.18.6.1. EC 1.18.6.1 maps to exactly
+    one curated Rhea reaction (RHEA:21448), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N2 + 8 reduced
+    [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O = H2 + 8 oxidized [2Fe-2S]-[ferredoxin] + 2 NH4(+) + 16 ADP
+    + 16 phosphate + 6 H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nitrogenase
+    grounding: EC:1.18.6.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N2
+    node_type: CHEMICAL
+    grounding: CHEBI:17997
+    description: Formula N2.
+  - node_id: sub2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: sub4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: H2
+    node_type: CHEMICAL
+    grounding: CHEBI:18276
+    description: Formula H2.
+  - node_id: prd2
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd3
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prd4
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd5
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd6
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: nitrogenase activity
+    grounding: GO:0016163
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P16266
+    node_type: PROTEIN
+    label: ANFD_AZOVI
+    grounding: UniProtKB:P16266
+  - node_id: prot_O68955
+    node_type: PROTEIN
+    label: ANFD_HELGE
+    grounding: UniProtKB:O68955
+  - node_id: prot_Q07933
+    node_type: PROTEIN
+    label: ANFD_RHOCA
+    grounding: UniProtKB:Q07933
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N2 is a substrate consumed by RHEA:21448 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_L as its substrates
+        (rh:substrates); the master reaction RHEA:21448 is undirected. This participant is CHEBI:17997
+        with coefficient 1. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:21448 (stoichiometric coefficient
+      8).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_L as its substrates
+        (rh:substrates); the master reaction RHEA:21448 is undirected. This participant is GENERIC:10001
+        with coefficient 8. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:21448
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:21448 (stoichiometric coefficient 16).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_L as its substrates
+        (rh:substrates); the master reaction RHEA:21448 is undirected. This participant is CHEBI:30616
+        with coefficient 16. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H2O is a substrate consumed by RHEA:21448 (stoichiometric coefficient 16).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_L as its substrates
+        (rh:substrates); the master reaction RHEA:21448 is undirected. This participant is CHEBI:15377
+        with coefficient 16. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: H2 is a product released by RHEA:21448 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_R as its products
+        (rh:products); the master reaction RHEA:21448 is undirected. This participant is CHEBI:18276 with
+        coefficient 1. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [2Fe-2S]-[ferredoxin] is a product released by RHEA:21448 (stoichiometric coefficient
+      8).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_R as its products
+        (rh:products); the master reaction RHEA:21448 is undirected. This participant is GENERIC:10000
+        with coefficient 8. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:21448
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NH4(+) is a product released by RHEA:21448 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_R as its products
+        (rh:products); the master reaction RHEA:21448 is undirected. This participant is CHEBI:28938 with
+        coefficient 2. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: ADP is a product released by RHEA:21448 (stoichiometric coefficient 16).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_R as its products
+        (rh:products); the master reaction RHEA:21448 is undirected. This participant is CHEBI:456216
+        with coefficient 16. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd5
+    description: phosphate is a product released by RHEA:21448 (stoichiometric coefficient 16).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_R as its products
+        (rh:products); the master reaction RHEA:21448 is undirected. This participant is CHEBI:43474 with
+        coefficient 16. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd6
+    description: H(+) is a product released by RHEA:21448 (stoichiometric coefficient 6).
+    evidence:
+    - reference: RHEA:21449
+      snippet: N2 + 8 reduced [2Fe-2S]-[ferredoxin] + 16 ATP + 16 H2O => H2 + 8 oxidized [2Fe-2S]-[ferredoxin]
+        + 2 NH4(+) + 16 ADP + 16 phosphate + 6 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21449 declares side 21448_R as its products
+        (rh:products); the master reaction RHEA:21448 is undirected. This participant is CHEBI:15378 with
+        coefficient 6. Rhea cites PMID:4390523, PMID:10852721, PMID:15382920, PMID:3200830 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.18.6.1
+      snippet: EC:1.18.6.1 > GO:nitrogenase activity ; GO:0016163
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016163 is itself a record
+        in this KB.
+  - subject: prot_P16266
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANFD_AZOVI is an exemplar enzyme with EC 1.18.6.1 activity.
+    evidence:
+    - reference: EC:1.18.6.1
+      snippet: DR   P16266, ANFD_AZOVI ;  O68955, ANFD_HELGE ;  Q07933, ANFD_RHOCA ;
+      notes: ExPASy ENZYME entry EC 1.18.6.1 cross-references UniProtKB:P16266 (ANFD_AZOVI) as a protein
+        with this activity.
+  - subject: prot_O68955
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANFD_HELGE is an exemplar enzyme with EC 1.18.6.1 activity.
+    evidence:
+    - reference: EC:1.18.6.1
+      snippet: DR   P16266, ANFD_AZOVI ;  O68955, ANFD_HELGE ;  Q07933, ANFD_RHOCA ;
+      notes: ExPASy ENZYME entry EC 1.18.6.1 cross-references UniProtKB:O68955 (ANFD_HELGE) as a protein
+        with this activity.
+  - subject: prot_Q07933
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANFD_RHOCA is an exemplar enzyme with EC 1.18.6.1 activity.
+    evidence:
+    - reference: EC:1.18.6.1
+      snippet: DR   P16266, ANFD_AZOVI ;  O68955, ANFD_HELGE ;  Q07933, ANFD_RHOCA ;
+      notes: ExPASy ENZYME entry EC 1.18.6.1 cross-references UniProtKB:Q07933 (ANFD_RHOCA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

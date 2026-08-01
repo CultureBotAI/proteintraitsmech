@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -41,4 +41,133 @@ definitions:
       Catalyses: 2 ATP = 3',3'-c-di-AMP + 2 diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of diadenylate cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.85. EC 2.7.7.85 maps to exactly
+    one curated Rhea reaction (RHEA:35655), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 ATP = 3'',3''-c-di-AMP
+    + 2 diphosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: diadenylate cyclase
+    grounding: EC:2.7.7.85
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: 3',3'-c-di-AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:71500
+    description: Formula C20H22N10O12P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: diadenylate cyclase activity
+    grounding: GO:0106408
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q29450
+    node_type: PROTEIN
+    label: ADCY7_BOVIN
+    grounding: UniProtKB:Q29450
+  - node_id: prot_P51828
+    node_type: PROTEIN
+    label: ADCY7_HUMAN
+    grounding: UniProtKB:P51828
+  - node_id: prot_P51829
+    node_type: PROTEIN
+    label: ADCY7_MOUSE
+    grounding: UniProtKB:P51829
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ATP is a substrate consumed by RHEA:35655 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:35656
+      snippet: 2 ATP => 3',3'-c-di-AMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35656 declares side 35655_L as its substrates
+        (rh:substrates); the master reaction RHEA:35655 is undirected. This participant is CHEBI:30616
+        with coefficient 2. Rhea cites PMID:30884174, PMID:37379839, PMID:18439896, PMID:20508090 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3',3'-c-di-AMP is a product released by RHEA:35655 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35656
+      snippet: 2 ATP => 3',3'-c-di-AMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35656 declares side 35655_R as its products
+        (rh:products); the master reaction RHEA:35655 is undirected. This participant is CHEBI:71500 with
+        coefficient 1. Rhea cites PMID:30884174, PMID:37379839, PMID:18439896, PMID:20508090 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:35655 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:35656
+      snippet: 2 ATP => 3',3'-c-di-AMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35656 declares side 35655_R as its products
+        (rh:products); the master reaction RHEA:35655 is undirected. This participant is CHEBI:33019 with
+        coefficient 2. Rhea cites PMID:30884174, PMID:37379839, PMID:18439896, PMID:20508090 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.7.85
+      snippet: EC:2.7.7.85 > GO:diadenylate cyclase activity ; GO:0106408
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0106408 is itself a record
+        in this KB.
+  - subject: prot_Q29450
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADCY7_BOVIN is an exemplar enzyme with EC 2.7.7.85 activity.
+    evidence:
+    - reference: EC:2.7.7.85
+      snippet: DR   Q29450, ADCY7_BOVIN;  P51828, ADCY7_HUMAN;  P51829, ADCY7_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.7.7.85 cross-references UniProtKB:Q29450 (ADCY7_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P51828
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADCY7_HUMAN is an exemplar enzyme with EC 2.7.7.85 activity.
+    evidence:
+    - reference: EC:2.7.7.85
+      snippet: DR   Q29450, ADCY7_BOVIN;  P51828, ADCY7_HUMAN;  P51829, ADCY7_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.7.7.85 cross-references UniProtKB:P51828 (ADCY7_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P51829
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADCY7_MOUSE is an exemplar enzyme with EC 2.7.7.85 activity.
+    evidence:
+    - reference: EC:2.7.7.85
+      snippet: DR   Q29450, ADCY7_BOVIN;  P51828, ADCY7_HUMAN;  P51829, ADCY7_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.7.7.85 cross-references UniProtKB:P51829 (ADCY7_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

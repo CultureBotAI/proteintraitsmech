@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.99.27
     mapping_source: rhea2ec
@@ -28,4 +28,109 @@ definitions:
       Catalyses the reaction: (-)-4'-methoxycyclopenine = 4'-methoxyviridicatin + methyl isocyanate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (-)-4'-methoxycyclopenine = 4'-methoxyviridicatin + methyl isocyanate +
+    H(+)
+  description: Substrate-to-product chemistry of RHEA:74463, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:74464 (rh:substrates → 74463_L, rh:products → 74463_R), and Rhea
+    curates the reverse direction too. 1 substrate, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (-)-4'-methoxycyclopenine = 4'-methoxyviridicatin + methyl isocyanate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:74463
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (-)-4''-methoxycyclopenine = 4''-methoxyviridicatin + methyl isocyanate + H(+)'
+  - node_id: sub1
+    label: (-)-4'-methoxycyclopenine
+    node_type: CHEMICAL
+    grounding: CHEBI:193535
+    description: Formula C18H16N2O4.
+  - node_id: prd1
+    label: 4'-methoxyviridicatin
+    node_type: CHEMICAL
+    grounding: CHEBI:193536
+    description: Formula C16H12NO3.
+  - node_id: prd2
+    label: methyl isocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:59059
+    description: Formula C2H3NO.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: cyclopenase
+    grounding: EC:4.1.99.27
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (-)-4'-methoxycyclopenine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74464
+      snippet: (-)-4'-methoxycyclopenine => 4'-methoxyviridicatin + methyl isocyanate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74464 declares side 74463_L as its substrates
+        (rh:substrates); the master reaction RHEA:74463 is undirected. This participant is CHEBI:193535
+        with coefficient 1. Rhea cites PMID:30026518 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4'-methoxyviridicatin is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74464
+      snippet: (-)-4'-methoxycyclopenine => 4'-methoxyviridicatin + methyl isocyanate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74464 declares side 74463_R as its products
+        (rh:products); the master reaction RHEA:74463 is undirected. This participant is CHEBI:193536
+        with coefficient 1. Rhea cites PMID:30026518 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: methyl isocyanate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74464
+      snippet: (-)-4'-methoxycyclopenine => 4'-methoxyviridicatin + methyl isocyanate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74464 declares side 74463_R as its products
+        (rh:products); the master reaction RHEA:74463 is undirected. This participant is CHEBI:59059 with
+        coefficient 1. Rhea cites PMID:30026518 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74464
+      snippet: (-)-4'-methoxycyclopenine => 4'-methoxyviridicatin + methyl isocyanate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74464 declares side 74463_R as its products
+        (rh:products); the master reaction RHEA:74463 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:30026518 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.99.27; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:74463
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.27"/>
+      notes: The rh:ec triple on RHEA:74463 in rhea.rdf. EC 4.1.99.27 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

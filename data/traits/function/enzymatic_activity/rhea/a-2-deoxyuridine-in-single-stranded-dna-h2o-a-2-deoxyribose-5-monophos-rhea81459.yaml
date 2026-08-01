@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:133902
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,131 @@ definitions:
       Catalyses the reaction: a 2'-deoxyuridine in single-stranded DNA + H2O = a 2'-deoxyribose 5'-monophosphate in single-stranded DNA + uracil
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2'-deoxyuridine in single-stranded DNA + H2O = a 2'-deoxyribose 5'-monophosphate
+    in s…
+  description: Substrate-to-product chemistry of RHEA:81459, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81460 (rh:substrates → 81459_L, rh:products → 81459_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2'-deoxyuridine in single-stranded DNA + H2O = a 2'-deoxyribose 5'-monopho…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81459
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2''-deoxyuridine in single-stranded DNA + H2O = a 2''-deoxyribose 5''-monophosphate
+      in single-stranded DNA + uracil'
+  - node_id: sub1
+    label: a 2'-deoxyuridine in single-stranded DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:12847
+    description: Rhea compound GENERIC:12847.
+  - node_id: sub1_rp1
+    label: a dUMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12847 (a 2'-deoxyuridine
+      in single-stranded DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:133902
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 2'-deoxyribose 5'-monophosphate in single-stranded DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19684
+    description: Rhea compound GENERIC:19684.
+  - node_id: prd1_rp1
+    label: a 2'-deoxyribose 5'-monophosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19684 (a 2'-deoxyribose
+      5'-monophosphate in single-stranded DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:139095
+  - node_id: prd2
+    label: uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:17568
+    description: Formula C4H4N2O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2'-deoxyuridine in single-stranded DNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:81460
+      snippet: a 2'-deoxyuridine in single-stranded DNA + H2O => a 2'-deoxyribose 5'-monophosphate in
+        single-stranded DNA + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:81460 declares side 81459_L as its substrates
+        (rh:substrates); the master reaction RHEA:81459 is undirected. This participant is GENERIC:12847
+        with coefficient 1. Rhea cites PMID:7819187 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a dUMP residue is the reactive part of a 2'-deoxyuridine in single-stranded DNA.
+    evidence:
+    - reference: RHEA:81459
+      snippet: a dUMP residue
+      notes: Rhea compound GENERIC:12847 (a 2'-deoxyuridine in single-stranded DNA) declares rh:reactivePart
+        = a dUMP residue (CHEBI:133902), formula C9H10N2O7P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81460
+      snippet: a 2'-deoxyuridine in single-stranded DNA + H2O => a 2'-deoxyribose 5'-monophosphate in
+        single-stranded DNA + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:81460 declares side 81459_L as its substrates
+        (rh:substrates); the master reaction RHEA:81459 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7819187 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 2'-deoxyribose 5'-monophosphate in single-stranded DNA is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81460
+      snippet: a 2'-deoxyuridine in single-stranded DNA + H2O => a 2'-deoxyribose 5'-monophosphate in
+        single-stranded DNA + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:81460 declares side 81459_R as its products
+        (rh:products); the master reaction RHEA:81459 is undirected. This participant is GENERIC:19684
+        with coefficient 1. Rhea cites PMID:7819187 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: a 2'-deoxyribose 5'-monophosphate residue is the reactive part of a 2'-deoxyribose 5'-monophosphate
+      in single-stranded DNA.
+    evidence:
+    - reference: RHEA:81459
+      snippet: a 2'-deoxyribose 5'-monophosphate residue
+      notes: Rhea compound GENERIC:19684 (a 2'-deoxyribose 5'-monophosphate in single-stranded DNA) declares
+        rh:reactivePart = a 2'-deoxyribose 5'-monophosphate residue (CHEBI:139095), formula C5H8O6P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: uracil is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81460
+      snippet: a 2'-deoxyuridine in single-stranded DNA + H2O => a 2'-deoxyribose 5'-monophosphate in
+        single-stranded DNA + uracil
+      notes: Rhea's left-to-right directional reaction RHEA:81460 declares side 81459_R as its products
+        (rh:products); the master reaction RHEA:81459 is undirected. This participant is CHEBI:17568 with
+        coefficient 1. Rhea cites PMID:7819187 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: L-galactonate = 2-dehydro-3-deoxy-L-galactonate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-galactonate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.146. EC 4.2.1.146 maps to
+    exactly one curated Rhea reaction (RHEA:38103), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-galactonate
+    = 2-dehydro-3-deoxy-L-galactonate + H2O". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-galactonate dehydratase
+    grounding: EC:4.2.1.146
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:53071
+    description: Formula C6H11O7.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-L-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:75545
+    description: Formula C6H9O6.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q0QWS4
+    node_type: PROTEIN
+    label: LGD1_TRIRF
+    grounding: UniProtKB:Q0QWS4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-galactonate is a substrate consumed by RHEA:38103 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38104
+      snippet: L-galactonate => 2-dehydro-3-deoxy-L-galactonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38104 declares side 38103_L as its substrates
+        (rh:substrates); the master reaction RHEA:38103 is undirected. This participant is CHEBI:53071
+        with coefficient 1. Rhea cites PMID:18768163, PMID:16879654 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-L-galactonate is a product released by RHEA:38103 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38104
+      snippet: L-galactonate => 2-dehydro-3-deoxy-L-galactonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38104 declares side 38103_R as its products
+        (rh:products); the master reaction RHEA:38103 is undirected. This participant is CHEBI:75545 with
+        coefficient 1. Rhea cites PMID:18768163, PMID:16879654 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:38103 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38104
+      snippet: L-galactonate => 2-dehydro-3-deoxy-L-galactonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38104 declares side 38103_R as its products
+        (rh:products); the master reaction RHEA:38103 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:18768163, PMID:16879654 for this reaction.
+  - subject: prot_Q0QWS4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LGD1_TRIRF is an exemplar enzyme with EC 4.2.1.146 activity.
+    evidence:
+    - reference: EC:4.2.1.146
+      snippet: DR   Q0QWS4, LGD1_TRIRF ;
+      notes: ExPASy ENZYME entry EC 4.2.1.146 cross-references UniProtKB:Q0QWS4 (LGD1_TRIRF) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

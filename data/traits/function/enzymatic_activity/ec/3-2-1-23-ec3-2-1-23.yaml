@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -41,4 +41,81 @@ definitions:
       Catalyses: Hydrolysis of terminal non-reducing beta-D-galactose residues in beta-D- galactosides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-galactosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.23. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of terminal non-reducing beta-D-galactose residues in beta-D- galactosides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-galactosidase
+    grounding: EC:3.2.1.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-galactosidase activity
+    grounding: GO:0004565
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O86372
+    node_type: PROTEIN
+    label: BDGAL_MYCTU
+    grounding: UniProtKB:O86372
+  - node_id: prot_Q9FN08
+    node_type: PROTEIN
+    label: BGA10_ARATH
+    grounding: UniProtKB:Q9FN08
+  - node_id: prot_Q67VU7
+    node_type: PROTEIN
+    label: BGA10_ORYSJ
+    grounding: UniProtKB:Q67VU7
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.23
+      snippet: EC:3.2.1.23 > GO:beta-galactosidase activity ; GO:0004565
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004565 is itself a record
+        in this KB.
+  - subject: prot_O86372
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BDGAL_MYCTU is an exemplar enzyme with EC 3.2.1.23 activity.
+    evidence:
+    - reference: EC:3.2.1.23
+      snippet: DR   O86372, BDGAL_MYCTU;  Q9FN08, BGA10_ARATH;  Q67VU7, BGA10_ORYSJ;
+      notes: ExPASy ENZYME entry EC 3.2.1.23 cross-references UniProtKB:O86372 (BDGAL_MYCTU) as a protein
+        with this activity.
+  - subject: prot_Q9FN08
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BGA10_ARATH is an exemplar enzyme with EC 3.2.1.23 activity.
+    evidence:
+    - reference: EC:3.2.1.23
+      snippet: DR   O86372, BDGAL_MYCTU;  Q9FN08, BGA10_ARATH;  Q67VU7, BGA10_ORYSJ;
+      notes: ExPASy ENZYME entry EC 3.2.1.23 cross-references UniProtKB:Q9FN08 (BGA10_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q67VU7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BGA10_ORYSJ is an exemplar enzyme with EC 3.2.1.23 activity.
+    evidence:
+    - reference: EC:3.2.1.23
+      snippet: DR   O86372, BDGAL_MYCTU;  Q9FN08, BGA10_ARATH;  Q67VU7, BGA10_ORYSJ;
+      notes: ExPASy ENZYME entry EC 3.2.1.23 cross-references UniProtKB:Q67VU7 (BGA10_ORYSJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

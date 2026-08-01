@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -31,4 +31,110 @@ definitions:
       Catalyses: 4-(hydroxymethyl)-2-furancarboxaldehyde phosphate + L-alanine = [5-(aminomethyl)-3-furyl]methyl phosphate + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (5-formylfuran-3-yl)methyl phosphate transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.108. EC 2.6.1.108 maps to
+    exactly one curated Rhea reaction (RHEA:43564), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-(hydroxymethyl)-2-furancarboxaldehyde
+    phosphate + L-alanine = [5-(aminomethyl)-3-furyl]methyl phosphate + pyruvate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (5-formylfuran-3-yl)methyl phosphate transaminase
+    grounding: EC:2.6.1.108
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-(hydroxymethyl)-2-furancarboxaldehyde phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:83407
+    description: Formula C6H5O6P.
+  - node_id: sub2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: prd1
+    label: '[5-(aminomethyl)-3-furyl]methyl phosphate'
+    node_type: CHEMICAL
+    grounding: CHEBI:83431
+    description: Formula C6H9NO5P.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prot_Q58097
+    node_type: PROTEIN
+    label: MFNC_METJA
+    grounding: UniProtKB:Q58097
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-(hydroxymethyl)-2-furancarboxaldehyde phosphate is a substrate consumed by RHEA:43564
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43565
+      snippet: 4-(hydroxymethyl)-2-furancarboxaldehyde phosphate + L-alanine => [5-(aminomethyl)-3-furyl]methyl
+        phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:43565 declares side 43564_L as its substrates
+        (rh:substrates); the master reaction RHEA:43564 is undirected. This participant is CHEBI:83407
+        with coefficient 1. Rhea cites PMID:24977328 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-alanine is a substrate consumed by RHEA:43564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43565
+      snippet: 4-(hydroxymethyl)-2-furancarboxaldehyde phosphate + L-alanine => [5-(aminomethyl)-3-furyl]methyl
+        phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:43565 declares side 43564_L as its substrates
+        (rh:substrates); the master reaction RHEA:43564 is undirected. This participant is CHEBI:57972
+        with coefficient 1. Rhea cites PMID:24977328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[5-(aminomethyl)-3-furyl]methyl phosphate is a product released by RHEA:43564 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:43565
+      snippet: 4-(hydroxymethyl)-2-furancarboxaldehyde phosphate + L-alanine => [5-(aminomethyl)-3-furyl]methyl
+        phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:43565 declares side 43564_R as its products
+        (rh:products); the master reaction RHEA:43564 is undirected. This participant is CHEBI:83431 with
+        coefficient 1. Rhea cites PMID:24977328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:43564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43565
+      snippet: 4-(hydroxymethyl)-2-furancarboxaldehyde phosphate + L-alanine => [5-(aminomethyl)-3-furyl]methyl
+        phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:43565 declares side 43564_R as its products
+        (rh:products); the master reaction RHEA:43564 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:24977328 for this reaction.
+  - subject: prot_Q58097
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MFNC_METJA is an exemplar enzyme with EC 2.6.1.108 activity.
+    evidence:
+    - reference: EC:2.6.1.108
+      snippet: DR   Q58097, MFNC_METJA ;
+      notes: ExPASy ENZYME entry EC 2.6.1.108 cross-references UniProtKB:Q58097 (MFNC_METJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

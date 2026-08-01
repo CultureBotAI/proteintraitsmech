@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.1.54
     mapping_source: rhea2ec
@@ -28,4 +28,130 @@ definitions:
       Catalyses the reaction: dCMP + (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate = 5-methyldeoxycytidine 5'-phosphate + 7,8-dihydrofolate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dCMP + (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate = 5-methyldeoxycytidine
+    5'-phosphat…
+  description: Substrate-to-product chemistry of RHEA:11568, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:11569 (rh:substrates → 11568_L, rh:products → 11568_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dCMP + (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate = 5-methyldeoxycytidine…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:11568
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dCMP + (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate = 5-methyldeoxycytidine 5''-phosphate
+      + 7,8-dihydrofolate'
+  - node_id: sub1
+    label: dCMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57566
+    description: Formula C9H12N3O7P.
+  - node_id: sub2
+    label: (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:15636
+    description: Formula C20H21N7O6.
+  - node_id: prd1
+    label: 5-methyldeoxycytidine 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57886
+    description: Formula C10H14N3O7P.
+  - node_id: prd2
+    label: 7,8-dihydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:57451
+    description: Formula C19H19N7O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: deoxycytidylate C-methyltransferase activity
+    grounding: GO:0050003
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: deoxycytidylate C-methyltransferase
+    grounding: EC:2.1.1.54
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dCMP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11569
+      snippet: dCMP + (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate => 5-methyldeoxycytidine 5'-phosphate
+        + 7,8-dihydrofolate
+      notes: Rhea's left-to-right directional reaction RHEA:11569 declares side 11568_L as its substrates
+        (rh:substrates); the master reaction RHEA:11568 is undirected. This participant is CHEBI:57566
+        with coefficient 1. Rhea cites PMID:980110 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11569
+      snippet: dCMP + (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate => 5-methyldeoxycytidine 5'-phosphate
+        + 7,8-dihydrofolate
+      notes: Rhea's left-to-right directional reaction RHEA:11569 declares side 11568_L as its substrates
+        (rh:substrates); the master reaction RHEA:11568 is undirected. This participant is CHEBI:15636
+        with coefficient 1. Rhea cites PMID:980110 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-methyldeoxycytidine 5'-phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11569
+      snippet: dCMP + (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate => 5-methyldeoxycytidine 5'-phosphate
+        + 7,8-dihydrofolate
+      notes: Rhea's left-to-right directional reaction RHEA:11569 declares side 11568_R as its products
+        (rh:products); the master reaction RHEA:11568 is undirected. This participant is CHEBI:57886 with
+        coefficient 1. Rhea cites PMID:980110 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 7,8-dihydrofolate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11569
+      snippet: dCMP + (6R)-5,10-methylene-5,6,7,8-tetrahydrofolate => 5-methyldeoxycytidine 5'-phosphate
+        + 7,8-dihydrofolate
+      notes: Rhea's left-to-right directional reaction RHEA:11569 declares side 11568_R as its products
+        (rh:products); the master reaction RHEA:11568 is undirected. This participant is CHEBI:57451 with
+        coefficient 1. Rhea cites PMID:980110 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:11568
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050003"/>
+      notes: The rdfs:seeAlso triple on RHEA:11568 in rhea.rdf. GO term GO:0050003 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.1.54; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:11568
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.54"/>
+      notes: The rh:ec triple on RHEA:11568 in rhea.rdf. EC 2.1.1.54 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

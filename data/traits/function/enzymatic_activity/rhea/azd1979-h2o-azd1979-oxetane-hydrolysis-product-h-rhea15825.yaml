@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.3.2.9
     mapping_source: rhea2ec
@@ -28,4 +28,106 @@ definitions:
       Catalyses the reaction: AZD1979 + H2O = AZD1979 oxetane hydrolysis product + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of AZD1979 + H2O = AZD1979 oxetane hydrolysis product + H(+)
+  description: Substrate-to-product chemistry of RHEA:15825, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:15826 (rh:substrates → 15825_L, rh:products → 15825_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of AZD1979 + H2O = AZD1979 oxetane hydrolysis product + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15825
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: AZD1979 + H2O = AZD1979 oxetane hydrolysis product + H(+)'
+  - node_id: sub1
+    label: AZD1979
+    node_type: CHEMICAL
+    grounding: CHEBI:138980
+    description: Formula C25H27N4O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: AZD1979 oxetane hydrolysis product
+    node_type: CHEMICAL
+    grounding: CHEBI:139019
+    description: Formula C25H28N4O6.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: microsomal epoxide hydrolase
+    grounding: EC:3.3.2.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: AZD1979 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15826
+      snippet: AZD1979 + H2O => AZD1979 oxetane hydrolysis product + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15826 declares side 15825_L as its substrates
+        (rh:substrates); the master reaction RHEA:15825 is undirected. This participant is CHEBI:138980
+        with coefficient 1. Rhea cites PMID:28600384 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15826
+      snippet: AZD1979 + H2O => AZD1979 oxetane hydrolysis product + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15826 declares side 15825_L as its substrates
+        (rh:substrates); the master reaction RHEA:15825 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:28600384 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: AZD1979 oxetane hydrolysis product is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:15826
+      snippet: AZD1979 + H2O => AZD1979 oxetane hydrolysis product + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15826 declares side 15825_R as its products
+        (rh:products); the master reaction RHEA:15825 is undirected. This participant is CHEBI:139019
+        with coefficient 1. Rhea cites PMID:28600384 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15826
+      snippet: AZD1979 + H2O => AZD1979 oxetane hydrolysis product + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15826 declares side 15825_R as its products
+        (rh:products); the master reaction RHEA:15825 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:28600384 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.3.2.9; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:15825
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.3.2.9"/>
+      notes: The rh:ec triple on RHEA:15825 in rhea.rdf. EC 3.3.2.9 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

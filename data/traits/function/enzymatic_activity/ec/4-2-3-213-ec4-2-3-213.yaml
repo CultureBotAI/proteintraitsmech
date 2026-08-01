@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: all-trans-hexaprenyl diphosphate + H2O = colleterpenol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of colleterpenol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.213. EC 4.2.3.213 maps to
+    exactly one curated Rhea reaction (RHEA:77979), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-hexaprenyl
+    diphosphate + H2O = colleterpenol + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: colleterpenol synthase
+    grounding: EC:4.2.3.213
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-hexaprenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58179
+    description: Formula C30H49O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: colleterpenol
+    node_type: CHEMICAL
+    grounding: CHEBI:192981
+    description: Formula C30H50O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A8H4CUY8
+    node_type: PROTEIN
+    label: CGCS_COLGL
+    grounding: UniProtKB:A0A8H4CUY8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-hexaprenyl diphosphate is a substrate consumed by RHEA:77979 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77980
+      snippet: all-trans-hexaprenyl diphosphate + H2O => colleterpenol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77980 declares side 77979_L as its substrates
+        (rh:substrates); the master reaction RHEA:77979 is undirected. This participant is CHEBI:58179
+        with coefficient 1. Rhea cites PMID:35650436 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:77979 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77980
+      snippet: all-trans-hexaprenyl diphosphate + H2O => colleterpenol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77980 declares side 77979_L as its substrates
+        (rh:substrates); the master reaction RHEA:77979 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:35650436 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: colleterpenol is a product released by RHEA:77979 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77980
+      snippet: all-trans-hexaprenyl diphosphate + H2O => colleterpenol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77980 declares side 77979_R as its products
+        (rh:products); the master reaction RHEA:77979 is undirected. This participant is CHEBI:192981
+        with coefficient 1. Rhea cites PMID:35650436 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:77979 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77980
+      snippet: all-trans-hexaprenyl diphosphate + H2O => colleterpenol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77980 declares side 77979_R as its products
+        (rh:products); the master reaction RHEA:77979 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:35650436 for this reaction.
+  - subject: prot_A0A8H4CUY8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGCS_COLGL is an exemplar enzyme with EC 4.2.3.213 activity.
+    evidence:
+    - reference: EC:4.2.3.213
+      snippet: DR   A0A8H4CUY8, CGCS_COLGL ;
+      notes: ExPASy ENZYME entry EC 4.2.3.213 cross-references UniProtKB:A0A8H4CUY8 (CGCS_COLGL) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

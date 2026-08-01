@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 xrefs:
@@ -40,4 +40,150 @@ definitions:
       Catalyses: quercetin + O2 = 2-(3,4-dihydroxybenzoyloxy)-4,6-dihydroxybenzoate + CO
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of quercetin 2,3-dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.24. EC 1.13.11.24 maps to
+    exactly one curated Rhea reaction (RHEA:15381), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "quercetin
+    + O2 = 2-(3,4-dihydroxybenzoyloxy)-4,6-dihydroxybenzoate + CO". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: quercetin 2,3-dioxygenase
+    grounding: EC:1.13.11.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: quercetin
+    node_type: CHEMICAL
+    grounding: CHEBI:57694
+    description: Formula C15H9O7.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 2-(3,4-dihydroxybenzoyloxy)-4,6-dihydroxybenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57628
+    description: Formula C14H9O8.
+  - node_id: prd2
+    label: CO
+    node_type: CHEMICAL
+    grounding: CHEBI:17245
+    description: Formula CO.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: quercetin 2,3-dioxygenase activity
+    grounding: GO:0008127
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O00625
+    node_type: PROTEIN
+    label: PIR_HUMAN
+    grounding: UniProtKB:O00625
+  - node_id: prot_Q9D711
+    node_type: PROTEIN
+    label: PIR_MOUSE
+    grounding: UniProtKB:Q9D711
+  - node_id: prot_Q5M827
+    node_type: PROTEIN
+    label: PIR_RAT
+    grounding: UniProtKB:Q5M827
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: quercetin is a substrate consumed by RHEA:15381 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15382
+      snippet: quercetin + O2 => 2-(3,4-dihydroxybenzoyloxy)-4,6-dihydroxybenzoate + CO
+      notes: Rhea's left-to-right directional reaction RHEA:15382 declares side 15381_L as its substrates
+        (rh:substrates); the master reaction RHEA:15381 is undirected. This participant is CHEBI:57694
+        with coefficient 1. Rhea cites PMID:14741339, PMID:15951572, PMID:5579942, PMID:12486225 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:15381 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15382
+      snippet: quercetin + O2 => 2-(3,4-dihydroxybenzoyloxy)-4,6-dihydroxybenzoate + CO
+      notes: Rhea's left-to-right directional reaction RHEA:15382 declares side 15381_L as its substrates
+        (rh:substrates); the master reaction RHEA:15381 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:14741339, PMID:15951572, PMID:5579942, PMID:12486225 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-(3,4-dihydroxybenzoyloxy)-4,6-dihydroxybenzoate is a product released by RHEA:15381
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15382
+      snippet: quercetin + O2 => 2-(3,4-dihydroxybenzoyloxy)-4,6-dihydroxybenzoate + CO
+      notes: Rhea's left-to-right directional reaction RHEA:15382 declares side 15381_R as its products
+        (rh:products); the master reaction RHEA:15381 is undirected. This participant is CHEBI:57628 with
+        coefficient 1. Rhea cites PMID:14741339, PMID:15951572, PMID:5579942, PMID:12486225 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO is a product released by RHEA:15381 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15382
+      snippet: quercetin + O2 => 2-(3,4-dihydroxybenzoyloxy)-4,6-dihydroxybenzoate + CO
+      notes: Rhea's left-to-right directional reaction RHEA:15382 declares side 15381_R as its products
+        (rh:products); the master reaction RHEA:15381 is undirected. This participant is CHEBI:17245 with
+        coefficient 1. Rhea cites PMID:14741339, PMID:15951572, PMID:5579942, PMID:12486225 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.24
+      snippet: EC:1.13.11.24 > GO:quercetin 2,3-dioxygenase activity ; GO:0008127
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008127 is itself a record
+        in this KB.
+  - subject: prot_O00625
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PIR_HUMAN is an exemplar enzyme with EC 1.13.11.24 activity.
+    evidence:
+    - reference: EC:1.13.11.24
+      snippet: DR   O00625, PIR_HUMAN  ;  Q9D711, PIR_MOUSE  ;  Q5M827, PIR_RAT    ;
+      notes: ExPASy ENZYME entry EC 1.13.11.24 cross-references UniProtKB:O00625 (PIR_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9D711
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PIR_MOUSE is an exemplar enzyme with EC 1.13.11.24 activity.
+    evidence:
+    - reference: EC:1.13.11.24
+      snippet: DR   O00625, PIR_HUMAN  ;  Q9D711, PIR_MOUSE  ;  Q5M827, PIR_RAT    ;
+      notes: ExPASy ENZYME entry EC 1.13.11.24 cross-references UniProtKB:Q9D711 (PIR_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q5M827
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PIR_RAT is an exemplar enzyme with EC 1.13.11.24 activity.
+    evidence:
+    - reference: EC:1.13.11.24
+      snippet: DR   O00625, PIR_HUMAN  ;  Q9D711, PIR_MOUSE  ;  Q5M827, PIR_RAT    ;
+      notes: ExPASy ENZYME entry EC 1.13.11.24 cross-references UniProtKB:Q5M827 (PIR_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

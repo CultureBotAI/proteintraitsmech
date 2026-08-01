@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.5.1.-
 synonyms:
@@ -45,4 +45,282 @@ definitions:
       Catalyses: (1) L-proline + NAD(+) = (S)-1-pyrroline-5-carboxylate + NADH + 2 H(+). (2) L-proline + NADP(+) = (S)-1-pyrroline-5-carboxylate + NADPH + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pyrroline-5-carboxylate reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.5.1.2. Rhea assigns 2 curated
+    reactions to EC 1.5.1.2. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "(1) L-proline + NAD(+) = (S)-1-pyrroline-5-carboxylate + NADH +
+    2 H(+). (2) L-proline + NADP(+) = (S)-1-pyrroline-5-carboxylate + NADPH + 2 H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: pyrroline-5-carboxylate reductase
+    grounding: EC:1.5.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-proline + NAD(+) = (S)-1-pyrroline-5-carboxylate + NADH + 2 H(+)
+    grounding: RHEA:14105
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-proline + NAD(+) = (S)-1-pyrroline-5-carboxylate + NADH + 2 H(+)'
+  - node_id: rxn1_sub1
+    label: L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:60039
+    description: Formula C5H9NO2.
+  - node_id: rxn1_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn1_prd1
+    label: (S)-1-pyrroline-5-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:17388
+    description: Formula C5H6NO2.
+  - node_id: rxn1_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-proline + NADP(+) = (S)-1-pyrroline-5-carboxylate + NADPH + 2 H(+)
+    grounding: RHEA:14109
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-proline + NADP(+) = (S)-1-pyrroline-5-carboxylate + NADPH + 2 H(+)'
+  - node_id: rxn2_sub1
+    label: L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:60039
+    description: Formula C5H9NO2.
+  - node_id: rxn2_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_prd1
+    label: (S)-1-pyrroline-5-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:17388
+    description: Formula C5H6NO2.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: pyrroline-5-carboxylate reductase activity
+    grounding: GO:0004735
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P54904
+    node_type: PROTEIN
+    label: P5CR1_ARATH
+    grounding: UniProtKB:P54904
+  - node_id: prot_E0TY11
+    node_type: PROTEIN
+    label: P5CR1_BACSH
+    grounding: UniProtKB:E0TY11
+  - node_id: prot_P0CI77
+    node_type: PROTEIN
+    label: P5CR1_BACSU
+    grounding: UniProtKB:P0CI77
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:14105 is one of the 2 curated reactions Rhea assigns to EC 1.5.1.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:14105
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.1.2"/>
+      notes: The rh:ec triple on RHEA:14105 in rhea.rdf assigns that reaction to EC 1.5.1.2.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: L-proline is a substrate consumed by RHEA:14105 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14106
+      snippet: L-proline + NAD(+) => (S)-1-pyrroline-5-carboxylate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14106 declares side 14105_L as its substrates
+        (rh:substrates); the master reaction RHEA:14105 is undirected. This participant is CHEBI:60039
+        with coefficient 1. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NAD(+) is a substrate consumed by RHEA:14105 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14106
+      snippet: L-proline + NAD(+) => (S)-1-pyrroline-5-carboxylate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14106 declares side 14105_L as its substrates
+        (rh:substrates); the master reaction RHEA:14105 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (S)-1-pyrroline-5-carboxylate is a product released by RHEA:14105 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14106
+      snippet: L-proline + NAD(+) => (S)-1-pyrroline-5-carboxylate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14106 declares side 14105_R as its products
+        (rh:products); the master reaction RHEA:14105 is undirected. This participant is CHEBI:17388 with
+        coefficient 1. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADH is a product released by RHEA:14105 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14106
+      snippet: L-proline + NAD(+) => (S)-1-pyrroline-5-carboxylate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14106 declares side 14105_R as its products
+        (rh:products); the master reaction RHEA:14105 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:14105 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:14106
+      snippet: L-proline + NAD(+) => (S)-1-pyrroline-5-carboxylate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14106 declares side 14105_R as its products
+        (rh:products); the master reaction RHEA:14105 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:14109 is one of the 2 curated reactions Rhea assigns to EC 1.5.1.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:14109
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.1.2"/>
+      notes: The rh:ec triple on RHEA:14109 in rhea.rdf assigns that reaction to EC 1.5.1.2.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: L-proline is a substrate consumed by RHEA:14109 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14110
+      snippet: L-proline + NADP(+) => (S)-1-pyrroline-5-carboxylate + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14110 declares side 14109_L as its substrates
+        (rh:substrates); the master reaction RHEA:14109 is undirected. This participant is CHEBI:60039
+        with coefficient 1. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADP(+) is a substrate consumed by RHEA:14109 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14110
+      snippet: L-proline + NADP(+) => (S)-1-pyrroline-5-carboxylate + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14110 declares side 14109_L as its substrates
+        (rh:substrates); the master reaction RHEA:14109 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (S)-1-pyrroline-5-carboxylate is a product released by RHEA:14109 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14110
+      snippet: L-proline + NADP(+) => (S)-1-pyrroline-5-carboxylate + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14110 declares side 14109_R as its products
+        (rh:products); the master reaction RHEA:14109 is undirected. This participant is CHEBI:17388 with
+        coefficient 1. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:14109 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14110
+      snippet: L-proline + NADP(+) => (S)-1-pyrroline-5-carboxylate + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14110 declares side 14109_R as its products
+        (rh:products); the master reaction RHEA:14109 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:14109 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:14110
+      snippet: L-proline + NADP(+) => (S)-1-pyrroline-5-carboxylate + NADPH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14110 declares side 14109_R as its products
+        (rh:products); the master reaction RHEA:14109 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:2722838, PMID:6296787, PMID:23024808, PMID:12133 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.5.1.2
+      snippet: EC:1.5.1.2 > GO:pyrroline-5-carboxylate reductase activity ; GO:0004735
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004735 is itself a record
+        in this KB.
+  - subject: prot_P54904
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: P5CR1_ARATH is an exemplar enzyme with EC 1.5.1.2 activity.
+    evidence:
+    - reference: EC:1.5.1.2
+      snippet: DR   P54904, P5CR1_ARATH;  E0TY11, P5CR1_BACSH;  P0CI77, P5CR1_BACSU;
+      notes: ExPASy ENZYME entry EC 1.5.1.2 cross-references UniProtKB:P54904 (P5CR1_ARATH) as a protein
+        with this activity.
+  - subject: prot_E0TY11
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: P5CR1_BACSH is an exemplar enzyme with EC 1.5.1.2 activity.
+    evidence:
+    - reference: EC:1.5.1.2
+      snippet: DR   P54904, P5CR1_ARATH;  E0TY11, P5CR1_BACSH;  P0CI77, P5CR1_BACSU;
+      notes: ExPASy ENZYME entry EC 1.5.1.2 cross-references UniProtKB:E0TY11 (P5CR1_BACSH) as a protein
+        with this activity.
+  - subject: prot_P0CI77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: P5CR1_BACSU is an exemplar enzyme with EC 1.5.1.2 activity.
+    evidence:
+    - reference: EC:1.5.1.2
+      snippet: DR   P54904, P5CR1_ARATH;  E0TY11, P5CR1_BACSH;  P0CI77, P5CR1_BACSU;
+      notes: ExPASy ENZYME entry EC 1.5.1.2 cross-references UniProtKB:P0CI77 (P5CR1_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

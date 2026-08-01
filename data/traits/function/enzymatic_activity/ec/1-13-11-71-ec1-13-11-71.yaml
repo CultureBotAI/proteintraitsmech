@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -41,4 +41,152 @@ definitions:
       Catalyses: all-trans-beta-carotene + O2 = beta-ionone + all-trans-10'-apo-beta- carotenal
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carotenoid-9',10'-cleaving dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.71. EC 1.13.11.71 maps to
+    exactly one curated Rhea reaction (RHEA:26389), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-beta-carotene
+    + O2 = beta-ionone + all-trans-10''-apo-beta- carotenal". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: carotenoid-9',10'-cleaving dioxygenase
+    grounding: EC:1.13.11.71
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-beta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:17579
+    description: Formula C40H56.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: beta-ionone
+    node_type: CHEMICAL
+    grounding: CHEBI:32325
+    description: Formula C13H20O.
+  - node_id: prd2
+    label: all-trans-10'-apo-beta-carotenal
+    node_type: CHEMICAL
+    grounding: CHEBI:53153
+    description: Formula C27H36O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta,beta-carotene-9',10'-cleaving oxygenase activity
+    grounding: GO:0102076
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9BYV7
+    node_type: PROTEIN
+    label: BCDO2_HUMAN
+    grounding: UniProtKB:Q9BYV7
+  - node_id: prot_Q8HXG8
+    node_type: PROTEIN
+    label: BCDO2_MACFA
+    grounding: UniProtKB:Q8HXG8
+  - node_id: prot_Q99NF1
+    node_type: PROTEIN
+    label: BCDO2_MOUSE
+    grounding: UniProtKB:Q99NF1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-beta-carotene is a substrate consumed by RHEA:26389 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26390
+      snippet: all-trans-beta-carotene + O2 => beta-ionone + all-trans-10'-apo-beta-carotenal
+      notes: Rhea's left-to-right directional reaction RHEA:26390 declares side 26389_L as its substrates
+        (rh:substrates); the master reaction RHEA:26389 is undirected. This participant is CHEBI:17579
+        with coefficient 1. Rhea cites PMID:15983114, PMID:11278918, PMID:14704328, PMID:21106934 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:26389 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26390
+      snippet: all-trans-beta-carotene + O2 => beta-ionone + all-trans-10'-apo-beta-carotenal
+      notes: Rhea's left-to-right directional reaction RHEA:26390 declares side 26389_L as its substrates
+        (rh:substrates); the master reaction RHEA:26389 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:15983114, PMID:11278918, PMID:14704328, PMID:21106934 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-ionone is a product released by RHEA:26389 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26390
+      snippet: all-trans-beta-carotene + O2 => beta-ionone + all-trans-10'-apo-beta-carotenal
+      notes: Rhea's left-to-right directional reaction RHEA:26390 declares side 26389_R as its products
+        (rh:products); the master reaction RHEA:26389 is undirected. This participant is CHEBI:32325 with
+        coefficient 1. Rhea cites PMID:15983114, PMID:11278918, PMID:14704328, PMID:21106934 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: all-trans-10'-apo-beta-carotenal is a product released by RHEA:26389 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:26390
+      snippet: all-trans-beta-carotene + O2 => beta-ionone + all-trans-10'-apo-beta-carotenal
+      notes: Rhea's left-to-right directional reaction RHEA:26390 declares side 26389_R as its products
+        (rh:products); the master reaction RHEA:26389 is undirected. This participant is CHEBI:53153 with
+        coefficient 1. Rhea cites PMID:15983114, PMID:11278918, PMID:14704328, PMID:21106934 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.71
+      snippet: EC:1.13.11.71 > GO:beta,beta-carotene-9',10'-cleaving oxygenase activity ; GO:0102076
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102076 is itself a record
+        in this KB.
+  - subject: prot_Q9BYV7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BCDO2_HUMAN is an exemplar enzyme with EC 1.13.11.71 activity.
+    evidence:
+    - reference: EC:1.13.11.71
+      snippet: DR   Q9BYV7, BCDO2_HUMAN;  Q8HXG8, BCDO2_MACFA;  Q99NF1, BCDO2_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.13.11.71 cross-references UniProtKB:Q9BYV7 (BCDO2_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q8HXG8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BCDO2_MACFA is an exemplar enzyme with EC 1.13.11.71 activity.
+    evidence:
+    - reference: EC:1.13.11.71
+      snippet: DR   Q9BYV7, BCDO2_HUMAN;  Q8HXG8, BCDO2_MACFA;  Q99NF1, BCDO2_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.13.11.71 cross-references UniProtKB:Q8HXG8 (BCDO2_MACFA) as a protein
+        with this activity.
+  - subject: prot_Q99NF1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BCDO2_MOUSE is an exemplar enzyme with EC 1.13.11.71 activity.
+    evidence:
+    - reference: EC:1.13.11.71
+      snippet: DR   Q9BYV7, BCDO2_HUMAN;  Q8HXG8, BCDO2_MACFA;  Q99NF1, BCDO2_MOUSE;
+      notes: ExPASy ENZYME entry EC 1.13.11.71 cross-references UniProtKB:Q99NF1 (BCDO2_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

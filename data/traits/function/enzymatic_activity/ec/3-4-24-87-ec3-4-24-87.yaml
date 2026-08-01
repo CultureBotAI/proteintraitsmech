@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -42,4 +42,52 @@ definitions:
       Catalyses: The enzyme cleaves the von Willebrand factor at bond 842-Tyr-|-Met-843 within the A2 domain
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ADAMTS13 endopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.87. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "The enzyme
+    cleaves the von Willebrand factor at bond 842-Tyr-|-Met-843 within the A2 domain".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ADAMTS13 endopeptidase
+    grounding: EC:3.4.24.87
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q76LX8
+    node_type: PROTEIN
+    label: ATS13_HUMAN
+    grounding: UniProtKB:Q76LX8
+  - node_id: prot_Q769J6
+    node_type: PROTEIN
+    label: ATS13_MOUSE
+    grounding: UniProtKB:Q769J6
+  edges:
+  - subject: prot_Q76LX8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATS13_HUMAN is an exemplar enzyme with EC 3.4.24.87 activity.
+    evidence:
+    - reference: EC:3.4.24.87
+      snippet: DR   Q76LX8, ATS13_HUMAN;  Q769J6, ATS13_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.24.87 cross-references UniProtKB:Q76LX8 (ATS13_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q769J6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATS13_MOUSE is an exemplar enzyme with EC 3.4.24.87 activity.
+    evidence:
+    - reference: EC:3.4.24.87
+      snippet: DR   Q76LX8, ATS13_HUMAN;  Q769J6, ATS13_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.24.87 cross-references UniProtKB:Q769J6 (ATS13_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

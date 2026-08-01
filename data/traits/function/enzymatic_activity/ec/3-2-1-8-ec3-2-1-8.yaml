@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: Endohydrolysis of (1->4)-beta-D-xylosidic linkages in xylans
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of endo-1,4-beta-xylanase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.8. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endohydrolysis
+    of (1->4)-beta-D-xylosidic linkages in xylans".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: endo-1,4-beta-xylanase
+    grounding: EC:3.2.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: endo-1,4-beta-xylanase activity
+    grounding: GO:0031176
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P40942
+    node_type: PROTEIN
+    label: CEXY_THEST
+    grounding: UniProtKB:P40942
+  - node_id: prot_A0A384JXV5
+    node_type: PROTEIN
+    label: EIX1_BOTFB
+    grounding: UniProtKB:A0A384JXV5
+  - node_id: prot_G2X4G0
+    node_type: PROTEIN
+    label: EIX1_VERDV
+    grounding: UniProtKB:G2X4G0
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.8
+      snippet: EC:3.2.1.8 > GO:endo-1,4-beta-xylanase activity ; GO:0031176
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0031176 is itself a record
+        in this KB.
+  - subject: prot_P40942
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEXY_THEST is an exemplar enzyme with EC 3.2.1.8 activity.
+    evidence:
+    - reference: EC:3.2.1.8
+      snippet: DR   P40942, CEXY_THEST ;  A0A384JXV5, EIX1_BOTFB ;  G2X4G0, EIX1_VERDV ;
+      notes: ExPASy ENZYME entry EC 3.2.1.8 cross-references UniProtKB:P40942 (CEXY_THEST) as a protein
+        with this activity.
+  - subject: prot_A0A384JXV5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EIX1_BOTFB is an exemplar enzyme with EC 3.2.1.8 activity.
+    evidence:
+    - reference: EC:3.2.1.8
+      snippet: DR   P40942, CEXY_THEST ;  A0A384JXV5, EIX1_BOTFB ;  G2X4G0, EIX1_VERDV ;
+      notes: ExPASy ENZYME entry EC 3.2.1.8 cross-references UniProtKB:A0A384JXV5 (EIX1_BOTFB) as a protein
+        with this activity.
+  - subject: prot_G2X4G0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EIX1_VERDV is an exemplar enzyme with EC 3.2.1.8 activity.
+    evidence:
+    - reference: EC:3.2.1.8
+      snippet: DR   P40942, CEXY_THEST ;  A0A384JXV5, EIX1_BOTFB ;  G2X4G0, EIX1_VERDV ;
+      notes: ExPASy ENZYME entry EC 3.2.1.8 cross-references UniProtKB:G2X4G0 (EIX1_VERDV) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

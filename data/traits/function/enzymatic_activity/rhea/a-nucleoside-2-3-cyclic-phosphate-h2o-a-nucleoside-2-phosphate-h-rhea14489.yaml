@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.1.4.37
     mapping_source: rhea2ec
@@ -30,4 +30,293 @@ definitions:
       Catalyses the reaction: a nucleoside 2',3'-cyclic phosphate + H2O = a nucleoside 2'-phosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a nucleoside 2',3'-cyclic phosphate + H2O = a nucleoside 2'-phosphate +
+    H(+)
+  description: Substrate-to-product chemistry of RHEA:14489, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:14490 (rh:substrates → 14489_L, rh:products → 14489_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a nucleoside 2',3'-cyclic phosphate + H2O = a nucleoside 2'-phosphate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14489
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a nucleoside 2'',3''-cyclic phosphate + H2O = a nucleoside 2''-phosphate + H(+)'
+  - node_id: sub1
+    label: a nucleoside 2',3'-cyclic phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:66954
+    description: Formula C5H7O6PR.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a nucleoside 2'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:78552
+    description: Formula C5H8O7PR.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2',3'-cyclic-nucleotide 3'-phosphodiesterase activity
+    grounding: GO:0004113
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2',3'-cyclic-nucleotide 3'-phosphodiesterase
+    grounding: EC:3.1.4.37
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a nucleoside 2',3'-cyclic phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14490
+      snippet: a nucleoside 2',3'-cyclic phosphate + H2O => a nucleoside 2'-phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14490 declares side 14489_L as its substrates
+        (rh:substrates); the master reaction RHEA:14489 is undirected. This participant is CHEBI:66954
+        with coefficient 1. Rhea cites PMID:10734185, PMID:6272743 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14490
+      snippet: a nucleoside 2',3'-cyclic phosphate + H2O => a nucleoside 2'-phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14490 declares side 14489_L as its substrates
+        (rh:substrates); the master reaction RHEA:14489 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10734185, PMID:6272743 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a nucleoside 2'-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14490
+      snippet: a nucleoside 2',3'-cyclic phosphate + H2O => a nucleoside 2'-phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14490 declares side 14489_R as its products
+        (rh:products); the master reaction RHEA:14489 is undirected. This participant is CHEBI:78552 with
+        coefficient 1. Rhea cites PMID:10734185, PMID:6272743 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14490
+      snippet: a nucleoside 2',3'-cyclic phosphate + H2O => a nucleoside 2'-phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14490 declares side 14489_R as its products
+        (rh:products); the master reaction RHEA:14489 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:10734185, PMID:6272743 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:14489
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004113"/>
+      notes: The rdfs:seeAlso triple on RHEA:14489 in rhea.rdf. GO term GO:0004113 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.1.4.37; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:14489
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.4.37"/>
+      notes: The rh:ec triple on RHEA:14489 in rhea.rdf. EC 3.1.4.37 is itself a record in this KB.
+- graph_id: catalytic_residues_mcsa794
+  title: Catalytic residues of RHEA:14489 (from MCSA:794)
+  description: 'The catalytic residues that carry out RHEA:14489, joined from M-CSA entry 794. 6 residues,
+    reused verbatim from the MCSA:794 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 794''s reactant set (CHEBI:15377, CHEBI:66954) equals Rhea side 14489_L exactly,
+    and its product set (CHEBI:15378, CHEBI:78552) equals side 14489_R exactly. EC agreement bounded the
+    candidates but was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of a nucleoside 2',3'-cyclic phosphate + H2O = a nucleoside 2'-phosphate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14489
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: a nucleoside 2'',3''-cyclic phosphate + H2O = a nucleoside 2''-phosphate + H(+)'
+  - node_id: mcsa
+    label: 2',3'-cyclic-nucleotide 3'-phosphodiesterase
+    node_type: MOTIF
+    grounding: MCSA:794
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: his42
+    label: catalytic His42 (M-CSA/PDB numbering; UniProt residue 42)
+    node_type: RESIDUE
+    grounding: UniProtKB:O04147
+    description: 'M-CSA roles: proton donor. Reused verbatim from the MCSA:794 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: thr44
+    label: catalytic Thr44 (M-CSA/PDB numbering; UniProt residue 44)
+    node_type: RESIDUE
+    grounding: UniProtKB:O04147
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:794 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: met117
+    label: catalytic Met117 (M-CSA/PDB numbering; UniProt residue 117)
+    node_type: RESIDUE
+    grounding: UniProtKB:O04147
+    description: 'M-CSA roles: electrostatic stabiliser, increase basicity. Reused verbatim from the MCSA:794
+      record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: his119
+    label: catalytic His119 (M-CSA/PDB numbering; UniProt residue 119)
+    node_type: RESIDUE
+    grounding: UniProtKB:O04147
+    description: 'M-CSA roles: increase nucleophilicity, proton acceptor. Reused verbatim from the MCSA:794
+      record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: ser121
+    label: catalytic Ser121 (M-CSA/PDB numbering; UniProt residue 121)
+    node_type: RESIDUE
+    grounding: UniProtKB:O04147
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:794 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: tyr124
+    label: catalytic Tyr124 (M-CSA/PDB numbering; UniProt residue 124)
+    node_type: RESIDUE
+    grounding: UniProtKB:O04147
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:794 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 794 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:794
+      snippet: 2',3'-cyclic nucleotide(1-) [reactant]; water [reactant]; ribonucleoside 2'-monophosphate(2-)
+        [product]; hydron [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 794, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 794''s reactant
+        set (CHEBI:15377, CHEBI:66954) equals Rhea side 14489_L exactly, and its product set (CHEBI:15378,
+        CHEBI:78552) equals side 14489_R exactly. EC agreement bounded the candidates but was not sufficient
+        on its own.'
+  - subject: his42
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:794
+      snippet: proton donor
+      notes: 'M-CSA entry 794 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 794''s reactant set (CHEBI:15377,
+        CHEBI:66954) equals Rhea side 14489_L exactly, and its product set (CHEBI:15378, CHEBI:78552)
+        equals side 14489_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: thr44
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:794
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 794 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 794''s reactant set (CHEBI:15377,
+        CHEBI:66954) equals Rhea side 14489_L exactly, and its product set (CHEBI:15378, CHEBI:78552)
+        equals side 14489_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: met117
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:794
+      snippet: electrostatic stabiliser, increase basicity
+      notes: 'M-CSA entry 794 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 794''s reactant set (CHEBI:15377,
+        CHEBI:66954) equals Rhea side 14489_L exactly, and its product set (CHEBI:15378, CHEBI:78552)
+        equals side 14489_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: his119
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:794
+      snippet: increase nucleophilicity, proton acceptor
+      notes: 'M-CSA entry 794 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 794''s reactant set (CHEBI:15377,
+        CHEBI:66954) equals Rhea side 14489_L exactly, and its product set (CHEBI:15378, CHEBI:78552)
+        equals side 14489_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: ser121
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:794
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 794 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 794''s reactant set (CHEBI:15377,
+        CHEBI:66954) equals Rhea side 14489_L exactly, and its product set (CHEBI:15378, CHEBI:78552)
+        equals side 14489_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: tyr124
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:794
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 794 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 794''s reactant set (CHEBI:15377,
+        CHEBI:66954) equals Rhea side 14489_L exactly, and its product set (CHEBI:15378, CHEBI:78552)
+        equals side 14489_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa794' (7 evidence-backed edges) joining MCSA:794
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

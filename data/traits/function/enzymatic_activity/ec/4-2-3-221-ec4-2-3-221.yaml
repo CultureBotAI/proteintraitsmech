@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: all-trans-hexaprenyl diphosphate = macrophomene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of macrophomene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.221. EC 4.2.3.221 maps to
+    exactly one curated Rhea reaction (RHEA:77967), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-hexaprenyl
+    diphosphate = macrophomene + diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: macrophomene synthase
+    grounding: EC:4.2.3.221
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-hexaprenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58179
+    description: Formula C30H49O7P2.
+  - node_id: prd1
+    label: macrophomene
+    node_type: CHEMICAL
+    grounding: CHEBI:192980
+    description: Formula C30H48.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_K2SUY0
+    node_type: PROTEIN
+    label: MPMS_MACPH
+    grounding: UniProtKB:K2SUY0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-hexaprenyl diphosphate is a substrate consumed by RHEA:77967 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77968
+      snippet: all-trans-hexaprenyl diphosphate => macrophomene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77968 declares side 77967_L as its substrates
+        (rh:substrates); the master reaction RHEA:77967 is undirected. This participant is CHEBI:58179
+        with coefficient 1. Rhea cites PMID:35650436 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: macrophomene is a product released by RHEA:77967 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77968
+      snippet: all-trans-hexaprenyl diphosphate => macrophomene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77968 declares side 77967_R as its products
+        (rh:products); the master reaction RHEA:77967 is undirected. This participant is CHEBI:192980
+        with coefficient 1. Rhea cites PMID:35650436 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:77967 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77968
+      snippet: all-trans-hexaprenyl diphosphate => macrophomene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77968 declares side 77967_R as its products
+        (rh:products); the master reaction RHEA:77967 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:35650436 for this reaction.
+  - subject: prot_K2SUY0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MPMS_MACPH is an exemplar enzyme with EC 4.2.3.221 activity.
+    evidence:
+    - reference: EC:4.2.3.221
+      snippet: DR   K2SUY0, MPMS_MACPH ;
+      notes: ExPASy ENZYME entry EC 4.2.3.221 cross-references UniProtKB:K2SUY0 (MPMS_MACPH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

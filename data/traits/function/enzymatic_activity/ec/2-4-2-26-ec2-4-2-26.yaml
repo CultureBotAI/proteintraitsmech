@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 synonyms:
@@ -45,4 +45,202 @@ definitions:
       Catalyses: L-seryl-[protein] + UDP-alpha-D-xylose = 3-O-(beta-D-xylosyl)-L-seryl- [protein] + UDP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein xylosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.26. EC 2.4.2.26 maps to exactly
+    one curated Rhea reaction (RHEA:50192), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-seryl-[protein]
+    + UDP-alpha-D-xylose = 3-O-(beta-D-xylosyl)-L-seryl- [protein] + UDP + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein xylosyltransferase
+    grounding: EC:2.4.2.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9863
+    description: Rhea compound GENERIC:9863.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9863 (L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: UDP-alpha-D-xylose
+    node_type: CHEMICAL
+    grounding: CHEBI:57632
+    description: Formula C14H20N2O16P2.
+  - node_id: prd1
+    label: 3-O-(beta-D-xylosyl)-L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12567
+    description: Rhea compound GENERIC:12567.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O(3)-(beta-D-xylosyl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12567 (3-O-(beta-D-xylosyl)-L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:132085
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein xylosyltransferase activity
+    grounding: GO:0030158
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5QQ56
+    node_type: PROTEIN
+    label: XYLT1_CANLF
+    grounding: UniProtKB:Q5QQ56
+  - node_id: prot_Q86Y38
+    node_type: PROTEIN
+    label: XYLT1_HUMAN
+    grounding: UniProtKB:Q86Y38
+  - node_id: prot_Q811B1
+    node_type: PROTEIN
+    label: XYLT1_MOUSE
+    grounding: UniProtKB:Q811B1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-seryl-[protein] is a substrate consumed by RHEA:50192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50193
+      snippet: L-seryl-[protein] + UDP-alpha-D-xylose => 3-O-(beta-D-xylosyl)-L-seryl-[protein] + UDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50193 declares side 50192_L as its substrates
+        (rh:substrates); the master reaction RHEA:50192 is undirected. This participant is GENERIC:9863
+        with coefficient 1. Rhea cites PMID:11099377, PMID:5030630 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of L-seryl-[protein].
+    evidence:
+    - reference: RHEA:50192
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:9863 (L-seryl-[protein]) declares rh:reactivePart = L-serine residue
+        (CHEBI:29999).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-xylose is a substrate consumed by RHEA:50192 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50193
+      snippet: L-seryl-[protein] + UDP-alpha-D-xylose => 3-O-(beta-D-xylosyl)-L-seryl-[protein] + UDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50193 declares side 50192_L as its substrates
+        (rh:substrates); the master reaction RHEA:50192 is undirected. This participant is CHEBI:57632
+        with coefficient 1. Rhea cites PMID:11099377, PMID:5030630 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-O-(beta-D-xylosyl)-L-seryl-[protein] is a product released by RHEA:50192 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:50193
+      snippet: L-seryl-[protein] + UDP-alpha-D-xylose => 3-O-(beta-D-xylosyl)-L-seryl-[protein] + UDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50193 declares side 50192_R as its products
+        (rh:products); the master reaction RHEA:50192 is undirected. This participant is GENERIC:12567
+        with coefficient 1. Rhea cites PMID:11099377, PMID:5030630 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O(3)-(beta-D-xylosyl)-L-serine residue is the reactive part of 3-O-(beta-D-xylosyl)-L-seryl-[protein].
+    evidence:
+    - reference: RHEA:50192
+      snippet: O(3)-(beta-D-xylosyl)-L-serine residue
+      notes: Rhea compound GENERIC:12567 (3-O-(beta-D-xylosyl)-L-seryl-[protein]) declares rh:reactivePart
+        = O(3)-(beta-D-xylosyl)-L-serine residue (CHEBI:132085).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by RHEA:50192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50193
+      snippet: L-seryl-[protein] + UDP-alpha-D-xylose => 3-O-(beta-D-xylosyl)-L-seryl-[protein] + UDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50193 declares side 50192_R as its products
+        (rh:products); the master reaction RHEA:50192 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:11099377, PMID:5030630 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:50192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50193
+      snippet: L-seryl-[protein] + UDP-alpha-D-xylose => 3-O-(beta-D-xylosyl)-L-seryl-[protein] + UDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50193 declares side 50192_R as its products
+        (rh:products); the master reaction RHEA:50192 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11099377, PMID:5030630 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.2.26
+      snippet: EC:2.4.2.26 > GO:protein xylosyltransferase activity ; GO:0030158
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0030158 is itself a record
+        in this KB.
+  - subject: prot_Q5QQ56
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XYLT1_CANLF is an exemplar enzyme with EC 2.4.2.26 activity.
+    evidence:
+    - reference: EC:2.4.2.26
+      snippet: DR   Q5QQ56, XYLT1_CANLF;  Q86Y38, XYLT1_HUMAN;  Q811B1, XYLT1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.4.2.26 cross-references UniProtKB:Q5QQ56 (XYLT1_CANLF) as a protein
+        with this activity.
+  - subject: prot_Q86Y38
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XYLT1_HUMAN is an exemplar enzyme with EC 2.4.2.26 activity.
+    evidence:
+    - reference: EC:2.4.2.26
+      snippet: DR   Q5QQ56, XYLT1_CANLF;  Q86Y38, XYLT1_HUMAN;  Q811B1, XYLT1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.4.2.26 cross-references UniProtKB:Q86Y38 (XYLT1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q811B1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XYLT1_MOUSE is an exemplar enzyme with EC 2.4.2.26 activity.
+    evidence:
+    - reference: EC:2.4.2.26
+      snippet: DR   Q5QQ56, XYLT1_CANLF;  Q86Y38, XYLT1_HUMAN;  Q811B1, XYLT1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.4.2.26 cross-references UniProtKB:Q811B1 (XYLT1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -45,4 +45,158 @@ definitions:
       Catalyses: [(1->4)-alpha-D-glucosyl](n) + phosphate = [(1->4)-alpha-D-glucosyl](n-1) + alpha-D-glucose 1-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glycogen phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.1. EC 2.4.1.1 maps to exactly
+    one curated Rhea reaction (RHEA:41732), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[(1->4)-alpha-D-glucosyl](n)
+    + phosphate = [(1->4)-alpha-D-glucosyl](n-1) + alpha-D-glucose 1-phosphate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glycogen phosphorylase
+    grounding: EC:2.4.1.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[(1->4)-alpha-D-glucosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:15444
+    xrefs:
+    - RHEA-COMP:9584
+    description: Rhea compound POLYMER:9584. Formula H2O(C6H10O5)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: '[(1->4)-alpha-D-glucosyl](n-1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:15444
+    xrefs:
+    - RHEA-COMP:9586
+    description: Rhea compound POLYMER:9586. Formula H2O(C6H10O5)<i><sub>n-1</sub></i>.
+  - node_id: prd2
+    label: alpha-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58601
+    description: Formula C6H11O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 1,4-alpha-oligoglucan phosphorylase activity
+    grounding: GO:0004645
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9LIB2
+    node_type: PROTEIN
+    label: PHS1_ARATH
+    grounding: UniProtKB:Q9LIB2
+  - node_id: prot_Q00766
+    node_type: PROTEIN
+    label: PHS1_DICDI
+    grounding: UniProtKB:Q00766
+  - node_id: prot_Q9SD76
+    node_type: PROTEIN
+    label: PHS2_ARATH
+    grounding: UniProtKB:Q9SD76
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[(1->4)-alpha-D-glucosyl](n) is a substrate consumed by RHEA:41732 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:41733
+      snippet: '[(1->4)-alpha-D-glucosyl](n) + phosphate => [(1->4)-alpha-D-glucosyl](n-1) + alpha-D-glucose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:41733 declares side 41732_L as its substrates
+        (rh:substrates); the master reaction RHEA:41732 is undirected. This participant is POLYMER:9584
+        with coefficient 1. Rhea cites PMID:13812491, PMID:4878695 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:41732 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41733
+      snippet: '[(1->4)-alpha-D-glucosyl](n) + phosphate => [(1->4)-alpha-D-glucosyl](n-1) + alpha-D-glucose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:41733 declares side 41732_L as its substrates
+        (rh:substrates); the master reaction RHEA:41732 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:13812491, PMID:4878695 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[(1->4)-alpha-D-glucosyl](n-1) is a product released by RHEA:41732 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:41733
+      snippet: '[(1->4)-alpha-D-glucosyl](n) + phosphate => [(1->4)-alpha-D-glucosyl](n-1) + alpha-D-glucose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:41733 declares side 41732_R as its products
+        (rh:products); the master reaction RHEA:41732 is undirected. This participant is POLYMER:9586
+        with coefficient 1. Rhea cites PMID:13812491, PMID:4878695 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: alpha-D-glucose 1-phosphate is a product released by RHEA:41732 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41733
+      snippet: '[(1->4)-alpha-D-glucosyl](n) + phosphate => [(1->4)-alpha-D-glucosyl](n-1) + alpha-D-glucose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:41733 declares side 41732_R as its products
+        (rh:products); the master reaction RHEA:41732 is undirected. This participant is CHEBI:58601 with
+        coefficient 1. Rhea cites PMID:13812491, PMID:4878695 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.1
+      snippet: EC:2.4.1.1 > GO:1,4-alpha-oligoglucan phosphorylase activity ; GO:0004645
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004645 is itself a record
+        in this KB.
+  - subject: prot_Q9LIB2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHS1_ARATH is an exemplar enzyme with EC 2.4.1.1 activity.
+    evidence:
+    - reference: EC:2.4.1.1
+      snippet: DR   Q9LIB2, PHS1_ARATH ;  Q00766, PHS1_DICDI ;  Q9SD76, PHS2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.4.1.1 cross-references UniProtKB:Q9LIB2 (PHS1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q00766
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHS1_DICDI is an exemplar enzyme with EC 2.4.1.1 activity.
+    evidence:
+    - reference: EC:2.4.1.1
+      snippet: DR   Q9LIB2, PHS1_ARATH ;  Q00766, PHS1_DICDI ;  Q9SD76, PHS2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.4.1.1 cross-references UniProtKB:Q00766 (PHS1_DICDI) as a protein
+        with this activity.
+  - subject: prot_Q9SD76
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHS2_ARATH is an exemplar enzyme with EC 2.4.1.1 activity.
+    evidence:
+    - reference: EC:2.4.1.1
+      snippet: DR   Q9LIB2, PHS1_ARATH ;  Q00766, PHS1_DICDI ;  Q9SD76, PHS2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.4.1.1 cross-references UniProtKB:Q9SD76 (PHS2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.13.-
 mapped_xrefs:
@@ -36,4 +36,136 @@ definitions:
       Catalyses: an S-substituted L-cysteinylglycine + H2O = an S-substituted L-cysteine + glycine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cysteinylglycine-S-conjugate dipeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.13.23. EC 3.4.13.23 maps to
+    exactly one curated Rhea reaction (RHEA:60444), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an S-substituted
+    L-cysteinylglycine + H2O = an S-substituted L-cysteine + glycine". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cysteinylglycine-S-conjugate dipeptidase
+    grounding: EC:3.4.13.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an S-substituted L-cysteinylglycine
+    node_type: CHEMICAL
+    grounding: CHEBI:143103
+    description: Formula C5H9N2O3SR.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an S-substituted L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58717
+    description: Formula C3H6NO2SR.
+  - node_id: prd2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  - node_id: prot_P00727
+    node_type: PROTEIN
+    label: AMPL_BOVIN
+    grounding: UniProtKB:P00727
+  - node_id: prot_P28838
+    node_type: PROTEIN
+    label: AMPL_HUMAN
+    grounding: UniProtKB:P28838
+  - node_id: prot_P86249
+    node_type: PROTEIN
+    label: AMPL_MESAU
+    grounding: UniProtKB:P86249
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an S-substituted L-cysteinylglycine is a substrate consumed by RHEA:60444 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:60445
+      snippet: an S-substituted L-cysteinylglycine + H2O => an S-substituted L-cysteine + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:60445 declares side 60444_L as its substrates
+        (rh:substrates); the master reaction RHEA:60444 is undirected. This participant is CHEBI:143103
+        with coefficient 1. Rhea cites PMID:12675513, PMID:6108111, PMID:13436444, PMID:2865778 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:60444 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60445
+      snippet: an S-substituted L-cysteinylglycine + H2O => an S-substituted L-cysteine + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:60445 declares side 60444_L as its substrates
+        (rh:substrates); the master reaction RHEA:60444 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12675513, PMID:6108111, PMID:13436444, PMID:2865778 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an S-substituted L-cysteine is a product released by RHEA:60444 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60445
+      snippet: an S-substituted L-cysteinylglycine + H2O => an S-substituted L-cysteine + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:60445 declares side 60444_R as its products
+        (rh:products); the master reaction RHEA:60444 is undirected. This participant is CHEBI:58717 with
+        coefficient 1. Rhea cites PMID:12675513, PMID:6108111, PMID:13436444, PMID:2865778 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glycine is a product released by RHEA:60444 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60445
+      snippet: an S-substituted L-cysteinylglycine + H2O => an S-substituted L-cysteine + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:60445 declares side 60444_R as its products
+        (rh:products); the master reaction RHEA:60444 is undirected. This participant is CHEBI:57305 with
+        coefficient 1. Rhea cites PMID:12675513, PMID:6108111, PMID:13436444, PMID:2865778 for this reaction.
+  - subject: prot_P00727
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPL_BOVIN is an exemplar enzyme with EC 3.4.13.23 activity.
+    evidence:
+    - reference: EC:3.4.13.23
+      snippet: DR   P00727, AMPL_BOVIN ;  P28838, AMPL_HUMAN ;  P86249, AMPL_MESAU ;
+      notes: ExPASy ENZYME entry EC 3.4.13.23 cross-references UniProtKB:P00727 (AMPL_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P28838
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPL_HUMAN is an exemplar enzyme with EC 3.4.13.23 activity.
+    evidence:
+    - reference: EC:3.4.13.23
+      snippet: DR   P00727, AMPL_BOVIN ;  P28838, AMPL_HUMAN ;  P86249, AMPL_MESAU ;
+      notes: ExPASy ENZYME entry EC 3.4.13.23 cross-references UniProtKB:P28838 (AMPL_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P86249
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPL_MESAU is an exemplar enzyme with EC 3.4.13.23 activity.
+    evidence:
+    - reference: EC:3.4.13.23
+      snippet: DR   P00727, AMPL_BOVIN ;  P28838, AMPL_HUMAN ;  P86249, AMPL_MESAU ;
+      notes: ExPASy ENZYME entry EC 3.4.13.23 cross-references UniProtKB:P86249 (AMPL_MESAU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

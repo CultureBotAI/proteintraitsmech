@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57661
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: O-succinyl-L-homoserine + hydrogen sulfide = L-homocysteine + succinate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of O-succinyl-L-homoserine + hydrogen sulfide = L-homocysteine + succinate
+  description: Substrate-to-product chemistry of RHEA:27826, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27827 (rh:substrates → 27826_L, rh:products → 27826_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of O-succinyl-L-homoserine + hydrogen sulfide = L-homocysteine + succinate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27826
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: O-succinyl-L-homoserine + hydrogen sulfide = L-homocysteine + succinate'
+  - node_id: sub1
+    label: O-succinyl-L-homoserine
+    node_type: CHEMICAL
+    grounding: CHEBI:57661
+    description: Formula C8H12NO6.
+  - node_id: sub2
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: prd1
+    label: L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58199
+    description: Formula C4H9NO2S.
+  - node_id: prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: O-succinyl-L-homoserine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27827
+      snippet: O-succinyl-L-homoserine + hydrogen sulfide => L-homocysteine + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:27827 declares side 27826_L as its substrates
+        (rh:substrates); the master reaction RHEA:27826 is undirected. This participant is CHEBI:57661
+        with coefficient 1. Rhea cites PMID:7704274 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen sulfide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27827
+      snippet: O-succinyl-L-homoserine + hydrogen sulfide => L-homocysteine + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:27827 declares side 27826_L as its substrates
+        (rh:substrates); the master reaction RHEA:27826 is undirected. This participant is CHEBI:29919
+        with coefficient 1. Rhea cites PMID:7704274 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-homocysteine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27827
+      snippet: O-succinyl-L-homoserine + hydrogen sulfide => L-homocysteine + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:27827 declares side 27826_R as its products
+        (rh:products); the master reaction RHEA:27826 is undirected. This participant is CHEBI:58199 with
+        coefficient 1. Rhea cites PMID:7704274 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27827
+      snippet: O-succinyl-L-homoserine + hydrogen sulfide => L-homocysteine + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:27827 declares side 27826_R as its products
+        (rh:products); the master reaction RHEA:27826 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:7704274 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

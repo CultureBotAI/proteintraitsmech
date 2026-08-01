@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.1.1.-
 synonyms:
@@ -43,4 +43,211 @@ definitions:
       Catalyses: tRNA(Cys) + O-phospho-L-serine + ATP = O-phospho-L-seryl-tRNA(Cys) + AMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of O-phosphoserine--tRNA ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.1.1.27. EC 6.1.1.27 maps to exactly
+    one curated Rhea reaction (RHEA:25678), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "tRNA(Cys) + O-phospho-L-serine
+    + ATP = O-phospho-L-seryl-tRNA(Cys) + AMP + diphosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: O-phosphoserine--tRNA ligase
+    grounding: EC:6.1.1.27
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: tRNA(Cys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9661
+    description: Rhea compound GENERIC:9661.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9661 (tRNA(Cys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: O-phospho-L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:57524
+    description: Formula C3H6NO6P.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: O-phospho-L-seryl-tRNA(Cys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9719
+    description: Rhea compound GENERIC:9719.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 3'-(O-phosphonato-L-seryl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9719 (O-phospho-L-seryl-tRNA(Cys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78551
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoserine-tRNA(Cys) ligase activity
+    grounding: GO:0043816
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O30126
+    node_type: PROTEIN
+    label: SEPS_ARCFU
+    grounding: UniProtKB:O30126
+  - node_id: prot_A6UVW6
+    node_type: PROTEIN
+    label: SEPS_META3
+    grounding: UniProtKB:A6UVW6
+  - node_id: prot_Q8TUH7
+    node_type: PROTEIN
+    label: SEPS_METAC
+    grounding: UniProtKB:Q8TUH7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Cys) is a substrate consumed by RHEA:25678 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25679
+      snippet: tRNA(Cys) + O-phospho-L-serine + ATP => O-phospho-L-seryl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25679 declares side 25678_L as its substrates
+        (rh:substrates); the master reaction RHEA:25678 is undirected. This participant is GENERIC:9661
+        with coefficient 1. Rhea cites PMID:18559341, PMID:17351629 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Cys).
+    evidence:
+    - reference: RHEA:25678
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9661 (tRNA(Cys)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O-phospho-L-serine is a substrate consumed by RHEA:25678 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25679
+      snippet: tRNA(Cys) + O-phospho-L-serine + ATP => O-phospho-L-seryl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25679 declares side 25678_L as its substrates
+        (rh:substrates); the master reaction RHEA:25678 is undirected. This participant is CHEBI:57524
+        with coefficient 1. Rhea cites PMID:18559341, PMID:17351629 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:25678 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25679
+      snippet: tRNA(Cys) + O-phospho-L-serine + ATP => O-phospho-L-seryl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25679 declares side 25678_L as its substrates
+        (rh:substrates); the master reaction RHEA:25678 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:18559341, PMID:17351629 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-phospho-L-seryl-tRNA(Cys) is a product released by RHEA:25678 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25679
+      snippet: tRNA(Cys) + O-phospho-L-serine + ATP => O-phospho-L-seryl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25679 declares side 25678_R as its products
+        (rh:products); the master reaction RHEA:25678 is undirected. This participant is GENERIC:9719
+        with coefficient 1. Rhea cites PMID:18559341, PMID:17351629 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(O-phosphonato-L-seryl)adenylyl group is the reactive part of O-phospho-L-seryl-tRNA(Cys).
+    evidence:
+    - reference: RHEA:25678
+      snippet: 3'-(O-phosphonato-L-seryl)adenylyl group
+      notes: Rhea compound GENERIC:9719 (O-phospho-L-seryl-tRNA(Cys)) declares rh:reactivePart = 3'-(O-phosphonato-L-seryl)adenylyl
+        group (CHEBI:78551).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:25678 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25679
+      snippet: tRNA(Cys) + O-phospho-L-serine + ATP => O-phospho-L-seryl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25679 declares side 25678_R as its products
+        (rh:products); the master reaction RHEA:25678 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:18559341, PMID:17351629 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:25678 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25679
+      snippet: tRNA(Cys) + O-phospho-L-serine + ATP => O-phospho-L-seryl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25679 declares side 25678_R as its products
+        (rh:products); the master reaction RHEA:25678 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18559341, PMID:17351629 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.1.1.27
+      snippet: EC:6.1.1.27 > GO:phosphoserine-tRNA(Cys) ligase activity ; GO:0043816
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043816 is itself a record
+        in this KB.
+  - subject: prot_O30126
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SEPS_ARCFU is an exemplar enzyme with EC 6.1.1.27 activity.
+    evidence:
+    - reference: EC:6.1.1.27
+      snippet: DR   O30126, SEPS_ARCFU ;  A6UVW6, SEPS_META3 ;  Q8TUH7, SEPS_METAC ;
+      notes: ExPASy ENZYME entry EC 6.1.1.27 cross-references UniProtKB:O30126 (SEPS_ARCFU) as a protein
+        with this activity.
+  - subject: prot_A6UVW6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SEPS_META3 is an exemplar enzyme with EC 6.1.1.27 activity.
+    evidence:
+    - reference: EC:6.1.1.27
+      snippet: DR   O30126, SEPS_ARCFU ;  A6UVW6, SEPS_META3 ;  Q8TUH7, SEPS_METAC ;
+      notes: ExPASy ENZYME entry EC 6.1.1.27 cross-references UniProtKB:A6UVW6 (SEPS_META3) as a protein
+        with this activity.
+  - subject: prot_Q8TUH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SEPS_METAC is an exemplar enzyme with EC 6.1.1.27 activity.
+    evidence:
+    - reference: EC:6.1.1.27
+      snippet: DR   O30126, SEPS_ARCFU ;  A6UVW6, SEPS_META3 ;  Q8TUH7, SEPS_METAC ;
+      notes: ExPASy ENZYME entry EC 6.1.1.27 cross-references UniProtKB:Q8TUH7 (SEPS_METAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.26.-
 canonical_examples:
@@ -33,4 +33,70 @@ definitions:
       Catalyses: Endohydrolysis of RNA in RNA/DNA hybrids. Three different cleavage modes: 1. sequence-specific internal cleavage of RNA. Human immunodeficiency virus type 1 and Moloney murine leukemia virus enzymes prefer to cleave the RNA strand one nucleotide away from the RNA-DNA junction. 2. RNA 5'-end directed cleavage 13-19 nucleotides from the RNA end. 3. DNA 3'-end directed cleavage 15-20 nucleotides away from the primer terminus
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of retroviral ribonuclease H
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.26.13. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endohydrolysis
+    of RNA in RNA/DNA hybrids. Three different cleavage modes: 1. sequence-specific internal cleavage
+    of RNA. Human immunodeficiency virus type 1 and Moloney murine leukemia virus enzymes prefer to cleave
+    the RNA strand one nucleotide away from the RNA-DNA junction. 2. RNA 5''-end directed cleavage 13-19
+    nucleotides from the RNA end. 3. DNA 3''-end directed cleavage 15-20 nucleotides away from the primer
+    terminus".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: retroviral ribonuclease H
+    grounding: EC:3.1.26.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P19560
+    node_type: PROTEIN
+    label: POL_BIV29
+    grounding: UniProtKB:P19560
+  - node_id: prot_P33459
+    node_type: PROTEIN
+    label: POL_CAEVC
+    grounding: UniProtKB:P33459
+  - node_id: prot_P11204
+    node_type: PROTEIN
+    label: POL_EIAV9
+    grounding: UniProtKB:P11204
+  edges:
+  - subject: prot_P19560
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL_BIV29 is an exemplar enzyme with EC 3.1.26.13 activity.
+    evidence:
+    - reference: EC:3.1.26.13
+      snippet: DR   P19560, POL_BIV29  ;  P33459, POL_CAEVC  ;  P11204, POL_EIAV9  ;
+      notes: ExPASy ENZYME entry EC 3.1.26.13 cross-references UniProtKB:P19560 (POL_BIV29) as a protein
+        with this activity.
+  - subject: prot_P33459
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL_CAEVC is an exemplar enzyme with EC 3.1.26.13 activity.
+    evidence:
+    - reference: EC:3.1.26.13
+      snippet: DR   P19560, POL_BIV29  ;  P33459, POL_CAEVC  ;  P11204, POL_EIAV9  ;
+      notes: ExPASy ENZYME entry EC 3.1.26.13 cross-references UniProtKB:P33459 (POL_CAEVC) as a protein
+        with this activity.
+  - subject: prot_P11204
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL_EIAV9 is an exemplar enzyme with EC 3.1.26.13 activity.
+    evidence:
+    - reference: EC:3.1.26.13
+      snippet: DR   P19560, POL_BIV29  ;  P33459, POL_CAEVC  ;  P11204, POL_EIAV9  ;
+      notes: ExPASy ENZYME entry EC 3.1.26.13 cross-references UniProtKB:P11204 (POL_EIAV9) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

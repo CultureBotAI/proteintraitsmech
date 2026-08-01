@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.196
     mapping_source: rhea2ec
@@ -30,4 +30,165 @@ definitions:
       Catalyses the reaction: benzyl alcohol + benzoyl-CoA = benzyl benzoate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of benzyl alcohol + benzoyl-CoA = benzyl benzoate + CoA
+  description: Substrate-to-product chemistry of RHEA:30411, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30412 (rh:substrates → 30411_L, rh:products → 30411_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of benzyl alcohol + benzoyl-CoA = benzyl benzoate + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30411
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: benzyl alcohol + benzoyl-CoA = benzyl benzoate + CoA'
+  - node_id: sub1
+    label: benzyl alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:17987
+    description: Formula C7H8O.
+  - node_id: sub2
+    label: benzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57369
+    description: Formula C28H36N7O17P3S.
+  - node_id: prd1
+    label: benzyl benzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:41237
+    description: Formula C14H12O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: benzyl alcohol O-benzoyltransferase
+    grounding: EC:2.3.1.196
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q3ZPN4
+    node_type: PROTEIN
+    label: ACMAT_VITLA
+    grounding: UniProtKB:Q3ZPN4
+  - node_id: prot_Q6E593
+    node_type: PROTEIN
+    label: BEBT1_PETHY
+    grounding: UniProtKB:Q6E593
+  - node_id: prot_Q8GT21
+    node_type: PROTEIN
+    label: BEBT_CLABR
+    grounding: UniProtKB:Q8GT21
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: benzyl alcohol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30412
+      snippet: benzyl alcohol + benzoyl-CoA => benzyl benzoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:30412 declares side 30411_L as its substrates
+        (rh:substrates); the master reaction RHEA:30411 is undirected. This participant is CHEBI:17987
+        with coefficient 1. Rhea cites PMID:15286288, PMID:12226525 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: benzoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30412
+      snippet: benzyl alcohol + benzoyl-CoA => benzyl benzoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:30412 declares side 30411_L as its substrates
+        (rh:substrates); the master reaction RHEA:30411 is undirected. This participant is CHEBI:57369
+        with coefficient 1. Rhea cites PMID:15286288, PMID:12226525 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: benzyl benzoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30412
+      snippet: benzyl alcohol + benzoyl-CoA => benzyl benzoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:30412 declares side 30411_R as its products
+        (rh:products); the master reaction RHEA:30411 is undirected. This participant is CHEBI:41237 with
+        coefficient 1. Rhea cites PMID:15286288, PMID:12226525 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30412
+      snippet: benzyl alcohol + benzoyl-CoA => benzyl benzoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:30412 declares side 30411_R as its products
+        (rh:products); the master reaction RHEA:30411 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:15286288, PMID:12226525 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.196; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:30411
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.196"/>
+      notes: The rh:ec triple on RHEA:30411 in rhea.rdf. EC 2.3.1.196 is itself a record in this KB.
+  - subject: prot_Q3ZPN4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACMAT_VITLA is an exemplar enzyme carrying EC 2.3.1.196, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.196
+      snippet: DR   Q3ZPN4, ACMAT_VITLA;  Q6E593, BEBT1_PETHY;  Q8GT21, BEBT_CLABR ;
+      notes: ExPASy ENZYME entry EC 2.3.1.196 cross-references UniProtKB:Q3ZPN4 (ACMAT_VITLA) as a protein
+        with this activity.
+    - reference: RHEA:30411
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.196"/>
+      notes: Rhea assigns RHEA:30411 to EC 2.3.1.196, and EC 2.3.1.196 maps to exactly one Rhea master
+        reaction (RHEA:30411), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q6E593
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BEBT1_PETHY is an exemplar enzyme carrying EC 2.3.1.196, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.196
+      snippet: DR   Q3ZPN4, ACMAT_VITLA;  Q6E593, BEBT1_PETHY;  Q8GT21, BEBT_CLABR ;
+      notes: ExPASy ENZYME entry EC 2.3.1.196 cross-references UniProtKB:Q6E593 (BEBT1_PETHY) as a protein
+        with this activity.
+    - reference: RHEA:30411
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.196"/>
+      notes: Rhea assigns RHEA:30411 to EC 2.3.1.196, and EC 2.3.1.196 maps to exactly one Rhea master
+        reaction (RHEA:30411), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q8GT21
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BEBT_CLABR is an exemplar enzyme carrying EC 2.3.1.196, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.196
+      snippet: DR   Q3ZPN4, ACMAT_VITLA;  Q6E593, BEBT1_PETHY;  Q8GT21, BEBT_CLABR ;
+      notes: ExPASy ENZYME entry EC 2.3.1.196 cross-references UniProtKB:Q8GT21 (BEBT_CLABR) as a protein
+        with this activity.
+    - reference: RHEA:30411
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.196"/>
+      notes: Rhea assigns RHEA:30411 to EC 2.3.1.196, and EC 2.3.1.196 maps to exactly one Rhea master
+        reaction (RHEA:30411), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

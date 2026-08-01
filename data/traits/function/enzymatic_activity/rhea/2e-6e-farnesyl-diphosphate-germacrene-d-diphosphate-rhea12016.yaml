@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.75
     mapping_source: rhea2ec
@@ -34,4 +34,169 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate = (-)-germacrene D + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate = (-)-germacrene D + diphosphate
+  description: Substrate-to-product chemistry of RHEA:12016, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12017 (rh:substrates → 12016_L, rh:products → 12016_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate = (-)-germacrene D + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12016
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate = (-)-germacrene D + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (-)-germacrene D
+    node_type: CHEMICAL
+    grounding: CHEBI:49044
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: germacrene-D synthase activity
+    grounding: GO:0052577
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-germacrene D synthase
+    grounding: EC:4.2.3.75
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9X839
+    node_type: PROTEIN
+    label: CYC2_STRCO
+    grounding: UniProtKB:Q9X839
+  - node_id: prot_E2E2N8
+    node_type: PROTEIN
+    label: GCDS_ORIVU
+    grounding: UniProtKB:E2E2N8
+  - node_id: prot_Q5SBP6
+    node_type: PROTEIN
+    label: GDS_OCIBA
+    grounding: UniProtKB:Q5SBP6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:12017
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-germacrene D + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12017 declares side 12016_L as its substrates
+        (rh:substrates); the master reaction RHEA:12016 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:20419468, PMID:12556563, PMID:16970904, PMID:16787064 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-germacrene D is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12017
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-germacrene D + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12017 declares side 12016_R as its products
+        (rh:products); the master reaction RHEA:12016 is undirected. This participant is CHEBI:49044 with
+        coefficient 1. Rhea cites PMID:20419468, PMID:12556563, PMID:16970904, PMID:16787064 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12017
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-germacrene D + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12017 declares side 12016_R as its products
+        (rh:products); the master reaction RHEA:12016 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20419468, PMID:12556563, PMID:16970904, PMID:16787064 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12016
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052577"/>
+      notes: The rdfs:seeAlso triple on RHEA:12016 in rhea.rdf. GO term GO:0052577 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.75; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12016
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.75"/>
+      notes: The rh:ec triple on RHEA:12016 in rhea.rdf. EC 4.2.3.75 is itself a record in this KB.
+  - subject: prot_Q9X839
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYC2_STRCO is an exemplar enzyme carrying EC 4.2.3.75, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.75
+      snippet: DR   Q9X839, CYC2_STRCO ;  E2E2N8, GCDS_ORIVU ;  Q5SBP6, GDS_OCIBA  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.75 cross-references UniProtKB:Q9X839 (CYC2_STRCO) as a protein
+        with this activity.
+    - reference: RHEA:12016
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.75"/>
+      notes: Rhea assigns RHEA:12016 to EC 4.2.3.75, and EC 4.2.3.75 maps to exactly one Rhea master reaction
+        (RHEA:12016), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_E2E2N8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCDS_ORIVU is an exemplar enzyme carrying EC 4.2.3.75, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.75
+      snippet: DR   Q9X839, CYC2_STRCO ;  E2E2N8, GCDS_ORIVU ;  Q5SBP6, GDS_OCIBA  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.75 cross-references UniProtKB:E2E2N8 (GCDS_ORIVU) as a protein
+        with this activity.
+    - reference: RHEA:12016
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.75"/>
+      notes: Rhea assigns RHEA:12016 to EC 4.2.3.75, and EC 4.2.3.75 maps to exactly one Rhea master reaction
+        (RHEA:12016), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q5SBP6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GDS_OCIBA is an exemplar enzyme carrying EC 4.2.3.75, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.75
+      snippet: DR   Q9X839, CYC2_STRCO ;  E2E2N8, GCDS_ORIVU ;  Q5SBP6, GDS_OCIBA  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.75 cross-references UniProtKB:Q5SBP6 (GDS_OCIBA) as a protein
+        with this activity.
+    - reference: RHEA:12016
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.75"/>
+      notes: Rhea assigns RHEA:12016 to EC 4.2.3.75, and EC 4.2.3.75 maps to exactly one Rhea master reaction
+        (RHEA:12016), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

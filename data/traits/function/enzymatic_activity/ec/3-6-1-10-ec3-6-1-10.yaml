@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.6.1.-
 synonyms:
@@ -45,4 +45,148 @@ definitions:
       Catalyses: [phosphate](n+1) + n H2O = (n+1) phosphate + n H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of endopolyphosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.6.1.10. EC 3.6.1.10 maps to exactly
+    one curated Rhea reaction (RHEA:22452), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[phosphate](n+1)
+    + n H2O = (n+1) phosphate + n H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: endopolyphosphatase
+    grounding: EC:3.6.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[phosphate](n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:16838
+    xrefs:
+    - RHEA-COMP:14280
+    description: Rhea compound POLYMER:14280. Formula HO(O3P)<i><sub>n+1</sub></i>.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: endopolyphosphatase activity
+    grounding: GO:0000298
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q99321
+    node_type: PROTEIN
+    label: DDP1_YEAST
+    grounding: UniProtKB:Q99321
+  - node_id: prot_A2VE79
+    node_type: PROTEIN
+    label: NUDT3_BOVIN
+    grounding: UniProtKB:A2VE79
+  - node_id: prot_O95989
+    node_type: PROTEIN
+    label: NUDT3_HUMAN
+    grounding: UniProtKB:O95989
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[phosphate](n+1) is a substrate consumed by RHEA:22452 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:22453
+      snippet: '[phosphate](n+1) + n H2O => (n+1) phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:22453 declares side 22452_L as its substrates
+        (rh:substrates); the master reaction RHEA:22452 is undirected. This participant is POLYMER:14280
+        with coefficient 1. Rhea cites PMID:11447286, PMID:8900207 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:22452 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:22453
+      snippet: '[phosphate](n+1) + n H2O => (n+1) phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:22453 declares side 22452_L as its substrates
+        (rh:substrates); the master reaction RHEA:22452 is undirected. This participant is CHEBI:15377
+        with coefficient n. Rhea cites PMID:11447286, PMID:8900207 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phosphate is a product released by RHEA:22452 (stoichiometric coefficient (n+1)).
+    evidence:
+    - reference: RHEA:22453
+      snippet: '[phosphate](n+1) + n H2O => (n+1) phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:22453 declares side 22452_R as its products
+        (rh:products); the master reaction RHEA:22452 is undirected. This participant is CHEBI:43474 with
+        coefficient (n+1). Rhea cites PMID:11447286, PMID:8900207 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:22452 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:22453
+      snippet: '[phosphate](n+1) + n H2O => (n+1) phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:22453 declares side 22452_R as its products
+        (rh:products); the master reaction RHEA:22452 is undirected. This participant is CHEBI:15378 with
+        coefficient n. Rhea cites PMID:11447286, PMID:8900207 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.6.1.10
+      snippet: EC:3.6.1.10 > GO:endopolyphosphatase activity ; GO:0000298
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0000298 is itself a record
+        in this KB.
+  - subject: prot_Q99321
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DDP1_YEAST is an exemplar enzyme with EC 3.6.1.10 activity.
+    evidence:
+    - reference: EC:3.6.1.10
+      snippet: DR   Q99321, DDP1_YEAST ;  A2VE79, NUDT3_BOVIN;  O95989, NUDT3_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.6.1.10 cross-references UniProtKB:Q99321 (DDP1_YEAST) as a protein
+        with this activity.
+  - subject: prot_A2VE79
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUDT3_BOVIN is an exemplar enzyme with EC 3.6.1.10 activity.
+    evidence:
+    - reference: EC:3.6.1.10
+      snippet: DR   Q99321, DDP1_YEAST ;  A2VE79, NUDT3_BOVIN;  O95989, NUDT3_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.6.1.10 cross-references UniProtKB:A2VE79 (NUDT3_BOVIN) as a protein
+        with this activity.
+  - subject: prot_O95989
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUDT3_HUMAN is an exemplar enzyme with EC 3.6.1.10 activity.
+    evidence:
+    - reference: EC:3.6.1.10
+      snippet: DR   Q99321, DDP1_YEAST ;  A2VE79, NUDT3_BOVIN;  O95989, NUDT3_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.6.1.10 cross-references UniProtKB:O95989 (NUDT3_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

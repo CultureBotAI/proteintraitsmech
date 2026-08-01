@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.1.-
 mapped_xrefs:
@@ -23,4 +23,150 @@ definitions:
       Catalyses: a 2,3-saturated meromycolyl-[ACP] + NAD(+) = a trans-Delta(2)- meromycolyl-[ACP] + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of meromycolic acid enoyl-[acyl-carrier-protein] reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.1.118. EC 1.3.1.118 maps to
+    exactly one curated Rhea reaction (RHEA:57740), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 2,3-saturated
+    meromycolyl-[ACP] + NAD(+) = a trans-Delta(2)- meromycolyl-[ACP] + NADH + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: meromycolic acid enoyl-[acyl-carrier-protein] reductase
+    grounding: EC:1.3.1.118
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 2,3-saturated meromycolyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14981
+    description: Rhea compound GENERIC:14981.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(S-2,3-saturated meromycolylpantetheine-4'-phosphoryl)serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14981 (a 2,3-saturated
+      meromycolyl-[ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142233
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: a trans-Delta(2)-meromycolyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14982
+    description: Rhea compound GENERIC:14982.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-[S-(2E)-Delta(2)-meromycolylpantetheine-4'-phosphoryl]-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14982 (a trans-Delta(2)-meromycolyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142234
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2,3-saturated meromycolyl-[ACP] is a substrate consumed by RHEA:57740 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57741
+      snippet: a 2,3-saturated meromycolyl-[ACP] + NAD(+) => a trans-Delta(2)-meromycolyl-[ACP] + NADH
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57741 declares side 57740_L as its substrates
+        (rh:substrates); the master reaction RHEA:57740 is undirected. This participant is GENERIC:14981
+        with coefficient 1. Rhea cites PMID:10869086, PMID:18552191, PMID:10708367, PMID:7599116 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-2,3-saturated meromycolylpantetheine-4'-phosphoryl)serine residue is the reactive
+      part of a 2,3-saturated meromycolyl-[ACP].
+    evidence:
+    - reference: RHEA:57740
+      snippet: O-(S-2,3-saturated meromycolylpantetheine-4'-phosphoryl)serine residue
+      notes: Rhea compound GENERIC:14981 (a 2,3-saturated meromycolyl-[ACP]) declares rh:reactivePart
+        = O-(S-2,3-saturated meromycolylpantetheine-4'-phosphoryl)serine residue (CHEBI:142233).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:57740 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57741
+      snippet: a 2,3-saturated meromycolyl-[ACP] + NAD(+) => a trans-Delta(2)-meromycolyl-[ACP] + NADH
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57741 declares side 57740_L as its substrates
+        (rh:substrates); the master reaction RHEA:57740 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:10869086, PMID:18552191, PMID:10708367, PMID:7599116 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a trans-Delta(2)-meromycolyl-[ACP] is a product released by RHEA:57740 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57741
+      snippet: a 2,3-saturated meromycolyl-[ACP] + NAD(+) => a trans-Delta(2)-meromycolyl-[ACP] + NADH
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57741 declares side 57740_R as its products
+        (rh:products); the master reaction RHEA:57740 is undirected. This participant is GENERIC:14982
+        with coefficient 1. Rhea cites PMID:10869086, PMID:18552191, PMID:10708367, PMID:7599116 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[S-(2E)-Delta(2)-meromycolylpantetheine-4'-phosphoryl]-L-serine residue is the reactive
+      part of a trans-Delta(2)-meromycolyl-[ACP].
+    evidence:
+    - reference: RHEA:57740
+      snippet: O-[S-(2E)-Delta(2)-meromycolylpantetheine-4'-phosphoryl]-L-serine residue
+      notes: Rhea compound GENERIC:14982 (a trans-Delta(2)-meromycolyl-[ACP]) declares rh:reactivePart
+        = O-[S-(2E)-Delta(2)-meromycolylpantetheine-4'-phosphoryl]-L-serine residue (CHEBI:142234).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by RHEA:57740 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57741
+      snippet: a 2,3-saturated meromycolyl-[ACP] + NAD(+) => a trans-Delta(2)-meromycolyl-[ACP] + NADH
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57741 declares side 57740_R as its products
+        (rh:products); the master reaction RHEA:57740 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:10869086, PMID:18552191, PMID:10708367, PMID:7599116 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:57740 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57741
+      snippet: a 2,3-saturated meromycolyl-[ACP] + NAD(+) => a trans-Delta(2)-meromycolyl-[ACP] + NADH
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57741 declares side 57740_R as its products
+        (rh:products); the master reaction RHEA:57740 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:10869086, PMID:18552191, PMID:10708367, PMID:7599116 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

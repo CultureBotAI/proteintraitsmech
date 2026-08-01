@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 mapped_xrefs:
@@ -23,4 +23,96 @@ definitions:
       Catalyses: 3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate + CTP = CMP-beta- 3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-deoxy-D-glycero-D-galacto-nononate cytidylyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.92. EC 2.7.7.92 maps to exactly
+    one curated Rhea reaction (RHEA:49220), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate
+    + CTP = CMP-beta- 3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate + diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-deoxy-D-glycero-D-galacto-nononate cytidylyltransferase
+    grounding: EC:2.7.7.92
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate
+    node_type: CHEMICAL
+    grounding: CHEBI:90988
+    description: Formula C9H15O9.
+  - node_id: sub2
+    label: CTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+    description: Formula C9H12N3O14P3.
+  - node_id: prd1
+    label: CMP-beta-3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate
+    node_type: CHEMICAL
+    grounding: CHEBI:90989
+    description: Formula C18H26N3O16P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate is a substrate consumed by RHEA:49220
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49221
+      snippet: 3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate + CTP => CMP-beta-3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49221 declares side 49220_L as its substrates
+        (rh:substrates); the master reaction RHEA:49220 is undirected. This participant is CHEBI:90988
+        with coefficient 1. Rhea cites PMID:18804026 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CTP is a substrate consumed by RHEA:49220 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49221
+      snippet: 3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate + CTP => CMP-beta-3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49221 declares side 49220_L as its substrates
+        (rh:substrates); the master reaction RHEA:49220 is undirected. This participant is CHEBI:37563
+        with coefficient 1. Rhea cites PMID:18804026 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: CMP-beta-3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate is a product released
+      by RHEA:49220 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49221
+      snippet: 3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate + CTP => CMP-beta-3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49221 declares side 49220_R as its products
+        (rh:products); the master reaction RHEA:49220 is undirected. This participant is CHEBI:90989 with
+        coefficient 1. Rhea cites PMID:18804026 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:49220 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49221
+      snippet: 3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate + CTP => CMP-beta-3-deoxy-D-glycero-beta-D-galacto-non-2-ulopyranosonate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49221 declares side 49220_R as its products
+        (rh:products); the master reaction RHEA:49220 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18804026 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

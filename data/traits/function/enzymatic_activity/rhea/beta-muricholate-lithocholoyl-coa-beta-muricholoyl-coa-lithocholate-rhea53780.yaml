@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:134119
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,93 @@ definitions:
       Catalyses the reaction: beta-muricholate + lithocholoyl-CoA = beta-muricholoyl-CoA + lithocholate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-muricholate + lithocholoyl-CoA = beta-muricholoyl-CoA + lithocholate
+  description: Substrate-to-product chemistry of RHEA:53780, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53781 (rh:substrates → 53780_L, rh:products → 53780_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of beta-muricholate + lithocholoyl-CoA = beta-muricholoyl-CoA + lithocholate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53780
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: beta-muricholate + lithocholoyl-CoA = beta-muricholoyl-CoA + lithocholate'
+  - node_id: sub1
+    label: beta-muricholate
+    node_type: CHEMICAL
+    grounding: CHEBI:134119
+    description: Formula C24H39O5.
+  - node_id: sub2
+    label: lithocholoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:87438
+    description: Formula C45H70N7O18P3S.
+  - node_id: prd1
+    label: beta-muricholoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:137668
+    description: Formula C45H70N7O20P3S.
+  - node_id: prd2
+    label: lithocholate
+    node_type: CHEMICAL
+    grounding: CHEBI:29744
+    description: Formula C24H39O3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: beta-muricholate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53781
+      snippet: beta-muricholate + lithocholoyl-CoA => beta-muricholoyl-CoA + lithocholate
+      notes: Rhea's left-to-right directional reaction RHEA:53781 declares side 53780_L as its substrates
+        (rh:substrates); the master reaction RHEA:53780 is undirected. This participant is CHEBI:134119
+        with coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: lithocholoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53781
+      snippet: beta-muricholate + lithocholoyl-CoA => beta-muricholoyl-CoA + lithocholate
+      notes: Rhea's left-to-right directional reaction RHEA:53781 declares side 53780_L as its substrates
+        (rh:substrates); the master reaction RHEA:53780 is undirected. This participant is CHEBI:87438
+        with coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-muricholoyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53781
+      snippet: beta-muricholate + lithocholoyl-CoA => beta-muricholoyl-CoA + lithocholate
+      notes: Rhea's left-to-right directional reaction RHEA:53781 declares side 53780_R as its products
+        (rh:products); the master reaction RHEA:53780 is undirected. This participant is CHEBI:137668
+        with coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: lithocholate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53781
+      snippet: beta-muricholate + lithocholoyl-CoA => beta-muricholoyl-CoA + lithocholate
+      notes: Rhea's left-to-right directional reaction RHEA:53781 declares side 53780_R as its products
+        (rh:products); the master reaction RHEA:53780 is undirected. This participant is CHEBI:29744 with
+        coefficient 1. Rhea cites PMID:22021638 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

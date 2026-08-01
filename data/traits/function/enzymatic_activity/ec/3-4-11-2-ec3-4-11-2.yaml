@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.11.-
 synonyms:
@@ -53,4 +53,83 @@ definitions:
       Catalyses: Release of an N-terminal amino acid, Xaa-|-Yaa- from a peptide, amide or arylamide. Xaa is preferably Ala, but may be most amino acids including Pro (slow action). When a terminal hydrophobic residue is followed by a prolyl residue, the two may be released as an intact Xaa-Pro dipeptide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of membrane alanyl aminopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.11.2. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of an N-terminal amino acid, Xaa-|-Yaa- from a peptide, amide or arylamide. Xaa is preferably Ala,
+    but may be most amino acids including Pro (slow action). When a terminal hydrophobic residue is followed
+    by a prolyl residue, the two may be released as an intact Xaa-Pro dipeptide".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: membrane alanyl aminopeptidase
+    grounding: EC:3.4.11.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alanyl aminopeptidase activity
+    grounding: GO:0016285
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q10736
+    node_type: PROTEIN
+    label: AMPN_ACEPA
+    grounding: UniProtKB:Q10736
+  - node_id: prot_Q7Q2T8
+    node_type: PROTEIN
+    label: AMPN_ANOGA
+    grounding: UniProtKB:Q7Q2T8
+  - node_id: prot_P79098
+    node_type: PROTEIN
+    label: AMPN_BOVIN
+    grounding: UniProtKB:P79098
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.11.2
+      snippet: EC:3.4.11.2 > GO:alanyl aminopeptidase activity ; GO:0016285
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016285 is itself a record
+        in this KB.
+  - subject: prot_Q10736
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPN_ACEPA is an exemplar enzyme with EC 3.4.11.2 activity.
+    evidence:
+    - reference: EC:3.4.11.2
+      snippet: DR   Q10736, AMPN_ACEPA ;  Q7Q2T8, AMPN_ANOGA ;  P79098, AMPN_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.4.11.2 cross-references UniProtKB:Q10736 (AMPN_ACEPA) as a protein
+        with this activity.
+  - subject: prot_Q7Q2T8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPN_ANOGA is an exemplar enzyme with EC 3.4.11.2 activity.
+    evidence:
+    - reference: EC:3.4.11.2
+      snippet: DR   Q10736, AMPN_ACEPA ;  Q7Q2T8, AMPN_ANOGA ;  P79098, AMPN_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.4.11.2 cross-references UniProtKB:Q7Q2T8 (AMPN_ANOGA) as a protein
+        with this activity.
+  - subject: prot_P79098
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPN_BOVIN is an exemplar enzyme with EC 3.4.11.2 activity.
+    evidence:
+    - reference: EC:3.4.11.2
+      snippet: DR   Q10736, AMPN_ACEPA ;  Q7Q2T8, AMPN_ANOGA ;  P79098, AMPN_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.4.11.2 cross-references UniProtKB:P79098 (AMPN_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

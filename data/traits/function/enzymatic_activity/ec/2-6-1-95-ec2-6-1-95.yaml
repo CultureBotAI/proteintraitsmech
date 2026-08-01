@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: neomycin C + 2-oxoglutarate = 6'''-deamino-6'''-oxoneomycin C + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of neomycin C transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.95. EC 2.6.1.95 maps to exactly
+    one curated Rhea reaction (RHEA:33959), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "neomycin C +
+    2-oxoglutarate = 6''''''-deamino-6''''''-oxoneomycin C + L-glutamate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: neomycin C transaminase
+    grounding: EC:2.6.1.95
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: neomycin C
+    node_type: CHEMICAL
+    grounding: CHEBI:65077
+    description: Formula C23H52N6O13.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: 6'''-deamino-6'''-oxoneomycin C
+    node_type: CHEMICAL
+    grounding: CHEBI:65068
+    description: Formula C23H48N5O14.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prot_Q53U08
+    node_type: PROTEIN
+    label: NEON_STRFR
+    grounding: UniProtKB:Q53U08
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: neomycin C is a substrate consumed by RHEA:33959 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33960
+      snippet: neomycin C + 2-oxoglutarate => 6'''-deamino-6'''-oxoneomycin C + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:33960 declares side 33959_L as its substrates
+        (rh:substrates); the master reaction RHEA:33959 is undirected. This participant is CHEBI:65077
+        with coefficient 1. Rhea cites PMID:21689223, PMID:17206729, PMID:21983602 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:33959 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33960
+      snippet: neomycin C + 2-oxoglutarate => 6'''-deamino-6'''-oxoneomycin C + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:33960 declares side 33959_L as its substrates
+        (rh:substrates); the master reaction RHEA:33959 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:21689223, PMID:17206729, PMID:21983602 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 6'''-deamino-6'''-oxoneomycin C is a product released by RHEA:33959 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33960
+      snippet: neomycin C + 2-oxoglutarate => 6'''-deamino-6'''-oxoneomycin C + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:33960 declares side 33959_R as its products
+        (rh:products); the master reaction RHEA:33959 is undirected. This participant is CHEBI:65068 with
+        coefficient 1. Rhea cites PMID:21689223, PMID:17206729, PMID:21983602 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:33959 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33960
+      snippet: neomycin C + 2-oxoglutarate => 6'''-deamino-6'''-oxoneomycin C + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:33960 declares side 33959_R as its products
+        (rh:products); the master reaction RHEA:33959 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:21689223, PMID:17206729, PMID:21983602 for this reaction.
+  - subject: prot_Q53U08
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEON_STRFR is an exemplar enzyme with EC 2.6.1.95 activity.
+    evidence:
+    - reference: EC:2.6.1.95
+      snippet: DR   Q53U08, NEON_STRFR ;
+      notes: ExPASy ENZYME entry EC 2.6.1.95 cross-references UniProtKB:Q53U08 (NEON_STRFR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

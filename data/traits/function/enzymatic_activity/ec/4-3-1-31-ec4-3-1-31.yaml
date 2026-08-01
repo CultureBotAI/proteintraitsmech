@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.1.-
 mapped_xrefs:
@@ -23,4 +23,74 @@ definitions:
       Catalyses: L-tryptophan = (E)-3-(indol-3-yl)acrylate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-tryptophan ammonia lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.1.31. EC 4.3.1.31 maps to exactly
+    one curated Rhea reaction (RHEA:41259), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-tryptophan
+    = (E)-3-(indol-3-yl)acrylate + NH4(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-tryptophan ammonia lyase
+    grounding: EC:4.3.1.31
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:57912
+    description: Formula C11H12N2O2.
+  - node_id: prd1
+    label: (E)-3-(indol-3-yl)acrylate
+    node_type: CHEMICAL
+    grounding: CHEBI:131929
+    description: Formula C11H8NO2.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tryptophan is a substrate consumed by RHEA:41259 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41260
+      snippet: L-tryptophan => (E)-3-(indol-3-yl)acrylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:41260 declares side 41259_L as its substrates
+        (rh:substrates); the master reaction RHEA:41259 is undirected. This participant is CHEBI:57912
+        with coefficient 1. Rhea cites PMID:25961404 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (E)-3-(indol-3-yl)acrylate is a product released by RHEA:41259 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41260
+      snippet: L-tryptophan => (E)-3-(indol-3-yl)acrylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:41260 declares side 41259_R as its products
+        (rh:products); the master reaction RHEA:41259 is undirected. This participant is CHEBI:131929
+        with coefficient 1. Rhea cites PMID:25961404 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:41259 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41260
+      snippet: L-tryptophan => (E)-3-(indol-3-yl)acrylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:41260 declares side 41259_R as its products
+        (rh:products); the master reaction RHEA:41259 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:25961404 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

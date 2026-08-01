@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:90513
     role: SUBSTRATE_OR_PRODUCT
@@ -22,4 +22,93 @@ definitions:
       Catalyses the reaction: a ganglioside GQ1c + H2O = a ganglioside GT1c + N-acetylneuraminate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a ganglioside GQ1c + H2O = a ganglioside GT1c + N-acetylneuraminate
+  description: Substrate-to-product chemistry of RHEA:77439, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77440 (rh:substrates → 77439_L, rh:products → 77439_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a ganglioside GQ1c + H2O = a ganglioside GT1c + N-acetylneuraminate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77439
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a ganglioside GQ1c + H2O = a ganglioside GT1c + N-acetylneuraminate'
+  - node_id: sub1
+    label: a ganglioside GQ1c
+    node_type: CHEMICAL
+    grounding: CHEBI:90513
+    description: Formula C74H114N6O55R2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a ganglioside GT1c
+    node_type: CHEMICAL
+    grounding: CHEBI:141743
+    description: Formula C63H98N5O47R2.
+  - node_id: prd2
+    label: N-acetylneuraminate
+    node_type: CHEMICAL
+    grounding: CHEBI:35418
+    description: Formula C11H18NO9.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a ganglioside GQ1c is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77440
+      snippet: a ganglioside GQ1c + H2O => a ganglioside GT1c + N-acetylneuraminate
+      notes: Rhea's left-to-right directional reaction RHEA:77440 declares side 77439_L as its substrates
+        (rh:substrates); the master reaction RHEA:77439 is undirected. This participant is CHEBI:90513
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77440
+      snippet: a ganglioside GQ1c + H2O => a ganglioside GT1c + N-acetylneuraminate
+      notes: Rhea's left-to-right directional reaction RHEA:77440 declares side 77439_L as its substrates
+        (rh:substrates); the master reaction RHEA:77439 is undirected. This participant is CHEBI:15377
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a ganglioside GT1c is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77440
+      snippet: a ganglioside GQ1c + H2O => a ganglioside GT1c + N-acetylneuraminate
+      notes: Rhea's left-to-right directional reaction RHEA:77440 declares side 77439_R as its products
+        (rh:products); the master reaction RHEA:77439 is undirected. This participant is CHEBI:141743
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N-acetylneuraminate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77440
+      snippet: a ganglioside GQ1c + H2O => a ganglioside GT1c + N-acetylneuraminate
+      notes: Rhea's left-to-right directional reaction RHEA:77440 declares side 77439_R as its products
+        (rh:products); the master reaction RHEA:77439 is undirected. This participant is CHEBI:35418 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

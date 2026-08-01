@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.8.3.12
     mapping_source: rhea2ec
@@ -28,4 +28,163 @@ definitions:
       Catalyses the reaction: trans-glutaconate + acetyl-CoA = (2E)-glutaconyl-CoA + acetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of trans-glutaconate + acetyl-CoA = (2E)-glutaconyl-CoA + acetate
+  description: Substrate-to-product chemistry of RHEA:23208, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23209 (rh:substrates → 23208_L, rh:products → 23208_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of trans-glutaconate + acetyl-CoA = (2E)-glutaconyl-CoA + acetate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23208
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: trans-glutaconate + acetyl-CoA = (2E)-glutaconyl-CoA + acetate'
+  - node_id: sub1
+    label: trans-glutaconate
+    node_type: CHEMICAL
+    grounding: CHEBI:36460
+    description: Formula C5H4O4.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: (2E)-glutaconyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57353
+    description: Formula C26H35N7O19P3S.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glutaconate CoA-transferase activity
+    grounding: GO:0018730
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: glutaconate CoA-transferase
+    grounding: EC:2.8.3.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q59111
+    node_type: PROTEIN
+    label: GCTA_ACIFV
+    grounding: UniProtKB:Q59111
+  - node_id: prot_Q59112
+    node_type: PROTEIN
+    label: GCTB_ACIFV
+    grounding: UniProtKB:Q59112
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: trans-glutaconate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23209
+      snippet: trans-glutaconate + acetyl-CoA => (2E)-glutaconyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23209 declares side 23208_L as its substrates
+        (rh:substrates); the master reaction RHEA:23208 is undirected. This participant is CHEBI:36460
+        with coefficient 1. Rhea cites PMID:6945182 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23209
+      snippet: trans-glutaconate + acetyl-CoA => (2E)-glutaconyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23209 declares side 23208_L as its substrates
+        (rh:substrates); the master reaction RHEA:23208 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:6945182 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-glutaconyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23209
+      snippet: trans-glutaconate + acetyl-CoA => (2E)-glutaconyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23209 declares side 23208_R as its products
+        (rh:products); the master reaction RHEA:23208 is undirected. This participant is CHEBI:57353 with
+        coefficient 1. Rhea cites PMID:6945182 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23209
+      snippet: trans-glutaconate + acetyl-CoA => (2E)-glutaconyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23209 declares side 23208_R as its products
+        (rh:products); the master reaction RHEA:23208 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:6945182 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:23208
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0018730"/>
+      notes: The rdfs:seeAlso triple on RHEA:23208 in rhea.rdf. GO term GO:0018730 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.8.3.12; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:23208
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.12"/>
+      notes: The rh:ec triple on RHEA:23208 in rhea.rdf. EC 2.8.3.12 is itself a record in this KB.
+  - subject: prot_Q59111
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCTA_ACIFV is an exemplar enzyme carrying EC 2.8.3.12, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.3.12
+      snippet: DR   Q59111, GCTA_ACIFV ;  Q59112, GCTB_ACIFV ;
+      notes: ExPASy ENZYME entry EC 2.8.3.12 cross-references UniProtKB:Q59111 (GCTA_ACIFV) as a protein
+        with this activity.
+    - reference: RHEA:23208
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.12"/>
+      notes: Rhea assigns RHEA:23208 to EC 2.8.3.12, and EC 2.8.3.12 maps to exactly one Rhea master reaction
+        (RHEA:23208), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q59112
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCTB_ACIFV is an exemplar enzyme carrying EC 2.8.3.12, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.3.12
+      snippet: DR   Q59111, GCTA_ACIFV ;  Q59112, GCTB_ACIFV ;
+      notes: ExPASy ENZYME entry EC 2.8.3.12 cross-references UniProtKB:Q59112 (GCTB_ACIFV) as a protein
+        with this activity.
+    - reference: RHEA:23208
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.12"/>
+      notes: Rhea assigns RHEA:23208 to EC 2.8.3.12, and EC 2.8.3.12 maps to exactly one Rhea master reaction
+        (RHEA:23208), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

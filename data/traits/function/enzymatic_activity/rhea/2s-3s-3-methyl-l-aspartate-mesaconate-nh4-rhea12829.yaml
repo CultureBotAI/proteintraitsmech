@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.3.1.2
     mapping_source: rhea2ec
@@ -36,4 +36,356 @@ definitions:
       Catalyses the reaction: (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:12829, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12830 (rh:substrates → 12829_L, rh:products → 12829_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12829
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)'
+  - node_id: sub1
+    label: (2S,3S)-3-methyl-L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:58724
+    description: Formula C5H8NO4.
+  - node_id: prd1
+    label: mesaconate
+    node_type: CHEMICAL
+    grounding: CHEBI:36986
+    description: Formula C5H4O4.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methylaspartate ammonia-lyase activity
+    grounding: GO:0050096
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: methylaspartate ammonia-lyase
+    grounding: EC:4.3.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q3AEU2
+    node_type: PROTEIN
+    label: MAAL1_CARHZ
+    grounding: UniProtKB:Q3AEU2
+  - node_id: prot_Q3AEJ6
+    node_type: PROTEIN
+    label: MAAL2_CARHZ
+    grounding: UniProtKB:Q3AEJ6
+  - node_id: prot_O66145
+    node_type: PROTEIN
+    label: MAAL_CITAM
+    grounding: UniProtKB:O66145
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S,3S)-3-methyl-L-aspartate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:12830
+      snippet: (2S,3S)-3-methyl-L-aspartate => mesaconate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12830 declares side 12829_L as its substrates
+        (rh:substrates); the master reaction RHEA:12829 is undirected. This participant is CHEBI:58724
+        with coefficient 1. Rhea cites PMID:9385136, PMID:22614383, PMID:1531295, PMID:19670200 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: mesaconate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12830
+      snippet: (2S,3S)-3-methyl-L-aspartate => mesaconate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12830 declares side 12829_R as its products
+        (rh:products); the master reaction RHEA:12829 is undirected. This participant is CHEBI:36986 with
+        coefficient 1. Rhea cites PMID:9385136, PMID:22614383, PMID:1531295, PMID:19670200 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12830
+      snippet: (2S,3S)-3-methyl-L-aspartate => mesaconate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12830 declares side 12829_R as its products
+        (rh:products); the master reaction RHEA:12829 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:9385136, PMID:22614383, PMID:1531295, PMID:19670200 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12829
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050096"/>
+      notes: The rdfs:seeAlso triple on RHEA:12829 in rhea.rdf. GO term GO:0050096 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.3.1.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12829
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.2"/>
+      notes: The rh:ec triple on RHEA:12829 in rhea.rdf. EC 4.3.1.2 is itself a record in this KB.
+  - subject: prot_Q3AEU2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAAL1_CARHZ is an exemplar enzyme carrying EC 4.3.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: DR   Q3AEU2, MAAL1_CARHZ;  Q3AEJ6, MAAL2_CARHZ;  O66145, MAAL_CITAM ;
+      notes: ExPASy ENZYME entry EC 4.3.1.2 cross-references UniProtKB:Q3AEU2 (MAAL1_CARHZ) as a protein
+        with this activity.
+    - reference: RHEA:12829
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.2"/>
+      notes: Rhea assigns RHEA:12829 to EC 4.3.1.2, and EC 4.3.1.2 maps to exactly one Rhea master reaction
+        (RHEA:12829), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q3AEJ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAAL2_CARHZ is an exemplar enzyme carrying EC 4.3.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: DR   Q3AEU2, MAAL1_CARHZ;  Q3AEJ6, MAAL2_CARHZ;  O66145, MAAL_CITAM ;
+      notes: ExPASy ENZYME entry EC 4.3.1.2 cross-references UniProtKB:Q3AEJ6 (MAAL2_CARHZ) as a protein
+        with this activity.
+    - reference: RHEA:12829
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.2"/>
+      notes: Rhea assigns RHEA:12829 to EC 4.3.1.2, and EC 4.3.1.2 maps to exactly one Rhea master reaction
+        (RHEA:12829), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O66145
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAAL_CITAM is an exemplar enzyme carrying EC 4.3.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: DR   Q3AEU2, MAAL1_CARHZ;  Q3AEJ6, MAAL2_CARHZ;  O66145, MAAL_CITAM ;
+      notes: ExPASy ENZYME entry EC 4.3.1.2 cross-references UniProtKB:O66145 (MAAL_CITAM) as a protein
+        with this activity.
+    - reference: RHEA:12829
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.2"/>
+      notes: Rhea assigns RHEA:12829 to EC 4.3.1.2, and EC 4.3.1.2 maps to exactly one Rhea master reaction
+        (RHEA:12829), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa468
+  title: Catalytic residues of RHEA:12829 (from MCSA:468)
+  description: 'The catalytic residues that carry out RHEA:12829, joined from M-CSA entry 468. 7 residues,
+    reused verbatim from the MCSA:468 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 468''s reactant set (CHEBI:58724) equals Rhea side 12829_L exactly, and its product
+    set (CHEBI:28938, CHEBI:36986) equals side 12829_R exactly. EC agreement bounded the candidates but
+    was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12829
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)'
+  - node_id: mcsa
+    label: methylaspartate ammonia-lyase
+    node_type: MOTIF
+    grounding: MCSA:468
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: gln172
+    label: catalytic Gln172 (M-CSA/PDB numbering; UniProt residue 172)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:468 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: his194
+    label: catalytic His194 (M-CSA/PDB numbering; UniProt residue 194)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:468 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: asp238
+    label: catalytic Asp238 (M-CSA/PDB numbering; UniProt residue 238)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:468 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: glu273
+    label: catalytic Glu273 (M-CSA/PDB numbering; UniProt residue 273)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:468 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: asp307
+    label: catalytic Asp307 (M-CSA/PDB numbering; UniProt residue 307)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: metal ligand. Reused verbatim from the MCSA:468 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: gln329
+    label: catalytic Gln329 (M-CSA/PDB numbering; UniProt residue 329)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:468 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: lys331
+    label: catalytic Lys331 (M-CSA/PDB numbering; UniProt residue 331)
+    node_type: RESIDUE
+    grounding: UniProtKB:Q05514
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor, proton donor. Reused verbatim
+      from the MCSA:468 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 468 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:468
+      snippet: threo-3-methyl-L-aspartate(1-) [reactant]; mesaconate(2-) [product]; ammonium [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 468, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 468''s reactant
+        set (CHEBI:58724) equals Rhea side 12829_L exactly, and its product set (CHEBI:28938, CHEBI:36986)
+        equals side 12829_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: gln172
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:468
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 468 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 interaction, 7 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 468''s reactant
+        set (CHEBI:58724) equals Rhea side 12829_L exactly, and its product set (CHEBI:28938, CHEBI:36986)
+        equals side 12829_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: his194
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:468
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 468 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 interaction, 7 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 468''s reactant
+        set (CHEBI:58724) equals Rhea side 12829_L exactly, and its product set (CHEBI:28938, CHEBI:36986)
+        equals side 12829_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: asp238
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:468
+      snippet: metal ligand
+      notes: 'M-CSA entry 468 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 interaction, 7 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 468''s reactant
+        set (CHEBI:58724) equals Rhea side 12829_L exactly, and its product set (CHEBI:28938, CHEBI:36986)
+        equals side 12829_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: glu273
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:468
+      snippet: metal ligand
+      notes: 'M-CSA entry 468 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 interaction, 7 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 468''s reactant
+        set (CHEBI:58724) equals Rhea side 12829_L exactly, and its product set (CHEBI:28938, CHEBI:36986)
+        equals side 12829_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: asp307
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:468
+      snippet: metal ligand
+      notes: 'M-CSA entry 468 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 interaction, 7 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 468''s reactant
+        set (CHEBI:58724) equals Rhea side 12829_L exactly, and its product set (CHEBI:28938, CHEBI:36986)
+        equals side 12829_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: gln329
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:468
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 468 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 interaction, 7 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 468''s reactant
+        set (CHEBI:58724) equals Rhea side 12829_L exactly, and its product set (CHEBI:28938, CHEBI:36986)
+        equals side 12829_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: lys331
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:468
+      snippet: electrostatic stabiliser, proton acceptor, proton donor
+      notes: 'M-CSA entry 468 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 9 interaction, 7 spectator, 2 reactant. M-CSA states which residues are catalytic
+        and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 468''s reactant
+        set (CHEBI:58724) equals Rhea side 12829_L exactly, and its product set (CHEBI:28938, CHEBI:36986)
+        equals side 12829_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa468' (8 evidence-backed edges) joining MCSA:468
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78466
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,148 @@ definitions:
       Catalyses the reaction: 2 (3R)-hydroxydecanoyl-[ACP] + H2O = (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate + 2 holo-[ACP] + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 (3R)-hydroxydecanoyl-[ACP] + H2O = (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate
+    + 2 ho…
+  description: Substrate-to-product chemistry of RHEA:55592, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:55593 (rh:substrates → 55592_L, rh:products → 55592_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 (3R)-hydroxydecanoyl-[ACP] + H2O = (3R)-3-[(3R)-3-hydroxydecanoyloxy]decan…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:55592
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 (3R)-hydroxydecanoyl-[ACP] + H2O = (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate
+      + 2 holo-[ACP] + H(+)'
+  - node_id: sub1
+    label: (3R)-hydroxydecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9638
+    description: Rhea compound GENERIC:9638.
+  - node_id: sub1_rp1
+    label: O-(S-3R-hydroxydecanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9638 ((3R)-hydroxydecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78466
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:139104
+    description: Formula C20H37O5.
+  - node_id: prd2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: prd2_rp1
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3R)-hydroxydecanoyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:55593
+      snippet: 2 (3R)-hydroxydecanoyl-[ACP] + H2O => (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate + 2 holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55593 declares side 55592_L as its substrates
+        (rh:substrates); the master reaction RHEA:55592 is undirected. This participant is GENERIC:9638
+        with coefficient 2. Rhea cites PMID:18326581, PMID:23699259 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-3R-hydroxydecanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part
+      of (3R)-hydroxydecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:55592
+      snippet: O-(S-3R-hydroxydecanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9638 ((3R)-hydroxydecanoyl-[ACP]) declares rh:reactivePart = O-(S-3R-hydroxydecanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78466), formula C24H43N3O10PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55593
+      snippet: 2 (3R)-hydroxydecanoyl-[ACP] + H2O => (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate + 2 holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55593 declares side 55592_L as its substrates
+        (rh:substrates); the master reaction RHEA:55592 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18326581, PMID:23699259 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:55593
+      snippet: 2 (3R)-hydroxydecanoyl-[ACP] + H2O => (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate + 2 holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55593 declares side 55592_R as its products
+        (rh:products); the master reaction RHEA:55592 is undirected. This participant is CHEBI:139104
+        with coefficient 1. Rhea cites PMID:18326581, PMID:23699259 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[ACP] is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:55593
+      snippet: 2 (3R)-hydroxydecanoyl-[ACP] + H2O => (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate + 2 holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55593 declares side 55592_R as its products
+        (rh:products); the master reaction RHEA:55592 is undirected. This participant is GENERIC:9685
+        with coefficient 2. Rhea cites PMID:18326581, PMID:23699259 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:55592
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479), formula C14H25N3O8PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55593
+      snippet: 2 (3R)-hydroxydecanoyl-[ACP] + H2O => (3R)-3-[(3R)-3-hydroxydecanoyloxy]decanoate + 2 holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:55593 declares side 55592_R as its products
+        (rh:products); the master reaction RHEA:55592 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18326581, PMID:23699259 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58937
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,92 @@ definitions:
       Catalyses the reaction: thiamine diphosphate + ADP = thiamine triphosphate + AMP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thiamine diphosphate + ADP = thiamine triphosphate + AMP
+  description: Substrate-to-product chemistry of RHEA:69180, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69181 (rh:substrates → 69180_L, rh:products → 69180_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of thiamine diphosphate + ADP = thiamine triphosphate + AMP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69180
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: thiamine diphosphate + ADP = thiamine triphosphate + AMP'
+  - node_id: sub1
+    label: thiamine diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58937
+    description: Formula C12H16N4O7P2S.
+  - node_id: sub2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd1
+    label: thiamine triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58938
+    description: Formula C12H16N4O10P3S.
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: thiamine diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69181
+      snippet: thiamine diphosphate + ADP => thiamine triphosphate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:69181 declares side 69180_L as its substrates
+        (rh:substrates); the master reaction RHEA:69180 is undirected. This participant is CHEBI:58937
+        with coefficient 1. Rhea cites PMID:2551298, PMID:24590690 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ADP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69181
+      snippet: thiamine diphosphate + ADP => thiamine triphosphate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:69181 declares side 69180_L as its substrates
+        (rh:substrates); the master reaction RHEA:69180 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:2551298, PMID:24590690 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: thiamine triphosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69181
+      snippet: thiamine diphosphate + ADP => thiamine triphosphate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:69181 declares side 69180_R as its products
+        (rh:products); the master reaction RHEA:69180 is undirected. This participant is CHEBI:58938 with
+        coefficient 1. Rhea cites PMID:2551298, PMID:24590690 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69181
+      snippet: thiamine diphosphate + ADP => thiamine triphosphate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:69181 declares side 69180_R as its products
+        (rh:products); the master reaction RHEA:69180 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:2551298, PMID:24590690 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

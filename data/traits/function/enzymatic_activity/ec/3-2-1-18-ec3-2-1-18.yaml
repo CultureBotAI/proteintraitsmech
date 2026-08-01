@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -45,4 +45,82 @@ definitions:
       Catalyses: Hydrolysis of alpha-(2->3)-, alpha-(2->6)-, alpha-(2->8)- glycosidic linkages of terminal sialic acid residues in oligosaccharides, glycoproteins, glycolipids, colominic acid and synthetic substrates
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of exo-alpha-sialidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.18. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of alpha-(2->3)-, alpha-(2->6)-, alpha-(2->8)- glycosidic linkages of terminal sialic acid residues
+    in oligosaccharides, glycoproteins, glycolipids, colominic acid and synthetic substrates".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: exo-alpha-sialidase
+    grounding: EC:3.2.1.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: exo-alpha-sialidase activity
+    grounding: GO:0004308
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P18269
+    node_type: PROTEIN
+    label: 8511_TRYCR
+    grounding: UniProtKB:P18269
+  - node_id: prot_P18270
+    node_type: PROTEIN
+    label: 8512_TRYCR
+    grounding: UniProtKB:P18270
+  - node_id: prot_P18271
+    node_type: PROTEIN
+    label: 8513_TRYCR
+    grounding: UniProtKB:P18271
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.18
+      snippet: EC:3.2.1.18 > GO:exo-alpha-sialidase activity ; GO:0004308
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004308 is itself a record
+        in this KB.
+  - subject: prot_P18269
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 8511_TRYCR is an exemplar enzyme with EC 3.2.1.18 activity.
+    evidence:
+    - reference: EC:3.2.1.18
+      snippet: DR   P18269, 8511_TRYCR ;  P18270, 8512_TRYCR ;  P18271, 8513_TRYCR ;
+      notes: ExPASy ENZYME entry EC 3.2.1.18 cross-references UniProtKB:P18269 (8511_TRYCR) as a protein
+        with this activity.
+  - subject: prot_P18270
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 8512_TRYCR is an exemplar enzyme with EC 3.2.1.18 activity.
+    evidence:
+    - reference: EC:3.2.1.18
+      snippet: DR   P18269, 8511_TRYCR ;  P18270, 8512_TRYCR ;  P18271, 8513_TRYCR ;
+      notes: ExPASy ENZYME entry EC 3.2.1.18 cross-references UniProtKB:P18270 (8512_TRYCR) as a protein
+        with this activity.
+  - subject: prot_P18271
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 8513_TRYCR is an exemplar enzyme with EC 3.2.1.18 activity.
+    evidence:
+    - reference: EC:3.2.1.18
+      snippet: DR   P18269, 8511_TRYCR ;  P18270, 8512_TRYCR ;  P18271, 8513_TRYCR ;
+      notes: ExPASy ENZYME entry EC 3.2.1.18 cross-references UniProtKB:P18271 (8513_TRYCR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

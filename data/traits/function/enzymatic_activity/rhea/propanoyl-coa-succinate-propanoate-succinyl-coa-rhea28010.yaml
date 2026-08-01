@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.8.3.27
     mapping_source: rhea2ec
@@ -30,4 +30,161 @@ definitions:
       Catalyses the reaction: propanoyl-CoA + succinate = propanoate + succinyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of propanoyl-CoA + succinate = propanoate + succinyl-CoA
+  description: Substrate-to-product chemistry of RHEA:28010, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28011 (rh:substrates → 28010_L, rh:products → 28010_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of propanoyl-CoA + succinate = propanoate + succinyl-CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28010
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: propanoyl-CoA + succinate = propanoate + succinyl-CoA'
+  - node_id: sub1
+    label: propanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57392
+    description: Formula C24H36N7O17P3S.
+  - node_id: sub2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: prd1
+    label: propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17272
+    description: Formula C3H5O2.
+  - node_id: prd2
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: propionyl-CoA:succinate CoA-transferase activity
+    grounding: GO:0043821
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: propanoyl-CoA:succinate CoA transferase
+    grounding: EC:2.8.3.27
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_C6EUD4
+    node_type: PROTEIN
+    label: APSCT_FASHE
+    grounding: UniProtKB:C6EUD4
+  - node_id: prot_P52043
+    node_type: PROTEIN
+    label: SCPC_ECOLI
+    grounding: UniProtKB:P52043
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: propanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28011
+      snippet: propanoyl-CoA + succinate => propanoate + succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28011 declares side 28010_L as its substrates
+        (rh:substrates); the master reaction RHEA:28010 is undirected. This participant is CHEBI:57392
+        with coefficient 1. Rhea cites PMID:19103231, PMID:10769117 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: succinate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28011
+      snippet: propanoyl-CoA + succinate => propanoate + succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28011 declares side 28010_L as its substrates
+        (rh:substrates); the master reaction RHEA:28010 is undirected. This participant is CHEBI:30031
+        with coefficient 1. Rhea cites PMID:19103231, PMID:10769117 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: propanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28011
+      snippet: propanoyl-CoA + succinate => propanoate + succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28011 declares side 28010_R as its products
+        (rh:products); the master reaction RHEA:28010 is undirected. This participant is CHEBI:17272 with
+        coefficient 1. Rhea cites PMID:19103231, PMID:10769117 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28011
+      snippet: propanoyl-CoA + succinate => propanoate + succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28011 declares side 28010_R as its products
+        (rh:products); the master reaction RHEA:28010 is undirected. This participant is CHEBI:57292 with
+        coefficient 1. Rhea cites PMID:19103231, PMID:10769117 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:28010
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0043821"/>
+      notes: The rdfs:seeAlso triple on RHEA:28010 in rhea.rdf. GO term GO:0043821 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.8.3.27; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28010
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.27"/>
+      notes: The rh:ec triple on RHEA:28010 in rhea.rdf. EC 2.8.3.27 is itself a record in this KB.
+  - subject: prot_C6EUD4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APSCT_FASHE is an exemplar enzyme carrying EC 2.8.3.27, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.3.27
+      snippet: DR   C6EUD4, APSCT_FASHE;  P52043, SCPC_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.8.3.27 cross-references UniProtKB:C6EUD4 (APSCT_FASHE) as a protein
+        with this activity.
+    - reference: RHEA:28010
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.27"/>
+      notes: Rhea assigns RHEA:28010 to EC 2.8.3.27, and EC 2.8.3.27 maps to exactly one Rhea master reaction
+        (RHEA:28010), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P52043
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SCPC_ECOLI is an exemplar enzyme carrying EC 2.8.3.27, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.3.27
+      snippet: DR   C6EUD4, APSCT_FASHE;  P52043, SCPC_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.8.3.27 cross-references UniProtKB:P52043 (SCPC_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:28010
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.27"/>
+      notes: Rhea assigns RHEA:28010 to EC 2.8.3.27, and EC 2.8.3.27 maps to exactly one Rhea master reaction
+        (RHEA:28010), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

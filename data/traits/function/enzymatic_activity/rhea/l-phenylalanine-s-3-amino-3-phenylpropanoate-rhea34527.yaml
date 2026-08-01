@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.3.11
     mapping_source: rhea2ec
@@ -24,4 +24,75 @@ definitions:
       Catalyses the reaction: L-phenylalanine = (S)-3-amino-3-phenylpropanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-phenylalanine = (S)-3-amino-3-phenylpropanoate
+  description: Substrate-to-product chemistry of RHEA:34527, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34528 (rh:substrates → 34527_L, rh:products → 34527_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-phenylalanine = (S)-3-amino-3-phenylpropanoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34527
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-phenylalanine = (S)-3-amino-3-phenylpropanoate'
+  - node_id: sub1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prd1
+    label: (S)-3-amino-3-phenylpropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:68506
+    description: Formula C9H11NO2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine aminomutase (D-beta-phenylalanine forming)
+    grounding: EC:5.4.3.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-phenylalanine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34528
+      snippet: L-phenylalanine => (S)-3-amino-3-phenylpropanoate
+      notes: Rhea's left-to-right directional reaction RHEA:34528 declares side 34527_L as its substrates
+        (rh:substrates); the master reaction RHEA:34527 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:21561099 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-3-amino-3-phenylpropanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34528
+      snippet: L-phenylalanine => (S)-3-amino-3-phenylpropanoate
+      notes: Rhea's left-to-right directional reaction RHEA:34528 declares side 34527_R as its products
+        (rh:products); the master reaction RHEA:34527 is undirected. This participant is CHEBI:68506 with
+        coefficient 1. Rhea cites PMID:21561099 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.3.11; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34527
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.3.11"/>
+      notes: The rh:ec triple on RHEA:34527 in rhea.rdf. EC 5.4.3.11 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

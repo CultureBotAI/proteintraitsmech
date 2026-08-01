@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.4.1.42
     mapping_source: rhea2ec
@@ -30,4 +30,128 @@ definitions:
       Catalyses the reaction: S-adenosyl-L-methionine = L-homoserine lactone + S-methyl-5'-thioadenosine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-adenosyl-L-methionine = L-homoserine lactone + S-methyl-5'-thioadenosine
+  description: Substrate-to-product chemistry of RHEA:21932, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:21933 (rh:substrates → 21932_L, rh:products → 21932_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of S-adenosyl-L-methionine = L-homoserine lactone + S-methyl-5'-thioadenosine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21932
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: S-adenosyl-L-methionine = L-homoserine lactone + S-methyl-5''-thioadenosine'
+  - node_id: sub1
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: L-homoserine lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:58633
+    description: Formula C4H8NO2.
+  - node_id: prd2
+    label: S-methyl-5'-thioadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17509
+    description: Formula C11H15N5O3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: S-adenosyl-L-methionine lyase activity
+    grounding: GO:0047625
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: S-adenosyl-L-methionine lyase
+    grounding: EC:4.4.1.42
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P07693
+    node_type: PROTEIN
+    label: ADOM_BPT3
+    grounding: UniProtKB:P07693
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21933
+      snippet: S-adenosyl-L-methionine => L-homoserine lactone + S-methyl-5'-thioadenosine
+      notes: Rhea's left-to-right directional reaction RHEA:21933 declares side 21932_L as its substrates
+        (rh:substrates); the master reaction RHEA:21932 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:13610898, PMID:13672964, PMID:33567250 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-homoserine lactone is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21933
+      snippet: S-adenosyl-L-methionine => L-homoserine lactone + S-methyl-5'-thioadenosine
+      notes: Rhea's left-to-right directional reaction RHEA:21933 declares side 21932_R as its products
+        (rh:products); the master reaction RHEA:21932 is undirected. This participant is CHEBI:58633 with
+        coefficient 1. Rhea cites PMID:13610898, PMID:13672964, PMID:33567250 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-methyl-5'-thioadenosine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21933
+      snippet: S-adenosyl-L-methionine => L-homoserine lactone + S-methyl-5'-thioadenosine
+      notes: Rhea's left-to-right directional reaction RHEA:21933 declares side 21932_R as its products
+        (rh:products); the master reaction RHEA:21932 is undirected. This participant is CHEBI:17509 with
+        coefficient 1. Rhea cites PMID:13610898, PMID:13672964, PMID:33567250 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:21932
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047625"/>
+      notes: The rdfs:seeAlso triple on RHEA:21932 in rhea.rdf. GO term GO:0047625 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.4.1.42; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:21932
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.42"/>
+      notes: The rh:ec triple on RHEA:21932 in rhea.rdf. EC 4.4.1.42 is itself a record in this KB.
+  - subject: prot_P07693
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADOM_BPT3 is an exemplar enzyme carrying EC 4.4.1.42, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.4.1.42
+      snippet: DR   P07693, ADOM_BPT3  ;
+      notes: ExPASy ENZYME entry EC 4.4.1.42 cross-references UniProtKB:P07693 (ADOM_BPT3) as a protein
+        with this activity.
+    - reference: RHEA:21932
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.42"/>
+      notes: Rhea assigns RHEA:21932 to EC 4.4.1.42, and EC 4.4.1.42 maps to exactly one Rhea master reaction
+        (RHEA:21932), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.1.3.84
     mapping_source: rhea2ec
@@ -30,4 +30,166 @@ definitions:
       Catalyses the reaction: ADP-alpha-D-ribose 1''-phosphate + H2O = ADP-D-ribose + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ADP-alpha-D-ribose 1''-phosphate + H2O = ADP-D-ribose + phosphate
+  description: Substrate-to-product chemistry of RHEA:25029, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:25030 (rh:substrates → 25029_L, rh:products → 25029_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of ADP-alpha-D-ribose 1''-phosphate + H2O = ADP-D-ribose + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:25029
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: ADP-alpha-D-ribose 1''''-phosphate + H2O = ADP-D-ribose + phosphate'
+  - node_id: sub1
+    label: ADP-alpha-D-ribose 1''-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58753
+    description: Formula C15H20N5O17P3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: ADP-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:57967
+    description: Formula C15H21N5O14P2.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: ADP-ribose 1''-phosphate phosphatase
+    grounding: EC:3.1.3.84
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A1CNH7
+    node_type: PROTEIN
+    label: POA1_ASPCL
+    grounding: UniProtKB:A1CNH7
+  - node_id: prot_A1D1B7
+    node_type: PROTEIN
+    label: POA1_ASPF1
+    grounding: UniProtKB:A1D1B7
+  - node_id: prot_Q4WRE8
+    node_type: PROTEIN
+    label: POA1_ASPFU
+    grounding: UniProtKB:Q4WRE8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ADP-alpha-D-ribose 1''-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:25030
+      snippet: ADP-alpha-D-ribose 1''-phosphate + H2O => ADP-D-ribose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25030 declares side 25029_L as its substrates
+        (rh:substrates); the master reaction RHEA:25029 is undirected. This participant is CHEBI:58753
+        with coefficient 1. Rhea cites PMID:15684411, PMID:15722447 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25030
+      snippet: ADP-alpha-D-ribose 1''-phosphate + H2O => ADP-D-ribose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25030 declares side 25029_L as its substrates
+        (rh:substrates); the master reaction RHEA:25029 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15684411, PMID:15722447 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ADP-D-ribose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25030
+      snippet: ADP-alpha-D-ribose 1''-phosphate + H2O => ADP-D-ribose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25030 declares side 25029_R as its products
+        (rh:products); the master reaction RHEA:25029 is undirected. This participant is CHEBI:57967 with
+        coefficient 1. Rhea cites PMID:15684411, PMID:15722447 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25030
+      snippet: ADP-alpha-D-ribose 1''-phosphate + H2O => ADP-D-ribose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25030 declares side 25029_R as its products
+        (rh:products); the master reaction RHEA:25029 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:15684411, PMID:15722447 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.1.3.84; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:25029
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.84"/>
+      notes: The rh:ec triple on RHEA:25029 in rhea.rdf. EC 3.1.3.84 is itself a record in this KB.
+  - subject: prot_A1CNH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POA1_ASPCL is an exemplar enzyme carrying EC 3.1.3.84, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.1.3.84
+      snippet: DR   A1CNH7, POA1_ASPCL ;  A1D1B7, POA1_ASPF1 ;  Q4WRE8, POA1_ASPFU ;
+      notes: ExPASy ENZYME entry EC 3.1.3.84 cross-references UniProtKB:A1CNH7 (POA1_ASPCL) as a protein
+        with this activity.
+    - reference: RHEA:25029
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.84"/>
+      notes: Rhea assigns RHEA:25029 to EC 3.1.3.84, and EC 3.1.3.84 maps to exactly one Rhea master reaction
+        (RHEA:25029), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A1D1B7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POA1_ASPF1 is an exemplar enzyme carrying EC 3.1.3.84, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.1.3.84
+      snippet: DR   A1CNH7, POA1_ASPCL ;  A1D1B7, POA1_ASPF1 ;  Q4WRE8, POA1_ASPFU ;
+      notes: ExPASy ENZYME entry EC 3.1.3.84 cross-references UniProtKB:A1D1B7 (POA1_ASPF1) as a protein
+        with this activity.
+    - reference: RHEA:25029
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.84"/>
+      notes: Rhea assigns RHEA:25029 to EC 3.1.3.84, and EC 3.1.3.84 maps to exactly one Rhea master reaction
+        (RHEA:25029), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q4WRE8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POA1_ASPFU is an exemplar enzyme carrying EC 3.1.3.84, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.1.3.84
+      snippet: DR   A1CNH7, POA1_ASPCL ;  A1D1B7, POA1_ASPF1 ;  Q4WRE8, POA1_ASPFU ;
+      notes: ExPASy ENZYME entry EC 3.1.3.84 cross-references UniProtKB:Q4WRE8 (POA1_ASPFU) as a protein
+        with this activity.
+    - reference: RHEA:25029
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.84"/>
+      notes: Rhea assigns RHEA:25029 to EC 3.1.3.84, and EC 3.1.3.84 maps to exactly one Rhea master reaction
+        (RHEA:25029), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

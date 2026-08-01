@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.2
     mapping_source: rhea2ec
@@ -28,4 +28,287 @@ definitions:
       Catalyses the reaction: (S)-malate = fumarate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-malate = fumarate + H2O
+  description: Substrate-to-product chemistry of RHEA:12460, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12461 (rh:substrates → 12460_L, rh:products → 12460_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (S)-malate = fumarate + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12460
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (S)-malate = fumarate + H2O'
+  - node_id: sub1
+    label: (S)-malate
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+    description: Formula C4H4O5.
+  - node_id: prd1
+    label: fumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+    description: Formula C4H2O4.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: fumarate hydratase activity
+    grounding: GO:0004333
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: fumarate hydratase
+    grounding: EC:4.2.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P93033
+    node_type: PROTEIN
+    label: FUM1_ARATH
+    grounding: UniProtKB:P93033
+  - node_id: prot_Q4QAU9
+    node_type: PROTEIN
+    label: FUM1_LEIMA
+    grounding: UniProtKB:Q4QAU9
+  - node_id: prot_Q9FI53
+    node_type: PROTEIN
+    label: FUM2_ARATH
+    grounding: UniProtKB:Q9FI53
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-malate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12461
+      snippet: (S)-malate => fumarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12461 declares side 12460_L as its substrates
+        (rh:substrates); the master reaction RHEA:12460 is undirected. This participant is CHEBI:15589
+        with coefficient 1. Rhea cites PMID:14247669, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: fumarate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12461
+      snippet: (S)-malate => fumarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12461 declares side 12460_R as its products
+        (rh:products); the master reaction RHEA:12460 is undirected. This participant is CHEBI:29806 with
+        coefficient 1. Rhea cites PMID:14247669, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12461
+      snippet: (S)-malate => fumarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12461 declares side 12460_R as its products
+        (rh:products); the master reaction RHEA:12460 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:14247669, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12460
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004333"/>
+      notes: The rdfs:seeAlso triple on RHEA:12460 in rhea.rdf. GO term GO:0004333 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12460
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.2"/>
+      notes: The rh:ec triple on RHEA:12460 in rhea.rdf. EC 4.2.1.2 is itself a record in this KB.
+  - subject: prot_P93033
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUM1_ARATH is an exemplar enzyme carrying EC 4.2.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.2
+      snippet: DR   P93033, FUM1_ARATH ;  Q4QAU9, FUM1_LEIMA ;  Q9FI53, FUM2_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.2 cross-references UniProtKB:P93033 (FUM1_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:12460
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.2"/>
+      notes: Rhea assigns RHEA:12460 to EC 4.2.1.2, and EC 4.2.1.2 maps to exactly one Rhea master reaction
+        (RHEA:12460), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q4QAU9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUM1_LEIMA is an exemplar enzyme carrying EC 4.2.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.2
+      snippet: DR   P93033, FUM1_ARATH ;  Q4QAU9, FUM1_LEIMA ;  Q9FI53, FUM2_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.2 cross-references UniProtKB:Q4QAU9 (FUM1_LEIMA) as a protein
+        with this activity.
+    - reference: RHEA:12460
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.2"/>
+      notes: Rhea assigns RHEA:12460 to EC 4.2.1.2, and EC 4.2.1.2 maps to exactly one Rhea master reaction
+        (RHEA:12460), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9FI53
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUM2_ARATH is an exemplar enzyme carrying EC 4.2.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.2
+      snippet: DR   P93033, FUM1_ARATH ;  Q4QAU9, FUM1_LEIMA ;  Q9FI53, FUM2_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.2 cross-references UniProtKB:Q9FI53 (FUM2_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:12460
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.2"/>
+      notes: Rhea assigns RHEA:12460 to EC 4.2.1.2, and EC 4.2.1.2 maps to exactly one Rhea master reaction
+        (RHEA:12460), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa569
+  title: Catalytic residues of RHEA:12460 (from MCSA:569)
+  description: 'The catalytic residues that carry out RHEA:12460, joined from M-CSA entry 569. 4 residues,
+    reused verbatim from the MCSA:569 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 569''s reactant set (CHEBI:15589) equals Rhea side 12460_L exactly, and its product
+    set (CHEBI:15377, CHEBI:29806) equals side 12460_R exactly. EC agreement bounded the candidates but
+    was not sufficient on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of (S)-malate = fumarate + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12460
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: (S)-malate = fumarate + H2O'
+  - node_id: mcsa
+    label: fumarate hydratase (class II)
+    node_type: MOTIF
+    grounding: MCSA:569
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: his188
+    label: catalytic His188 (M-CSA/PDB numbering; UniProt residue 188)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05042
+    description: 'M-CSA roles: electrostatic stabiliser, proton acceptor. Reused verbatim from the MCSA:569
+      record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: ser318
+    label: catalytic Ser318 (M-CSA/PDB numbering; UniProt residue 318)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05042
+    description: 'M-CSA roles: proton donor. Reused verbatim from the MCSA:569 record''s catalysis graph,
+      where the UniProt position was resolved through SIFTS.'
+  - node_id: lys324
+    label: catalytic Lys324 (M-CSA/PDB numbering; UniProt residue 324)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05042
+    description: 'M-CSA roles: electrostatic stabiliser. Reused verbatim from the MCSA:569 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: glu331
+    label: catalytic Glu331 (M-CSA/PDB numbering; UniProt residue 331)
+    node_type: RESIDUE
+    grounding: UniProtKB:P05042
+    description: 'M-CSA roles: increase basicity. Reused verbatim from the MCSA:569 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 569 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:569
+      snippet: (S)-malate(2-) [reactant]; fumarate(2-) [product]; water [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 569, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 569''s reactant
+        set (CHEBI:15589) equals Rhea side 12460_L exactly, and its product set (CHEBI:15377, CHEBI:29806)
+        equals side 12460_R exactly. EC agreement bounded the candidates but was not sufficient on its
+        own.'
+  - subject: his188
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:569
+      snippet: electrostatic stabiliser, proton acceptor
+      notes: 'M-CSA entry 569 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 7 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 569''s reactant set (CHEBI:15589)
+        equals Rhea side 12460_L exactly, and its product set (CHEBI:15377, CHEBI:29806) equals side 12460_R
+        exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: ser318
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:569
+      snippet: proton donor
+      notes: 'M-CSA entry 569 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 7 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 569''s reactant set (CHEBI:15589)
+        equals Rhea side 12460_L exactly, and its product set (CHEBI:15377, CHEBI:29806) equals side 12460_R
+        exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: lys324
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:569
+      snippet: electrostatic stabiliser
+      notes: 'M-CSA entry 569 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 7 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 569''s reactant set (CHEBI:15589)
+        equals Rhea side 12460_L exactly, and its product set (CHEBI:15377, CHEBI:29806) equals side 12460_R
+        exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: glu331
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:569
+      snippet: increase basicity
+      notes: 'M-CSA entry 569 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 7 spectator, 2 reactant. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 569''s reactant set (CHEBI:15589)
+        equals Rhea side 12460_L exactly, and its product set (CHEBI:15377, CHEBI:29806) equals side 12460_R
+        exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa569' (5 evidence-backed edges) joining MCSA:569
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

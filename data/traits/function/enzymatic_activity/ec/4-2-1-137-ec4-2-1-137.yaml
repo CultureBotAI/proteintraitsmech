@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: sporulenol = (R)-tetraprenyl-beta-curcumene + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sporulenol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.137. EC 4.2.1.137 maps to
+    exactly one curated Rhea reaction (RHEA:34255), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "sporulenol
+    = (R)-tetraprenyl-beta-curcumene + H2O". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sporulenol synthase
+    grounding: EC:4.2.1.137
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: sporulenol
+    node_type: CHEMICAL
+    grounding: CHEBI:67182
+    description: Formula C35H58O.
+  - node_id: prd1
+    label: (R)-tetraprenyl-beta-curcumene
+    node_type: CHEMICAL
+    grounding: CHEBI:64801
+    description: Formula C35H56.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q796C3
+    node_type: PROTEIN
+    label: SQHC_BACSU
+    grounding: UniProtKB:Q796C3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sporulenol is a substrate consumed by RHEA:34255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34256
+      snippet: sporulenol => (R)-tetraprenyl-beta-curcumene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34256 declares side 34255_L as its substrates
+        (rh:substrates); the master reaction RHEA:34255 is undirected. This participant is CHEBI:67182
+        with coefficient 1. Rhea cites PMID:21627333 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-tetraprenyl-beta-curcumene is a product released by RHEA:34255 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34256
+      snippet: sporulenol => (R)-tetraprenyl-beta-curcumene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34256 declares side 34255_R as its products
+        (rh:products); the master reaction RHEA:34255 is undirected. This participant is CHEBI:64801 with
+        coefficient 1. Rhea cites PMID:21627333 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:34255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34256
+      snippet: sporulenol => (R)-tetraprenyl-beta-curcumene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34256 declares side 34255_R as its products
+        (rh:products); the master reaction RHEA:34255 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:21627333 for this reaction.
+  - subject: prot_Q796C3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQHC_BACSU is an exemplar enzyme with EC 4.2.1.137 activity.
+    evidence:
+    - reference: EC:4.2.1.137
+      snippet: DR   Q796C3, SQHC_BACSU ;
+      notes: ExPASy ENZYME entry EC 4.2.1.137 cross-references UniProtKB:Q796C3 (SQHC_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.51
     mapping_source: rhea2ec
@@ -26,4 +26,166 @@ definitions:
       Catalyses the reaction: 2-dehydro-3-deoxy-D-gluconate = D-glyceraldehyde + pyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-dehydro-3-deoxy-D-gluconate = D-glyceraldehyde + pyruvate
+  description: Substrate-to-product chemistry of RHEA:35583, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35584 (rh:substrates → 35583_L, rh:products → 35583_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-dehydro-3-deoxy-D-gluconate = D-glyceraldehyde + pyruvate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:35583
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-dehydro-3-deoxy-D-gluconate = D-glyceraldehyde + pyruvate'
+  - node_id: sub1
+    label: 2-dehydro-3-deoxy-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:57990
+    description: Formula C6H9O6.
+  - node_id: prd1
+    label: D-glyceraldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17378
+    description: Formula C3H6O3.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydro-3-deoxy-D-gluconate aldolase activity
+    grounding: GO:0061677
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydro-3-deoxy-D-gluconate aldolase
+    grounding: EC:4.1.2.51
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q6KZI8
+    node_type: PROTEIN
+    label: KDGA_PICTO
+    grounding: UniProtKB:Q6KZI8
+  - node_id: prot_Q704D1
+    node_type: PROTEIN
+    label: KDGA_THETE
+    grounding: UniProtKB:Q704D1
+  - node_id: prot_P75682
+    node_type: PROTEIN
+    label: YAGE_ECOLI
+    grounding: UniProtKB:P75682
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-dehydro-3-deoxy-D-gluconate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:35584
+      snippet: 2-dehydro-3-deoxy-D-gluconate => D-glyceraldehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:35584 declares side 35583_L as its substrates
+        (rh:substrates); the master reaction RHEA:35583 is undirected. This participant is CHEBI:57990
+        with coefficient 1. Rhea cites PMID:20023024 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-glyceraldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35584
+      snippet: 2-dehydro-3-deoxy-D-gluconate => D-glyceraldehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:35584 declares side 35583_R as its products
+        (rh:products); the master reaction RHEA:35583 is undirected. This participant is CHEBI:17378 with
+        coefficient 1. Rhea cites PMID:20023024 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35584
+      snippet: 2-dehydro-3-deoxy-D-gluconate => D-glyceraldehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:35584 declares side 35583_R as its products
+        (rh:products); the master reaction RHEA:35583 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:20023024 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:35583
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0061677"/>
+      notes: The rdfs:seeAlso triple on RHEA:35583 in rhea.rdf. GO term GO:0061677 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.51; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:35583
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.51"/>
+      notes: The rh:ec triple on RHEA:35583 in rhea.rdf. EC 4.1.2.51 is itself a record in this KB.
+  - subject: prot_Q6KZI8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KDGA_PICTO is an exemplar enzyme carrying EC 4.1.2.51, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.51
+      snippet: DR   Q6KZI8, KDGA_PICTO ;  Q704D1, KDGA_THETE ;  P75682, YAGE_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.1.2.51 cross-references UniProtKB:Q6KZI8 (KDGA_PICTO) as a protein
+        with this activity.
+    - reference: RHEA:35583
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.51"/>
+      notes: Rhea assigns RHEA:35583 to EC 4.1.2.51, and EC 4.1.2.51 maps to exactly one Rhea master reaction
+        (RHEA:35583), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q704D1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KDGA_THETE is an exemplar enzyme carrying EC 4.1.2.51, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.51
+      snippet: DR   Q6KZI8, KDGA_PICTO ;  Q704D1, KDGA_THETE ;  P75682, YAGE_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.1.2.51 cross-references UniProtKB:Q704D1 (KDGA_THETE) as a protein
+        with this activity.
+    - reference: RHEA:35583
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.51"/>
+      notes: Rhea assigns RHEA:35583 to EC 4.1.2.51, and EC 4.1.2.51 maps to exactly one Rhea master reaction
+        (RHEA:35583), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P75682
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: YAGE_ECOLI is an exemplar enzyme carrying EC 4.1.2.51, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.51
+      snippet: DR   Q6KZI8, KDGA_PICTO ;  Q704D1, KDGA_THETE ;  P75682, YAGE_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.1.2.51 cross-references UniProtKB:P75682 (YAGE_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:35583
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.51"/>
+      notes: Rhea assigns RHEA:35583 to EC 4.1.2.51, and EC 4.1.2.51 maps to exactly one Rhea master reaction
+        (RHEA:35583), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

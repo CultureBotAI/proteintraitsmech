@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.99.-
 synonyms:
@@ -33,4 +33,87 @@ definitions:
       Catalyses: styrene oxide = 2-phenylacetaldehyde
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of styrene-oxide isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.99.7. EC 5.3.99.7 maps to exactly
+    one curated Rhea reaction (RHEA:21604), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "styrene oxide
+    = 2-phenylacetaldehyde". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: styrene-oxide isomerase
+    grounding: EC:5.3.99.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: styrene oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:17907
+    description: Formula C8H8O.
+  - node_id: prd1
+    label: 2-phenylacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:16424
+    description: Formula C8H8O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: styrene-oxide isomerase activity
+    grounding: GO:0018846
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O06836
+    node_type: PROTEIN
+    label: STYC_PSEFL
+    grounding: UniProtKB:O06836
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: styrene oxide is a substrate consumed by RHEA:21604 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21605
+      snippet: styrene oxide => 2-phenylacetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21605 declares side 21604_L as its substrates
+        (rh:substrates); the master reaction RHEA:21604 is undirected. This participant is CHEBI:17907
+        with coefficient 1. Rhea cites PMID:16348047 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-phenylacetaldehyde is a product released by RHEA:21604 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21605
+      snippet: styrene oxide => 2-phenylacetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21605 declares side 21604_R as its products
+        (rh:products); the master reaction RHEA:21604 is undirected. This participant is CHEBI:16424 with
+        coefficient 1. Rhea cites PMID:16348047 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.99.7
+      snippet: EC:5.3.99.7 > GO:styrene-oxide isomerase activity ; GO:0018846
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018846 is itself a record
+        in this KB.
+  - subject: prot_O06836
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STYC_PSEFL is an exemplar enzyme with EC 5.3.99.7 activity.
+    evidence:
+    - reference: EC:5.3.99.7
+      snippet: DR   O06836, STYC_PSEFL ;
+      notes: ExPASy ENZYME entry EC 5.3.99.7 cross-references UniProtKB:O06836 (STYC_PSEFL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

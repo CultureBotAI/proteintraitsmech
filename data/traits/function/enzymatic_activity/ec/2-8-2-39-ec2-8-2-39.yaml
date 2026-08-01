@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.2.-
 mapped_xrefs:
@@ -32,4 +32,266 @@ definitions:
       Catalyses: a 12-hydroxyjasmonate + 3'-phosphoadenylyl sulfate = a 12-sulfojasmonate + adenosine 3',5'-bisphosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydroxyjasmonate sulfotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.2.39. Rhea assigns 2 curated
+    reactions to EC 2.8.2.39. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "a 12-hydroxyjasmonate + 3''-phosphoadenylyl sulfate = a
+    12-sulfojasmonate + adenosine 3'',5''-bisphosphate + H(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxyjasmonate sulfotransferase
+    grounding: EC:2.8.2.39
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a 12-hydroxyjasmonate + 3'-phosphoadenylyl sulfate = a 12-sulfojasmonate + a…
+    grounding: RHEA:52728
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a 12-hydroxyjasmonate + 3''-phosphoadenylyl sulfate = a 12-sulfojasmonate
+      + adenosine 3'',5''-bisphosphate + H(+)'
+  - node_id: rxn1_sub1
+    label: a 12-hydroxyjasmonate
+    node_type: CHEMICAL
+    grounding: CHEBI:136810
+    description: Formula C12H17O4.
+  - node_id: rxn1_sub2
+    label: 3'-phosphoadenylyl sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:58339
+    description: Formula C10H11N5O13P2S.
+  - node_id: rxn1_prd1
+    label: a 12-sulfojasmonate
+    node_type: CHEMICAL
+    grounding: CHEBI:136811
+    description: Formula C12H16O7S.
+  - node_id: rxn1_prd2
+    label: adenosine 3',5'-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58343
+    description: Formula C10H11N5O10P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an 11-hydroxyjasmonate + 3'-phosphoadenylyl sulfate = an 11-sulfojasmonate +…
+    grounding: RHEA:52732
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an 11-hydroxyjasmonate + 3''-phosphoadenylyl sulfate = an 11-sulfojasmonate
+      + adenosine 3'',5''-bisphosphate + H(+)'
+  - node_id: rxn2_sub1
+    label: an 11-hydroxyjasmonate
+    node_type: CHEMICAL
+    grounding: CHEBI:136812
+    description: Formula C12H17O4.
+  - node_id: rxn2_sub2
+    label: 3'-phosphoadenylyl sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:58339
+    description: Formula C10H11N5O13P2S.
+  - node_id: rxn2_prd1
+    label: an 11-sulfojasmonate
+    node_type: CHEMICAL
+    grounding: CHEBI:136813
+    description: Formula C12H16O7S.
+  - node_id: rxn2_prd2
+    label: adenosine 3',5'-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58343
+    description: Formula C10H11N5O10P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxyjasmonate sulfotransferase activity
+    grounding: GO:0080131
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8L5A7
+    node_type: PROTEIN
+    label: SOT15_ARATH
+    grounding: UniProtKB:Q8L5A7
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:52728 is one of the 2 curated reactions Rhea assigns to EC 2.8.2.39; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:52728
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.2.39"/>
+      notes: The rh:ec triple on RHEA:52728 in rhea.rdf assigns that reaction to EC 2.8.2.39.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a 12-hydroxyjasmonate is a substrate consumed by RHEA:52728 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52729
+      snippet: a 12-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => a 12-sulfojasmonate + adenosine 3',5'-bisphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52729 declares side 52728_L as its substrates
+        (rh:substrates); the master reaction RHEA:52728 is undirected. This participant is CHEBI:136810
+        with coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: 3'-phosphoadenylyl sulfate is a substrate consumed by RHEA:52728 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52729
+      snippet: a 12-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => a 12-sulfojasmonate + adenosine 3',5'-bisphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52729 declares side 52728_L as its substrates
+        (rh:substrates); the master reaction RHEA:52728 is undirected. This participant is CHEBI:58339
+        with coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a 12-sulfojasmonate is a product released by RHEA:52728 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52729
+      snippet: a 12-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => a 12-sulfojasmonate + adenosine 3',5'-bisphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52729 declares side 52728_R as its products
+        (rh:products); the master reaction RHEA:52728 is undirected. This participant is CHEBI:136811
+        with coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: adenosine 3',5'-bisphosphate is a product released by RHEA:52728 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52729
+      snippet: a 12-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => a 12-sulfojasmonate + adenosine 3',5'-bisphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52729 declares side 52728_R as its products
+        (rh:products); the master reaction RHEA:52728 is undirected. This participant is CHEBI:58343 with
+        coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:52728 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52729
+      snippet: a 12-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => a 12-sulfojasmonate + adenosine 3',5'-bisphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52729 declares side 52728_R as its products
+        (rh:products); the master reaction RHEA:52728 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:52732 is one of the 2 curated reactions Rhea assigns to EC 2.8.2.39; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:52732
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.2.39"/>
+      notes: The rh:ec triple on RHEA:52732 in rhea.rdf assigns that reaction to EC 2.8.2.39.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: an 11-hydroxyjasmonate is a substrate consumed by RHEA:52732 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52733
+      snippet: an 11-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => an 11-sulfojasmonate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52733 declares side 52732_L as its substrates
+        (rh:substrates); the master reaction RHEA:52732 is undirected. This participant is CHEBI:136812
+        with coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: 3'-phosphoadenylyl sulfate is a substrate consumed by RHEA:52732 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52733
+      snippet: an 11-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => an 11-sulfojasmonate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52733 declares side 52732_L as its substrates
+        (rh:substrates); the master reaction RHEA:52732 is undirected. This participant is CHEBI:58339
+        with coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: an 11-sulfojasmonate is a product released by RHEA:52732 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52733
+      snippet: an 11-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => an 11-sulfojasmonate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52733 declares side 52732_R as its products
+        (rh:products); the master reaction RHEA:52732 is undirected. This participant is CHEBI:136813
+        with coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: adenosine 3',5'-bisphosphate is a product released by RHEA:52732 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52733
+      snippet: an 11-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => an 11-sulfojasmonate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52733 declares side 52732_R as its products
+        (rh:products); the master reaction RHEA:52732 is undirected. This participant is CHEBI:58343 with
+        coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:52732 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52733
+      snippet: an 11-hydroxyjasmonate + 3'-phosphoadenylyl sulfate => an 11-sulfojasmonate + adenosine
+        3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:52733 declares side 52732_R as its products
+        (rh:products); the master reaction RHEA:52732 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12637544 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.2.39
+      snippet: EC:2.8.2.39 > GO:hydroxyjasmonate sulfotransferase activity ; GO:0080131
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0080131 is itself a record
+        in this KB.
+  - subject: prot_Q8L5A7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SOT15_ARATH is an exemplar enzyme with EC 2.8.2.39 activity.
+    evidence:
+    - reference: EC:2.8.2.39
+      snippet: DR   Q8L5A7, SOT15_ARATH;
+      notes: ExPASy ENZYME entry EC 2.8.2.39 cross-references UniProtKB:Q8L5A7 (SOT15_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

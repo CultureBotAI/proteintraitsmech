@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.2.-
 mapped_xrefs:
@@ -23,4 +23,142 @@ definitions:
       Catalyses: 2 Fe(III)-[cytochrome c3] + hydrogen sulfide + sulfite = 2 Fe(II)- [cytochrome c3] + thiosulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thiosulfate reductase (cytochrome)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.2.5. EC 1.8.2.5 maps to exactly
+    one curated Rhea reaction (RHEA:51932), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 Fe(III)-[cytochrome
+    c3] + hydrogen sulfide + sulfite = 2 Fe(II)- [cytochrome c3] + thiosulfate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thiosulfate reductase (cytochrome)
+    grounding: EC:1.8.2.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: Fe(III)-[cytochrome c3]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11576
+    description: Rhea compound GENERIC:11576.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: Fe(3+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:11576 (Fe(III)-[cytochrome
+      c3]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: sub2
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: sub3
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: prd1
+    label: Fe(II)-[cytochrome c3]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11577
+    description: Rhea compound GENERIC:11577.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: Fe(2+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:11577 (Fe(II)-[cytochrome
+      c3]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd2
+    label: thiosulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:33542
+    description: Formula HO3S2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(III)-[cytochrome c3] is a substrate consumed by RHEA:51932 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:51933
+      snippet: 2 Fe(III)-[cytochrome c3] + hydrogen sulfide + sulfite => 2 Fe(II)-[cytochrome c3] + thiosulfate
+      notes: Rhea's left-to-right directional reaction RHEA:51933 declares side 51932_L as its substrates
+        (rh:substrates); the master reaction RHEA:51932 is undirected. This participant is GENERIC:11576
+        with coefficient 2. Rhea cites PMID:242299, PMID:2993256, PMID:5784203, PMID:12889609 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c3].
+    evidence:
+    - reference: RHEA:51932
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:11576 (Fe(III)-[cytochrome c3]) declares rh:reactivePart = Fe(3+) (CHEBI:29034).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen sulfide is a substrate consumed by RHEA:51932 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51933
+      snippet: 2 Fe(III)-[cytochrome c3] + hydrogen sulfide + sulfite => 2 Fe(II)-[cytochrome c3] + thiosulfate
+      notes: Rhea's left-to-right directional reaction RHEA:51933 declares side 51932_L as its substrates
+        (rh:substrates); the master reaction RHEA:51932 is undirected. This participant is CHEBI:29919
+        with coefficient 1. Rhea cites PMID:242299, PMID:2993256, PMID:5784203, PMID:12889609 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: sulfite is a substrate consumed by RHEA:51932 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51933
+      snippet: 2 Fe(III)-[cytochrome c3] + hydrogen sulfide + sulfite => 2 Fe(II)-[cytochrome c3] + thiosulfate
+      notes: Rhea's left-to-right directional reaction RHEA:51933 declares side 51932_L as its substrates
+        (rh:substrates); the master reaction RHEA:51932 is undirected. This participant is CHEBI:17359
+        with coefficient 1. Rhea cites PMID:242299, PMID:2993256, PMID:5784203, PMID:12889609 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(II)-[cytochrome c3] is a product released by RHEA:51932 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:51933
+      snippet: 2 Fe(III)-[cytochrome c3] + hydrogen sulfide + sulfite => 2 Fe(II)-[cytochrome c3] + thiosulfate
+      notes: Rhea's left-to-right directional reaction RHEA:51933 declares side 51932_R as its products
+        (rh:products); the master reaction RHEA:51932 is undirected. This participant is GENERIC:11577
+        with coefficient 2. Rhea cites PMID:242299, PMID:2993256, PMID:5784203, PMID:12889609 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome c3].
+    evidence:
+    - reference: RHEA:51932
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:11577 (Fe(II)-[cytochrome c3]) declares rh:reactivePart = Fe(2+) (CHEBI:29033).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: thiosulfate is a product released by RHEA:51932 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51933
+      snippet: 2 Fe(III)-[cytochrome c3] + hydrogen sulfide + sulfite => 2 Fe(II)-[cytochrome c3] + thiosulfate
+      notes: Rhea's left-to-right directional reaction RHEA:51933 declares side 51932_R as its products
+        (rh:products); the master reaction RHEA:51932 is undirected. This participant is CHEBI:33542 with
+        coefficient 1. Rhea cites PMID:242299, PMID:2993256, PMID:5784203, PMID:12889609 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

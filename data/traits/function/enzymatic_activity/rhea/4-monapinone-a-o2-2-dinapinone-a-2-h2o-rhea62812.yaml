@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:145922
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,90 @@ definitions:
       Catalyses the reaction: 4 monapinone A + O2 = 2 dinapinone A + 2 H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4 monapinone A + O2 = 2 dinapinone A + 2 H2O
+  description: Substrate-to-product chemistry of RHEA:62812, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62813 (rh:substrates → 62812_L, rh:products → 62812_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4 monapinone A + O2 = 2 dinapinone A + 2 H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62812
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4 monapinone A + O2 = 2 dinapinone A + 2 H2O'
+  - node_id: sub1
+    label: monapinone A
+    node_type: CHEMICAL
+    grounding: CHEBI:145922
+    description: Formula C23H30O7.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: dinapinone A
+    node_type: CHEMICAL
+    grounding: CHEBI:145923
+    description: Formula C46H58O14.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: monapinone A is a substrate consumed by this reaction (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:62813
+      snippet: 4 monapinone A + O2 => 2 dinapinone A + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:62813 declares side 62812_L as its substrates
+        (rh:substrates); the master reaction RHEA:62812 is undirected. This participant is CHEBI:145922
+        with coefficient 4. Rhea cites PMID:29468784 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62813
+      snippet: 4 monapinone A + O2 => 2 dinapinone A + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:62813 declares side 62812_L as its substrates
+        (rh:substrates); the master reaction RHEA:62812 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:29468784 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dinapinone A is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:62813
+      snippet: 4 monapinone A + O2 => 2 dinapinone A + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:62813 declares side 62812_R as its products
+        (rh:products); the master reaction RHEA:62812 is undirected. This participant is CHEBI:145923
+        with coefficient 2. Rhea cites PMID:29468784 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:62813
+      snippet: 4 monapinone A + O2 => 2 dinapinone A + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:62813 declares side 62812_R as its products
+        (rh:products); the master reaction RHEA:62812 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:29468784 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

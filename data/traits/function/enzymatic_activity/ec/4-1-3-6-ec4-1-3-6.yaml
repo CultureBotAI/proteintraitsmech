@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.3.-
 synonyms:
@@ -51,4 +51,130 @@ definitions:
       Catalyses: citrate = oxaloacetate + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of citrate (pro-3S)-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.3.6. EC 4.1.3.6 maps to exactly
+    one curated Rhea reaction (RHEA:10760), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "citrate = oxaloacetate
+    + acetate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: citrate (pro-3S)-lyase
+    grounding: EC:4.1.3.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: citrate
+    node_type: CHEMICAL
+    grounding: CHEBI:16947
+    description: Formula C6H5O7.
+  - node_id: prd1
+    label: oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+    description: Formula C4H2O5.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: citrate (pro-3S)-lyase activity
+    grounding: GO:0008815
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P75726
+    node_type: PROTEIN
+    label: CILA_ECOLI
+    grounding: UniProtKB:P75726
+  - node_id: prot_P44459
+    node_type: PROTEIN
+    label: CILA_HAEIN
+    grounding: UniProtKB:P44459
+  - node_id: prot_P45413
+    node_type: PROTEIN
+    label: CILA_KLEPN
+    grounding: UniProtKB:P45413
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: citrate is a substrate consumed by RHEA:10760 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10761
+      snippet: citrate => oxaloacetate + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:10761 declares side 10760_L as its substrates
+        (rh:substrates); the master reaction RHEA:10760 is undirected. This participant is CHEBI:16947
+        with coefficient 1. Rhea cites PMID:13239657, PMID:336371, PMID:6354265 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: oxaloacetate is a product released by RHEA:10760 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10761
+      snippet: citrate => oxaloacetate + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:10761 declares side 10760_R as its products
+        (rh:products); the master reaction RHEA:10760 is undirected. This participant is CHEBI:16452 with
+        coefficient 1. Rhea cites PMID:13239657, PMID:336371, PMID:6354265 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:10760 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10761
+      snippet: citrate => oxaloacetate + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:10761 declares side 10760_R as its products
+        (rh:products); the master reaction RHEA:10760 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:13239657, PMID:336371, PMID:6354265 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.3.6
+      snippet: EC:4.1.3.6 > GO:citrate (pro-3S)-lyase activity ; GO:0008815
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008815 is itself a record
+        in this KB.
+  - subject: prot_P75726
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CILA_ECOLI is an exemplar enzyme with EC 4.1.3.6 activity.
+    evidence:
+    - reference: EC:4.1.3.6
+      snippet: DR   P75726, CILA_ECOLI ;  P44459, CILA_HAEIN ;  P45413, CILA_KLEPN ;
+      notes: ExPASy ENZYME entry EC 4.1.3.6 cross-references UniProtKB:P75726 (CILA_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P44459
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CILA_HAEIN is an exemplar enzyme with EC 4.1.3.6 activity.
+    evidence:
+    - reference: EC:4.1.3.6
+      snippet: DR   P75726, CILA_ECOLI ;  P44459, CILA_HAEIN ;  P45413, CILA_KLEPN ;
+      notes: ExPASy ENZYME entry EC 4.1.3.6 cross-references UniProtKB:P44459 (CILA_HAEIN) as a protein
+        with this activity.
+  - subject: prot_P45413
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CILA_KLEPN is an exemplar enzyme with EC 4.1.3.6 activity.
+    evidence:
+    - reference: EC:4.1.3.6
+      snippet: DR   P75726, CILA_ECOLI ;  P44459, CILA_HAEIN ;  P45413, CILA_KLEPN ;
+      notes: ExPASy ENZYME entry EC 4.1.3.6 cross-references UniProtKB:P45413 (CILA_KLEPN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

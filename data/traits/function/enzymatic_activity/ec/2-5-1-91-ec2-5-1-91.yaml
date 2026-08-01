@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -51,4 +51,154 @@ definitions:
       Catalyses: 7 isopentenyl diphosphate + (2E,6E)-farnesyl diphosphate = all-trans- decaprenyl diphosphate + 7 diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of all-trans-decaprenyl-diphosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.91. EC 2.5.1.91 maps to exactly
+    one curated Rhea reaction (RHEA:27802), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "7 isopentenyl
+    diphosphate + (2E,6E)-farnesyl diphosphate = all-trans- decaprenyl diphosphate + 7 diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: all-trans-decaprenyl-diphosphate synthase
+    grounding: EC:2.5.1.91
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: isopentenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:128769
+    description: Formula C5H9O7P2.
+  - node_id: sub2
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: all-trans-decaprenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:60721
+    description: Formula C50H81O7P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: all-trans-decaprenyl-diphosphate synthase activity
+    grounding: GO:0097269
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q86YH6
+    node_type: PROTEIN
+    label: DLP1_HUMAN
+    grounding: UniProtKB:Q86YH6
+  - node_id: prot_Q33DR3
+    node_type: PROTEIN
+    label: DLP1_MOUSE
+    grounding: UniProtKB:Q33DR3
+  - node_id: prot_Q5U2R1
+    node_type: PROTEIN
+    label: DLP1_RAT
+    grounding: UniProtKB:Q5U2R1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: isopentenyl diphosphate is a substrate consumed by RHEA:27802 (stoichiometric coefficient
+      7).
+    evidence:
+    - reference: RHEA:27803
+      snippet: 7 isopentenyl diphosphate + (2E,6E)-farnesyl diphosphate => all-trans-decaprenyl diphosphate
+        + 7 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27803 declares side 27802_L as its substrates
+        (rh:substrates); the master reaction RHEA:27802 is undirected. This participant is CHEBI:128769
+        with coefficient 7. Rhea cites PMID:16262699, PMID:17916383 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:27802 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27803
+      snippet: 7 isopentenyl diphosphate + (2E,6E)-farnesyl diphosphate => all-trans-decaprenyl diphosphate
+        + 7 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27803 declares side 27802_L as its substrates
+        (rh:substrates); the master reaction RHEA:27802 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:16262699, PMID:17916383 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: all-trans-decaprenyl diphosphate is a product released by RHEA:27802 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27803
+      snippet: 7 isopentenyl diphosphate + (2E,6E)-farnesyl diphosphate => all-trans-decaprenyl diphosphate
+        + 7 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27803 declares side 27802_R as its products
+        (rh:products); the master reaction RHEA:27802 is undirected. This participant is CHEBI:60721 with
+        coefficient 1. Rhea cites PMID:16262699, PMID:17916383 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:27802 (stoichiometric coefficient 7).
+    evidence:
+    - reference: RHEA:27803
+      snippet: 7 isopentenyl diphosphate + (2E,6E)-farnesyl diphosphate => all-trans-decaprenyl diphosphate
+        + 7 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27803 declares side 27802_R as its products
+        (rh:products); the master reaction RHEA:27802 is undirected. This participant is CHEBI:33019 with
+        coefficient 7. Rhea cites PMID:16262699, PMID:17916383 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.91
+      snippet: EC:2.5.1.91 > GO:all-trans-decaprenyl-diphosphate synthase activity ; GO:0097269
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0097269 is itself a record
+        in this KB.
+  - subject: prot_Q86YH6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DLP1_HUMAN is an exemplar enzyme with EC 2.5.1.91 activity.
+    evidence:
+    - reference: EC:2.5.1.91
+      snippet: DR   Q86YH6, DLP1_HUMAN ;  Q33DR3, DLP1_MOUSE ;  Q5U2R1, DLP1_RAT   ;
+      notes: ExPASy ENZYME entry EC 2.5.1.91 cross-references UniProtKB:Q86YH6 (DLP1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q33DR3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DLP1_MOUSE is an exemplar enzyme with EC 2.5.1.91 activity.
+    evidence:
+    - reference: EC:2.5.1.91
+      snippet: DR   Q86YH6, DLP1_HUMAN ;  Q33DR3, DLP1_MOUSE ;  Q5U2R1, DLP1_RAT   ;
+      notes: ExPASy ENZYME entry EC 2.5.1.91 cross-references UniProtKB:Q33DR3 (DLP1_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q5U2R1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DLP1_RAT is an exemplar enzyme with EC 2.5.1.91 activity.
+    evidence:
+    - reference: EC:2.5.1.91
+      snippet: DR   Q86YH6, DLP1_HUMAN ;  Q33DR3, DLP1_MOUSE ;  Q5U2R1, DLP1_RAT   ;
+      notes: ExPASy ENZYME entry EC 2.5.1.91 cross-references UniProtKB:Q5U2R1 (DLP1_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

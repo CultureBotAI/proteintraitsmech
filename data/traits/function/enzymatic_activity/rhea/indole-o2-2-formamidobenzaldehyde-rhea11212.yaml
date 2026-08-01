@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.13.11.17
     mapping_source: rhea2ec
@@ -30,4 +30,106 @@ definitions:
       Catalyses the reaction: indole + O2 = 2-formamidobenzaldehyde
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of indole + O2 = 2-formamidobenzaldehyde
+  description: Substrate-to-product chemistry of RHEA:11212, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:11213 (rh:substrates → 11212_L, rh:products → 11212_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of indole + O2 = 2-formamidobenzaldehyde
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:11212
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: indole + O2 = 2-formamidobenzaldehyde'
+  - node_id: sub1
+    label: indole
+    node_type: CHEMICAL
+    grounding: CHEBI:16881
+    description: Formula C8H7N.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 2-formamidobenzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:18033
+    description: Formula C8H7NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: indole 2,3-dioxygenase activity
+    grounding: GO:0047719
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: indole 2,3-dioxygenase
+    grounding: EC:1.13.11.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: indole is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11213
+      snippet: indole + O2 => 2-formamidobenzaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:11213 declares side 11212_L as its substrates
+        (rh:substrates); the master reaction RHEA:11212 is undirected. This participant is CHEBI:16881
+        with coefficient 1. Rhea cites PMID:14170321, PMID:16662784, PMID:697856 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11213
+      snippet: indole + O2 => 2-formamidobenzaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:11213 declares side 11212_L as its substrates
+        (rh:substrates); the master reaction RHEA:11212 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:14170321, PMID:16662784, PMID:697856 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-formamidobenzaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11213
+      snippet: indole + O2 => 2-formamidobenzaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:11213 declares side 11212_R as its products
+        (rh:products); the master reaction RHEA:11212 is undirected. This participant is CHEBI:18033 with
+        coefficient 1. Rhea cites PMID:14170321, PMID:16662784, PMID:697856 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:11212
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047719"/>
+      notes: The rdfs:seeAlso triple on RHEA:11212 in rhea.rdf. GO term GO:0047719 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.13.11.17; the EC class covers the chemistry, this
+      reaction is one curated instance of it.
+    evidence:
+    - reference: RHEA:11212
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.17"/>
+      notes: The rh:ec triple on RHEA:11212 in rhea.rdf. EC 1.13.11.17 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

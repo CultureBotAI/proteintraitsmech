@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -45,4 +45,154 @@ definitions:
       Catalyses: RNA(n) + ATP = RNA(n)-3'-adenine ribonucleotide + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of polynucleotide adenylyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.19. EC 2.7.7.19 maps to exactly
+    one curated Rhea reaction (RHEA:11332), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "RNA(n) + ATP
+    = RNA(n)-3''-adenine ribonucleotide + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: polynucleotide adenylyltransferase
+    grounding: EC:2.7.7.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: RNA(n)
+    node_type: CHEMICAL
+    grounding: CHEBI:140395
+    xrefs:
+    - RHEA-COMP:14527
+    description: Rhea compound POLYMER:14527. Formula H2O(C5H7O6PR)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: RNA(n)-3'-adenine ribonucleotide
+    node_type: CHEMICAL
+    grounding: CHEBI:173115
+    xrefs:
+    - RHEA-COMP:17347
+    description: Rhea compound POLYMER:17347. Formula C10H13N5O7P(C5H7O6PR)<i><sub>n</sub></i>.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: poly(A) RNA polymerase activity
+    grounding: GO:1990817
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O74326
+    node_type: PROTEIN
+    label: CID11_SCHPO
+    grounding: UniProtKB:O74326
+  - node_id: prot_O74518
+    node_type: PROTEIN
+    label: CID12_SCHPO
+    grounding: UniProtKB:O74518
+  - node_id: prot_Q9UT49
+    node_type: PROTEIN
+    label: CID13_SCHPO
+    grounding: UniProtKB:Q9UT49
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: RNA(n) is a substrate consumed by RHEA:11332 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11333
+      snippet: RNA(n) + ATP => RNA(n)-3'-adenine ribonucleotide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11333 declares side 11332_L as its substrates
+        (rh:substrates); the master reaction RHEA:11332 is undirected. This participant is POLYMER:14527
+        with coefficient 1. Rhea cites PMID:13965521, PMID:13819354, PMID:4288534, PMID:14459258 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:11332 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11333
+      snippet: RNA(n) + ATP => RNA(n)-3'-adenine ribonucleotide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11333 declares side 11332_L as its substrates
+        (rh:substrates); the master reaction RHEA:11332 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:13965521, PMID:13819354, PMID:4288534, PMID:14459258 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: RNA(n)-3'-adenine ribonucleotide is a product released by RHEA:11332 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11333
+      snippet: RNA(n) + ATP => RNA(n)-3'-adenine ribonucleotide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11333 declares side 11332_R as its products
+        (rh:products); the master reaction RHEA:11332 is undirected. This participant is POLYMER:17347
+        with coefficient 1. Rhea cites PMID:13965521, PMID:13819354, PMID:4288534, PMID:14459258 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:11332 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11333
+      snippet: RNA(n) + ATP => RNA(n)-3'-adenine ribonucleotide + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11333 declares side 11332_R as its products
+        (rh:products); the master reaction RHEA:11332 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:13965521, PMID:13819354, PMID:4288534, PMID:14459258 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.7.19
+      snippet: EC:2.7.7.19 > GO:poly(A) RNA polymerase activity ; GO:1990817
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:1990817 is itself a record
+        in this KB.
+  - subject: prot_O74326
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CID11_SCHPO is an exemplar enzyme with EC 2.7.7.19 activity.
+    evidence:
+    - reference: EC:2.7.7.19
+      snippet: DR   O74326, CID11_SCHPO;  O74518, CID12_SCHPO;  Q9UT49, CID13_SCHPO;
+      notes: ExPASy ENZYME entry EC 2.7.7.19 cross-references UniProtKB:O74326 (CID11_SCHPO) as a protein
+        with this activity.
+  - subject: prot_O74518
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CID12_SCHPO is an exemplar enzyme with EC 2.7.7.19 activity.
+    evidence:
+    - reference: EC:2.7.7.19
+      snippet: DR   O74326, CID11_SCHPO;  O74518, CID12_SCHPO;  Q9UT49, CID13_SCHPO;
+      notes: ExPASy ENZYME entry EC 2.7.7.19 cross-references UniProtKB:O74518 (CID12_SCHPO) as a protein
+        with this activity.
+  - subject: prot_Q9UT49
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CID13_SCHPO is an exemplar enzyme with EC 2.7.7.19 activity.
+    evidence:
+    - reference: EC:2.7.7.19
+      snippet: DR   O74326, CID11_SCHPO;  O74518, CID12_SCHPO;  Q9UT49, CID13_SCHPO;
+      notes: ExPASy ENZYME entry EC 2.7.7.19 cross-references UniProtKB:Q9UT49 (CID13_SCHPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

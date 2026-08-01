@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:142449
     role: SUBSTRATE_OR_PRODUCT
@@ -43,4 +43,147 @@ definitions:
       Catalyses the reaction: 5-phosphooxy-L-glutamyl-tRNA(Gln) + NH4(+) = L-glutaminyl-tRNA(Gln) + phosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-phosphooxy-L-glutamyl-tRNA(Gln) + NH4(+) = L-glutaminyl-tRNA(Gln) + phosphate
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:57912, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57913 (rh:substrates → 57912_L, rh:products → 57912_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-phosphooxy-L-glutamyl-tRNA(Gln) + NH4(+) = L-glutaminyl-tRNA(Gln) + phosph…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57912
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-phosphooxy-L-glutamyl-tRNA(Gln) + NH4(+) = L-glutaminyl-tRNA(Gln) + phosphate +
+      H(+)'
+  - node_id: sub1
+    label: 5-phosphooxy-L-glutamyl-tRNA(Gln)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15032
+    description: Rhea compound GENERIC:15032.
+  - node_id: sub1_rp1
+    label: 3'-(5-phosphooxy-L-glutamate)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15032 (5-phosphooxy-L-glutamyl-tRNA(Gln));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142449
+  - node_id: sub2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prd1
+    label: L-glutaminyl-tRNA(Gln)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9681
+    description: Rhea compound GENERIC:9681.
+  - node_id: prd1_rp1
+    label: 3'-(L-glutaminyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9681 (L-glutaminyl-tRNA(Gln));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78521
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-phosphooxy-L-glutamyl-tRNA(Gln) is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57913
+      snippet: 5-phosphooxy-L-glutamyl-tRNA(Gln) + NH4(+) => L-glutaminyl-tRNA(Gln) + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57913 declares side 57912_L as its substrates
+        (rh:substrates); the master reaction RHEA:57912 is undirected. This participant is GENERIC:15032
+        with coefficient 1. Rhea cites PMID:19417106, PMID:19520089, PMID:24692665, PMID:18667535 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(5-phosphooxy-L-glutamate)adenylyl group is the reactive part of 5-phosphooxy-L-glutamyl-tRNA(Gln).
+    evidence:
+    - reference: RHEA:57912
+      snippet: 3'-(5-phosphooxy-L-glutamate)adenylyl group
+      notes: Rhea compound GENERIC:15032 (5-phosphooxy-L-glutamyl-tRNA(Gln)) declares rh:reactivePart
+        = 3'-(5-phosphooxy-L-glutamate)adenylyl group (CHEBI:142449), formula C15H19N6O12P2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NH4(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57913
+      snippet: 5-phosphooxy-L-glutamyl-tRNA(Gln) + NH4(+) => L-glutaminyl-tRNA(Gln) + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57913 declares side 57912_L as its substrates
+        (rh:substrates); the master reaction RHEA:57912 is undirected. This participant is CHEBI:28938
+        with coefficient 1. Rhea cites PMID:19417106, PMID:19520089, PMID:24692665, PMID:18667535 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-glutaminyl-tRNA(Gln) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57913
+      snippet: 5-phosphooxy-L-glutamyl-tRNA(Gln) + NH4(+) => L-glutaminyl-tRNA(Gln) + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57913 declares side 57912_R as its products
+        (rh:products); the master reaction RHEA:57912 is undirected. This participant is GENERIC:9681
+        with coefficient 1. Rhea cites PMID:19417106, PMID:19520089, PMID:24692665, PMID:18667535 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-glutaminyl)adenylyl group is the reactive part of L-glutaminyl-tRNA(Gln).
+    evidence:
+    - reference: RHEA:57912
+      snippet: 3'-(L-glutaminyl)adenylyl group
+      notes: Rhea compound GENERIC:9681 (L-glutaminyl-tRNA(Gln)) declares rh:reactivePart = 3'-(L-glutaminyl)adenylyl
+        group (CHEBI:78521), formula C15H21N7O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57913
+      snippet: 5-phosphooxy-L-glutamyl-tRNA(Gln) + NH4(+) => L-glutaminyl-tRNA(Gln) + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57913 declares side 57912_R as its products
+        (rh:products); the master reaction RHEA:57912 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:19417106, PMID:19520089, PMID:24692665, PMID:18667535 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57913
+      snippet: 5-phosphooxy-L-glutamyl-tRNA(Gln) + NH4(+) => L-glutaminyl-tRNA(Gln) + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57913 declares side 57912_R as its products
+        (rh:products); the master reaction RHEA:57912 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19417106, PMID:19520089, PMID:24692665, PMID:18667535 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

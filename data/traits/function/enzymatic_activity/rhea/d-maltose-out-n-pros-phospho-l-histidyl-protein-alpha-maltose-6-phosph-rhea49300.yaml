@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.1.208
     mapping_source: rhea2ec
@@ -32,4 +32,188 @@ definitions:
       Catalyses the reaction: D-maltose(out) + N(pros)-phospho-L-histidyl-[protein] = alpha-maltose 6'-phosphate(in) + L-histidyl-[protein]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-maltose(out) + N(pros)-phospho-L-histidyl-[protein] = alpha-maltose 6'-phosphate(in)…
+  description: 'Substrate-to-product chemistry of RHEA:49300, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49301 (rh:substrates → 49300_L, rh:products → 49300_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of D-maltose(out) + N(pros)-phospho-L-histidyl-[protein] = alpha-maltose 6'-pho…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49300
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-maltose(out) + N(pros)-phospho-L-histidyl-[protein] = alpha-maltose 6''-phosphate(in)
+      + L-histidyl-[protein]'
+  - node_id: sub1
+    label: D-maltose (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:17306
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: N(pros)-phospho-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9746
+    description: Rhea compound GENERIC:9746.
+  - node_id: sub2_rp1
+    label: N(pros)-phospho-L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64837
+  - node_id: prd1
+    label: alpha-maltose 6'-phosphate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57478
+    description: Formula C12H21O14P.
+  - node_id: prd2
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: prd2_rp1
+    label: L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: protein-N(pi)-phosphohistidine--maltose phosphotransferase
+    grounding: EC:2.7.1.208
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P54715
+    node_type: PROTEIN
+    label: PTOCB_BACSU
+    grounding: UniProtKB:P54715
+  - node_id: prot_P19642
+    node_type: PROTEIN
+    label: PTOCB_ECOLI
+    grounding: UniProtKB:P19642
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-maltose is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49301
+      snippet: D-maltose(out) + N(pros)-phospho-L-histidyl-[protein] => alpha-maltose 6'-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:49301 declares side 49300_L as its substrates
+        (rh:substrates); the master reaction RHEA:49300 is undirected. This participant is CHEBI:17306
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:10613875, PMID:16707683, PMID:7700234 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: N(pros)-phospho-L-histidyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49301
+      snippet: D-maltose(out) + N(pros)-phospho-L-histidyl-[protein] => alpha-maltose 6'-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:49301 declares side 49300_L as its substrates
+        (rh:substrates); the master reaction RHEA:49300 is undirected. This participant is GENERIC:9746
+        with coefficient 1. Rhea cites PMID:10613875, PMID:16707683, PMID:7700234 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: N(pros)-phospho-L-histidine residue is the reactive part of N(pros)-phospho-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:49300
+      snippet: N(pros)-phospho-L-histidine residue
+      notes: Rhea compound GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]) declares rh:reactivePart
+        = N(pros)-phospho-L-histidine residue (CHEBI:64837), formula C6H6N3O4P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-maltose 6'-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49301
+      snippet: D-maltose(out) + N(pros)-phospho-L-histidyl-[protein] => alpha-maltose 6'-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:49301 declares side 49300_R as its products
+        (rh:products); the master reaction RHEA:49300 is undirected. This participant is CHEBI:57478 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:10613875,
+        PMID:16707683, PMID:7700234 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-histidyl-[protein] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49301
+      snippet: D-maltose(out) + N(pros)-phospho-L-histidyl-[protein] => alpha-maltose 6'-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:49301 declares side 49300_R as its products
+        (rh:products); the master reaction RHEA:49300 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:10613875, PMID:16707683, PMID:7700234 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:49300
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979), formula C6H7N3O.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.1.208; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:49300
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.208"/>
+      notes: The rh:ec triple on RHEA:49300 in rhea.rdf. EC 2.7.1.208 is itself a record in this KB.
+  - subject: prot_P54715
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTOCB_BACSU is an exemplar enzyme carrying EC 2.7.1.208, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.1.208
+      snippet: DR   P54715, PTOCB_BACSU;  P19642, PTOCB_ECOLI;
+      notes: ExPASy ENZYME entry EC 2.7.1.208 cross-references UniProtKB:P54715 (PTOCB_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:49300
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.208"/>
+      notes: Rhea assigns RHEA:49300 to EC 2.7.1.208, and EC 2.7.1.208 maps to exactly one Rhea master
+        reaction (RHEA:49300), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P19642
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTOCB_ECOLI is an exemplar enzyme carrying EC 2.7.1.208, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.1.208
+      snippet: DR   P54715, PTOCB_BACSU;  P19642, PTOCB_ECOLI;
+      notes: ExPASy ENZYME entry EC 2.7.1.208 cross-references UniProtKB:P19642 (PTOCB_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:49300
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.208"/>
+      notes: Rhea assigns RHEA:49300 to EC 2.7.1.208, and EC 2.7.1.208 maps to exactly one Rhea master
+        reaction (RHEA:49300), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

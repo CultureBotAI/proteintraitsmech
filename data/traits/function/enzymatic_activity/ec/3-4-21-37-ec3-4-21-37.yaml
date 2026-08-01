@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -38,4 +38,52 @@ definitions:
       Catalyses: Hydrolysis of proteins, including elastin. Preferential cleavage: Val-|-Xaa > Ala-|-Xaa
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of leukocyte elastase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.37. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of proteins, including elastin. Preferential cleavage: Val-|-Xaa > Ala-|-Xaa".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: leukocyte elastase
+    grounding: EC:3.4.21.37
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P08246
+    node_type: PROTEIN
+    label: ELNE_HUMAN
+    grounding: UniProtKB:P08246
+  - node_id: prot_Q3UP87
+    node_type: PROTEIN
+    label: ELNE_MOUSE
+    grounding: UniProtKB:Q3UP87
+  edges:
+  - subject: prot_P08246
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ELNE_HUMAN is an exemplar enzyme with EC 3.4.21.37 activity.
+    evidence:
+    - reference: EC:3.4.21.37
+      snippet: DR   P08246, ELNE_HUMAN ;  Q3UP87, ELNE_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.21.37 cross-references UniProtKB:P08246 (ELNE_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q3UP87
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ELNE_MOUSE is an exemplar enzyme with EC 3.4.21.37 activity.
+    evidence:
+    - reference: EC:3.4.21.37
+      snippet: DR   P08246, ELNE_HUMAN ;  Q3UP87, ELNE_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.21.37 cross-references UniProtKB:Q3UP87 (ELNE_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

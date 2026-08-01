@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.3.-
 mapped_xrefs:
@@ -38,4 +38,151 @@ definitions:
       Catalyses: L-histidinol phosphate + H2O = L-histidinol + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of histidinol-phosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.3.15. EC 3.1.3.15 maps to exactly
+    one curated Rhea reaction (RHEA:14465), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-histidinol
+    phosphate + H2O = L-histidinol + phosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: histidinol-phosphatase
+    grounding: EC:3.1.3.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-histidinol phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57980
+    description: Formula C6H11N3O4P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-histidinol
+    node_type: CHEMICAL
+    grounding: CHEBI:57699
+    description: Formula C6H12N3O.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: histidinol-phosphatase activity
+    grounding: GO:0004401
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A3N3W1
+    node_type: PROTEIN
+    label: HIS7_ACTP2
+    grounding: UniProtKB:A3N3W1
+  - node_id: prot_B3GZG9
+    node_type: PROTEIN
+    label: HIS7_ACTP7
+    grounding: UniProtKB:B3GZG9
+  - node_id: prot_B0BU51
+    node_type: PROTEIN
+    label: HIS7_ACTPJ
+    grounding: UniProtKB:B0BU51
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-histidinol phosphate is a substrate consumed by RHEA:14465 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14466
+      snippet: L-histidinol phosphate + H2O => L-histidinol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14466 declares side 14465_L as its substrates
+        (rh:substrates); the master reaction RHEA:14465 is undirected. This participant is CHEBI:57980
+        with coefficient 1. Rhea cites PMID:17929834, PMID:20023146, PMID:29752410, PMID:16966333 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:14465 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14466
+      snippet: L-histidinol phosphate + H2O => L-histidinol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14466 declares side 14465_L as its substrates
+        (rh:substrates); the master reaction RHEA:14465 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17929834, PMID:20023146, PMID:29752410, PMID:16966333 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-histidinol is a product released by RHEA:14465 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14466
+      snippet: L-histidinol phosphate + H2O => L-histidinol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14466 declares side 14465_R as its products
+        (rh:products); the master reaction RHEA:14465 is undirected. This participant is CHEBI:57699 with
+        coefficient 1. Rhea cites PMID:17929834, PMID:20023146, PMID:29752410, PMID:16966333 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:14465 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14466
+      snippet: L-histidinol phosphate + H2O => L-histidinol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14466 declares side 14465_R as its products
+        (rh:products); the master reaction RHEA:14465 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:17929834, PMID:20023146, PMID:29752410, PMID:16966333 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.3.15
+      snippet: EC:3.1.3.15 > GO:histidinol-phosphatase activity ; GO:0004401
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004401 is itself a record
+        in this KB.
+  - subject: prot_A3N3W1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS7_ACTP2 is an exemplar enzyme with EC 3.1.3.15 activity.
+    evidence:
+    - reference: EC:3.1.3.15
+      snippet: DR   A3N3W1, HIS7_ACTP2 ;  B3GZG9, HIS7_ACTP7 ;  B0BU51, HIS7_ACTPJ ;
+      notes: ExPASy ENZYME entry EC 3.1.3.15 cross-references UniProtKB:A3N3W1 (HIS7_ACTP2) as a protein
+        with this activity.
+  - subject: prot_B3GZG9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS7_ACTP7 is an exemplar enzyme with EC 3.1.3.15 activity.
+    evidence:
+    - reference: EC:3.1.3.15
+      snippet: DR   A3N3W1, HIS7_ACTP2 ;  B3GZG9, HIS7_ACTP7 ;  B0BU51, HIS7_ACTPJ ;
+      notes: ExPASy ENZYME entry EC 3.1.3.15 cross-references UniProtKB:B3GZG9 (HIS7_ACTP7) as a protein
+        with this activity.
+  - subject: prot_B0BU51
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS7_ACTPJ is an exemplar enzyme with EC 3.1.3.15 activity.
+    evidence:
+    - reference: EC:3.1.3.15
+      snippet: DR   A3N3W1, HIS7_ACTP2 ;  B3GZG9, HIS7_ACTP7 ;  B0BU51, HIS7_ACTPJ ;
+      notes: ExPASy ENZYME entry EC 3.1.3.15 cross-references UniProtKB:B0BU51 (HIS7_ACTPJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

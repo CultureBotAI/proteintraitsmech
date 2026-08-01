@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58735
     role: SUBSTRATE_OR_PRODUCT
@@ -22,4 +22,91 @@ definitions:
       Catalyses the reaction: D-mannose 6-phosphate + H2O = D-mannose + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-mannose 6-phosphate + H2O = D-mannose + phosphate
+  description: Substrate-to-product chemistry of RHEA:28554, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28555 (rh:substrates → 28554_L, rh:products → 28554_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-mannose 6-phosphate + H2O = D-mannose + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28554
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-mannose 6-phosphate + H2O = D-mannose + phosphate'
+  - node_id: sub1
+    label: D-mannose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58735
+    description: Formula C6H11O9P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-mannose
+    node_type: CHEMICAL
+    grounding: CHEBI:4208
+    description: Formula C6H12O6.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-mannose 6-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28555
+      snippet: D-mannose 6-phosphate + H2O => D-mannose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28555 declares side 28554_L as its substrates
+        (rh:substrates); the master reaction RHEA:28554 is undirected. This participant is CHEBI:58735
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28555
+      snippet: D-mannose 6-phosphate + H2O => D-mannose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28555 declares side 28554_L as its substrates
+        (rh:substrates); the master reaction RHEA:28554 is undirected. This participant is CHEBI:15377
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-mannose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28555
+      snippet: D-mannose 6-phosphate + H2O => D-mannose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28555 declares side 28554_R as its products
+        (rh:products); the master reaction RHEA:28554 is undirected. This participant is CHEBI:4208 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28555
+      snippet: D-mannose 6-phosphate + H2O => D-mannose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28555 declares side 28554_R as its products
+        (rh:products); the master reaction RHEA:28554 is undirected. This participant is CHEBI:43474 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

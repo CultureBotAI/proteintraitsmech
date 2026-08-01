@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.8.1.5
     mapping_source: rhea2ec
@@ -32,4 +32,166 @@ definitions:
       Catalyses the reaction: a (Z)-N-(sulfonatooxy)alkanimidothioate = a nitrile + sulfur + sulfate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a (Z)-N-(sulfonatooxy)alkanimidothioate = a nitrile + sulfur + sulfate
+  description: Substrate-to-product chemistry of RHEA:59956, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59957 (rh:substrates → 59956_L, rh:products → 59956_R), and Rhea
+    curates the reverse direction too. 1 substrate, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a (Z)-N-(sulfonatooxy)alkanimidothioate = a nitrile + sulfur + sulfate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59956
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a (Z)-N-(sulfonatooxy)alkanimidothioate = a nitrile + sulfur + sulfate'
+  - node_id: sub1
+    label: a (Z)-N-(sulfonatooxy)alkanimidothioate
+    node_type: CHEMICAL
+    grounding: CHEBI:183089
+    description: Formula CNO4S2R.
+  - node_id: prd1
+    label: a nitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:18379
+    description: Formula CNR.
+  - node_id: prd2
+    label: sulfur
+    node_type: CHEMICAL
+    grounding: CHEBI:26833
+    description: Formula S.
+  - node_id: prd3
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: thiohydroximate-O-sulfate sulfate/sulfur-lyase (nitrile-forming)
+    grounding: EC:4.8.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8RY71
+    node_type: PROTEIN
+    label: ESP_ARATH
+    grounding: UniProtKB:Q8RY71
+  - node_id: prot_O49326
+    node_type: PROTEIN
+    label: JAL21_ARATH
+    grounding: UniProtKB:O49326
+  - node_id: prot_O04318
+    node_type: PROTEIN
+    label: JAL27_ARATH
+    grounding: UniProtKB:O04318
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a (Z)-N-(sulfonatooxy)alkanimidothioate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:59957
+      snippet: a (Z)-N-(sulfonatooxy)alkanimidothioate => a nitrile + sulfur + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:59957 declares side 59956_L as its substrates
+        (rh:substrates); the master reaction RHEA:59956 is undirected. This participant is CHEBI:183089
+        with coefficient 1. Rhea cites PMID:11752388, PMID:18987211, PMID:19224919 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a nitrile is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59957
+      snippet: a (Z)-N-(sulfonatooxy)alkanimidothioate => a nitrile + sulfur + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:59957 declares side 59956_R as its products
+        (rh:products); the master reaction RHEA:59956 is undirected. This participant is CHEBI:18379 with
+        coefficient 1. Rhea cites PMID:11752388, PMID:18987211, PMID:19224919 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfur is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59957
+      snippet: a (Z)-N-(sulfonatooxy)alkanimidothioate => a nitrile + sulfur + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:59957 declares side 59956_R as its products
+        (rh:products); the master reaction RHEA:59956 is undirected. This participant is CHEBI:26833 with
+        coefficient 1. Rhea cites PMID:11752388, PMID:18987211, PMID:19224919 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: sulfate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59957
+      snippet: a (Z)-N-(sulfonatooxy)alkanimidothioate => a nitrile + sulfur + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:59957 declares side 59956_R as its products
+        (rh:products); the master reaction RHEA:59956 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:11752388, PMID:18987211, PMID:19224919 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.8.1.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:59956
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.8.1.5"/>
+      notes: The rh:ec triple on RHEA:59956 in rhea.rdf. EC 4.8.1.5 is itself a record in this KB.
+  - subject: prot_Q8RY71
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ESP_ARATH is an exemplar enzyme carrying EC 4.8.1.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.8.1.5
+      snippet: DR   Q8RY71, ESP_ARATH  ;  O49326, JAL21_ARATH;  O04318, JAL27_ARATH;
+      notes: ExPASy ENZYME entry EC 4.8.1.5 cross-references UniProtKB:Q8RY71 (ESP_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:59956
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.8.1.5"/>
+      notes: Rhea assigns RHEA:59956 to EC 4.8.1.5, and EC 4.8.1.5 maps to exactly one Rhea master reaction
+        (RHEA:59956), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O49326
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JAL21_ARATH is an exemplar enzyme carrying EC 4.8.1.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.8.1.5
+      snippet: DR   Q8RY71, ESP_ARATH  ;  O49326, JAL21_ARATH;  O04318, JAL27_ARATH;
+      notes: ExPASy ENZYME entry EC 4.8.1.5 cross-references UniProtKB:O49326 (JAL21_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:59956
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.8.1.5"/>
+      notes: Rhea assigns RHEA:59956 to EC 4.8.1.5, and EC 4.8.1.5 maps to exactly one Rhea master reaction
+        (RHEA:59956), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O04318
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JAL27_ARATH is an exemplar enzyme carrying EC 4.8.1.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.8.1.5
+      snippet: DR   Q8RY71, ESP_ARATH  ;  O49326, JAL21_ARATH;  O04318, JAL27_ARATH;
+      notes: ExPASy ENZYME entry EC 4.8.1.5 cross-references UniProtKB:O04318 (JAL27_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:59956
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.8.1.5"/>
+      notes: Rhea assigns RHEA:59956 to EC 4.8.1.5, and EC 4.8.1.5 maps to exactly one Rhea master reaction
+        (RHEA:59956), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

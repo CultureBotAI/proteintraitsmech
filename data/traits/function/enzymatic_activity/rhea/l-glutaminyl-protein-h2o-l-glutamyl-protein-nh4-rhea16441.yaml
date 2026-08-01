@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.44
     mapping_source: rhea2ec
@@ -30,4 +30,215 @@ definitions:
       Catalyses the reaction: L-glutaminyl-[protein] + H2O = L-glutamyl-[protein] + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-glutaminyl-[protein] + H2O = L-glutamyl-[protein] + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:16441, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:16442 (rh:substrates → 16441_L, rh:products → 16441_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-glutaminyl-[protein] + H2O = L-glutamyl-[protein] + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:16441
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-glutaminyl-[protein] + H2O = L-glutamyl-[protein] + NH4(+)'
+  - node_id: sub1
+    label: L-glutaminyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10207
+    description: Rhea compound GENERIC:10207.
+  - node_id: sub1_rp1
+    label: L-glutamine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10207 (L-glutaminyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30011
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-glutamyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10208
+    description: Rhea compound GENERIC:10208.
+  - node_id: prd1_rp1
+    label: L-glutamate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10208 (L-glutamyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29973
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-glutamine glutaminase activity
+    grounding: GO:0050568
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: protein-glutamine glutaminase
+    grounding: EC:3.5.1.44
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O85128
+    node_type: PROTEIN
+    label: CHEB1_AGRFC
+    grounding: UniProtKB:O85128
+  - node_id: prot_Q221I1
+    node_type: PROTEIN
+    label: CHEB1_ALBFT
+    grounding: UniProtKB:Q221I1
+  - node_id: prot_Q2INJ8
+    node_type: PROTEIN
+    label: CHEB1_ANADE
+    grounding: UniProtKB:Q2INJ8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-glutaminyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16442
+      snippet: L-glutaminyl-[protein] + H2O => L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16442 declares side 16441_L as its substrates
+        (rh:substrates); the master reaction RHEA:16441 is undirected. This participant is GENERIC:10207
+        with coefficient 1. Rhea cites PMID:30092200, PMID:4928623 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-glutamine residue is the reactive part of L-glutaminyl-[protein].
+    evidence:
+    - reference: RHEA:16441
+      snippet: L-glutamine residue
+      notes: Rhea compound GENERIC:10207 (L-glutaminyl-[protein]) declares rh:reactivePart = L-glutamine
+        residue (CHEBI:30011), formula C5H8N2O2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16442
+      snippet: L-glutaminyl-[protein] + H2O => L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16442 declares side 16441_L as its substrates
+        (rh:substrates); the master reaction RHEA:16441 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:30092200, PMID:4928623 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-glutamyl-[protein] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16442
+      snippet: L-glutaminyl-[protein] + H2O => L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16442 declares side 16441_R as its products
+        (rh:products); the master reaction RHEA:16441 is undirected. This participant is GENERIC:10208
+        with coefficient 1. Rhea cites PMID:30092200, PMID:4928623 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-glutamate residue is the reactive part of L-glutamyl-[protein].
+    evidence:
+    - reference: RHEA:16441
+      snippet: L-glutamate residue
+      notes: Rhea compound GENERIC:10208 (L-glutamyl-[protein]) declares rh:reactivePart = L-glutamate
+        residue (CHEBI:29973), formula C5H6NO3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16442
+      snippet: L-glutaminyl-[protein] + H2O => L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16442 declares side 16441_R as its products
+        (rh:products); the master reaction RHEA:16441 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:30092200, PMID:4928623 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:16441
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050568"/>
+      notes: The rdfs:seeAlso triple on RHEA:16441 in rhea.rdf. GO term GO:0050568 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.44; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:16441
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.44"/>
+      notes: The rh:ec triple on RHEA:16441 in rhea.rdf. EC 3.5.1.44 is itself a record in this KB.
+  - subject: prot_O85128
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHEB1_AGRFC is an exemplar enzyme carrying EC 3.5.1.44, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.44
+      snippet: DR   O85128, CHEB1_AGRFC;  Q221I1, CHEB1_ALBFT;  Q2INJ8, CHEB1_ANADE;
+      notes: ExPASy ENZYME entry EC 3.5.1.44 cross-references UniProtKB:O85128 (CHEB1_AGRFC) as a protein
+        with this activity.
+    - reference: RHEA:16441
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.44"/>
+      notes: Rhea assigns RHEA:16441 to EC 3.5.1.44, and EC 3.5.1.44 maps to exactly one Rhea master reaction
+        (RHEA:16441), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q221I1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHEB1_ALBFT is an exemplar enzyme carrying EC 3.5.1.44, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.44
+      snippet: DR   O85128, CHEB1_AGRFC;  Q221I1, CHEB1_ALBFT;  Q2INJ8, CHEB1_ANADE;
+      notes: ExPASy ENZYME entry EC 3.5.1.44 cross-references UniProtKB:Q221I1 (CHEB1_ALBFT) as a protein
+        with this activity.
+    - reference: RHEA:16441
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.44"/>
+      notes: Rhea assigns RHEA:16441 to EC 3.5.1.44, and EC 3.5.1.44 maps to exactly one Rhea master reaction
+        (RHEA:16441), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q2INJ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHEB1_ANADE is an exemplar enzyme carrying EC 3.5.1.44, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.44
+      snippet: DR   O85128, CHEB1_AGRFC;  Q221I1, CHEB1_ALBFT;  Q2INJ8, CHEB1_ANADE;
+      notes: ExPASy ENZYME entry EC 3.5.1.44 cross-references UniProtKB:Q2INJ8 (CHEB1_ANADE) as a protein
+        with this activity.
+    - reference: RHEA:16441
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.44"/>
+      notes: Rhea assigns RHEA:16441 to EC 3.5.1.44, and EC 3.5.1.44 maps to exactly one Rhea master reaction
+        (RHEA:16441), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

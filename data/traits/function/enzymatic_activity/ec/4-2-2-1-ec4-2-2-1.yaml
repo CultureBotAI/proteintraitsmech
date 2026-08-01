@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -45,4 +45,134 @@ definitions:
       Catalyses: [hyaluronan](n) = n 3-(4-deoxy-beta-D-gluc-4-enuronosyl)-N-acetyl-D- glucosamine + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hyaluronate lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.1. EC 4.2.2.1 maps to exactly
+    one curated Rhea reaction (RHEA:50240), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[hyaluronan](n)
+    = n 3-(4-deoxy-beta-D-gluc-4-enuronosyl)-N-acetyl-D- glucosamine + H2O". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hyaluronate lyase
+    grounding: EC:4.2.2.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[hyaluronan](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:132153
+    xrefs:
+    - RHEA-COMP:12583
+    description: Rhea compound POLYMER:12583. Formula H2O(C14H20NO11)<i><sub>n</sub></i>.
+  - node_id: prd1
+    label: 3-(4-deoxy-beta-D-gluc-4-enuronosyl)-N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:132151
+    description: Formula C14H20NO11.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hyaluronate lyase activity
+    grounding: GO:0030340
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A2B7ICX0
+    node_type: PROTEIN
+    label: HYLA_CUTAC
+    grounding: UniProtKB:A0A2B7ICX0
+  - node_id: prot_P0CZ00
+    node_type: PROTEIN
+    label: HYLB_CUTAC
+    grounding: UniProtKB:P0CZ00
+  - node_id: prot_P0CZ01
+    node_type: PROTEIN
+    label: HYLB_CUTAK
+    grounding: UniProtKB:P0CZ01
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[hyaluronan](n) is a substrate consumed by RHEA:50240 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:50241
+      snippet: '[hyaluronan](n) => n 3-(4-deoxy-beta-D-gluc-4-enuronosyl)-N-acetyl-D-glucosamine + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:50241 declares side 50240_L as its substrates
+        (rh:substrates); the master reaction RHEA:50240 is undirected. This participant is POLYMER:12583
+        with coefficient 1. Rhea cites PMID:5642600, PMID:14943668, PMID:13762462 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-(4-deoxy-beta-D-gluc-4-enuronosyl)-N-acetyl-D-glucosamine is a product released by
+      RHEA:50240 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:50241
+      snippet: '[hyaluronan](n) => n 3-(4-deoxy-beta-D-gluc-4-enuronosyl)-N-acetyl-D-glucosamine + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:50241 declares side 50240_R as its products
+        (rh:products); the master reaction RHEA:50240 is undirected. This participant is CHEBI:132151
+        with coefficient n. Rhea cites PMID:5642600, PMID:14943668, PMID:13762462 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:50240 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50241
+      snippet: '[hyaluronan](n) => n 3-(4-deoxy-beta-D-gluc-4-enuronosyl)-N-acetyl-D-glucosamine + H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:50241 declares side 50240_R as its products
+        (rh:products); the master reaction RHEA:50240 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:5642600, PMID:14943668, PMID:13762462 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.1
+      snippet: EC:4.2.2.1 > GO:hyaluronate lyase activity ; GO:0030340
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0030340 is itself a record
+        in this KB.
+  - subject: prot_A0A2B7ICX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYLA_CUTAC is an exemplar enzyme with EC 4.2.2.1 activity.
+    evidence:
+    - reference: EC:4.2.2.1
+      snippet: DR   A0A2B7ICX0, HYLA_CUTAC ;  P0CZ00, HYLB_CUTAC ;  P0CZ01, HYLB_CUTAK ;
+      notes: ExPASy ENZYME entry EC 4.2.2.1 cross-references UniProtKB:A0A2B7ICX0 (HYLA_CUTAC) as a protein
+        with this activity.
+  - subject: prot_P0CZ00
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYLB_CUTAC is an exemplar enzyme with EC 4.2.2.1 activity.
+    evidence:
+    - reference: EC:4.2.2.1
+      snippet: DR   A0A2B7ICX0, HYLA_CUTAC ;  P0CZ00, HYLB_CUTAC ;  P0CZ01, HYLB_CUTAK ;
+      notes: ExPASy ENZYME entry EC 4.2.2.1 cross-references UniProtKB:P0CZ00 (HYLB_CUTAC) as a protein
+        with this activity.
+  - subject: prot_P0CZ01
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYLB_CUTAK is an exemplar enzyme with EC 4.2.2.1 activity.
+    evidence:
+    - reference: EC:4.2.2.1
+      snippet: DR   A0A2B7ICX0, HYLA_CUTAC ;  P0CZ00, HYLB_CUTAC ;  P0CZ01, HYLB_CUTAK ;
+      notes: ExPASy ENZYME entry EC 4.2.2.1 cross-references UniProtKB:P0CZ01 (HYLB_CUTAK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

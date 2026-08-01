@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:30013
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,124 @@ definitions:
       Catalyses the reaction: L-threonyl-[protein] + UTP = uridylyl-L-threonyl-[protein] + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-threonyl-[protein] + UTP = uridylyl-L-threonyl-[protein] + diphosphate
+  description: Substrate-to-product chemistry of RHEA:64608, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:64609 (rh:substrates → 64608_L, rh:products → 64608_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-threonyl-[protein] + UTP = uridylyl-L-threonyl-[protein] + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:64608
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-threonyl-[protein] + UTP = uridylyl-L-threonyl-[protein] + diphosphate'
+  - node_id: sub1
+    label: L-threonyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11060
+    description: Rhea compound GENERIC:11060.
+  - node_id: sub1_rp1
+    label: L-threonine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11060 (L-threonyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30013
+  - node_id: sub2
+    label: UTP
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  - node_id: prd1
+    label: uridylyl-L-threonyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:16636
+    description: Rhea compound GENERIC:16636.
+  - node_id: prd1_rp1
+    label: uridylyl-L-threonine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:16636 (uridylyl-L-threonyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:156052
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-threonyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:64609
+      snippet: L-threonyl-[protein] + UTP => uridylyl-L-threonyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64609 declares side 64608_L as its substrates
+        (rh:substrates); the master reaction RHEA:64608 is undirected. This participant is GENERIC:11060
+        with coefficient 1. Rhea cites PMID:22504181 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-threonine residue is the reactive part of L-threonyl-[protein].
+    evidence:
+    - reference: RHEA:64608
+      snippet: L-threonine residue
+      notes: Rhea compound GENERIC:11060 (L-threonyl-[protein]) declares rh:reactivePart = L-threonine
+        residue (CHEBI:30013), formula C4H7NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64609
+      snippet: L-threonyl-[protein] + UTP => uridylyl-L-threonyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64609 declares side 64608_L as its substrates
+        (rh:substrates); the master reaction RHEA:64608 is undirected. This participant is CHEBI:46398
+        with coefficient 1. Rhea cites PMID:22504181 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: uridylyl-L-threonyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:64609
+      snippet: L-threonyl-[protein] + UTP => uridylyl-L-threonyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64609 declares side 64608_R as its products
+        (rh:products); the master reaction RHEA:64608 is undirected. This participant is GENERIC:16636
+        with coefficient 1. Rhea cites PMID:22504181 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: uridylyl-L-threonine residue is the reactive part of uridylyl-L-threonyl-[protein].
+    evidence:
+    - reference: RHEA:64608
+      snippet: uridylyl-L-threonine residue
+      notes: Rhea compound GENERIC:16636 (uridylyl-L-threonyl-[protein]) declares rh:reactivePart = uridylyl-L-threonine
+        residue (CHEBI:156052), formula C13H17N3O10P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64609
+      snippet: L-threonyl-[protein] + UTP => uridylyl-L-threonyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64609 declares side 64608_R as its products
+        (rh:products); the master reaction RHEA:64608 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:22504181 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

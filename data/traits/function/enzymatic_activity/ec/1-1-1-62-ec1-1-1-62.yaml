@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -51,4 +51,279 @@ definitions:
       Catalyses: (1) 17beta-estradiol + NAD(+) = estrone + NADH + H(+). (2) 17beta-estradiol + NADP(+) = estrone + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 17beta-estradiol 17-dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.62. Rhea assigns 2 curated
+    reactions to EC 1.1.1.62. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 17beta-estradiol + NAD(+) = estrone + NADH + H(+). (2)
+    17beta-estradiol + NADP(+) = estrone + NADPH + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 17beta-estradiol 17-dehydrogenase
+    grounding: EC:1.1.1.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 17beta-estradiol + NAD(+) = estrone + NADH + H(+)
+    grounding: RHEA:24612
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 17beta-estradiol + NAD(+) = estrone + NADH + H(+)'
+  - node_id: rxn1_sub1
+    label: 17beta-estradiol
+    node_type: CHEMICAL
+    grounding: CHEBI:16469
+    description: Formula C18H24O2.
+  - node_id: rxn1_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn1_prd1
+    label: estrone
+    node_type: CHEMICAL
+    grounding: CHEBI:17263
+    description: Formula C18H22O2.
+  - node_id: rxn1_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 17beta-estradiol + NADP(+) = estrone + NADPH + H(+)
+    grounding: RHEA:24616
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 17beta-estradiol + NADP(+) = estrone + NADPH + H(+)'
+  - node_id: rxn2_sub1
+    label: 17beta-estradiol
+    node_type: CHEMICAL
+    grounding: CHEBI:16469
+    description: Formula C18H24O2.
+  - node_id: rxn2_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_prd1
+    label: estrone
+    node_type: CHEMICAL
+    grounding: CHEBI:17263
+    description: Formula C18H22O2.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: estradiol 17-beta-dehydrogenase [NAD(P)+] activity
+    grounding: GO:0004303
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q04828
+    node_type: PROTEIN
+    label: AK1C1_HUMAN
+    grounding: UniProtKB:Q04828
+  - node_id: prot_Q95JH7
+    node_type: PROTEIN
+    label: AK1C1_MACFA
+    grounding: UniProtKB:Q95JH7
+  - node_id: prot_Q95JH6
+    node_type: PROTEIN
+    label: AK1C1_MACFU
+    grounding: UniProtKB:Q95JH6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:24612 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.62; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24612
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.62"/>
+      notes: The rh:ec triple on RHEA:24612 in rhea.rdf assigns that reaction to EC 1.1.1.62.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 17beta-estradiol is a substrate consumed by RHEA:24612 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24613
+      snippet: 17beta-estradiol + NAD(+) => estrone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24613 declares side 24612_L as its substrates
+        (rh:substrates); the master reaction RHEA:24612 is undirected. This participant is CHEBI:16469
+        with coefficient 1. Rhea cites PMID:8994190, PMID:17067289, PMID:17978863, PMID:10998348 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NAD(+) is a substrate consumed by RHEA:24612 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24613
+      snippet: 17beta-estradiol + NAD(+) => estrone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24613 declares side 24612_L as its substrates
+        (rh:substrates); the master reaction RHEA:24612 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:8994190, PMID:17067289, PMID:17978863, PMID:10998348 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: estrone is a product released by RHEA:24612 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24613
+      snippet: 17beta-estradiol + NAD(+) => estrone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24613 declares side 24612_R as its products
+        (rh:products); the master reaction RHEA:24612 is undirected. This participant is CHEBI:17263 with
+        coefficient 1. Rhea cites PMID:8994190, PMID:17067289, PMID:17978863, PMID:10998348 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADH is a product released by RHEA:24612 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24613
+      snippet: 17beta-estradiol + NAD(+) => estrone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24613 declares side 24612_R as its products
+        (rh:products); the master reaction RHEA:24612 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:8994190, PMID:17067289, PMID:17978863, PMID:10998348 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:24612 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24613
+      snippet: 17beta-estradiol + NAD(+) => estrone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24613 declares side 24612_R as its products
+        (rh:products); the master reaction RHEA:24612 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8994190, PMID:17067289, PMID:17978863, PMID:10998348 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:24616 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.62; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24616
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.62"/>
+      notes: The rh:ec triple on RHEA:24616 in rhea.rdf assigns that reaction to EC 1.1.1.62.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 17beta-estradiol is a substrate consumed by RHEA:24616 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24617
+      snippet: 17beta-estradiol + NADP(+) => estrone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24617 declares side 24616_L as its substrates
+        (rh:substrates); the master reaction RHEA:24616 is undirected. This participant is CHEBI:16469
+        with coefficient 1. Rhea cites PMID:8075637, PMID:9658408, PMID:20036328, PMID:12574203 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADP(+) is a substrate consumed by RHEA:24616 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24617
+      snippet: 17beta-estradiol + NADP(+) => estrone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24617 declares side 24616_L as its substrates
+        (rh:substrates); the master reaction RHEA:24616 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:8075637, PMID:9658408, PMID:20036328, PMID:12574203 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: estrone is a product released by RHEA:24616 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24617
+      snippet: 17beta-estradiol + NADP(+) => estrone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24617 declares side 24616_R as its products
+        (rh:products); the master reaction RHEA:24616 is undirected. This participant is CHEBI:17263 with
+        coefficient 1. Rhea cites PMID:8075637, PMID:9658408, PMID:20036328, PMID:12574203 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:24616 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24617
+      snippet: 17beta-estradiol + NADP(+) => estrone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24617 declares side 24616_R as its products
+        (rh:products); the master reaction RHEA:24616 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:8075637, PMID:9658408, PMID:20036328, PMID:12574203 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:24616 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24617
+      snippet: 17beta-estradiol + NADP(+) => estrone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24617 declares side 24616_R as its products
+        (rh:products); the master reaction RHEA:24616 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8075637, PMID:9658408, PMID:20036328, PMID:12574203 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.1.62
+      snippet: EC:1.1.1.62 > GO:estradiol 17-beta-dehydrogenase [NAD(P)+] activity ; GO:0004303
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004303 is itself a record
+        in this KB.
+  - subject: prot_Q04828
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AK1C1_HUMAN is an exemplar enzyme with EC 1.1.1.62 activity.
+    evidence:
+    - reference: EC:1.1.1.62
+      snippet: DR   Q04828, AK1C1_HUMAN;  Q95JH7, AK1C1_MACFA;  Q95JH6, AK1C1_MACFU;
+      notes: ExPASy ENZYME entry EC 1.1.1.62 cross-references UniProtKB:Q04828 (AK1C1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q95JH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AK1C1_MACFA is an exemplar enzyme with EC 1.1.1.62 activity.
+    evidence:
+    - reference: EC:1.1.1.62
+      snippet: DR   Q04828, AK1C1_HUMAN;  Q95JH7, AK1C1_MACFA;  Q95JH6, AK1C1_MACFU;
+      notes: ExPASy ENZYME entry EC 1.1.1.62 cross-references UniProtKB:Q95JH7 (AK1C1_MACFA) as a protein
+        with this activity.
+  - subject: prot_Q95JH6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AK1C1_MACFU is an exemplar enzyme with EC 1.1.1.62 activity.
+    evidence:
+    - reference: EC:1.1.1.62
+      snippet: DR   Q04828, AK1C1_HUMAN;  Q95JH7, AK1C1_MACFA;  Q95JH6, AK1C1_MACFU;
+      notes: ExPASy ENZYME entry EC 1.1.1.62 cross-references UniProtKB:Q95JH6 (AK1C1_MACFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

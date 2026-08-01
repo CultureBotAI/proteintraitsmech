@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.2.-
 mapped_xrefs:
@@ -34,4 +34,181 @@ definitions:
       Catalyses: hydrogen sulfide + 2 Fe(III)-[cytochrome c] = sulfur + 2 Fe(II)- [cytochrome c] + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sulfide-cytochrome-c reductase (flavocytochrome c)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.2.3. EC 1.8.2.3 maps to exactly
+    one curated Rhea reaction (RHEA:30223), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "hydrogen sulfide
+    + 2 Fe(III)-[cytochrome c] = sulfur + 2 Fe(II)- [cytochrome c] + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sulfide-cytochrome-c reductase (flavocytochrome c)
+    grounding: EC:1.8.2.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: sub2
+    label: Fe(III)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14399
+    description: Rhea compound GENERIC:14399.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: Fe(3+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:14399 (Fe(III)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: prd1
+    label: sulfur
+    node_type: CHEMICAL
+    grounding: CHEBI:26833
+    description: Formula S.
+  - node_id: prd2
+    label: Fe(II)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10350
+    description: Rhea compound GENERIC:10350.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: Fe(2+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:10350 (Fe(II)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sulfide dehydrogenase activity
+    grounding: GO:0070225
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q06530
+    node_type: PROTEIN
+    label: DHSU_ALLVD
+    grounding: UniProtKB:Q06530
+  - node_id: prot_P20161
+    node_type: PROTEIN
+    label: DHSU_CHLTI
+    grounding: UniProtKB:P20161
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hydrogen sulfide is a substrate consumed by RHEA:30223 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30224
+      snippet: hydrogen sulfide + 2 Fe(III)-[cytochrome c] => sulfur + 2 Fe(II)-[cytochrome c] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30224 declares side 30223_L as its substrates
+        (rh:substrates); the master reaction RHEA:30223 is undirected. This participant is CHEBI:29919
+        with coefficient 1. Rhea cites PMID:6301383, PMID:4357558, PMID:222744 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: Fe(III)-[cytochrome c] is a substrate consumed by RHEA:30223 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:30224
+      snippet: hydrogen sulfide + 2 Fe(III)-[cytochrome c] => sulfur + 2 Fe(II)-[cytochrome c] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30224 declares side 30223_L as its substrates
+        (rh:substrates); the master reaction RHEA:30223 is undirected. This participant is GENERIC:14399
+        with coefficient 2. Rhea cites PMID:6301383, PMID:4357558, PMID:222744 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c].
+    evidence:
+    - reference: RHEA:30223
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:14399 (Fe(III)-[cytochrome c]) declares rh:reactivePart = Fe(3+) (CHEBI:29034).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sulfur is a product released by RHEA:30223 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30224
+      snippet: hydrogen sulfide + 2 Fe(III)-[cytochrome c] => sulfur + 2 Fe(II)-[cytochrome c] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30224 declares side 30223_R as its products
+        (rh:products); the master reaction RHEA:30223 is undirected. This participant is CHEBI:26833 with
+        coefficient 1. Rhea cites PMID:6301383, PMID:4357558, PMID:222744 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Fe(II)-[cytochrome c] is a product released by RHEA:30223 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:30224
+      snippet: hydrogen sulfide + 2 Fe(III)-[cytochrome c] => sulfur + 2 Fe(II)-[cytochrome c] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30224 declares side 30223_R as its products
+        (rh:products); the master reaction RHEA:30223 is undirected. This participant is GENERIC:10350
+        with coefficient 2. Rhea cites PMID:6301383, PMID:4357558, PMID:222744 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome c].
+    evidence:
+    - reference: RHEA:30223
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:10350 (Fe(II)-[cytochrome c]) declares rh:reactivePart = Fe(2+) (CHEBI:29033).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:30223 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30224
+      snippet: hydrogen sulfide + 2 Fe(III)-[cytochrome c] => sulfur + 2 Fe(II)-[cytochrome c] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30224 declares side 30223_R as its products
+        (rh:products); the master reaction RHEA:30223 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:6301383, PMID:4357558, PMID:222744 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.8.2.3
+      snippet: EC:1.8.2.3 > GO:sulfide dehydrogenase activity ; GO:0070225
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0070225 is itself a record
+        in this KB.
+  - subject: prot_Q06530
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHSU_ALLVD is an exemplar enzyme with EC 1.8.2.3 activity.
+    evidence:
+    - reference: EC:1.8.2.3
+      snippet: DR   Q06530, DHSU_ALLVD ;  P20161, DHSU_CHLTI ;
+      notes: ExPASy ENZYME entry EC 1.8.2.3 cross-references UniProtKB:Q06530 (DHSU_ALLVD) as a protein
+        with this activity.
+  - subject: prot_P20161
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHSU_CHLTI is an exemplar enzyme with EC 1.8.2.3 activity.
+    evidence:
+    - reference: EC:1.8.2.3
+      snippet: DR   Q06530, DHSU_ALLVD ;  P20161, DHSU_CHLTI ;
+      notes: ExPASy ENZYME entry EC 1.8.2.3 cross-references UniProtKB:P20161 (DHSU_CHLTI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

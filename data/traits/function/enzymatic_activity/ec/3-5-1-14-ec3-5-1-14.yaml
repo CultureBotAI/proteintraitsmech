@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -57,4 +57,253 @@ definitions:
       Catalyses: (1) an N-acyl-L-amino acid + H2O = an L-alpha-amino acid + a carboxylate. (2) an N-acetyl-L-cysteine-S-conjugate + H2O = an S-substituted L-cysteine + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acyl-aliphatic-L-amino acid amidohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.14. Rhea assigns 2 curated
+    reactions to EC 3.5.1.14. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) an N-acyl-L-amino acid + H2O = an L-alpha-amino acid
+    + a carboxylate. (2) an N-acetyl-L-cysteine-S-conjugate + H2O = an S-substituted L-cysteine + acetate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-acyl-aliphatic-L-amino acid amidohydrolase
+    grounding: EC:3.5.1.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an N-acyl-L-amino acid + H2O = an L-alpha-amino acid + a carboxylate
+    grounding: RHEA:15565
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an N-acyl-L-amino acid + H2O = an L-alpha-amino acid + a carboxylate'
+  - node_id: rxn1_sub1
+    label: an N-acyl-L-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59874
+    description: Formula C3H2NO3R2.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: an L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+    description: Formula C2H4NO2R.
+  - node_id: rxn1_prd2
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an N-acetyl-L-cysteine-S-conjugate + H2O = an S-substituted L-cysteine + ace…
+    grounding: RHEA:36855
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an N-acetyl-L-cysteine-S-conjugate + H2O = an S-substituted L-cysteine
+      + acetate'
+  - node_id: rxn2_sub1
+    label: an N-acetyl-L-cysteine-S-conjugate
+    node_type: CHEMICAL
+    grounding: CHEBI:58718
+    description: Formula C5H7NO3SR.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: an S-substituted L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58717
+    description: Formula C3H6NO2SR.
+  - node_id: rxn2_prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aminoacylase activity
+    grounding: GO:0004046
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_K9NBS6
+    node_type: PROTEIN
+    label: AAM_RHOER
+    grounding: UniProtKB:K9NBS6
+  - node_id: prot_Q6AYS7
+    node_type: PROTEIN
+    label: ACY1A_RAT
+    grounding: UniProtKB:Q6AYS7
+  - node_id: prot_Q6PTT0
+    node_type: PROTEIN
+    label: ACY1B_RAT
+    grounding: UniProtKB:Q6PTT0
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:15565 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:15565
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.14"/>
+      notes: The rh:ec triple on RHEA:15565 in rhea.rdf assigns that reaction to EC 3.5.1.14.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: an N-acyl-L-amino acid is a substrate consumed by RHEA:15565 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15566
+      snippet: an N-acyl-L-amino acid + H2O => an L-alpha-amino acid + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:15566 declares side 15565_L as its substrates
+        (rh:substrates); the master reaction RHEA:15565 is undirected. This participant is CHEBI:59874
+        with coefficient 1. Rhea cites PMID:3355856, PMID:2318199, PMID:12933810, PMID:10727768 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:15565 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15566
+      snippet: an N-acyl-L-amino acid + H2O => an L-alpha-amino acid + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:15566 declares side 15565_L as its substrates
+        (rh:substrates); the master reaction RHEA:15565 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:3355856, PMID:2318199, PMID:12933810, PMID:10727768 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: an L-alpha-amino acid is a product released by RHEA:15565 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15566
+      snippet: an N-acyl-L-amino acid + H2O => an L-alpha-amino acid + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:15566 declares side 15565_R as its products
+        (rh:products); the master reaction RHEA:15565 is undirected. This participant is CHEBI:59869 with
+        coefficient 1. Rhea cites PMID:3355856, PMID:2318199, PMID:12933810, PMID:10727768 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: a carboxylate is a product released by RHEA:15565 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15566
+      snippet: an N-acyl-L-amino acid + H2O => an L-alpha-amino acid + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:15566 declares side 15565_R as its products
+        (rh:products); the master reaction RHEA:15565 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. Rhea cites PMID:3355856, PMID:2318199, PMID:12933810, PMID:10727768 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:36855 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:36855
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.14"/>
+      notes: The rh:ec triple on RHEA:36855 in rhea.rdf assigns that reaction to EC 3.5.1.14.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: an N-acetyl-L-cysteine-S-conjugate is a substrate consumed by RHEA:36855 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36856
+      snippet: an N-acetyl-L-cysteine-S-conjugate + H2O => an S-substituted L-cysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:36856 declares side 36855_L as its substrates
+        (rh:substrates); the master reaction RHEA:36855 is undirected. This participant is CHEBI:58718
+        with coefficient 1. Rhea cites PMID:19362172, PMID:3355856, PMID:2318199, PMID:12933810 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:36855 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36856
+      snippet: an N-acetyl-L-cysteine-S-conjugate + H2O => an S-substituted L-cysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:36856 declares side 36855_L as its substrates
+        (rh:substrates); the master reaction RHEA:36855 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19362172, PMID:3355856, PMID:2318199, PMID:12933810 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: an S-substituted L-cysteine is a product released by RHEA:36855 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36856
+      snippet: an N-acetyl-L-cysteine-S-conjugate + H2O => an S-substituted L-cysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:36856 declares side 36855_R as its products
+        (rh:products); the master reaction RHEA:36855 is undirected. This participant is CHEBI:58717 with
+        coefficient 1. Rhea cites PMID:19362172, PMID:3355856, PMID:2318199, PMID:12933810 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: acetate is a product released by RHEA:36855 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36856
+      snippet: an N-acetyl-L-cysteine-S-conjugate + H2O => an S-substituted L-cysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:36856 declares side 36855_R as its products
+        (rh:products); the master reaction RHEA:36855 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:19362172, PMID:3355856, PMID:2318199, PMID:12933810 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.14
+      snippet: EC:3.5.1.14 > GO:aminoacylase activity ; GO:0004046
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004046 is itself a record
+        in this KB.
+  - subject: prot_K9NBS6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAM_RHOER is an exemplar enzyme with EC 3.5.1.14 activity.
+    evidence:
+    - reference: EC:3.5.1.14
+      snippet: DR   K9NBS6, AAM_RHOER  ;  Q6AYS7, ACY1A_RAT  ;  Q6PTT0, ACY1B_RAT  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.14 cross-references UniProtKB:K9NBS6 (AAM_RHOER) as a protein
+        with this activity.
+  - subject: prot_Q6AYS7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACY1A_RAT is an exemplar enzyme with EC 3.5.1.14 activity.
+    evidence:
+    - reference: EC:3.5.1.14
+      snippet: DR   K9NBS6, AAM_RHOER  ;  Q6AYS7, ACY1A_RAT  ;  Q6PTT0, ACY1B_RAT  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.14 cross-references UniProtKB:Q6AYS7 (ACY1A_RAT) as a protein
+        with this activity.
+  - subject: prot_Q6PTT0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACY1B_RAT is an exemplar enzyme with EC 3.5.1.14 activity.
+    evidence:
+    - reference: EC:3.5.1.14
+      snippet: DR   K9NBS6, AAM_RHOER  ;  Q6AYS7, ACY1A_RAT  ;  Q6PTT0, ACY1B_RAT  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.14 cross-references UniProtKB:Q6PTT0 (ACY1B_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

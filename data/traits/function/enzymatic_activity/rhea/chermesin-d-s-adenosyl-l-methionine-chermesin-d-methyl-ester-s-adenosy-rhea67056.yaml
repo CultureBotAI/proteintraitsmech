@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:156464
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,93 @@ definitions:
       Catalyses the reaction: chermesin D + S-adenosyl-L-methionine = chermesin D methyl ester + S-adenosyl-L-homocysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chermesin D + S-adenosyl-L-methionine = chermesin D methyl ester + S-adenosyl-L-homocys…
+  description: Substrate-to-product chemistry of RHEA:67056, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67057 (rh:substrates → 67056_L, rh:products → 67056_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of chermesin D + S-adenosyl-L-methionine = chermesin D methyl ester + S-adenosy…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67056
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: chermesin D + S-adenosyl-L-methionine = chermesin D methyl ester + S-adenosyl-L-homocysteine'
+  - node_id: sub1
+    label: chermesin D
+    node_type: CHEMICAL
+    grounding: CHEBI:156464
+    description: Formula C25H33O5.
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: chermesin D methyl ester
+    node_type: CHEMICAL
+    grounding: CHEBI:167691
+    description: Formula C26H36O5.
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: chermesin D is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67057
+      snippet: chermesin D + S-adenosyl-L-methionine => chermesin D methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:67057 declares side 67056_L as its substrates
+        (rh:substrates); the master reaction RHEA:67056 is undirected. This participant is CHEBI:156464
+        with coefficient 1. Rhea cites PMID:29968715 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:67057
+      snippet: chermesin D + S-adenosyl-L-methionine => chermesin D methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:67057 declares side 67056_L as its substrates
+        (rh:substrates); the master reaction RHEA:67056 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:29968715 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: chermesin D methyl ester is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:67057
+      snippet: chermesin D + S-adenosyl-L-methionine => chermesin D methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:67057 declares side 67056_R as its products
+        (rh:products); the master reaction RHEA:67056 is undirected. This participant is CHEBI:167691
+        with coefficient 1. Rhea cites PMID:29968715 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:67057
+      snippet: chermesin D + S-adenosyl-L-methionine => chermesin D methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:67057 declares side 67056_R as its products
+        (rh:products); the master reaction RHEA:67056 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:29968715 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

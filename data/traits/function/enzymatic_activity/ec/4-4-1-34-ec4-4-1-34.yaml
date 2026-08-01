@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 mapped_xrefs:
@@ -28,4 +28,89 @@ definitions:
       Catalyses: 2-glutathionyl-2-methylbut-3-en-1-ol = (3R)-3,4-epoxy-3-methylbut-1-ene + glutathione
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isoprene-epoxide--glutathione S-transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.34. EC 4.4.1.34 maps to exactly
+    one curated Rhea reaction (RHEA:49568), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-glutathionyl-2-methylbut-3-en-1-ol
+    = (3R)-3,4-epoxy-3-methylbut-1-ene + glutathione". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: isoprene-epoxide--glutathione S-transferase
+    grounding: EC:4.4.1.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-glutathionyl-2-methylbut-3-en-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:131718
+    description: Formula C15H24N3O7S.
+  - node_id: prd1
+    label: (3R)-3,4-epoxy-3-methylbut-1-ene
+    node_type: CHEMICAL
+    grounding: CHEBI:131720
+    description: Formula C5H8O.
+  - node_id: prd2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: prot_Q9RBP4
+    node_type: PROTEIN
+    label: ISOI_RHOSX
+    grounding: UniProtKB:Q9RBP4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-glutathionyl-2-methylbut-3-en-1-ol is a substrate consumed by RHEA:49568 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49569
+      snippet: 2-glutathionyl-2-methylbut-3-en-1-ol => (3R)-3,4-epoxy-3-methylbut-1-ene + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:49569 declares side 49568_L as its substrates
+        (rh:substrates); the master reaction RHEA:49568 is undirected. This participant is CHEBI:131718
+        with coefficient 1. Rhea cites PMID:10094686, PMID:9687433 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3R)-3,4-epoxy-3-methylbut-1-ene is a product released by RHEA:49568 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49569
+      snippet: 2-glutathionyl-2-methylbut-3-en-1-ol => (3R)-3,4-epoxy-3-methylbut-1-ene + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:49569 declares side 49568_R as its products
+        (rh:products); the master reaction RHEA:49568 is undirected. This participant is CHEBI:131720
+        with coefficient 1. Rhea cites PMID:10094686, PMID:9687433 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glutathione is a product released by RHEA:49568 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49569
+      snippet: 2-glutathionyl-2-methylbut-3-en-1-ol => (3R)-3,4-epoxy-3-methylbut-1-ene + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:49569 declares side 49568_R as its products
+        (rh:products); the master reaction RHEA:49568 is undirected. This participant is CHEBI:57925 with
+        coefficient 1. Rhea cites PMID:10094686, PMID:9687433 for this reaction.
+  - subject: prot_Q9RBP4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ISOI_RHOSX is an exemplar enzyme with EC 4.4.1.34 activity.
+    evidence:
+    - reference: EC:4.4.1.34
+      snippet: DR   Q9RBP4, ISOI_RHOSX ;
+      notes: ExPASy ENZYME entry EC 4.4.1.34 cross-references UniProtKB:Q9RBP4 (ISOI_RHOSX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

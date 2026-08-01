@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:81466
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: 5-deoxystrigol + H2O = 5-deoxystrigol ABC-rings + 5-hydroxy-3-methylfuran-2(5H)-one
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-deoxystrigol + H2O = 5-deoxystrigol ABC-rings + 5-hydroxy-3-methylfuran-2(5H)-one
+  description: Substrate-to-product chemistry of RHEA:76511, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:76512 (rh:substrates → 76511_L, rh:products → 76511_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-deoxystrigol + H2O = 5-deoxystrigol ABC-rings + 5-hydroxy-3-methylfuran-2(…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:76511
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-deoxystrigol + H2O = 5-deoxystrigol ABC-rings + 5-hydroxy-3-methylfuran-2(5H)-one'
+  - node_id: sub1
+    label: 5-deoxystrigol
+    node_type: CHEMICAL
+    grounding: CHEBI:81466
+    description: Formula C19H22O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 5-deoxystrigol ABC-rings
+    node_type: CHEMICAL
+    grounding: CHEBI:81465
+    description: Formula C14H18O3.
+  - node_id: prd2
+    label: 5-hydroxy-3-methylfuran-2(5H)-one
+    node_type: CHEMICAL
+    grounding: CHEBI:195253
+    description: Formula C5H6O3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-deoxystrigol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76512
+      snippet: 5-deoxystrigol + H2O => 5-deoxystrigol ABC-rings + 5-hydroxy-3-methylfuran-2(5H)-one
+      notes: Rhea's left-to-right directional reaction RHEA:76512 declares side 76511_L as its substrates
+        (rh:substrates); the master reaction RHEA:76511 is undirected. This participant is CHEBI:81466
+        with coefficient 1. Rhea cites PMID:34764442 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76512
+      snippet: 5-deoxystrigol + H2O => 5-deoxystrigol ABC-rings + 5-hydroxy-3-methylfuran-2(5H)-one
+      notes: Rhea's left-to-right directional reaction RHEA:76512 declares side 76511_L as its substrates
+        (rh:substrates); the master reaction RHEA:76511 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:34764442 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-deoxystrigol ABC-rings is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76512
+      snippet: 5-deoxystrigol + H2O => 5-deoxystrigol ABC-rings + 5-hydroxy-3-methylfuran-2(5H)-one
+      notes: Rhea's left-to-right directional reaction RHEA:76512 declares side 76511_R as its products
+        (rh:products); the master reaction RHEA:76511 is undirected. This participant is CHEBI:81465 with
+        coefficient 1. Rhea cites PMID:34764442 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 5-hydroxy-3-methylfuran-2(5H)-one is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:76512
+      snippet: 5-deoxystrigol + H2O => 5-deoxystrigol ABC-rings + 5-hydroxy-3-methylfuran-2(5H)-one
+      notes: Rhea's left-to-right directional reaction RHEA:76512 declares side 76511_R as its products
+        (rh:products); the master reaction RHEA:76511 is undirected. This participant is CHEBI:195253
+        with coefficient 1. Rhea cites PMID:34764442 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -38,4 +38,148 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate + H2O = (1S,2S,4R)-endo-fenchol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (-)-endo-fenchol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.10. EC 4.2.3.10 maps to exactly
+    one curated Rhea reaction (RHEA:20565), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate + H2O = (1S,2S,4R)-endo-fenchol + diphosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-endo-fenchol synthase
+    grounding: EC:4.2.3.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (1S,2S,4R)-endo-fenchol
+    node_type: CHEMICAL
+    grounding: CHEBI:15405
+    description: Formula C10H18O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-endo-fenchol synthase activity
+    grounding: GO:0050437
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_T1RRR9
+    node_type: PROTEIN
+    label: FENS_LAVPL
+    grounding: UniProtKB:T1RRR9
+  - node_id: prot_T1RRJ4
+    node_type: PROTEIN
+    label: FENS_LAVST
+    grounding: UniProtKB:T1RRJ4
+  - node_id: prot_T1RR72
+    node_type: PROTEIN
+    label: FENS_LAVVI
+    grounding: UniProtKB:T1RR72
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:20565 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20566
+      snippet: (2E)-geranyl diphosphate + H2O => (1S,2S,4R)-endo-fenchol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:20566 declares side 20565_L as its substrates
+        (rh:substrates); the master reaction RHEA:20565 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:2919880, PMID:3170591, PMID:15516500 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:20565 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20566
+      snippet: (2E)-geranyl diphosphate + H2O => (1S,2S,4R)-endo-fenchol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:20566 declares side 20565_L as its substrates
+        (rh:substrates); the master reaction RHEA:20565 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2919880, PMID:3170591, PMID:15516500 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1S,2S,4R)-endo-fenchol is a product released by RHEA:20565 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20566
+      snippet: (2E)-geranyl diphosphate + H2O => (1S,2S,4R)-endo-fenchol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:20566 declares side 20565_R as its products
+        (rh:products); the master reaction RHEA:20565 is undirected. This participant is CHEBI:15405 with
+        coefficient 1. Rhea cites PMID:2919880, PMID:3170591, PMID:15516500 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:20565 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20566
+      snippet: (2E)-geranyl diphosphate + H2O => (1S,2S,4R)-endo-fenchol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:20566 declares side 20565_R as its products
+        (rh:products); the master reaction RHEA:20565 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:2919880, PMID:3170591, PMID:15516500 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.10
+      snippet: EC:4.2.3.10 > GO:(-)-endo-fenchol synthase activity ; GO:0050437
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050437 is itself a record
+        in this KB.
+  - subject: prot_T1RRR9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FENS_LAVPL is an exemplar enzyme with EC 4.2.3.10 activity.
+    evidence:
+    - reference: EC:4.2.3.10
+      snippet: DR   T1RRR9, FENS_LAVPL ;  T1RRJ4, FENS_LAVST ;  T1RR72, FENS_LAVVI ;
+      notes: ExPASy ENZYME entry EC 4.2.3.10 cross-references UniProtKB:T1RRR9 (FENS_LAVPL) as a protein
+        with this activity.
+  - subject: prot_T1RRJ4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FENS_LAVST is an exemplar enzyme with EC 4.2.3.10 activity.
+    evidence:
+    - reference: EC:4.2.3.10
+      snippet: DR   T1RRR9, FENS_LAVPL ;  T1RRJ4, FENS_LAVST ;  T1RR72, FENS_LAVVI ;
+      notes: ExPASy ENZYME entry EC 4.2.3.10 cross-references UniProtKB:T1RRJ4 (FENS_LAVST) as a protein
+        with this activity.
+  - subject: prot_T1RR72
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FENS_LAVVI is an exemplar enzyme with EC 4.2.3.10 activity.
+    evidence:
+    - reference: EC:4.2.3.10
+      snippet: DR   T1RRR9, FENS_LAVPL ;  T1RRJ4, FENS_LAVST ;  T1RR72, FENS_LAVVI ;
+      notes: ExPASy ENZYME entry EC 4.2.3.10 cross-references UniProtKB:T1RR72 (FENS_LAVVI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

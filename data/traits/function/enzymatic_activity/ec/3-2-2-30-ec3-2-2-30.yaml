@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 synonyms:
@@ -45,4 +45,148 @@ definitions:
       Catalyses: 6-amino-6-deoxyfutalosine + H2O = dehypoxanthine futalosine + adenine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aminodeoxyfutalosine nucleosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.30. EC 3.2.2.30 maps to exactly
+    one curated Rhea reaction (RHEA:33079), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "6-amino-6-deoxyfutalosine
+    + H2O = dehypoxanthine futalosine + adenine". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aminodeoxyfutalosine nucleosidase
+    grounding: EC:3.2.2.30
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 6-amino-6-deoxyfutalosine
+    node_type: CHEMICAL
+    grounding: CHEBI:64286
+    description: Formula C19H18N5O6.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: dehypoxanthine futalosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58864
+    description: Formula C14H15O7.
+  - node_id: prd2
+    label: adenine
+    node_type: CHEMICAL
+    grounding: CHEBI:16708
+    description: Formula C5H5N5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 6-amino-6-deoxyfutalosine hydrolase activity
+    grounding: GO:0102246
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q0PC20
+    node_type: PROTEIN
+    label: MQMTN_CAMJE
+    grounding: UniProtKB:Q0PC20
+  - node_id: prot_Q9ZMY2
+    node_type: PROTEIN
+    label: MQMTN_HELPJ
+    grounding: UniProtKB:Q9ZMY2
+  - node_id: prot_O24915
+    node_type: PROTEIN
+    label: MQMTN_HELPY
+    grounding: UniProtKB:O24915
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 6-amino-6-deoxyfutalosine is a substrate consumed by RHEA:33079 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33080
+      snippet: 6-amino-6-deoxyfutalosine + H2O => dehypoxanthine futalosine + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:33080 declares side 33079_L as its substrates
+        (rh:substrates); the master reaction RHEA:33079 is undirected. This participant is CHEBI:64286
+        with coefficient 1. Rhea cites PMID:18801996, PMID:21489995, PMID:21098241 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:33079 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33080
+      snippet: 6-amino-6-deoxyfutalosine + H2O => dehypoxanthine futalosine + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:33080 declares side 33079_L as its substrates
+        (rh:substrates); the master reaction RHEA:33079 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18801996, PMID:21489995, PMID:21098241 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dehypoxanthine futalosine is a product released by RHEA:33079 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33080
+      snippet: 6-amino-6-deoxyfutalosine + H2O => dehypoxanthine futalosine + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:33080 declares side 33079_R as its products
+        (rh:products); the master reaction RHEA:33079 is undirected. This participant is CHEBI:58864 with
+        coefficient 1. Rhea cites PMID:18801996, PMID:21489995, PMID:21098241 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: adenine is a product released by RHEA:33079 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33080
+      snippet: 6-amino-6-deoxyfutalosine + H2O => dehypoxanthine futalosine + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:33080 declares side 33079_R as its products
+        (rh:products); the master reaction RHEA:33079 is undirected. This participant is CHEBI:16708 with
+        coefficient 1. Rhea cites PMID:18801996, PMID:21489995, PMID:21098241 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.30
+      snippet: EC:3.2.2.30 > GO:6-amino-6-deoxyfutalosine hydrolase activity ; GO:0102246
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102246 is itself a record
+        in this KB.
+  - subject: prot_Q0PC20
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MQMTN_CAMJE is an exemplar enzyme with EC 3.2.2.30 activity.
+    evidence:
+    - reference: EC:3.2.2.30
+      snippet: DR   Q0PC20, MQMTN_CAMJE;  Q9ZMY2, MQMTN_HELPJ;  O24915, MQMTN_HELPY;
+      notes: ExPASy ENZYME entry EC 3.2.2.30 cross-references UniProtKB:Q0PC20 (MQMTN_CAMJE) as a protein
+        with this activity.
+  - subject: prot_Q9ZMY2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MQMTN_HELPJ is an exemplar enzyme with EC 3.2.2.30 activity.
+    evidence:
+    - reference: EC:3.2.2.30
+      snippet: DR   Q0PC20, MQMTN_CAMJE;  Q9ZMY2, MQMTN_HELPJ;  O24915, MQMTN_HELPY;
+      notes: ExPASy ENZYME entry EC 3.2.2.30 cross-references UniProtKB:Q9ZMY2 (MQMTN_HELPJ) as a protein
+        with this activity.
+  - subject: prot_O24915
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MQMTN_HELPY is an exemplar enzyme with EC 3.2.2.30 activity.
+    evidence:
+    - reference: EC:3.2.2.30
+      snippet: DR   Q0PC20, MQMTN_CAMJE;  Q9ZMY2, MQMTN_HELPJ;  O24915, MQMTN_HELPY;
+      notes: ExPASy ENZYME entry EC 3.2.2.30 cross-references UniProtKB:O24915 (MQMTN_HELPY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

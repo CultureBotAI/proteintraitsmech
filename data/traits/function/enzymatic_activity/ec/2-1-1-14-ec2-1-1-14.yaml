@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 synonyms:
@@ -53,4 +53,261 @@ definitions:
       Catalyses: 5-methyltetrahydropteroyltri-L-glutamate + L-homocysteine = tetrahydropteroyltri-L-glutamate + L-methionine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.14. Rhea assigns 2 curated
+    reactions to EC 2.1.1.14. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "5-methyltetrahydropteroyltri-L-glutamate + L-homocysteine
+    = tetrahydropteroyltri-L-glutamate + L-methionine". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 5-methyltetrahydropteroyltriglutamate--homocysteine S-methyltransferase
+    grounding: EC:2.1.1.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 5-methyltetrahydropteroyltri-L-glutamate + L-homocysteine = tetrahydropteroy…
+    grounding: RHEA:21196
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 5-methyltetrahydropteroyltri-L-glutamate + L-homocysteine = tetrahydropteroyltri-L-glutamate
+      + L-methionine'
+  - node_id: rxn1_sub1
+    label: 5-methyltetrahydropteroyltri-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58207
+    description: Formula C30H35N9O12.
+  - node_id: rxn1_sub2
+    label: L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58199
+    description: Formula C4H9NO2S.
+  - node_id: rxn1_prd1
+    label: tetrahydropteroyltri-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58140
+    description: Formula C29H33N9O12.
+  - node_id: rxn1_prd2
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+    description: Formula C5H11NO2S.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate = tetrahydro…
+    grounding: RHEA:45016
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate = tetrahydropteroyltri-L-glutamate
+      + L-selenomethionine'
+  - node_id: rxn2_sub1
+    label: L-selenohomocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:84850
+    description: Formula C4H9NO2Se.
+  - node_id: rxn2_sub2
+    label: 5-methyltetrahydropteroyltri-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58207
+    description: Formula C30H35N9O12.
+  - node_id: rxn2_prd1
+    label: tetrahydropteroyltri-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58140
+    description: Formula C29H33N9O12.
+  - node_id: rxn2_prd2
+    label: L-selenomethionine
+    node_type: CHEMICAL
+    grounding: CHEBI:62621
+    description: Formula C5H11NO2Se.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 5-methyltetrahydropteroyltriglutamate-homocysteine S-methyltransferase activity
+    grounding: GO:0003871
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O50008
+    node_type: PROTEIN
+    label: METE1_ARATH
+    grounding: UniProtKB:O50008
+  - node_id: prot_Q2QLY5
+    node_type: PROTEIN
+    label: METE1_ORYSJ
+    grounding: UniProtKB:Q2QLY5
+  - node_id: prot_Q9SRV5
+    node_type: PROTEIN
+    label: METE2_ARATH
+    grounding: UniProtKB:Q9SRV5
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:21196 is one of the 2 curated reactions Rhea assigns to EC 2.1.1.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:21196
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.14"/>
+      notes: The rh:ec triple on RHEA:21196 in rhea.rdf assigns that reaction to EC 2.1.1.14.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 5-methyltetrahydropteroyltri-L-glutamate is a substrate consumed by RHEA:21196 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21197
+      snippet: 5-methyltetrahydropteroyltri-L-glutamate + L-homocysteine => tetrahydropteroyltri-L-glutamate
+        + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:21197 declares side 21196_L as its substrates
+        (rh:substrates); the master reaction RHEA:21196 is undirected. This participant is CHEBI:58207
+        with coefficient 1. Rhea cites PMID:4904482, PMID:5319972, PMID:7601135, PMID:8823155 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: L-homocysteine is a substrate consumed by RHEA:21196 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21197
+      snippet: 5-methyltetrahydropteroyltri-L-glutamate + L-homocysteine => tetrahydropteroyltri-L-glutamate
+        + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:21197 declares side 21196_L as its substrates
+        (rh:substrates); the master reaction RHEA:21196 is undirected. This participant is CHEBI:58199
+        with coefficient 1. Rhea cites PMID:4904482, PMID:5319972, PMID:7601135, PMID:8823155 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: tetrahydropteroyltri-L-glutamate is a product released by RHEA:21196 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21197
+      snippet: 5-methyltetrahydropteroyltri-L-glutamate + L-homocysteine => tetrahydropteroyltri-L-glutamate
+        + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:21197 declares side 21196_R as its products
+        (rh:products); the master reaction RHEA:21196 is undirected. This participant is CHEBI:58140 with
+        coefficient 1. Rhea cites PMID:4904482, PMID:5319972, PMID:7601135, PMID:8823155 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: L-methionine is a product released by RHEA:21196 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21197
+      snippet: 5-methyltetrahydropteroyltri-L-glutamate + L-homocysteine => tetrahydropteroyltri-L-glutamate
+        + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:21197 declares side 21196_R as its products
+        (rh:products); the master reaction RHEA:21196 is undirected. This participant is CHEBI:57844 with
+        coefficient 1. Rhea cites PMID:4904482, PMID:5319972, PMID:7601135, PMID:8823155 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:45016 is one of the 2 curated reactions Rhea assigns to EC 2.1.1.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:45016
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.14"/>
+      notes: The rh:ec triple on RHEA:45016 in rhea.rdf assigns that reaction to EC 2.1.1.14.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: L-selenohomocysteine is a substrate consumed by RHEA:45016 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45017
+      snippet: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate => tetrahydropteroyltri-L-glutamate
+        + L-selenomethionine
+      notes: Rhea's left-to-right directional reaction RHEA:45017 declares side 45016_L as its substrates
+        (rh:substrates); the master reaction RHEA:45016 is undirected. This participant is CHEBI:84850
+        with coefficient 1. Rhea cites PMID:11078203 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: 5-methyltetrahydropteroyltri-L-glutamate is a substrate consumed by RHEA:45016 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45017
+      snippet: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate => tetrahydropteroyltri-L-glutamate
+        + L-selenomethionine
+      notes: Rhea's left-to-right directional reaction RHEA:45017 declares side 45016_L as its substrates
+        (rh:substrates); the master reaction RHEA:45016 is undirected. This participant is CHEBI:58207
+        with coefficient 1. Rhea cites PMID:11078203 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: tetrahydropteroyltri-L-glutamate is a product released by RHEA:45016 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45017
+      snippet: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate => tetrahydropteroyltri-L-glutamate
+        + L-selenomethionine
+      notes: Rhea's left-to-right directional reaction RHEA:45017 declares side 45016_R as its products
+        (rh:products); the master reaction RHEA:45016 is undirected. This participant is CHEBI:58140 with
+        coefficient 1. Rhea cites PMID:11078203 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: L-selenomethionine is a product released by RHEA:45016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45017
+      snippet: L-selenohomocysteine + 5-methyltetrahydropteroyltri-L-glutamate => tetrahydropteroyltri-L-glutamate
+        + L-selenomethionine
+      notes: Rhea's left-to-right directional reaction RHEA:45017 declares side 45016_R as its products
+        (rh:products); the master reaction RHEA:45016 is undirected. This participant is CHEBI:62621 with
+        coefficient 1. Rhea cites PMID:11078203 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.1.1.14
+      snippet: EC:2.1.1.14 > GO:5-methyltetrahydropteroyltriglutamate-homocysteine S-methyltransferase
+        activity ; GO:0003871
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003871 is itself a record
+        in this KB.
+  - subject: prot_O50008
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: METE1_ARATH is an exemplar enzyme with EC 2.1.1.14 activity.
+    evidence:
+    - reference: EC:2.1.1.14
+      snippet: DR   O50008, METE1_ARATH;  Q2QLY5, METE1_ORYSJ;  Q9SRV5, METE2_ARATH;
+      notes: ExPASy ENZYME entry EC 2.1.1.14 cross-references UniProtKB:O50008 (METE1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q2QLY5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: METE1_ORYSJ is an exemplar enzyme with EC 2.1.1.14 activity.
+    evidence:
+    - reference: EC:2.1.1.14
+      snippet: DR   O50008, METE1_ARATH;  Q2QLY5, METE1_ORYSJ;  Q9SRV5, METE2_ARATH;
+      notes: ExPASy ENZYME entry EC 2.1.1.14 cross-references UniProtKB:Q2QLY5 (METE1_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_Q9SRV5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: METE2_ARATH is an exemplar enzyme with EC 2.1.1.14 activity.
+    evidence:
+    - reference: EC:2.1.1.14
+      snippet: DR   O50008, METE1_ARATH;  Q2QLY5, METE1_ORYSJ;  Q9SRV5, METE2_ARATH;
+      notes: ExPASy ENZYME entry EC 2.1.1.14 cross-references UniProtKB:Q9SRV5 (METE2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

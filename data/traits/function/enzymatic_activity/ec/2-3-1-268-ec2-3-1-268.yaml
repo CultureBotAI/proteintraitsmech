@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -39,4 +39,131 @@ definitions:
       Catalyses: ethanol + acetyl-CoA = ethyl acetate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ethanol O-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.268. EC 2.3.1.268 maps to
+    exactly one curated Rhea reaction (RHEA:55972), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ethanol
+    + acetyl-CoA = ethyl acetate + CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ethanol O-acetyltransferase
+    grounding: EC:2.3.1.268
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: ethanol
+    node_type: CHEMICAL
+    grounding: CHEBI:16236
+    description: Formula C2H6O.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: ethyl acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:27750
+    description: Formula C4H8O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_A0A2R6PLK2
+    node_type: PROTEIN
+    label: AT9_ACTCC
+    grounding: UniProtKB:A0A2R6PLK2
+  - node_id: prot_P0DO25
+    node_type: PROTEIN
+    label: AT9_ACTDE
+    grounding: UniProtKB:P0DO25
+  - node_id: prot_A0A068BIF1
+    node_type: PROTEIN
+    label: AT9_ACTER
+    grounding: UniProtKB:A0A068BIF1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ethanol is a substrate consumed by RHEA:55972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55973
+      snippet: ethanol + acetyl-CoA => ethyl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55973 declares side 55972_L as its substrates
+        (rh:substrates); the master reaction RHEA:55972 is undirected. This participant is CHEBI:16236
+        with coefficient 1. Rhea cites PMID:28356220, PMID:21450321 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:55972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55973
+      snippet: ethanol + acetyl-CoA => ethyl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55973 declares side 55972_L as its substrates
+        (rh:substrates); the master reaction RHEA:55972 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:28356220, PMID:21450321 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ethyl acetate is a product released by RHEA:55972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55973
+      snippet: ethanol + acetyl-CoA => ethyl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55973 declares side 55972_R as its products
+        (rh:products); the master reaction RHEA:55972 is undirected. This participant is CHEBI:27750 with
+        coefficient 1. Rhea cites PMID:28356220, PMID:21450321 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:55972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55973
+      snippet: ethanol + acetyl-CoA => ethyl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55973 declares side 55972_R as its products
+        (rh:products); the master reaction RHEA:55972 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:28356220, PMID:21450321 for this reaction.
+  - subject: prot_A0A2R6PLK2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AT9_ACTCC is an exemplar enzyme with EC 2.3.1.268 activity.
+    evidence:
+    - reference: EC:2.3.1.268
+      snippet: DR   A0A2R6PLK2, AT9_ACTCC  ;  P0DO25, AT9_ACTDE  ;  A0A068BIF1, AT9_ACTER  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.268 cross-references UniProtKB:A0A2R6PLK2 (AT9_ACTCC) as a protein
+        with this activity.
+  - subject: prot_P0DO25
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AT9_ACTDE is an exemplar enzyme with EC 2.3.1.268 activity.
+    evidence:
+    - reference: EC:2.3.1.268
+      snippet: DR   A0A2R6PLK2, AT9_ACTCC  ;  P0DO25, AT9_ACTDE  ;  A0A068BIF1, AT9_ACTER  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.268 cross-references UniProtKB:P0DO25 (AT9_ACTDE) as a protein
+        with this activity.
+  - subject: prot_A0A068BIF1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AT9_ACTER is an exemplar enzyme with EC 2.3.1.268 activity.
+    evidence:
+    - reference: EC:2.3.1.268
+      snippet: DR   A0A2R6PLK2, AT9_ACTCC  ;  P0DO25, AT9_ACTDE  ;  A0A068BIF1, AT9_ACTER  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.268 cross-references UniProtKB:A0A068BIF1 (AT9_ACTER) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

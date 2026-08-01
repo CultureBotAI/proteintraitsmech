@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.7.-
 synonyms:
@@ -33,4 +33,121 @@ definitions:
       Catalyses: geranylgeranyl diphosphate + H2O = (13E)-labda-7,13-dien-15-ol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (13E)-labda-7,13-dien-15-ol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.7.10. EC 3.1.7.10 maps to exactly
+    one curated Rhea reaction (RHEA:32075), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "geranylgeranyl
+    diphosphate + H2O = (13E)-labda-7,13-dien-15-ol + diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (13E)-labda-7,13-dien-15-ol synthase
+    grounding: EC:3.1.7.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57533
+    description: Formula C20H33O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (13E)-labda-7,13-dien-15-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:63683
+    description: Formula C20H34O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (13E)-labda-7,13-dien-15-ol synthase activity
+    grounding: GO:0102305
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_G1DGI7
+    node_type: PROTEIN
+    label: TPS7_SELML
+    grounding: UniProtKB:G1DGI7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: geranylgeranyl diphosphate is a substrate consumed by RHEA:32075 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32076
+      snippet: geranylgeranyl diphosphate + H2O => (13E)-labda-7,13-dien-15-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32076 declares side 32075_L as its substrates
+        (rh:substrates); the master reaction RHEA:32075 is undirected. This participant is CHEBI:57533
+        with coefficient 1. Rhea cites PMID:21751328 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:32075 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32076
+      snippet: geranylgeranyl diphosphate + H2O => (13E)-labda-7,13-dien-15-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32076 declares side 32075_L as its substrates
+        (rh:substrates); the master reaction RHEA:32075 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21751328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (13E)-labda-7,13-dien-15-ol is a product released by RHEA:32075 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32076
+      snippet: geranylgeranyl diphosphate + H2O => (13E)-labda-7,13-dien-15-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32076 declares side 32075_R as its products
+        (rh:products); the master reaction RHEA:32075 is undirected. This participant is CHEBI:63683 with
+        coefficient 1. Rhea cites PMID:21751328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:32075 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32076
+      snippet: geranylgeranyl diphosphate + H2O => (13E)-labda-7,13-dien-15-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32076 declares side 32075_R as its products
+        (rh:products); the master reaction RHEA:32075 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21751328 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.7.10
+      snippet: EC:3.1.7.10 > GO:(13E)-labda-7,13-dien-15-ol synthase activity ; GO:0102305
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102305 is itself a record
+        in this KB.
+  - subject: prot_G1DGI7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS7_SELML is an exemplar enzyme with EC 3.1.7.10 activity.
+    evidence:
+    - reference: EC:3.1.7.10
+      snippet: DR   G1DGI7, TPS7_SELML ;
+      notes: ExPASy ENZYME entry EC 3.1.7.10 cross-references UniProtKB:G1DGI7 (TPS7_SELML) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

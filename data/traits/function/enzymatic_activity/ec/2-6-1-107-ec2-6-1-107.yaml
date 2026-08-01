@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 mapped_xrefs:
@@ -28,4 +28,106 @@ definitions:
       Catalyses: (3S)-3-methyl-L-phenylalanine + 2-oxoglutarate = (3S)-2-oxo-3- phenylbutanoate + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-methylphenylalanine transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.107. EC 2.6.1.107 maps to
+    exactly one curated Rhea reaction (RHEA:39911), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(3S)-3-methyl-L-phenylalanine
+    + 2-oxoglutarate = (3S)-2-oxo-3- phenylbutanoate + L-glutamate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-methylphenylalanine transaminase
+    grounding: EC:2.6.1.107
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (3S)-3-methyl-L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:76864
+    description: Formula C10H13NO2.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: (3S)-2-oxo-3-phenylbutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:74119
+    description: Formula C10H9O3.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prot_P04693
+    node_type: PROTEIN
+    label: TYRB_ECOLI
+    grounding: UniProtKB:P04693
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3S)-3-methyl-L-phenylalanine is a substrate consumed by RHEA:39911 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39912
+      snippet: (3S)-3-methyl-L-phenylalanine + 2-oxoglutarate => (3S)-2-oxo-3-phenylbutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:39912 declares side 39911_L as its substrates
+        (rh:substrates); the master reaction RHEA:39911 is undirected. This participant is CHEBI:76864
+        with coefficient 1. Rhea cites PMID:19731276 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:39911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39912
+      snippet: (3S)-3-methyl-L-phenylalanine + 2-oxoglutarate => (3S)-2-oxo-3-phenylbutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:39912 declares side 39911_L as its substrates
+        (rh:substrates); the master reaction RHEA:39911 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:19731276 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3S)-2-oxo-3-phenylbutanoate is a product released by RHEA:39911 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39912
+      snippet: (3S)-3-methyl-L-phenylalanine + 2-oxoglutarate => (3S)-2-oxo-3-phenylbutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:39912 declares side 39911_R as its products
+        (rh:products); the master reaction RHEA:39911 is undirected. This participant is CHEBI:74119 with
+        coefficient 1. Rhea cites PMID:19731276 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:39911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39912
+      snippet: (3S)-3-methyl-L-phenylalanine + 2-oxoglutarate => (3S)-2-oxo-3-phenylbutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:39912 declares side 39911_R as its products
+        (rh:products); the master reaction RHEA:39911 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:19731276 for this reaction.
+  - subject: prot_P04693
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TYRB_ECOLI is an exemplar enzyme with EC 2.6.1.107 activity.
+    evidence:
+    - reference: EC:2.6.1.107
+      snippet: DR   P04693, TYRB_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.6.1.107 cross-references UniProtKB:P04693 (TYRB_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

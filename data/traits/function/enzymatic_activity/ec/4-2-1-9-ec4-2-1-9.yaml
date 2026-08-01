@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -40,4 +40,218 @@ definitions:
       Catalyses: (2R)-2,3-dihydroxy-3-methylbutanoate = 3-methyl-2-oxobutanoate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dihydroxy-acid dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.9. Rhea assigns 2 curated
+    reactions to EC 4.2.1.9. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "(2R)-2,3-dihydroxy-3-methylbutanoate = 3-methyl-2-oxobutanoate
+    + H2O". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dihydroxy-acid dehydratase
+    grounding: EC:4.2.1.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (2R)-2,3-dihydroxy-3-methylbutanoate = 3-methyl-2-oxobutanoate + H2O
+    grounding: RHEA:24809
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (2R)-2,3-dihydroxy-3-methylbutanoate = 3-methyl-2-oxobutanoate + H2O'
+  - node_id: rxn1_sub1
+    label: (2R)-2,3-dihydroxy-3-methylbutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:49072
+    description: Formula C5H9O4.
+  - node_id: rxn1_prd1
+    label: 3-methyl-2-oxobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:11851
+    description: Formula C5H7O3.
+  - node_id: rxn1_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (2R,3R)-2,3-dihydroxy-3-methylpentanoate = (S)-3-methyl-2-oxopentanoate + H2O
+    grounding: RHEA:27694
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (2R,3R)-2,3-dihydroxy-3-methylpentanoate = (S)-3-methyl-2-oxopentanoate
+      + H2O'
+  - node_id: rxn2_sub1
+    label: (2R,3R)-2,3-dihydroxy-3-methylpentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:49258
+    description: Formula C6H11O4.
+  - node_id: rxn2_prd1
+    label: (S)-3-methyl-2-oxopentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:35146
+    description: Formula C6H9O3.
+  - node_id: rxn2_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dihydroxy-acid dehydratase activity
+    grounding: GO:0004160
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q0CPG9
+    node_type: PROTEIN
+    label: ASTD_ASPTN
+    grounding: UniProtKB:Q0CPG9
+  - node_id: prot_Q10318
+    node_type: PROTEIN
+    label: ILV3_SCHPO
+    grounding: UniProtKB:Q10318
+  - node_id: prot_P39522
+    node_type: PROTEIN
+    label: ILV3_YEAST
+    grounding: UniProtKB:P39522
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:24809 is one of the 2 curated reactions Rhea assigns to EC 4.2.1.9; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24809
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.9"/>
+      notes: The rh:ec triple on RHEA:24809 in rhea.rdf assigns that reaction to EC 4.2.1.9.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (2R)-2,3-dihydroxy-3-methylbutanoate is a substrate consumed by RHEA:24809 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24810
+      snippet: (2R)-2,3-dihydroxy-3-methylbutanoate => 3-methyl-2-oxobutanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:24810 declares side 24809_L as its substrates
+        (rh:substrates); the master reaction RHEA:24809 is undirected. This participant is CHEBI:49072
+        with coefficient 1. Rhea cites PMID:13962154, PMID:31315931, PMID:3314584, PMID:13727223 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 3-methyl-2-oxobutanoate is a product released by RHEA:24809 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24810
+      snippet: (2R)-2,3-dihydroxy-3-methylbutanoate => 3-methyl-2-oxobutanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:24810 declares side 24809_R as its products
+        (rh:products); the master reaction RHEA:24809 is undirected. This participant is CHEBI:11851 with
+        coefficient 1. Rhea cites PMID:13962154, PMID:31315931, PMID:3314584, PMID:13727223 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O is a product released by RHEA:24809 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24810
+      snippet: (2R)-2,3-dihydroxy-3-methylbutanoate => 3-methyl-2-oxobutanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:24810 declares side 24809_R as its products
+        (rh:products); the master reaction RHEA:24809 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:13962154, PMID:31315931, PMID:3314584, PMID:13727223 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:27694 is one of the 2 curated reactions Rhea assigns to EC 4.2.1.9; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:27694
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.9"/>
+      notes: The rh:ec triple on RHEA:27694 in rhea.rdf assigns that reaction to EC 4.2.1.9.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (2R,3R)-2,3-dihydroxy-3-methylpentanoate is a substrate consumed by RHEA:27694 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27695
+      snippet: (2R,3R)-2,3-dihydroxy-3-methylpentanoate => (S)-3-methyl-2-oxopentanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:27695 declares side 27694_L as its substrates
+        (rh:substrates); the master reaction RHEA:27694 is undirected. This participant is CHEBI:49258
+        with coefficient 1. Rhea cites PMID:13962154, PMID:31315931, PMID:3314584, PMID:13727223 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (S)-3-methyl-2-oxopentanoate is a product released by RHEA:27694 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27695
+      snippet: (2R,3R)-2,3-dihydroxy-3-methylpentanoate => (S)-3-methyl-2-oxopentanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:27695 declares side 27694_R as its products
+        (rh:products); the master reaction RHEA:27694 is undirected. This participant is CHEBI:35146 with
+        coefficient 1. Rhea cites PMID:13962154, PMID:31315931, PMID:3314584, PMID:13727223 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O is a product released by RHEA:27694 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27695
+      snippet: (2R,3R)-2,3-dihydroxy-3-methylpentanoate => (S)-3-methyl-2-oxopentanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:27695 declares side 27694_R as its products
+        (rh:products); the master reaction RHEA:27694 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:13962154, PMID:31315931, PMID:3314584, PMID:13727223 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.9
+      snippet: EC:4.2.1.9 > GO:dihydroxy-acid dehydratase activity ; GO:0004160
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004160 is itself a record
+        in this KB.
+  - subject: prot_Q0CPG9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASTD_ASPTN is an exemplar enzyme with EC 4.2.1.9 activity.
+    evidence:
+    - reference: EC:4.2.1.9
+      snippet: DR   Q0CPG9, ASTD_ASPTN ;  Q10318, ILV3_SCHPO ;  P39522, ILV3_YEAST ;
+      notes: ExPASy ENZYME entry EC 4.2.1.9 cross-references UniProtKB:Q0CPG9 (ASTD_ASPTN) as a protein
+        with this activity.
+  - subject: prot_Q10318
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ILV3_SCHPO is an exemplar enzyme with EC 4.2.1.9 activity.
+    evidence:
+    - reference: EC:4.2.1.9
+      snippet: DR   Q0CPG9, ASTD_ASPTN ;  Q10318, ILV3_SCHPO ;  P39522, ILV3_YEAST ;
+      notes: ExPASy ENZYME entry EC 4.2.1.9 cross-references UniProtKB:Q10318 (ILV3_SCHPO) as a protein
+        with this activity.
+  - subject: prot_P39522
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ILV3_YEAST is an exemplar enzyme with EC 4.2.1.9 activity.
+    evidence:
+    - reference: EC:4.2.1.9
+      snippet: DR   Q0CPG9, ASTD_ASPTN ;  Q10318, ILV3_SCHPO ;  P39522, ILV3_YEAST ;
+      notes: ExPASy ENZYME entry EC 4.2.1.9 cross-references UniProtKB:P39522 (ILV3_YEAST) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

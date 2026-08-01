@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 mapped_xrefs:
@@ -30,4 +30,137 @@ definitions:
       Catalyses: columbamine + S-adenosyl-L-methionine = palmatine + S-adenosyl-L- homocysteine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of columbamine O-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.118. EC 2.1.1.118 maps to
+    exactly one curated Rhea reaction (RHEA:15373), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "columbamine
+    + S-adenosyl-L-methionine = palmatine + S-adenosyl-L- homocysteine + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: columbamine O-methyltransferase
+    grounding: EC:2.1.1.118
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: columbamine
+    node_type: CHEMICAL
+    grounding: CHEBI:15920
+    description: Formula C20H20NO4.
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: palmatine
+    node_type: CHEMICAL
+    grounding: CHEBI:16096
+    description: Formula C21H22NO4.
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: columbamine O-methyltransferase activity
+    grounding: GO:0030778
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8H9A8
+    node_type: PROTEIN
+    label: COOMT_COPJA
+    grounding: UniProtKB:Q8H9A8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: columbamine is a substrate consumed by RHEA:15373 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15374
+      snippet: columbamine + S-adenosyl-L-methionine => palmatine + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15374 declares side 15373_L as its substrates
+        (rh:substrates); the master reaction RHEA:15373 is undirected. This participant is CHEBI:15920
+        with coefficient 1. Rhea cites PMID:12423366 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:15373 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15374
+      snippet: columbamine + S-adenosyl-L-methionine => palmatine + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15374 declares side 15373_L as its substrates
+        (rh:substrates); the master reaction RHEA:15373 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:12423366 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: palmatine is a product released by RHEA:15373 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15374
+      snippet: columbamine + S-adenosyl-L-methionine => palmatine + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15374 declares side 15373_R as its products
+        (rh:products); the master reaction RHEA:15373 is undirected. This participant is CHEBI:16096 with
+        coefficient 1. Rhea cites PMID:12423366 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:15373 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15374
+      snippet: columbamine + S-adenosyl-L-methionine => palmatine + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15374 declares side 15373_R as its products
+        (rh:products); the master reaction RHEA:15373 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:12423366 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:15373 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15374
+      snippet: columbamine + S-adenosyl-L-methionine => palmatine + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15374 declares side 15373_R as its products
+        (rh:products); the master reaction RHEA:15373 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12423366 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.1.1.118
+      snippet: EC:2.1.1.118 > GO:columbamine O-methyltransferase activity ; GO:0030778
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0030778 is itself a record
+        in this KB.
+  - subject: prot_Q8H9A8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COOMT_COPJA is an exemplar enzyme with EC 2.1.1.118 activity.
+    evidence:
+    - reference: EC:2.1.1.118
+      snippet: DR   Q8H9A8, COOMT_COPJA;
+      notes: ExPASy ENZYME entry EC 2.1.1.118 cross-references UniProtKB:Q8H9A8 (COOMT_COPJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

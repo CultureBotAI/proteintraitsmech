@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -30,4 +30,119 @@ definitions:
       Catalyses: D-cellobiose + phosphate = alpha-D-glucose 1-phosphate + D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cellobiose phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.20. EC 2.4.1.20 maps to exactly
+    one curated Rhea reaction (RHEA:19493), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-cellobiose
+    + phosphate = alpha-D-glucose 1-phosphate + D-glucose". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cellobiose phosphorylase
+    grounding: EC:2.4.1.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-cellobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:17057
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: alpha-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58601
+    description: Formula C6H11O9P.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cellobiose phosphorylase activity
+    grounding: GO:0047738
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B9K7M6
+    node_type: PROTEIN
+    label: CBPA_THENN
+    grounding: UniProtKB:B9K7M6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-cellobiose is a substrate consumed by RHEA:19493 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19494
+      snippet: D-cellobiose + phosphate => alpha-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:19494 declares side 19493_L as its substrates
+        (rh:substrates); the master reaction RHEA:19493 is undirected. This participant is CHEBI:17057
+        with coefficient 1. Rhea cites PMID:10960102, PMID:18346721, PMID:5653182 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:19493 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19494
+      snippet: D-cellobiose + phosphate => alpha-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:19494 declares side 19493_L as its substrates
+        (rh:substrates); the master reaction RHEA:19493 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:10960102, PMID:18346721, PMID:5653182 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-glucose 1-phosphate is a product released by RHEA:19493 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19494
+      snippet: D-cellobiose + phosphate => alpha-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:19494 declares side 19493_R as its products
+        (rh:products); the master reaction RHEA:19493 is undirected. This participant is CHEBI:58601 with
+        coefficient 1. Rhea cites PMID:10960102, PMID:18346721, PMID:5653182 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by RHEA:19493 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19494
+      snippet: D-cellobiose + phosphate => alpha-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:19494 declares side 19493_R as its products
+        (rh:products); the master reaction RHEA:19493 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:10960102, PMID:18346721, PMID:5653182 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.20
+      snippet: EC:2.4.1.20 > GO:cellobiose phosphorylase activity ; GO:0047738
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047738 is itself a record
+        in this KB.
+  - subject: prot_B9K7M6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBPA_THENN is an exemplar enzyme with EC 2.4.1.20 activity.
+    evidence:
+    - reference: EC:2.4.1.20
+      snippet: DR   B9K7M6, CBPA_THENN ;
+      notes: ExPASy ENZYME entry EC 2.4.1.20 cross-references UniProtKB:B9K7M6 (CBPA_THENN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

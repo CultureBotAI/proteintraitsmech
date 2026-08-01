@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -43,4 +43,147 @@ definitions:
       Catalyses: alpha,alpha-trehalose + H2O = alpha-D-glucose + beta-D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha,alpha-trehalase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.28. EC 3.2.1.28 maps to exactly
+    one curated Rhea reaction (RHEA:32675), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "alpha,alpha-trehalose
+    + H2O = alpha-D-glucose + beta-D-glucose". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alpha,alpha-trehalase
+    grounding: EC:3.2.1.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: alpha,alpha-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:16551
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+    description: Formula C6H12O6.
+  - node_id: prd2
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alpha,alpha-trehalase activity
+    grounding: GO:0004555
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_D4B5H9
+    node_type: PROTEIN
+    label: ATC1_ARTBC
+    grounding: UniProtKB:D4B5H9
+  - node_id: prot_Q5AAU5
+    node_type: PROTEIN
+    label: ATC1_CANAL
+    grounding: UniProtKB:Q5AAU5
+  - node_id: prot_M1RNJ8
+    node_type: PROTEIN
+    label: ATH1_CANGB
+    grounding: UniProtKB:M1RNJ8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha,alpha-trehalose is a substrate consumed by RHEA:32675 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32676
+      snippet: alpha,alpha-trehalose + H2O => alpha-D-glucose + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:32676 declares side 32675_L as its substrates
+        (rh:substrates); the master reaction RHEA:32675 is undirected. This participant is CHEBI:16551
+        with coefficient 1. Rhea cites PMID:7104311, PMID:19897915 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:32675 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32676
+      snippet: alpha,alpha-trehalose + H2O => alpha-D-glucose + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:32676 declares side 32675_L as its substrates
+        (rh:substrates); the master reaction RHEA:32675 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7104311, PMID:19897915 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-glucose is a product released by RHEA:32675 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32676
+      snippet: alpha,alpha-trehalose + H2O => alpha-D-glucose + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:32676 declares side 32675_R as its products
+        (rh:products); the master reaction RHEA:32675 is undirected. This participant is CHEBI:17925 with
+        coefficient 1. Rhea cites PMID:7104311, PMID:19897915 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: beta-D-glucose is a product released by RHEA:32675 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32676
+      snippet: alpha,alpha-trehalose + H2O => alpha-D-glucose + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:32676 declares side 32675_R as its products
+        (rh:products); the master reaction RHEA:32675 is undirected. This participant is CHEBI:15903 with
+        coefficient 1. Rhea cites PMID:7104311, PMID:19897915 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.28
+      snippet: EC:3.2.1.28 > GO:alpha,alpha-trehalase activity ; GO:0004555
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004555 is itself a record
+        in this KB.
+  - subject: prot_D4B5H9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATC1_ARTBC is an exemplar enzyme with EC 3.2.1.28 activity.
+    evidence:
+    - reference: EC:3.2.1.28
+      snippet: DR   D4B5H9, ATC1_ARTBC ;  Q5AAU5, ATC1_CANAL ;  M1RNJ8, ATH1_CANGB ;
+      notes: ExPASy ENZYME entry EC 3.2.1.28 cross-references UniProtKB:D4B5H9 (ATC1_ARTBC) as a protein
+        with this activity.
+  - subject: prot_Q5AAU5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATC1_CANAL is an exemplar enzyme with EC 3.2.1.28 activity.
+    evidence:
+    - reference: EC:3.2.1.28
+      snippet: DR   D4B5H9, ATC1_ARTBC ;  Q5AAU5, ATC1_CANAL ;  M1RNJ8, ATH1_CANGB ;
+      notes: ExPASy ENZYME entry EC 3.2.1.28 cross-references UniProtKB:Q5AAU5 (ATC1_CANAL) as a protein
+        with this activity.
+  - subject: prot_M1RNJ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATH1_CANGB is an exemplar enzyme with EC 3.2.1.28 activity.
+    evidence:
+    - reference: EC:3.2.1.28
+      snippet: DR   D4B5H9, ATC1_ARTBC ;  Q5AAU5, ATC1_CANAL ;  M1RNJ8, ATH1_CANGB ;
+      notes: ExPASy ENZYME entry EC 3.2.1.28 cross-references UniProtKB:M1RNJ8 (ATH1_CANGB) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

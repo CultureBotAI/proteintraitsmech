@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.99.-
 synonyms:
@@ -43,4 +43,115 @@ definitions:
       Catalyses: prostaglandin H2 = thromboxane A2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thromboxane-A synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.99.5. EC 5.3.99.5 maps to exactly
+    one curated Rhea reaction (RHEA:17137), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "prostaglandin
+    H2 = thromboxane A2". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thromboxane-A synthase
+    grounding: EC:5.3.99.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: prostaglandin H2
+    node_type: CHEMICAL
+    grounding: CHEBI:57405
+    description: Formula C20H31O5.
+  - node_id: prd1
+    label: thromboxane A2
+    node_type: CHEMICAL
+    grounding: CHEBI:57445
+    description: Formula C20H31O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: thromboxane-A synthase activity
+    grounding: GO:0004796
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q96SQ9
+    node_type: PROTEIN
+    label: CP2S1_HUMAN
+    grounding: UniProtKB:Q96SQ9
+  - node_id: prot_Q9DBX6
+    node_type: PROTEIN
+    label: CP2S1_MOUSE
+    grounding: UniProtKB:Q9DBX6
+  - node_id: prot_Q2KIG5
+    node_type: PROTEIN
+    label: THAS_BOVIN
+    grounding: UniProtKB:Q2KIG5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: prostaglandin H2 is a substrate consumed by RHEA:17137 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17138
+      snippet: prostaglandin H2 => thromboxane A2
+      notes: Rhea's left-to-right directional reaction RHEA:17138 declares side 17137_L as its substrates
+        (rh:substrates); the master reaction RHEA:17137 is undirected. This participant is CHEBI:57405
+        with coefficient 1. Rhea cites PMID:6221511, PMID:24009185, PMID:3691505, PMID:11297515 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: thromboxane A2 is a product released by RHEA:17137 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17138
+      snippet: prostaglandin H2 => thromboxane A2
+      notes: Rhea's left-to-right directional reaction RHEA:17138 declares side 17137_R as its products
+        (rh:products); the master reaction RHEA:17137 is undirected. This participant is CHEBI:57445 with
+        coefficient 1. Rhea cites PMID:6221511, PMID:24009185, PMID:3691505, PMID:11297515 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.99.5
+      snippet: EC:5.3.99.5 > GO:thromboxane-A synthase activity ; GO:0004796
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004796 is itself a record
+        in this KB.
+  - subject: prot_Q96SQ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP2S1_HUMAN is an exemplar enzyme with EC 5.3.99.5 activity.
+    evidence:
+    - reference: EC:5.3.99.5
+      snippet: DR   Q96SQ9, CP2S1_HUMAN;  Q9DBX6, CP2S1_MOUSE;  Q2KIG5, THAS_BOVIN ;
+      notes: ExPASy ENZYME entry EC 5.3.99.5 cross-references UniProtKB:Q96SQ9 (CP2S1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9DBX6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP2S1_MOUSE is an exemplar enzyme with EC 5.3.99.5 activity.
+    evidence:
+    - reference: EC:5.3.99.5
+      snippet: DR   Q96SQ9, CP2S1_HUMAN;  Q9DBX6, CP2S1_MOUSE;  Q2KIG5, THAS_BOVIN ;
+      notes: ExPASy ENZYME entry EC 5.3.99.5 cross-references UniProtKB:Q9DBX6 (CP2S1_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q2KIG5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THAS_BOVIN is an exemplar enzyme with EC 5.3.99.5 activity.
+    evidence:
+    - reference: EC:5.3.99.5
+      snippet: DR   Q96SQ9, CP2S1_HUMAN;  Q9DBX6, CP2S1_MOUSE;  Q2KIG5, THAS_BOVIN ;
+      notes: ExPASy ENZYME entry EC 5.3.99.5 cross-references UniProtKB:Q2KIG5 (THAS_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

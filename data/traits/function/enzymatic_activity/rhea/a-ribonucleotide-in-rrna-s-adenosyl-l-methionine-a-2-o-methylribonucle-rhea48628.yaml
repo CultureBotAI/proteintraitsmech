@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:90675
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,166 @@ definitions:
       Catalyses the reaction: a ribonucleotide in rRNA + S-adenosyl-L-methionine = a 2'-O-methylribonucleotide in rRNA + S-adenosyl-L-homocysteine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a ribonucleotide in rRNA + S-adenosyl-L-methionine = a 2'-O-methylribonucleotide
+    in rRN…
+  description: Substrate-to-product chemistry of RHEA:48628, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48629 (rh:substrates → 48628_L, rh:products → 48628_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a ribonucleotide in rRNA + S-adenosyl-L-methionine = a 2'-O-methylribonucleo…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48628
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a ribonucleotide in rRNA + S-adenosyl-L-methionine = a 2''-O-methylribonucleotide
+      in rRNA + S-adenosyl-L-homocysteine + H(+)'
+  - node_id: sub1
+    label: a ribonucleotide in rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:12164
+    description: Rhea compound GENERIC:12164.
+  - node_id: sub1_rp1
+    label: ribonucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12164 (a ribonucleotide
+      in rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90675
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: a 2'-O-methylribonucleotide in rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:12165
+    description: Rhea compound GENERIC:12165.
+  - node_id: prd1_rp1
+    label: 2'-O-methylribonucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12165 (a 2'-O-methylribonucleotide
+      in rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90676
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: RNA 2'-O-methyltransferase activity
+    grounding: GO:0062105
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a ribonucleotide in rRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48629
+      snippet: a ribonucleotide in rRNA + S-adenosyl-L-methionine => a 2'-O-methylribonucleotide in rRNA
+        + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48629 declares side 48628_L as its substrates
+        (rh:substrates); the master reaction RHEA:48628 is undirected. This participant is GENERIC:12164
+        with coefficient 1. Rhea cites PMID:22195017 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: ribonucleotide residue is the reactive part of a ribonucleotide in rRNA.
+    evidence:
+    - reference: RHEA:48628
+      snippet: ribonucleotide residue
+      notes: Rhea compound GENERIC:12164 (a ribonucleotide in rRNA) declares rh:reactivePart = ribonucleotide
+        residue (CHEBI:90675), formula C5H7O6PR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48629
+      snippet: a ribonucleotide in rRNA + S-adenosyl-L-methionine => a 2'-O-methylribonucleotide in rRNA
+        + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48629 declares side 48628_L as its substrates
+        (rh:substrates); the master reaction RHEA:48628 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:22195017 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 2'-O-methylribonucleotide in rRNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:48629
+      snippet: a ribonucleotide in rRNA + S-adenosyl-L-methionine => a 2'-O-methylribonucleotide in rRNA
+        + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48629 declares side 48628_R as its products
+        (rh:products); the master reaction RHEA:48628 is undirected. This participant is GENERIC:12165
+        with coefficient 1. Rhea cites PMID:22195017 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 2'-O-methylribonucleotide residue is the reactive part of a 2'-O-methylribonucleotide
+      in rRNA.
+    evidence:
+    - reference: RHEA:48628
+      snippet: 2'-O-methylribonucleotide residue
+      notes: Rhea compound GENERIC:12165 (a 2'-O-methylribonucleotide in rRNA) declares rh:reactivePart
+        = 2'-O-methylribonucleotide residue (CHEBI:90676), formula C6H9O6PR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48629
+      snippet: a ribonucleotide in rRNA + S-adenosyl-L-methionine => a 2'-O-methylribonucleotide in rRNA
+        + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48629 declares side 48628_R as its products
+        (rh:products); the master reaction RHEA:48628 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:22195017 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48629
+      snippet: a ribonucleotide in rRNA + S-adenosyl-L-methionine => a 2'-O-methylribonucleotide in rRNA
+        + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48629 declares side 48628_R as its products
+        (rh:products); the master reaction RHEA:48628 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22195017 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:48628
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0062105"/>
+      notes: The rdfs:seeAlso triple on RHEA:48628 in rhea.rdf. GO term GO:0062105 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17389
     role: SUBSTRATE_OR_PRODUCT
@@ -22,4 +22,99 @@ definitions:
       Catalyses the reaction: a 2-acylglycerol + a 1,2-diacyl-sn-glycero-3-phosphoethanolamine = a 2,3-diacyl-sn-glycerol + a 1-acyl-sn-glycero-3-phosphoethanolamine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2-acylglycerol + a 1,2-diacyl-sn-glycero-3-phosphoethanolamine = a 2,3-diacyl-sn-glyc…
+  description: Substrate-to-product chemistry of RHEA:39879, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:39880 (rh:substrates → 39879_L, rh:products → 39879_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2-acylglycerol + a 1,2-diacyl-sn-glycero-3-phosphoethanolamine = a 2,3-dia…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:39879
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2-acylglycerol + a 1,2-diacyl-sn-glycero-3-phosphoethanolamine = a 2,3-diacyl-sn-glycerol
+      + a 1-acyl-sn-glycero-3-phosphoethanolamine'
+  - node_id: sub1
+    label: a 2-acylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17389
+    description: Formula C4H7O4R.
+  - node_id: sub2
+    label: a 1,2-diacyl-sn-glycero-3-phosphoethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:64612
+    description: Formula C7H12NO8PR2.
+  - node_id: prd1
+    label: a 2,3-diacyl-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:75524
+    description: Formula C5H6O5R2.
+  - node_id: prd2
+    label: a 1-acyl-sn-glycero-3-phosphoethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:64381
+    description: Formula C6H13NO7PR.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2-acylglycerol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39880
+      snippet: a 2-acylglycerol + a 1,2-diacyl-sn-glycero-3-phosphoethanolamine => a 2,3-diacyl-sn-glycerol
+        + a 1-acyl-sn-glycero-3-phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:39880 declares side 39879_L as its substrates
+        (rh:substrates); the master reaction RHEA:39879 is undirected. This participant is CHEBI:17389
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a 1,2-diacyl-sn-glycero-3-phosphoethanolamine is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39880
+      snippet: a 2-acylglycerol + a 1,2-diacyl-sn-glycero-3-phosphoethanolamine => a 2,3-diacyl-sn-glycerol
+        + a 1-acyl-sn-glycero-3-phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:39880 declares side 39879_L as its substrates
+        (rh:substrates); the master reaction RHEA:39879 is undirected. This participant is CHEBI:64612
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 2,3-diacyl-sn-glycerol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39880
+      snippet: a 2-acylglycerol + a 1,2-diacyl-sn-glycero-3-phosphoethanolamine => a 2,3-diacyl-sn-glycerol
+        + a 1-acyl-sn-glycero-3-phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:39880 declares side 39879_R as its products
+        (rh:products); the master reaction RHEA:39879 is undirected. This participant is CHEBI:75524 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 1-acyl-sn-glycero-3-phosphoethanolamine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:39880
+      snippet: a 2-acylglycerol + a 1,2-diacyl-sn-glycero-3-phosphoethanolamine => a 2,3-diacyl-sn-glycerol
+        + a 1-acyl-sn-glycero-3-phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:39880 declares side 39879_R as its products
+        (rh:products); the master reaction RHEA:39879 is undirected. This participant is CHEBI:64381 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

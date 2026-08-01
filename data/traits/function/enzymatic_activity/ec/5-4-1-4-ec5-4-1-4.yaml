@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.1.-
 mapped_xrefs:
@@ -28,4 +28,73 @@ definitions:
       Catalyses: D-galactaro-1,5-lactone = D-galactaro-1,4-lactone
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-galactarolactone isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.1.4. EC 5.4.1.4 maps to exactly
+    one curated Rhea reaction (RHEA:45580), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-galactaro-1,5-lactone
+    = D-galactaro-1,4-lactone". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-galactarolactone isomerase
+    grounding: EC:5.4.1.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-galactaro-1,5-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:83383
+    description: Formula C6H7O7.
+  - node_id: prd1
+    label: D-galactaro-1,4-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:85317
+    description: Formula C6H7O7.
+  - node_id: prot_A9CEQ7
+    node_type: PROTEIN
+    label: GLI_AGRFC
+    grounding: UniProtKB:A9CEQ7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-galactaro-1,5-lactone is a substrate consumed by RHEA:45580 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45581
+      snippet: D-galactaro-1,5-lactone => D-galactaro-1,4-lactone
+      notes: Rhea's left-to-right directional reaction RHEA:45581 declares side 45580_L as its substrates
+        (rh:substrates); the master reaction RHEA:45580 is undirected. This participant is CHEBI:83383
+        with coefficient 1. Rhea cites PMID:24450804 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-galactaro-1,4-lactone is a product released by RHEA:45580 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45581
+      snippet: D-galactaro-1,5-lactone => D-galactaro-1,4-lactone
+      notes: Rhea's left-to-right directional reaction RHEA:45581 declares side 45580_R as its products
+        (rh:products); the master reaction RHEA:45580 is undirected. This participant is CHEBI:85317 with
+        coefficient 1. Rhea cites PMID:24450804 for this reaction.
+  - subject: prot_A9CEQ7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLI_AGRFC is an exemplar enzyme with EC 5.4.1.4 activity.
+    evidence:
+    - reference: EC:5.4.1.4
+      snippet: DR   A9CEQ7, GLI_AGRFC  ;
+      notes: ExPASy ENZYME entry EC 5.4.1.4 cross-references UniProtKB:A9CEQ7 (GLI_AGRFC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

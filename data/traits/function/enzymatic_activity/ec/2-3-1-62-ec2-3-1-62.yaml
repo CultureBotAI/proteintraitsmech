@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -34,4 +34,139 @@ definitions:
       Catalyses: a 2-acyl-sn-glycero-3-phosphocholine + an acyl-CoA = a 1,2-diacyl- sn-glycero-3-phosphocholine + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-acylglycerophosphocholine O-acyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.62. EC 2.3.1.62 maps to exactly
+    one curated Rhea reaction (RHEA:10332), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 2-acyl-sn-glycero-3-phosphocholine
+    + an acyl-CoA = a 1,2-diacyl- sn-glycero-3-phosphocholine + CoA". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-acylglycerophosphocholine O-acyltransferase
+    grounding: EC:2.3.1.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 2-acyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:57875
+    description: Formula C9H19NO7PR.
+  - node_id: sub2
+    label: an acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58342
+    description: Formula C22H31N7O17P3SR.
+  - node_id: prd1
+    label: a 1,2-diacyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:57643
+    description: Formula C10H18NO8PR2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-acylglycerophosphocholine O-acyltransferase activity
+    grounding: GO:0047190
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q92604
+    node_type: PROTEIN
+    label: LGAT1_HUMAN
+    grounding: UniProtKB:Q92604
+  - node_id: prot_Q91YX5
+    node_type: PROTEIN
+    label: LGAT1_MOUSE
+    grounding: UniProtKB:Q91YX5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2-acyl-sn-glycero-3-phosphocholine is a substrate consumed by RHEA:10332 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:10333
+      snippet: a 2-acyl-sn-glycero-3-phosphocholine + an acyl-CoA => a 1,2-diacyl-sn-glycero-3-phosphocholine
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10333 declares side 10332_L as its substrates
+        (rh:substrates); the master reaction RHEA:10332 is undirected. This participant is CHEBI:57875
+        with coefficient 1. Rhea cites PMID:14299609, PMID:5660084 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: an acyl-CoA is a substrate consumed by RHEA:10332 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10333
+      snippet: a 2-acyl-sn-glycero-3-phosphocholine + an acyl-CoA => a 1,2-diacyl-sn-glycero-3-phosphocholine
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10333 declares side 10332_L as its substrates
+        (rh:substrates); the master reaction RHEA:10332 is undirected. This participant is CHEBI:58342
+        with coefficient 1. Rhea cites PMID:14299609, PMID:5660084 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 1,2-diacyl-sn-glycero-3-phosphocholine is a product released by RHEA:10332 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:10333
+      snippet: a 2-acyl-sn-glycero-3-phosphocholine + an acyl-CoA => a 1,2-diacyl-sn-glycero-3-phosphocholine
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10333 declares side 10332_R as its products
+        (rh:products); the master reaction RHEA:10332 is undirected. This participant is CHEBI:57643 with
+        coefficient 1. Rhea cites PMID:14299609, PMID:5660084 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:10332 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10333
+      snippet: a 2-acyl-sn-glycero-3-phosphocholine + an acyl-CoA => a 1,2-diacyl-sn-glycero-3-phosphocholine
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10333 declares side 10332_R as its products
+        (rh:products); the master reaction RHEA:10332 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:14299609, PMID:5660084 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.62
+      snippet: EC:2.3.1.62 > GO:2-acylglycerophosphocholine O-acyltransferase activity ; GO:0047190
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047190 is itself a record
+        in this KB.
+  - subject: prot_Q92604
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LGAT1_HUMAN is an exemplar enzyme with EC 2.3.1.62 activity.
+    evidence:
+    - reference: EC:2.3.1.62
+      snippet: DR   Q92604, LGAT1_HUMAN;  Q91YX5, LGAT1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.3.1.62 cross-references UniProtKB:Q92604 (LGAT1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q91YX5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LGAT1_MOUSE is an exemplar enzyme with EC 2.3.1.62 activity.
+    evidence:
+    - reference: EC:2.3.1.62
+      snippet: DR   Q92604, LGAT1_HUMAN;  Q91YX5, LGAT1_MOUSE;
+      notes: ExPASy ENZYME entry EC 2.3.1.62 cross-references UniProtKB:Q91YX5 (LGAT1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

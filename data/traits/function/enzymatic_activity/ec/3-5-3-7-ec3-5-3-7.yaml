@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.3.-
 mapped_xrefs:
@@ -38,4 +38,151 @@ definitions:
       Catalyses: 4-guanidinobutanoate + H2O = urea + 4-aminobutanoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of guanidinobutyrase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.3.7. EC 3.5.3.7 maps to exactly
+    one curated Rhea reaction (RHEA:19501), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-guanidinobutanoate
+    + H2O = urea + 4-aminobutanoate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: guanidinobutyrase
+    grounding: EC:3.5.3.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-guanidinobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57486
+    description: Formula C5H11N3O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: urea
+    node_type: CHEMICAL
+    grounding: CHEBI:16199
+    description: Formula CH4N2O.
+  - node_id: prd2
+    label: 4-aminobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:59888
+    description: Formula C4H9NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: guanidinobutyrase activity
+    grounding: GO:0047971
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8KZT5
+    node_type: PROTEIN
+    label: GBH_ARTS8
+    grounding: UniProtKB:Q8KZT5
+  - node_id: prot_Q6CIB4
+    node_type: PROTEIN
+    label: GBU1_KLULA
+    grounding: UniProtKB:Q6CIB4
+  - node_id: prot_Q9I3S3
+    node_type: PROTEIN
+    label: GBUA_PSEAE
+    grounding: UniProtKB:Q9I3S3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-guanidinobutanoate is a substrate consumed by RHEA:19501 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19502
+      snippet: 4-guanidinobutanoate + H2O => urea + 4-aminobutanoate
+      notes: Rhea's left-to-right directional reaction RHEA:19502 declares side 19501_L as its substrates
+        (rh:substrates); the master reaction RHEA:19501 is undirected. This participant is CHEBI:57486
+        with coefficient 1. Rhea cites PMID:36543883, PMID:24912400, PMID:12029055, PMID:21600989 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:19501 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19502
+      snippet: 4-guanidinobutanoate + H2O => urea + 4-aminobutanoate
+      notes: Rhea's left-to-right directional reaction RHEA:19502 declares side 19501_L as its substrates
+        (rh:substrates); the master reaction RHEA:19501 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:36543883, PMID:24912400, PMID:12029055, PMID:21600989 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: urea is a product released by RHEA:19501 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19502
+      snippet: 4-guanidinobutanoate + H2O => urea + 4-aminobutanoate
+      notes: Rhea's left-to-right directional reaction RHEA:19502 declares side 19501_R as its products
+        (rh:products); the master reaction RHEA:19501 is undirected. This participant is CHEBI:16199 with
+        coefficient 1. Rhea cites PMID:36543883, PMID:24912400, PMID:12029055, PMID:21600989 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 4-aminobutanoate is a product released by RHEA:19501 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19502
+      snippet: 4-guanidinobutanoate + H2O => urea + 4-aminobutanoate
+      notes: Rhea's left-to-right directional reaction RHEA:19502 declares side 19501_R as its products
+        (rh:products); the master reaction RHEA:19501 is undirected. This participant is CHEBI:59888 with
+        coefficient 1. Rhea cites PMID:36543883, PMID:24912400, PMID:12029055, PMID:21600989 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.3.7
+      snippet: EC:3.5.3.7 > GO:guanidinobutyrase activity ; GO:0047971
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047971 is itself a record
+        in this KB.
+  - subject: prot_Q8KZT5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GBH_ARTS8 is an exemplar enzyme with EC 3.5.3.7 activity.
+    evidence:
+    - reference: EC:3.5.3.7
+      snippet: DR   Q8KZT5, GBH_ARTS8  ;  Q6CIB4, GBU1_KLULA ;  Q9I3S3, GBUA_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.5.3.7 cross-references UniProtKB:Q8KZT5 (GBH_ARTS8) as a protein
+        with this activity.
+  - subject: prot_Q6CIB4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GBU1_KLULA is an exemplar enzyme with EC 3.5.3.7 activity.
+    evidence:
+    - reference: EC:3.5.3.7
+      snippet: DR   Q8KZT5, GBH_ARTS8  ;  Q6CIB4, GBU1_KLULA ;  Q9I3S3, GBUA_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.5.3.7 cross-references UniProtKB:Q6CIB4 (GBU1_KLULA) as a protein
+        with this activity.
+  - subject: prot_Q9I3S3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GBUA_PSEAE is an exemplar enzyme with EC 3.5.3.7 activity.
+    evidence:
+    - reference: EC:3.5.3.7
+      snippet: DR   Q8KZT5, GBH_ARTS8  ;  Q6CIB4, GBU1_KLULA ;  Q9I3S3, GBUA_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.5.3.7 cross-references UniProtKB:Q9I3S3 (GBUA_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

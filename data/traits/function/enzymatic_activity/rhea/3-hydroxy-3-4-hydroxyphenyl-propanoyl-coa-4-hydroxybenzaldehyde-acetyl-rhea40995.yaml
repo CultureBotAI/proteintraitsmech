@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:73500
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,77 @@ definitions:
       Catalyses the reaction: 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA = 4-hydroxybenzaldehyde + acetyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA = 4-hydroxybenzaldehyde + acetyl-CoA
+  description: Substrate-to-product chemistry of RHEA:40995, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:40996 (rh:substrates → 40995_L, rh:products → 40995_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA = 4-hydroxybenzaldehyde + acetyl-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:40995
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA = 4-hydroxybenzaldehyde + acetyl-CoA'
+  - node_id: sub1
+    label: 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:73500
+    description: Formula C30H40N7O19P3S.
+  - node_id: prd1
+    label: 4-hydroxybenzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17597
+    description: Formula C7H6O2.
+  - node_id: prd2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:40996
+      snippet: 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA => 4-hydroxybenzaldehyde + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:40996 declares side 40995_L as its substrates
+        (rh:substrates); the master reaction RHEA:40995 is undirected. This participant is CHEBI:73500
+        with coefficient 1. Rhea cites PMID:10543794, PMID:18479250, PMID:22328668, PMID:9461612 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-hydroxybenzaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:40996
+      snippet: 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA => 4-hydroxybenzaldehyde + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:40996 declares side 40995_R as its products
+        (rh:products); the master reaction RHEA:40995 is undirected. This participant is CHEBI:17597 with
+        coefficient 1. Rhea cites PMID:10543794, PMID:18479250, PMID:22328668, PMID:9461612 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40996
+      snippet: 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA => 4-hydroxybenzaldehyde + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:40996 declares side 40995_R as its products
+        (rh:products); the master reaction RHEA:40995 is undirected. This participant is CHEBI:57288 with
+        coefficient 1. Rhea cites PMID:10543794, PMID:18479250, PMID:22328668, PMID:9461612 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -44,4 +44,67 @@ definitions:
       Catalyses: Cleavage of amide substrates following the basic amino acids Arg or Lys at the P1 position, with a preference for Arg over Lys
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of kallikrein 8
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.118. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "Cleavage of amide substrates following the basic amino acids Arg or Lys at the P1 position, with
+    a preference for Arg over Lys".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: kallikrein 8
+    grounding: EC:3.4.21.118
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_O60259
+    node_type: PROTEIN
+    label: KLK8_HUMAN
+    grounding: UniProtKB:O60259
+  - node_id: prot_Q61955
+    node_type: PROTEIN
+    label: KLK8_MOUSE
+    grounding: UniProtKB:Q61955
+  - node_id: prot_O88780
+    node_type: PROTEIN
+    label: KLK8_RAT
+    grounding: UniProtKB:O88780
+  edges:
+  - subject: prot_O60259
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KLK8_HUMAN is an exemplar enzyme with EC 3.4.21.118 activity.
+    evidence:
+    - reference: EC:3.4.21.118
+      snippet: DR   O60259, KLK8_HUMAN ;  Q61955, KLK8_MOUSE ;  O88780, KLK8_RAT   ;
+      notes: ExPASy ENZYME entry EC 3.4.21.118 cross-references UniProtKB:O60259 (KLK8_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q61955
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KLK8_MOUSE is an exemplar enzyme with EC 3.4.21.118 activity.
+    evidence:
+    - reference: EC:3.4.21.118
+      snippet: DR   O60259, KLK8_HUMAN ;  Q61955, KLK8_MOUSE ;  O88780, KLK8_RAT   ;
+      notes: ExPASy ENZYME entry EC 3.4.21.118 cross-references UniProtKB:Q61955 (KLK8_MOUSE) as a protein
+        with this activity.
+  - subject: prot_O88780
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KLK8_RAT is an exemplar enzyme with EC 3.4.21.118 activity.
+    evidence:
+    - reference: EC:3.4.21.118
+      snippet: DR   O60259, KLK8_HUMAN ;  Q61955, KLK8_MOUSE ;  O88780, KLK8_RAT   ;
+      notes: ExPASy ENZYME entry EC 3.4.21.118 cross-references UniProtKB:O88780 (KLK8_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

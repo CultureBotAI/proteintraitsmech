@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:88066
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,107 @@ definitions:
       Catalyses the reaction: dioctanoylglycerol + H2O = octanoylglycerol + octanoate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dioctanoylglycerol + H2O = octanoylglycerol + octanoate + H(+)
+  description: Substrate-to-product chemistry of RHEA:47880, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:47881 (rh:substrates → 47880_L, rh:products → 47880_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dioctanoylglycerol + H2O = octanoylglycerol + octanoate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:47880
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dioctanoylglycerol + H2O = octanoylglycerol + octanoate + H(+)'
+  - node_id: sub1
+    label: dioctanoylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:88066
+    description: Formula C19H36O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: octanoylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:88070
+    description: Formula C11H22O4.
+  - node_id: prd2
+    label: octanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:25646
+    description: Formula C8H15O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dioctanoylglycerol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47881
+      snippet: dioctanoylglycerol + H2O => octanoylglycerol + octanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47881 declares side 47880_L as its substrates
+        (rh:substrates); the master reaction RHEA:47880 is undirected. This participant is CHEBI:88066
+        with coefficient 1. Rhea cites PMID:19959834 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47881
+      snippet: dioctanoylglycerol + H2O => octanoylglycerol + octanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47881 declares side 47880_L as its substrates
+        (rh:substrates); the master reaction RHEA:47880 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19959834 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: octanoylglycerol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47881
+      snippet: dioctanoylglycerol + H2O => octanoylglycerol + octanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47881 declares side 47880_R as its products
+        (rh:products); the master reaction RHEA:47880 is undirected. This participant is CHEBI:88070 with
+        coefficient 1. Rhea cites PMID:19959834 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: octanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47881
+      snippet: dioctanoylglycerol + H2O => octanoylglycerol + octanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47881 declares side 47880_R as its products
+        (rh:products); the master reaction RHEA:47880 is undirected. This participant is CHEBI:25646 with
+        coefficient 1. Rhea cites PMID:19959834 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47881
+      snippet: dioctanoylglycerol + H2O => octanoylglycerol + octanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47881 declares side 47880_R as its products
+        (rh:products); the master reaction RHEA:47880 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19959834 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

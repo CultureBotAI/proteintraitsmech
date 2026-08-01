@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -31,4 +31,88 @@ definitions:
       Catalyses: (2Z,6E)-farnesyl diphosphate = (-)-gamma-cadinene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (-)-gamma-cadinene synthase [(2Z,6E)-farnesyl diphosphate cyclizing]
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.62. EC 4.2.3.62 maps to exactly
+    one curated Rhea reaction (RHEA:28639), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2Z,6E)-farnesyl
+    diphosphate = (-)-gamma-cadinene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-gamma-cadinene synthase [(2Z,6E)-farnesyl diphosphate cyclizing]
+    grounding: EC:4.2.3.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2Z,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:162247
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (-)-gamma-cadinene
+    node_type: CHEMICAL
+    grounding: CHEBI:63203
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_C7PLV2
+    node_type: PROTEIN
+    label: GCAS_CHIPD
+    grounding: UniProtKB:C7PLV2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2Z,6E)-farnesyl diphosphate is a substrate consumed by RHEA:28639 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28640
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-gamma-cadinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28640 declares side 28639_L as its substrates
+        (rh:substrates); the master reaction RHEA:28639 is undirected. This participant is CHEBI:162247
+        with coefficient 1. Rhea cites PMID:27666571, PMID:27829890, PMID:23307484 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-gamma-cadinene is a product released by RHEA:28639 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28640
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-gamma-cadinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28640 declares side 28639_R as its products
+        (rh:products); the master reaction RHEA:28639 is undirected. This participant is CHEBI:63203 with
+        coefficient 1. Rhea cites PMID:27666571, PMID:27829890, PMID:23307484 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:28639 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28640
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-gamma-cadinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28640 declares side 28639_R as its products
+        (rh:products); the master reaction RHEA:28639 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:27666571, PMID:27829890, PMID:23307484 for this reaction.
+  - subject: prot_C7PLV2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCAS_CHIPD is an exemplar enzyme with EC 4.2.3.62 activity.
+    evidence:
+    - reference: EC:4.2.3.62
+      snippet: DR   C7PLV2, GCAS_CHIPD ;
+      notes: ExPASy ENZYME entry EC 4.2.3.62 cross-references UniProtKB:C7PLV2 (GCAS_CHIPD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

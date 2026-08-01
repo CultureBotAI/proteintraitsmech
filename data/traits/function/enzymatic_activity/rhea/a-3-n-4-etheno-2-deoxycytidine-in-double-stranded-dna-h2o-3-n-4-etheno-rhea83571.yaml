@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:189585
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,133 @@ definitions:
       Catalyses the reaction: a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA + H2O = 3,N(4)-ethenocytosine + a 2'-deoxyribose 5'-monophosphate in double-stranded DNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA + H2O = 3,N(4)-ethenocytosine
+    +…
+  description: Substrate-to-product chemistry of RHEA:83571, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:83572 (rh:substrates → 83571_L, rh:products → 83571_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA + H2O = 3,N(4)-ethen…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:83571
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 3,N(4)-etheno-2''-deoxycytidine in double-stranded DNA + H2O = 3,N(4)-ethenocytosine
+      + a 2''-deoxyribose 5''-monophosphate in double-stranded DNA'
+  - node_id: sub1
+    label: a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17905
+    description: Rhea compound GENERIC:17905.
+  - node_id: sub1_rp1
+    label: 3,N(4)-etheno-dCMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17905 (a 3,N(4)-etheno-2'-deoxycytidine
+      in double-stranded DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:189585
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 3,N(4)-ethenocytosine
+    node_type: CHEMICAL
+    grounding: CHEBI:29147
+    description: Formula C6H5N3O.
+  - node_id: prd2
+    label: a 2'-deoxyribose 5'-monophosphate in double-stranded DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:14231
+    description: Rhea compound GENERIC:14231.
+  - node_id: prd2_rp1
+    label: a 2'-deoxyribose 5'-monophosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14231 (a 2'-deoxyribose
+      5'-monophosphate in double-stranded DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:139095
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83572
+      snippet: a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA + H2O => 3,N(4)-ethenocytosine
+        + a 2'-deoxyribose 5'-monophosphate in double-stranded DNA
+      notes: Rhea's left-to-right directional reaction RHEA:83572 declares side 83571_L as its substrates
+        (rh:substrates); the master reaction RHEA:83571 is undirected. This participant is GENERIC:17905
+        with coefficient 1. Rhea cites PMID:8302827, PMID:8565126 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3,N(4)-etheno-dCMP residue is the reactive part of a 3,N(4)-etheno-2'-deoxycytidine in
+      double-stranded DNA.
+    evidence:
+    - reference: RHEA:83571
+      snippet: 3,N(4)-etheno-dCMP residue
+      notes: Rhea compound GENERIC:17905 (a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA) declares
+        rh:reactivePart = 3,N(4)-etheno-dCMP residue (CHEBI:189585), formula C11H11N3O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83572
+      snippet: a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA + H2O => 3,N(4)-ethenocytosine
+        + a 2'-deoxyribose 5'-monophosphate in double-stranded DNA
+      notes: Rhea's left-to-right directional reaction RHEA:83572 declares side 83571_L as its substrates
+        (rh:substrates); the master reaction RHEA:83571 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8302827, PMID:8565126 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3,N(4)-ethenocytosine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83572
+      snippet: a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA + H2O => 3,N(4)-ethenocytosine
+        + a 2'-deoxyribose 5'-monophosphate in double-stranded DNA
+      notes: Rhea's left-to-right directional reaction RHEA:83572 declares side 83571_R as its products
+        (rh:products); the master reaction RHEA:83571 is undirected. This participant is CHEBI:29147 with
+        coefficient 1. Rhea cites PMID:8302827, PMID:8565126 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 2'-deoxyribose 5'-monophosphate in double-stranded DNA is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83572
+      snippet: a 3,N(4)-etheno-2'-deoxycytidine in double-stranded DNA + H2O => 3,N(4)-ethenocytosine
+        + a 2'-deoxyribose 5'-monophosphate in double-stranded DNA
+      notes: Rhea's left-to-right directional reaction RHEA:83572 declares side 83571_R as its products
+        (rh:products); the master reaction RHEA:83571 is undirected. This participant is GENERIC:14231
+        with coefficient 1. Rhea cites PMID:8302827, PMID:8565126 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: a 2'-deoxyribose 5'-monophosphate residue is the reactive part of a 2'-deoxyribose 5'-monophosphate
+      in double-stranded DNA.
+    evidence:
+    - reference: RHEA:83571
+      snippet: a 2'-deoxyribose 5'-monophosphate residue
+      notes: Rhea compound GENERIC:14231 (a 2'-deoxyribose 5'-monophosphate in double-stranded DNA) declares
+        rh:reactivePart = a 2'-deoxyribose 5'-monophosphate residue (CHEBI:139095), formula C5H8O6P.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

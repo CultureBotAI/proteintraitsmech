@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -34,4 +34,236 @@ definitions:
       Catalyses: aminomethylphosphonate + acetyl-CoA = 2-N-acetamidomethylphosphonate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (aminoalkyl)phosphonate N-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.280. Rhea assigns 2 curated
+    reactions to EC 2.3.1.280. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "aminomethylphosphonate + acetyl-CoA = 2-N-acetamidomethylphosphonate
+    + CoA". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (aminoalkyl)phosphonate N-acetyltransferase
+    grounding: EC:2.3.1.280
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of aminomethylphosphonate + acetyl-CoA = 2-N-acetamidomethylphosphonate + CoA
+    grounding: RHEA:51428
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: aminomethylphosphonate + acetyl-CoA = 2-N-acetamidomethylphosphonate +
+      CoA'
+  - node_id: rxn1_sub1
+    label: aminomethylphosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:133674
+    description: Formula CH5NO3P.
+  - node_id: rxn1_sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: rxn1_prd1
+    label: 2-N-acetamidomethylphosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:134093
+    description: Formula C3H7NO4P.
+  - node_id: rxn1_prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (2-aminoethyl)phosphonate + acetyl-CoA = (2-acetamidoethyl)phosphonate + CoA…
+    grounding: RHEA:58052
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (2-aminoethyl)phosphonate + acetyl-CoA = (2-acetamidoethyl)phosphonate
+      + CoA + H(+)'
+  - node_id: rxn2_sub1
+    label: (2-aminoethyl)phosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57418
+    description: Formula C2H8NO3P.
+  - node_id: rxn2_sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: rxn2_prd1
+    label: (2-acetamidoethyl)phosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:142479
+    description: Formula C4H9NO4P.
+  - node_id: rxn2_prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_P16691
+    node_type: PROTEIN
+    label: PHNO_ECOLI
+    grounding: UniProtKB:P16691
+  - node_id: prot_Q8ZKE6
+    node_type: PROTEIN
+    label: PHNO_SALTY
+    grounding: UniProtKB:Q8ZKE6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:51428 is one of the 2 curated reactions Rhea assigns to EC 2.3.1.280; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:51428
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.280"/>
+      notes: The rh:ec triple on RHEA:51428 in rhea.rdf assigns that reaction to EC 2.3.1.280.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: aminomethylphosphonate is a substrate consumed by RHEA:51428 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51429
+      snippet: aminomethylphosphonate + acetyl-CoA => 2-N-acetamidomethylphosphonate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:51429 declares side 51428_L as its substrates
+        (rh:substrates); the master reaction RHEA:51428 is undirected. This participant is CHEBI:133674
+        with coefficient 1. Rhea cites PMID:16503658, PMID:23056305 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:51428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51429
+      snippet: aminomethylphosphonate + acetyl-CoA => 2-N-acetamidomethylphosphonate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:51429 declares side 51428_L as its substrates
+        (rh:substrates); the master reaction RHEA:51428 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:16503658, PMID:23056305 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 2-N-acetamidomethylphosphonate is a product released by RHEA:51428 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51429
+      snippet: aminomethylphosphonate + acetyl-CoA => 2-N-acetamidomethylphosphonate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:51429 declares side 51428_R as its products
+        (rh:products); the master reaction RHEA:51428 is undirected. This participant is CHEBI:134093
+        with coefficient 1. Rhea cites PMID:16503658, PMID:23056305 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: CoA is a product released by RHEA:51428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51429
+      snippet: aminomethylphosphonate + acetyl-CoA => 2-N-acetamidomethylphosphonate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:51429 declares side 51428_R as its products
+        (rh:products); the master reaction RHEA:51428 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:16503658, PMID:23056305 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:58052 is one of the 2 curated reactions Rhea assigns to EC 2.3.1.280; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:58052
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.280"/>
+      notes: The rh:ec triple on RHEA:58052 in rhea.rdf assigns that reaction to EC 2.3.1.280.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (2-aminoethyl)phosphonate is a substrate consumed by RHEA:58052 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58053
+      snippet: (2-aminoethyl)phosphonate + acetyl-CoA => (2-acetamidoethyl)phosphonate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58053 declares side 58052_L as its substrates
+        (rh:substrates); the master reaction RHEA:58052 is undirected. This participant is CHEBI:57418
+        with coefficient 1. Rhea cites PMID:16503658, PMID:23056305 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:58052 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58053
+      snippet: (2-aminoethyl)phosphonate + acetyl-CoA => (2-acetamidoethyl)phosphonate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58053 declares side 58052_L as its substrates
+        (rh:substrates); the master reaction RHEA:58052 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:16503658, PMID:23056305 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (2-acetamidoethyl)phosphonate is a product released by RHEA:58052 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58053
+      snippet: (2-aminoethyl)phosphonate + acetyl-CoA => (2-acetamidoethyl)phosphonate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58053 declares side 58052_R as its products
+        (rh:products); the master reaction RHEA:58052 is undirected. This participant is CHEBI:142479
+        with coefficient 1. Rhea cites PMID:16503658, PMID:23056305 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: CoA is a product released by RHEA:58052 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58053
+      snippet: (2-aminoethyl)phosphonate + acetyl-CoA => (2-acetamidoethyl)phosphonate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58053 declares side 58052_R as its products
+        (rh:products); the master reaction RHEA:58052 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:16503658, PMID:23056305 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:58052 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58053
+      snippet: (2-aminoethyl)phosphonate + acetyl-CoA => (2-acetamidoethyl)phosphonate + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58053 declares side 58052_R as its products
+        (rh:products); the master reaction RHEA:58052 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:16503658, PMID:23056305 for this reaction.
+  - subject: prot_P16691
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNO_ECOLI is an exemplar enzyme with EC 2.3.1.280 activity.
+    evidence:
+    - reference: EC:2.3.1.280
+      snippet: DR   P16691, PHNO_ECOLI ;  Q8ZKE6, PHNO_SALTY ;
+      notes: ExPASy ENZYME entry EC 2.3.1.280 cross-references UniProtKB:P16691 (PHNO_ECOLI) as a protein
+        with this activity.
+  - subject: prot_Q8ZKE6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNO_SALTY is an exemplar enzyme with EC 2.3.1.280 activity.
+    evidence:
+    - reference: EC:2.3.1.280
+      snippet: DR   P16691, PHNO_ECOLI ;  Q8ZKE6, PHNO_SALTY ;
+      notes: ExPASy ENZYME entry EC 2.3.1.280 cross-references UniProtKB:Q8ZKE6 (PHNO_SALTY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.5.1.88
     mapping_source: rhea2ec
@@ -28,4 +28,113 @@ definitions:
       Catalyses the reaction: (2Z,6E)-farnesyl diphosphate + 11 isopentenyl diphosphate = di-trans,undeca-cis-tetradecaprenyl diphosphate + 11 diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2Z,6E)-farnesyl diphosphate + 11 isopentenyl diphosphate = di-trans,undeca-cis-tetrade…
+  description: Substrate-to-product chemistry of RHEA:27618, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27619 (rh:substrates → 27618_L, rh:products → 27618_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2Z,6E)-farnesyl diphosphate + 11 isopentenyl diphosphate = di-trans,undeca-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27618
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2Z,6E)-farnesyl diphosphate + 11 isopentenyl diphosphate = di-trans,undeca-cis-tetradecaprenyl
+      diphosphate + 11 diphosphate'
+  - node_id: sub1
+    label: (2Z,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:162247
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: isopentenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:128769
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: di-trans,undeca-cis-tetradecaprenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:60387
+    description: Formula C70H113O7P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: trans,polycis-polyprenyl diphosphate synthase [(2Z,6E)-farnesyl diphosphate specific]
+    grounding: EC:2.5.1.88
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2Z,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27619
+      snippet: (2Z,6E)-farnesyl diphosphate + 11 isopentenyl diphosphate => di-trans,undeca-cis-tetradecaprenyl
+        diphosphate + 11 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27619 declares side 27618_L as its substrates
+        (rh:substrates); the master reaction RHEA:27618 is undirected. This participant is CHEBI:162247
+        with coefficient 1. Rhea cites PMID:19447338 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: isopentenyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      11).
+    evidence:
+    - reference: RHEA:27619
+      snippet: (2Z,6E)-farnesyl diphosphate + 11 isopentenyl diphosphate => di-trans,undeca-cis-tetradecaprenyl
+        diphosphate + 11 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27619 declares side 27618_L as its substrates
+        (rh:substrates); the master reaction RHEA:27618 is undirected. This participant is CHEBI:128769
+        with coefficient 11. Rhea cites PMID:19447338 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: di-trans,undeca-cis-tetradecaprenyl diphosphate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27619
+      snippet: (2Z,6E)-farnesyl diphosphate + 11 isopentenyl diphosphate => di-trans,undeca-cis-tetradecaprenyl
+        diphosphate + 11 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27619 declares side 27618_R as its products
+        (rh:products); the master reaction RHEA:27618 is undirected. This participant is CHEBI:60387 with
+        coefficient 1. Rhea cites PMID:19447338 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 11).
+    evidence:
+    - reference: RHEA:27619
+      snippet: (2Z,6E)-farnesyl diphosphate + 11 isopentenyl diphosphate => di-trans,undeca-cis-tetradecaprenyl
+        diphosphate + 11 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27619 declares side 27618_R as its products
+        (rh:products); the master reaction RHEA:27618 is undirected. This participant is CHEBI:33019 with
+        coefficient 11. Rhea cites PMID:19447338 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.5.1.88; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:27618
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.88"/>
+      notes: The rh:ec triple on RHEA:27618 in rhea.rdf. EC 2.5.1.88 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

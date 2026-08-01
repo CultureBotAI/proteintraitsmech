@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 synonyms:
@@ -51,4 +51,180 @@ definitions:
       Catalyses: guanosine(34) in tRNA + queuine = queuosine(34) in tRNA + guanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA-guanosine(34) queuine transglycosylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.64. EC 2.4.2.64 maps to exactly
+    one curated Rhea reaction (RHEA:16633), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "guanosine(34)
+    in tRNA + queuine = queuosine(34) in tRNA + guanine". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA-guanosine(34) queuine transglycosylase
+    grounding: EC:2.4.2.64
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: guanosine(34) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10341
+    description: Rhea compound GENERIC:10341.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: GMP residue at position 34
+    description: The reacting group Rhea names inside the generic participant GENERIC:10341 (guanosine(34)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74269
+  - node_id: sub2
+    label: queuine
+    node_type: CHEMICAL
+    grounding: CHEBI:17433
+    description: Formula C12H15N5O3.
+  - node_id: prd1
+    label: queuosine(34) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18571
+    description: Rhea compound GENERIC:18571.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: queuosine 5'-phosphate residue at position 34
+    description: The reacting group Rhea names inside the generic participant GENERIC:18571 (queuosine(34)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:194431
+  - node_id: prd2
+    label: guanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16235
+    description: Formula C5H5N5O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA-guanosine(34) queuine transglycosylase activity
+    grounding: GO:0008479
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A8X0P0
+    node_type: PROTEIN
+    label: TGT_CAEBR
+    grounding: UniProtKB:A8X0P0
+  - node_id: prot_Q23623
+    node_type: PROTEIN
+    label: TGT_CAEEL
+    grounding: UniProtKB:Q23623
+  - node_id: prot_Q7SYK1
+    node_type: PROTEIN
+    label: TGT_DANRE
+    grounding: UniProtKB:Q7SYK1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: guanosine(34) in tRNA is a substrate consumed by RHEA:16633 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16634
+      snippet: guanosine(34) in tRNA + queuine => queuosine(34) in tRNA + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:16634 declares side 16633_L as its substrates
+        (rh:substrates); the master reaction RHEA:16633 is undirected. This participant is GENERIC:10341
+        with coefficient 1. Rhea cites PMID:721832, PMID:372186, PMID:16401090 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: GMP residue is the reactive part of guanosine(34) in tRNA.
+    evidence:
+    - reference: RHEA:16633
+      snippet: GMP residue
+      notes: Rhea compound GENERIC:10341 (guanosine(34) in tRNA) declares rh:reactivePart at position
+        34 = GMP residue (CHEBI:74269).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: queuine is a substrate consumed by RHEA:16633 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16634
+      snippet: guanosine(34) in tRNA + queuine => queuosine(34) in tRNA + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:16634 declares side 16633_L as its substrates
+        (rh:substrates); the master reaction RHEA:16633 is undirected. This participant is CHEBI:17433
+        with coefficient 1. Rhea cites PMID:721832, PMID:372186, PMID:16401090 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: queuosine(34) in tRNA is a product released by RHEA:16633 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16634
+      snippet: guanosine(34) in tRNA + queuine => queuosine(34) in tRNA + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:16634 declares side 16633_R as its products
+        (rh:products); the master reaction RHEA:16633 is undirected. This participant is GENERIC:18571
+        with coefficient 1. Rhea cites PMID:721832, PMID:372186, PMID:16401090 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: queuosine 5'-phosphate residue is the reactive part of queuosine(34) in tRNA.
+    evidence:
+    - reference: RHEA:16633
+      snippet: queuosine 5'-phosphate residue
+      notes: Rhea compound GENERIC:18571 (queuosine(34) in tRNA) declares rh:reactivePart at position
+        34 = queuosine 5'-phosphate residue (CHEBI:194431).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: guanine is a product released by RHEA:16633 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16634
+      snippet: guanosine(34) in tRNA + queuine => queuosine(34) in tRNA + guanine
+      notes: Rhea's left-to-right directional reaction RHEA:16634 declares side 16633_R as its products
+        (rh:products); the master reaction RHEA:16633 is undirected. This participant is CHEBI:16235 with
+        coefficient 1. Rhea cites PMID:721832, PMID:372186, PMID:16401090 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.2.64
+      snippet: EC:2.4.2.64 > GO:tRNA-guanosine(34) queuine transglycosylase activity ; GO:0008479
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008479 is itself a record
+        in this KB.
+  - subject: prot_A8X0P0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TGT_CAEBR is an exemplar enzyme with EC 2.4.2.64 activity.
+    evidence:
+    - reference: EC:2.4.2.64
+      snippet: DR   A8X0P0, TGT_CAEBR  ;  Q23623, TGT_CAEEL  ;  Q7SYK1, TGT_DANRE  ;
+      notes: ExPASy ENZYME entry EC 2.4.2.64 cross-references UniProtKB:A8X0P0 (TGT_CAEBR) as a protein
+        with this activity.
+  - subject: prot_Q23623
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TGT_CAEEL is an exemplar enzyme with EC 2.4.2.64 activity.
+    evidence:
+    - reference: EC:2.4.2.64
+      snippet: DR   A8X0P0, TGT_CAEBR  ;  Q23623, TGT_CAEEL  ;  Q7SYK1, TGT_DANRE  ;
+      notes: ExPASy ENZYME entry EC 2.4.2.64 cross-references UniProtKB:Q23623 (TGT_CAEEL) as a protein
+        with this activity.
+  - subject: prot_Q7SYK1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TGT_DANRE is an exemplar enzyme with EC 2.4.2.64 activity.
+    evidence:
+    - reference: EC:2.4.2.64
+      snippet: DR   A8X0P0, TGT_CAEBR  ;  Q23623, TGT_CAEEL  ;  Q7SYK1, TGT_DANRE  ;
+      notes: ExPASy ENZYME entry EC 2.4.2.64 cross-references UniProtKB:Q7SYK1 (TGT_DANRE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

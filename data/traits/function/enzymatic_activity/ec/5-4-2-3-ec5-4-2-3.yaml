@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.2.-
 synonyms:
@@ -43,4 +43,117 @@ definitions:
       Catalyses: N-acetyl-alpha-D-glucosamine 1-phosphate = N-acetyl-D-glucosamine 6-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphoacetylglucosamine mutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.2.3. EC 5.4.2.3 maps to exactly
+    one curated Rhea reaction (RHEA:23804), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-acetyl-alpha-D-glucosamine
+    1-phosphate = N-acetyl-D-glucosamine 6-phosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoacetylglucosamine mutase
+    grounding: EC:5.4.2.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-acetyl-alpha-D-glucosamine 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57776
+    description: Formula C8H14NO9P.
+  - node_id: prd1
+    label: N-acetyl-D-glucosamine 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57513
+    description: Formula C8H14NO9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoacetylglucosamine mutase activity
+    grounding: GO:0004610
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P57750
+    node_type: PROTEIN
+    label: AGM1_ARATH
+    grounding: UniProtKB:P57750
+  - node_id: prot_Q9P4V2
+    node_type: PROTEIN
+    label: AGM1_CANAX
+    grounding: UniProtKB:Q9P4V2
+  - node_id: prot_Q8SSL7
+    node_type: PROTEIN
+    label: AGM1_ENCCU
+    grounding: UniProtKB:Q8SSL7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-acetyl-alpha-D-glucosamine 1-phosphate is a substrate consumed by RHEA:23804 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23805
+      snippet: N-acetyl-alpha-D-glucosamine 1-phosphate => N-acetyl-D-glucosamine 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:23805 declares side 23804_L as its substrates
+        (rh:substrates); the master reaction RHEA:23804 is undirected. This participant is CHEBI:57776
+        with coefficient 1. Rhea cites PMID:24931394, PMID:24589341, PMID:24698316, PMID:8174553 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-D-glucosamine 6-phosphate is a product released by RHEA:23804 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23805
+      snippet: N-acetyl-alpha-D-glucosamine 1-phosphate => N-acetyl-D-glucosamine 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:23805 declares side 23804_R as its products
+        (rh:products); the master reaction RHEA:23804 is undirected. This participant is CHEBI:57513 with
+        coefficient 1. Rhea cites PMID:24931394, PMID:24589341, PMID:24698316, PMID:8174553 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.2.3
+      snippet: EC:5.4.2.3 > GO:phosphoacetylglucosamine mutase activity ; GO:0004610
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004610 is itself a record
+        in this KB.
+  - subject: prot_P57750
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGM1_ARATH is an exemplar enzyme with EC 5.4.2.3 activity.
+    evidence:
+    - reference: EC:5.4.2.3
+      snippet: DR   P57750, AGM1_ARATH ;  Q9P4V2, AGM1_CANAX ;  Q8SSL7, AGM1_ENCCU ;
+      notes: ExPASy ENZYME entry EC 5.4.2.3 cross-references UniProtKB:P57750 (AGM1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9P4V2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGM1_CANAX is an exemplar enzyme with EC 5.4.2.3 activity.
+    evidence:
+    - reference: EC:5.4.2.3
+      snippet: DR   P57750, AGM1_ARATH ;  Q9P4V2, AGM1_CANAX ;  Q8SSL7, AGM1_ENCCU ;
+      notes: ExPASy ENZYME entry EC 5.4.2.3 cross-references UniProtKB:Q9P4V2 (AGM1_CANAX) as a protein
+        with this activity.
+  - subject: prot_Q8SSL7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGM1_ENCCU is an exemplar enzyme with EC 5.4.2.3 activity.
+    evidence:
+    - reference: EC:5.4.2.3
+      snippet: DR   P57750, AGM1_ARATH ;  Q9P4V2, AGM1_CANAX ;  Q8SSL7, AGM1_ENCCU ;
+      notes: ExPASy ENZYME entry EC 5.4.2.3 cross-references UniProtKB:Q8SSL7 (AGM1_ENCCU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

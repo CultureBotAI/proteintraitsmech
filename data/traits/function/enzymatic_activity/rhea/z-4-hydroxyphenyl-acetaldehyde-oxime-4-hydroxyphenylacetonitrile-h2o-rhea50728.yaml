@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:15667
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,77 @@ definitions:
       Catalyses the reaction: (Z)-(4-hydroxyphenyl)acetaldehyde oxime = 4-hydroxyphenylacetonitrile + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (Z)-(4-hydroxyphenyl)acetaldehyde oxime = 4-hydroxyphenylacetonitrile +
+    H2O
+  description: Substrate-to-product chemistry of RHEA:50728, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50729 (rh:substrates → 50728_L, rh:products → 50728_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (Z)-(4-hydroxyphenyl)acetaldehyde oxime = 4-hydroxyphenylacetonitrile + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50728
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (Z)-(4-hydroxyphenyl)acetaldehyde oxime = 4-hydroxyphenylacetonitrile + H2O'
+  - node_id: sub1
+    label: (Z)-(4-hydroxyphenyl)acetaldehyde oxime
+    node_type: CHEMICAL
+    grounding: CHEBI:15667
+    description: Formula C8H9NO2.
+  - node_id: prd1
+    label: 4-hydroxyphenylacetonitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:16667
+    description: Formula C8H7NO.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (Z)-(4-hydroxyphenyl)acetaldehyde oxime is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:50729
+      snippet: (Z)-(4-hydroxyphenyl)acetaldehyde oxime => 4-hydroxyphenylacetonitrile + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50729 declares side 50728_L as its substrates
+        (rh:substrates); the master reaction RHEA:50728 is undirected. This participant is CHEBI:15667
+        with coefficient 1. Rhea cites PMID:15665094, PMID:12114576, PMID:26361733 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-hydroxyphenylacetonitrile is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50729
+      snippet: (Z)-(4-hydroxyphenyl)acetaldehyde oxime => 4-hydroxyphenylacetonitrile + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50729 declares side 50728_R as its products
+        (rh:products); the master reaction RHEA:50728 is undirected. This participant is CHEBI:16667 with
+        coefficient 1. Rhea cites PMID:15665094, PMID:12114576, PMID:26361733 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50729
+      snippet: (Z)-(4-hydroxyphenyl)acetaldehyde oxime => 4-hydroxyphenylacetonitrile + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50729 declares side 50728_R as its products
+        (rh:products); the master reaction RHEA:50728 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:15665094, PMID:12114576, PMID:26361733 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

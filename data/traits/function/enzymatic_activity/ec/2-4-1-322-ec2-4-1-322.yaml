@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -33,4 +33,121 @@ definitions:
       Catalyses: dTDP-beta-L-vancosamine + devancoaminyl-vancomycin = vancomycin + dTDP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of devancosaminyl-vancomycin vancosaminetransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.322. EC 2.4.1.322 maps to
+    exactly one curated Rhea reaction (RHEA:39891), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dTDP-beta-L-vancosamine
+    + devancoaminyl-vancomycin = vancomycin + dTDP + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: devancosaminyl-vancomycin vancosaminetransferase
+    grounding: EC:2.4.1.322
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dTDP-beta-L-vancosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:76839
+    description: Formula C17H28N3O13P2.
+  - node_id: sub2
+    label: devancoaminyl-vancomycin
+    node_type: CHEMICAL
+    grounding: CHEBI:75953
+    description: Formula C59H62Cl2N8O22.
+  - node_id: prd1
+    label: vancomycin
+    node_type: CHEMICAL
+    grounding: CHEBI:76842
+    description: Formula C66H76Cl2N9O24.
+  - node_id: prd2
+    label: dTDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58369
+    description: Formula C10H13N2O11P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q9AFC7
+    node_type: PROTEIN
+    label: GTFD_AMYOR
+    grounding: UniProtKB:Q9AFC7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTDP-beta-L-vancosamine is a substrate consumed by RHEA:39891 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39892
+      snippet: dTDP-beta-L-vancosamine + devancoaminyl-vancomycin => vancomycin + dTDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39892 declares side 39891_L as its substrates
+        (rh:substrates); the master reaction RHEA:39891 is undirected. This participant is CHEBI:76839
+        with coefficient 1. Rhea cites PMID:15122882, PMID:11294642 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: devancoaminyl-vancomycin is a substrate consumed by RHEA:39891 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39892
+      snippet: dTDP-beta-L-vancosamine + devancoaminyl-vancomycin => vancomycin + dTDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39892 declares side 39891_L as its substrates
+        (rh:substrates); the master reaction RHEA:39891 is undirected. This participant is CHEBI:75953
+        with coefficient 1. Rhea cites PMID:15122882, PMID:11294642 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: vancomycin is a product released by RHEA:39891 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39892
+      snippet: dTDP-beta-L-vancosamine + devancoaminyl-vancomycin => vancomycin + dTDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39892 declares side 39891_R as its products
+        (rh:products); the master reaction RHEA:39891 is undirected. This participant is CHEBI:76842 with
+        coefficient 1. Rhea cites PMID:15122882, PMID:11294642 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dTDP is a product released by RHEA:39891 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39892
+      snippet: dTDP-beta-L-vancosamine + devancoaminyl-vancomycin => vancomycin + dTDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39892 declares side 39891_R as its products
+        (rh:products); the master reaction RHEA:39891 is undirected. This participant is CHEBI:58369 with
+        coefficient 1. Rhea cites PMID:15122882, PMID:11294642 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:39891 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39892
+      snippet: dTDP-beta-L-vancosamine + devancoaminyl-vancomycin => vancomycin + dTDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39892 declares side 39891_R as its products
+        (rh:products); the master reaction RHEA:39891 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15122882, PMID:11294642 for this reaction.
+  - subject: prot_Q9AFC7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GTFD_AMYOR is an exemplar enzyme with EC 2.4.1.322 activity.
+    evidence:
+    - reference: EC:2.4.1.322
+      snippet: DR   Q9AFC7, GTFD_AMYOR ;
+      notes: ExPASy ENZYME entry EC 2.4.1.322 cross-references UniProtKB:Q9AFC7 (GTFD_AMYOR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

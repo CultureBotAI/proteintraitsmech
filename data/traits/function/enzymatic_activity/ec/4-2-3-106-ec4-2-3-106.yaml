@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -41,4 +41,134 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate = (E)-beta-ocimene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E)-beta-ocimene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.106. EC 4.2.3.106 maps to
+    exactly one curated Rhea reaction (RHEA:32691), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate = (E)-beta-ocimene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (E)-beta-ocimene synthase
+    grounding: EC:4.2.3.106
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: (E)-beta-ocimene
+    node_type: CHEMICAL
+    grounding: CHEBI:64280
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (E)-beta-ocimene synthase activity
+    grounding: GO:0034768
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_E2E2N3
+    node_type: PROTEIN
+    label: BOMS_ORIVU
+    grounding: UniProtKB:E2E2N3
+  - node_id: prot_A5Y5L5
+    node_type: PROTEIN
+    label: CIN_NICSU
+    grounding: UniProtKB:A5Y5L5
+  - node_id: prot_A0A8H7XP09
+    node_type: PROTEIN
+    label: CUBC_PSICU
+    grounding: UniProtKB:A0A8H7XP09
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:32691 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32692
+      snippet: (2E)-geranyl diphosphate => (E)-beta-ocimene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32692 declares side 32691_L as its substrates
+        (rh:substrates); the master reaction RHEA:32691 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:22682202, PMID:15299125, PMID:19249223, PMID:15310830 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (E)-beta-ocimene is a product released by RHEA:32691 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32692
+      snippet: (2E)-geranyl diphosphate => (E)-beta-ocimene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32692 declares side 32691_R as its products
+        (rh:products); the master reaction RHEA:32691 is undirected. This participant is CHEBI:64280 with
+        coefficient 1. Rhea cites PMID:22682202, PMID:15299125, PMID:19249223, PMID:15310830 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:32691 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32692
+      snippet: (2E)-geranyl diphosphate => (E)-beta-ocimene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32692 declares side 32691_R as its products
+        (rh:products); the master reaction RHEA:32691 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:22682202, PMID:15299125, PMID:19249223, PMID:15310830 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.106
+      snippet: EC:4.2.3.106 > GO:(E)-beta-ocimene synthase activity ; GO:0034768
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034768 is itself a record
+        in this KB.
+  - subject: prot_E2E2N3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BOMS_ORIVU is an exemplar enzyme with EC 4.2.3.106 activity.
+    evidence:
+    - reference: EC:4.2.3.106
+      snippet: DR   E2E2N3, BOMS_ORIVU ;  A5Y5L5, CIN_NICSU  ;  A0A8H7XP09, CUBC_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.106 cross-references UniProtKB:E2E2N3 (BOMS_ORIVU) as a protein
+        with this activity.
+  - subject: prot_A5Y5L5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CIN_NICSU is an exemplar enzyme with EC 4.2.3.106 activity.
+    evidence:
+    - reference: EC:4.2.3.106
+      snippet: DR   E2E2N3, BOMS_ORIVU ;  A5Y5L5, CIN_NICSU  ;  A0A8H7XP09, CUBC_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.106 cross-references UniProtKB:A5Y5L5 (CIN_NICSU) as a protein
+        with this activity.
+  - subject: prot_A0A8H7XP09
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CUBC_PSICU is an exemplar enzyme with EC 4.2.3.106 activity.
+    evidence:
+    - reference: EC:4.2.3.106
+      snippet: DR   E2E2N3, BOMS_ORIVU ;  A5Y5L5, CIN_NICSU  ;  A0A8H7XP09, CUBC_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.106 cross-references UniProtKB:A0A8H7XP09 (CUBC_PSICU) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

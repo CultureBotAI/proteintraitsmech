@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.75
     mapping_source: rhea2ec
@@ -44,4 +44,190 @@ definitions:
       Catalyses the reaction: a long chain fatty alcohol + a fatty acyl-CoA = a long-chain alcohol wax ester + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a long chain fatty alcohol + a fatty acyl-CoA = a long-chain alcohol wax
+    ester + CoA
+  description: Substrate-to-product chemistry of RHEA:38443, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:38444 (rh:substrates → 38443_L, rh:products → 38443_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a long chain fatty alcohol + a fatty acyl-CoA = a long-chain alcohol wax est…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:38443
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a long chain fatty alcohol + a fatty acyl-CoA = a long-chain alcohol wax ester +
+      CoA'
+  - node_id: sub1
+    label: a long chain fatty alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:17135
+    description: Formula HOR.
+  - node_id: sub2
+    label: a fatty acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:77636
+    description: Formula C22H31N7O17P3SR.
+  - node_id: prd1
+    label: a long-chain alcohol wax ester
+    node_type: CHEMICAL
+    grounding: CHEBI:235323
+    description: Formula CO2R2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: long-chain-alcohol O-fatty-acyltransferase activity
+    grounding: GO:0047196
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: long-chain-alcohol O-fatty-acyltransferase
+    grounding: EC:2.3.1.75
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q58HT5
+    node_type: PROTEIN
+    label: AWAT1_HUMAN
+    grounding: UniProtKB:Q58HT5
+  - node_id: prot_A2ADU9
+    node_type: PROTEIN
+    label: AWAT1_MOUSE
+    grounding: UniProtKB:A2ADU9
+  - node_id: prot_Q6E213
+    node_type: PROTEIN
+    label: AWAT2_HUMAN
+    grounding: UniProtKB:Q6E213
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a long chain fatty alcohol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38444
+      snippet: a long chain fatty alcohol + a fatty acyl-CoA => a long-chain alcohol wax ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38444 declares side 38443_L as its substrates
+        (rh:substrates); the master reaction RHEA:38443 is undirected. This participant is CHEBI:17135
+        with coefficient 1. Rhea cites PMID:15220349, PMID:15262939, PMID:30729606, PMID:10712527 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a fatty acyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38444
+      snippet: a long chain fatty alcohol + a fatty acyl-CoA => a long-chain alcohol wax ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38444 declares side 38443_L as its substrates
+        (rh:substrates); the master reaction RHEA:38443 is undirected. This participant is CHEBI:77636
+        with coefficient 1. Rhea cites PMID:15220349, PMID:15262939, PMID:30729606, PMID:10712527 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a long-chain alcohol wax ester is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:38444
+      snippet: a long chain fatty alcohol + a fatty acyl-CoA => a long-chain alcohol wax ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38444 declares side 38443_R as its products
+        (rh:products); the master reaction RHEA:38443 is undirected. This participant is CHEBI:235323
+        with coefficient 1. Rhea cites PMID:15220349, PMID:15262939, PMID:30729606, PMID:10712527 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38444
+      snippet: a long chain fatty alcohol + a fatty acyl-CoA => a long-chain alcohol wax ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38444 declares side 38443_R as its products
+        (rh:products); the master reaction RHEA:38443 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:15220349, PMID:15262939, PMID:30729606, PMID:10712527 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:38443
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047196"/>
+      notes: The rdfs:seeAlso triple on RHEA:38443 in rhea.rdf. GO term GO:0047196 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.75; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:38443
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.75"/>
+      notes: The rh:ec triple on RHEA:38443 in rhea.rdf. EC 2.3.1.75 is itself a record in this KB.
+  - subject: prot_Q58HT5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AWAT1_HUMAN is an exemplar enzyme carrying EC 2.3.1.75, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.75
+      snippet: DR   Q58HT5, AWAT1_HUMAN;  A2ADU9, AWAT1_MOUSE;  Q6E213, AWAT2_HUMAN;
+      notes: ExPASy ENZYME entry EC 2.3.1.75 cross-references UniProtKB:Q58HT5 (AWAT1_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:38443
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.75"/>
+      notes: Rhea assigns RHEA:38443 to EC 2.3.1.75, and EC 2.3.1.75 maps to exactly one Rhea master reaction
+        (RHEA:38443), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A2ADU9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AWAT1_MOUSE is an exemplar enzyme carrying EC 2.3.1.75, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.75
+      snippet: DR   Q58HT5, AWAT1_HUMAN;  A2ADU9, AWAT1_MOUSE;  Q6E213, AWAT2_HUMAN;
+      notes: ExPASy ENZYME entry EC 2.3.1.75 cross-references UniProtKB:A2ADU9 (AWAT1_MOUSE) as a protein
+        with this activity.
+    - reference: RHEA:38443
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.75"/>
+      notes: Rhea assigns RHEA:38443 to EC 2.3.1.75, and EC 2.3.1.75 maps to exactly one Rhea master reaction
+        (RHEA:38443), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q6E213
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AWAT2_HUMAN is an exemplar enzyme carrying EC 2.3.1.75, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.75
+      snippet: DR   Q58HT5, AWAT1_HUMAN;  A2ADU9, AWAT1_MOUSE;  Q6E213, AWAT2_HUMAN;
+      notes: ExPASy ENZYME entry EC 2.3.1.75 cross-references UniProtKB:Q6E213 (AWAT2_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:38443
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.75"/>
+      notes: Rhea assigns RHEA:38443 to EC 2.3.1.75, and EC 2.3.1.75 maps to exactly one Rhea master reaction
+        (RHEA:38443), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

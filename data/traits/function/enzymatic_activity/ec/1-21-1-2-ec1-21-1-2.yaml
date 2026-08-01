@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.21.1.-
 mapped_xrefs:
@@ -25,4 +25,122 @@ definitions:
       Catalyses: 4-chlorobenzoyl-CoA + chloride + NADP(+) = 2,4-dichlorobenzoyl-CoA + NADPH
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2,4-dichlorobenzoyl-CoA reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.21.1.2. EC 1.21.1.2 maps to exactly
+    one curated Rhea reaction (RHEA:23076), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-chlorobenzoyl-CoA
+    + chloride + NADP(+) = 2,4-dichlorobenzoyl-CoA + NADPH". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2,4-dichlorobenzoyl-CoA reductase
+    grounding: EC:1.21.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-chlorobenzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57354
+    description: Formula C28H35ClN7O17P3S.
+  - node_id: sub2
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+    description: Formula Cl.
+  - node_id: sub3
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: 2,4-dichlorobenzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57329
+    description: Formula C28H34Cl2N7O17P3S.
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2,4-dichlorobenzoyl-CoA reductase activity
+    grounding: GO:0018516
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-chlorobenzoyl-CoA is a substrate consumed by RHEA:23076 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23077
+      snippet: 4-chlorobenzoyl-CoA + chloride + NADP(+) => 2,4-dichlorobenzoyl-CoA + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:23077 declares side 23076_L as its substrates
+        (rh:substrates); the master reaction RHEA:23076 is undirected. This participant is CHEBI:57354
+        with coefficient 1. Rhea cites PMID:8626335 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: chloride is a substrate consumed by RHEA:23076 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23077
+      snippet: 4-chlorobenzoyl-CoA + chloride + NADP(+) => 2,4-dichlorobenzoyl-CoA + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:23077 declares side 23076_L as its substrates
+        (rh:substrates); the master reaction RHEA:23076 is undirected. This participant is CHEBI:17996
+        with coefficient 1. Rhea cites PMID:8626335 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: NADP(+) is a substrate consumed by RHEA:23076 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23077
+      snippet: 4-chlorobenzoyl-CoA + chloride + NADP(+) => 2,4-dichlorobenzoyl-CoA + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:23077 declares side 23076_L as its substrates
+        (rh:substrates); the master reaction RHEA:23076 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:8626335 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2,4-dichlorobenzoyl-CoA is a product released by RHEA:23076 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23077
+      snippet: 4-chlorobenzoyl-CoA + chloride + NADP(+) => 2,4-dichlorobenzoyl-CoA + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:23077 declares side 23076_R as its products
+        (rh:products); the master reaction RHEA:23076 is undirected. This participant is CHEBI:57329 with
+        coefficient 1. Rhea cites PMID:8626335 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by RHEA:23076 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23077
+      snippet: 4-chlorobenzoyl-CoA + chloride + NADP(+) => 2,4-dichlorobenzoyl-CoA + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:23077 declares side 23076_R as its products
+        (rh:products); the master reaction RHEA:23076 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:8626335 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.21.1.2
+      snippet: EC:1.21.1.2 > GO:2,4-dichlorobenzoyl-CoA reductase activity ; GO:0018516
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018516 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

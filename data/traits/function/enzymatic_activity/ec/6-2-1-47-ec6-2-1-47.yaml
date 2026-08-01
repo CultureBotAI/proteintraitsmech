@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.2.1.-
 mapped_xrefs:
@@ -36,4 +36,205 @@ definitions:
       Catalyses: a medium-chain fatty acid + holo-[ACP] + ATP = a medium-chain fatty acyl- [ACP] + AMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of medium-chain-fatty-acid--[acyl-carrier-protein] ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.2.1.47. EC 6.2.1.47 maps to exactly
+    one curated Rhea reaction (RHEA:50460), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a medium-chain
+    fatty acid + holo-[ACP] + ATP = a medium-chain fatty acyl- [ACP] + AMP + diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: medium-chain-fatty-acid--[acyl-carrier-protein] ligase
+    grounding: EC:6.2.1.47
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a medium-chain fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59558
+    description: Formula CO2R.
+  - node_id: sub2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: a medium-chain fatty acyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12681
+    description: Rhea compound GENERIC:12681.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-[S-(medium-chain fatty acyl)pantetheine-4'-phosphoryl]serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12681 (a medium-chain
+      fatty acyl-[ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:133242
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_P9WQ54
+    node_type: PROTEIN
+    label: INLPC_MYCTO
+    grounding: UniProtKB:P9WQ54
+  - node_id: prot_P9WQ55
+    node_type: PROTEIN
+    label: INLPC_MYCTU
+    grounding: UniProtKB:P9WQ55
+  - node_id: prot_P0DX14
+    node_type: PROTEIN
+    label: INLPC_STRC4
+    grounding: UniProtKB:P0DX14
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a medium-chain fatty acid is a substrate consumed by RHEA:50460 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50461
+      snippet: a medium-chain fatty acid + holo-[ACP] + ATP => a medium-chain fatty acyl-[ACP] + AMP +
+        diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50461 declares side 50460_L as its substrates
+        (rh:substrates); the master reaction RHEA:50460 is undirected. This participant is CHEBI:59558
+        with coefficient 1. Rhea cites PMID:15217615, PMID:25531891 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: holo-[ACP] is a substrate consumed by RHEA:50460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50461
+      snippet: a medium-chain fatty acid + holo-[ACP] + ATP => a medium-chain fatty acyl-[ACP] + AMP +
+        diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50461 declares side 50460_L as its substrates
+        (rh:substrates); the master reaction RHEA:50460 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:15217615, PMID:25531891 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:50460
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:50460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50461
+      snippet: a medium-chain fatty acid + holo-[ACP] + ATP => a medium-chain fatty acyl-[ACP] + AMP +
+        diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50461 declares side 50460_L as its substrates
+        (rh:substrates); the master reaction RHEA:50460 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:15217615, PMID:25531891 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a medium-chain fatty acyl-[ACP] is a product released by RHEA:50460 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50461
+      snippet: a medium-chain fatty acid + holo-[ACP] + ATP => a medium-chain fatty acyl-[ACP] + AMP +
+        diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50461 declares side 50460_R as its products
+        (rh:products); the master reaction RHEA:50460 is undirected. This participant is GENERIC:12681
+        with coefficient 1. Rhea cites PMID:15217615, PMID:25531891 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[S-(medium-chain fatty acyl)pantetheine-4'-phosphoryl]serine residue is the reactive
+      part of a medium-chain fatty acyl-[ACP].
+    evidence:
+    - reference: RHEA:50460
+      snippet: O-[S-(medium-chain fatty acyl)pantetheine-4'-phosphoryl]serine residue
+      notes: Rhea compound GENERIC:12681 (a medium-chain fatty acyl-[ACP]) declares rh:reactivePart =
+        O-[S-(medium-chain fatty acyl)pantetheine-4'-phosphoryl]serine residue (CHEBI:133242).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:50460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50461
+      snippet: a medium-chain fatty acid + holo-[ACP] + ATP => a medium-chain fatty acyl-[ACP] + AMP +
+        diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50461 declares side 50460_R as its products
+        (rh:products); the master reaction RHEA:50460 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:15217615, PMID:25531891 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:50460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50461
+      snippet: a medium-chain fatty acid + holo-[ACP] + ATP => a medium-chain fatty acyl-[ACP] + AMP +
+        diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:50461 declares side 50460_R as its products
+        (rh:products); the master reaction RHEA:50460 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:15217615, PMID:25531891 for this reaction.
+  - subject: prot_P9WQ54
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INLPC_MYCTO is an exemplar enzyme with EC 6.2.1.47 activity.
+    evidence:
+    - reference: EC:6.2.1.47
+      snippet: DR   P9WQ54, INLPC_MYCTO;  P9WQ55, INLPC_MYCTU;  P0DX14, INLPC_STRC4;
+      notes: ExPASy ENZYME entry EC 6.2.1.47 cross-references UniProtKB:P9WQ54 (INLPC_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WQ55
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INLPC_MYCTU is an exemplar enzyme with EC 6.2.1.47 activity.
+    evidence:
+    - reference: EC:6.2.1.47
+      snippet: DR   P9WQ54, INLPC_MYCTO;  P9WQ55, INLPC_MYCTU;  P0DX14, INLPC_STRC4;
+      notes: ExPASy ENZYME entry EC 6.2.1.47 cross-references UniProtKB:P9WQ55 (INLPC_MYCTU) as a protein
+        with this activity.
+  - subject: prot_P0DX14
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INLPC_STRC4 is an exemplar enzyme with EC 6.2.1.47 activity.
+    evidence:
+    - reference: EC:6.2.1.47
+      snippet: DR   P9WQ54, INLPC_MYCTO;  P9WQ55, INLPC_MYCTU;  P0DX14, INLPC_STRC4;
+      notes: ExPASy ENZYME entry EC 6.2.1.47 cross-references UniProtKB:P0DX14 (INLPC_STRC4) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

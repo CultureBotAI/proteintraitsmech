@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.6.-
 synonyms:
@@ -39,4 +39,82 @@ definitions:
       Catalyses: Hydrolysis of the 2-sulfate groups of the 2-O-sulfo-D-glucuronate residues of chondroitin sulfate, heparin and heparitin sulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucuronate-2-sulfatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.6.18. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of the 2-sulfate groups of the 2-O-sulfo-D-glucuronate residues of chondroitin sulfate, heparin and
+    heparitin sulfate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucuronate-2-sulfatase
+    grounding: EC:3.1.6.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucuronate-2-sulfatase activity
+    grounding: GO:0015024
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q148F3
+    node_type: PROTEIN
+    label: ARSK_BOVIN
+    grounding: UniProtKB:Q148F3
+  - node_id: prot_Q32KH0
+    node_type: PROTEIN
+    label: ARSK_CANLF
+    grounding: UniProtKB:Q32KH0
+  - node_id: prot_Q5ZK90
+    node_type: PROTEIN
+    label: ARSK_CHICK
+    grounding: UniProtKB:Q5ZK90
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.6.18
+      snippet: EC:3.1.6.18 > GO:glucuronate-2-sulfatase activity ; GO:0015024
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0015024 is itself a record
+        in this KB.
+  - subject: prot_Q148F3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSK_BOVIN is an exemplar enzyme with EC 3.1.6.18 activity.
+    evidence:
+    - reference: EC:3.1.6.18
+      snippet: DR   Q148F3, ARSK_BOVIN ;  Q32KH0, ARSK_CANLF ;  Q5ZK90, ARSK_CHICK ;
+      notes: ExPASy ENZYME entry EC 3.1.6.18 cross-references UniProtKB:Q148F3 (ARSK_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q32KH0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSK_CANLF is an exemplar enzyme with EC 3.1.6.18 activity.
+    evidence:
+    - reference: EC:3.1.6.18
+      snippet: DR   Q148F3, ARSK_BOVIN ;  Q32KH0, ARSK_CANLF ;  Q5ZK90, ARSK_CHICK ;
+      notes: ExPASy ENZYME entry EC 3.1.6.18 cross-references UniProtKB:Q32KH0 (ARSK_CANLF) as a protein
+        with this activity.
+  - subject: prot_Q5ZK90
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSK_CHICK is an exemplar enzyme with EC 3.1.6.18 activity.
+    evidence:
+    - reference: EC:3.1.6.18
+      snippet: DR   Q148F3, ARSK_BOVIN ;  Q32KH0, ARSK_CANLF ;  Q5ZK90, ARSK_CHICK ;
+      notes: ExPASy ENZYME entry EC 3.1.6.18 cross-references UniProtKB:Q5ZK90 (ARSK_CHICK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

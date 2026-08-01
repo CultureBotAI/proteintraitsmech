@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58214
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: kanamycin A + CTP = 4'-cytidylylkanamycin A + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of kanamycin A + CTP = 4'-cytidylylkanamycin A + diphosphate
+  description: Substrate-to-product chemistry of RHEA:83691, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:83692 (rh:substrates → 83691_L, rh:products → 83691_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of kanamycin A + CTP = 4'-cytidylylkanamycin A + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:83691
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: kanamycin A + CTP = 4''-cytidylylkanamycin A + diphosphate'
+  - node_id: sub1
+    label: kanamycin A
+    node_type: CHEMICAL
+    grounding: CHEBI:58214
+    description: Formula C18H40N4O11.
+  - node_id: sub2
+    label: CTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+    description: Formula C9H12N3O14P3.
+  - node_id: prd1
+    label: 4'-cytidylylkanamycin A
+    node_type: CHEMICAL
+    grounding: CHEBI:233206
+    description: Formula C27H51N7O18P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: kanamycin A is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83692
+      snippet: kanamycin A + CTP => 4'-cytidylylkanamycin A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:83692 declares side 83691_L as its substrates
+        (rh:substrates); the master reaction RHEA:83691 is undirected. This participant is CHEBI:58214
+        with coefficient 1. Rhea cites PMID:21040710 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83692
+      snippet: kanamycin A + CTP => 4'-cytidylylkanamycin A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:83692 declares side 83691_L as its substrates
+        (rh:substrates); the master reaction RHEA:83691 is undirected. This participant is CHEBI:37563
+        with coefficient 1. Rhea cites PMID:21040710 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4'-cytidylylkanamycin A is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83692
+      snippet: kanamycin A + CTP => 4'-cytidylylkanamycin A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:83692 declares side 83691_R as its products
+        (rh:products); the master reaction RHEA:83691 is undirected. This participant is CHEBI:233206
+        with coefficient 1. Rhea cites PMID:21040710 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83692
+      snippet: kanamycin A + CTP => 4'-cytidylylkanamycin A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:83692 declares side 83691_R as its products
+        (rh:products); the master reaction RHEA:83691 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21040710 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

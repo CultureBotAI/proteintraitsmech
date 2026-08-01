@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:88119
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,62 @@ definitions:
       Catalyses the reaction: dTDP-2,6-dideoxy-D-glycero-hex-2-enos-4-ulose = dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dTDP-2,6-dideoxy-D-glycero-hex-2-enos-4-ulose = dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-…
+  description: Substrate-to-product chemistry of RHEA:47980, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:47981 (rh:substrates → 47980_L, rh:products → 47980_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dTDP-2,6-dideoxy-D-glycero-hex-2-enos-4-ulose = dTDP-3,4-didehydro-2,6-dideo…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:47980
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dTDP-2,6-dideoxy-D-glycero-hex-2-enos-4-ulose = dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose'
+  - node_id: sub1
+    label: dTDP-2,6-dideoxy-D-glycero-hex-2-enos-4-ulose
+    node_type: CHEMICAL
+    grounding: CHEBI:88119
+    description: Formula C16H20N2O14P2.
+  - node_id: prd1
+    label: dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:84540
+    description: Formula C16H20N2O14P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTDP-2,6-dideoxy-D-glycero-hex-2-enos-4-ulose is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47981
+      snippet: dTDP-2,6-dideoxy-D-glycero-hex-2-enos-4-ulose => dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:47981 declares side 47980_L as its substrates
+        (rh:substrates); the master reaction RHEA:47980 is undirected. This participant is CHEBI:88119
+        with coefficient 1. Rhea cites PMID:11035791, PMID:18345667, PMID:20418422, PMID:10770761 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47981
+      snippet: dTDP-2,6-dideoxy-D-glycero-hex-2-enos-4-ulose => dTDP-3,4-didehydro-2,6-dideoxy-alpha-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:47981 declares side 47980_R as its products
+        (rh:products); the master reaction RHEA:47980 is undirected. This participant is CHEBI:84540 with
+        coefficient 1. Rhea cites PMID:11035791, PMID:18345667, PMID:20418422, PMID:10770761 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

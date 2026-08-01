@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: (+)-(E)-beta-caryophyllene + H2O = (+)-caryolan-1-ol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (+)-caryolan-1-ol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.138. EC 4.2.1.138 maps to
+    exactly one curated Rhea reaction (RHEA:31795), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(+)-(E)-beta-caryophyllene
+    + H2O = (+)-caryolan-1-ol". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-caryolan-1-ol synthase
+    grounding: EC:4.2.1.138
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (+)-(E)-beta-caryophyllene
+    node_type: CHEMICAL
+    grounding: CHEBI:63190
+    description: Formula C15H24.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (+)-caryolan-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:63196
+    description: Formula C15H26O.
+  - node_id: prot_B1W019
+    node_type: PROTEIN
+    label: GCOA_STRGG
+    grounding: UniProtKB:B1W019
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (+)-(E)-beta-caryophyllene is a substrate consumed by RHEA:31795 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31796
+      snippet: (+)-(E)-beta-caryophyllene + H2O => (+)-caryolan-1-ol
+      notes: Rhea's left-to-right directional reaction RHEA:31796 declares side 31795_L as its substrates
+        (rh:substrates); the master reaction RHEA:31795 is undirected. This participant is CHEBI:63190
+        with coefficient 1. Rhea cites PMID:21693706 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:31795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31796
+      snippet: (+)-(E)-beta-caryophyllene + H2O => (+)-caryolan-1-ol
+      notes: Rhea's left-to-right directional reaction RHEA:31796 declares side 31795_L as its substrates
+        (rh:substrates); the master reaction RHEA:31795 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21693706 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-caryolan-1-ol is a product released by RHEA:31795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31796
+      snippet: (+)-(E)-beta-caryophyllene + H2O => (+)-caryolan-1-ol
+      notes: Rhea's left-to-right directional reaction RHEA:31796 declares side 31795_R as its products
+        (rh:products); the master reaction RHEA:31795 is undirected. This participant is CHEBI:63196 with
+        coefficient 1. Rhea cites PMID:21693706 for this reaction.
+  - subject: prot_B1W019
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCOA_STRGG is an exemplar enzyme with EC 4.2.1.138 activity.
+    evidence:
+    - reference: EC:4.2.1.138
+      snippet: DR   B1W019, GCOA_STRGG ;
+      notes: ExPASy ENZYME entry EC 4.2.1.138 cross-references UniProtKB:B1W019 (GCOA_STRGG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.6.-
 synonyms:
@@ -43,4 +43,82 @@ definitions:
       Catalyses: Hydrolysis of the 6-sulfate groups of the N-acetyl-D-galactosamine 6-sulfate units of chondroitin sulfate and of the D-galactose 6-sulfate units of keratan sulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acetylgalactosamine-6-sulfatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.6.4. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of the 6-sulfate groups of the N-acetyl-D-galactosamine 6-sulfate units of chondroitin sulfate and
+    of the D-galactose 6-sulfate units of keratan sulfate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-acetylgalactosamine-6-sulfatase
+    grounding: EC:3.1.6.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-acetylgalactosamine-6-sulfatase activity
+    grounding: GO:0043890
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q32KH5
+    node_type: PROTEIN
+    label: GALNS_CANLF
+    grounding: UniProtKB:Q32KH5
+  - node_id: prot_P34059
+    node_type: PROTEIN
+    label: GALNS_HUMAN
+    grounding: UniProtKB:P34059
+  - node_id: prot_Q571E4
+    node_type: PROTEIN
+    label: GALNS_MOUSE
+    grounding: UniProtKB:Q571E4
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.6.4
+      snippet: EC:3.1.6.4 > GO:N-acetylgalactosamine-6-sulfatase activity ; GO:0043890
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043890 is itself a record
+        in this KB.
+  - subject: prot_Q32KH5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GALNS_CANLF is an exemplar enzyme with EC 3.1.6.4 activity.
+    evidence:
+    - reference: EC:3.1.6.4
+      snippet: DR   Q32KH5, GALNS_CANLF;  P34059, GALNS_HUMAN;  Q571E4, GALNS_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.1.6.4 cross-references UniProtKB:Q32KH5 (GALNS_CANLF) as a protein
+        with this activity.
+  - subject: prot_P34059
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GALNS_HUMAN is an exemplar enzyme with EC 3.1.6.4 activity.
+    evidence:
+    - reference: EC:3.1.6.4
+      snippet: DR   Q32KH5, GALNS_CANLF;  P34059, GALNS_HUMAN;  Q571E4, GALNS_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.1.6.4 cross-references UniProtKB:P34059 (GALNS_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q571E4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GALNS_MOUSE is an exemplar enzyme with EC 3.1.6.4 activity.
+    evidence:
+    - reference: EC:3.1.6.4
+      snippet: DR   Q32KH5, GALNS_CANLF;  P34059, GALNS_HUMAN;  Q571E4, GALNS_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.1.6.4 cross-references UniProtKB:Q571E4 (GALNS_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

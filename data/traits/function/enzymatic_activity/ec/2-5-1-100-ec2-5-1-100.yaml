@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: fumigaclavine A + dimethylallyl diphosphate = fumigaclavine C + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fumigaclavine A dimethylallyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.100. EC 2.5.1.100 maps to
+    exactly one curated Rhea reaction (RHEA:34263), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "fumigaclavine
+    A + dimethylallyl diphosphate = fumigaclavine C + diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fumigaclavine A dimethylallyltransferase
+    grounding: EC:2.5.1.100
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: fumigaclavine A
+    node_type: CHEMICAL
+    grounding: CHEBI:67145
+    description: Formula C18H23N2O2.
+  - node_id: sub2
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: fumigaclavine C
+    node_type: CHEMICAL
+    grounding: CHEBI:67147
+    description: Formula C23H31N2O2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q4WZ67
+    node_type: PROTEIN
+    label: EASL_ASPFU
+    grounding: UniProtKB:Q4WZ67
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: fumigaclavine A is a substrate consumed by RHEA:34263 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34264
+      snippet: fumigaclavine A + dimethylallyl diphosphate => fumigaclavine C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34264 declares side 34263_L as its substrates
+        (rh:substrates); the master reaction RHEA:34263 is undirected. This participant is CHEBI:67145
+        with coefficient 1. Rhea cites PMID:18678866, PMID:16397874 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:34263 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34264
+      snippet: fumigaclavine A + dimethylallyl diphosphate => fumigaclavine C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34264 declares side 34263_L as its substrates
+        (rh:substrates); the master reaction RHEA:34263 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:18678866, PMID:16397874 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: fumigaclavine C is a product released by RHEA:34263 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34264
+      snippet: fumigaclavine A + dimethylallyl diphosphate => fumigaclavine C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34264 declares side 34263_R as its products
+        (rh:products); the master reaction RHEA:34263 is undirected. This participant is CHEBI:67147 with
+        coefficient 1. Rhea cites PMID:18678866, PMID:16397874 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:34263 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34264
+      snippet: fumigaclavine A + dimethylallyl diphosphate => fumigaclavine C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34264 declares side 34263_R as its products
+        (rh:products); the master reaction RHEA:34263 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18678866, PMID:16397874 for this reaction.
+  - subject: prot_Q4WZ67
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EASL_ASPFU is an exemplar enzyme with EC 2.5.1.100 activity.
+    evidence:
+    - reference: EC:2.5.1.100
+      snippet: DR   Q4WZ67, EASL_ASPFU ;
+      notes: ExPASy ENZYME entry EC 2.5.1.100 cross-references UniProtKB:Q4WZ67 (EASL_ASPFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

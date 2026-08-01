@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.99.-
 synonyms:
@@ -35,4 +35,190 @@ definitions:
       Catalyses: (E)-alk-1-en-1-SO-peroxol = (Z)-alkanethial oxide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lachrymatory-factor synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.99.12. Rhea assigns 3 curated
+    reactions to EC 5.3.99.12. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(E)-alk-1-en-1-SO-peroxol = (Z)-alkanethial oxide". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lachrymatory-factor synthase
+    grounding: EC:5.3.99.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (E)-alk-1-en-1-SO-peroxol = (Z)-alkanethial oxide
+    grounding: RHEA:69336
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (E)-alk-1-en-1-SO-peroxol = (Z)-alkanethial oxide'
+  - node_id: rxn1_sub1
+    label: (E)-alk-1-en-1-SO-peroxol
+    node_type: CHEMICAL
+    grounding: CHEBI:183056
+    description: Formula C2H3OSR.
+  - node_id: rxn1_prd1
+    label: (Z)-alkanethial oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:183059
+    description: Formula C2H3OSR.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (E)-prop-1-en-1-SO-peroxol = (Z)-propanethial S-oxide
+    grounding: RHEA:69340
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (E)-prop-1-en-1-SO-peroxol = (Z)-propanethial S-oxide'
+  - node_id: rxn2_sub1
+    label: (E)-prop-1-en-1-SO-peroxol
+    node_type: CHEMICAL
+    grounding: CHEBI:183057
+    description: Formula C3H6OS.
+  - node_id: rxn2_prd1
+    label: (Z)-propanethial S-oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:183657
+    description: Formula C3H6OS.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (E)-but-1-en-1-SO-peroxol = (Z)-butanethial oxide
+    grounding: RHEA:69344
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (E)-but-1-en-1-SO-peroxol = (Z)-butanethial oxide'
+  - node_id: rxn3_sub1
+    label: (E)-but-1-en-1-SO-peroxol
+    node_type: CHEMICAL
+    grounding: CHEBI:183058
+    description: Formula C4H8OS.
+  - node_id: rxn3_prd1
+    label: (Z)-butanethial oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:183060
+    description: Formula C4H8OS.
+  - node_id: prot_P59082
+    node_type: PROTEIN
+    label: LFS_ALLCE
+    grounding: UniProtKB:P59082
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:69336 is one of the 3 curated reactions Rhea assigns to EC 5.3.99.12; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:69336
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.99.12"/>
+      notes: The rh:ec triple on RHEA:69336 in rhea.rdf assigns that reaction to EC 5.3.99.12.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (E)-alk-1-en-1-SO-peroxol is a substrate consumed by RHEA:69336 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69337
+      snippet: (E)-alk-1-en-1-SO-peroxol => (Z)-alkanethial oxide
+      notes: Rhea's left-to-right directional reaction RHEA:69337 declares side 69336_L as its substrates
+        (rh:substrates); the master reaction RHEA:69336 is undirected. This participant is CHEBI:183056
+        with coefficient 1. Rhea cites PMID:12384686, PMID:18583530, PMID:20047275 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (Z)-alkanethial oxide is a product released by RHEA:69336 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69337
+      snippet: (E)-alk-1-en-1-SO-peroxol => (Z)-alkanethial oxide
+      notes: Rhea's left-to-right directional reaction RHEA:69337 declares side 69336_R as its products
+        (rh:products); the master reaction RHEA:69336 is undirected. This participant is CHEBI:183059
+        with coefficient 1. Rhea cites PMID:12384686, PMID:18583530, PMID:20047275 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:69340 is one of the 3 curated reactions Rhea assigns to EC 5.3.99.12; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:69340
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.99.12"/>
+      notes: The rh:ec triple on RHEA:69340 in rhea.rdf assigns that reaction to EC 5.3.99.12.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (E)-prop-1-en-1-SO-peroxol is a substrate consumed by RHEA:69340 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69341
+      snippet: (E)-prop-1-en-1-SO-peroxol => (Z)-propanethial S-oxide
+      notes: Rhea's left-to-right directional reaction RHEA:69341 declares side 69340_L as its substrates
+        (rh:substrates); the master reaction RHEA:69340 is undirected. This participant is CHEBI:183057
+        with coefficient 1. Rhea cites PMID:12384686, PMID:18583530, PMID:20047275 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (Z)-propanethial S-oxide is a product released by RHEA:69340 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69341
+      snippet: (E)-prop-1-en-1-SO-peroxol => (Z)-propanethial S-oxide
+      notes: Rhea's left-to-right directional reaction RHEA:69341 declares side 69340_R as its products
+        (rh:products); the master reaction RHEA:69340 is undirected. This participant is CHEBI:183657
+        with coefficient 1. Rhea cites PMID:12384686, PMID:18583530, PMID:20047275 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:69344 is one of the 3 curated reactions Rhea assigns to EC 5.3.99.12; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:69344
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.99.12"/>
+      notes: The rh:ec triple on RHEA:69344 in rhea.rdf assigns that reaction to EC 5.3.99.12.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: (E)-but-1-en-1-SO-peroxol is a substrate consumed by RHEA:69344 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69345
+      snippet: (E)-but-1-en-1-SO-peroxol => (Z)-butanethial oxide
+      notes: Rhea's left-to-right directional reaction RHEA:69345 declares side 69344_L as its substrates
+        (rh:substrates); the master reaction RHEA:69344 is undirected. This participant is CHEBI:183058
+        with coefficient 1. Rhea cites PMID:12384686, PMID:20047275 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: (Z)-butanethial oxide is a product released by RHEA:69344 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69345
+      snippet: (E)-but-1-en-1-SO-peroxol => (Z)-butanethial oxide
+      notes: Rhea's left-to-right directional reaction RHEA:69345 declares side 69344_R as its products
+        (rh:products); the master reaction RHEA:69344 is undirected. This participant is CHEBI:183060
+        with coefficient 1. Rhea cites PMID:12384686, PMID:20047275 for this reaction.
+  - subject: prot_P59082
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LFS_ALLCE is an exemplar enzyme with EC 5.3.99.12 activity.
+    evidence:
+    - reference: EC:5.3.99.12
+      snippet: DR   P59082, LFS_ALLCE  ;
+      notes: ExPASy ENZYME entry EC 5.3.99.12 cross-references UniProtKB:P59082 (LFS_ALLCE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.2.1.-
 synonyms:
@@ -33,4 +33,217 @@ definitions:
       Catalyses: (1) beta-D-fructose 1,6-bisphosphate + methylglyoxal = 1-deoxy-D-threo- hexo-2,5-diulose 6-phosphate + D-glyceraldehyde 3-phosphate. (2) beta-D-fructose 1-phosphate + methylglyoxal = 1-deoxy-D-threo-hexo- 2,5-diulose 6-phosphate + D-glyceraldehyde
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-deoxy-5-ketofructose 1-phosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.2.1.11. Rhea assigns 2 curated
+    reactions to EC 2.2.1.11. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) beta-D-fructose 1,6-bisphosphate + methylglyoxal = 1-deoxy-D-threo-
+    hexo-2,5-diulose 6-phosphate + D-glyceraldehyde 3-phosphate. (2) beta-D-fructose 1-phosphate + methylglyoxal
+    = 1-deoxy-D-threo-hexo- 2,5-diulose 6-phosphate + D-glyceraldehyde". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6-deoxy-5-ketofructose 1-phosphate synthase
+    grounding: EC:2.2.1.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of beta-D-fructose 1,6-bisphosphate + methylglyoxal = 1-deoxy-D-threo-hexo-2,5-…
+    grounding: RHEA:31911
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: beta-D-fructose 1,6-bisphosphate + methylglyoxal = 1-deoxy-D-threo-hexo-2,5-diulose
+      6-phosphate + D-glyceraldehyde 3-phosphate'
+  - node_id: rxn1_sub1
+    label: beta-D-fructose 1,6-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:32966
+    description: Formula C6H10O12P2.
+  - node_id: rxn1_sub2
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: rxn1_prd1
+    label: 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58861
+    description: Formula C6H9O8P.
+  - node_id: rxn1_prd2
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of beta-D-fructose 1-phosphate + methylglyoxal = 1-deoxy-D-threo-hexo-2,5-diulo…
+    grounding: RHEA:32259
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: beta-D-fructose 1-phosphate + methylglyoxal = 1-deoxy-D-threo-hexo-2,5-diulose
+      6-phosphate + D-glyceraldehyde'
+  - node_id: rxn2_sub1
+    label: beta-D-fructose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138881
+    description: Formula C6H11O9P.
+  - node_id: rxn2_sub2
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: rxn2_prd1
+    label: 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58861
+    description: Formula C6H9O8P.
+  - node_id: rxn2_prd2
+    label: D-glyceraldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17378
+    description: Formula C3H6O3.
+  - node_id: prot_Q58980
+    node_type: PROTEIN
+    label: DKFP_METJA
+    grounding: UniProtKB:Q58980
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:31911 is one of the 2 curated reactions Rhea assigns to EC 2.2.1.11; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31911
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.2.1.11"/>
+      notes: The rh:ec triple on RHEA:31911 in rhea.rdf assigns that reaction to EC 2.2.1.11.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: beta-D-fructose 1,6-bisphosphate is a substrate consumed by RHEA:31911 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31912
+      snippet: beta-D-fructose 1,6-bisphosphate + methylglyoxal => 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+        + D-glyceraldehyde 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31912 declares side 31911_L as its substrates
+        (rh:substrates); the master reaction RHEA:31911 is undirected. This participant is CHEBI:32966
+        with coefficient 1. Rhea cites PMID:17014089, PMID:18318840 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: methylglyoxal is a substrate consumed by RHEA:31911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31912
+      snippet: beta-D-fructose 1,6-bisphosphate + methylglyoxal => 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+        + D-glyceraldehyde 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31912 declares side 31911_L as its substrates
+        (rh:substrates); the master reaction RHEA:31911 is undirected. This participant is CHEBI:17158
+        with coefficient 1. Rhea cites PMID:17014089, PMID:18318840 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate is a product released by RHEA:31911 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31912
+      snippet: beta-D-fructose 1,6-bisphosphate + methylglyoxal => 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+        + D-glyceraldehyde 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31912 declares side 31911_R as its products
+        (rh:products); the master reaction RHEA:31911 is undirected. This participant is CHEBI:58861 with
+        coefficient 1. Rhea cites PMID:17014089, PMID:18318840 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: D-glyceraldehyde 3-phosphate is a product released by RHEA:31911 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31912
+      snippet: beta-D-fructose 1,6-bisphosphate + methylglyoxal => 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+        + D-glyceraldehyde 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31912 declares side 31911_R as its products
+        (rh:products); the master reaction RHEA:31911 is undirected. This participant is CHEBI:59776 with
+        coefficient 1. Rhea cites PMID:17014089, PMID:18318840 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:32259 is one of the 2 curated reactions Rhea assigns to EC 2.2.1.11; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:32259
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.2.1.11"/>
+      notes: The rh:ec triple on RHEA:32259 in rhea.rdf assigns that reaction to EC 2.2.1.11.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: beta-D-fructose 1-phosphate is a substrate consumed by RHEA:32259 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32260
+      snippet: beta-D-fructose 1-phosphate + methylglyoxal => 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+        + D-glyceraldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:32260 declares side 32259_L as its substrates
+        (rh:substrates); the master reaction RHEA:32259 is undirected. This participant is CHEBI:138881
+        with coefficient 1. Rhea cites PMID:17014089, PMID:18318840 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: methylglyoxal is a substrate consumed by RHEA:32259 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32260
+      snippet: beta-D-fructose 1-phosphate + methylglyoxal => 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+        + D-glyceraldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:32260 declares side 32259_L as its substrates
+        (rh:substrates); the master reaction RHEA:32259 is undirected. This participant is CHEBI:17158
+        with coefficient 1. Rhea cites PMID:17014089, PMID:18318840 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate is a product released by RHEA:32259 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32260
+      snippet: beta-D-fructose 1-phosphate + methylglyoxal => 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+        + D-glyceraldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:32260 declares side 32259_R as its products
+        (rh:products); the master reaction RHEA:32259 is undirected. This participant is CHEBI:58861 with
+        coefficient 1. Rhea cites PMID:17014089, PMID:18318840 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: D-glyceraldehyde is a product released by RHEA:32259 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32260
+      snippet: beta-D-fructose 1-phosphate + methylglyoxal => 1-deoxy-D-threo-hexo-2,5-diulose 6-phosphate
+        + D-glyceraldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:32260 declares side 32259_R as its products
+        (rh:products); the master reaction RHEA:32259 is undirected. This participant is CHEBI:17378 with
+        coefficient 1. Rhea cites PMID:17014089, PMID:18318840 for this reaction.
+  - subject: prot_Q58980
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DKFP_METJA is an exemplar enzyme with EC 2.2.1.11 activity.
+    evidence:
+    - reference: EC:2.2.1.11
+      snippet: DR   Q58980, DKFP_METJA ;
+      notes: ExPASy ENZYME entry EC 2.2.1.11 cross-references UniProtKB:Q58980 (DKFP_METJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

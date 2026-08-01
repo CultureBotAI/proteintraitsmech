@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -38,4 +38,133 @@ definitions:
       Catalyses: a very-long-chain (3R)-3-hydroxyacyl-CoA = a very-long-chain (2E)-enoyl- CoA + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of very-long-chain (3R)-3-hydroxyacyl-CoA dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.134. EC 4.2.1.134 maps to
+    exactly one curated Rhea reaction (RHEA:45812), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a very-long-chain
+    (3R)-3-hydroxyacyl-CoA = a very-long-chain (2E)-enoyl- CoA + H2O". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: very-long-chain (3R)-3-hydroxyacyl-CoA dehydratase
+    grounding: EC:4.2.1.134
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a very-long-chain (3R)-3-hydroxyacyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:85440
+    description: Formula C24H35N7O18P3SR.
+  - node_id: prd1
+    label: a very-long-chain (2E)-enoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:83728
+    description: Formula C24H33N7O17P3SR.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: very-long-chain (3R)-3-hydroxyacyl-CoA dehydratase activity
+    grounding: GO:0102158
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q4W1W1
+    node_type: PROTEIN
+    label: HACD1_CANLF
+    grounding: UniProtKB:Q4W1W1
+  - node_id: prot_B0YJ81
+    node_type: PROTEIN
+    label: HACD1_HUMAN
+    grounding: UniProtKB:B0YJ81
+  - node_id: prot_Q9QY80
+    node_type: PROTEIN
+    label: HACD1_MOUSE
+    grounding: UniProtKB:Q9QY80
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a very-long-chain (3R)-3-hydroxyacyl-CoA is a substrate consumed by RHEA:45812 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45813
+      snippet: a very-long-chain (3R)-3-hydroxyacyl-CoA => a very-long-chain (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:45813 declares side 45812_L as its substrates
+        (rh:substrates); the master reaction RHEA:45812 is undirected. This participant is CHEBI:85440
+        with coefficient 1. Rhea cites PMID:18799749, PMID:18272525 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a very-long-chain (2E)-enoyl-CoA is a product released by RHEA:45812 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45813
+      snippet: a very-long-chain (3R)-3-hydroxyacyl-CoA => a very-long-chain (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:45813 declares side 45812_R as its products
+        (rh:products); the master reaction RHEA:45812 is undirected. This participant is CHEBI:83728 with
+        coefficient 1. Rhea cites PMID:18799749, PMID:18272525 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:45812 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45813
+      snippet: a very-long-chain (3R)-3-hydroxyacyl-CoA => a very-long-chain (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:45813 declares side 45812_R as its products
+        (rh:products); the master reaction RHEA:45812 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:18799749, PMID:18272525 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.134
+      snippet: EC:4.2.1.134 > GO:very-long-chain (3R)-3-hydroxyacyl-CoA dehydratase activity ; GO:0102158
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102158 is itself a record
+        in this KB.
+  - subject: prot_Q4W1W1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HACD1_CANLF is an exemplar enzyme with EC 4.2.1.134 activity.
+    evidence:
+    - reference: EC:4.2.1.134
+      snippet: DR   Q4W1W1, HACD1_CANLF;  B0YJ81, HACD1_HUMAN;  Q9QY80, HACD1_MOUSE;
+      notes: ExPASy ENZYME entry EC 4.2.1.134 cross-references UniProtKB:Q4W1W1 (HACD1_CANLF) as a protein
+        with this activity.
+  - subject: prot_B0YJ81
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HACD1_HUMAN is an exemplar enzyme with EC 4.2.1.134 activity.
+    evidence:
+    - reference: EC:4.2.1.134
+      snippet: DR   Q4W1W1, HACD1_CANLF;  B0YJ81, HACD1_HUMAN;  Q9QY80, HACD1_MOUSE;
+      notes: ExPASy ENZYME entry EC 4.2.1.134 cross-references UniProtKB:B0YJ81 (HACD1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9QY80
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HACD1_MOUSE is an exemplar enzyme with EC 4.2.1.134 activity.
+    evidence:
+    - reference: EC:4.2.1.134
+      snippet: DR   Q4W1W1, HACD1_CANLF;  B0YJ81, HACD1_HUMAN;  Q9QY80, HACD1_MOUSE;
+      notes: ExPASy ENZYME entry EC 4.2.1.134 cross-references UniProtKB:Q9QY80 (HACD1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

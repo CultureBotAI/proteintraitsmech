@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.19.-
 synonyms:
@@ -41,4 +41,263 @@ definitions:
       Catalyses: hexadecanoyl-[ACP] + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = (4Z)-hexadecenoyl-[ACP] + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acyl-[acyl-carrier-protein] 4-desaturase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.19.11. EC 1.14.19.11 maps to
+    exactly one curated Rhea reaction (RHEA:38043), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "hexadecanoyl-[ACP]
+    + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = (4Z)-hexadecenoyl-[ACP] + 2 oxidized [2Fe-2S]-[ferredoxin]
+    + 2 H2O". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acyl-[acyl-carrier-protein] 4-desaturase
+    grounding: EC:1.14.19.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: hexadecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9652
+    description: Rhea compound GENERIC:9652.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9652 (hexadecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78483
+  - node_id: sub2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: (4Z)-hexadecenoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11488
+    description: Rhea compound GENERIC:11488.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-[S-(4Z)-hexadecenoylpantetheine-4'-phosphoryl]serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11488 ((4Z)-hexadecenoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85919
+  - node_id: prd2
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_E3PZS1
+    node_type: PROTEIN
+    label: STAD1_OPHSP
+    grounding: UniProtKB:E3PZS1
+  - node_id: prot_E3PZS3
+    node_type: PROTEIN
+    label: STAD2_OPHAA
+    grounding: UniProtKB:E3PZS3
+  - node_id: prot_E3PZS2
+    node_type: PROTEIN
+    label: STAD2_OPHSP
+    grounding: UniProtKB:E3PZS2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hexadecanoyl-[ACP] is a substrate consumed by RHEA:38043 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38044
+      snippet: hexadecanoyl-[ACP] + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => (4Z)-hexadecenoyl-[ACP]
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38044 declares side 38043_L as its substrates
+        (rh:substrates); the master reaction RHEA:38043 is undirected. This participant is GENERIC:9652
+        with coefficient 1. Rhea cites PMID:12232129, PMID:1454797, PMID:15939740, PMID:21436056 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of
+      hexadecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:38043
+      snippet: O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9652 (hexadecanoyl-[ACP]) declares rh:reactivePart = O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78483).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:38043 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:38044
+      snippet: hexadecanoyl-[ACP] + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => (4Z)-hexadecenoyl-[ACP]
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38044 declares side 38043_L as its substrates
+        (rh:substrates); the master reaction RHEA:38043 is undirected. This participant is GENERIC:10001
+        with coefficient 2. Rhea cites PMID:12232129, PMID:1454797, PMID:15939740, PMID:21436056 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:38043
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:38043 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38044
+      snippet: hexadecanoyl-[ACP] + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => (4Z)-hexadecenoyl-[ACP]
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38044 declares side 38043_L as its substrates
+        (rh:substrates); the master reaction RHEA:38043 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:12232129, PMID:1454797, PMID:15939740, PMID:21436056 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by RHEA:38043 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:38044
+      snippet: hexadecanoyl-[ACP] + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => (4Z)-hexadecenoyl-[ACP]
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38044 declares side 38043_L as its substrates
+        (rh:substrates); the master reaction RHEA:38043 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:12232129, PMID:1454797, PMID:15939740, PMID:21436056 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (4Z)-hexadecenoyl-[ACP] is a product released by RHEA:38043 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38044
+      snippet: hexadecanoyl-[ACP] + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => (4Z)-hexadecenoyl-[ACP]
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38044 declares side 38043_R as its products
+        (rh:products); the master reaction RHEA:38043 is undirected. This participant is GENERIC:11488
+        with coefficient 1. Rhea cites PMID:12232129, PMID:1454797, PMID:15939740, PMID:21436056 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[S-(4Z)-hexadecenoylpantetheine-4'-phosphoryl]serine residue is the reactive part of
+      (4Z)-hexadecenoyl-[ACP].
+    evidence:
+    - reference: RHEA:38043
+      snippet: O-[S-(4Z)-hexadecenoylpantetheine-4'-phosphoryl]serine residue
+      notes: Rhea compound GENERIC:11488 ((4Z)-hexadecenoyl-[ACP]) declares rh:reactivePart = O-[S-(4Z)-hexadecenoylpantetheine-4'-phosphoryl]serine
+        residue (CHEBI:85919).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [2Fe-2S]-[ferredoxin] is a product released by RHEA:38043 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:38044
+      snippet: hexadecanoyl-[ACP] + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => (4Z)-hexadecenoyl-[ACP]
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38044 declares side 38043_R as its products
+        (rh:products); the master reaction RHEA:38043 is undirected. This participant is GENERIC:10000
+        with coefficient 2. Rhea cites PMID:12232129, PMID:1454797, PMID:15939740, PMID:21436056 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:38043
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:38043 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:38044
+      snippet: hexadecanoyl-[ACP] + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => (4Z)-hexadecenoyl-[ACP]
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:38044 declares side 38043_R as its products
+        (rh:products); the master reaction RHEA:38043 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:12232129, PMID:1454797, PMID:15939740, PMID:21436056 for this reaction.
+  - subject: prot_E3PZS1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STAD1_OPHSP is an exemplar enzyme with EC 1.14.19.11 activity.
+    evidence:
+    - reference: EC:1.14.19.11
+      snippet: DR   E3PZS1, STAD1_OPHSP;  E3PZS3, STAD2_OPHAA;  E3PZS2, STAD2_OPHSP;
+      notes: ExPASy ENZYME entry EC 1.14.19.11 cross-references UniProtKB:E3PZS1 (STAD1_OPHSP) as a protein
+        with this activity.
+  - subject: prot_E3PZS3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STAD2_OPHAA is an exemplar enzyme with EC 1.14.19.11 activity.
+    evidence:
+    - reference: EC:1.14.19.11
+      snippet: DR   E3PZS1, STAD1_OPHSP;  E3PZS3, STAD2_OPHAA;  E3PZS2, STAD2_OPHSP;
+      notes: ExPASy ENZYME entry EC 1.14.19.11 cross-references UniProtKB:E3PZS3 (STAD2_OPHAA) as a protein
+        with this activity.
+  - subject: prot_E3PZS2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STAD2_OPHSP is an exemplar enzyme with EC 1.14.19.11 activity.
+    evidence:
+    - reference: EC:1.14.19.11
+      snippet: DR   E3PZS1, STAD1_OPHSP;  E3PZS3, STAD2_OPHAA;  E3PZS2, STAD2_OPHSP;
+      notes: ExPASy ENZYME entry EC 1.14.19.11 cross-references UniProtKB:E3PZS2 (STAD2_OPHSP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

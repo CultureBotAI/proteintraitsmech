@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.1.13
     mapping_source: rhea2ec
@@ -30,4 +30,413 @@ definitions:
       Catalyses the reaction: L-aspartate = D-aspartate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-aspartate = D-aspartate
+  description: Substrate-to-product chemistry of RHEA:14973, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:14974 (rh:substrates → 14973_L, rh:products → 14973_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-aspartate = D-aspartate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14973
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-aspartate = D-aspartate'
+  - node_id: sub1
+    label: L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+    description: Formula C4H6NO4.
+  - node_id: prd1
+    label: D-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:29990
+    description: Formula C4H6NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aspartate racemase activity
+    grounding: GO:0047689
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: aspartate racemase
+    grounding: EC:5.1.1.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O68008
+    node_type: PROTEIN
+    label: BACC_BACLI
+    grounding: UniProtKB:O68008
+  - node_id: prot_P83989
+    node_type: PROTEIN
+    label: RACD_ANABR
+    grounding: UniProtKB:P83989
+  - node_id: prot_P29079
+    node_type: PROTEIN
+    label: RACD_ENTFC
+    grounding: UniProtKB:P29079
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-aspartate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14974
+      snippet: L-aspartate => D-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:14974 declares side 14973_L as its substrates
+        (rh:substrates); the master reaction RHEA:14973 is undirected. This participant is CHEBI:29991
+        with coefficient 1. Rhea cites PMID:12051922, PMID:15606767, PMID:12568809, PMID:12713441 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-aspartate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14974
+      snippet: L-aspartate => D-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:14974 declares side 14973_R as its products
+        (rh:products); the master reaction RHEA:14973 is undirected. This participant is CHEBI:29990 with
+        coefficient 1. Rhea cites PMID:12051922, PMID:15606767, PMID:12568809, PMID:12713441 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:14973
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047689"/>
+      notes: The rdfs:seeAlso triple on RHEA:14973 in rhea.rdf. GO term GO:0047689 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.1.13; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:14973
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.13"/>
+      notes: The rh:ec triple on RHEA:14973 in rhea.rdf. EC 5.1.1.13 is itself a record in this KB.
+  - subject: prot_O68008
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACC_BACLI is an exemplar enzyme carrying EC 5.1.1.13, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.1.13
+      snippet: DR   O68008, BACC_BACLI ;  P83989, RACD_ANABR ;  P29079, RACD_ENTFC ;
+      notes: ExPASy ENZYME entry EC 5.1.1.13 cross-references UniProtKB:O68008 (BACC_BACLI) as a protein
+        with this activity.
+    - reference: RHEA:14973
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.13"/>
+      notes: Rhea assigns RHEA:14973 to EC 5.1.1.13, and EC 5.1.1.13 maps to exactly one Rhea master reaction
+        (RHEA:14973), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P83989
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RACD_ANABR is an exemplar enzyme carrying EC 5.1.1.13, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.1.13
+      snippet: DR   O68008, BACC_BACLI ;  P83989, RACD_ANABR ;  P29079, RACD_ENTFC ;
+      notes: ExPASy ENZYME entry EC 5.1.1.13 cross-references UniProtKB:P83989 (RACD_ANABR) as a protein
+        with this activity.
+    - reference: RHEA:14973
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.13"/>
+      notes: Rhea assigns RHEA:14973 to EC 5.1.1.13, and EC 5.1.1.13 maps to exactly one Rhea master reaction
+        (RHEA:14973), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P29079
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RACD_ENTFC is an exemplar enzyme carrying EC 5.1.1.13, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.1.13
+      snippet: DR   O68008, BACC_BACLI ;  P83989, RACD_ANABR ;  P29079, RACD_ENTFC ;
+      notes: ExPASy ENZYME entry EC 5.1.1.13 cross-references UniProtKB:P29079 (RACD_ENTFC) as a protein
+        with this activity.
+    - reference: RHEA:14973
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.13"/>
+      notes: Rhea assigns RHEA:14973 to EC 5.1.1.13, and EC 5.1.1.13 maps to exactly one Rhea master reaction
+        (RHEA:14973), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+- graph_id: catalytic_residues_mcsa335
+  title: Catalytic residues of RHEA:14973 (from MCSA:335)
+  description: 'The catalytic residues that carry out RHEA:14973, joined from M-CSA entry 335. 6 residues,
+    reused verbatim from the MCSA:335 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 335''s reactant set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product
+    set (CHEBI:29990) equals side 14973_R exactly. EC agreement bounded the candidates but was not sufficient
+    on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of L-aspartate = D-aspartate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14973
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: L-aspartate = D-aspartate'
+  - node_id: mcsa
+    label: aspartate racemase (CC-type)
+    node_type: MOTIF
+    grounding: MCSA:335
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: arg48
+    label: catalytic Arg48 (M-CSA/PDB numbering; UniProt residue 48)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58403
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:335 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: cys82
+    label: catalytic Cys82 (M-CSA/PDB numbering; UniProt residue 82)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58403
+    description: 'M-CSA roles: proton acceptor. Reused verbatim from the MCSA:335 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: thr84
+    label: catalytic Thr84 (M-CSA/PDB numbering; UniProt residue 84)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58403
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:335 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: thr124
+    label: catalytic Thr124 (M-CSA/PDB numbering; UniProt residue 124)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58403
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:335 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: lys164
+    label: catalytic Lys164 (M-CSA/PDB numbering; UniProt residue 164)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58403
+    description: 'M-CSA roles: electrostatic stabiliser, hydrogen bond donor. Reused verbatim from the
+      MCSA:335 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: cys194
+    label: catalytic Cys194 (M-CSA/PDB numbering; UniProt residue 194)
+    node_type: RESIDUE
+    grounding: UniProtKB:O58403
+    description: 'M-CSA roles: activator, hydrogen bond donor, proton donor. Reused verbatim from the
+      MCSA:335 record''s catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 335 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:335
+      snippet: D-aspartate(1-) [product]; L-aspartate(1-) [reactant]
+      notes: 'The `reaction.compounds` field of M-CSA entry 335, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 335''s reactant
+        set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side
+        14973_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: arg48
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:335
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 335 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 10 interaction, 9 spectator, 2 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 335''s reactant
+        set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side
+        14973_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: cys82
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:335
+      snippet: proton acceptor
+      notes: 'M-CSA entry 335 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 10 interaction, 9 spectator, 2 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 335''s reactant
+        set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side
+        14973_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: thr84
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:335
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 335 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 10 interaction, 9 spectator, 2 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 335''s reactant
+        set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side
+        14973_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: thr124
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:335
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 335 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 10 interaction, 9 spectator, 2 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 335''s reactant
+        set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side
+        14973_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: lys164
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:335
+      snippet: electrostatic stabiliser, hydrogen bond donor
+      notes: 'M-CSA entry 335 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 10 interaction, 9 spectator, 2 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 335''s reactant
+        set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side
+        14973_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: cys194
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:335
+      snippet: activator, hydrogen bond donor, proton donor
+      notes: 'M-CSA entry 335 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 10 interaction, 9 spectator, 2 reactant. M-CSA states which residues are
+        catalytic and what role each plays, but never which compound a residue acts on, so no residue-to-substrate
+        edge is asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 335''s reactant
+        set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side
+        14973_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+- graph_id: catalytic_residues_mcsa388
+  title: Catalytic residues of RHEA:14973 (from MCSA:388)
+  description: 'The catalytic residues that carry out RHEA:14973, joined from M-CSA entry 388. 3 residues,
+    reused verbatim from the MCSA:388 record rather than re-derived. M-CSA annotates each residue''s role
+    (proton donor, electrostatic stabiliser, …) and whether it is a chemical reactant, an interaction
+    partner or a spectator, but does not say which compound a residue acts on — so this graph asserts
+    residue-to-reaction causation, not residue-to-substrate. Join verified on chemistry, not inferred
+    from EC: M-CSA entry 388''s reactant set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product
+    set (CHEBI:29990) equals side 14973_R exactly. EC agreement bounded the candidates but was not sufficient
+    on its own.'
+  nodes:
+  - node_id: activity
+    label: catalysis of L-aspartate = D-aspartate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14973
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction these residues carry out. Full
+      equation: L-aspartate = D-aspartate'
+  - node_id: mcsa
+    label: aspartate racemase (CT type)
+    node_type: MOTIF
+    grounding: MCSA:388
+    description: KB trait record (STRUCT_ACTIVE_SITE) — the curated catalytic site whose stepwise mechanism
+      this reaction's chemistry is.
+  - node_id: ser14
+    label: catalytic Ser14 (M-CSA/PDB numbering; UniProt residue 14)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0H3JGH6
+    description: 'M-CSA roles: increase basicity. Reused verbatim from the MCSA:388 record''s catalysis
+      graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: thr83
+    label: catalytic Thr83 (M-CSA/PDB numbering; UniProt residue 83)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0H3JGH6
+    description: 'M-CSA roles: proton acceptor, proton donor. Reused verbatim from the MCSA:388 record''s
+      catalysis graph, where the UniProt position was resolved through SIFTS.'
+  - node_id: cys197
+    label: catalytic Cys197 (M-CSA/PDB numbering; UniProt residue 197)
+    node_type: RESIDUE
+    grounding: UniProtKB:A0A0H3JGH6
+    description: 'M-CSA roles: proton acceptor, proton donor. Reused verbatim from the MCSA:388 record''s
+      catalysis graph, where the UniProt position was resolved through SIFTS.'
+  edges:
+  - subject: activity
+    predicate: has its catalytic mechanism curated by
+    predicate_id: skos:closeMatch
+    object: mcsa
+    description: M-CSA entry 388 curates the catalytic mechanism of this reaction.
+    evidence:
+    - reference: MCSA:388
+      snippet: L-aspartate(1-) [reactant]; D-aspartate(1-) [product]
+      notes: 'The `reaction.compounds` field of M-CSA entry 388, each compound with the reactant/product
+        type M-CSA assigns it. Join verified on chemistry, not inferred from EC: M-CSA entry 388''s reactant
+        set (CHEBI:29991) equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side
+        14973_R exactly. EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: ser14
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:388
+      snippet: increase basicity
+      notes: 'M-CSA entry 388 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 4 reactant, 2 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 388''s reactant set (CHEBI:29991)
+        equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side 14973_R exactly.
+        EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: thr83
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:388
+      snippet: proton acceptor, proton donor
+      notes: 'M-CSA entry 388 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 4 reactant, 2 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 388''s reactant set (CHEBI:29991)
+        equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side 14973_R exactly.
+        EC agreement bounded the candidates but was not sufficient on its own.'
+  - subject: cys197
+    predicate: is a catalytic agent in
+    predicate_id: RO:0002500
+    object: activity
+    description: M-CSA lists this residue as catalytic for the mechanism that carries out this reaction.
+    evidence:
+    - reference: MCSA:388
+      snippet: proton acceptor, proton donor
+      notes: 'M-CSA entry 388 annotates this residue with the roles quoted. Across the entry M-CSA types
+        its residue roles as 4 reactant, 2 spectator. M-CSA states which residues are catalytic and what
+        role each plays, but never which compound a residue acts on, so no residue-to-substrate edge is
+        asserted. Join verified on chemistry, not inferred from EC: M-CSA entry 388''s reactant set (CHEBI:29991)
+        equals Rhea side 14973_L exactly, and its product set (CHEBI:29990) equals side 14973_R exactly.
+        EC agreement bounded the candidates but was not sufficient on its own.'
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa335' (7 evidence-backed edges) joining MCSA:335
+    on exact ChEBI set equality
+  llm_assisted: true
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'catalytic_residues_mcsa388' (4 evidence-backed edges) joining MCSA:388
+    on exact ChEBI set equality
+  llm_assisted: true
 license: CC-BY 4.0

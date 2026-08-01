@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 mapped_xrefs:
@@ -36,4 +36,133 @@ definitions:
       Catalyses: (2E)-3-methyl-5-phosphooxypent-2-enoate + H(+) = isopentenyl phosphate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of anhydromevalonate phosphate decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.126. EC 4.1.1.126 maps to
+    exactly one curated Rhea reaction (RHEA:78971), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-3-methyl-5-phosphooxypent-2-enoate
+    + H(+) = isopentenyl phosphate + CO2". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: anhydromevalonate phosphate decarboxylase
+    grounding: EC:4.1.1.126
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-3-methyl-5-phosphooxypent-2-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:229665
+    description: Formula C6H8O6P.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: isopentenyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:65078
+    description: Formula C5H9O4P.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prot_Q9YA60
+    node_type: PROTEIN
+    label: AMPD_AERPE
+    grounding: UniProtKB:Q9YA60
+  - node_id: prot_O28630
+    node_type: PROTEIN
+    label: AMPD_ARCFU
+    grounding: UniProtKB:O28630
+  - node_id: prot_Q58533
+    node_type: PROTEIN
+    label: AMPD_METJA
+    grounding: UniProtKB:Q58533
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-3-methyl-5-phosphooxypent-2-enoate is a substrate consumed by RHEA:78971 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78972
+      snippet: (2E)-3-methyl-5-phosphooxypent-2-enoate + H(+) => isopentenyl phosphate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:78972 declares side 78971_L as its substrates
+        (rh:substrates); the master reaction RHEA:78971 is undirected. This participant is CHEBI:229665
+        with coefficient 1. Rhea cites PMID:31924615, PMID:30224495 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:78971 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78972
+      snippet: (2E)-3-methyl-5-phosphooxypent-2-enoate + H(+) => isopentenyl phosphate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:78972 declares side 78971_L as its substrates
+        (rh:substrates); the master reaction RHEA:78971 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:31924615, PMID:30224495 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: isopentenyl phosphate is a product released by RHEA:78971 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78972
+      snippet: (2E)-3-methyl-5-phosphooxypent-2-enoate + H(+) => isopentenyl phosphate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:78972 declares side 78971_R as its products
+        (rh:products); the master reaction RHEA:78971 is undirected. This participant is CHEBI:65078 with
+        coefficient 1. Rhea cites PMID:31924615, PMID:30224495 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:78971 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78972
+      snippet: (2E)-3-methyl-5-phosphooxypent-2-enoate + H(+) => isopentenyl phosphate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:78972 declares side 78971_R as its products
+        (rh:products); the master reaction RHEA:78971 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:31924615, PMID:30224495 for this reaction.
+  - subject: prot_Q9YA60
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPD_AERPE is an exemplar enzyme with EC 4.1.1.126 activity.
+    evidence:
+    - reference: EC:4.1.1.126
+      snippet: DR   Q9YA60, AMPD_AERPE ;  O28630, AMPD_ARCFU ;  Q58533, AMPD_METJA ;
+      notes: ExPASy ENZYME entry EC 4.1.1.126 cross-references UniProtKB:Q9YA60 (AMPD_AERPE) as a protein
+        with this activity.
+  - subject: prot_O28630
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPD_ARCFU is an exemplar enzyme with EC 4.1.1.126 activity.
+    evidence:
+    - reference: EC:4.1.1.126
+      snippet: DR   Q9YA60, AMPD_AERPE ;  O28630, AMPD_ARCFU ;  Q58533, AMPD_METJA ;
+      notes: ExPASy ENZYME entry EC 4.1.1.126 cross-references UniProtKB:O28630 (AMPD_ARCFU) as a protein
+        with this activity.
+  - subject: prot_Q58533
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPD_METJA is an exemplar enzyme with EC 4.1.1.126 activity.
+    evidence:
+    - reference: EC:4.1.1.126
+      snippet: DR   Q9YA60, AMPD_AERPE ;  O28630, AMPD_ARCFU ;  Q58533, AMPD_METJA ;
+      notes: ExPASy ENZYME entry EC 4.1.1.126 cross-references UniProtKB:Q58533 (AMPD_METJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

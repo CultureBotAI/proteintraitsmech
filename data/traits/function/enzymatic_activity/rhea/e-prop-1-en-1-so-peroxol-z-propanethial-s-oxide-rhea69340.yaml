@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.99.12
     mapping_source: rhea2ec
@@ -28,4 +28,75 @@ definitions:
       Catalyses the reaction: (E)-prop-1-en-1-SO-peroxol = (Z)-propanethial S-oxide
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E)-prop-1-en-1-SO-peroxol = (Z)-propanethial S-oxide
+  description: Substrate-to-product chemistry of RHEA:69340, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69341 (rh:substrates → 69340_L, rh:products → 69340_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (E)-prop-1-en-1-SO-peroxol = (Z)-propanethial S-oxide
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69340
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (E)-prop-1-en-1-SO-peroxol = (Z)-propanethial S-oxide'
+  - node_id: sub1
+    label: (E)-prop-1-en-1-SO-peroxol
+    node_type: CHEMICAL
+    grounding: CHEBI:183057
+    description: Formula C3H6OS.
+  - node_id: prd1
+    label: (Z)-propanethial S-oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:183657
+    description: Formula C3H6OS.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: lachrymatory-factor synthase
+    grounding: EC:5.3.99.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (E)-prop-1-en-1-SO-peroxol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69341
+      snippet: (E)-prop-1-en-1-SO-peroxol => (Z)-propanethial S-oxide
+      notes: Rhea's left-to-right directional reaction RHEA:69341 declares side 69340_L as its substrates
+        (rh:substrates); the master reaction RHEA:69340 is undirected. This participant is CHEBI:183057
+        with coefficient 1. Rhea cites PMID:12384686, PMID:18583530, PMID:20047275 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (Z)-propanethial S-oxide is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69341
+      snippet: (E)-prop-1-en-1-SO-peroxol => (Z)-propanethial S-oxide
+      notes: Rhea's left-to-right directional reaction RHEA:69341 declares side 69340_R as its products
+        (rh:products); the master reaction RHEA:69340 is undirected. This participant is CHEBI:183657
+        with coefficient 1. Rhea cites PMID:12384686, PMID:18583530, PMID:20047275 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.99.12; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:69340
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.99.12"/>
+      notes: The rh:ec triple on RHEA:69340 in rhea.rdf. EC 5.3.99.12 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

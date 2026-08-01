@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:232642
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: 3-oxo-(9Z-hexadecenoyl)-CoA + CoA = (7Z)-tetradecenoyl-CoA + acetyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-oxo-(9Z-hexadecenoyl)-CoA + CoA = (7Z)-tetradecenoyl-CoA + acetyl-CoA
+  description: Substrate-to-product chemistry of RHEA:82935, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:82936 (rh:substrates → 82935_L, rh:products → 82935_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-oxo-(9Z-hexadecenoyl)-CoA + CoA = (7Z)-tetradecenoyl-CoA + acetyl-CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:82935
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-oxo-(9Z-hexadecenoyl)-CoA + CoA = (7Z)-tetradecenoyl-CoA + acetyl-CoA'
+  - node_id: sub1
+    label: 3-oxo-(9Z-hexadecenoyl)-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:232642
+    description: Formula C37H58N7O18P3S.
+  - node_id: sub2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd1
+    label: (7Z)-tetradecenoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:232643
+    description: Formula C35H56N7O17P3S.
+  - node_id: prd2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-oxo-(9Z-hexadecenoyl)-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:82936
+      snippet: 3-oxo-(9Z-hexadecenoyl)-CoA + CoA => (7Z)-tetradecenoyl-CoA + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:82936 declares side 82935_L as its substrates
+        (rh:substrates); the master reaction RHEA:82935 is undirected. This participant is CHEBI:232642
+        with coefficient 1. Rhea cites PMID:26474213 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82936
+      snippet: 3-oxo-(9Z-hexadecenoyl)-CoA + CoA => (7Z)-tetradecenoyl-CoA + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:82936 declares side 82935_L as its substrates
+        (rh:substrates); the master reaction RHEA:82935 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:26474213 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (7Z)-tetradecenoyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82936
+      snippet: 3-oxo-(9Z-hexadecenoyl)-CoA + CoA => (7Z)-tetradecenoyl-CoA + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:82936 declares side 82935_R as its products
+        (rh:products); the master reaction RHEA:82935 is undirected. This participant is CHEBI:232643
+        with coefficient 1. Rhea cites PMID:26474213 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82936
+      snippet: 3-oxo-(9Z-hexadecenoyl)-CoA + CoA => (7Z)-tetradecenoyl-CoA + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:82936 declares side 82935_R as its products
+        (rh:products); the master reaction RHEA:82935 is undirected. This participant is CHEBI:57288 with
+        coefficient 1. Rhea cites PMID:26474213 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.3.43
     mapping_source: rhea2ec
@@ -30,4 +30,150 @@ definitions:
       Catalyses the reaction: (S)-4-hydroxy-2-oxohexanoate = propanal + pyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-4-hydroxy-2-oxohexanoate = propanal + pyruvate
+  description: Substrate-to-product chemistry of RHEA:36003, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:36004 (rh:substrates → 36003_L, rh:products → 36003_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (S)-4-hydroxy-2-oxohexanoate = propanal + pyruvate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:36003
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (S)-4-hydroxy-2-oxohexanoate = propanal + pyruvate'
+  - node_id: sub1
+    label: (S)-4-hydroxy-2-oxohexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:73142
+    description: Formula C6H9O4.
+  - node_id: prd1
+    label: propanal
+    node_type: CHEMICAL
+    grounding: CHEBI:17153
+    description: Formula C3H6O.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxy-2-oxohexanoate aldolase
+    grounding: EC:4.1.3.43
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P51015
+    node_type: PROTEIN
+    label: HOA4_PARXL
+    grounding: UniProtKB:P51015
+  - node_id: prot_Q7TW97
+    node_type: PROTEIN
+    label: HOA_MYCBO
+    grounding: UniProtKB:Q7TW97
+  - node_id: prot_A1KPL9
+    node_type: PROTEIN
+    label: HOA_MYCBP
+    grounding: UniProtKB:A1KPL9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-4-hydroxy-2-oxohexanoate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36004
+      snippet: (S)-4-hydroxy-2-oxohexanoate => propanal + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:36004 declares side 36003_L as its substrates
+        (rh:substrates); the master reaction RHEA:36003 is undirected. This participant is CHEBI:73142
+        with coefficient 1. Rhea cites PMID:23614353, PMID:22081904, PMID:19476337 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: propanal is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36004
+      snippet: (S)-4-hydroxy-2-oxohexanoate => propanal + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:36004 declares side 36003_R as its products
+        (rh:products); the master reaction RHEA:36003 is undirected. This participant is CHEBI:17153 with
+        coefficient 1. Rhea cites PMID:23614353, PMID:22081904, PMID:19476337 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36004
+      snippet: (S)-4-hydroxy-2-oxohexanoate => propanal + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:36004 declares side 36003_R as its products
+        (rh:products); the master reaction RHEA:36003 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:23614353, PMID:22081904, PMID:19476337 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.3.43; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:36003
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.3.43"/>
+      notes: The rh:ec triple on RHEA:36003 in rhea.rdf. EC 4.1.3.43 is itself a record in this KB.
+  - subject: prot_P51015
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOA4_PARXL is an exemplar enzyme carrying EC 4.1.3.43, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.3.43
+      snippet: DR   P51015, HOA4_PARXL ;  Q7TW97, HOA_MYCBO  ;  A1KPL9, HOA_MYCBP  ;
+      notes: ExPASy ENZYME entry EC 4.1.3.43 cross-references UniProtKB:P51015 (HOA4_PARXL) as a protein
+        with this activity.
+    - reference: RHEA:36003
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.3.43"/>
+      notes: Rhea assigns RHEA:36003 to EC 4.1.3.43, and EC 4.1.3.43 maps to exactly one Rhea master reaction
+        (RHEA:36003), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q7TW97
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOA_MYCBO is an exemplar enzyme carrying EC 4.1.3.43, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.3.43
+      snippet: DR   P51015, HOA4_PARXL ;  Q7TW97, HOA_MYCBO  ;  A1KPL9, HOA_MYCBP  ;
+      notes: ExPASy ENZYME entry EC 4.1.3.43 cross-references UniProtKB:Q7TW97 (HOA_MYCBO) as a protein
+        with this activity.
+    - reference: RHEA:36003
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.3.43"/>
+      notes: Rhea assigns RHEA:36003 to EC 4.1.3.43, and EC 4.1.3.43 maps to exactly one Rhea master reaction
+        (RHEA:36003), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A1KPL9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOA_MYCBP is an exemplar enzyme carrying EC 4.1.3.43, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.3.43
+      snippet: DR   P51015, HOA4_PARXL ;  Q7TW97, HOA_MYCBO  ;  A1KPL9, HOA_MYCBP  ;
+      notes: ExPASy ENZYME entry EC 4.1.3.43 cross-references UniProtKB:A1KPL9 (HOA_MYCBP) as a protein
+        with this activity.
+    - reference: RHEA:36003
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.3.43"/>
+      notes: Rhea assigns RHEA:36003 to EC 4.1.3.43, and EC 4.1.3.43 maps to exactly one Rhea master reaction
+        (RHEA:36003), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

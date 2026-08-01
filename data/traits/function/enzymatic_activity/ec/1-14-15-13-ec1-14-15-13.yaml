@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.15.-
 synonyms:
@@ -33,4 +33,194 @@ definitions:
       Catalyses: cyclo(L-leucyl-L-leucyl) + 6 reduced [2Fe-2S]-[ferredoxin] + 3 O2 + 4 H(+) = pulcherriminic acid + 6 oxidized [2Fe-2S]-[ferredoxin] + 4 H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pulcherriminic acid synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.15.13. EC 1.14.15.13 maps to
+    exactly one curated Rhea reaction (RHEA:35555), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "cyclo(L-leucyl-L-leucyl)
+    + 6 reduced [2Fe-2S]-[ferredoxin] + 3 O2 + 4 H(+) = pulcherriminic acid + 6 oxidized [2Fe-2S]-[ferredoxin]
+    + 4 H2O". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: pulcherriminic acid synthase
+    grounding: EC:1.14.15.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: cyclo(L-leucyl-L-leucyl)
+    node_type: CHEMICAL
+    grounding: CHEBI:67269
+    description: Formula C12H22N2O2.
+  - node_id: sub2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: pulcherriminic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:77663
+    description: Formula C12H18N2O4.
+  - node_id: prd2
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_O34926
+    node_type: PROTEIN
+    label: CYPX_BACSU
+    grounding: UniProtKB:O34926
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cyclo(L-leucyl-L-leucyl) is a substrate consumed by RHEA:35555 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35556
+      snippet: cyclo(L-leucyl-L-leucyl) + 6 reduced [2Fe-2S]-[ferredoxin] + 3 O2 + 4 H(+) => pulcherriminic
+        acid + 6 oxidized [2Fe-2S]-[ferredoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35556 declares side 35555_L as its substrates
+        (rh:substrates); the master reaction RHEA:35555 is undirected. This participant is CHEBI:67269
+        with coefficient 1. Rhea cites PMID:20690619 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:35555 (stoichiometric coefficient
+      6).
+    evidence:
+    - reference: RHEA:35556
+      snippet: cyclo(L-leucyl-L-leucyl) + 6 reduced [2Fe-2S]-[ferredoxin] + 3 O2 + 4 H(+) => pulcherriminic
+        acid + 6 oxidized [2Fe-2S]-[ferredoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35556 declares side 35555_L as its substrates
+        (rh:substrates); the master reaction RHEA:35555 is undirected. This participant is GENERIC:10001
+        with coefficient 6. Rhea cites PMID:20690619 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:35555
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:35555 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:35556
+      snippet: cyclo(L-leucyl-L-leucyl) + 6 reduced [2Fe-2S]-[ferredoxin] + 3 O2 + 4 H(+) => pulcherriminic
+        acid + 6 oxidized [2Fe-2S]-[ferredoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35556 declares side 35555_L as its substrates
+        (rh:substrates); the master reaction RHEA:35555 is undirected. This participant is CHEBI:15379
+        with coefficient 3. Rhea cites PMID:20690619 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by RHEA:35555 (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:35556
+      snippet: cyclo(L-leucyl-L-leucyl) + 6 reduced [2Fe-2S]-[ferredoxin] + 3 O2 + 4 H(+) => pulcherriminic
+        acid + 6 oxidized [2Fe-2S]-[ferredoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35556 declares side 35555_L as its substrates
+        (rh:substrates); the master reaction RHEA:35555 is undirected. This participant is CHEBI:15378
+        with coefficient 4. Rhea cites PMID:20690619 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pulcherriminic acid is a product released by RHEA:35555 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35556
+      snippet: cyclo(L-leucyl-L-leucyl) + 6 reduced [2Fe-2S]-[ferredoxin] + 3 O2 + 4 H(+) => pulcherriminic
+        acid + 6 oxidized [2Fe-2S]-[ferredoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35556 declares side 35555_R as its products
+        (rh:products); the master reaction RHEA:35555 is undirected. This participant is CHEBI:77663 with
+        coefficient 1. Rhea cites PMID:20690619 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [2Fe-2S]-[ferredoxin] is a product released by RHEA:35555 (stoichiometric coefficient
+      6).
+    evidence:
+    - reference: RHEA:35556
+      snippet: cyclo(L-leucyl-L-leucyl) + 6 reduced [2Fe-2S]-[ferredoxin] + 3 O2 + 4 H(+) => pulcherriminic
+        acid + 6 oxidized [2Fe-2S]-[ferredoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35556 declares side 35555_R as its products
+        (rh:products); the master reaction RHEA:35555 is undirected. This participant is GENERIC:10000
+        with coefficient 6. Rhea cites PMID:20690619 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:35555
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:35555 (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:35556
+      snippet: cyclo(L-leucyl-L-leucyl) + 6 reduced [2Fe-2S]-[ferredoxin] + 3 O2 + 4 H(+) => pulcherriminic
+        acid + 6 oxidized [2Fe-2S]-[ferredoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35556 declares side 35555_R as its products
+        (rh:products); the master reaction RHEA:35555 is undirected. This participant is CHEBI:15377 with
+        coefficient 4. Rhea cites PMID:20690619 for this reaction.
+  - subject: prot_O34926
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYPX_BACSU is an exemplar enzyme with EC 1.14.15.13 activity.
+    evidence:
+    - reference: EC:1.14.15.13
+      snippet: DR   O34926, CYPX_BACSU ;
+      notes: ExPASy ENZYME entry EC 1.14.15.13 cross-references UniProtKB:O34926 (CYPX_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

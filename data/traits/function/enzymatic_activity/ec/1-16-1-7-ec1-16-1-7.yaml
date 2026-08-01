@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.16.1.-
 synonyms:
@@ -47,4 +47,194 @@ definitions:
       Catalyses: 2 a Fe(II)-siderophore + NAD(+) + H(+) = 2 a Fe(III)-siderophore + NADH
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ferric-chelate reductase (NADH)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.16.1.7. EC 1.16.1.7 maps to exactly
+    one curated Rhea reaction (RHEA:15061), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 a Fe(II)-siderophore
+    + NAD(+) + H(+) = 2 a Fe(III)-siderophore + NADH". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ferric-chelate reductase (NADH)
+    grounding: EC:1.16.1.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a Fe(II)-siderophore
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11344
+    description: Rhea compound GENERIC:11344.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: Fe(2+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:11344 (a Fe(II)-siderophore);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: a Fe(III)-siderophore
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11342
+    description: Rhea compound GENERIC:11342.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: Fe(3+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:11342 (a Fe(III)-siderophore);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ferric-chelate reductase (NADH) activity
+    grounding: GO:0140618
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P84468
+    node_type: PROTEIN
+    label: FERA_PARDE
+    grounding: UniProtKB:P84468
+  - node_id: prot_P84469
+    node_type: PROTEIN
+    label: FERB_PARDE
+    grounding: UniProtKB:P84469
+  - node_id: prot_Q75CQ8
+    node_type: PROTEIN
+    label: FRE8_EREGS
+    grounding: UniProtKB:Q75CQ8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a Fe(II)-siderophore is a substrate consumed by RHEA:15061 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:15062
+      snippet: 2 a Fe(II)-siderophore + NAD(+) + H(+) => 2 a Fe(III)-siderophore + NADH
+      notes: Rhea's left-to-right directional reaction RHEA:15062 declares side 15061_L as its substrates
+        (rh:substrates); the master reaction RHEA:15061 is undirected. This participant is GENERIC:11344
+        with coefficient 2. Rhea cites PMID:14728682 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(2+) is the reactive part of a Fe(II)-siderophore.
+    evidence:
+    - reference: RHEA:15061
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:11344 (a Fe(II)-siderophore) declares rh:reactivePart = Fe(2+) (CHEBI:29033).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:15061 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15062
+      snippet: 2 a Fe(II)-siderophore + NAD(+) + H(+) => 2 a Fe(III)-siderophore + NADH
+      notes: Rhea's left-to-right directional reaction RHEA:15062 declares side 15061_L as its substrates
+        (rh:substrates); the master reaction RHEA:15061 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:14728682 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:15061 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15062
+      snippet: 2 a Fe(II)-siderophore + NAD(+) + H(+) => 2 a Fe(III)-siderophore + NADH
+      notes: Rhea's left-to-right directional reaction RHEA:15062 declares side 15061_L as its substrates
+        (rh:substrates); the master reaction RHEA:15061 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:14728682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a Fe(III)-siderophore is a product released by RHEA:15061 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:15062
+      snippet: 2 a Fe(II)-siderophore + NAD(+) + H(+) => 2 a Fe(III)-siderophore + NADH
+      notes: Rhea's left-to-right directional reaction RHEA:15062 declares side 15061_R as its products
+        (rh:products); the master reaction RHEA:15061 is undirected. This participant is GENERIC:11342
+        with coefficient 2. Rhea cites PMID:14728682 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Fe(3+) is the reactive part of a Fe(III)-siderophore.
+    evidence:
+    - reference: RHEA:15061
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:11342 (a Fe(III)-siderophore) declares rh:reactivePart = Fe(3+) (CHEBI:29034).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by RHEA:15061 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15062
+      snippet: 2 a Fe(II)-siderophore + NAD(+) + H(+) => 2 a Fe(III)-siderophore + NADH
+      notes: Rhea's left-to-right directional reaction RHEA:15062 declares side 15061_R as its products
+        (rh:products); the master reaction RHEA:15061 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:14728682 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.16.1.7
+      snippet: EC:1.16.1.7 > GO:ferric-chelate reductase (NADH) activity ; GO:0140618
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0140618 is itself a record
+        in this KB.
+  - subject: prot_P84468
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FERA_PARDE is an exemplar enzyme with EC 1.16.1.7 activity.
+    evidence:
+    - reference: EC:1.16.1.7
+      snippet: DR   P84468, FERA_PARDE ;  P84469, FERB_PARDE ;  Q75CQ8, FRE8_EREGS ;
+      notes: ExPASy ENZYME entry EC 1.16.1.7 cross-references UniProtKB:P84468 (FERA_PARDE) as a protein
+        with this activity.
+  - subject: prot_P84469
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FERB_PARDE is an exemplar enzyme with EC 1.16.1.7 activity.
+    evidence:
+    - reference: EC:1.16.1.7
+      snippet: DR   P84468, FERA_PARDE ;  P84469, FERB_PARDE ;  Q75CQ8, FRE8_EREGS ;
+      notes: ExPASy ENZYME entry EC 1.16.1.7 cross-references UniProtKB:P84469 (FERB_PARDE) as a protein
+        with this activity.
+  - subject: prot_Q75CQ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FRE8_EREGS is an exemplar enzyme with EC 1.16.1.7 activity.
+    evidence:
+    - reference: EC:1.16.1.7
+      snippet: DR   P84468, FERA_PARDE ;  P84469, FERB_PARDE ;  Q75CQ8, FRE8_EREGS ;
+      notes: ExPASy ENZYME entry EC 1.16.1.7 cross-references UniProtKB:Q75CQ8 (FRE8_EREGS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

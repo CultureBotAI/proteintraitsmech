@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.5.1.46
     mapping_source: rhea2ec
@@ -44,4 +44,220 @@ definitions:
       Catalyses the reaction: [eIF5A protein]-L-lysine + spermidine = [eIF5A protein]-deoxyhypusine + propane-1,3-diamine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [eIF5A protein]-L-lysine + spermidine = [eIF5A protein]-deoxyhypusine +
+    propane-1,3-dia…
+  description: Substrate-to-product chemistry of RHEA:33299, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33300 (rh:substrates → 33299_L, rh:products → 33299_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [eIF5A protein]-L-lysine + spermidine = [eIF5A protein]-deoxyhypusine + prop…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33299
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [eIF5A protein]-L-lysine + spermidine = [eIF5A protein]-deoxyhypusine + propane-1,3-diamine'
+  - node_id: sub1
+    label: '[eIF5A protein]-L-lysine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10143
+    description: Rhea compound GENERIC:10143.
+  - node_id: sub1_rp1
+    label: L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10143 ([eIF5A protein]-L-lysine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29969
+  - node_id: sub2
+    label: spermidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57834
+    description: Formula C7H22N3.
+  - node_id: prd1
+    label: '[eIF5A protein]-deoxyhypusine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10144
+    description: Rhea compound GENERIC:10144.
+  - node_id: prd1_rp1
+    label: deoxyhypusine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10144 ([eIF5A protein]-deoxyhypusine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82657
+  - node_id: prd2
+    label: propane-1,3-diamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57484
+    description: Formula C3H12N2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: deoxyhypusine synthase activity
+    grounding: GO:0034038
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: deoxyhypusine synthase
+    grounding: EC:2.5.1.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O28088
+    node_type: PROTEIN
+    label: DHYS1_ARCFU
+    grounding: UniProtKB:O28088
+  - node_id: prot_Q8TS38
+    node_type: PROTEIN
+    label: DHYS1_METAC
+    grounding: UniProtKB:Q8TS38
+  - node_id: prot_Q8PV89
+    node_type: PROTEIN
+    label: DHYS1_METMA
+    grounding: UniProtKB:Q8PV89
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[eIF5A protein]-L-lysine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:33300
+      snippet: '[eIF5A protein]-L-lysine + spermidine => [eIF5A protein]-deoxyhypusine + propane-1,3-diamine'
+      notes: Rhea's left-to-right directional reaction RHEA:33300 declares side 33299_L as its substrates
+        (rh:substrates); the master reaction RHEA:33299 is undirected. This participant is GENERIC:10143
+        with coefficient 1. Rhea cites PMID:9285092, PMID:10734052, PMID:7673224, PMID:2108161 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-lysine residue is the reactive part of [eIF5A protein]-L-lysine.
+    evidence:
+    - reference: RHEA:33299
+      snippet: L-lysine residue
+      notes: Rhea compound GENERIC:10143 ([eIF5A protein]-L-lysine) declares rh:reactivePart = L-lysine
+        residue (CHEBI:29969), formula C6H13N2O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: spermidine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33300
+      snippet: '[eIF5A protein]-L-lysine + spermidine => [eIF5A protein]-deoxyhypusine + propane-1,3-diamine'
+      notes: Rhea's left-to-right directional reaction RHEA:33300 declares side 33299_L as its substrates
+        (rh:substrates); the master reaction RHEA:33299 is undirected. This participant is CHEBI:57834
+        with coefficient 1. Rhea cites PMID:9285092, PMID:10734052, PMID:7673224, PMID:2108161 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[eIF5A protein]-deoxyhypusine is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:33300
+      snippet: '[eIF5A protein]-L-lysine + spermidine => [eIF5A protein]-deoxyhypusine + propane-1,3-diamine'
+      notes: Rhea's left-to-right directional reaction RHEA:33300 declares side 33299_R as its products
+        (rh:products); the master reaction RHEA:33299 is undirected. This participant is GENERIC:10144
+        with coefficient 1. Rhea cites PMID:9285092, PMID:10734052, PMID:7673224, PMID:2108161 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: deoxyhypusine residue is the reactive part of [eIF5A protein]-deoxyhypusine.
+    evidence:
+    - reference: RHEA:33299
+      snippet: deoxyhypusine residue
+      notes: Rhea compound GENERIC:10144 ([eIF5A protein]-deoxyhypusine) declares rh:reactivePart = deoxyhypusine
+        residue (CHEBI:82657), formula C10H23N3O.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: propane-1,3-diamine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33300
+      snippet: '[eIF5A protein]-L-lysine + spermidine => [eIF5A protein]-deoxyhypusine + propane-1,3-diamine'
+      notes: Rhea's left-to-right directional reaction RHEA:33300 declares side 33299_R as its products
+        (rh:products); the master reaction RHEA:33299 is undirected. This participant is CHEBI:57484 with
+        coefficient 1. Rhea cites PMID:9285092, PMID:10734052, PMID:7673224, PMID:2108161 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:33299
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0034038"/>
+      notes: The rdfs:seeAlso triple on RHEA:33299 in rhea.rdf. GO term GO:0034038 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.5.1.46; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:33299
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.46"/>
+      notes: The rh:ec triple on RHEA:33299 in rhea.rdf. EC 2.5.1.46 is itself a record in this KB.
+  - subject: prot_O28088
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHYS1_ARCFU is an exemplar enzyme carrying EC 2.5.1.46, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.46
+      snippet: DR   O28088, DHYS1_ARCFU;  Q8TS38, DHYS1_METAC;  Q8PV89, DHYS1_METMA;
+      notes: ExPASy ENZYME entry EC 2.5.1.46 cross-references UniProtKB:O28088 (DHYS1_ARCFU) as a protein
+        with this activity.
+    - reference: RHEA:33299
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.46"/>
+      notes: Rhea assigns RHEA:33299 to EC 2.5.1.46, and EC 2.5.1.46 maps to exactly one Rhea master reaction
+        (RHEA:33299), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q8TS38
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHYS1_METAC is an exemplar enzyme carrying EC 2.5.1.46, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.46
+      snippet: DR   O28088, DHYS1_ARCFU;  Q8TS38, DHYS1_METAC;  Q8PV89, DHYS1_METMA;
+      notes: ExPASy ENZYME entry EC 2.5.1.46 cross-references UniProtKB:Q8TS38 (DHYS1_METAC) as a protein
+        with this activity.
+    - reference: RHEA:33299
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.46"/>
+      notes: Rhea assigns RHEA:33299 to EC 2.5.1.46, and EC 2.5.1.46 maps to exactly one Rhea master reaction
+        (RHEA:33299), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q8PV89
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHYS1_METMA is an exemplar enzyme carrying EC 2.5.1.46, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.46
+      snippet: DR   O28088, DHYS1_ARCFU;  Q8TS38, DHYS1_METAC;  Q8PV89, DHYS1_METMA;
+      notes: ExPASy ENZYME entry EC 2.5.1.46 cross-references UniProtKB:Q8PV89 (DHYS1_METMA) as a protein
+        with this activity.
+    - reference: RHEA:33299
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.46"/>
+      notes: Rhea assigns RHEA:33299 to EC 2.5.1.46, and EC 2.5.1.46 maps to exactly one Rhea master reaction
+        (RHEA:33299), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

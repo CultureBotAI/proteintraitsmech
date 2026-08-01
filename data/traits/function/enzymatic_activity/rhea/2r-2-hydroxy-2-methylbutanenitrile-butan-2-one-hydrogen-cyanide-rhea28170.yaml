@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.46
     mapping_source: rhea2ec
@@ -28,4 +28,126 @@ definitions:
       Catalyses the reaction: (2R)-2-hydroxy-2-methylbutanenitrile = butan-2-one + hydrogen cyanide
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2R)-2-hydroxy-2-methylbutanenitrile = butan-2-one + hydrogen cyanide
+  description: Substrate-to-product chemistry of RHEA:28170, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28171 (rh:substrates → 28170_L, rh:products → 28170_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2R)-2-hydroxy-2-methylbutanenitrile = butan-2-one + hydrogen cyanide
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28170
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2R)-2-hydroxy-2-methylbutanenitrile = butan-2-one + hydrogen cyanide'
+  - node_id: sub1
+    label: (2R)-2-hydroxy-2-methylbutanenitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:60908
+    description: Formula C5H9NO.
+  - node_id: prd1
+    label: butan-2-one
+    node_type: CHEMICAL
+    grounding: CHEBI:28398
+    description: Formula C4H8O.
+  - node_id: prd2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aliphatic (R)-hydroxynitrile lyase activity
+    grounding: GO:0052919
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: aliphatic (R)-hydroxynitrile lyase
+    grounding: EC:4.1.2.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P93243
+    node_type: PROTEIN
+    label: AHNL_LINUS
+    grounding: UniProtKB:P93243
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2R)-2-hydroxy-2-methylbutanenitrile is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:28171
+      snippet: (2R)-2-hydroxy-2-methylbutanenitrile => butan-2-one + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:28171 declares side 28170_L as its substrates
+        (rh:substrates); the master reaction RHEA:28170 is undirected. This participant is CHEBI:60908
+        with coefficient 1. Rhea cites PMID:3377504, PMID:9030531 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: butan-2-one is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28171
+      snippet: (2R)-2-hydroxy-2-methylbutanenitrile => butan-2-one + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:28171 declares side 28170_R as its products
+        (rh:products); the master reaction RHEA:28170 is undirected. This participant is CHEBI:28398 with
+        coefficient 1. Rhea cites PMID:3377504, PMID:9030531 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hydrogen cyanide is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28171
+      snippet: (2R)-2-hydroxy-2-methylbutanenitrile => butan-2-one + hydrogen cyanide
+      notes: Rhea's left-to-right directional reaction RHEA:28171 declares side 28170_R as its products
+        (rh:products); the master reaction RHEA:28170 is undirected. This participant is CHEBI:18407 with
+        coefficient 1. Rhea cites PMID:3377504, PMID:9030531 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:28170
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052919"/>
+      notes: The rdfs:seeAlso triple on RHEA:28170 in rhea.rdf. GO term GO:0052919 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.46; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28170
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.46"/>
+      notes: The rh:ec triple on RHEA:28170 in rhea.rdf. EC 4.1.2.46 is itself a record in this KB.
+  - subject: prot_P93243
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHNL_LINUS is an exemplar enzyme carrying EC 4.1.2.46, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.46
+      snippet: DR   P93243, AHNL_LINUS ;
+      notes: ExPASy ENZYME entry EC 4.1.2.46 cross-references UniProtKB:P93243 (AHNL_LINUS) as a protein
+        with this activity.
+    - reference: RHEA:28170
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.46"/>
+      notes: Rhea assigns RHEA:28170 to EC 4.1.2.46, and EC 4.1.2.46 maps to exactly one Rhea master reaction
+        (RHEA:28170), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.97.1.-
 mapped_xrefs:
@@ -36,4 +36,223 @@ definitions:
       Catalyses: reduced [plastocyanin] + hnu + oxidized [2Fe-2S]-[ferredoxin] = oxidized [plastocyanin] + reduced [2Fe-2S]-[ferredoxin]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of photosystem I
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.97.1.12. EC 1.97.1.12 maps to
+    exactly one curated Rhea reaction (RHEA:30407), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "reduced
+    [plastocyanin] + hnu + oxidized [2Fe-2S]-[ferredoxin] = oxidized [plastocyanin] + reduced [2Fe-2S]-[ferredoxin]".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: photosystem I
+    grounding: EC:1.97.1.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: reduced [plastocyanin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10039
+    description: Rhea compound GENERIC:10039.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: Cu(+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:10039 (reduced [plastocyanin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:49552
+  - node_id: sub2
+    label: hnu
+    node_type: CHEMICAL
+    grounding: CHEBI:30212
+  - node_id: sub3
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: sub3_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd1
+    label: oxidized [plastocyanin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10040
+    description: Rhea compound GENERIC:10040.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: Cu(2+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:10040 (oxidized
+      [plastocyanin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29036
+  - node_id: prd2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: prot_B0C474
+    node_type: PROTEIN
+    label: PSAA_ACAM1
+    grounding: UniProtKB:B0C474
+  - node_id: prot_Q3V534
+    node_type: PROTEIN
+    label: PSAA_ACOCL
+    grounding: UniProtKB:Q3V534
+  - node_id: prot_Q9MUJ3
+    node_type: PROTEIN
+    label: PSAA_ADICA
+    grounding: UniProtKB:Q9MUJ3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: reduced [plastocyanin] is a substrate consumed by RHEA:30407 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30408
+      snippet: reduced [plastocyanin] + hnu + oxidized [2Fe-2S]-[ferredoxin] => oxidized [plastocyanin]
+        + reduced [2Fe-2S]-[ferredoxin]
+      notes: Rhea's left-to-right directional reaction RHEA:30408 declares side 30407_L as its substrates
+        (rh:substrates); the master reaction RHEA:30407 is undirected. This participant is GENERIC:10039
+        with coefficient 1. Rhea cites PMID:11418848, PMID:1778985, PMID:11337410, PMID:10066800 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Cu(+) is the reactive part of reduced [plastocyanin].
+    evidence:
+    - reference: RHEA:30407
+      snippet: Cu(+)
+      notes: Rhea compound GENERIC:10039 (reduced [plastocyanin]) declares rh:reactivePart = Cu(+) (CHEBI:49552).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hnu is a substrate consumed by RHEA:30407 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30408
+      snippet: reduced [plastocyanin] + hnu + oxidized [2Fe-2S]-[ferredoxin] => oxidized [plastocyanin]
+        + reduced [2Fe-2S]-[ferredoxin]
+      notes: Rhea's left-to-right directional reaction RHEA:30408 declares side 30407_L as its substrates
+        (rh:substrates); the master reaction RHEA:30407 is undirected. This participant is CHEBI:30212
+        with coefficient 1. Rhea cites PMID:11418848, PMID:1778985, PMID:11337410, PMID:10066800 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: oxidized [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:30407 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:30408
+      snippet: reduced [plastocyanin] + hnu + oxidized [2Fe-2S]-[ferredoxin] => oxidized [plastocyanin]
+        + reduced [2Fe-2S]-[ferredoxin]
+      notes: Rhea's left-to-right directional reaction RHEA:30408 declares side 30407_L as its substrates
+        (rh:substrates); the master reaction RHEA:30407 is undirected. This participant is GENERIC:10000
+        with coefficient 1. Rhea cites PMID:11418848, PMID:1778985, PMID:11337410, PMID:10066800 for this
+        reaction.
+  - subject: sub3_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub3
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:30407
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: oxidized [plastocyanin] is a product released by RHEA:30407 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30408
+      snippet: reduced [plastocyanin] + hnu + oxidized [2Fe-2S]-[ferredoxin] => oxidized [plastocyanin]
+        + reduced [2Fe-2S]-[ferredoxin]
+      notes: Rhea's left-to-right directional reaction RHEA:30408 declares side 30407_R as its products
+        (rh:products); the master reaction RHEA:30407 is undirected. This participant is GENERIC:10040
+        with coefficient 1. Rhea cites PMID:11418848, PMID:1778985, PMID:11337410, PMID:10066800 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Cu(2+) is the reactive part of oxidized [plastocyanin].
+    evidence:
+    - reference: RHEA:30407
+      snippet: Cu(2+)
+      notes: Rhea compound GENERIC:10040 (oxidized [plastocyanin]) declares rh:reactivePart = Cu(2+) (CHEBI:29036).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: reduced [2Fe-2S]-[ferredoxin] is a product released by RHEA:30407 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30408
+      snippet: reduced [plastocyanin] + hnu + oxidized [2Fe-2S]-[ferredoxin] => oxidized [plastocyanin]
+        + reduced [2Fe-2S]-[ferredoxin]
+      notes: Rhea's left-to-right directional reaction RHEA:30408 declares side 30407_R as its products
+        (rh:products); the master reaction RHEA:30407 is undirected. This participant is GENERIC:10001
+        with coefficient 1. Rhea cites PMID:11418848, PMID:1778985, PMID:11337410, PMID:10066800 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:30407
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: prot_B0C474
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSAA_ACAM1 is an exemplar enzyme with EC 1.97.1.12 activity.
+    evidence:
+    - reference: EC:1.97.1.12
+      snippet: DR   B0C474, PSAA_ACAM1 ;  Q3V534, PSAA_ACOCL ;  Q9MUJ3, PSAA_ADICA ;
+      notes: ExPASy ENZYME entry EC 1.97.1.12 cross-references UniProtKB:B0C474 (PSAA_ACAM1) as a protein
+        with this activity.
+  - subject: prot_Q3V534
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSAA_ACOCL is an exemplar enzyme with EC 1.97.1.12 activity.
+    evidence:
+    - reference: EC:1.97.1.12
+      snippet: DR   B0C474, PSAA_ACAM1 ;  Q3V534, PSAA_ACOCL ;  Q9MUJ3, PSAA_ADICA ;
+      notes: ExPASy ENZYME entry EC 1.97.1.12 cross-references UniProtKB:Q3V534 (PSAA_ACOCL) as a protein
+        with this activity.
+  - subject: prot_Q9MUJ3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSAA_ADICA is an exemplar enzyme with EC 1.97.1.12 activity.
+    evidence:
+    - reference: EC:1.97.1.12
+      snippet: DR   B0C474, PSAA_ACAM1 ;  Q3V534, PSAA_ACOCL ;  Q9MUJ3, PSAA_ADICA ;
+      notes: ExPASy ENZYME entry EC 1.97.1.12 cross-references UniProtKB:Q9MUJ3 (PSAA_ADICA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

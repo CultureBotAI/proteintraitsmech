@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78001
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,93 @@ definitions:
       Catalyses the reaction: N-dodecanoyl-(4R)-hydroxysphinganine + H2O = (4R)-hydroxysphinganine + dodecanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-dodecanoyl-(4R)-hydroxysphinganine + H2O = (4R)-hydroxysphinganine +
+    dodecanoate
+  description: Substrate-to-product chemistry of RHEA:41303, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:41304 (rh:substrates → 41303_L, rh:products → 41303_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-dodecanoyl-(4R)-hydroxysphinganine + H2O = (4R)-hydroxysphinganine + dodec…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:41303
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-dodecanoyl-(4R)-hydroxysphinganine + H2O = (4R)-hydroxysphinganine + dodecanoate'
+  - node_id: sub1
+    label: N-dodecanoyl-(4R)-hydroxysphinganine
+    node_type: CHEMICAL
+    grounding: CHEBI:78001
+    description: Formula C30H61NO4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (4R)-hydroxysphinganine
+    node_type: CHEMICAL
+    grounding: CHEBI:64124
+    description: Formula C18H40NO3.
+  - node_id: prd2
+    label: dodecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:18262
+    description: Formula C12H23O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-dodecanoyl-(4R)-hydroxysphinganine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:41304
+      snippet: N-dodecanoyl-(4R)-hydroxysphinganine + H2O => (4R)-hydroxysphinganine + dodecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:41304 declares side 41303_L as its substrates
+        (rh:substrates); the master reaction RHEA:41303 is undirected. This participant is CHEBI:78001
+        with coefficient 1. Rhea cites PMID:12764132 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41304
+      snippet: N-dodecanoyl-(4R)-hydroxysphinganine + H2O => (4R)-hydroxysphinganine + dodecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:41304 declares side 41303_L as its substrates
+        (rh:substrates); the master reaction RHEA:41303 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12764132 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (4R)-hydroxysphinganine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41304
+      snippet: N-dodecanoyl-(4R)-hydroxysphinganine + H2O => (4R)-hydroxysphinganine + dodecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:41304 declares side 41303_R as its products
+        (rh:products); the master reaction RHEA:41303 is undirected. This participant is CHEBI:64124 with
+        coefficient 1. Rhea cites PMID:12764132 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dodecanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41304
+      snippet: N-dodecanoyl-(4R)-hydroxysphinganine + H2O => (4R)-hydroxysphinganine + dodecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:41304 declares side 41303_R as its products
+        (rh:products); the master reaction RHEA:41303 is undirected. This participant is CHEBI:18262 with
+        coefficient 1. Rhea cites PMID:12764132 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

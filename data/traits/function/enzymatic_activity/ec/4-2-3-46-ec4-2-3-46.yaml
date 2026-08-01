@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -43,4 +43,135 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = (3E,6E)-alpha-farnesene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha-farnesene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.46. EC 4.2.3.46 maps to exactly
+    one curated Rhea reaction (RHEA:27421), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = (3E,6E)-alpha-farnesene + diphosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-farnesene synthase
+    grounding: EC:4.2.3.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (3E,6E)-alpha-farnesene
+    node_type: CHEMICAL
+    grounding: CHEBI:10280
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-farnesene synthase activity
+    grounding: GO:0052578
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q84LB2
+    node_type: PROTEIN
+    label: AFS1_MALDO
+    grounding: UniProtKB:Q84LB2
+  - node_id: prot_B2KSJ6
+    node_type: PROTEIN
+    label: AFSY1_CUCME
+    grounding: UniProtKB:B2KSJ6
+  - node_id: prot_F2XF99
+    node_type: PROTEIN
+    label: FARNS_PICXS
+    grounding: UniProtKB:F2XF99
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:27421 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27422
+      snippet: (2E,6E)-farnesyl diphosphate => (3E,6E)-alpha-farnesene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27422 declares side 27421_L as its substrates
+        (rh:substrates); the master reaction RHEA:27421 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:21385377, PMID:19516075, PMID:27790999, PMID:30254228 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3E,6E)-alpha-farnesene is a product released by RHEA:27421 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27422
+      snippet: (2E,6E)-farnesyl diphosphate => (3E,6E)-alpha-farnesene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27422 declares side 27421_R as its products
+        (rh:products); the master reaction RHEA:27421 is undirected. This participant is CHEBI:10280 with
+        coefficient 1. Rhea cites PMID:21385377, PMID:19516075, PMID:27790999, PMID:30254228 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:27421 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27422
+      snippet: (2E,6E)-farnesyl diphosphate => (3E,6E)-alpha-farnesene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27422 declares side 27421_R as its products
+        (rh:products); the master reaction RHEA:27421 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21385377, PMID:19516075, PMID:27790999, PMID:30254228 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.46
+      snippet: EC:4.2.3.46 > GO:alpha-farnesene synthase activity ; GO:0052578
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0052578 is itself a record
+        in this KB.
+  - subject: prot_Q84LB2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFS1_MALDO is an exemplar enzyme with EC 4.2.3.46 activity.
+    evidence:
+    - reference: EC:4.2.3.46
+      snippet: DR   Q84LB2, AFS1_MALDO ;  B2KSJ6, AFSY1_CUCME;  F2XF99, FARNS_PICXS;
+      notes: ExPASy ENZYME entry EC 4.2.3.46 cross-references UniProtKB:Q84LB2 (AFS1_MALDO) as a protein
+        with this activity.
+  - subject: prot_B2KSJ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFSY1_CUCME is an exemplar enzyme with EC 4.2.3.46 activity.
+    evidence:
+    - reference: EC:4.2.3.46
+      snippet: DR   Q84LB2, AFS1_MALDO ;  B2KSJ6, AFSY1_CUCME;  F2XF99, FARNS_PICXS;
+      notes: ExPASy ENZYME entry EC 4.2.3.46 cross-references UniProtKB:B2KSJ6 (AFSY1_CUCME) as a protein
+        with this activity.
+  - subject: prot_F2XF99
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FARNS_PICXS is an exemplar enzyme with EC 4.2.3.46 activity.
+    evidence:
+    - reference: EC:4.2.3.46
+      snippet: DR   Q84LB2, AFS1_MALDO ;  B2KSJ6, AFSY1_CUCME;  F2XF99, FARNS_PICXS;
+      notes: ExPASy ENZYME entry EC 4.2.3.46 cross-references UniProtKB:F2XF99 (FARNS_PICXS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

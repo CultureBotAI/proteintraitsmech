@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.5.1.-
 synonyms:
@@ -37,4 +37,239 @@ definitions:
       Catalyses: (1) 5,6,7,8-tetrahydromethanopterin + NADP(+) = 7,8-dihydromethanopterin + NADPH + H(+). (2) 5,6,7,8-tetrahydromethanopterin + NAD(+) = 7,8-dihydromethanopterin + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dihydromethanopterin reductase [NAD(P)(+)]
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.5.1.47. Rhea assigns 2 curated
+    reactions to EC 1.5.1.47. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 5,6,7,8-tetrahydromethanopterin + NADP(+) = 7,8-dihydromethanopterin
+    + NADPH + H(+). (2) 5,6,7,8-tetrahydromethanopterin + NAD(+) = 7,8-dihydromethanopterin + NADH + H(+)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dihydromethanopterin reductase [NAD(P)(+)]
+    grounding: EC:1.5.1.47
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 5,6,7,8-tetrahydromethanopterin + NADP(+) = 7,8-dihydromethanopterin + NADPH…
+    grounding: RHEA:35819
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 5,6,7,8-tetrahydromethanopterin + NADP(+) = 7,8-dihydromethanopterin +
+      NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: 5,6,7,8-tetrahydromethanopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:58103
+    description: Formula C30H42N6O16P.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: 7,8-dihydromethanopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:72788
+    description: Formula C30H40N6O16P.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 5,6,7,8-tetrahydromethanopterin + NAD(+) = 7,8-dihydromethanopterin + NADH +…
+    grounding: RHEA:35823
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 5,6,7,8-tetrahydromethanopterin + NAD(+) = 7,8-dihydromethanopterin + NADH
+      + H(+)'
+  - node_id: rxn2_sub1
+    label: 5,6,7,8-tetrahydromethanopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:58103
+    description: Formula C30H42N6O16P.
+  - node_id: rxn2_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2_prd1
+    label: 7,8-dihydromethanopterin
+    node_type: CHEMICAL
+    grounding: CHEBI:72788
+    description: Formula C30H40N6O16P.
+  - node_id: rxn2_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_C5B2R8
+    node_type: PROTEIN
+    label: DMRA_METEA
+    grounding: UniProtKB:C5B2R8
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:35819 is one of the 2 curated reactions Rhea assigns to EC 1.5.1.47; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:35819
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.1.47"/>
+      notes: The rh:ec triple on RHEA:35819 in rhea.rdf assigns that reaction to EC 1.5.1.47.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 5,6,7,8-tetrahydromethanopterin is a substrate consumed by RHEA:35819 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:35820
+      snippet: 5,6,7,8-tetrahydromethanopterin + NADP(+) => 7,8-dihydromethanopterin + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35820 declares side 35819_L as its substrates
+        (rh:substrates); the master reaction RHEA:35819 is undirected. This participant is CHEBI:58103
+        with coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:35819 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35820
+      snippet: 5,6,7,8-tetrahydromethanopterin + NADP(+) => 7,8-dihydromethanopterin + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35820 declares side 35819_L as its substrates
+        (rh:substrates); the master reaction RHEA:35819 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 7,8-dihydromethanopterin is a product released by RHEA:35819 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35820
+      snippet: 5,6,7,8-tetrahydromethanopterin + NADP(+) => 7,8-dihydromethanopterin + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35820 declares side 35819_R as its products
+        (rh:products); the master reaction RHEA:35819 is undirected. This participant is CHEBI:72788 with
+        coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:35819 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35820
+      snippet: 5,6,7,8-tetrahydromethanopterin + NADP(+) => 7,8-dihydromethanopterin + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35820 declares side 35819_R as its products
+        (rh:products); the master reaction RHEA:35819 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:35819 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35820
+      snippet: 5,6,7,8-tetrahydromethanopterin + NADP(+) => 7,8-dihydromethanopterin + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35820 declares side 35819_R as its products
+        (rh:products); the master reaction RHEA:35819 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:35823 is one of the 2 curated reactions Rhea assigns to EC 1.5.1.47; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:35823
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.1.47"/>
+      notes: The rh:ec triple on RHEA:35823 in rhea.rdf assigns that reaction to EC 1.5.1.47.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 5,6,7,8-tetrahydromethanopterin is a substrate consumed by RHEA:35823 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:35824
+      snippet: 5,6,7,8-tetrahydromethanopterin + NAD(+) => 7,8-dihydromethanopterin + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35824 declares side 35823_L as its substrates
+        (rh:substrates); the master reaction RHEA:35823 is undirected. This participant is CHEBI:58103
+        with coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NAD(+) is a substrate consumed by RHEA:35823 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35824
+      snippet: 5,6,7,8-tetrahydromethanopterin + NAD(+) => 7,8-dihydromethanopterin + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35824 declares side 35823_L as its substrates
+        (rh:substrates); the master reaction RHEA:35823 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 7,8-dihydromethanopterin is a product released by RHEA:35823 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35824
+      snippet: 5,6,7,8-tetrahydromethanopterin + NAD(+) => 7,8-dihydromethanopterin + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35824 declares side 35823_R as its products
+        (rh:products); the master reaction RHEA:35823 is undirected. This participant is CHEBI:72788 with
+        coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADH is a product released by RHEA:35823 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35824
+      snippet: 5,6,7,8-tetrahydromethanopterin + NAD(+) => 7,8-dihydromethanopterin + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35824 declares side 35823_R as its products
+        (rh:products); the master reaction RHEA:35823 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:35823 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35824
+      snippet: 5,6,7,8-tetrahydromethanopterin + NAD(+) => 7,8-dihydromethanopterin + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35824 declares side 35823_R as its products
+        (rh:products); the master reaction RHEA:35823 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15028691 for this reaction.
+  - subject: prot_C5B2R8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DMRA_METEA is an exemplar enzyme with EC 1.5.1.47 activity.
+    evidence:
+    - reference: EC:1.5.1.47
+      snippet: DR   C5B2R8, DMRA_METEA ;
+      notes: ExPASy ENZYME entry EC 1.5.1.47 cross-references UniProtKB:C5B2R8 (DMRA_METEA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

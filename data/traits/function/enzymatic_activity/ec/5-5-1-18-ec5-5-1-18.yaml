@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 mapped_xrefs:
@@ -40,4 +40,215 @@ definitions:
       Catalyses: a carotenoid psi-end derivative = a carotenoid epsilon-end derivative
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lycopene epsilon-cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.18. Rhea assigns 3 curated
+    reactions to EC 5.5.1.18. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "a carotenoid psi-end derivative = a carotenoid epsilon-end
+    derivative". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lycopene epsilon-cyclase
+    grounding: EC:5.5.1.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of all-trans-lycopene = delta-carotene
+    grounding: RHEA:53124
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: all-trans-lycopene = delta-carotene'
+  - node_id: rxn1_sub1
+    label: all-trans-lycopene
+    node_type: CHEMICAL
+    grounding: CHEBI:15948
+    description: Formula C40H56.
+  - node_id: rxn1_prd1
+    label: delta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:27705
+    description: Formula C40H56.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of delta-carotene = epsilon-carotene
+    grounding: RHEA:53128
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: delta-carotene = epsilon-carotene'
+  - node_id: rxn2_sub1
+    label: delta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:27705
+    description: Formula C40H56.
+  - node_id: rxn2_prd1
+    label: epsilon-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:32549
+    description: Formula C40H56.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a carotenoid psi-end derivative = a carotenoid epsilon-end derivative
+    grounding: RHEA:55616
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a carotenoid psi-end derivative = a carotenoid epsilon-end derivative'
+  - node_id: rxn3_sub1
+    label: a carotenoid psi-end derivative
+    node_type: CHEMICAL
+    grounding: CHEBI:139114
+    description: Formula C19H27R.
+  - node_id: rxn3_prd1
+    label: a carotenoid epsilon-end derivative
+    node_type: CHEMICAL
+    grounding: CHEBI:139115
+    description: Formula C19H27R.
+  - node_id: prot_Q38932
+    node_type: PROTEIN
+    label: LCYE_ARATH
+    grounding: UniProtKB:Q38932
+  - node_id: prot_D9IL24
+    node_type: PROTEIN
+    label: LCYE_ONCHC
+    grounding: UniProtKB:D9IL24
+  - node_id: prot_O65837
+    node_type: PROTEIN
+    label: LCYE_SOLLC
+    grounding: UniProtKB:O65837
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:53124 is one of the 3 curated reactions Rhea assigns to EC 5.5.1.18; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:53124
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.18"/>
+      notes: The rh:ec triple on RHEA:53124 in rhea.rdf assigns that reaction to EC 5.5.1.18.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: all-trans-lycopene is a substrate consumed by RHEA:53124 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53125
+      snippet: all-trans-lycopene => delta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:53125 declares side 53124_L as its substrates
+        (rh:substrates); the master reaction RHEA:53124 is undirected. This participant is CHEBI:15948
+        with coefficient 1. Rhea cites PMID:11226339, PMID:12712234 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: delta-carotene is a product released by RHEA:53124 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53125
+      snippet: all-trans-lycopene => delta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:53125 declares side 53124_R as its products
+        (rh:products); the master reaction RHEA:53124 is undirected. This participant is CHEBI:27705 with
+        coefficient 1. Rhea cites PMID:11226339, PMID:12712234 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:53128 is one of the 3 curated reactions Rhea assigns to EC 5.5.1.18; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:53128
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.18"/>
+      notes: The rh:ec triple on RHEA:53128 in rhea.rdf assigns that reaction to EC 5.5.1.18.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: delta-carotene is a substrate consumed by RHEA:53128 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53129
+      snippet: delta-carotene => epsilon-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:53129 declares side 53128_L as its substrates
+        (rh:substrates); the master reaction RHEA:53128 is undirected. This participant is CHEBI:27705
+        with coefficient 1. Rhea cites PMID:11226339, PMID:12712234 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: epsilon-carotene is a product released by RHEA:53128 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53129
+      snippet: delta-carotene => epsilon-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:53129 declares side 53128_R as its products
+        (rh:products); the master reaction RHEA:53128 is undirected. This participant is CHEBI:32549 with
+        coefficient 1. Rhea cites PMID:11226339, PMID:12712234 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:55616 is one of the 3 curated reactions Rhea assigns to EC 5.5.1.18; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:55616
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.18"/>
+      notes: The rh:ec triple on RHEA:55616 in rhea.rdf assigns that reaction to EC 5.5.1.18.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: a carotenoid psi-end derivative is a substrate consumed by RHEA:55616 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:55617
+      snippet: a carotenoid psi-end derivative => a carotenoid epsilon-end derivative
+      notes: Rhea's left-to-right directional reaction RHEA:55617 declares side 55616_L as its substrates
+        (rh:substrates); the master reaction RHEA:55616 is undirected. This participant is CHEBI:139114
+        with coefficient 1. Rhea cites PMID:11226339, PMID:8837512, PMID:12712234 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: a carotenoid epsilon-end derivative is a product released by RHEA:55616 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:55617
+      snippet: a carotenoid psi-end derivative => a carotenoid epsilon-end derivative
+      notes: Rhea's left-to-right directional reaction RHEA:55617 declares side 55616_R as its products
+        (rh:products); the master reaction RHEA:55616 is undirected. This participant is CHEBI:139115
+        with coefficient 1. Rhea cites PMID:11226339, PMID:8837512, PMID:12712234 for this reaction.
+  - subject: prot_Q38932
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCYE_ARATH is an exemplar enzyme with EC 5.5.1.18 activity.
+    evidence:
+    - reference: EC:5.5.1.18
+      snippet: DR   Q38932, LCYE_ARATH ;  D9IL24, LCYE_ONCHC ;  O65837, LCYE_SOLLC ;
+      notes: ExPASy ENZYME entry EC 5.5.1.18 cross-references UniProtKB:Q38932 (LCYE_ARATH) as a protein
+        with this activity.
+  - subject: prot_D9IL24
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCYE_ONCHC is an exemplar enzyme with EC 5.5.1.18 activity.
+    evidence:
+    - reference: EC:5.5.1.18
+      snippet: DR   Q38932, LCYE_ARATH ;  D9IL24, LCYE_ONCHC ;  O65837, LCYE_SOLLC ;
+      notes: ExPASy ENZYME entry EC 5.5.1.18 cross-references UniProtKB:D9IL24 (LCYE_ONCHC) as a protein
+        with this activity.
+  - subject: prot_O65837
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCYE_SOLLC is an exemplar enzyme with EC 5.5.1.18 activity.
+    evidence:
+    - reference: EC:5.5.1.18
+      snippet: DR   Q38932, LCYE_ARATH ;  D9IL24, LCYE_ONCHC ;  O65837, LCYE_SOLLC ;
+      notes: ExPASy ENZYME entry EC 5.5.1.18 cross-references UniProtKB:O65837 (LCYE_SOLLC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

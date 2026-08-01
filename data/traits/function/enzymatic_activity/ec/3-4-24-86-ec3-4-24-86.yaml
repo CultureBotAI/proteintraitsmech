@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -38,4 +38,68 @@ definitions:
       Catalyses: Narrow endopeptidase specificity. Cleaves Pro-Leu-Ala-Gln-Ala-|-Val- Arg-Ser-Ser-Ser in the membrane-bound, 26-kDa form of tumor necrosis factor alpha (TNFalpha). Similarly cleaves other membrane-anchored, cell- surface proteins to 'shed' the extracellular domains
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ADAM 17 endopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.86. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Narrow
+    endopeptidase specificity. Cleaves Pro-Leu-Ala-Gln-Ala-|-Val- Arg-Ser-Ser-Ser in the membrane-bound,
+    26-kDa form of tumor necrosis factor alpha (TNFalpha). Similarly cleaves other membrane-anchored,
+    cell- surface proteins to ''shed'' the extracellular domains".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ADAM 17 endopeptidase
+    grounding: EC:3.4.24.86
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P78536
+    node_type: PROTEIN
+    label: ADA17_HUMAN
+    grounding: UniProtKB:P78536
+  - node_id: prot_Q9Z0F8
+    node_type: PROTEIN
+    label: ADA17_MOUSE
+    grounding: UniProtKB:Q9Z0F8
+  - node_id: prot_O77636
+    node_type: PROTEIN
+    label: ADA17_PIG
+    grounding: UniProtKB:O77636
+  edges:
+  - subject: prot_P78536
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADA17_HUMAN is an exemplar enzyme with EC 3.4.24.86 activity.
+    evidence:
+    - reference: EC:3.4.24.86
+      snippet: DR   P78536, ADA17_HUMAN;  Q9Z0F8, ADA17_MOUSE;  O77636, ADA17_PIG  ;
+      notes: ExPASy ENZYME entry EC 3.4.24.86 cross-references UniProtKB:P78536 (ADA17_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9Z0F8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADA17_MOUSE is an exemplar enzyme with EC 3.4.24.86 activity.
+    evidence:
+    - reference: EC:3.4.24.86
+      snippet: DR   P78536, ADA17_HUMAN;  Q9Z0F8, ADA17_MOUSE;  O77636, ADA17_PIG  ;
+      notes: ExPASy ENZYME entry EC 3.4.24.86 cross-references UniProtKB:Q9Z0F8 (ADA17_MOUSE) as a protein
+        with this activity.
+  - subject: prot_O77636
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADA17_PIG is an exemplar enzyme with EC 3.4.24.86 activity.
+    evidence:
+    - reference: EC:3.4.24.86
+      snippet: DR   P78536, ADA17_HUMAN;  Q9Z0F8, ADA17_MOUSE;  O77636, ADA17_PIG  ;
+      notes: ExPASy ENZYME entry EC 3.4.24.86 cross-references UniProtKB:O77636 (ADA17_PIG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

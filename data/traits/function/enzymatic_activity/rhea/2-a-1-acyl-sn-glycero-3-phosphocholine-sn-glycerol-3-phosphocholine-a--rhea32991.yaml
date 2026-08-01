@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58168
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,79 @@ definitions:
       Catalyses the reaction: 2 a 1-acyl-sn-glycero-3-phosphocholine = sn-glycerol 3-phosphocholine + a 1,2-diacyl-sn-glycero-3-phosphocholine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 a 1-acyl-sn-glycero-3-phosphocholine = sn-glycerol 3-phosphocholine +
+    a 1,2-diacyl-sn…
+  description: Substrate-to-product chemistry of RHEA:32991, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:32992 (rh:substrates → 32991_L, rh:products → 32991_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 a 1-acyl-sn-glycero-3-phosphocholine = sn-glycerol 3-phosphocholine + a 1,…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:32991
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 a 1-acyl-sn-glycero-3-phosphocholine = sn-glycerol 3-phosphocholine + a 1,2-diacyl-sn-glycero-3-phosphocholine'
+  - node_id: sub1
+    label: a 1-acyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:58168
+    description: Formula C9H19NO7PR.
+  - node_id: prd1
+    label: sn-glycerol 3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:16870
+    description: Formula C8H20NO6P.
+  - node_id: prd2
+    label: a 1,2-diacyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:57643
+    description: Formula C10H18NO8PR2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 1-acyl-sn-glycero-3-phosphocholine is a substrate consumed by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:32992
+      snippet: 2 a 1-acyl-sn-glycero-3-phosphocholine => sn-glycerol 3-phosphocholine + a 1,2-diacyl-sn-glycero-3-phosphocholine
+      notes: Rhea's left-to-right directional reaction RHEA:32992 declares side 32991_L as its substrates
+        (rh:substrates); the master reaction RHEA:32991 is undirected. This participant is CHEBI:58168
+        with coefficient 2. Rhea cites PMID:10231538, PMID:8119970, PMID:10320809, PMID:8051052 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sn-glycerol 3-phosphocholine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32992
+      snippet: 2 a 1-acyl-sn-glycero-3-phosphocholine => sn-glycerol 3-phosphocholine + a 1,2-diacyl-sn-glycero-3-phosphocholine
+      notes: Rhea's left-to-right directional reaction RHEA:32992 declares side 32991_R as its products
+        (rh:products); the master reaction RHEA:32991 is undirected. This participant is CHEBI:16870 with
+        coefficient 1. Rhea cites PMID:10231538, PMID:8119970, PMID:10320809, PMID:8051052 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 1,2-diacyl-sn-glycero-3-phosphocholine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32992
+      snippet: 2 a 1-acyl-sn-glycero-3-phosphocholine => sn-glycerol 3-phosphocholine + a 1,2-diacyl-sn-glycero-3-phosphocholine
+      notes: Rhea's left-to-right directional reaction RHEA:32992 declares side 32991_R as its products
+        (rh:products); the master reaction RHEA:32991 is undirected. This participant is CHEBI:57643 with
+        coefficient 1. Rhea cites PMID:10231538, PMID:8119970, PMID:10320809, PMID:8051052 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

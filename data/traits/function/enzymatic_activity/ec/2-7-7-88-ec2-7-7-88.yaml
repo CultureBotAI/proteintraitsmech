@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -39,4 +39,191 @@ definitions:
       Catalyses: a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + GDP + H(+) = a 5'-end (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl- adenosine in mRNA + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of GDP polyribonucleotidyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.88. EC 2.7.7.88 maps to exactly
+    one curated Rhea reaction (RHEA:65436), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 5''-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine
+    in mRNA + GDP + H(+) = a 5''-end (5''-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl- adenosine
+    in mRNA + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: GDP polyribonucleotidyltransferase
+    grounding: EC:2.7.7.88
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine in mRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:16799
+    description: Rhea compound GENERIC:16799.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: ppp5'AACA-mRNA
+    description: The reacting group Rhea names inside the generic participant GENERIC:16799 (a 5'-end
+      triphospho-adenylyl-adenylyl-cytidylyl-adenosine in mRNA); no position on any specific protein sequence
+      is asserted.
+    grounding: CHEBI:156503
+  - node_id: sub2
+    label: GDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: a 5'-end (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine in mRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:16797
+    description: Rhea compound GENERIC:16797.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: G5'ppp5'AACA-mRNA
+    description: The reacting group Rhea names inside the generic participant GENERIC:16797 (a 5'-end
+      (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine in mRNA); no position on any specific
+      protein sequence is asserted.
+    grounding: CHEBI:156484
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q9QSP0
+    node_type: PROTEIN
+    label: L_ABLVB
+    grounding: UniProtKB:Q9QSP0
+  - node_id: prot_Q8JTG9
+    node_type: PROTEIN
+    label: L_ABLVH
+    grounding: UniProtKB:Q8JTG9
+  - node_id: prot_Q2Y2L8
+    node_type: PROTEIN
+    label: L_AMPV1
+    grounding: UniProtKB:Q2Y2L8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine in mRNA is a substrate consumed
+      by RHEA:65436 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65437
+      snippet: a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + GDP + H(+) => a 5'-end
+        (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:65437 declares side 65436_L as its substrates
+        (rh:substrates); the master reaction RHEA:65436 is undirected. This participant is GENERIC:16799
+        with coefficient 1. Rhea cites PMID:20142503, PMID:27213429, PMID:17218273 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: ppp5'AACA-mRNA is the reactive part of a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine
+      in mRNA.
+    evidence:
+    - reference: RHEA:65436
+      snippet: ppp5'AACA-mRNA
+      notes: Rhea compound GENERIC:16799 (a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine in
+        mRNA) declares rh:reactivePart = ppp5'AACA-mRNA (CHEBI:156503).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GDP is a substrate consumed by RHEA:65436 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65437
+      snippet: a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + GDP + H(+) => a 5'-end
+        (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:65437 declares side 65436_L as its substrates
+        (rh:substrates); the master reaction RHEA:65436 is undirected. This participant is CHEBI:58189
+        with coefficient 1. Rhea cites PMID:20142503, PMID:27213429, PMID:17218273 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:65436 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65437
+      snippet: a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + GDP + H(+) => a 5'-end
+        (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:65437 declares side 65436_L as its substrates
+        (rh:substrates); the master reaction RHEA:65436 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:20142503, PMID:27213429, PMID:17218273 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 5'-end (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine in mRNA is a
+      product released by RHEA:65436 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65437
+      snippet: a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + GDP + H(+) => a 5'-end
+        (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:65437 declares side 65436_R as its products
+        (rh:products); the master reaction RHEA:65436 is undirected. This participant is GENERIC:16797
+        with coefficient 1. Rhea cites PMID:20142503, PMID:27213429, PMID:17218273 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: G5'ppp5'AACA-mRNA is the reactive part of a 5'-end (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine
+      in mRNA.
+    evidence:
+    - reference: RHEA:65436
+      snippet: G5'ppp5'AACA-mRNA
+      notes: Rhea compound GENERIC:16797 (a 5'-end (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine
+        in mRNA) declares rh:reactivePart = G5'ppp5'AACA-mRNA (CHEBI:156484).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:65436 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65437
+      snippet: a 5'-end triphospho-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + GDP + H(+) => a 5'-end
+        (5'-triphosphoguanosine)-adenylyl-adenylyl-cytidylyl-adenosine in mRNA + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:65437 declares side 65436_R as its products
+        (rh:products); the master reaction RHEA:65436 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20142503, PMID:27213429, PMID:17218273 for this reaction.
+  - subject: prot_Q9QSP0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: L_ABLVB is an exemplar enzyme with EC 2.7.7.88 activity.
+    evidence:
+    - reference: EC:2.7.7.88
+      snippet: DR   Q9QSP0, L_ABLVB    ;  Q8JTG9, L_ABLVH    ;  Q2Y2L8, L_AMPV1    ;
+      notes: ExPASy ENZYME entry EC 2.7.7.88 cross-references UniProtKB:Q9QSP0 (L_ABLVB) as a protein
+        with this activity.
+  - subject: prot_Q8JTG9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: L_ABLVH is an exemplar enzyme with EC 2.7.7.88 activity.
+    evidence:
+    - reference: EC:2.7.7.88
+      snippet: DR   Q9QSP0, L_ABLVB    ;  Q8JTG9, L_ABLVH    ;  Q2Y2L8, L_AMPV1    ;
+      notes: ExPASy ENZYME entry EC 2.7.7.88 cross-references UniProtKB:Q8JTG9 (L_ABLVH) as a protein
+        with this activity.
+  - subject: prot_Q2Y2L8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: L_AMPV1 is an exemplar enzyme with EC 2.7.7.88 activity.
+    evidence:
+    - reference: EC:2.7.7.88
+      snippet: DR   Q9QSP0, L_ABLVB    ;  Q8JTG9, L_ABLVH    ;  Q2Y2L8, L_AMPV1    ;
+      notes: ExPASy ENZYME entry EC 2.7.7.88 cross-references UniProtKB:Q2Y2L8 (L_AMPV1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

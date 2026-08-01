@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:133392
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,61 @@ definitions:
       Catalyses the reaction: prostaglandin C2 = prostaglandin B2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of prostaglandin C2 = prostaglandin B2
+  description: Substrate-to-product chemistry of RHEA:50544, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50545 (rh:substrates → 50544_L, rh:products → 50544_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of prostaglandin C2 = prostaglandin B2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50544
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: prostaglandin C2 = prostaglandin B2'
+  - node_id: sub1
+    label: prostaglandin C2
+    node_type: CHEMICAL
+    grounding: CHEBI:133392
+    description: Formula C20H29O4.
+  - node_id: prd1
+    label: prostaglandin B2
+    node_type: CHEMICAL
+    grounding: CHEBI:133391
+    description: Formula C20H29O4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: prostaglandin C2 is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50545
+      snippet: prostaglandin C2 => prostaglandin B2
+      notes: Rhea's left-to-right directional reaction RHEA:50545 declares side 50544_L as its substrates
+        (rh:substrates); the master reaction RHEA:50544 is undirected. This participant is CHEBI:133392
+        with coefficient 1. Rhea cites PMID:5002702, PMID:1137404, PMID:4420472, PMID:4824819 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: prostaglandin B2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50545
+      snippet: prostaglandin C2 => prostaglandin B2
+      notes: Rhea's left-to-right directional reaction RHEA:50545 declares side 50544_R as its products
+        (rh:products); the master reaction RHEA:50544 is undirected. This participant is CHEBI:133391
+        with coefficient 1. Rhea cites PMID:5002702, PMID:1137404, PMID:4420472, PMID:4824819 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

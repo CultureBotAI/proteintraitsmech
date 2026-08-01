@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.3.-
 synonyms:
@@ -41,4 +41,180 @@ definitions:
       Catalyses: L-arginyl-[protein] + H2O = L-citrullyl-[protein] + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-arginine deiminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.3.15. EC 3.5.3.15 maps to exactly
+    one curated Rhea reaction (RHEA:18089), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-arginyl-[protein]
+    + H2O = L-citrullyl-[protein] + NH4(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-arginine deiminase
+    grounding: EC:3.5.3.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10532
+    description: Rhea compound GENERIC:10532.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-arginine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10532 (L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29965
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-citrullyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10588
+    description: Rhea compound GENERIC:10588.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-citrulline residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10588 (L-citrullyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83397
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-arginine deiminase activity
+    grounding: GO:0004668
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9ULC6
+    node_type: PROTEIN
+    label: PADI1_HUMAN
+    grounding: UniProtKB:Q9ULC6
+  - node_id: prot_Q9Z185
+    node_type: PROTEIN
+    label: PADI1_MOUSE
+    grounding: UniProtKB:Q9Z185
+  - node_id: prot_O88806
+    node_type: PROTEIN
+    label: PADI1_RAT
+    grounding: UniProtKB:O88806
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginyl-[protein] is a substrate consumed by RHEA:18089 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18090
+      snippet: L-arginyl-[protein] + H2O => L-citrullyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18090 declares side 18089_L as its substrates
+        (rh:substrates); the master reaction RHEA:18089 is undirected. This participant is GENERIC:10532
+        with coefficient 1. Rhea cites PMID:21245532, PMID:16567635, PMID:7217033 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-arginine residue is the reactive part of L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:18089
+      snippet: L-arginine residue
+      notes: Rhea compound GENERIC:10532 (L-arginyl-[protein]) declares rh:reactivePart = L-arginine residue
+        (CHEBI:29965).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:18089 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18090
+      snippet: L-arginyl-[protein] + H2O => L-citrullyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18090 declares side 18089_L as its substrates
+        (rh:substrates); the master reaction RHEA:18089 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21245532, PMID:16567635, PMID:7217033 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-citrullyl-[protein] is a product released by RHEA:18089 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18090
+      snippet: L-arginyl-[protein] + H2O => L-citrullyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18090 declares side 18089_R as its products
+        (rh:products); the master reaction RHEA:18089 is undirected. This participant is GENERIC:10588
+        with coefficient 1. Rhea cites PMID:21245532, PMID:16567635, PMID:7217033 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-citrulline residue is the reactive part of L-citrullyl-[protein].
+    evidence:
+    - reference: RHEA:18089
+      snippet: L-citrulline residue
+      notes: Rhea compound GENERIC:10588 (L-citrullyl-[protein]) declares rh:reactivePart = L-citrulline
+        residue (CHEBI:83397).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:18089 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18090
+      snippet: L-arginyl-[protein] + H2O => L-citrullyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18090 declares side 18089_R as its products
+        (rh:products); the master reaction RHEA:18089 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:21245532, PMID:16567635, PMID:7217033 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.3.15
+      snippet: EC:3.5.3.15 > GO:protein-arginine deiminase activity ; GO:0004668
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004668 is itself a record
+        in this KB.
+  - subject: prot_Q9ULC6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PADI1_HUMAN is an exemplar enzyme with EC 3.5.3.15 activity.
+    evidence:
+    - reference: EC:3.5.3.15
+      snippet: DR   Q9ULC6, PADI1_HUMAN;  Q9Z185, PADI1_MOUSE;  O88806, PADI1_RAT  ;
+      notes: ExPASy ENZYME entry EC 3.5.3.15 cross-references UniProtKB:Q9ULC6 (PADI1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9Z185
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PADI1_MOUSE is an exemplar enzyme with EC 3.5.3.15 activity.
+    evidence:
+    - reference: EC:3.5.3.15
+      snippet: DR   Q9ULC6, PADI1_HUMAN;  Q9Z185, PADI1_MOUSE;  O88806, PADI1_RAT  ;
+      notes: ExPASy ENZYME entry EC 3.5.3.15 cross-references UniProtKB:Q9Z185 (PADI1_MOUSE) as a protein
+        with this activity.
+  - subject: prot_O88806
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PADI1_RAT is an exemplar enzyme with EC 3.5.3.15 activity.
+    evidence:
+    - reference: EC:3.5.3.15
+      snippet: DR   Q9ULC6, PADI1_HUMAN;  Q9Z185, PADI1_MOUSE;  O88806, PADI1_RAT  ;
+      notes: ExPASy ENZYME entry EC 3.5.3.15 cross-references UniProtKB:O88806 (PADI1_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

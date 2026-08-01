@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.2.5.-
 synonyms:
@@ -41,4 +41,167 @@ definitions:
       Catalyses: CO + a quinone + H2O = a quinol + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aerobic carbon monoxide dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.2.5.3. EC 1.2.5.3 maps to exactly
+    one curated Rhea reaction (RHEA:48880), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "CO + a quinone
+    + H2O = a quinol + CO2". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aerobic carbon monoxide dehydrogenase
+    grounding: EC:1.2.5.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: CO
+    node_type: CHEMICAL
+    grounding: CHEBI:17245
+    description: Formula CO.
+  - node_id: sub2
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aerobic carbon monoxide dehydrogenase activity
+    grounding: GO:0008805
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P19919
+    node_type: PROTEIN
+    label: DCML_AFIC5
+    grounding: UniProtKB:P19919
+  - node_id: prot_P19916
+    node_type: PROTEIN
+    label: DCML_AFICR
+    grounding: UniProtKB:P19916
+  - node_id: prot_P19913
+    node_type: PROTEIN
+    label: DCML_HYDPS
+    grounding: UniProtKB:P19913
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: CO is a substrate consumed by RHEA:48880 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48881
+      snippet: CO + a quinone + H2O => a quinol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:48881 declares side 48880_L as its substrates
+        (rh:substrates); the master reaction RHEA:48880 is undirected. This participant is CHEBI:17245
+        with coefficient 1. Rhea cites PMID:16091936, PMID:25156151, PMID:12475995, PMID:21275368 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a quinone is a substrate consumed by RHEA:48880 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48881
+      snippet: CO + a quinone + H2O => a quinol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:48881 declares side 48880_L as its substrates
+        (rh:substrates); the master reaction RHEA:48880 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:16091936, PMID:25156151, PMID:12475995, PMID:21275368 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:48880 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48881
+      snippet: CO + a quinone + H2O => a quinol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:48881 declares side 48880_L as its substrates
+        (rh:substrates); the master reaction RHEA:48880 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16091936, PMID:25156151, PMID:12475995, PMID:21275368 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a quinol is a product released by RHEA:48880 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48881
+      snippet: CO + a quinone + H2O => a quinol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:48881 declares side 48880_R as its products
+        (rh:products); the master reaction RHEA:48880 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:16091936, PMID:25156151, PMID:12475995, PMID:21275368 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:48880 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48881
+      snippet: CO + a quinone + H2O => a quinol + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:48881 declares side 48880_R as its products
+        (rh:products); the master reaction RHEA:48880 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:16091936, PMID:25156151, PMID:12475995, PMID:21275368 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.2.5.3
+      snippet: EC:1.2.5.3 > GO:aerobic carbon monoxide dehydrogenase activity ; GO:0008805
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008805 is itself a record
+        in this KB.
+  - subject: prot_P19919
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DCML_AFIC5 is an exemplar enzyme with EC 1.2.5.3 activity.
+    evidence:
+    - reference: EC:1.2.5.3
+      snippet: DR   P19919, DCML_AFIC5 ;  P19916, DCML_AFICR ;  P19913, DCML_HYDPS ;
+      notes: ExPASy ENZYME entry EC 1.2.5.3 cross-references UniProtKB:P19919 (DCML_AFIC5) as a protein
+        with this activity.
+  - subject: prot_P19916
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DCML_AFICR is an exemplar enzyme with EC 1.2.5.3 activity.
+    evidence:
+    - reference: EC:1.2.5.3
+      snippet: DR   P19919, DCML_AFIC5 ;  P19916, DCML_AFICR ;  P19913, DCML_HYDPS ;
+      notes: ExPASy ENZYME entry EC 1.2.5.3 cross-references UniProtKB:P19916 (DCML_AFICR) as a protein
+        with this activity.
+  - subject: prot_P19913
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DCML_HYDPS is an exemplar enzyme with EC 1.2.5.3 activity.
+    evidence:
+    - reference: EC:1.2.5.3
+      snippet: DR   P19919, DCML_AFIC5 ;  P19916, DCML_AFICR ;  P19913, DCML_HYDPS ;
+      notes: ExPASy ENZYME entry EC 1.2.5.3 cross-references UniProtKB:P19913 (DCML_HYDPS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

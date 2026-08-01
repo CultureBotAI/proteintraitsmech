@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29950
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,126 @@ definitions:
       Catalyses the reaction: L-cysteinyl-[PqsC protein] + octanoyl-CoA = S-octanoyl-L-cysteinyl-[PqsC protein] + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-cysteinyl-[PqsC protein] + octanoyl-CoA = S-octanoyl-L-cysteinyl-[PqsC
+    protein] + CoA
+  description: Substrate-to-product chemistry of RHEA:50400, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50401 (rh:substrates → 50400_L, rh:products → 50400_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-cysteinyl-[PqsC protein] + octanoyl-CoA = S-octanoyl-L-cysteinyl-[PqsC pro…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50400
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-cysteinyl-[PqsC protein] + octanoyl-CoA = S-octanoyl-L-cysteinyl-[PqsC protein]
+      + CoA'
+  - node_id: sub1
+    label: L-cysteinyl-[PqsC protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12661
+    description: Rhea compound GENERIC:12661.
+  - node_id: sub1_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12661 (L-cysteinyl-[PqsC
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: octanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57386
+    description: Formula C29H46N7O17P3S.
+  - node_id: prd1
+    label: S-octanoyl-L-cysteinyl-[PqsC protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12662
+    description: Rhea compound GENERIC:12662.
+  - node_id: prd1_rp1
+    label: S-octanoyl-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12662 (S-octanoyl-L-cysteinyl-[PqsC
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:133029
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteinyl-[PqsC protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50401
+      snippet: L-cysteinyl-[PqsC protein] + octanoyl-CoA => S-octanoyl-L-cysteinyl-[PqsC protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:50401 declares side 50400_L as its substrates
+        (rh:substrates); the master reaction RHEA:50400 is undirected. This participant is GENERIC:12661
+        with coefficient 1. Rhea cites PMID:26811339, PMID:24239007 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[PqsC protein].
+    evidence:
+    - reference: RHEA:50400
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:12661 (L-cysteinyl-[PqsC protein]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: octanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50401
+      snippet: L-cysteinyl-[PqsC protein] + octanoyl-CoA => S-octanoyl-L-cysteinyl-[PqsC protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:50401 declares side 50400_L as its substrates
+        (rh:substrates); the master reaction RHEA:50400 is undirected. This participant is CHEBI:57386
+        with coefficient 1. Rhea cites PMID:26811339, PMID:24239007 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-octanoyl-L-cysteinyl-[PqsC protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:50401
+      snippet: L-cysteinyl-[PqsC protein] + octanoyl-CoA => S-octanoyl-L-cysteinyl-[PqsC protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:50401 declares side 50400_R as its products
+        (rh:products); the master reaction RHEA:50400 is undirected. This participant is GENERIC:12662
+        with coefficient 1. Rhea cites PMID:26811339, PMID:24239007 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-octanoyl-L-cysteine residue is the reactive part of S-octanoyl-L-cysteinyl-[PqsC protein].
+    evidence:
+    - reference: RHEA:50400
+      snippet: S-octanoyl-L-cysteine residue
+      notes: Rhea compound GENERIC:12662 (S-octanoyl-L-cysteinyl-[PqsC protein]) declares rh:reactivePart
+        = S-octanoyl-L-cysteine residue (CHEBI:133029), formula C11H19NO2S.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50401
+      snippet: L-cysteinyl-[PqsC protein] + octanoyl-CoA => S-octanoyl-L-cysteinyl-[PqsC protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:50401 declares side 50400_R as its products
+        (rh:products); the master reaction RHEA:50400 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:26811339, PMID:24239007 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

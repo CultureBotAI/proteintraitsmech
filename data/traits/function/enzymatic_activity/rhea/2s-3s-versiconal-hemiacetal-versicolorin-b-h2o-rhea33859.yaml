@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.143
     mapping_source: rhea2ec
@@ -28,4 +28,166 @@ definitions:
       Catalyses the reaction: (2S-3S)-versiconal hemiacetal = versicolorin B + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2S-3S)-versiconal hemiacetal = versicolorin B + H2O
+  description: Substrate-to-product chemistry of RHEA:33859, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33860 (rh:substrates → 33859_L, rh:products → 33859_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2S-3S)-versiconal hemiacetal = versicolorin B + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33859
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2S-3S)-versiconal hemiacetal = versicolorin B + H2O'
+  - node_id: sub1
+    label: (2S-3S)-versiconal hemiacetal
+    node_type: CHEMICAL
+    grounding: CHEBI:77950
+    description: Formula C18H13O8.
+  - node_id: prd1
+    label: versicolorin B
+    node_type: CHEMICAL
+    grounding: CHEBI:77951
+    description: Formula C18H11O7.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: versicolorin B synthase activity
+    grounding: GO:0046572
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: versicolorin B synthase
+    grounding: EC:4.2.1.143
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q12062
+    node_type: PROTEIN
+    label: AFLK_ASPPU
+    grounding: UniProtKB:Q12062
+  - node_id: prot_C8VDT4
+    node_type: PROTEIN
+    label: STCN_EMENI
+    grounding: UniProtKB:C8VDT4
+  - node_id: prot_A4UHS8
+    node_type: PROTEIN
+    label: VBSA_DOTSE
+    grounding: UniProtKB:A4UHS8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S-3S)-versiconal hemiacetal is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33860
+      snippet: (2S-3S)-versiconal hemiacetal => versicolorin B + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:33860 declares side 33859_L as its substrates
+        (rh:substrates); the master reaction RHEA:33859 is undirected. This participant is CHEBI:77950
+        with coefficient 1. Rhea cites PMID:1731640, PMID:8784203 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: versicolorin B is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33860
+      snippet: (2S-3S)-versiconal hemiacetal => versicolorin B + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:33860 declares side 33859_R as its products
+        (rh:products); the master reaction RHEA:33859 is undirected. This participant is CHEBI:77951 with
+        coefficient 1. Rhea cites PMID:1731640, PMID:8784203 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33860
+      snippet: (2S-3S)-versiconal hemiacetal => versicolorin B + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:33860 declares side 33859_R as its products
+        (rh:products); the master reaction RHEA:33859 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:1731640, PMID:8784203 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:33859
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0046572"/>
+      notes: The rdfs:seeAlso triple on RHEA:33859 in rhea.rdf. GO term GO:0046572 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.143; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:33859
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.143"/>
+      notes: The rh:ec triple on RHEA:33859 in rhea.rdf. EC 4.2.1.143 is itself a record in this KB.
+  - subject: prot_Q12062
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFLK_ASPPU is an exemplar enzyme carrying EC 4.2.1.143, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.143
+      snippet: DR   Q12062, AFLK_ASPPU ;  C8VDT4, STCN_EMENI ;  A4UHS8, VBSA_DOTSE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.143 cross-references UniProtKB:Q12062 (AFLK_ASPPU) as a protein
+        with this activity.
+    - reference: RHEA:33859
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.143"/>
+      notes: Rhea assigns RHEA:33859 to EC 4.2.1.143, and EC 4.2.1.143 maps to exactly one Rhea master
+        reaction (RHEA:33859), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_C8VDT4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STCN_EMENI is an exemplar enzyme carrying EC 4.2.1.143, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.143
+      snippet: DR   Q12062, AFLK_ASPPU ;  C8VDT4, STCN_EMENI ;  A4UHS8, VBSA_DOTSE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.143 cross-references UniProtKB:C8VDT4 (STCN_EMENI) as a protein
+        with this activity.
+    - reference: RHEA:33859
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.143"/>
+      notes: Rhea assigns RHEA:33859 to EC 4.2.1.143, and EC 4.2.1.143 maps to exactly one Rhea master
+        reaction (RHEA:33859), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A4UHS8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VBSA_DOTSE is an exemplar enzyme carrying EC 4.2.1.143, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.143
+      snippet: DR   Q12062, AFLK_ASPPU ;  C8VDT4, STCN_EMENI ;  A4UHS8, VBSA_DOTSE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.143 cross-references UniProtKB:A4UHS8 (VBSA_DOTSE) as a protein
+        with this activity.
+    - reference: RHEA:33859
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.143"/>
+      notes: Rhea assigns RHEA:33859 to EC 4.2.1.143, and EC 4.2.1.143 maps to exactly one Rhea master
+        reaction (RHEA:33859), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -41,4 +41,82 @@ definitions:
       Catalyses: Hydrolysis of soluble and insoluble elastin. Specific cleavages are also produced at 14-Ala-|-Leu-15 and 16-Tyr-|-Leu-17 in the B chain of insulin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of macrophage elastase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.65. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of soluble and insoluble elastin. Specific cleavages are also produced at 14-Ala-|-Leu-15 and 16-Tyr-|-Leu-17
+    in the B chain of insulin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: macrophage elastase
+    grounding: EC:3.4.24.65
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: metalloendopeptidase activity
+    grounding: GO:0004222
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P39900
+    node_type: PROTEIN
+    label: MMP12_HUMAN
+    grounding: UniProtKB:P39900
+  - node_id: prot_P34960
+    node_type: PROTEIN
+    label: MMP12_MOUSE
+    grounding: UniProtKB:P34960
+  - node_id: prot_P79227
+    node_type: PROTEIN
+    label: MMP12_RABIT
+    grounding: UniProtKB:P79227
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.24.65
+      snippet: EC:3.4.24.65 > GO:metalloendopeptidase activity ; GO:0004222
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004222 is itself a record
+        in this KB.
+  - subject: prot_P39900
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP12_HUMAN is an exemplar enzyme with EC 3.4.24.65 activity.
+    evidence:
+    - reference: EC:3.4.24.65
+      snippet: DR   P39900, MMP12_HUMAN;  P34960, MMP12_MOUSE;  P79227, MMP12_RABIT;
+      notes: ExPASy ENZYME entry EC 3.4.24.65 cross-references UniProtKB:P39900 (MMP12_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P34960
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP12_MOUSE is an exemplar enzyme with EC 3.4.24.65 activity.
+    evidence:
+    - reference: EC:3.4.24.65
+      snippet: DR   P39900, MMP12_HUMAN;  P34960, MMP12_MOUSE;  P79227, MMP12_RABIT;
+      notes: ExPASy ENZYME entry EC 3.4.24.65 cross-references UniProtKB:P34960 (MMP12_MOUSE) as a protein
+        with this activity.
+  - subject: prot_P79227
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP12_RABIT is an exemplar enzyme with EC 3.4.24.65 activity.
+    evidence:
+    - reference: EC:3.4.24.65
+      snippet: DR   P39900, MMP12_HUMAN;  P34960, MMP12_MOUSE;  P79227, MMP12_RABIT;
+      notes: ExPASy ENZYME entry EC 3.4.24.65 cross-references UniProtKB:P79227 (MMP12_RABIT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

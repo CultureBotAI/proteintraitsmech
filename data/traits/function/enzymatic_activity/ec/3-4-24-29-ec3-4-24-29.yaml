@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -28,4 +28,39 @@ definitions:
       Catalyses: Cleavage of insulin B chain with specificity similar to that of thermolysin, preferring hydrophobic P1' residues. Activates the glutamyl endopeptidase (EC 3.4.21.19) of Staphylococcus aureus
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aureolysin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.29. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleavage
+    of insulin B chain with specificity similar to that of thermolysin, preferring hydrophobic P1'' residues.
+    Activates the glutamyl endopeptidase (EC 3.4.21.19) of Staphylococcus aureus".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aureolysin
+    grounding: EC:3.4.24.29
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P81177
+    node_type: PROTEIN
+    label: AURE_STAAU
+    grounding: UniProtKB:P81177
+  edges:
+  - subject: prot_P81177
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AURE_STAAU is an exemplar enzyme with EC 3.4.24.29 activity.
+    evidence:
+    - reference: EC:3.4.24.29
+      snippet: DR   P81177, AURE_STAAU ;
+      notes: ExPASy ENZYME entry EC 3.4.24.29 cross-references UniProtKB:P81177 (AURE_STAAU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

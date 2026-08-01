@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -45,4 +45,83 @@ definitions:
       Catalyses: The enzyme shows specific recognition of a C-terminal tripeptide, Xaa- Yaa-Zaa, in which Xaa is preferably Ala or Leu, Yaa is preferably Ala or Tyr, and Zaa is preferably Ala, but then cleaves at a variable distance from the C-terminus. A typical cleavage is -Ala-Ala-|-Arg-Ala-Ala- Lys-Glu-Asn-Tyr-Ala-Leu-Ala-Ala
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of C-terminal processing peptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.102. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "The enzyme shows specific recognition of a C-terminal tripeptide, Xaa- Yaa-Zaa, in which Xaa is preferably
+    Ala or Leu, Yaa is preferably Ala or Tyr, and Zaa is preferably Ala, but then cleaves at a variable
+    distance from the C-terminus. A typical cleavage is -Ala-Ala-|-Arg-Ala-Ala- Lys-Glu-Asn-Tyr-Ala-Leu-Ala-Ala".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: C-terminal processing peptidase
+    grounding: EC:3.4.21.102
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: serine-type endopeptidase activity
+    grounding: GO:0004252
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_F4KHG6
+    node_type: PROTEIN
+    label: CTPA1_ARATH
+    grounding: UniProtKB:F4KHG6
+  - node_id: prot_O23614
+    node_type: PROTEIN
+    label: CTPA2_ARATH
+    grounding: UniProtKB:O23614
+  - node_id: prot_F4J3G5
+    node_type: PROTEIN
+    label: CTPA3_ARATH
+    grounding: UniProtKB:F4J3G5
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.21.102
+      snippet: EC:3.4.21.102 > GO:serine-type endopeptidase activity ; GO:0004252
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004252 is itself a record
+        in this KB.
+  - subject: prot_F4KHG6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CTPA1_ARATH is an exemplar enzyme with EC 3.4.21.102 activity.
+    evidence:
+    - reference: EC:3.4.21.102
+      snippet: DR   F4KHG6, CTPA1_ARATH;  O23614, CTPA2_ARATH;  F4J3G5, CTPA3_ARATH;
+      notes: ExPASy ENZYME entry EC 3.4.21.102 cross-references UniProtKB:F4KHG6 (CTPA1_ARATH) as a protein
+        with this activity.
+  - subject: prot_O23614
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CTPA2_ARATH is an exemplar enzyme with EC 3.4.21.102 activity.
+    evidence:
+    - reference: EC:3.4.21.102
+      snippet: DR   F4KHG6, CTPA1_ARATH;  O23614, CTPA2_ARATH;  F4J3G5, CTPA3_ARATH;
+      notes: ExPASy ENZYME entry EC 3.4.21.102 cross-references UniProtKB:O23614 (CTPA2_ARATH) as a protein
+        with this activity.
+  - subject: prot_F4J3G5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CTPA3_ARATH is an exemplar enzyme with EC 3.4.21.102 activity.
+    evidence:
+    - reference: EC:3.4.21.102
+      snippet: DR   F4KHG6, CTPA1_ARATH;  O23614, CTPA2_ARATH;  F4J3G5, CTPA3_ARATH;
+      notes: ExPASy ENZYME entry EC 3.4.21.102 cross-references UniProtKB:F4J3G5 (CTPA3_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

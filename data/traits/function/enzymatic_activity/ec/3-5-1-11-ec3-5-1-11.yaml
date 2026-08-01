@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -43,4 +43,149 @@ definitions:
       Catalyses: a penicillin + H2O = 6-aminopenicillanate + a carboxylate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of penicillin amidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.11. EC 3.5.1.11 maps to exactly
+    one curated Rhea reaction (RHEA:18693), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a penicillin
+    + H2O = 6-aminopenicillanate + a carboxylate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: penicillin amidase
+    grounding: EC:3.5.1.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a penicillin
+    node_type: CHEMICAL
+    grounding: CHEBI:51356
+    description: Formula C9H10N2O4SR.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 6-aminopenicillanate
+    node_type: CHEMICAL
+    grounding: CHEBI:57869
+    description: Formula C8H12N2O3S.
+  - node_id: prd2
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: penicillin amidase activity
+    grounding: GO:0008953
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P15558
+    node_type: PROTEIN
+    label: PAC2_PSES3
+    grounding: UniProtKB:P15558
+  - node_id: prot_P54948
+    node_type: PROTEIN
+    label: PAC_BACSU
+    grounding: UniProtKB:P54948
+  - node_id: prot_P06875
+    node_type: PROTEIN
+    label: PAC_ECOLX
+    grounding: UniProtKB:P06875
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a penicillin is a substrate consumed by RHEA:18693 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18694
+      snippet: a penicillin + H2O => 6-aminopenicillanate + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:18694 declares side 18693_L as its substrates
+        (rh:substrates); the master reaction RHEA:18693 is undirected. This participant is CHEBI:51356
+        with coefficient 1. Rhea cites PMID:11601852, PMID:10331865, PMID:15254299, PMID:7816145 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:18693 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18694
+      snippet: a penicillin + H2O => 6-aminopenicillanate + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:18694 declares side 18693_L as its substrates
+        (rh:substrates); the master reaction RHEA:18693 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11601852, PMID:10331865, PMID:15254299, PMID:7816145 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 6-aminopenicillanate is a product released by RHEA:18693 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18694
+      snippet: a penicillin + H2O => 6-aminopenicillanate + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:18694 declares side 18693_R as its products
+        (rh:products); the master reaction RHEA:18693 is undirected. This participant is CHEBI:57869 with
+        coefficient 1. Rhea cites PMID:11601852, PMID:10331865, PMID:15254299, PMID:7816145 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a carboxylate is a product released by RHEA:18693 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18694
+      snippet: a penicillin + H2O => 6-aminopenicillanate + a carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:18694 declares side 18693_R as its products
+        (rh:products); the master reaction RHEA:18693 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. Rhea cites PMID:11601852, PMID:10331865, PMID:15254299, PMID:7816145 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.11
+      snippet: EC:3.5.1.11 > GO:penicillin amidase activity ; GO:0008953
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008953 is itself a record
+        in this KB.
+  - subject: prot_P15558
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAC2_PSES3 is an exemplar enzyme with EC 3.5.1.11 activity.
+    evidence:
+    - reference: EC:3.5.1.11
+      snippet: DR   P15558, PAC2_PSES3 ;  P54948, PAC_BACSU  ;  P06875, PAC_ECOLX  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.11 cross-references UniProtKB:P15558 (PAC2_PSES3) as a protein
+        with this activity.
+  - subject: prot_P54948
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAC_BACSU is an exemplar enzyme with EC 3.5.1.11 activity.
+    evidence:
+    - reference: EC:3.5.1.11
+      snippet: DR   P15558, PAC2_PSES3 ;  P54948, PAC_BACSU  ;  P06875, PAC_ECOLX  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.11 cross-references UniProtKB:P54948 (PAC_BACSU) as a protein
+        with this activity.
+  - subject: prot_P06875
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAC_ECOLX is an exemplar enzyme with EC 3.5.1.11 activity.
+    evidence:
+    - reference: EC:3.5.1.11
+      snippet: DR   P15558, PAC2_PSES3 ;  P54948, PAC_BACSU  ;  P06875, PAC_ECOLX  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.11 cross-references UniProtKB:P06875 (PAC_ECOLX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

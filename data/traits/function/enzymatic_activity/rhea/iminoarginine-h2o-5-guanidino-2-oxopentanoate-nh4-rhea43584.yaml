@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:83439
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,93 @@ definitions:
       Catalyses the reaction: iminoarginine + H2O = 5-guanidino-2-oxopentanoate + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of iminoarginine + H2O = 5-guanidino-2-oxopentanoate + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:43584, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:43585 (rh:substrates → 43584_L, rh:products → 43584_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of iminoarginine + H2O = 5-guanidino-2-oxopentanoate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:43584
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: iminoarginine + H2O = 5-guanidino-2-oxopentanoate + NH4(+)'
+  - node_id: sub1
+    label: iminoarginine
+    node_type: CHEMICAL
+    grounding: CHEBI:83439
+    description: Formula C6H13N4O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 5-guanidino-2-oxopentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58489
+    description: Formula C6H11N3O3.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: iminoarginine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43585
+      snippet: iminoarginine + H2O => 5-guanidino-2-oxopentanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43585 declares side 43584_L as its substrates
+        (rh:substrates); the master reaction RHEA:43584 is undirected. This participant is CHEBI:83439
+        with coefficient 1. Rhea cites PMID:19139398, PMID:20932054, PMID:20809650, PMID:3141581 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43585
+      snippet: iminoarginine + H2O => 5-guanidino-2-oxopentanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43585 declares side 43584_L as its substrates
+        (rh:substrates); the master reaction RHEA:43584 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19139398, PMID:20932054, PMID:20809650, PMID:3141581 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-guanidino-2-oxopentanoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43585
+      snippet: iminoarginine + H2O => 5-guanidino-2-oxopentanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43585 declares side 43584_R as its products
+        (rh:products); the master reaction RHEA:43584 is undirected. This participant is CHEBI:58489 with
+        coefficient 1. Rhea cites PMID:19139398, PMID:20932054, PMID:20809650, PMID:3141581 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43585
+      snippet: iminoarginine + H2O => 5-guanidino-2-oxopentanoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43585 declares side 43584_R as its products
+        (rh:products); the master reaction RHEA:43584 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:19139398, PMID:20932054, PMID:20809650, PMID:3141581 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

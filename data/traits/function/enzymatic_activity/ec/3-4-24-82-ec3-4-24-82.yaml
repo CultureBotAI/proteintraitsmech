@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -36,4 +36,67 @@ definitions:
       Catalyses: Glutamyl endopeptidase. Bonds cleaved include 370-Thr-Glu-Gly-Glu-|-Ala- Arg-Gly-Ser-377 in the interglobular domain of mammalian aggrecan
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ADAMTS-4 endopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.82. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Glutamyl
+    endopeptidase. Bonds cleaved include 370-Thr-Glu-Gly-Glu-|-Ala- Arg-Gly-Ser-377 in the interglobular
+    domain of mammalian aggrecan".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ADAMTS-4 endopeptidase
+    grounding: EC:3.4.24.82
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9TT93
+    node_type: PROTEIN
+    label: ATS4_BOVIN
+    grounding: UniProtKB:Q9TT93
+  - node_id: prot_O75173
+    node_type: PROTEIN
+    label: ATS4_HUMAN
+    grounding: UniProtKB:O75173
+  - node_id: prot_Q8BNJ2
+    node_type: PROTEIN
+    label: ATS4_MOUSE
+    grounding: UniProtKB:Q8BNJ2
+  edges:
+  - subject: prot_Q9TT93
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATS4_BOVIN is an exemplar enzyme with EC 3.4.24.82 activity.
+    evidence:
+    - reference: EC:3.4.24.82
+      snippet: DR   Q9TT93, ATS4_BOVIN ;  O75173, ATS4_HUMAN ;  Q8BNJ2, ATS4_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.24.82 cross-references UniProtKB:Q9TT93 (ATS4_BOVIN) as a protein
+        with this activity.
+  - subject: prot_O75173
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATS4_HUMAN is an exemplar enzyme with EC 3.4.24.82 activity.
+    evidence:
+    - reference: EC:3.4.24.82
+      snippet: DR   Q9TT93, ATS4_BOVIN ;  O75173, ATS4_HUMAN ;  Q8BNJ2, ATS4_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.24.82 cross-references UniProtKB:O75173 (ATS4_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q8BNJ2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATS4_MOUSE is an exemplar enzyme with EC 3.4.24.82 activity.
+    evidence:
+    - reference: EC:3.4.24.82
+      snippet: DR   Q9TT93, ATS4_BOVIN ;  O75173, ATS4_HUMAN ;  Q8BNJ2, ATS4_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.24.82 cross-references UniProtKB:Q8BNJ2 (ATS4_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

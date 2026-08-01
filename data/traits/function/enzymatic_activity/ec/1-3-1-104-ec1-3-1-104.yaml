@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.1.-
 synonyms:
@@ -43,4 +43,200 @@ definitions:
       Catalyses: a 2,3-saturated acyl-[ACP] + NADP(+) = a (2E)-enoyl-[ACP] + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of enoyl-[acyl-carrier-protein] reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.1.104. EC 1.3.1.104 maps to
+    exactly one curated Rhea reaction (RHEA:22564), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 2,3-saturated
+    acyl-[ACP] + NADP(+) = a (2E)-enoyl-[ACP] + NADPH + H(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: enoyl-[acyl-carrier-protein] reductase
+    grounding: EC:1.3.1.104
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 2,3-saturated acyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9926
+    description: Rhea compound GENERIC:9926.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(S-(2,3-saturated)-acylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9926 (a 2,3-saturated
+      acyl-[ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78785
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: a (2E)-enoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9925
+    description: Rhea compound GENERIC:9925.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-(S-(2E)-enoylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9925 (a (2E)-enoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78784
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: enoyl-[acyl-carrier-protein] reductase (NADPH) activity
+    grounding: GO:0141148
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q6FXN7
+    node_type: PROTEIN
+    label: ETR1_CANGA
+    grounding: UniProtKB:Q6FXN7
+  - node_id: prot_Q8WZM3
+    node_type: PROTEIN
+    label: ETR1_CANTR
+    grounding: UniProtKB:Q8WZM3
+  - node_id: prot_Q6BLV6
+    node_type: PROTEIN
+    label: ETR1_DEBHA
+    grounding: UniProtKB:Q6BLV6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2,3-saturated acyl-[ACP] is a substrate consumed by RHEA:22564 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_L as its substrates
+        (rh:substrates); the master reaction RHEA:22564 is undirected. This participant is GENERIC:9926
+        with coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-(2,3-saturated)-acylpantetheine-4'-phosphoryl)-L-serine residue is the reactive
+      part of a 2,3-saturated acyl-[ACP].
+    evidence:
+    - reference: RHEA:22564
+      snippet: O-(S-(2,3-saturated)-acylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9926 (a 2,3-saturated acyl-[ACP]) declares rh:reactivePart = O-(S-(2,3-saturated)-acylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78785).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by RHEA:22564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_L as its substrates
+        (rh:substrates); the master reaction RHEA:22564 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a (2E)-enoyl-[ACP] is a product released by RHEA:22564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_R as its products
+        (rh:products); the master reaction RHEA:22564 is undirected. This participant is GENERIC:9925
+        with coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-(2E)-enoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of a
+      (2E)-enoyl-[ACP].
+    evidence:
+    - reference: RHEA:22564
+      snippet: O-(S-(2E)-enoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9925 (a (2E)-enoyl-[ACP]) declares rh:reactivePart = O-(S-(2E)-enoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78784).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by RHEA:22564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_R as its products
+        (rh:products); the master reaction RHEA:22564 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:22564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_R as its products
+        (rh:products); the master reaction RHEA:22564 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.3.1.104
+      snippet: EC:1.3.1.104 > GO:enoyl-[acyl-carrier-protein] reductase (NADPH) activity ; GO:0141148
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0141148 is itself a record
+        in this KB.
+  - subject: prot_Q6FXN7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ETR1_CANGA is an exemplar enzyme with EC 1.3.1.104 activity.
+    evidence:
+    - reference: EC:1.3.1.104
+      snippet: DR   Q6FXN7, ETR1_CANGA ;  Q8WZM3, ETR1_CANTR ;  Q6BLV6, ETR1_DEBHA ;
+      notes: ExPASy ENZYME entry EC 1.3.1.104 cross-references UniProtKB:Q6FXN7 (ETR1_CANGA) as a protein
+        with this activity.
+  - subject: prot_Q8WZM3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ETR1_CANTR is an exemplar enzyme with EC 1.3.1.104 activity.
+    evidence:
+    - reference: EC:1.3.1.104
+      snippet: DR   Q6FXN7, ETR1_CANGA ;  Q8WZM3, ETR1_CANTR ;  Q6BLV6, ETR1_DEBHA ;
+      notes: ExPASy ENZYME entry EC 1.3.1.104 cross-references UniProtKB:Q8WZM3 (ETR1_CANTR) as a protein
+        with this activity.
+  - subject: prot_Q6BLV6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ETR1_DEBHA is an exemplar enzyme with EC 1.3.1.104 activity.
+    evidence:
+    - reference: EC:1.3.1.104
+      snippet: DR   Q6FXN7, ETR1_CANGA ;  Q8WZM3, ETR1_CANTR ;  Q6BLV6, ETR1_DEBHA ;
+      notes: ExPASy ENZYME entry EC 1.3.1.104 cross-references UniProtKB:Q6BLV6 (ETR1_DEBHA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 mapped_xrefs:
@@ -23,4 +23,58 @@ definitions:
       Catalyses: 3-geranyl-3-[(Z)-2-isocyanoethenyl]-1H-indole = hapalindole U
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hapalindole U synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.36. EC 5.5.1.36 maps to exactly
+    one curated Rhea reaction (RHEA:79303), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-geranyl-3-[(Z)-2-isocyanoethenyl]-1H-indole
+    = hapalindole U". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hapalindole U synthase
+    grounding: EC:5.5.1.36
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-geranyl-3-[(Z)-2-isocyanoethenyl]-1H-indole
+    node_type: CHEMICAL
+    grounding: CHEBI:140439
+    description: Formula C21H24N2.
+  - node_id: prd1
+    label: hapalindole U
+    node_type: CHEMICAL
+    grounding: CHEBI:141613
+    description: Formula C21H24N2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-geranyl-3-[(Z)-2-isocyanoethenyl]-1H-indole is a substrate consumed by RHEA:79303 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79304
+      snippet: 3-geranyl-3-[(Z)-2-isocyanoethenyl]-1H-indole => hapalindole U
+      notes: Rhea's left-to-right directional reaction RHEA:79304 declares side 79303_L as its substrates
+        (rh:substrates); the master reaction RHEA:79303 is undirected. This participant is CHEBI:140439
+        with coefficient 1. Rhea cites PMID:28626997, PMID:32052896 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hapalindole U is a product released by RHEA:79303 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79304
+      snippet: 3-geranyl-3-[(Z)-2-isocyanoethenyl]-1H-indole => hapalindole U
+      notes: Rhea's left-to-right directional reaction RHEA:79304 declares side 79303_R as its products
+        (rh:products); the master reaction RHEA:79303 is undirected. This participant is CHEBI:141613
+        with coefficient 1. Rhea cites PMID:28626997, PMID:32052896 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

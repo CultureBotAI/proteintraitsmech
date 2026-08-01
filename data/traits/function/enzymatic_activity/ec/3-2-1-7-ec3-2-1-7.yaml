@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -39,4 +39,81 @@ definitions:
       Catalyses: Endohydrolysis of (2->1)-beta-D-fructosidic linkages in inulin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of inulinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.7. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endohydrolysis
+    of (2->1)-beta-D-fructosidic linkages in inulin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: inulinase
+    grounding: EC:3.2.1.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: inulinase activity
+    grounding: GO:0051670
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P28999
+    node_type: PROTEIN
+    label: INU1_KLUMA
+    grounding: UniProtKB:P28999
+  - node_id: prot_O94220
+    node_type: PROTEIN
+    label: INU2_ASPFI
+    grounding: UniProtKB:O94220
+  - node_id: prot_A5ABL2
+    node_type: PROTEIN
+    label: INUA_ASPNC
+    grounding: UniProtKB:A5ABL2
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.7
+      snippet: EC:3.2.1.7 > GO:inulinase activity ; GO:0051670
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0051670 is itself a record
+        in this KB.
+  - subject: prot_P28999
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INU1_KLUMA is an exemplar enzyme with EC 3.2.1.7 activity.
+    evidence:
+    - reference: EC:3.2.1.7
+      snippet: DR   P28999, INU1_KLUMA ;  O94220, INU2_ASPFI ;  A5ABL2, INUA_ASPNC ;
+      notes: ExPASy ENZYME entry EC 3.2.1.7 cross-references UniProtKB:P28999 (INU1_KLUMA) as a protein
+        with this activity.
+  - subject: prot_O94220
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INU2_ASPFI is an exemplar enzyme with EC 3.2.1.7 activity.
+    evidence:
+    - reference: EC:3.2.1.7
+      snippet: DR   P28999, INU1_KLUMA ;  O94220, INU2_ASPFI ;  A5ABL2, INUA_ASPNC ;
+      notes: ExPASy ENZYME entry EC 3.2.1.7 cross-references UniProtKB:O94220 (INU2_ASPFI) as a protein
+        with this activity.
+  - subject: prot_A5ABL2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INUA_ASPNC is an exemplar enzyme with EC 3.2.1.7 activity.
+    evidence:
+    - reference: EC:3.2.1.7
+      snippet: DR   P28999, INU1_KLUMA ;  O94220, INU2_ASPFI ;  A5ABL2, INUA_ASPNC ;
+      notes: ExPASy ENZYME entry EC 3.2.1.7 cross-references UniProtKB:A5ABL2 (INUA_ASPNC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

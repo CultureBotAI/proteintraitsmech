@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.5.1.28
     mapping_source: rhea2ec
@@ -30,4 +30,145 @@ definitions:
       Catalyses the reaction: isopentenyl diphosphate + dimethylallyl diphosphate = neryl diphosphate + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isopentenyl diphosphate + dimethylallyl diphosphate = neryl diphosphate
+    + diphosphate
+  description: Substrate-to-product chemistry of RHEA:11328, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:11329 (rh:substrates → 11328_L, rh:products → 11328_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of isopentenyl diphosphate + dimethylallyl diphosphate = neryl diphosphate + di…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:11328
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: isopentenyl diphosphate + dimethylallyl diphosphate = neryl diphosphate + diphosphate'
+  - node_id: sub1
+    label: isopentenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:128769
+    description: Formula C5H9O7P2.
+  - node_id: sub2
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: neryl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57665
+    description: Formula C10H17O7P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dimethylallylcistransferase activity
+    grounding: GO:0047863
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: dimethylallylcistransferase
+    grounding: EC:2.5.1.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_C1K5M2
+    node_type: PROTEIN
+    label: CPT1_SOLLC
+    grounding: UniProtKB:C1K5M2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: isopentenyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11329
+      snippet: isopentenyl diphosphate + dimethylallyl diphosphate => neryl diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11329 declares side 11328_L as its substrates
+        (rh:substrates); the master reaction RHEA:11328 is undirected. This participant is CHEBI:128769
+        with coefficient 1. Rhea cites PMID:19155349, PMID:19487664 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethylallyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11329
+      snippet: isopentenyl diphosphate + dimethylallyl diphosphate => neryl diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11329 declares side 11328_L as its substrates
+        (rh:substrates); the master reaction RHEA:11328 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:19155349, PMID:19487664 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: neryl diphosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11329
+      snippet: isopentenyl diphosphate + dimethylallyl diphosphate => neryl diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11329 declares side 11328_R as its products
+        (rh:products); the master reaction RHEA:11328 is undirected. This participant is CHEBI:57665 with
+        coefficient 1. Rhea cites PMID:19155349, PMID:19487664 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11329
+      snippet: isopentenyl diphosphate + dimethylallyl diphosphate => neryl diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11329 declares side 11328_R as its products
+        (rh:products); the master reaction RHEA:11328 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:19155349, PMID:19487664 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:11328
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047863"/>
+      notes: The rdfs:seeAlso triple on RHEA:11328 in rhea.rdf. GO term GO:0047863 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.5.1.28; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:11328
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.28"/>
+      notes: The rh:ec triple on RHEA:11328 in rhea.rdf. EC 2.5.1.28 is itself a record in this KB.
+  - subject: prot_C1K5M2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPT1_SOLLC is an exemplar enzyme carrying EC 2.5.1.28, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.28
+      snippet: DR   C1K5M2, CPT1_SOLLC ;
+      notes: ExPASy ENZYME entry EC 2.5.1.28 cross-references UniProtKB:C1K5M2 (CPT1_SOLLC) as a protein
+        with this activity.
+    - reference: RHEA:11328
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.28"/>
+      notes: Rhea assigns RHEA:11328 to EC 2.5.1.28, and EC 2.5.1.28 maps to exactly one Rhea master reaction
+        (RHEA:11328), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

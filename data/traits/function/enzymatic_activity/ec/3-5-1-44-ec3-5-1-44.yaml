@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -43,4 +43,180 @@ definitions:
       Catalyses: L-glutaminyl-[protein] + H2O = L-glutamyl-[protein] + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-glutamine glutaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.44. EC 3.5.1.44 maps to exactly
+    one curated Rhea reaction (RHEA:16441), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-glutaminyl-[protein]
+    + H2O = L-glutamyl-[protein] + NH4(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-glutamine glutaminase
+    grounding: EC:3.5.1.44
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-glutaminyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10207
+    description: Rhea compound GENERIC:10207.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-glutamine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10207 (L-glutaminyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30011
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-glutamyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10208
+    description: Rhea compound GENERIC:10208.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-glutamate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10208 (L-glutamyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29973
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-glutamine glutaminase activity
+    grounding: GO:0050568
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O85128
+    node_type: PROTEIN
+    label: CHEB1_AGRFC
+    grounding: UniProtKB:O85128
+  - node_id: prot_Q221I1
+    node_type: PROTEIN
+    label: CHEB1_ALBFT
+    grounding: UniProtKB:Q221I1
+  - node_id: prot_Q2INJ8
+    node_type: PROTEIN
+    label: CHEB1_ANADE
+    grounding: UniProtKB:Q2INJ8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-glutaminyl-[protein] is a substrate consumed by RHEA:16441 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16442
+      snippet: L-glutaminyl-[protein] + H2O => L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16442 declares side 16441_L as its substrates
+        (rh:substrates); the master reaction RHEA:16441 is undirected. This participant is GENERIC:10207
+        with coefficient 1. Rhea cites PMID:30092200, PMID:4928623 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-glutamine residue is the reactive part of L-glutaminyl-[protein].
+    evidence:
+    - reference: RHEA:16441
+      snippet: L-glutamine residue
+      notes: Rhea compound GENERIC:10207 (L-glutaminyl-[protein]) declares rh:reactivePart = L-glutamine
+        residue (CHEBI:30011).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:16441 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16442
+      snippet: L-glutaminyl-[protein] + H2O => L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16442 declares side 16441_L as its substrates
+        (rh:substrates); the master reaction RHEA:16441 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:30092200, PMID:4928623 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-glutamyl-[protein] is a product released by RHEA:16441 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16442
+      snippet: L-glutaminyl-[protein] + H2O => L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16442 declares side 16441_R as its products
+        (rh:products); the master reaction RHEA:16441 is undirected. This participant is GENERIC:10208
+        with coefficient 1. Rhea cites PMID:30092200, PMID:4928623 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-glutamate residue is the reactive part of L-glutamyl-[protein].
+    evidence:
+    - reference: RHEA:16441
+      snippet: L-glutamate residue
+      notes: Rhea compound GENERIC:10208 (L-glutamyl-[protein]) declares rh:reactivePart = L-glutamate
+        residue (CHEBI:29973).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:16441 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16442
+      snippet: L-glutaminyl-[protein] + H2O => L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16442 declares side 16441_R as its products
+        (rh:products); the master reaction RHEA:16441 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:30092200, PMID:4928623 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.44
+      snippet: EC:3.5.1.44 > GO:protein-glutamine glutaminase activity ; GO:0050568
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050568 is itself a record
+        in this KB.
+  - subject: prot_O85128
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHEB1_AGRFC is an exemplar enzyme with EC 3.5.1.44 activity.
+    evidence:
+    - reference: EC:3.5.1.44
+      snippet: DR   O85128, CHEB1_AGRFC;  Q221I1, CHEB1_ALBFT;  Q2INJ8, CHEB1_ANADE;
+      notes: ExPASy ENZYME entry EC 3.5.1.44 cross-references UniProtKB:O85128 (CHEB1_AGRFC) as a protein
+        with this activity.
+  - subject: prot_Q221I1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHEB1_ALBFT is an exemplar enzyme with EC 3.5.1.44 activity.
+    evidence:
+    - reference: EC:3.5.1.44
+      snippet: DR   O85128, CHEB1_AGRFC;  Q221I1, CHEB1_ALBFT;  Q2INJ8, CHEB1_ANADE;
+      notes: ExPASy ENZYME entry EC 3.5.1.44 cross-references UniProtKB:Q221I1 (CHEB1_ALBFT) as a protein
+        with this activity.
+  - subject: prot_Q2INJ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHEB1_ANADE is an exemplar enzyme with EC 3.5.1.44 activity.
+    evidence:
+    - reference: EC:3.5.1.44
+      snippet: DR   O85128, CHEB1_AGRFC;  Q221I1, CHEB1_ALBFT;  Q2INJ8, CHEB1_ANADE;
+      notes: ExPASy ENZYME entry EC 3.5.1.44 cross-references UniProtKB:Q2INJ8 (CHEB1_ANADE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

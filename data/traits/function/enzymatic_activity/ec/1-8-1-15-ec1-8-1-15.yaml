@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.1.-
 synonyms:
@@ -39,4 +39,261 @@ definitions:
       Catalyses: (1) 2 mycothiol + NADP(+) = mycothione + NADPH + H(+). (2) 2 mycothiol + NAD(+) = mycothione + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mycothione reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.1.15. Rhea assigns 2 curated
+    reactions to EC 1.8.1.15. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 2 mycothiol + NADP(+) = mycothione + NADPH + H(+). (2)
+    2 mycothiol + NAD(+) = mycothione + NADH + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mycothione reductase
+    grounding: EC:1.8.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2 mycothiol + NADP(+) = mycothione + NADPH + H(+)
+    grounding: RHEA:12685
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2 mycothiol + NADP(+) = mycothione + NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: mycothiol
+    node_type: CHEMICAL
+    grounding: CHEBI:16768
+    description: Formula C17H30N2O12S.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: mycothione
+    node_type: CHEMICAL
+    grounding: CHEBI:16086
+    description: Formula C34H58N4O24S2.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2 mycothiol + NAD(+) = mycothione + NADH + H(+)
+    grounding: RHEA:12689
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2 mycothiol + NAD(+) = mycothione + NADH + H(+)'
+  - node_id: rxn2_sub1
+    label: mycothiol
+    node_type: CHEMICAL
+    grounding: CHEBI:16768
+    description: Formula C17H30N2O12S.
+  - node_id: rxn2_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2_prd1
+    label: mycothione
+    node_type: CHEMICAL
+    grounding: CHEBI:16086
+    description: Formula C34H58N4O24S2.
+  - node_id: rxn2_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: mycothione reductase [NAD(P)H] activity
+    grounding: GO:0050627
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P9WHH2
+    node_type: PROTEIN
+    label: MTR_MYCTO
+    grounding: UniProtKB:P9WHH2
+  - node_id: prot_P9WHH3
+    node_type: PROTEIN
+    label: MTR_MYCTU
+    grounding: UniProtKB:P9WHH3
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:12685 is one of the 2 curated reactions Rhea assigns to EC 1.8.1.15; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:12685
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.1.15"/>
+      notes: The rh:ec triple on RHEA:12685 in rhea.rdf assigns that reaction to EC 1.8.1.15.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: mycothiol is a substrate consumed by RHEA:12685 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:12686
+      snippet: 2 mycothiol + NADP(+) => mycothione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12686 declares side 12685_L as its substrates
+        (rh:substrates); the master reaction RHEA:12685 is undirected. This participant is CHEBI:16768
+        with coefficient 2. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:12685 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12686
+      snippet: 2 mycothiol + NADP(+) => mycothione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12686 declares side 12685_L as its substrates
+        (rh:substrates); the master reaction RHEA:12685 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: mycothione is a product released by RHEA:12685 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12686
+      snippet: 2 mycothiol + NADP(+) => mycothione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12686 declares side 12685_R as its products
+        (rh:products); the master reaction RHEA:12685 is undirected. This participant is CHEBI:16086 with
+        coefficient 1. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:12685 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12686
+      snippet: 2 mycothiol + NADP(+) => mycothione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12686 declares side 12685_R as its products
+        (rh:products); the master reaction RHEA:12685 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:12685 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12686
+      snippet: 2 mycothiol + NADP(+) => mycothione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12686 declares side 12685_R as its products
+        (rh:products); the master reaction RHEA:12685 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:12689 is one of the 2 curated reactions Rhea assigns to EC 1.8.1.15; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:12689
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.1.15"/>
+      notes: The rh:ec triple on RHEA:12689 in rhea.rdf assigns that reaction to EC 1.8.1.15.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: mycothiol is a substrate consumed by RHEA:12689 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:12690
+      snippet: 2 mycothiol + NAD(+) => mycothione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12690 declares side 12689_L as its substrates
+        (rh:substrates); the master reaction RHEA:12689 is undirected. This participant is CHEBI:16768
+        with coefficient 2. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NAD(+) is a substrate consumed by RHEA:12689 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12690
+      snippet: 2 mycothiol + NAD(+) => mycothione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12690 declares side 12689_L as its substrates
+        (rh:substrates); the master reaction RHEA:12689 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: mycothione is a product released by RHEA:12689 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12690
+      snippet: 2 mycothiol + NAD(+) => mycothione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12690 declares side 12689_R as its products
+        (rh:products); the master reaction RHEA:12689 is undirected. This participant is CHEBI:16086 with
+        coefficient 1. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADH is a product released by RHEA:12689 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12690
+      snippet: 2 mycothiol + NAD(+) => mycothione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12690 declares side 12689_R as its products
+        (rh:products); the master reaction RHEA:12689 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:12689 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12690
+      snippet: 2 mycothiol + NAD(+) => mycothione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12690 declares side 12689_R as its products
+        (rh:products); the master reaction RHEA:12689 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11318633, PMID:10512639 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.8.1.15
+      snippet: EC:1.8.1.15 > GO:mycothione reductase [NAD(P)H] activity ; GO:0050627
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050627 is itself a record
+        in this KB.
+  - subject: prot_P9WHH2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTR_MYCTO is an exemplar enzyme with EC 1.8.1.15 activity.
+    evidence:
+    - reference: EC:1.8.1.15
+      snippet: DR   P9WHH2, MTR_MYCTO  ;  P9WHH3, MTR_MYCTU  ;
+      notes: ExPASy ENZYME entry EC 1.8.1.15 cross-references UniProtKB:P9WHH2 (MTR_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WHH3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTR_MYCTU is an exemplar enzyme with EC 1.8.1.15 activity.
+    evidence:
+    - reference: EC:1.8.1.15
+      snippet: DR   P9WHH2, MTR_MYCTO  ;  P9WHH3, MTR_MYCTU  ;
+      notes: ExPASy ENZYME entry EC 1.8.1.15 cross-references UniProtKB:P9WHH3 (MTR_MYCTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.16
     mapping_source: rhea2ec
@@ -36,4 +36,167 @@ definitions:
       Catalyses the reaction: (2E)-geranyl diphosphate = (4S)-limonene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E)-geranyl diphosphate = (4S)-limonene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:12869, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12870 (rh:substrates → 12869_L, rh:products → 12869_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E)-geranyl diphosphate = (4S)-limonene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12869
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E)-geranyl diphosphate = (4S)-limonene + diphosphate'
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: (4S)-limonene
+    node_type: CHEMICAL
+    grounding: CHEBI:15383
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (4S)-limonene synthase activity
+    grounding: GO:0050552
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (4S)-limonene synthase
+    grounding: EC:4.2.3.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_R9QMR5
+    node_type: PROTEIN
+    label: ATERP_PINBN
+    grounding: UniProtKB:R9QMR5
+  - node_id: prot_Q20HU7
+    node_type: PROTEIN
+    label: LIMNS_PICSI
+    grounding: UniProtKB:Q20HU7
+  - node_id: prot_F6M8I0
+    node_type: PROTEIN
+    label: MTPS2_SANAL
+    grounding: UniProtKB:F6M8I0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12870
+      snippet: (2E)-geranyl diphosphate => (4S)-limonene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12870 declares side 12869_L as its substrates
+        (rh:substrates); the master reaction RHEA:12869 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:18218975, PMID:8226816, PMID:9268308, PMID:10441373 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (4S)-limonene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12870
+      snippet: (2E)-geranyl diphosphate => (4S)-limonene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12870 declares side 12869_R as its products
+        (rh:products); the master reaction RHEA:12869 is undirected. This participant is CHEBI:15383 with
+        coefficient 1. Rhea cites PMID:18218975, PMID:8226816, PMID:9268308, PMID:10441373 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12870
+      snippet: (2E)-geranyl diphosphate => (4S)-limonene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12870 declares side 12869_R as its products
+        (rh:products); the master reaction RHEA:12869 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18218975, PMID:8226816, PMID:9268308, PMID:10441373 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12869
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050552"/>
+      notes: The rdfs:seeAlso triple on RHEA:12869 in rhea.rdf. GO term GO:0050552 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.16; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12869
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.16"/>
+      notes: The rh:ec triple on RHEA:12869 in rhea.rdf. EC 4.2.3.16 is itself a record in this KB.
+  - subject: prot_R9QMR5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATERP_PINBN is an exemplar enzyme carrying EC 4.2.3.16, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.16
+      snippet: DR   R9QMR5, ATERP_PINBN;  Q20HU7, LIMNS_PICSI;  F6M8I0, MTPS2_SANAL;
+      notes: ExPASy ENZYME entry EC 4.2.3.16 cross-references UniProtKB:R9QMR5 (ATERP_PINBN) as a protein
+        with this activity.
+    - reference: RHEA:12869
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.16"/>
+      notes: Rhea assigns RHEA:12869 to EC 4.2.3.16, and EC 4.2.3.16 maps to exactly one Rhea master reaction
+        (RHEA:12869), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q20HU7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LIMNS_PICSI is an exemplar enzyme carrying EC 4.2.3.16, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.16
+      snippet: DR   R9QMR5, ATERP_PINBN;  Q20HU7, LIMNS_PICSI;  F6M8I0, MTPS2_SANAL;
+      notes: ExPASy ENZYME entry EC 4.2.3.16 cross-references UniProtKB:Q20HU7 (LIMNS_PICSI) as a protein
+        with this activity.
+    - reference: RHEA:12869
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.16"/>
+      notes: Rhea assigns RHEA:12869 to EC 4.2.3.16, and EC 4.2.3.16 maps to exactly one Rhea master reaction
+        (RHEA:12869), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_F6M8I0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTPS2_SANAL is an exemplar enzyme carrying EC 4.2.3.16, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.16
+      snippet: DR   R9QMR5, ATERP_PINBN;  Q20HU7, LIMNS_PICSI;  F6M8I0, MTPS2_SANAL;
+      notes: ExPASy ENZYME entry EC 4.2.3.16 cross-references UniProtKB:F6M8I0 (MTPS2_SANAL) as a protein
+        with this activity.
+    - reference: RHEA:12869
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.16"/>
+      notes: Rhea assigns RHEA:12869 to EC 4.2.3.16, and EC 4.2.3.16 maps to exactly one Rhea master reaction
+        (RHEA:12869), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

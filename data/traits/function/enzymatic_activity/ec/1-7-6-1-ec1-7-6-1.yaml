@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.7.6.-
 synonyms:
@@ -37,4 +37,133 @@ definitions:
       Catalyses: 3 nitrite + 2 H(+) = 2 nitric oxide + nitrate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nitrite dismutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.7.6.1. EC 1.7.6.1 maps to exactly
+    one curated Rhea reaction (RHEA:31367), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3 nitrite + 2
+    H(+) = 2 nitric oxide + nitrate + H2O". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nitrite dismutase
+    grounding: EC:1.7.6.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: nitrite
+    node_type: CHEMICAL
+    grounding: CHEBI:16301
+    description: Formula NO2.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: nitric oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16480
+    description: Formula NO.
+  - node_id: prd2
+    label: nitrate
+    node_type: CHEMICAL
+    grounding: CHEBI:17632
+    description: Formula NO3.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q94734
+    node_type: PROTEIN
+    label: NP4_RHOPR
+    grounding: UniProtKB:Q94734
+  - node_id: prot_Q6PQK2
+    node_type: PROTEIN
+    label: NP7_RHOPR
+    grounding: UniProtKB:Q6PQK2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: nitrite is a substrate consumed by RHEA:31367 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:31368
+      snippet: 3 nitrite + 2 H(+) => 2 nitric oxide + nitrate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31368 declares side 31367_L as its substrates
+        (rh:substrates); the master reaction RHEA:31367 is undirected. This participant is CHEBI:16301
+        with coefficient 3. Rhea cites PMID:20524697, PMID:19655755 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:31367 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:31368
+      snippet: 3 nitrite + 2 H(+) => 2 nitric oxide + nitrate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31368 declares side 31367_L as its substrates
+        (rh:substrates); the master reaction RHEA:31367 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:20524697, PMID:19655755 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: nitric oxide is a product released by RHEA:31367 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:31368
+      snippet: 3 nitrite + 2 H(+) => 2 nitric oxide + nitrate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31368 declares side 31367_R as its products
+        (rh:products); the master reaction RHEA:31367 is undirected. This participant is CHEBI:16480 with
+        coefficient 2. Rhea cites PMID:20524697, PMID:19655755 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nitrate is a product released by RHEA:31367 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31368
+      snippet: 3 nitrite + 2 H(+) => 2 nitric oxide + nitrate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31368 declares side 31367_R as its products
+        (rh:products); the master reaction RHEA:31367 is undirected. This participant is CHEBI:17632 with
+        coefficient 1. Rhea cites PMID:20524697, PMID:19655755 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:31367 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31368
+      snippet: 3 nitrite + 2 H(+) => 2 nitric oxide + nitrate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31368 declares side 31367_R as its products
+        (rh:products); the master reaction RHEA:31367 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:20524697, PMID:19655755 for this reaction.
+  - subject: prot_Q94734
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NP4_RHOPR is an exemplar enzyme with EC 1.7.6.1 activity.
+    evidence:
+    - reference: EC:1.7.6.1
+      snippet: DR   Q94734, NP4_RHOPR  ;  Q6PQK2, NP7_RHOPR  ;
+      notes: ExPASy ENZYME entry EC 1.7.6.1 cross-references UniProtKB:Q94734 (NP4_RHOPR) as a protein
+        with this activity.
+  - subject: prot_Q6PQK2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NP7_RHOPR is an exemplar enzyme with EC 1.7.6.1 activity.
+    evidence:
+    - reference: EC:1.7.6.1
+      snippet: DR   Q94734, NP4_RHOPR  ;  Q6PQK2, NP7_RHOPR  ;
+      notes: ExPASy ENZYME entry EC 1.7.6.1 cross-references UniProtKB:Q6PQK2 (NP7_RHOPR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

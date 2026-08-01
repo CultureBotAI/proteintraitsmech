@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57702
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,91 @@ definitions:
       Catalyses the reaction: N-acetyl-L-phenylalanine + H2O = L-phenylalanine + acetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acetyl-L-phenylalanine + H2O = L-phenylalanine + acetate
+  description: Substrate-to-product chemistry of RHEA:54188, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:54189 (rh:substrates → 54188_L, rh:products → 54188_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-acetyl-L-phenylalanine + H2O = L-phenylalanine + acetate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:54188
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-acetyl-L-phenylalanine + H2O = L-phenylalanine + acetate'
+  - node_id: sub1
+    label: N-acetyl-L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57702
+    description: Formula C11H12NO3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-acetyl-L-phenylalanine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54189
+      snippet: N-acetyl-L-phenylalanine + H2O => L-phenylalanine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:54189 declares side 54188_L as its substrates
+        (rh:substrates); the master reaction RHEA:54188 is undirected. This participant is CHEBI:57702
+        with coefficient 1. Rhea cites PMID:17012540, PMID:14656720 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54189
+      snippet: N-acetyl-L-phenylalanine + H2O => L-phenylalanine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:54189 declares side 54188_L as its substrates
+        (rh:substrates); the master reaction RHEA:54188 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17012540, PMID:14656720 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-phenylalanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54189
+      snippet: N-acetyl-L-phenylalanine + H2O => L-phenylalanine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:54189 declares side 54188_R as its products
+        (rh:products); the master reaction RHEA:54188 is undirected. This participant is CHEBI:58095 with
+        coefficient 1. Rhea cites PMID:17012540, PMID:14656720 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54189
+      snippet: N-acetyl-L-phenylalanine + H2O => L-phenylalanine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:54189 declares side 54188_R as its products
+        (rh:products); the master reaction RHEA:54188 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:17012540, PMID:14656720 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

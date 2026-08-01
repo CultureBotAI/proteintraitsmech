@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.2.19
     mapping_source: rhea2ec
@@ -34,4 +34,124 @@ definitions:
       Catalyses the reaction: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O = ADP-D-ribose + L-arginine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(omega)-(ADP-D-ribosyl)-L-arginine + H2O = ADP-D-ribose + L-arginine
+  description: Substrate-to-product chemistry of RHEA:20784, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20785 (rh:substrates → 20784_L, rh:products → 20784_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N(omega)-(ADP-D-ribosyl)-L-arginine + H2O = ADP-D-ribose + L-arginine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20784
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O = ADP-D-ribose + L-arginine'
+  - node_id: sub1
+    label: N(omega)-(ADP-D-ribosyl)-L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:60267
+    description: Formula C21H34N9O15P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: ADP-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:57967
+    description: Formula C15H21N5O14P2.
+  - node_id: prd2
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ADP-ribosylarginine-[protein] hydrolase activity
+    grounding: GO:0003875
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: '[protein ADP-ribosylarginine] hydrolase'
+    grounding: EC:3.2.2.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(omega)-(ADP-D-ribosyl)-L-arginine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20785
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O => ADP-D-ribose + L-arginine
+      notes: Rhea's left-to-right directional reaction RHEA:20785 declares side 20784_L as its substrates
+        (rh:substrates); the master reaction RHEA:20784 is undirected. This participant is CHEBI:60267
+        with coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:10358013, PMID:8349667 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20785
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O => ADP-D-ribose + L-arginine
+      notes: Rhea's left-to-right directional reaction RHEA:20785 declares side 20784_L as its substrates
+        (rh:substrates); the master reaction RHEA:20784 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:10358013, PMID:8349667 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ADP-D-ribose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20785
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O => ADP-D-ribose + L-arginine
+      notes: Rhea's left-to-right directional reaction RHEA:20785 declares side 20784_R as its products
+        (rh:products); the master reaction RHEA:20784 is undirected. This participant is CHEBI:57967 with
+        coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:10358013, PMID:8349667 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-arginine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20785
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine + H2O => ADP-D-ribose + L-arginine
+      notes: Rhea's left-to-right directional reaction RHEA:20785 declares side 20784_R as its products
+        (rh:products); the master reaction RHEA:20784 is undirected. This participant is CHEBI:32682 with
+        coefficient 1. Rhea cites PMID:2994036, PMID:8678289, PMID:10358013, PMID:8349667 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20784
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003875"/>
+      notes: The rdfs:seeAlso triple on RHEA:20784 in rhea.rdf. GO term GO:0003875 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.2.19; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.2.19"/>
+      notes: The rh:ec triple on RHEA:20784 in rhea.rdf. EC 3.2.2.19 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

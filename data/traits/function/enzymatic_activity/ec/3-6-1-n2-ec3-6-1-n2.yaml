@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.6.1.-
 synonyms:
@@ -23,4 +23,157 @@ definitions:
       Catalyses: L-cysteinyl-tRNA(Pro) + H2O = tRNA(Pro) + L-cysteine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-cysteinyl-tRNA(Pro)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.6.1.n2. EC 3.6.1.n2 maps to exactly
+    one curated Rhea reaction (RHEA:25351), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-cysteinyl-tRNA(Pro)
+    + H2O = tRNA(Pro) + L-cysteine + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-cysteinyl-tRNA(Pro)
+    grounding: EC:3.6.1.n2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-cysteinyl-tRNA(Pro)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9701
+    description: Rhea compound GENERIC:9701.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: 3'-(L-cysteinyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9701 (L-cysteinyl-tRNA(Pro));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78517
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: tRNA(Pro)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9702
+    description: Rhea compound GENERIC:9702.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9702 (tRNA(Pro));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd2
+    label: L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+    description: Formula C3H7NO2S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: Cys-tRNA(Pro) deacylase activity
+    grounding: GO:0043907
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteinyl-tRNA(Pro) is a substrate consumed by RHEA:25351 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25352
+      snippet: L-cysteinyl-tRNA(Pro) + H2O => tRNA(Pro) + L-cysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25352 declares side 25351_L as its substrates
+        (rh:substrates); the master reaction RHEA:25351 is undirected. This participant is GENERIC:9701
+        with coefficient 1. Rhea cites PMID:15322138, PMID:23185990, PMID:16087664, PMID:15886196 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-cysteinyl)adenylyl group is the reactive part of L-cysteinyl-tRNA(Pro).
+    evidence:
+    - reference: RHEA:25351
+      snippet: 3'-(L-cysteinyl)adenylyl group
+      notes: Rhea compound GENERIC:9701 (L-cysteinyl-tRNA(Pro)) declares rh:reactivePart = 3'-(L-cysteinyl)adenylyl
+        group (CHEBI:78517).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:25351 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25352
+      snippet: L-cysteinyl-tRNA(Pro) + H2O => tRNA(Pro) + L-cysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25352 declares side 25351_L as its substrates
+        (rh:substrates); the master reaction RHEA:25351 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15322138, PMID:23185990, PMID:16087664, PMID:15886196 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tRNA(Pro) is a product released by RHEA:25351 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25352
+      snippet: L-cysteinyl-tRNA(Pro) + H2O => tRNA(Pro) + L-cysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25352 declares side 25351_R as its products
+        (rh:products); the master reaction RHEA:25351 is undirected. This participant is GENERIC:9702
+        with coefficient 1. Rhea cites PMID:15322138, PMID:23185990, PMID:16087664, PMID:15886196 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: AMP 3'-end residue is the reactive part of tRNA(Pro).
+    evidence:
+    - reference: RHEA:25351
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9702 (tRNA(Pro)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-cysteine is a product released by RHEA:25351 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25352
+      snippet: L-cysteinyl-tRNA(Pro) + H2O => tRNA(Pro) + L-cysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25352 declares side 25351_R as its products
+        (rh:products); the master reaction RHEA:25351 is undirected. This participant is CHEBI:35235 with
+        coefficient 1. Rhea cites PMID:15322138, PMID:23185990, PMID:16087664, PMID:15886196 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:25351 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25352
+      snippet: L-cysteinyl-tRNA(Pro) + H2O => tRNA(Pro) + L-cysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25352 declares side 25351_R as its products
+        (rh:products); the master reaction RHEA:25351 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15322138, PMID:23185990, PMID:16087664, PMID:15886196 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.6.1.n2
+      snippet: EC:3.6.1.n2 > GO:Cys-tRNA(Pro) deacylase activity ; GO:0043907
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043907 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

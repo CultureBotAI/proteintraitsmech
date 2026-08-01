@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -41,4 +41,207 @@ definitions:
       Catalyses: (1) 2-dehydro-3-deoxy-6-phospho-D-gluconate = D-glyceraldehyde 3-phosphate + pyruvate. (2) 2-dehydro-3-deoxy-6-phospho-D-galactonate = D-glyceraldehyde 3-phosphate + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-dehydro-3-deoxy-phosphogluconate/2-dehydro-3-deoxy-6-phosphogalactonate
+    aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.55. Rhea assigns 2 curated
+    reactions to EC 4.1.2.55. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 2-dehydro-3-deoxy-6-phospho-D-gluconate = D-glyceraldehyde
+    3-phosphate + pyruvate. (2) 2-dehydro-3-deoxy-6-phospho-D-galactonate = D-glyceraldehyde 3-phosphate
+    + pyruvate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydro-3-deoxy-phosphogluconate/2-dehydro-3-deoxy-6-phosphogalactonate aldolase
+    grounding: EC:4.1.2.55
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2-dehydro-3-deoxy-6-phospho-D-gluconate = D-glyceraldehyde 3-phosphate + pyr…
+    grounding: RHEA:17089
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2-dehydro-3-deoxy-6-phospho-D-gluconate = D-glyceraldehyde 3-phosphate
+      + pyruvate'
+  - node_id: rxn1_sub1
+    label: 2-dehydro-3-deoxy-6-phospho-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:57569
+    description: Formula C6H8O9P.
+  - node_id: rxn1_prd1
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: rxn1_prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2-dehydro-3-deoxy-6-phospho-D-galactonate = D-glyceraldehyde 3-phosphate + p…
+    grounding: RHEA:24464
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2-dehydro-3-deoxy-6-phospho-D-galactonate = D-glyceraldehyde 3-phosphate
+      + pyruvate'
+  - node_id: rxn2_sub1
+    label: 2-dehydro-3-deoxy-6-phospho-D-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:58298
+    description: Formula C6H8O9P.
+  - node_id: rxn2_prd1
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: rxn2_prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prot_Q97U28
+    node_type: PROTEIN
+    label: KDGA_SACS2
+    grounding: UniProtKB:Q97U28
+  - node_id: prot_O54288
+    node_type: PROTEIN
+    label: KDGA_SACSO
+    grounding: UniProtKB:O54288
+  - node_id: prot_Q4JC35
+    node_type: PROTEIN
+    label: KDGA_SULAC
+    grounding: UniProtKB:Q4JC35
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:17089 is one of the 2 curated reactions Rhea assigns to EC 4.1.2.55; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:17089
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.55"/>
+      notes: The rh:ec triple on RHEA:17089 in rhea.rdf assigns that reaction to EC 4.1.2.55.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 2-dehydro-3-deoxy-6-phospho-D-gluconate is a substrate consumed by RHEA:17089 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17090
+      snippet: 2-dehydro-3-deoxy-6-phospho-D-gluconate => D-glyceraldehyde 3-phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:17090 declares side 17089_L as its substrates
+        (rh:substrates); the master reaction RHEA:17089 is undirected. This participant is CHEBI:57569
+        with coefficient 1. Rhea cites PMID:10527934, PMID:29377793, PMID:14245411, PMID:16330030 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: D-glyceraldehyde 3-phosphate is a product released by RHEA:17089 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17090
+      snippet: 2-dehydro-3-deoxy-6-phospho-D-gluconate => D-glyceraldehyde 3-phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:17090 declares side 17089_R as its products
+        (rh:products); the master reaction RHEA:17089 is undirected. This participant is CHEBI:59776 with
+        coefficient 1. Rhea cites PMID:10527934, PMID:29377793, PMID:14245411, PMID:16330030 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: pyruvate is a product released by RHEA:17089 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17090
+      snippet: 2-dehydro-3-deoxy-6-phospho-D-gluconate => D-glyceraldehyde 3-phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:17090 declares side 17089_R as its products
+        (rh:products); the master reaction RHEA:17089 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:10527934, PMID:29377793, PMID:14245411, PMID:16330030 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:24464 is one of the 2 curated reactions Rhea assigns to EC 4.1.2.55; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24464
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.55"/>
+      notes: The rh:ec triple on RHEA:24464 in rhea.rdf assigns that reaction to EC 4.1.2.55.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 2-dehydro-3-deoxy-6-phospho-D-galactonate is a substrate consumed by RHEA:24464 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24465
+      snippet: 2-dehydro-3-deoxy-6-phospho-D-galactonate => D-glyceraldehyde 3-phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:24465 declares side 24464_L as its substrates
+        (rh:substrates); the master reaction RHEA:24464 is undirected. This participant is CHEBI:58298
+        with coefficient 1. Rhea cites PMID:17981470 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: D-glyceraldehyde 3-phosphate is a product released by RHEA:24464 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24465
+      snippet: 2-dehydro-3-deoxy-6-phospho-D-galactonate => D-glyceraldehyde 3-phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:24465 declares side 24464_R as its products
+        (rh:products); the master reaction RHEA:24464 is undirected. This participant is CHEBI:59776 with
+        coefficient 1. Rhea cites PMID:17981470 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: pyruvate is a product released by RHEA:24464 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24465
+      snippet: 2-dehydro-3-deoxy-6-phospho-D-galactonate => D-glyceraldehyde 3-phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:24465 declares side 24464_R as its products
+        (rh:products); the master reaction RHEA:24464 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:17981470 for this reaction.
+  - subject: prot_Q97U28
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KDGA_SACS2 is an exemplar enzyme with EC 4.1.2.55 activity.
+    evidence:
+    - reference: EC:4.1.2.55
+      snippet: DR   Q97U28, KDGA_SACS2 ;  O54288, KDGA_SACSO ;  Q4JC35, KDGA_SULAC ;
+      notes: ExPASy ENZYME entry EC 4.1.2.55 cross-references UniProtKB:Q97U28 (KDGA_SACS2) as a protein
+        with this activity.
+  - subject: prot_O54288
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KDGA_SACSO is an exemplar enzyme with EC 4.1.2.55 activity.
+    evidence:
+    - reference: EC:4.1.2.55
+      snippet: DR   Q97U28, KDGA_SACS2 ;  O54288, KDGA_SACSO ;  Q4JC35, KDGA_SULAC ;
+      notes: ExPASy ENZYME entry EC 4.1.2.55 cross-references UniProtKB:O54288 (KDGA_SACSO) as a protein
+        with this activity.
+  - subject: prot_Q4JC35
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KDGA_SULAC is an exemplar enzyme with EC 4.1.2.55 activity.
+    evidence:
+    - reference: EC:4.1.2.55
+      snippet: DR   Q97U28, KDGA_SACS2 ;  O54288, KDGA_SACSO ;  Q4JC35, KDGA_SULAC ;
+      notes: ExPASy ENZYME entry EC 4.1.2.55 cross-references UniProtKB:Q4JC35 (KDGA_SULAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

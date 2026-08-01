@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -38,4 +38,67 @@ definitions:
       Catalyses: The primary cleavage site is at 67-His-|-Lys-68 in human C5a with a minor secondary cleavage site at 58-Ala-|-Ser-59
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of C5a peptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.110. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "The primary cleavage site is at 67-His-|-Lys-68 in human C5a with a minor secondary cleavage site
+    at 58-Ala-|-Ser-59".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: C5a peptidase
+    grounding: EC:3.4.21.110
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P58099
+    node_type: PROTEIN
+    label: C5AP_STRP1
+    grounding: UniProtKB:P58099
+  - node_id: prot_P0DD34
+    node_type: PROTEIN
+    label: C5AP_STRP3
+    grounding: UniProtKB:P0DD34
+  - node_id: prot_Q5X9R0
+    node_type: PROTEIN
+    label: C5AP_STRP6
+    grounding: UniProtKB:Q5X9R0
+  edges:
+  - subject: prot_P58099
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C5AP_STRP1 is an exemplar enzyme with EC 3.4.21.110 activity.
+    evidence:
+    - reference: EC:3.4.21.110
+      snippet: DR   P58099, C5AP_STRP1 ;  P0DD34, C5AP_STRP3 ;  Q5X9R0, C5AP_STRP6 ;
+      notes: ExPASy ENZYME entry EC 3.4.21.110 cross-references UniProtKB:P58099 (C5AP_STRP1) as a protein
+        with this activity.
+  - subject: prot_P0DD34
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C5AP_STRP3 is an exemplar enzyme with EC 3.4.21.110 activity.
+    evidence:
+    - reference: EC:3.4.21.110
+      snippet: DR   P58099, C5AP_STRP1 ;  P0DD34, C5AP_STRP3 ;  Q5X9R0, C5AP_STRP6 ;
+      notes: ExPASy ENZYME entry EC 3.4.21.110 cross-references UniProtKB:P0DD34 (C5AP_STRP3) as a protein
+        with this activity.
+  - subject: prot_Q5X9R0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C5AP_STRP6 is an exemplar enzyme with EC 3.4.21.110 activity.
+    evidence:
+    - reference: EC:3.4.21.110
+      snippet: DR   P58099, C5AP_STRP1 ;  P0DD34, C5AP_STRP3 ;  Q5X9R0, C5AP_STRP6 ;
+      notes: ExPASy ENZYME entry EC 3.4.21.110 cross-references UniProtKB:Q5X9R0 (C5AP_STRP6) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

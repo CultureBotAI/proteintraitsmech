@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 synonyms:
@@ -41,4 +41,116 @@ definitions:
       Catalyses: (S)-2,3-epoxysqualene = cycloartenol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cycloartenol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.8. EC 5.4.99.8 maps to exactly
+    one curated Rhea reaction (RHEA:21308), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-2,3-epoxysqualene
+    = cycloartenol". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cycloartenol synthase
+    grounding: EC:5.4.99.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-2,3-epoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:15441
+    description: Formula C30H50O.
+  - node_id: prd1
+    label: cycloartenol
+    node_type: CHEMICAL
+    grounding: CHEBI:17030
+    description: Formula C30H50O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cycloartenol synthase activity
+    grounding: GO:0016871
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P38605
+    node_type: PROTEIN
+    label: CAS1_ARATH
+    grounding: UniProtKB:P38605
+  - node_id: prot_Q8W3Z4
+    node_type: PROTEIN
+    label: CAS1_BETPL
+    grounding: UniProtKB:Q8W3Z4
+  - node_id: prot_Q6BE25
+    node_type: PROTEIN
+    label: CAS1_CUCPE
+    grounding: UniProtKB:Q6BE25
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-2,3-epoxysqualene is a substrate consumed by RHEA:21308 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21309
+      snippet: (S)-2,3-epoxysqualene => cycloartenol
+      notes: Rhea's left-to-right directional reaction RHEA:21309 declares side 21308_L as its substrates
+        (rh:substrates); the master reaction RHEA:21308 is undirected. This participant is CHEBI:15441
+        with coefficient 1. Rhea cites PMID:12736505, PMID:9746369, PMID:37416896, PMID:16445885 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cycloartenol is a product released by RHEA:21308 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21309
+      snippet: (S)-2,3-epoxysqualene => cycloartenol
+      notes: Rhea's left-to-right directional reaction RHEA:21309 declares side 21308_R as its products
+        (rh:products); the master reaction RHEA:21308 is undirected. This participant is CHEBI:17030 with
+        coefficient 1. Rhea cites PMID:12736505, PMID:9746369, PMID:37416896, PMID:16445885 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.8
+      snippet: EC:5.4.99.8 > GO:cycloartenol synthase activity ; GO:0016871
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016871 is itself a record
+        in this KB.
+  - subject: prot_P38605
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAS1_ARATH is an exemplar enzyme with EC 5.4.99.8 activity.
+    evidence:
+    - reference: EC:5.4.99.8
+      snippet: DR   P38605, CAS1_ARATH ;  Q8W3Z4, CAS1_BETPL ;  Q6BE25, CAS1_CUCPE ;
+      notes: ExPASy ENZYME entry EC 5.4.99.8 cross-references UniProtKB:P38605 (CAS1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q8W3Z4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAS1_BETPL is an exemplar enzyme with EC 5.4.99.8 activity.
+    evidence:
+    - reference: EC:5.4.99.8
+      snippet: DR   P38605, CAS1_ARATH ;  Q8W3Z4, CAS1_BETPL ;  Q6BE25, CAS1_CUCPE ;
+      notes: ExPASy ENZYME entry EC 5.4.99.8 cross-references UniProtKB:Q8W3Z4 (CAS1_BETPL) as a protein
+        with this activity.
+  - subject: prot_Q6BE25
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAS1_CUCPE is an exemplar enzyme with EC 5.4.99.8 activity.
+    evidence:
+    - reference: EC:5.4.99.8
+      snippet: DR   P38605, CAS1_ARATH ;  Q8W3Z4, CAS1_BETPL ;  Q6BE25, CAS1_CUCPE ;
+      notes: ExPASy ENZYME entry EC 5.4.99.8 cross-references UniProtKB:Q6BE25 (CAS1_CUCPE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

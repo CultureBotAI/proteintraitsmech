@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:32395
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,98 @@ definitions:
       Catalyses the reaction: (5Z,8Z,11Z,14Z)-eicosatetraenoate + UDP-alpha-D-glucuronate = O-[(5Z),(8Z),(11Z),(14Z)-eicosatetraenoyl]-beta-D-glucuronate + UDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (5Z,8Z,11Z,14Z)-eicosatetraenoate + UDP-alpha-D-glucuronate = O-[(5Z),(8Z),(11Z),(14Z)-…
+  description: Substrate-to-product chemistry of RHEA:79915, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79916 (rh:substrates → 79915_L, rh:products → 79915_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (5Z,8Z,11Z,14Z)-eicosatetraenoate + UDP-alpha-D-glucuronate = O-[(5Z),(8Z),(…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79915
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (5Z,8Z,11Z,14Z)-eicosatetraenoate + UDP-alpha-D-glucuronate = O-[(5Z),(8Z),(11Z),(14Z)-eicosatetraenoyl]-beta-D-glucuronate
+      + UDP'
+  - node_id: sub1
+    label: (5Z,8Z,11Z,14Z)-eicosatetraenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:32395
+    description: Formula C20H31O2.
+  - node_id: sub2
+    label: UDP-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+    description: Formula C15H19N2O18P2.
+  - node_id: prd1
+    label: O-[(5Z),(8Z),(11Z),(14Z)-eicosatetraenoyl]-beta-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:231327
+    description: Formula C26H39O8.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (5Z,8Z,11Z,14Z)-eicosatetraenoate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79916
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + UDP-alpha-D-glucuronate => O-[(5Z),(8Z),(11Z),(14Z)-eicosatetraenoyl]-beta-D-glucuronate
+        + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:79916 declares side 79915_L as its substrates
+        (rh:substrates); the master reaction RHEA:79915 is undirected. This participant is CHEBI:32395
+        with coefficient 1. Rhea cites PMID:15231852 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucuronate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79916
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + UDP-alpha-D-glucuronate => O-[(5Z),(8Z),(11Z),(14Z)-eicosatetraenoyl]-beta-D-glucuronate
+        + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:79916 declares side 79915_L as its substrates
+        (rh:substrates); the master reaction RHEA:79915 is undirected. This participant is CHEBI:58052
+        with coefficient 1. Rhea cites PMID:15231852 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-[(5Z),(8Z),(11Z),(14Z)-eicosatetraenoyl]-beta-D-glucuronate is a product released by
+      this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79916
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + UDP-alpha-D-glucuronate => O-[(5Z),(8Z),(11Z),(14Z)-eicosatetraenoyl]-beta-D-glucuronate
+        + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:79916 declares side 79915_R as its products
+        (rh:products); the master reaction RHEA:79915 is undirected. This participant is CHEBI:231327
+        with coefficient 1. Rhea cites PMID:15231852 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79916
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + UDP-alpha-D-glucuronate => O-[(5Z),(8Z),(11Z),(14Z)-eicosatetraenoyl]-beta-D-glucuronate
+        + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:79916 declares side 79915_R as its products
+        (rh:products); the master reaction RHEA:79915 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:15231852 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

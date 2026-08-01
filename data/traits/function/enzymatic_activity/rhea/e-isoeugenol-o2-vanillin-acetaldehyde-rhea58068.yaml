@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.13.11.88
     mapping_source: rhea2ec
@@ -34,4 +34,169 @@ definitions:
       Catalyses the reaction: (E)-isoeugenol + O2 = vanillin + acetaldehyde
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E)-isoeugenol + O2 = vanillin + acetaldehyde
+  description: Substrate-to-product chemistry of RHEA:58068, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58069 (rh:substrates → 58068_L, rh:products → 58068_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (E)-isoeugenol + O2 = vanillin + acetaldehyde
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58068
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (E)-isoeugenol + O2 = vanillin + acetaldehyde'
+  - node_id: sub1
+    label: (E)-isoeugenol
+    node_type: CHEMICAL
+    grounding: CHEBI:50545
+    description: Formula C10H12O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: vanillin
+    node_type: CHEMICAL
+    grounding: CHEBI:18346
+    description: Formula C8H8O3.
+  - node_id: prd2
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: isoeugenol monooxygenase
+    grounding: EC:1.13.11.88
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_W3VHW6
+    node_type: PROTEIN
+    label: ADO_MOEAP
+    grounding: UniProtKB:W3VHW6
+  - node_id: prot_G2QIL8
+    node_type: PROTEIN
+    label: ADO_THET4
+    grounding: UniProtKB:G2QIL8
+  - node_id: prot_C3VA26
+    node_type: PROTEIN
+    label: IEMOX_PSENT
+    grounding: UniProtKB:C3VA26
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (E)-isoeugenol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58069
+      snippet: (E)-isoeugenol + O2 => vanillin + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:58069 declares side 58068_L as its substrates
+        (rh:substrates); the master reaction RHEA:58068 is undirected. This participant is CHEBI:50545
+        with coefficient 1. Rhea cites PMID:16944125, PMID:17516050, PMID:10702906, PMID:23391906 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58069
+      snippet: (E)-isoeugenol + O2 => vanillin + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:58069 declares side 58068_L as its substrates
+        (rh:substrates); the master reaction RHEA:58068 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:16944125, PMID:17516050, PMID:10702906, PMID:23391906 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: vanillin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58069
+      snippet: (E)-isoeugenol + O2 => vanillin + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:58069 declares side 58068_R as its products
+        (rh:products); the master reaction RHEA:58068 is undirected. This participant is CHEBI:18346 with
+        coefficient 1. Rhea cites PMID:16944125, PMID:17516050, PMID:10702906, PMID:23391906 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetaldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58069
+      snippet: (E)-isoeugenol + O2 => vanillin + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:58069 declares side 58068_R as its products
+        (rh:products); the master reaction RHEA:58068 is undirected. This participant is CHEBI:15343 with
+        coefficient 1. Rhea cites PMID:16944125, PMID:17516050, PMID:10702906, PMID:23391906 for this
+        reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.13.11.88; the EC class covers the chemistry, this
+      reaction is one curated instance of it.
+    evidence:
+    - reference: RHEA:58068
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.88"/>
+      notes: The rh:ec triple on RHEA:58068 in rhea.rdf. EC 1.13.11.88 is itself a record in this KB.
+  - subject: prot_W3VHW6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADO_MOEAP is an exemplar enzyme carrying EC 1.13.11.88, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.88
+      snippet: DR   W3VHW6, ADO_MOEAP  ;  G2QIL8, ADO_THET4  ;  C3VA26, IEMOX_PSENT;
+      notes: ExPASy ENZYME entry EC 1.13.11.88 cross-references UniProtKB:W3VHW6 (ADO_MOEAP) as a protein
+        with this activity.
+    - reference: RHEA:58068
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.88"/>
+      notes: Rhea assigns RHEA:58068 to EC 1.13.11.88, and EC 1.13.11.88 maps to exactly one Rhea master
+        reaction (RHEA:58068), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_G2QIL8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADO_THET4 is an exemplar enzyme carrying EC 1.13.11.88, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.88
+      snippet: DR   W3VHW6, ADO_MOEAP  ;  G2QIL8, ADO_THET4  ;  C3VA26, IEMOX_PSENT;
+      notes: ExPASy ENZYME entry EC 1.13.11.88 cross-references UniProtKB:G2QIL8 (ADO_THET4) as a protein
+        with this activity.
+    - reference: RHEA:58068
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.88"/>
+      notes: Rhea assigns RHEA:58068 to EC 1.13.11.88, and EC 1.13.11.88 maps to exactly one Rhea master
+        reaction (RHEA:58068), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_C3VA26
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IEMOX_PSENT is an exemplar enzyme carrying EC 1.13.11.88, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.88
+      snippet: DR   W3VHW6, ADO_MOEAP  ;  G2QIL8, ADO_THET4  ;  C3VA26, IEMOX_PSENT;
+      notes: ExPASy ENZYME entry EC 1.13.11.88 cross-references UniProtKB:C3VA26 (IEMOX_PSENT) as a protein
+        with this activity.
+    - reference: RHEA:58068
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.88"/>
+      notes: Rhea assigns RHEA:58068 to EC 1.13.11.88, and EC 1.13.11.88 maps to exactly one Rhea master
+        reaction (RHEA:58068), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

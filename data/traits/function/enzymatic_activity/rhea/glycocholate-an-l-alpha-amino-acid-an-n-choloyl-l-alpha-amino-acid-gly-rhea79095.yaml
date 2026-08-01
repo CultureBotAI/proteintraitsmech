@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29746
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,93 @@ definitions:
       Catalyses the reaction: glycocholate + an L-alpha-amino acid = an N-choloyl-L-alpha-amino acid + glycine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glycocholate + an L-alpha-amino acid = an N-choloyl-L-alpha-amino acid
+    + glycine
+  description: Substrate-to-product chemistry of RHEA:79095, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79096 (rh:substrates → 79095_L, rh:products → 79095_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of glycocholate + an L-alpha-amino acid = an N-choloyl-L-alpha-amino acid + gly…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79095
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: glycocholate + an L-alpha-amino acid = an N-choloyl-L-alpha-amino acid + glycine'
+  - node_id: sub1
+    label: glycocholate
+    node_type: CHEMICAL
+    grounding: CHEBI:29746
+    description: Formula C26H42NO6.
+  - node_id: sub2
+    label: an L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+    description: Formula C2H4NO2R.
+  - node_id: prd1
+    label: an N-choloyl-L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:229709
+    description: Formula C26H41NO6R.
+  - node_id: prd2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: glycocholate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79096
+      snippet: glycocholate + an L-alpha-amino acid => an N-choloyl-L-alpha-amino acid + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:79096 declares side 79095_L as its substrates
+        (rh:substrates); the master reaction RHEA:79095 is undirected. This participant is CHEBI:29746
+        with coefficient 1. Rhea cites PMID:38326608, PMID:38326609 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: an L-alpha-amino acid is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79096
+      snippet: glycocholate + an L-alpha-amino acid => an N-choloyl-L-alpha-amino acid + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:79096 declares side 79095_L as its substrates
+        (rh:substrates); the master reaction RHEA:79095 is undirected. This participant is CHEBI:59869
+        with coefficient 1. Rhea cites PMID:38326608, PMID:38326609 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N-choloyl-L-alpha-amino acid is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79096
+      snippet: glycocholate + an L-alpha-amino acid => an N-choloyl-L-alpha-amino acid + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:79096 declares side 79095_R as its products
+        (rh:products); the master reaction RHEA:79095 is undirected. This participant is CHEBI:229709
+        with coefficient 1. Rhea cites PMID:38326608, PMID:38326609 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glycine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79096
+      snippet: glycocholate + an L-alpha-amino acid => an N-choloyl-L-alpha-amino acid + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:79096 declares side 79095_R as its products
+        (rh:products); the master reaction RHEA:79095 is undirected. This participant is CHEBI:57305 with
+        coefficient 1. Rhea cites PMID:38326608, PMID:38326609 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

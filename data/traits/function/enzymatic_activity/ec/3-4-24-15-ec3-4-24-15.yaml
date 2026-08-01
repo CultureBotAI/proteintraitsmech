@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -42,4 +42,67 @@ definitions:
       Catalyses: Preferential cleavage of bonds with hydrophobic residues at P1, P2 and P3' and a small residue at P1' in substrates of 5 to 15 residues
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thimet oligopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.15. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage of bonds with hydrophobic residues at P1, P2 and P3'' and a small residue at P1'' in substrates
+    of 5 to 15 residues".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thimet oligopeptidase
+    grounding: EC:3.4.24.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_F4HTQ1
+    node_type: PROTEIN
+    label: MPRO1_ARATH
+    grounding: UniProtKB:F4HTQ1
+  - node_id: prot_Q1JPJ8
+    node_type: PROTEIN
+    label: THOP1_BOVIN
+    grounding: UniProtKB:Q1JPJ8
+  - node_id: prot_P52888
+    node_type: PROTEIN
+    label: THOP1_HUMAN
+    grounding: UniProtKB:P52888
+  edges:
+  - subject: prot_F4HTQ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MPRO1_ARATH is an exemplar enzyme with EC 3.4.24.15 activity.
+    evidence:
+    - reference: EC:3.4.24.15
+      snippet: DR   F4HTQ1, MPRO1_ARATH;  Q1JPJ8, THOP1_BOVIN;  P52888, THOP1_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.4.24.15 cross-references UniProtKB:F4HTQ1 (MPRO1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q1JPJ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THOP1_BOVIN is an exemplar enzyme with EC 3.4.24.15 activity.
+    evidence:
+    - reference: EC:3.4.24.15
+      snippet: DR   F4HTQ1, MPRO1_ARATH;  Q1JPJ8, THOP1_BOVIN;  P52888, THOP1_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.4.24.15 cross-references UniProtKB:Q1JPJ8 (THOP1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P52888
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THOP1_HUMAN is an exemplar enzyme with EC 3.4.24.15 activity.
+    evidence:
+    - reference: EC:3.4.24.15
+      snippet: DR   F4HTQ1, MPRO1_ARATH;  Q1JPJ8, THOP1_BOVIN;  P52888, THOP1_HUMAN;
+      notes: ExPASy ENZYME entry EC 3.4.24.15 cross-references UniProtKB:P52888 (THOP1_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,106 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate + H2O = presilphiperfolan-8beta-ol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of presilphiperfolanol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.74. EC 4.2.3.74 maps to exactly
+    one curated Rhea reaction (RHEA:27954), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate + H2O = presilphiperfolan-8beta-ol + diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: presilphiperfolanol synthase
+    grounding: EC:4.2.3.74
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: presilphiperfolan-8beta-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:60968
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q6WP50
+    node_type: PROTEIN
+    label: BOT2_BOTFU
+    grounding: UniProtKB:Q6WP50
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:27954 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27955
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => presilphiperfolan-8beta-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27955 declares side 27954_L as its substrates
+        (rh:substrates); the master reaction RHEA:27954 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:19035644, PMID:19476353 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:27954 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27955
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => presilphiperfolan-8beta-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27955 declares side 27954_L as its substrates
+        (rh:substrates); the master reaction RHEA:27954 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19035644, PMID:19476353 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: presilphiperfolan-8beta-ol is a product released by RHEA:27954 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27955
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => presilphiperfolan-8beta-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27955 declares side 27954_R as its products
+        (rh:products); the master reaction RHEA:27954 is undirected. This participant is CHEBI:60968 with
+        coefficient 1. Rhea cites PMID:19035644, PMID:19476353 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:27954 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27955
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => presilphiperfolan-8beta-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27955 declares side 27954_R as its products
+        (rh:products); the master reaction RHEA:27954 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:19035644, PMID:19476353 for this reaction.
+  - subject: prot_Q6WP50
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BOT2_BOTFU is an exemplar enzyme with EC 4.2.3.74 activity.
+    evidence:
+    - reference: EC:4.2.3.74
+      snippet: DR   Q6WP50, BOT2_BOTFU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.74 cross-references UniProtKB:Q6WP50 (BOT2_BOTFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

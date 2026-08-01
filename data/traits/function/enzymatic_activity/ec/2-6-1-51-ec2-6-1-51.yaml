@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -41,4 +41,146 @@ definitions:
       Catalyses: L-serine + pyruvate = 3-hydroxypyruvate + L-alanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of serine--pyruvate transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.51. EC 2.6.1.51 maps to exactly
+    one curated Rhea reaction (RHEA:22852), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-serine + pyruvate
+    = 3-hydroxypyruvate + L-alanine". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: serine--pyruvate transaminase
+    grounding: EC:2.6.1.51
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:33384
+    description: Formula C3H7NO3.
+  - node_id: sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd1
+    label: 3-hydroxypyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:17180
+    description: Formula C3H3O4.
+  - node_id: prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-serine:pyruvate transaminase activity
+    grounding: GO:0004760
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P31029
+    node_type: PROTEIN
+    label: AGT1_CALJA
+    grounding: UniProtKB:P31029
+  - node_id: prot_Q54GT6
+    node_type: PROTEIN
+    label: AGT1_DICDI
+    grounding: UniProtKB:Q54GT6
+  - node_id: prot_P41689
+    node_type: PROTEIN
+    label: AGT1_FELCA
+    grounding: UniProtKB:P41689
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-serine is a substrate consumed by RHEA:22852 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22853
+      snippet: L-serine + pyruvate => 3-hydroxypyruvate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:22853 declares side 22852_L as its substrates
+        (rh:substrates); the master reaction RHEA:22852 is undirected. This participant is CHEBI:33384
+        with coefficient 1. Rhea cites PMID:23098902, PMID:12220660, PMID:18156253 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: pyruvate is a substrate consumed by RHEA:22852 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22853
+      snippet: L-serine + pyruvate => 3-hydroxypyruvate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:22853 declares side 22852_L as its substrates
+        (rh:substrates); the master reaction RHEA:22852 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:23098902, PMID:12220660, PMID:18156253 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-hydroxypyruvate is a product released by RHEA:22852 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22853
+      snippet: L-serine + pyruvate => 3-hydroxypyruvate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:22853 declares side 22852_R as its products
+        (rh:products); the master reaction RHEA:22852 is undirected. This participant is CHEBI:17180 with
+        coefficient 1. Rhea cites PMID:23098902, PMID:12220660, PMID:18156253 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-alanine is a product released by RHEA:22852 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22853
+      snippet: L-serine + pyruvate => 3-hydroxypyruvate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:22853 declares side 22852_R as its products
+        (rh:products); the master reaction RHEA:22852 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:23098902, PMID:12220660, PMID:18156253 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.6.1.51
+      snippet: EC:2.6.1.51 > GO:L-serine:pyruvate transaminase activity ; GO:0004760
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004760 is itself a record
+        in this KB.
+  - subject: prot_P31029
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGT1_CALJA is an exemplar enzyme with EC 2.6.1.51 activity.
+    evidence:
+    - reference: EC:2.6.1.51
+      snippet: DR   P31029, AGT1_CALJA ;  Q54GT6, AGT1_DICDI ;  P41689, AGT1_FELCA ;
+      notes: ExPASy ENZYME entry EC 2.6.1.51 cross-references UniProtKB:P31029 (AGT1_CALJA) as a protein
+        with this activity.
+  - subject: prot_Q54GT6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGT1_DICDI is an exemplar enzyme with EC 2.6.1.51 activity.
+    evidence:
+    - reference: EC:2.6.1.51
+      snippet: DR   P31029, AGT1_CALJA ;  Q54GT6, AGT1_DICDI ;  P41689, AGT1_FELCA ;
+      notes: ExPASy ENZYME entry EC 2.6.1.51 cross-references UniProtKB:Q54GT6 (AGT1_DICDI) as a protein
+        with this activity.
+  - subject: prot_P41689
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGT1_FELCA is an exemplar enzyme with EC 2.6.1.51 activity.
+    evidence:
+    - reference: EC:2.6.1.51
+      snippet: DR   P31029, AGT1_CALJA ;  Q54GT6, AGT1_DICDI ;  P41689, AGT1_FELCA ;
+      notes: ExPASy ENZYME entry EC 2.6.1.51 cross-references UniProtKB:P41689 (AGT1_FELCA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -40,4 +40,66 @@ definitions:
       Catalyses: Endopeptidase action with P4 Glu or Asp, P1 preferably Glu > Asp, P1' hydrophobic and P2' Ala
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of GPR endopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.78. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endopeptidase
+    action with P4 Glu or Asp, P1 preferably Glu > Asp, P1'' hydrophobic and P2'' Ala".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: GPR endopeptidase
+    grounding: EC:3.4.24.78
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_C3P8M7
+    node_type: PROTEIN
+    label: GPR_BACAA
+    grounding: UniProtKB:C3P8M7
+  - node_id: prot_C3L5S4
+    node_type: PROTEIN
+    label: GPR_BACAC
+    grounding: UniProtKB:C3L5S4
+  - node_id: prot_Q81LR5
+    node_type: PROTEIN
+    label: GPR_BACAN
+    grounding: UniProtKB:Q81LR5
+  edges:
+  - subject: prot_C3P8M7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPR_BACAA is an exemplar enzyme with EC 3.4.24.78 activity.
+    evidence:
+    - reference: EC:3.4.24.78
+      snippet: DR   C3P8M7, GPR_BACAA  ;  C3L5S4, GPR_BACAC  ;  Q81LR5, GPR_BACAN  ;
+      notes: ExPASy ENZYME entry EC 3.4.24.78 cross-references UniProtKB:C3P8M7 (GPR_BACAA) as a protein
+        with this activity.
+  - subject: prot_C3L5S4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPR_BACAC is an exemplar enzyme with EC 3.4.24.78 activity.
+    evidence:
+    - reference: EC:3.4.24.78
+      snippet: DR   C3P8M7, GPR_BACAA  ;  C3L5S4, GPR_BACAC  ;  Q81LR5, GPR_BACAN  ;
+      notes: ExPASy ENZYME entry EC 3.4.24.78 cross-references UniProtKB:C3L5S4 (GPR_BACAC) as a protein
+        with this activity.
+  - subject: prot_Q81LR5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPR_BACAN is an exemplar enzyme with EC 3.4.24.78 activity.
+    evidence:
+    - reference: EC:3.4.24.78
+      snippet: DR   C3P8M7, GPR_BACAA  ;  C3L5S4, GPR_BACAC  ;  Q81LR5, GPR_BACAN  ;
+      notes: ExPASy ENZYME entry EC 3.4.24.78 cross-references UniProtKB:Q81LR5 (GPR_BACAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

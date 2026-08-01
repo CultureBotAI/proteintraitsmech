@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:84069
     role: SUBSTRATE_OR_PRODUCT
@@ -20,4 +20,76 @@ definitions:
       Catalyses the reaction: pentanal + hydrogen cyanide = (2S)-2-hydroxyhexanenitrile
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pentanal + hydrogen cyanide = (2S)-2-hydroxyhexanenitrile
+  description: Substrate-to-product chemistry of RHEA:77399, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77400 (rh:substrates → 77399_L, rh:products → 77399_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of pentanal + hydrogen cyanide = (2S)-2-hydroxyhexanenitrile
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77399
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: pentanal + hydrogen cyanide = (2S)-2-hydroxyhexanenitrile'
+  - node_id: sub1
+    label: pentanal
+    node_type: CHEMICAL
+    grounding: CHEBI:84069
+    description: Formula C5H10O.
+  - node_id: sub2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: prd1
+    label: (2S)-2-hydroxyhexanenitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:197353
+    description: Formula C6H11NO.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: pentanal is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77400
+      snippet: pentanal + hydrogen cyanide => (2S)-2-hydroxyhexanenitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77400 declares side 77399_L as its substrates
+        (rh:substrates); the master reaction RHEA:77399 is undirected. This participant is CHEBI:84069
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen cyanide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77400
+      snippet: pentanal + hydrogen cyanide => (2S)-2-hydroxyhexanenitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77400 declares side 77399_L as its substrates
+        (rh:substrates); the master reaction RHEA:77399 is undirected. This participant is CHEBI:18407
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-2-hydroxyhexanenitrile is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77400
+      snippet: pentanal + hydrogen cyanide => (2S)-2-hydroxyhexanenitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77400 declares side 77399_R as its products
+        (rh:products); the master reaction RHEA:77399 is undirected. This participant is CHEBI:197353
+        with coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

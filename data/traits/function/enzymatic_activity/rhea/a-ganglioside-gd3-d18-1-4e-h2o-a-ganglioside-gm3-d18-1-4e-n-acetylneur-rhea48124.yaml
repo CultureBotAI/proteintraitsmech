@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78436
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,93 @@ definitions:
       Catalyses the reaction: a ganglioside GD3 (d18:1(4E)) + H2O = a ganglioside GM3 (d18:1(4E)) + N-acetylneuraminate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a ganglioside GD3 (d18:1(4E)) + H2O = a ganglioside GM3 (d18:1(4E)) + N-acetylneuramina…
+  description: Substrate-to-product chemistry of RHEA:48124, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48125 (rh:substrates → 48124_L, rh:products → 48124_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a ganglioside GD3 (d18:1(4E)) + H2O = a ganglioside GM3 (d18:1(4E)) + N-acet…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48124
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a ganglioside GD3 (d18:1(4E)) + H2O = a ganglioside GM3 (d18:1(4E)) + N-acetylneuraminate'
+  - node_id: sub1
+    label: a ganglioside GD3 (d18:1(4E))
+    node_type: CHEMICAL
+    grounding: CHEBI:78436
+    description: Formula C53H88N3O29R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a ganglioside GM3 (d18:1(4E))
+    node_type: CHEMICAL
+    grounding: CHEBI:60065
+    description: Formula C42H72N2O21R.
+  - node_id: prd2
+    label: N-acetylneuraminate
+    node_type: CHEMICAL
+    grounding: CHEBI:35418
+    description: Formula C11H18NO9.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a ganglioside GD3 (d18:1(4E)) is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:48125
+      snippet: a ganglioside GD3 (d18:1(4E)) + H2O => a ganglioside GM3 (d18:1(4E)) + N-acetylneuraminate
+      notes: Rhea's left-to-right directional reaction RHEA:48125 declares side 48124_L as its substrates
+        (rh:substrates); the master reaction RHEA:48124 is undirected. This participant is CHEBI:78436
+        with coefficient 1. Rhea cites PMID:12530538 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48125
+      snippet: a ganglioside GD3 (d18:1(4E)) + H2O => a ganglioside GM3 (d18:1(4E)) + N-acetylneuraminate
+      notes: Rhea's left-to-right directional reaction RHEA:48125 declares side 48124_L as its substrates
+        (rh:substrates); the master reaction RHEA:48124 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12530538 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a ganglioside GM3 (d18:1(4E)) is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:48125
+      snippet: a ganglioside GD3 (d18:1(4E)) + H2O => a ganglioside GM3 (d18:1(4E)) + N-acetylneuraminate
+      notes: Rhea's left-to-right directional reaction RHEA:48125 declares side 48124_R as its products
+        (rh:products); the master reaction RHEA:48124 is undirected. This participant is CHEBI:60065 with
+        coefficient 1. Rhea cites PMID:12530538 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N-acetylneuraminate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48125
+      snippet: a ganglioside GD3 (d18:1(4E)) + H2O => a ganglioside GM3 (d18:1(4E)) + N-acetylneuraminate
+      notes: Rhea's left-to-right directional reaction RHEA:48125 declares side 48124_R as its products
+        (rh:products); the master reaction RHEA:48124 is undirected. This participant is CHEBI:35418 with
+        coefficient 1. Rhea cites PMID:12530538 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

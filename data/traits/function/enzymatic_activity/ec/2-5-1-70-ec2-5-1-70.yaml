@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -35,4 +35,119 @@ definitions:
       Catalyses: (2S)-naringenin + dimethylallyl diphosphate = sophoraflavanone B + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of naringenin 8-dimethylallyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.70. EC 2.5.1.70 maps to exactly
+    one curated Rhea reaction (RHEA:15433), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2S)-naringenin
+    + dimethylallyl diphosphate = sophoraflavanone B + diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: naringenin 8-dimethylallyltransferase
+    grounding: EC:2.5.1.70
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2S)-naringenin
+    node_type: CHEMICAL
+    grounding: CHEBI:17846
+    description: Formula C15H12O5.
+  - node_id: sub2
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: sophoraflavanone B
+    node_type: CHEMICAL
+    grounding: CHEBI:50207
+    description: Formula C20H20O5.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_B1B3P3
+    node_type: PROTEIN
+    label: N8DT1_SOPFL
+    grounding: UniProtKB:B1B3P3
+  - node_id: prot_B1B5P4
+    node_type: PROTEIN
+    label: N8DT2_SOPFL
+    grounding: UniProtKB:B1B5P4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S)-naringenin is a substrate consumed by RHEA:15433 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15434
+      snippet: (2S)-naringenin + dimethylallyl diphosphate => sophoraflavanone B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:15434 declares side 15433_L as its substrates
+        (rh:substrates); the master reaction RHEA:15433 is undirected. This participant is CHEBI:17846
+        with coefficient 1. Rhea cites PMID:18218974, PMID:10975499, PMID:14551337 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:15433 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15434
+      snippet: (2S)-naringenin + dimethylallyl diphosphate => sophoraflavanone B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:15434 declares side 15433_L as its substrates
+        (rh:substrates); the master reaction RHEA:15433 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:18218974, PMID:10975499, PMID:14551337 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sophoraflavanone B is a product released by RHEA:15433 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15434
+      snippet: (2S)-naringenin + dimethylallyl diphosphate => sophoraflavanone B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:15434 declares side 15433_R as its products
+        (rh:products); the master reaction RHEA:15433 is undirected. This participant is CHEBI:50207 with
+        coefficient 1. Rhea cites PMID:18218974, PMID:10975499, PMID:14551337 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:15433 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15434
+      snippet: (2S)-naringenin + dimethylallyl diphosphate => sophoraflavanone B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:15434 declares side 15433_R as its products
+        (rh:products); the master reaction RHEA:15433 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18218974, PMID:10975499, PMID:14551337 for this reaction.
+  - subject: prot_B1B3P3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: N8DT1_SOPFL is an exemplar enzyme with EC 2.5.1.70 activity.
+    evidence:
+    - reference: EC:2.5.1.70
+      snippet: DR   B1B3P3, N8DT1_SOPFL;  B1B5P4, N8DT2_SOPFL;
+      notes: ExPASy ENZYME entry EC 2.5.1.70 cross-references UniProtKB:B1B3P3 (N8DT1_SOPFL) as a protein
+        with this activity.
+  - subject: prot_B1B5P4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: N8DT2_SOPFL is an exemplar enzyme with EC 2.5.1.70 activity.
+    evidence:
+    - reference: EC:2.5.1.70
+      snippet: DR   B1B3P3, N8DT1_SOPFL;  B1B5P4, N8DT2_SOPFL;
+      notes: ExPASy ENZYME entry EC 2.5.1.70 cross-references UniProtKB:B1B5P4 (N8DT2_SOPFL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

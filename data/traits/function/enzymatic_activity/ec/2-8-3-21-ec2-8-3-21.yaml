@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.3.-
 mapped_xrefs:
@@ -40,4 +40,247 @@ definitions:
       Catalyses: (1) crotonobetainyl-CoA + (R)-carnitine = crotonobetaine + (R)- carnitinyl-CoA. (2) 4-(trimethylamino)butanoyl-CoA + (R)-carnitine = (R)-carnitinyl-CoA + 4-(trimethylamino)butanoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-carnitine CoA-transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.3.21. Rhea assigns 2 curated
+    reactions to EC 2.8.3.21. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) crotonobetainyl-CoA + (R)-carnitine = crotonobetaine
+    + (R)- carnitinyl-CoA. (2) 4-(trimethylamino)butanoyl-CoA + (R)-carnitine = (R)-carnitinyl-CoA + 4-(trimethylamino)butanoate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-carnitine CoA-transferase
+    grounding: EC:2.8.3.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 4-(trimethylamino)butanoyl-CoA + (R)-carnitine = (R)-carnitinyl-CoA + 4-(tri…
+    grounding: RHEA:28418
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 4-(trimethylamino)butanoyl-CoA + (R)-carnitine = (R)-carnitinyl-CoA + 4-(trimethylamino)butanoate'
+  - node_id: rxn1_sub1
+    label: 4-(trimethylamino)butanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:61513
+    description: Formula C28H46N8O17P3S.
+  - node_id: rxn1_sub2
+    label: (R)-carnitine
+    node_type: CHEMICAL
+    grounding: CHEBI:16347
+    description: Formula C7H15NO3.
+  - node_id: rxn1_prd1
+    label: (R)-carnitinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:60932
+    description: Formula C28H46N8O18P3S.
+  - node_id: rxn1_prd2
+    label: 4-(trimethylamino)butanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16244
+    description: Formula C7H15NO2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of crotonobetainyl-CoA + (R)-carnitine = crotonobetaine + (R)-carnitinyl-CoA
+    grounding: RHEA:28526
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: crotonobetainyl-CoA + (R)-carnitine = crotonobetaine + (R)-carnitinyl-CoA'
+  - node_id: rxn2_sub1
+    label: crotonobetainyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:60933
+    description: Formula C28H44N8O17P3S.
+  - node_id: rxn2_sub2
+    label: (R)-carnitine
+    node_type: CHEMICAL
+    grounding: CHEBI:16347
+    description: Formula C7H15NO3.
+  - node_id: rxn2_prd1
+    label: crotonobetaine
+    node_type: CHEMICAL
+    grounding: CHEBI:17237
+    description: Formula C7H13NO2.
+  - node_id: rxn2_prd2
+    label: (R)-carnitinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:60932
+    description: Formula C28H46N8O18P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-carnitine CoA-transferase activity
+    grounding: GO:0008735
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A7ZHC9
+    node_type: PROTEIN
+    label: CAIB_ECO24
+    grounding: UniProtKB:A7ZHC9
+  - node_id: prot_B7UI84
+    node_type: PROTEIN
+    label: CAIB_ECO27
+    grounding: UniProtKB:B7UI84
+  - node_id: prot_B7MAG1
+    node_type: PROTEIN
+    label: CAIB_ECO45
+    grounding: UniProtKB:B7MAG1
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:28418 is one of the 2 curated reactions Rhea assigns to EC 2.8.3.21; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28418
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.21"/>
+      notes: The rh:ec triple on RHEA:28418 in rhea.rdf assigns that reaction to EC 2.8.3.21.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 4-(trimethylamino)butanoyl-CoA is a substrate consumed by RHEA:28418 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:28419
+      snippet: 4-(trimethylamino)butanoyl-CoA + (R)-carnitine => (R)-carnitinyl-CoA + 4-(trimethylamino)butanoate
+      notes: Rhea's left-to-right directional reaction RHEA:28419 declares side 28418_L as its substrates
+        (rh:substrates); the master reaction RHEA:28418 is undirected. This participant is CHEBI:61513
+        with coefficient 1. Rhea cites PMID:11551212 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: (R)-carnitine is a substrate consumed by RHEA:28418 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28419
+      snippet: 4-(trimethylamino)butanoyl-CoA + (R)-carnitine => (R)-carnitinyl-CoA + 4-(trimethylamino)butanoate
+      notes: Rhea's left-to-right directional reaction RHEA:28419 declares side 28418_L as its substrates
+        (rh:substrates); the master reaction RHEA:28418 is undirected. This participant is CHEBI:16347
+        with coefficient 1. Rhea cites PMID:11551212 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (R)-carnitinyl-CoA is a product released by RHEA:28418 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28419
+      snippet: 4-(trimethylamino)butanoyl-CoA + (R)-carnitine => (R)-carnitinyl-CoA + 4-(trimethylamino)butanoate
+      notes: Rhea's left-to-right directional reaction RHEA:28419 declares side 28418_R as its products
+        (rh:products); the master reaction RHEA:28418 is undirected. This participant is CHEBI:60932 with
+        coefficient 1. Rhea cites PMID:11551212 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: 4-(trimethylamino)butanoate is a product released by RHEA:28418 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28419
+      snippet: 4-(trimethylamino)butanoyl-CoA + (R)-carnitine => (R)-carnitinyl-CoA + 4-(trimethylamino)butanoate
+      notes: Rhea's left-to-right directional reaction RHEA:28419 declares side 28418_R as its products
+        (rh:products); the master reaction RHEA:28418 is undirected. This participant is CHEBI:16244 with
+        coefficient 1. Rhea cites PMID:11551212 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:28526 is one of the 2 curated reactions Rhea assigns to EC 2.8.3.21; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28526
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.21"/>
+      notes: The rh:ec triple on RHEA:28526 in rhea.rdf assigns that reaction to EC 2.8.3.21.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: crotonobetainyl-CoA is a substrate consumed by RHEA:28526 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28527
+      snippet: crotonobetainyl-CoA + (R)-carnitine => crotonobetaine + (R)-carnitinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28527 declares side 28526_L as its substrates
+        (rh:substrates); the master reaction RHEA:28526 is undirected. This participant is CHEBI:60933
+        with coefficient 1. Rhea cites PMID:12081978, PMID:11551212 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: (R)-carnitine is a substrate consumed by RHEA:28526 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28527
+      snippet: crotonobetainyl-CoA + (R)-carnitine => crotonobetaine + (R)-carnitinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28527 declares side 28526_L as its substrates
+        (rh:substrates); the master reaction RHEA:28526 is undirected. This participant is CHEBI:16347
+        with coefficient 1. Rhea cites PMID:12081978, PMID:11551212 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: crotonobetaine is a product released by RHEA:28526 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28527
+      snippet: crotonobetainyl-CoA + (R)-carnitine => crotonobetaine + (R)-carnitinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28527 declares side 28526_R as its products
+        (rh:products); the master reaction RHEA:28526 is undirected. This participant is CHEBI:17237 with
+        coefficient 1. Rhea cites PMID:12081978, PMID:11551212 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: (R)-carnitinyl-CoA is a product released by RHEA:28526 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28527
+      snippet: crotonobetainyl-CoA + (R)-carnitine => crotonobetaine + (R)-carnitinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28527 declares side 28526_R as its products
+        (rh:products); the master reaction RHEA:28526 is undirected. This participant is CHEBI:60932 with
+        coefficient 1. Rhea cites PMID:12081978, PMID:11551212 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.3.21
+      snippet: EC:2.8.3.21 > GO:L-carnitine CoA-transferase activity ; GO:0008735
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008735 is itself a record
+        in this KB.
+  - subject: prot_A7ZHC9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAIB_ECO24 is an exemplar enzyme with EC 2.8.3.21 activity.
+    evidence:
+    - reference: EC:2.8.3.21
+      snippet: DR   A7ZHC9, CAIB_ECO24 ;  B7UI84, CAIB_ECO27 ;  B7MAG1, CAIB_ECO45 ;
+      notes: ExPASy ENZYME entry EC 2.8.3.21 cross-references UniProtKB:A7ZHC9 (CAIB_ECO24) as a protein
+        with this activity.
+  - subject: prot_B7UI84
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAIB_ECO27 is an exemplar enzyme with EC 2.8.3.21 activity.
+    evidence:
+    - reference: EC:2.8.3.21
+      snippet: DR   A7ZHC9, CAIB_ECO24 ;  B7UI84, CAIB_ECO27 ;  B7MAG1, CAIB_ECO45 ;
+      notes: ExPASy ENZYME entry EC 2.8.3.21 cross-references UniProtKB:B7UI84 (CAIB_ECO27) as a protein
+        with this activity.
+  - subject: prot_B7MAG1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAIB_ECO45 is an exemplar enzyme with EC 2.8.3.21 activity.
+    evidence:
+    - reference: EC:2.8.3.21
+      snippet: DR   A7ZHC9, CAIB_ECO24 ;  B7UI84, CAIB_ECO27 ;  B7MAG1, CAIB_ECO45 ;
+      notes: ExPASy ENZYME entry EC 2.8.3.21 cross-references UniProtKB:B7MAG1 (CAIB_ECO45) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

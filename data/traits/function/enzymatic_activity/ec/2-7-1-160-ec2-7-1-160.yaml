@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -43,4 +43,206 @@ definitions:
       Catalyses: 2'-phospho-[ligated tRNA] + NAD(+) = mature tRNA + ADP-alpha-D-ribose 1'',2''-cyclic phosphate + nicotinamide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2'-phosphotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.160. EC 2.7.1.160 maps to
+    exactly one curated Rhea reaction (RHEA:23324), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2''-phospho-[ligated
+    tRNA] + NAD(+) = mature tRNA + ADP-alpha-D-ribose 1'''',2''''-cyclic phosphate + nicotinamide". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2'-phosphotransferase
+    grounding: EC:2.7.1.160
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2'-phospho-[ligated tRNA]
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:11106
+    description: Rhea compound GENERIC:11106.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: 2'-phospho-nucleotide 5'-phosphate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11106 (2'-phospho-[ligated
+      tRNA]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85027
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: mature tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:11107
+    description: Rhea compound GENERIC:11107.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: nucleotide 5'-phosphate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11107 (mature tRNA);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82883
+  - node_id: prd2
+    label: ADP-alpha-D-ribose 1'',2''-cyclic phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:76596
+    description: Formula C15H19N5O16P3.
+  - node_id: prd3
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+    description: Formula C6H6N2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA 2'-phosphotransferase activity
+    grounding: GO:0000215
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O14045
+    node_type: PROTEIN
+    label: TPT1_SCHPO
+    grounding: UniProtKB:O14045
+  - node_id: prot_Q12272
+    node_type: PROTEIN
+    label: TPT1_YEAST
+    grounding: UniProtKB:Q12272
+  - node_id: prot_Q3ZBM7
+    node_type: PROTEIN
+    label: TRPT1_BOVIN
+    grounding: UniProtKB:Q3ZBM7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2'-phospho-[ligated tRNA] is a substrate consumed by RHEA:23324 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23325
+      snippet: 2'-phospho-[ligated tRNA] + NAD(+) => mature tRNA + ADP-alpha-D-ribose 1'',2''-cyclic phosphate
+        + nicotinamide
+      notes: Rhea's left-to-right directional reaction RHEA:23325 declares side 23324_L as its substrates
+        (rh:substrates); the master reaction RHEA:23324 is undirected. This participant is GENERIC:11106
+        with coefficient 1. Rhea cites PMID:15611300, PMID:11705403, PMID:9915792, PMID:14504659 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 2'-phospho-nucleotide 5'-phosphate residue is the reactive part of 2'-phospho-[ligated
+      tRNA].
+    evidence:
+    - reference: RHEA:23324
+      snippet: 2'-phospho-nucleotide 5'-phosphate residue
+      notes: Rhea compound GENERIC:11106 (2'-phospho-[ligated tRNA]) declares rh:reactivePart = 2'-phospho-nucleotide
+        5'-phosphate residue (CHEBI:85027).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:23324 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23325
+      snippet: 2'-phospho-[ligated tRNA] + NAD(+) => mature tRNA + ADP-alpha-D-ribose 1'',2''-cyclic phosphate
+        + nicotinamide
+      notes: Rhea's left-to-right directional reaction RHEA:23325 declares side 23324_L as its substrates
+        (rh:substrates); the master reaction RHEA:23324 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:15611300, PMID:11705403, PMID:9915792, PMID:14504659 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: mature tRNA is a product released by RHEA:23324 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23325
+      snippet: 2'-phospho-[ligated tRNA] + NAD(+) => mature tRNA + ADP-alpha-D-ribose 1'',2''-cyclic phosphate
+        + nicotinamide
+      notes: Rhea's left-to-right directional reaction RHEA:23325 declares side 23324_R as its products
+        (rh:products); the master reaction RHEA:23324 is undirected. This participant is GENERIC:11107
+        with coefficient 1. Rhea cites PMID:15611300, PMID:11705403, PMID:9915792, PMID:14504659 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: nucleotide 5'-phosphate residue is the reactive part of mature tRNA.
+    evidence:
+    - reference: RHEA:23324
+      snippet: nucleotide 5'-phosphate residue
+      notes: Rhea compound GENERIC:11107 (mature tRNA) declares rh:reactivePart = nucleotide 5'-phosphate
+        residue (CHEBI:82883).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP-alpha-D-ribose 1'',2''-cyclic phosphate is a product released by RHEA:23324 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23325
+      snippet: 2'-phospho-[ligated tRNA] + NAD(+) => mature tRNA + ADP-alpha-D-ribose 1'',2''-cyclic phosphate
+        + nicotinamide
+      notes: Rhea's left-to-right directional reaction RHEA:23325 declares side 23324_R as its products
+        (rh:products); the master reaction RHEA:23324 is undirected. This participant is CHEBI:76596 with
+        coefficient 1. Rhea cites PMID:15611300, PMID:11705403, PMID:9915792, PMID:14504659 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: nicotinamide is a product released by RHEA:23324 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23325
+      snippet: 2'-phospho-[ligated tRNA] + NAD(+) => mature tRNA + ADP-alpha-D-ribose 1'',2''-cyclic phosphate
+        + nicotinamide
+      notes: Rhea's left-to-right directional reaction RHEA:23325 declares side 23324_R as its products
+        (rh:products); the master reaction RHEA:23324 is undirected. This participant is CHEBI:17154 with
+        coefficient 1. Rhea cites PMID:15611300, PMID:11705403, PMID:9915792, PMID:14504659 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.1.160
+      snippet: EC:2.7.1.160 > GO:tRNA 2'-phosphotransferase activity ; GO:0000215
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0000215 is itself a record
+        in this KB.
+  - subject: prot_O14045
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPT1_SCHPO is an exemplar enzyme with EC 2.7.1.160 activity.
+    evidence:
+    - reference: EC:2.7.1.160
+      snippet: DR   O14045, TPT1_SCHPO ;  Q12272, TPT1_YEAST ;  Q3ZBM7, TRPT1_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.7.1.160 cross-references UniProtKB:O14045 (TPT1_SCHPO) as a protein
+        with this activity.
+  - subject: prot_Q12272
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPT1_YEAST is an exemplar enzyme with EC 2.7.1.160 activity.
+    evidence:
+    - reference: EC:2.7.1.160
+      snippet: DR   O14045, TPT1_SCHPO ;  Q12272, TPT1_YEAST ;  Q3ZBM7, TRPT1_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.7.1.160 cross-references UniProtKB:Q12272 (TPT1_YEAST) as a protein
+        with this activity.
+  - subject: prot_Q3ZBM7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TRPT1_BOVIN is an exemplar enzyme with EC 2.7.1.160 activity.
+    evidence:
+    - reference: EC:2.7.1.160
+      snippet: DR   O14045, TPT1_SCHPO ;  Q12272, TPT1_YEAST ;  Q3ZBM7, TRPT1_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.7.1.160 cross-references UniProtKB:Q3ZBM7 (TRPT1_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

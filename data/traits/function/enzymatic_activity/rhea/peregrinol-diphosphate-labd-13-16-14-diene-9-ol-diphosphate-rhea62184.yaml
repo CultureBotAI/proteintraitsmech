@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:138232
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,92 @@ definitions:
       Catalyses the reaction: peregrinol diphosphate = labd-13(16),14-diene-9-ol + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peregrinol diphosphate = labd-13(16),14-diene-9-ol + diphosphate
+  description: Substrate-to-product chemistry of RHEA:62184, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62185 (rh:substrates → 62184_L, rh:products → 62184_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of peregrinol diphosphate = labd-13(16),14-diene-9-ol + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62184
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: peregrinol diphosphate = labd-13(16),14-diene-9-ol + diphosphate'
+  - node_id: sub1
+    label: peregrinol diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138232
+    description: Formula C20H35O8P2.
+  - node_id: prd1
+    label: labd-13(16),14-diene-9-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:145549
+    description: Formula C20H34O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: Labd-13(16),14-diene-9-ol synthase activity
+    grounding: GO:0062202
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: peregrinol diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62185
+      snippet: peregrinol diphosphate => labd-13(16),14-diene-9-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:62185 declares side 62184_L as its substrates
+        (rh:substrates); the master reaction RHEA:62184 is undirected. This participant is CHEBI:138232
+        with coefficient 1. Rhea cites PMID:29315936 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: labd-13(16),14-diene-9-ol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62185
+      snippet: peregrinol diphosphate => labd-13(16),14-diene-9-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:62185 declares side 62184_R as its products
+        (rh:products); the master reaction RHEA:62184 is undirected. This participant is CHEBI:145549
+        with coefficient 1. Rhea cites PMID:29315936 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62185
+      snippet: peregrinol diphosphate => labd-13(16),14-diene-9-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:62185 declares side 62184_R as its products
+        (rh:products); the master reaction RHEA:62184 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:29315936 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:62184
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0062202"/>
+      notes: The rdfs:seeAlso triple on RHEA:62184 in rhea.rdf. GO term GO:0062202 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

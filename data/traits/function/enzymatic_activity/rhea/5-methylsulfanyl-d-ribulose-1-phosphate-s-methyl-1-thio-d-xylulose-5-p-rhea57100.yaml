@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.3.23
     mapping_source: rhea2ec
@@ -28,4 +28,76 @@ definitions:
       Catalyses the reaction: 5-(methylsulfanyl)-D-ribulose 1-phosphate = S-methyl-1-thio-D-xylulose 5-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-(methylsulfanyl)-D-ribulose 1-phosphate = S-methyl-1-thio-D-xylulose
+    5-phosphate
+  description: Substrate-to-product chemistry of RHEA:57100, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57101 (rh:substrates → 57100_L, rh:products → 57100_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-(methylsulfanyl)-D-ribulose 1-phosphate = S-methyl-1-thio-D-xylulose 5-pho…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57100
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-(methylsulfanyl)-D-ribulose 1-phosphate = S-methyl-1-thio-D-xylulose 5-phosphate'
+  - node_id: sub1
+    label: 5-(methylsulfanyl)-D-ribulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58548
+    description: Formula C6H11O7PS.
+  - node_id: prd1
+    label: S-methyl-1-thio-D-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:141466
+    description: Formula C6H11O7PS.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: S-methyl-5-thioribulose 1-phosphate isomerase
+    grounding: EC:5.3.3.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-(methylsulfanyl)-D-ribulose 1-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57101
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => S-methyl-1-thio-D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57101 declares side 57100_L as its substrates
+        (rh:substrates); the master reaction RHEA:57100 is undirected. This participant is CHEBI:58548
+        with coefficient 1. Rhea cites PMID:23042035, PMID:18826254, PMID:29636438 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-methyl-1-thio-D-xylulose 5-phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57101
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => S-methyl-1-thio-D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:57101 declares side 57100_R as its products
+        (rh:products); the master reaction RHEA:57100 is undirected. This participant is CHEBI:141466
+        with coefficient 1. Rhea cites PMID:23042035, PMID:18826254, PMID:29636438 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.3.23; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:57100
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.23"/>
+      notes: The rh:ec triple on RHEA:57100 in rhea.rdf. EC 5.3.3.23 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

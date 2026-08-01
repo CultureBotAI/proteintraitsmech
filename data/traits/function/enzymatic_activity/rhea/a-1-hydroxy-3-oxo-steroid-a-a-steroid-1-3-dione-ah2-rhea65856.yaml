@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:157752
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: a 1-hydroxy-3-oxo steroid + A = a steroid 1,3-dione + AH2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 1-hydroxy-3-oxo steroid + A = a steroid 1,3-dione + AH2
+  description: Substrate-to-product chemistry of RHEA:65856, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:65857 (rh:substrates → 65856_L, rh:products → 65856_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 1-hydroxy-3-oxo steroid + A = a steroid 1,3-dione + AH2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:65856
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 1-hydroxy-3-oxo steroid + A = a steroid 1,3-dione + AH2'
+  - node_id: sub1
+    label: a 1-hydroxy-3-oxo steroid
+    node_type: CHEMICAL
+    grounding: CHEBI:157752
+    description: Formula C19H29O2R.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd1
+    label: a steroid 1,3-dione
+    node_type: CHEMICAL
+    grounding: CHEBI:157751
+    description: Formula C19H27O2R.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 1-hydroxy-3-oxo steroid is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:65857
+      snippet: a 1-hydroxy-3-oxo steroid + A => a steroid 1,3-dione + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:65857 declares side 65856_L as its substrates
+        (rh:substrates); the master reaction RHEA:65856 is undirected. This participant is CHEBI:157752
+        with coefficient 1. Rhea cites PMID:26872041 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65857
+      snippet: a 1-hydroxy-3-oxo steroid + A => a steroid 1,3-dione + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:65857 declares side 65856_L as its substrates
+        (rh:substrates); the master reaction RHEA:65856 is undirected. This participant is CHEBI:13193
+        with coefficient 1. Rhea cites PMID:26872041 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a steroid 1,3-dione is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:65857
+      snippet: a 1-hydroxy-3-oxo steroid + A => a steroid 1,3-dione + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:65857 declares side 65856_R as its products
+        (rh:products); the master reaction RHEA:65856 is undirected. This participant is CHEBI:157751
+        with coefficient 1. Rhea cites PMID:26872041 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65857
+      snippet: a 1-hydroxy-3-oxo steroid + A => a steroid 1,3-dione + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:65857 declares side 65856_R as its products
+        (rh:products); the master reaction RHEA:65856 is undirected. This participant is CHEBI:17499 with
+        coefficient 1. Rhea cites PMID:26872041 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

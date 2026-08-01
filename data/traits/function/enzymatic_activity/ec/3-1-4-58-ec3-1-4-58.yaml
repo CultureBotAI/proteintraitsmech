@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.4.-
 mapped_xrefs:
@@ -38,4 +38,185 @@ definitions:
       Catalyses: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O = a 3'-end 2'-phospho-ribonucleotide-RNA + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of RNA 2',3'-cyclic 3'-phosphodiesterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.4.58. EC 3.1.4.58 maps to exactly
+    one curated Rhea reaction (RHEA:11828), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 3''-end 2'',3''-cyclophospho-ribonucleotide-RNA
+    + H2O = a 3''-end 2''-phospho-ribonucleotide-RNA + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: RNA 2',3'-cyclic 3'-phosphodiesterase
+    grounding: EC:3.1.4.58
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10464
+    description: Rhea compound GENERIC:10464.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10464 (a 3'-end
+      2',3'-cyclophospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83064
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 3'-end 2'-phospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17353
+    description: Rhea compound GENERIC:17353.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 3'-terminal ribonucleotide 2'-phosphate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:17353 (a 3'-end
+      2'-phospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:173113
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: RNA 2',3'-cyclic 3'-phosphodiesterase activity
+    grounding: GO:0008664
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9YB03
+    node_type: PROTEIN
+    label: THPR_AERPE
+    grounding: UniProtKB:Q9YB03
+  - node_id: prot_O66967
+    node_type: PROTEIN
+    label: THPR_AQUAE
+    grounding: UniProtKB:O66967
+  - node_id: prot_O28125
+    node_type: PROTEIN
+    label: THPR_ARCFU
+    grounding: UniProtKB:O28125
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA is a substrate consumed by RHEA:11828
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11829
+      snippet: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O => a 3'-end 2'-phospho-ribonucleotide-RNA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11829 declares side 11828_L as its substrates
+        (rh:substrates); the master reaction RHEA:11828 is undirected. This participant is GENERIC:10464
+        with coefficient 1. Rhea cites PMID:19155324, PMID:25239919 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue is the reactive part of a
+      3'-end 2',3'-cyclophospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:11828
+      snippet: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue
+      notes: Rhea compound GENERIC:10464 (a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA) declares rh:reactivePart
+        = a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue (CHEBI:83064).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:11828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11829
+      snippet: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O => a 3'-end 2'-phospho-ribonucleotide-RNA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11829 declares side 11828_L as its substrates
+        (rh:substrates); the master reaction RHEA:11828 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19155324, PMID:25239919 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3'-end 2'-phospho-ribonucleotide-RNA is a product released by RHEA:11828 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11829
+      snippet: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O => a 3'-end 2'-phospho-ribonucleotide-RNA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11829 declares side 11828_R as its products
+        (rh:products); the master reaction RHEA:11828 is undirected. This participant is GENERIC:17353
+        with coefficient 1. Rhea cites PMID:19155324, PMID:25239919 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-terminal ribonucleotide 2'-phosphate residue is the reactive part of a 3'-end 2'-phospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:11828
+      snippet: 3'-terminal ribonucleotide 2'-phosphate residue
+      notes: Rhea compound GENERIC:17353 (a 3'-end 2'-phospho-ribonucleotide-RNA) declares rh:reactivePart
+        = 3'-terminal ribonucleotide 2'-phosphate residue (CHEBI:173113).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:11828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11829
+      snippet: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + H2O => a 3'-end 2'-phospho-ribonucleotide-RNA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11829 declares side 11828_R as its products
+        (rh:products); the master reaction RHEA:11828 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19155324, PMID:25239919 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.4.58
+      snippet: EC:3.1.4.58 > GO:RNA 2',3'-cyclic 3'-phosphodiesterase activity ; GO:0008664
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008664 is itself a record
+        in this KB.
+  - subject: prot_Q9YB03
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THPR_AERPE is an exemplar enzyme with EC 3.1.4.58 activity.
+    evidence:
+    - reference: EC:3.1.4.58
+      snippet: DR   Q9YB03, THPR_AERPE ;  O66967, THPR_AQUAE ;  O28125, THPR_ARCFU ;
+      notes: ExPASy ENZYME entry EC 3.1.4.58 cross-references UniProtKB:Q9YB03 (THPR_AERPE) as a protein
+        with this activity.
+  - subject: prot_O66967
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THPR_AQUAE is an exemplar enzyme with EC 3.1.4.58 activity.
+    evidence:
+    - reference: EC:3.1.4.58
+      snippet: DR   Q9YB03, THPR_AERPE ;  O66967, THPR_AQUAE ;  O28125, THPR_ARCFU ;
+      notes: ExPASy ENZYME entry EC 3.1.4.58 cross-references UniProtKB:O66967 (THPR_AQUAE) as a protein
+        with this activity.
+  - subject: prot_O28125
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THPR_ARCFU is an exemplar enzyme with EC 3.1.4.58 activity.
+    evidence:
+    - reference: EC:3.1.4.58
+      snippet: DR   Q9YB03, THPR_AERPE ;  O66967, THPR_AQUAE ;  O28125, THPR_ARCFU ;
+      notes: ExPASy ENZYME entry EC 3.1.4.58 cross-references UniProtKB:O28125 (THPR_ARCFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
