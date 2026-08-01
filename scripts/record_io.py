@@ -77,6 +77,13 @@ def append_to_section(text: str, key: str, payload: str) -> str:
         return text
 
     start = next((i for i, ln in enumerate(lines) if ln.startswith(f"{key}:")), None)
+    if start is not None and lines[start][len(key) + 1:].strip():
+        # The key carries an inline value — `causal_graphs: []` or a flow-style
+        # `[{graph_id: g1}]`. Appending block-style items after that yields
+        # unparseable YAML. No record in the corpus is written this way, so this
+        # cannot fire today; it returns unchanged rather than corrupting, and every
+        # caller already treats "unchanged" as "could not splice, skip this record".
+        return text
     if start is None:
         lic = next((i for i, ln in enumerate(lines) if ln.startswith("license:")), None)
         at = lic if lic is not None else len(lines)

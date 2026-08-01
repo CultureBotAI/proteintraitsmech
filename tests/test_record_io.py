@@ -151,3 +151,42 @@ def test_insert_before_license_places_and_preserves_backslashes():
 def test_insert_before_license_appends_when_absent():
     out = insert_before_license(NO_LICENSE, "extra:\n- value: 1\n")
     assert yaml.safe_load(out)["extra"] == [{"value": 1}]
+
+
+# --- shapes no record uses today, but which would corrupt if they appeared -----
+
+@pytest.mark.parametrize("inline", [
+    "causal_graphs: []",
+    "causal_graphs: [{graph_id: g1}]",
+])
+def test_inline_flow_value_is_refused_not_corrupted(inline):
+    """LATENT. Appending block-style items under a key that carries an INLINE value
+    produces unparseable YAML. No record is written this way, so this cannot fire
+    today — the helper returns the text unchanged, and every caller already treats
+    "unchanged" as "could not splice, skip". Found by adversarially fuzzing record
+    shapes rather than by any failure in the corpus."""
+    text = f"identifier: X:1\n{inline}\nlicense: CC0\n"
+    assert append_to_section(text, "causal_graphs", GRAPH_BLOCK) == text
+
+
+@pytest.mark.parametrize("text,label", [
+    ("identifier: X:1\nlicense: CC0", "no trailing newline"),
+    ("identifier: X:1\ncausal_graphs:\n- graph_id: g1\n", "section is the last key"),
+    ("identifier: X:1\r\ncausal_graphs:\r\n- graph_id: g1\r\nlicense: CC0\r\n", "CRLF"),
+    ("identifier: X:1\ndefinition: >-\n  mentions causal_graphs: not a key\nlicense: CC0\n",
+     "key name inside a folded scalar"),
+    ("identifier: X:1\ncausal_graphs:\nlicense: CC0\n", "key present with null value"),
+])
+def test_awkward_but_valid_shapes_still_parse(text, label):
+    """Shapes that are unusual but legal. The folded-scalar case matters: the key
+    name appears in prose, indented, and must NOT be mistaken for the section.
+
+    The payload uses a graph_id present in none of the inputs, so this cannot pass
+    merely because the input already had one — the "section is the last key" case
+    ships a `g1` and would satisfy a naive membership check for free.
+    """
+    payload = yaml.safe_dump({"causal_graphs": [{"graph_id": "appended"}]},
+                             sort_keys=False, allow_unicode=True, width=100)
+    out = append_to_section(text, "causal_graphs", payload)
+    ids = [g["graph_id"] for g in yaml.safe_load(out)["causal_graphs"]]
+    assert ids[-1] == "appended", f"{label}: appended item missing or misplaced"
