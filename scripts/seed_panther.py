@@ -27,7 +27,7 @@ WHERE DEFINITIONS COME FROM, AND WHAT IS NOT LAUNDERED
 `PANTHER19.0_HMM_classifications` has no abstracts — only a name plus GO,
 protein-class and pathway annotations. Definitions therefore come in tiers:
 
-  1. **Curated InterPro abstract** (7,714 families). PANTHER families are
+  1. **Curated InterPro abstract** (7,691 families). PANTHER families are
      integrated into InterPro entries, and this reads the abstract of the
      integrating entry straight out of `data/raw/interpro/interpro.xml.gz`.
      `method: SOURCED`.

@@ -34,9 +34,27 @@ M-CSA records:
 | STATE | RO:0002411 upstream of | STATE | 537 |
 | MOLECULAR_FUNCTION | RO:0002233/4 input/output | CHEMICAL | 874 |
 
-**There is no `RESIDUE → CHEMICAL` edge anywhere in the corpus.** Residues connect
-to mechanism steps; chemicals connect to the overall activity; the halves meet only
-at the top. So "which residues run this reaction" had no answer.
+> **CORRECTION (2026-08-01, fact-check of this report).** This section originally
+> read *"There is no `RESIDUE → CHEMICAL` edge anywhere in the corpus."* **That was
+> false, and it was the load-bearing claim of the round.** The corpus already held
+> **1,870** such edges across 230 records: 1,865 from MetalPDB (round 15 —
+> residue coordinates a metal) and 5 hand-curated in two M-CSA β-lactamase records,
+> including literally the edge this report says does not exist:
+>
+> ```
+> ser70 (RESIDUE, UniProtKB:P62593) --[nucleophilic attack on / RO:0002436]--> substrate (CHEMICAL, CHEBI:35627)
+> ```
+>
+> The error was generalising the table above — which its own header says is a
+> **sample of 200 M-CSA records** — into a claim about the whole corpus, and then
+> setting it in bold. A sample cannot support a universal negative. It also missed
+> two records *inside* M-CSA, so even the restricted claim was wrong.
+
+In the **M-CSA-derived graphs this round joins**, residues connect to mechanism
+steps and chemicals connect to the overall activity, and those halves meet only at
+the top — so for the 1,003 M-CSA records specifically, "which residues run this
+reaction" had no answer in the graph structure. That is the gap this round closes.
+It is not, as originally written, a corpus-wide absence.
 
 ## The premise I wrote into the backlog was wrong
 
@@ -94,8 +112,11 @@ direction. Each such graph states the orientation in its evidence notes. Silentl
 flipping one to agree with the other would have destroyed the only signal that says
 which direction an enzyme actually runs.
 
-**35 reactions are curated by more than one M-CSA entry** (up to 4). The first
-implementation wrote one graph per *reaction* and skipped 43 entries as "already
+**35 reactions are curated by more than one M-CSA entry** (up to 4) — that is 35 of
+the 430 reactions the join *matched*; the table below counts 34, because it covers
+the 427 reactions actually *written* (4 M-CSA entries were dropped for having no
+residue nodes to reuse). Both figures are right; they count different populations.
+The first implementation wrote one graph per *reaction* and skipped ~43 entries as "already
 wired" — a silent cap, and the wrong call: these are different enzymes, often
 different folds, converging on the same chemistry. `graph_id` is now
 `catalytic_residues_mcsa<id>`, one graph per entry.
@@ -137,10 +158,16 @@ ungrounded node).
 
 ## Open
 
-- **The residue→substrate edge remains unwritten and needs a source that states it.**
-  Not M-CSA. Candidates: Rhea's own `rh:reactivePart` (already used in round 16, but
-  it describes generic `[protein]-…` participants, not catalytic residues), or
-  UniProt `ACT_SITE` comments naming the attacked bond, or MACiE/EzCatDB.
+- **The residue→substrate edge cannot be derived *from M-CSA at scale*, but it is
+  not absent from the corpus** — see the correction above: 5 such edges exist,
+  hand-curated, in two β-lactamase M-CSA records, and 1,865 residue→metal edges
+  exist from MetalPDB. The open work is **generalising** what those five demonstrate
+  to the other 1,001 M-CSA records, which needs a source that states the target
+  compound per residue. Candidates: UniProt `ACT_SITE` comments naming the attacked
+  bond, or MACiE/EzCatDB. Rhea's `rh:reactivePart` is *not* one — it describes
+  generic `[protein]-…` participants, not catalytic residues.
+  **Start by reading the two hand-curated records**, since they are an existing
+  worked example of the target shape.
 - **289 EC-agreeing pairs remain unjoined** because their ChEBI sets differ. Some are
   genuine granularity differences that a ChEBI-hierarchy-aware comparison (parent /
   conjugate-acid-base relations) could close; that needs the ChEBI ontology, which is
@@ -150,4 +177,7 @@ ungrounded node).
 - **4 M-CSA entries had no residue nodes to reuse**, so their join is measured but
   not written.
 - The 5,845 corpus warnings are unchanged and all inherited: 4,023 M-CSA STATE nodes,
-  1,817 BioLiP fusion-chain residues, 5 hand-curated intermediates.
+  1,817 BioLiP fusion-chain residues, and 5 hand-curated label-only nodes (4 reaction
+  intermediates in two β-lactamase M-CSA records, plus one `rrna` node in
+  `function/resistance/aro/ermb-aro3000375.yaml`, which is not an intermediate —
+  the group is often described as "5 intermediates", which is not quite right).

@@ -32,7 +32,7 @@ Every one of the 182,999 new edges carries a verbatim snippet, an RO/SKOS
 
 | source | category | n | w/graph | w/ev |
 |---|---|--:|--:|--:|
-| rhea | FUNC_ENZYMATIC_ACTIVITY | 18,558 | 0 | 18,558 |
+| rhea | FUNC_ENZYMATIC_ACTIVITY | 18,558 | 0 | 17,615 |
 | ec | FUNC_ENZYMATIC_ACTIVITY | 7,375 | 0 | 0 |
 | metpo | FUNC_ENZYMATIC_ACTIVITY | 70 | 0 | 0 |
 
@@ -239,7 +239,8 @@ unchanged at 5,845.
 
 344,134 nodes, 366,049 edges, 0 errors, 5,845 warnings — all warnings inherited from
 earlier rounds (4,023 M-CSA STATE nodes, 1,817 BioLiP fusion-chain residues, 5
-hand-curated intermediates). `just validate-all data/traits/function/enzymatic_activity`
+hand-curated label-only nodes — 4 reaction intermediates plus one `rrna` node that
+is not an intermediate). `just validate-all data/traits/function/enzymatic_activity`
 passes 26,003/26,003.
 
 ## Open
