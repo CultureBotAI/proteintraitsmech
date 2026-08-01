@@ -304,6 +304,12 @@ were confirmed present on `main` (`git stash` + re-run).
   `predicate_id` coverage both reached 100% in round 16, so turning `--strict` on in
   CI today would gate solely on the 5,845 ungrounded nodes above. Gating on snippets
   (the original intent of this note) can be done with plain `just audit-graphs`.
+- **The round-15 builders were never reviewed for the two idiom-level defects fixed
+  in 5e9e920** — `re.sub` with a *string* replacement template (which interprets
+  backslashes and `\g`), and skip predicates testing the bare substring
+  `causal_graphs:` instead of their own `graph_id`. Both were latent in round 16 and
+  are latent in round 15 too, which is exactly why they need looking for rather than
+  waiting for. Issue #94; best done as part of the shared splice helper in #93.
 
 ## Recently shipped (DONE)
 
