@@ -39,6 +39,8 @@ import re
 import sys
 from pathlib import Path
 
+from record_io import has_graph, insert_before_license
+
 try:
     import yaml
 except ImportError:
@@ -330,7 +332,7 @@ def splice(text: str, graph: dict, mid: int) -> str:
     out = re.sub(r"^mapping_status:\s*SEEDED\s*$", "mapping_status: REVIEWED",
                  text, count=1, flags=re.M)
     if re.search(r"^license:", out, re.M):
-        return re.sub(r"^license:", block + hist + "license:", out, count=1, flags=re.M)
+        return insert_before_license(out, block + hist)
     return out.rstrip("\n") + "\n" + block + hist
 
 
@@ -354,7 +356,7 @@ def main() -> int:
             stat["no_record"] += 1
             continue
         path, text, seq = files[mid]
-        if "causal_graphs:" in text:
+        if has_graph(text, "catalysis"):
             stat["skip_has_graph"] += 1
             continue
         entry = cache[mid]

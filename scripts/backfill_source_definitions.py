@@ -21,6 +21,8 @@ import re
 import sys
 from pathlib import Path
 
+from record_io import insert_before_license
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 CDDID = REPO_ROOT / "data" / "raw" / "cdd" / "cddid_all.tbl.gz"
@@ -83,7 +85,7 @@ def add_synonym(text: str, syn: str, source: str) -> str:
         return re.sub(r"^synonyms:\s*$", "synonyms:\n" + "\n".join(entry), text, count=1, flags=re.M)
     block = "synonyms:\n" + "\n".join(entry) + "\n"
     if re.search(r"^license:", text, re.M):
-        return re.sub(r"^license:", block + "license:", text, count=1, flags=re.M)
+        return insert_before_license(text, block)
     return text.rstrip("\n") + "\n" + block
 
 

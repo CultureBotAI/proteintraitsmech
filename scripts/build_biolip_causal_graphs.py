@@ -46,6 +46,8 @@ from pathlib import Path
 
 import yaml
 
+from record_io import append_to_section, has_graph, insert_before_license
+
 REPO = Path(__file__).resolve().parent.parent
 BIOLIP = REPO / "data" / "raw" / "biolip" / "BioLiP_nr.txt"
 LIGTSV = REPO / "data" / "raw" / "biolip" / "ligand.tsv"
@@ -264,7 +266,7 @@ def main() -> int:
 
     for f in sorted(ROOT.glob("*.yaml")):
         text = f.read_text(encoding="utf-8")
-        if "causal_graphs:" in text:
+        if has_graph(text, "ligand_binding"):
             stat["already has a graph"] += 1
             continue
         record = yaml.safe_load(text)
@@ -287,7 +289,7 @@ def main() -> int:
         out = re.sub(r"^mapping_status:\s*SEEDED\s*$", "mapping_status: REVIEWED",
                      text, count=1, flags=re.M)
         if re.search(r"^license:", out, re.M):
-            out = re.sub(r"^license:", block + hist + "license:", out, count=1, flags=re.M)
+            out = insert_before_license(out, block + hist)
         else:
             out = out.rstrip("\n") + "\n" + block + hist
         if args.apply:

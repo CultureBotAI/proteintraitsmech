@@ -58,6 +58,8 @@ from pathlib import Path
 
 import yaml
 
+from record_io import append_to_section, has_graph, insert_before_license
+
 import rhea_rdf
 
 REPO = Path(__file__).resolve().parent.parent
@@ -418,7 +420,7 @@ def main() -> int:
         # Skip on THIS builder's graph_id, not on the presence of any graph at all.
         # A record that gained a `catalytic_residues_*` graph first would otherwise be
         # permanently skipped here and never get its reaction chemistry.
-        if re.search(r"^\s*graph_id:\s*reaction_chemistry\s*$", text, re.M):
+        if has_graph(text, "reaction_chemistry"):
             stat["already has a graph"] += 1
             continue
         m = re.search(r"^identifier:\s*RHEA:(\d+)\s*$", text, re.M)
@@ -455,8 +457,7 @@ def main() -> int:
             # any backslash or \g in the spliced YAML. No Rhea/ENZYME release has
             # one today, which is exactly why this would surface as corruption long
             # after the change that introduced it.
-            out = re.sub(r"^license:", lambda _m: block + hist + "license:", out,
-                         count=1, flags=re.M)
+            out = insert_before_license(out, block + hist)
         else:
             out = out.rstrip("\n") + "\n" + block + hist
         if args.apply:

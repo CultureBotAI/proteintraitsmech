@@ -35,6 +35,12 @@ audit-schema:
 
 # Validate the data-source registry (data/sources.yaml) and cross-check it
 # against the seeders. Warns on restrictive (NC/ND) licences + orphan seeders.
+# Unit tests for the pure helpers (scripts/record_io.py and friends). These do
+# NOT touch data/traits - `validate-all` and `audit-graphs` are the data gates.
+# Run the unit tests
+test *args:
+    uv run pytest tests/ {{args}}
+
 sources-check:
     python3 scripts/check_sources.py
 

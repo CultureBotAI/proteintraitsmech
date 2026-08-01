@@ -57,6 +57,8 @@ from pathlib import Path
 
 import yaml
 
+from record_io import append_to_section, has_graph, insert_before_license
+
 import rhea_rdf
 from build_rhea_causal_graphs import short
 
@@ -353,8 +355,7 @@ def main() -> int:
         # Match the whole graph_id, not a prefix: `..._mcsa45` is a substring of
         # `..._mcsa454`, so a plain `in` test would report a genuinely new entry as
         # already wired and silently never write it.
-        if re.search(rf"^\s*graph_id:\s*{re.escape(GRAPH_ID)}_mcsa{mid}\s*$",
-                     text, re.M):
+        if has_graph(text, f"{GRAPH_ID}_mcsa{mid}"):
             stat["already wired"] += 1
             continue
         graph, why = build(rid, rh.reactions[rid], mid, join, entries[mid], mpath)

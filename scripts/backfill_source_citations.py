@@ -27,6 +27,8 @@ import xml.etree.ElementTree as ET
 from collections import defaultdict
 from pathlib import Path
 
+from record_io import insert_before_license
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 RAW = REPO_ROOT / "data" / "raw"
@@ -195,7 +197,7 @@ def main() -> int:
                 pmids = pmap[m.group(1)][:args.max_refs]
                 block = evidence_block(pmids, pmid2doi, s)
                 if re.search(r"^license:", text, re.M):
-                    new = re.sub(r"^license:", block + "license:", text, count=1, flags=re.M)
+                    new = insert_before_license(text, block)
                 else:
                     new = text.rstrip("\n") + "\n" + block
                 touched += 1
