@@ -64,7 +64,7 @@ from pathlib import Path
 
 import yaml
 
-from record_io import append_to_section, has_graph, insert_before_license
+from record_io import append_to_section, has_graph
 
 import rhea_rdf
 from build_rhea_causal_graphs import short
@@ -78,38 +78,6 @@ P_AGENT = ("is a catalytic agent in", "RO:0002500")   # causal agent in process
 P_CLOSE = ("has its catalytic mechanism curated by", "skos:closeMatch")
 TIMESTAMP = "2026-07-30T00:00:00Z"
 GRAPH_ID = "catalytic_residues"
-
-
-_TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
-
-
-def append_to_section(text: str, key: str, payload: str) -> str:
-    """Append `payload` (a full `key:\\n  - …` YAML block) to the record's existing
-    `key:` section, or insert it whole if the record has no such key.
-
-    Written as a section-aware splice rather than a string replace because the
-    earlier version stripped the parent `key:` line off the payload unconditionally
-    and only put it back on one of three branches — so a record that lacked the key
-    (any freshly seeded Rhea record, which has no `curation_history`) got a bare
-    sequence item spliced under a mapping, i.e. unparseable YAML, and the
-    `out == text` guard did not catch it because the text *had* changed.
-
-    Appending rather than prepending also keeps `curation_history` in chronological
-    order; the previous version inserted new events ahead of older ones.
-    """
-    lines = text.splitlines(keepends=True)
-    start = next((i for i, ln in enumerate(lines) if ln.startswith(f"{key}:")), None)
-    if start is None:
-        # No such section: insert the whole block before `license:` (the record's
-        # last key by convention) or append it at the end.
-        lic = next((i for i, ln in enumerate(lines) if ln.startswith("license:")), None)
-        at = lic if lic is not None else len(lines)
-        return "".join(lines[:at]) + payload + "".join(lines[at:])
-    end = start + 1
-    while end < len(lines) and not _TOP_KEY.match(lines[end]):
-        end += 1
-    items = payload.split("\n", 1)[1]      # drop the duplicate `key:` line
-    return "".join(lines[:end]) + items + "".join(lines[end:])
 
 
 def mcsa_entries() -> dict[str, dict]:

@@ -190,3 +190,55 @@ def test_awkward_but_valid_shapes_still_parse(text, label):
     out = append_to_section(text, "causal_graphs", payload)
     ids = [g["graph_id"] for g in yaml.safe_load(out)["causal_graphs"]]
     assert ids[-1] == "appended", f"{label}: appended item missing or misplaced"
+
+
+# --- codex review findings ----------------------------------------------------
+
+def test_has_graph_ignores_the_name_appearing_in_prose():
+    """FALSE POSITIVE found by review. Searching the whole document matched the key
+    name inside a folded scalar, so a record merely *describing* a graph counted as
+    having one."""
+    text = ('identifier: X:1\n'
+            'definition: |-\n'
+            '  graph_id: reaction_chemistry\n'
+            'license: CC0\n')
+    assert not has_graph(text, "reaction_chemistry")
+
+
+@pytest.mark.parametrize("value", ['reaction_chemistry', '"reaction_chemistry"',
+                                   "'reaction_chemistry'",
+                                   'reaction_chemistry  # written by round 16'])
+def test_has_graph_handles_quoting_and_comments(value):
+    """FALSE NEGATIVES found by review. A quoted value or a trailing comment made the
+    match fail, so a record that HAS the graph would be rewritten and duplicated."""
+    text = f"identifier: X:1\ncausal_graphs:\n- graph_id: {value}\n  nodes: []\n"
+    assert has_graph(text, "reaction_chemistry")
+
+
+def test_append_at_eof_without_trailing_newline_does_not_concatenate():
+    """Found by review. The earlier 'no trailing newline' fixture contained
+    `license:`, so insertion happened before that line and the append-at-EOF path
+    was never exercised. Without a guard the payload fuses onto the last value:
+    `label: x` + `causal_graphs:` -> `label: xcausal_graphs:`."""
+    text = "identifier: X:1\nlabel: x"          # no license, no trailing newline
+    out = append_to_section(text, "causal_graphs", GRAPH_BLOCK)
+    rec = yaml.safe_load(out)
+    assert rec["label"] == "x"
+    assert [g["graph_id"] for g in rec["causal_graphs"]] == ["g1"]
+
+
+def test_second_builder_appends_rather_than_duplicating_the_key():
+    """THE DATA-LOSS DEFECT found by review, which this branch introduced. Making the
+    skip predicate specific let a record carrying another builder's graph proceed;
+    inserting a fresh `causal_graphs:` then gave the record two top-level keys, and
+    PyYAML keeps only the last — silently discarding the existing graph."""
+    first = append_to_section("identifier: X:1\nlicense: CC0\n",
+                              "causal_graphs", GRAPH_BLOCK)
+    first = append_to_section(first, "curation_history", HIST_BLOCK)
+    second = yaml.safe_dump(
+        {"causal_graphs": [{"graph_id": "reaction_chemistry"}]},
+        sort_keys=False, allow_unicode=True, width=100)
+    out = append_to_section(first, "causal_graphs", second)
+    assert out.count("\ncausal_graphs:") + out.startswith("causal_graphs:") == 1
+    assert [g["graph_id"] for g in yaml.safe_load(out)["causal_graphs"]] == \
+        ["g1", "reaction_chemistry"]

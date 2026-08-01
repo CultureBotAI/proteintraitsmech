@@ -39,7 +39,7 @@ import re
 import sys
 from pathlib import Path
 
-from record_io import has_graph, insert_before_license
+from record_io import append_to_section, has_graph
 
 try:
     import yaml
@@ -331,9 +331,12 @@ def splice(text: str, graph: dict, mid: int) -> str:
         "llm_assisted": True}]}, sort_keys=False, allow_unicode=True, width=100)
     out = re.sub(r"^mapping_status:\s*SEEDED\s*$", "mapping_status: REVIEWED",
                  text, count=1, flags=re.M)
-    if re.search(r"^license:", out, re.M):
-        return insert_before_license(out, block + hist)
-    return out.rstrip("\n") + "\n" + block + hist
+    # Append into each section rather than inserting a fresh key: a record may
+    # already carry another builder's graph (and its history), and a second
+    # top-level `causal_graphs:` would make PyYAML silently keep only the last,
+    # discarding the existing graph.
+    out = append_to_section(out, "causal_graphs", block)
+    return append_to_section(out, "curation_history", hist)
 
 
 def main() -> int:

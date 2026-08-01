@@ -439,9 +439,21 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
         if curie and curie not in seen_x:
             seen_x.add(curie)
             xrefs.append(curie)
+    # A definition source that is a citation (DOI/PMID) is NOT an xref. A DOI always
+    # contains "/", which the schema's CURIE pattern forbids, so routing these into
+    # `xrefs` produced 28 records that failed closed-mode validation (issue #90).
+    # They are real provenance — GO still names them as the definition source — so
+    # they go to `evidence`, whose `reference` range accepts a DOI, rather than being
+    # discarded. Non-citation sources (GOC:, etc.) stay as xrefs.
+    citations: list[str] = []
     for tok in def_sources:
         curie = normalise_source(tok)
-        if curie and curie not in seen_x:
+        if not curie:
+            continue
+        if curie.startswith(("DOI:", "PMID:")):
+            if curie not in citations:
+                citations.append(curie)
+        elif curie not in seen_x and _CURIE_RE.match(curie):
             seen_x.add(curie)
             xrefs.append(curie)
 
@@ -475,6 +487,11 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
     if xrefs:
         lines.append("xrefs:")
         lines.extend(f"  - {x}" for x in xrefs)
+    if citations:
+        lines.append("evidence:")
+        for c in citations:
+            lines.append(f"  - reference: {c}")
+            lines.append(f"    notes: {yaml_escape(src.release_prefix + ' definition source')}")
 
     lines.append(f"license: {src.license}")
     return "\n".join(lines) + "\n"

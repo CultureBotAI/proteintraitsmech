@@ -45,14 +45,47 @@ def has_graph(text: str, graph_id: str) -> bool:
     Anchored and whole-line: a substring test would report `..._mcsa454` as a match
     for `..._mcsa45` and silently skip a record that still needs writing.
 
-    The optional `- ` is load-bearing. `graph_id` is the first key of a list item, so
-    PyYAML writes it as `- graph_id: reaction_chemistry`. An earlier fix used
-    `^\\s*graph_id:` and therefore matched **nothing** — which turned the builders
-    from "skip records already done" into "append a duplicate graph on every run",
-    strictly worse than the over-broad test it replaced. Caught by the test below.
+    Scoped to the `causal_graphs:` section, and tolerant of the ways YAML may write
+    the same value. Three ways a looser test goes wrong:
+
+      * `^\\s*graph_id:` matches **nothing**, because `graph_id` is the first key of
+        a list item and PyYAML writes `- graph_id: …`. That mistake turned the
+        builders from "skip records already done" into "append a duplicate on every
+        run" — worse than the over-broad test it replaced.
+      * Searching the whole document gives a **false positive** when the name appears
+        in prose, e.g. a folded `definition:` containing the words `graph_id:
+        reaction_chemistry`.
+      * Matching a bare token gives a **false negative** on a quoted value
+        (`- graph_id: "reaction_chemistry"`) or one with a trailing comment.
     """
-    return re.search(rf"^\s*(?:-\s*)?graph_id:\s*{re.escape(graph_id)}\s*$", text,
-                     re.M) is not None
+    want = graph_id.strip()
+    for line in _section_lines(text, "causal_graphs"):
+        m = re.match(r"\s*(?:-\s*)?graph_id:\s*(.+?)\s*$", line)
+        if not m:
+            continue
+        value = m.group(1)
+        if value.startswith("#"):
+            continue
+        # strip a trailing comment, then surrounding quotes
+        value = re.split(r"\s+#", value, maxsplit=1)[0].strip()
+        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+            value = value[1:-1]
+        if value == want:
+            return True
+    return False
+
+
+def _section_lines(text: str, key: str):
+    """The lines belonging to a top-level `key:` block, excluding the key line."""
+    inside = False
+    for line in text.splitlines():
+        if line.startswith(f"{key}:"):
+            inside = True
+            continue
+        if inside:
+            if line and _TOP_KEY.match(line):
+                return
+            yield line
 
 
 def append_to_section(text: str, key: str, payload: str) -> str:
@@ -87,7 +120,12 @@ def append_to_section(text: str, key: str, payload: str) -> str:
     if start is None:
         lic = next((i for i, ln in enumerate(lines) if ln.startswith("license:")), None)
         at = lic if lic is not None else len(lines)
-        return "".join(lines[:at]) + payload + "".join(lines[at:])
+        head = "".join(lines[:at])
+        # A record whose final line has no newline would otherwise be concatenated
+        # with the payload — `label: x` + `causal_graphs:` = `label: xcausal_graphs:`.
+        if head and not head.endswith("\n"):
+            head += "\n"
+        return head + payload + "".join(lines[at:])
 
     end = start + 1
     while end < len(lines) and not _TOP_KEY.match(lines[end]):

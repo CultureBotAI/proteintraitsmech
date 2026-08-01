@@ -44,7 +44,7 @@ from pathlib import Path
 
 import yaml
 
-from record_io import append_to_section, has_graph, insert_before_license
+from record_io import append_to_section, has_graph
 
 REPO = Path(__file__).resolve().parent.parent
 XML = REPO / "data" / "raw" / "metalpdb" / "flat_db_file.xml.gz"
@@ -255,10 +255,13 @@ def main() -> int:
             "llm_assisted": True}]}, sort_keys=False, allow_unicode=True, width=100)
         out = re.sub(r"^mapping_status:\s*SEEDED\s*$", "mapping_status: REVIEWED",
                      text, count=1, flags=re.M)
-        if re.search(r"^license:", out, re.M):
-            out = insert_before_license(out, block + hist)
-        else:
-            out = out.rstrip("\n") + "\n" + block + hist
+        # Append into each section rather than inserting a fresh key: a record may
+        # already carry another builder's graph (and its history), and a second
+        # top-level `causal_graphs:` would make PyYAML silently keep only the last,
+        # discarding the existing graph. append_to_section handles both the
+        # key-present and key-absent cases.
+        out = append_to_section(out, "causal_graphs", block)
+        out = append_to_section(out, "curation_history", hist)
         if args.apply:
             f.write_text(out, encoding="utf-8")
         elif done == 0:
