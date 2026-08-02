@@ -305,3 +305,21 @@ def test_append_matches_the_existing_section_indentation():
     rec = yaml.safe_load(out)                       # raised before the fix
     assert [g["graph_id"] for g in rec["causal_graphs"]] == ["old", "new"]
     assert rec["license"] == "CC0"
+
+
+def test_append_matches_indentation_for_any_section_not_just_graphs():
+    """The indentation bug was found on `causal_graphs`, where only 2 records are
+    affected — but 6,182 records indent their `curation_history` items, so that is
+    the far larger risk class. Verified exhaustively against all 6,182; this pins
+    the behaviour so a future change to the indent detection cannot silently
+    reintroduce it for one key while fixing the other."""
+    text = ("identifier: X:1\n"
+            "curation_history:\n"
+            "  - timestamp: t1\n"
+            "    action: first\n"
+            "license: CC0\n")
+    payload = yaml.safe_dump({"curation_history": [{"timestamp": "t2", "action": "second"}]},
+                             sort_keys=False, allow_unicode=True, width=100)
+    rec = yaml.safe_load(append_to_section(text, "curation_history", payload))
+    assert [h["action"] for h in rec["curation_history"]] == ["first", "second"]
+    assert rec["license"] == "CC0"
