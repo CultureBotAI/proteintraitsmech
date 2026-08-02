@@ -337,9 +337,6 @@ def main() -> int:
         if graph is None:
             stat[f"skipped: {why}"] += 1
             continue
-        stat["written"] += 1
-        stat["residue edges"] += len(graph["edges"]) - 1
-        stat["reverse-oriented"] += (join["orientation"] == "RL")
 
         block = yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False,
                                allow_unicode=True, width=100, default_flow_style=False)
@@ -365,6 +362,9 @@ def main() -> int:
             # REVIEWED with no audit trail of why.
             stat["skipped: could not splice the history into the record"] += 1
             continue
+        stat["written"] += 1
+        stat["residue edges"] += len(graph["edges"]) - 1
+        stat["reverse-oriented"] += (join["orientation"] == "RL")
         if args.apply:
             rpath.write_text(out, encoding="utf-8")
         elif done == 0:

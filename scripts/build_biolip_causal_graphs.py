@@ -274,9 +274,6 @@ def main() -> int:
         if graph is None:
             stat[f"skipped: {why}"] += 1
             continue
-        stat["written"] += 1
-        stat["edges"] += len(graph["edges"])
-        stat["nodes"] += len(graph["nodes"])
         block = yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False,
                                allow_unicode=True, width=100,
                                default_flow_style=False)
@@ -307,6 +304,9 @@ def main() -> int:
             # REVIEWED with no audit trail of why.
             stat["skipped: could not splice the history into the record"] += 1
             continue
+        stat["written"] += 1
+        stat["edges"] += len(graph["edges"])
+        stat["nodes"] += len(graph["nodes"])
         if args.apply:
             f.write_text(out, encoding="utf-8")
         elif done == 0:

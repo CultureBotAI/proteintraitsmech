@@ -472,7 +472,8 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
         elif curie and curie not in seen_x:
             seen_x.add(curie)
             xrefs.append(curie)
-    # A definition source that is a citation (DOI/PMID) is NOT an xref. A DOI always
+    # A definition source that is a DOI is NOT an xref (PMID is — it is a valid
+    # CURIE and stays put; see the note on the DOI-only branch below). A DOI always
     # contains "/", which the schema's CURIE pattern forbids, so routing these into
     # `xrefs` produced 28 records that failed closed-mode validation (issue #90).
     # They are real provenance — GO still names them as the definition source — so

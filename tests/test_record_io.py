@@ -372,3 +372,61 @@ def test_has_graph_ignores_a_dashless_mapping():
     text = "causal_graphs:\n  graph_id: reaction_chemistry\n"
     assert isinstance(_y.safe_load(text)["causal_graphs"], dict)   # not a list
     assert not has_graph(text, "reaction_chemistry")
+
+
+# --- gaps codex named: mutations the suite would have tolerated -----------------
+
+def test_obo_escape_is_actually_decoded():
+    """MUTATION GAP. Making `_unescape_obo` return its input unchanged passed all 34
+    tests: the migration fixture used a plain `DOI:10.1000/ex` and nothing exercised
+    the escape. `EvidenceItem.reference` is unconstrained text, so validation would
+    not have caught it either — GO:0016087 shipped a malformed DOI for exactly that
+    reason."""
+    import seed_obo
+    assert seed_obo._unescape_obo(r"10.1002/(SICI)1520-6327(1997)35\:1") == \
+        "10.1002/(SICI)1520-6327(1997)35:1"
+    assert seed_obo.normalise_source(r"DOI:10.1/a\:b") == "DOI:10.1/a:b"
+    # an escape OBO does not define must survive rather than lose its backslash
+    assert seed_obo._unescape_obo(r"a\qb") == r"a\qb"
+
+
+def test_has_graph_handles_indentation_deeper_than_the_corpus_uses():
+    """MUTATION GAP. Replacing the derived indent with a hardcoded 0-2 spaces passed
+    every test, because the suite only exercised column 0 and two spaces — the two
+    styles the corpus happens to use. Production deliberately supports deeper, since
+    a false negative there makes a builder append a graph the record already has."""
+    text = ("causal_graphs:\n"
+            "    - graph_id: reaction_chemistry\n"
+            "      nodes: []\n")
+    assert has_graph(text, "reaction_chemistry")
+
+
+@pytest.mark.parametrize("shape,expect_refused", [
+    ("evidence: []", True),                                  # inline: refuse
+    ("evidence:\n- reference: PMID:1\n  notes: e", False),   # EOF, no newline: merge
+])
+def test_migration_merge_into_existing_evidence(shape, expect_refused):
+    """MUTATION GAP. The migration test had no pre-existing `evidence`, so the entire
+    merge branch could break without failing `just test` — and it did: hand-rolled
+    splicing corrupted both of these shapes."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "fx", Path(__file__).resolve().parent.parent / "scripts" / "fix_noncurie_xrefs.py")
+    fx = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fx)
+    text = f"identifier: GO:1\nxrefs:\n  - DOI:10.1000/ex\n{shape}"
+    lines = text.splitlines(keepends=True)
+    bad = fx.offenders(lines)
+    kept = [ln for i, ln in enumerate(lines) if i not in set(bad)]
+    xi = next((i for i, ln in enumerate(kept) if ln.startswith("xrefs:")), None)
+    if xi is not None and not fx._ITEM.match(kept[xi + 1] if xi + 1 < len(kept) else ""):
+        kept.pop(xi)
+    has_ev = any(ln.startswith("evidence:") for ln in kept)
+    payload = "".join(fx.evidence_block([("DOI:10.1000/ex", "def")], "GO",
+                                        "" if has_ev else "  "))
+    merged = fx.append_to_section("".join(kept), "evidence", payload)
+    if expect_refused:
+        assert merged == "".join(kept), "an inline value must be refused, not spliced"
+    else:
+        refs = [e["reference"] for e in yaml.safe_load(merged)["evidence"]]
+        assert refs == ["PMID:1", "DOI:10.1000/ex"]

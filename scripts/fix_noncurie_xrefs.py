@@ -19,7 +19,8 @@ An earlier version of this script dropped the DOIs, arguing that the current GO
 release carries none and that `seed_obo.py` already discards them, so nothing was
 lost and a re-seed would not recreate them. **Both halves of that were wrong.**
 
-`seed_obo.py` discards DOIs found on `xref:` lines, but these came from the `def:`
+`seed_obo.py` used to discard DOIs found on `xref:` lines (it now routes them to
+`evidence` too, tagged as a cross-reference), but these 27 came from the `def:`
 source brackets. `normalise_source()` does apply a CURIE check — but only after an
 early return for `DOI:`/`PMID:`, so a DOI reached `xrefs` unchecked. And the release
 the GO seeder actually reads, `go-basic.obo` (not `go.obo`), still carries them —
@@ -30,8 +31,9 @@ matching the 27 records here. Including GO:0072324:
 
 So a re-seed would have recreated every one of these failures, and dropping them
 discarded live provenance that GO still asserts. `seed_obo.py` now routes citation
-def-sources (DOI/PMID) to `evidence` instead of `xrefs`, and this migration brings
-existing records to the same shape.
+def-sources to `evidence` instead of `xrefs` — **DOI only, not PMID**: a PMID is a
+valid CURIE, 17,054 records carry one in `xrefs`, and moving them would rewrite all
+of those for no gain. This migration brings existing records to the same shape.
 
 SCOPE OF THE "RE-SEED REPRODUCES THIS" CLAIM — STATED PRECISELY
 ---------------------------------------------------------------
@@ -58,12 +60,51 @@ import re
 import sys
 from pathlib import Path
 
+from record_io import append_to_section
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 CURIE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
 # `EvidenceItem.reference` documents its range as "PMID:…, DOI:…, a database CURIE,
 # or an opaque URL", so a URL is relocatable evidence, not junk to discard.
 RELOCATABLE = re.compile(r"^(DOI:|PMID:|https?://)", re.I)
+
+
+def _origins_from_obo() -> dict[tuple[str, str], str]:
+    """(term id, citation value) -> "def" or "xref", read from the source OBO.
+
+    The seeder records WHICH route a citation came from, and labels it "definition
+    source" or "cross-reference" accordingly. A record on disk cannot tell them
+    apart — both used to land in `xrefs` — so the migration would otherwise label
+    every relocated value a definition source and disagree with a re-seed for any
+    value that came from an explicit `xref:` line. Reading the OBO is the only way
+    to be right rather than merely consistent-looking.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        from seed_obo import SOURCES, normalise_source, parse_xref
+    except ImportError:
+        return {}
+    out: dict[tuple[str, str], str] = {}
+    for src in SOURCES.values():
+        path = REPO_ROOT / "data" / "raw" / src.obo_file
+        if not path.exists():
+            continue
+        term = None
+        for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+            if line.startswith("id: "):
+                term = line[4:].strip()
+            elif line.startswith("def: ") and term:
+                bracket = line[line.rfind("[") + 1:line.rfind("]")] if "[" in line else ""
+                for tok in bracket.split(","):
+                    c = normalise_source(tok.strip())
+                    if c:
+                        out.setdefault((term, c), "def")
+            elif line.startswith("xref: ") and term:
+                c = parse_xref(line[6:].strip())
+                if isinstance(c, tuple):
+                    out.setdefault((term, c[1]), "xref")
+    return out
 
 
 def _source_labels() -> dict[str, str]:
@@ -122,7 +163,7 @@ def _unescape(value: str) -> str:
     return _unescape_obo(value)
 
 
-def evidence_block(citations: list[str], label: str, indent: str = "  ") -> list[str]:
+def evidence_block(citations, label: str, indent: str = "  ") -> list[str]:
     """Byte-identical to what `seed_obo.py` now emits for a citation def-source.
 
     This matters more than the note reading nicely: if the migration and the seeder
@@ -136,13 +177,15 @@ def evidence_block(citations: list[str], label: str, indent: str = "  ") -> list
     # helper hit, where appending column-0 items into an indented list produced
     # unparseable YAML.
     out = ["evidence:\n"]
-    for c in citations:
+    for entry in citations:
+        c, origin = entry if isinstance(entry, tuple) else (entry, "def")
+        where = "definition source" if origin == "def" else "cross-reference"
         out.append(f"{indent}- reference: {c}\n")
         # Must match seed_obo.py's wording exactly, including the honesty caveat:
         # two of these migrated GO DOIs are truncated SICI/journal fragments that
         # 404. They are what GO asserts, so they are preserved rather than dropped,
         # but they are not claimed as resolved.
-        out.append(f'{indent}  notes: "{label} definition source '
+        out.append(f'{indent}  notes: "{label} {where} '
                    f'(verbatim; not independently resolved)"\n')
     return out
 
@@ -154,6 +197,7 @@ def main() -> int:
     args = ap.parse_args()
 
     labels = _source_labels()
+    origins = _origins_from_obo()
     n_files = n_moved = n_dropped = 0
     for f in sorted(TRAITS.rglob("*.yaml")):
         text = f.read_text(encoding="utf-8")
@@ -172,8 +216,11 @@ def main() -> int:
         for i in bad:
             v = _ITEM.match(lines[i]).group(2).strip().strip("\"'")
             v = _unescape(v)
-            (citations if RELOCATABLE.match(v) else dropped).append(v)
-        for c in citations:
+            if RELOCATABLE.match(v):
+                citations.append((v, origins.get((ident, v), "def")))
+            else:
+                dropped.append(v)
+        for c, _ in citations:
             print(f"  {rel}\n      move to evidence: {c}")
         for d in dropped:
             print(f"  {rel}\n      drop:             {d}")
@@ -188,26 +235,22 @@ def main() -> int:
             kept.pop(xi)
 
         if citations:
-            # `evidence` belongs before `license:`, the record's last key by
-            # convention; merge into an existing block if the record already has one.
-            ei = next((i for i, ln in enumerate(kept) if ln.startswith("evidence:")), None)
-            if ei is not None:
-                end = ei + 1
-                while end < len(kept) and not _TOP_KEY.match(kept[end]):
-                    end += 1
-                # The existing evidence list's OWN indent, which need not match the
-                # xrefs one — 10k+ records write the two keys in different styles,
-                # and reusing the xrefs indent produced unparseable YAML.
-                ev_indent = next((m.group(1) for m in
-                                  (_ITEM.match(ln) for ln in kept[ei + 1:end]) if m),
-                                 indent)
-                kept = (kept[:end]
-                        + evidence_block(citations, label, ev_indent)[1:]
-                        + kept[end:])
-            else:
-                lic = next((i for i, ln in enumerate(kept)
-                            if ln.startswith("license:")), len(kept))
-                kept = kept[:lic] + evidence_block(citations, label, indent) + kept[lic:]
+            # Reuse append_to_section rather than splicing by hand: it already
+            # refuses inline values (`evidence: []`) and guards a final line with no
+            # newline, both of which the hand-rolled merge corrupted.
+            # Build the payload at column 0 when an `evidence:` section already
+            # exists: append_to_section re-indents items to match that section, and
+            # feeding it the XREFS indent instead produced a block whose items
+            # disagreed with the ones already there. Only when the key is absent
+            # does the payload's own indent survive, so use the record's style then.
+            has_ev = any(ln.startswith("evidence:") for ln in kept)
+            payload = "".join(evidence_block([c for c, _ in citations], label,
+                                             "" if has_ev else indent))
+            merged = append_to_section("".join(kept), "evidence", payload)
+            if merged == "".join(kept):
+                print(f"  {rel}\n      SKIPPED: could not splice evidence safely")
+                continue
+            kept = merged.splitlines(keepends=True)
 
         n_files += 1
         n_moved += len(citations)
