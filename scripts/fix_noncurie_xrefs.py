@@ -15,14 +15,16 @@ schema's `^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$`:
 
 WHY MOVED AND NOT DROPPED — A CORRECTION
 -----------------------------------------
-An earlier version of this script dropped the DOIs, arguing that the current
-`go.obo` carries none and that `seed_obo.py` already discards them, so nothing was
+An earlier version of this script dropped the DOIs, arguing that the current GO
+release carries none and that `seed_obo.py` already discards them, so nothing was
 lost and a re-seed would not recreate them. **Both halves of that were wrong.**
 
 `seed_obo.py` discards DOIs found on `xref:` lines, but these came from the `def:`
-source brackets, which `normalise_source()` passed straight through into `xrefs`
-with no CURIE check. And the current release does still carry them — 35 DOI
-definition sources, including the one on GO:0072324:
+source brackets. `normalise_source()` does apply a CURIE check — but only after an
+early return for `DOI:`/`PMID:`, so a DOI reached `xrefs` unchecked. And the release
+the GO seeder actually reads, `go-basic.obo` (not `go.obo`), still carries them —
+35 DOI definition sources, of which 27 are on routed non-obsolete terms, exactly
+matching the 27 records here. Including GO:0072324:
 
     def: "Ascus cytoplasm that is not packaged into ascospores." [DOI:10.1016/S0953-7562(96)80057-8, GOC:mcc]
 
@@ -45,7 +47,26 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 CURIE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
-CITATION = re.compile(r"^(DOI|PMID):", re.I)
+# `EvidenceItem.reference` documents its range as "PMID:…, DOI:…, a database CURIE,
+# or an opaque URL", so a URL is relocatable evidence, not junk to discard.
+RELOCATABLE = re.compile(r"^(DOI:|PMID:|https?://)", re.I)
+
+
+def _source_labels() -> dict[str, str]:
+    """identifier prefix -> the seeder's own release_prefix (`GO:` -> `GO`).
+
+    Imported from `seed_obo.py` rather than hardcoded: the migration previously
+    wrote "GO definition source" for every record it touched, but it walks all of
+    `data/traits`, so an ARO or PSI-MI record would have been mislabelled as GO —
+    and would then differ from what a re-seed emits, which is the whole property
+    this migration exists to restore.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        from seed_obo import SOURCES
+    except ImportError:
+        return {}
+    return {s.id_prefix: s.release_prefix for s in SOURCES.values()}
 _ITEM = re.compile(r"^  - (.+?)\s*$")
 _TOP_KEY = re.compile(r"^[A-Za-z_]")
 
@@ -69,7 +90,7 @@ def offenders(lines: list[str]) -> list[int]:
     return out
 
 
-def evidence_block(citations: list[str]) -> list[str]:
+def evidence_block(citations: list[str], label: str) -> list[str]:
     """Byte-identical to what `seed_obo.py` now emits for a citation def-source.
 
     This matters more than the note reading nicely: if the migration and the seeder
@@ -81,7 +102,7 @@ def evidence_block(citations: list[str]) -> list[str]:
     out = ["evidence:\n"]
     for c in citations:
         out.append(f"  - reference: {c}\n")
-        out.append('    notes: "GO definition source"\n')
+        out.append(f'    notes: "{label} definition source"\n')
     return out
 
 
@@ -91,6 +112,7 @@ def main() -> int:
     ap.add_argument("--apply", action="store_true")
     args = ap.parse_args()
 
+    labels = _source_labels()
     n_files = n_moved = n_dropped = 0
     for f in sorted(TRAITS.rglob("*.yaml")):
         text = f.read_text(encoding="utf-8")
@@ -101,11 +123,14 @@ def main() -> int:
         if not bad:
             continue
         rel = f.relative_to(REPO_ROOT)
+        ident = next((ln.split(":", 1)[1].strip() for ln in lines
+                      if ln.startswith("identifier:")), "")
+        label = labels.get(ident.split(":", 1)[0] + ":", "") if ident else ""
         bad_set = set(bad)
         citations, dropped = [], []
         for i in bad:
             v = _ITEM.match(lines[i]).group(1).strip().strip("\"'")
-            (citations if CITATION.match(v) else dropped).append(v)
+            (citations if RELOCATABLE.match(v) else dropped).append(v)
         for c in citations:
             print(f"  {rel}\n      move to evidence: {c}")
         for d in dropped:
@@ -126,11 +151,11 @@ def main() -> int:
                 end = ei + 1
                 while end < len(kept) and not _TOP_KEY.match(kept[end]):
                     end += 1
-                kept = kept[:end] + evidence_block(citations)[1:] + kept[end:]
+                kept = kept[:end] + evidence_block(citations, label)[1:] + kept[end:]
             else:
                 lic = next((i for i, ln in enumerate(kept)
                             if ln.startswith("license:")), len(kept))
-                kept = kept[:lic] + evidence_block(citations) + kept[lic:]
+                kept = kept[:lic] + evidence_block(citations, label) + kept[lic:]
 
         n_files += 1
         n_moved += len(citations)
