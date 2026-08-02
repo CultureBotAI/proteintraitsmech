@@ -76,7 +76,12 @@ def has_graph(text: str, graph_id: str) -> bool:
         # fail on the duplicate. Latent: no record indents that deeply today.
         if item_indent is None:
             continue
-        m = re.match(rf"{item_indent}(?:-\s*)?graph_id:\s*(.+?)\s*$", line)
+        # `graph_id` need not be the FIRST key of the item. PyYAML preserves dict
+        # order, so a builder that emitted {"title": ..., "graph_id": ...} would
+        # write `- title:` then `  graph_id:` — and requiring the sequence dash on
+        # the same line made has_graph miss it, so the builder appended a duplicate.
+        # A continuation key sits one level deeper than the dash.
+        m = re.match(rf"{item_indent}(?:-\s*|  )graph_id:\s*(.+?)\s*$", line)
         if not m:
             continue
         value = m.group(1)
@@ -143,7 +148,12 @@ def append_to_section(text: str, key: str, payload: str) -> str:
         # with the payload — `label: x` + `causal_graphs:` = `label: xcausal_graphs:`.
         if head and not head.endswith("\n"):
             head += "\n"
-        return head + payload + "".join(lines[at:])
+        tail = "".join(lines[at:])
+        # Guard the boundary AFTER the payload too: a payload with no trailing
+        # newline fused into the next key (`- reference: PMID:1license: CC0`).
+        if payload and not payload.endswith("\n") and tail:
+            payload += "\n"
+        return head + payload + tail
 
     end = start + 1
     while end < len(lines) and not _TOP_KEY.match(lines[end]):
@@ -171,7 +181,10 @@ def append_to_section(text: str, key: str, payload: str) -> str:
     # guards this; the key-present branch did not.
     if head and not head.endswith("\n"):
         head += "\n"
-    return head + items + "".join(lines[end:])
+    tail = "".join(lines[end:])
+    if items and not items.endswith("\n") and tail:
+        items += "\n"
+    return head + items + tail
 
 
 def insert_before_license(text: str, payload: str) -> str:
@@ -184,4 +197,7 @@ def insert_before_license(text: str, payload: str) -> str:
     lic = next((i for i, ln in enumerate(lines) if ln.startswith("license:")), None)
     if lic is None:
         return text.rstrip("\n") + "\n" + payload
-    return "".join(lines[:lic]) + payload + "".join(lines[lic:])
+    tail = "".join(lines[lic:])
+    if payload and not payload.endswith("\n") and tail:
+        payload += "\n"
+    return "".join(lines[:lic]) + payload + tail

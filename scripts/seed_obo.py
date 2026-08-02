@@ -356,6 +356,16 @@ def parse_xref(raw: str) -> "str | tuple[str, str, str] | None":
     # Non-grounding lexical sources some OBO files attach as xrefs.
     if prefix in {"WordNet", "url", "URL"}:
         return None
+    # OBO allows an optional quoted description after the identifier:
+    #   xref: Reactome:R-HSA-69206 "G1/S Transition"
+    # Strip it before anything else. Not stripping meant such an xref was DROPPED
+    # (the CURIE test failed on the space and quotes), and once the slash rule below
+    # was widened, any description containing "/" turned the whole string into a
+    # bogus `evidence` reference — 302 GO terms carry that shape, mostly Reactome.
+    local = re.sub(r'\s+"[^"]*"\s*$', "", local).strip()
+    if not local:
+        return None
+
     # A DOI (or any local containing '/') is a citation, not a CURIE xref — it
     # cannot satisfy the schema's xref pattern. Returning None here DISCARDED it,
     # which disagreed with fix_noncurie_xrefs.py, and that migration preserves such

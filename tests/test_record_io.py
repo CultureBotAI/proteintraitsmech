@@ -469,16 +469,89 @@ def test_each_builder_checks_its_own_graph_id():
     test, so every such regression stays green and the builder silently duplicates
     graphs on its next run."""
     import re as _re
+    # DERIVED, not hardcoded. The first version of this test listed five builders
+    # and silently omitted build_rhea_mcsa_residue_graphs.py despite its name, so a
+    # copy/paste regression there stayed green. Discovering the set from disk means
+    # a newly added builder is covered without anyone remembering to add it.
+    scripts = Path(__file__).resolve().parent.parent / "scripts"
+    builders = sorted(p.name for p in scripts.glob("build_*.py")
+                      if "has_graph(" in p.read_text(encoding="utf-8"))
+    assert len(builders) >= 6, f"expected every converted builder, found {builders}"
     expected = {"build_biolip_causal_graphs.py": "ligand_binding",
                 "build_metalpdb_causal_graphs.py": "metal_coordination",
                 "build_mcsa_causal_graphs.py": "catalysis",
                 "build_rhea_causal_graphs.py": "reaction_chemistry",
-                "build_ec_causal_graphs.py": "reaction_chemistry"}
-    scripts = Path(__file__).resolve().parent.parent / "scripts"
+                "build_ec_causal_graphs.py": "reaction_chemistry",
+                "build_rhea_mcsa_residue_graphs.py": "catalytic_residues"}
+    assert set(builders) == set(expected), (
+        f"a builder calls has_graph but is not asserted here: "
+        f"{set(builders) ^ set(expected)}")
     for name, want in expected.items():
         src = (scripts / name).read_text(encoding="utf-8")
-        called = _re.findall(r'has_graph\(\s*text\s*,\s*[fr]?["\']([^"\']+)["\']', src)
-        assert want in called, f"{name} should test has_graph(..., {want!r}), got {called}"
+        # Extract the literal text of the has_graph argument. No `want in src`
+        # fallback: that made the assertion tautological, because the graph id also
+        # appears elsewhere in the file (e.g. as GRAPH_ID), so it passed no matter
+        # what has_graph was actually called with.
+        arg = _re.search(r"has_graph\(\s*text\s*,\s*([^)]+)\)", src)
+        assert arg, f"{name} does not call has_graph(text, ...)"
+        arg = arg.group(1).strip()
+        # either a literal "want", or an f-string built from a constant equal to want
+        literal = _re.fullmatch(r'["\']([^"\']+)["\']', arg)
+        if literal:
+            got = literal.group(1)
+        else:
+            const = _re.search(r"\{(\w+)\}", arg)
+            assert const, f"{name}: cannot resolve has_graph argument {arg!r}"
+            val = _re.search(rf'^{const.group(1)}\s*=\s*["\']([^"\']+)["\']', src, _re.M)
+            assert val, f"{name}: {const.group(1)} not a module constant"
+            got = val.group(1)
+        assert got == want, f"{name} checks has_graph(..., {got!r}), expected {want!r}"
         # and it must equal the graph_id it actually writes
         written = _re.findall(r'"graph_id":\s*["\']([^"\']+)["\']', src)
         assert not written or want in written, f"{name}: writes {written}, checks {want!r}"
+
+
+# --- round 10 (post-merge review) ----------------------------------------------
+
+def test_has_graph_when_graph_id_is_not_the_first_key():
+    """MUTATION: reorder a builder's graph dict so `title` precedes `graph_id`.
+    PyYAML preserves dict order, so the record gets `- title:` then `  graph_id:`.
+    Requiring the sequence dash on the same line made has_graph miss it entirely,
+    and the builder would append a duplicate on its next run. Every test fixture
+    happened to put graph_id first, so the mutation stayed green."""
+    text = ("causal_graphs:\n"
+            "- title: Reaction chemistry\n"
+            "  graph_id: reaction_chemistry\n"
+            "  nodes: []\n")
+    assert has_graph(text, "reaction_chemistry")
+    assert not has_graph(text, "catalytic_residues")
+
+
+@pytest.mark.parametrize("fn_name", ["append_to_section", "insert_before_license"])
+def test_payload_without_trailing_newline_does_not_fuse(fn_name):
+    """The helpers guarded the boundary BEFORE a payload but not after it, so a
+    payload with no trailing newline fused into the next key:
+    `- reference: PMID:1license: CC0`. Dropping a `+ "\\n"` in any caller — a
+    plausible formatting refactor — would have activated this for every record
+    that has a license."""
+    import record_io
+    fn = getattr(record_io, fn_name)
+    args = (("identifier: X:1\nlicense: CC0\n", "evidence", "evidence:\n- reference: PMID:1")
+            if fn_name == "append_to_section"
+            else ("identifier: X:1\nlicense: CC0\n", "evidence:\n- reference: PMID:1"))
+    rec = yaml.safe_load(fn(*args))
+    assert rec["license"] == "CC0"
+    assert rec["evidence"] == [{"reference": "PMID:1"}]
+
+
+def test_obo_xref_description_is_stripped_not_misread():
+    """LIVE-ON-NEXT-RESEED. OBO allows `xref: ID "description"`. The description was
+    never stripped, so such an xref was DROPPED (the CURIE test failed on the space
+    and quotes) — and once the slash rule was widened, any description containing a
+    `/` turned the whole string into a bogus evidence reference. 302 GO terms carry
+    that shape, mostly Reactome."""
+    import seed_obo
+    assert seed_obo.parse_xref('Reactome:R-HSA-69206 "G1/S Transition"') == "Reactome:R-HSA-69206"
+    assert seed_obo.parse_xref('Reactome:R-HSA-1234 "Plain"') == "Reactome:R-HSA-1234"
+    # a genuine slash-bearing identifier is still routed to evidence
+    assert seed_obo.parse_xref("EC:1.2/3")[0] == "evidence"
