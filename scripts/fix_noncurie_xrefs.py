@@ -70,11 +70,18 @@ def offenders(lines: list[str]) -> list[int]:
 
 
 def evidence_block(citations: list[str]) -> list[str]:
+    """Byte-identical to what `seed_obo.py` now emits for a citation def-source.
+
+    This matters more than the note reading nicely: if the migration and the seeder
+    disagree by even the wording or the quoting, the next re-seed rewrites all 27
+    records — which is precisely the seeder-equals-data property this fix exists to
+    restore. The provenance of *why* they moved lives in the commit and in issue #90,
+    not in 27 copies of a sentence.
+    """
     out = ["evidence:\n"]
     for c in citations:
         out.append(f"  - reference: {c}\n")
-        out.append("    notes: GO definition source (moved from xrefs; a DOI is not "
-                   "a CURIE)\n")
+        out.append('    notes: "GO definition source"\n')
     return out
 
 
