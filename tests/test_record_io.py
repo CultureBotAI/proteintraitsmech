@@ -323,3 +323,27 @@ def test_append_matches_indentation_for_any_section_not_just_graphs():
     rec = yaml.safe_load(append_to_section(text, "curation_history", payload))
     assert [h["action"] for h in rec["curation_history"]] == ["first", "second"]
     assert rec["license"] == "CC0"
+
+
+@pytest.mark.parametrize("indent", ["", "  "])
+def test_migration_handles_both_xref_list_styles(indent):
+    """Found by review. The migration matched only `^  - `, but both list styles
+    occur in the corpus at scale, so it silently skipped offenders in column-0
+    records — it worked only because all 28 real offenders happened to be indented.
+    Widening the match alone was not enough: `evidence_block` always emitted two
+    spaces, which would have mixed indentation into a column-0 record, the same
+    corruption class the graph helper hit."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "fx", Path(__file__).resolve().parent.parent / "scripts" / "fix_noncurie_xrefs.py")
+    fx = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fx)
+    text = (f"identifier: GO:1\nxrefs:\n{indent}- DOI:10.1000/ex\n"
+            f"{indent}- GOC:a\nlicense: CC0\n")
+    lines = text.splitlines(keepends=True)
+    bad = fx.offenders(lines)
+    assert bad, "offender not detected for this list style"
+    got = fx._ITEM.match(lines[bad[0]])
+    assert got.group(1) == indent and got.group(2) == "DOI:10.1000/ex"
+    block = "".join(fx.evidence_block(["DOI:10.1000/ex"], "GO", indent))
+    assert block.splitlines()[1] == f"{indent}- reference: DOI:10.1000/ex"

@@ -33,6 +33,20 @@ discarded live provenance that GO still asserts. `seed_obo.py` now routes citati
 def-sources (DOI/PMID) to `evidence` instead of `xrefs`, and this migration brings
 existing records to the same shape.
 
+SCOPE OF THE "RE-SEED REPRODUCES THIS" CLAIM — STATED PRECISELY
+---------------------------------------------------------------
+It holds for the fields the seeder owns: identifier, label, definition,
+definition_source, axis/category, term_kind, mapping_status, parent_traits,
+synonyms, xrefs and evidence. Verified byte-for-byte on GO:0072324.
+
+It does NOT mean a forced re-seed reproduces a whole record. `seed_obo.py` and
+`seed_cath.py` rebuild only seed-owned fields and their `--force` path overwrites
+the file, so any later curation — `definitions`, `canonical_examples`,
+`trait_relations`, `causal_graphs`, `curation_history` — is lost. That is
+long-standing seeder behaviour, not introduced here, and it affects far more than
+these 28 records (10 of the 27 migrated GO records carry such enrichment). Do not
+run any seeder with `--force` over curated records expecting a no-op.
+
 Idempotent; dry-run unless --apply. Stdlib-only. Rewrites only the lines it must,
 leaving the rest of each hand-formatted record untouched.
 """
@@ -67,7 +81,11 @@ def _source_labels() -> dict[str, str]:
     except ImportError:
         return {}
     return {s.id_prefix: s.release_prefix for s in SOURCES.values()}
-_ITEM = re.compile(r"^  - (.+?)\s*$")
+# Both list styles occur in the corpus at scale — a record may write `- x` at
+# column 0 or `  - x` indented — so the item pattern must capture the indent rather
+# than assume one. Assuming two spaces made the migration silently skip offenders in
+# the majority of records; it only worked because all 28 happened to be indented.
+_ITEM = re.compile(r"^(\s*)- (.+?)\s*$")
 _TOP_KEY = re.compile(r"^[A-Za-z_]")
 
 
@@ -85,12 +103,12 @@ def offenders(lines: list[str]) -> list[int]:
             if ln.strip() and _TOP_KEY.match(ln):
                 inx = False
             continue
-        if not CURIE.match(m.group(1).strip().strip("\"'")):
+        if not CURIE.match(m.group(2).strip().strip("\"'")):
             out.append(i)
     return out
 
 
-def evidence_block(citations: list[str], label: str) -> list[str]:
+def evidence_block(citations: list[str], label: str, indent: str = "  ") -> list[str]:
     """Byte-identical to what `seed_obo.py` now emits for a citation def-source.
 
     This matters more than the note reading nicely: if the migration and the seeder
@@ -99,10 +117,14 @@ def evidence_block(citations: list[str], label: str) -> list[str]:
     restore. The provenance of *why* they moved lives in the commit and in issue #90,
     not in 27 copies of a sentence.
     """
+    # Emit in the record's own list style. Always writing two spaces would mix
+    # indentation into a column-0 record — the same class of corruption the graph
+    # helper hit, where appending column-0 items into an indented list produced
+    # unparseable YAML.
     out = ["evidence:\n"]
     for c in citations:
-        out.append(f"  - reference: {c}\n")
-        out.append(f'    notes: "{label} definition source"\n')
+        out.append(f"{indent}- reference: {c}\n")
+        out.append(f'{indent}  notes: "{label} definition source"\n')
     return out
 
 
@@ -129,13 +151,15 @@ def main() -> int:
         bad_set = set(bad)
         citations, dropped = [], []
         for i in bad:
-            v = _ITEM.match(lines[i]).group(1).strip().strip("\"'")
+            v = _ITEM.match(lines[i]).group(2).strip().strip("\"'")
             (citations if RELOCATABLE.match(v) else dropped).append(v)
         for c in citations:
             print(f"  {rel}\n      move to evidence: {c}")
         for d in dropped:
             print(f"  {rel}\n      drop:             {d}")
 
+        # the record's own list style, taken from the xrefs items we just read
+        indent = next((_ITEM.match(lines[i]).group(1) for i in bad), "  ")
         kept = [ln for i, ln in enumerate(lines) if i not in bad_set]
         # An xrefs: key whose every item was invalid must go too, or it is left as an
         # empty mapping value and stops parsing as a list.
@@ -151,11 +175,11 @@ def main() -> int:
                 end = ei + 1
                 while end < len(kept) and not _TOP_KEY.match(kept[end]):
                     end += 1
-                kept = kept[:end] + evidence_block(citations, label)[1:] + kept[end:]
+                kept = kept[:end] + evidence_block(citations, label, indent)[1:] + kept[end:]
             else:
                 lic = next((i for i, ln in enumerate(kept)
                             if ln.startswith("license:")), len(kept))
-                kept = kept[:lic] + evidence_block(citations, label) + kept[lic:]
+                kept = kept[:lic] + evidence_block(citations, label, indent) + kept[lic:]
 
         n_files += 1
         n_moved += len(citations)
