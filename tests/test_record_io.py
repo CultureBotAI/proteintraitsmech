@@ -126,10 +126,9 @@ def test_has_graph_is_specific_not_merely_any_graph():
 
 
 @pytest.mark.parametrize("line", [
-    "- graph_id: reaction_chemistry",        # 40,113 records look exactly like this
+    "- graph_id: reaction_chemistry",        # 39,645 records look exactly like this
     "  - graph_id: reaction_chemistry",      # 2 records do
-    "  graph_id: reaction_chemistry",
-    "  graph_id:   reaction_chemistry   ",
+    "- graph_id:   reaction_chemistry   ",
 ])
 def test_has_graph_tolerates_the_indentation_records_actually_use(line):
     """REGRESSION. `graph_id` is the first key of a list item, so PyYAML emits it as
@@ -137,9 +136,10 @@ def test_has_graph_tolerates_the_indentation_records_actually_use(line):
     of the real records — turning "skip what is done" into "append a duplicate every
     run".
 
-    Measured across the corpus: 40,113 graph_id lines sit at column 0 with `- `, and
-    2 at a two-space indent. Nothing deeper, which is why anything deeper is treated
-    as nested content rather than a graph key — see the spoofing test below."""
+    Measured across the corpus with a real multiline scan (line-based `grep` cannot
+    do this and silently gave wrong counts): 39,645 `causal_graphs` sections put
+    their items at column 0 and 2 at a two-space indent. None are deeper, and none
+    omit the `- `. The item indent is therefore derived from the section itself."""
     assert has_graph(f"causal_graphs:\n{line}\n", "reaction_chemistry")
 
 
@@ -347,3 +347,15 @@ def test_migration_handles_both_xref_list_styles(indent):
     assert got.group(1) == indent and got.group(2) == "DOI:10.1000/ex"
     block = "".join(fx.evidence_block(["DOI:10.1000/ex"], "GO", indent))
     assert block.splitlines()[1] == f"{indent}- reference: DOI:10.1000/ex"
+
+
+def test_has_graph_ignores_a_dashless_mapping():
+    """`causal_graphs:` followed by a bare `graph_id:` with no `- ` parses as a
+    MAPPING, not a list of graphs, so it is not a graph list at all — confirmed with
+    yaml.safe_load, and zero corpus records are written that way. An earlier version
+    of the test above asserted this form should match, which was wrong on both
+    counts."""
+    import yaml as _y
+    text = "causal_graphs:\n  graph_id: reaction_chemistry\n"
+    assert isinstance(_y.safe_load(text)["causal_graphs"], dict)   # not a list
+    assert not has_graph(text, "reaction_chemistry")

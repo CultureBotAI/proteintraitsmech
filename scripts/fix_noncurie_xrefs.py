@@ -108,6 +108,20 @@ def offenders(lines: list[str]) -> list[int]:
     return out
 
 
+def _unescape(value: str) -> str:
+    """Reuse the seeder's OBO unescaper so migrated and re-seeded values match.
+
+    GO:0016087 shipped `DOI:...35\\:1` — an OBO-escaped colon copied through
+    verbatim, producing a DOI that does not resolve.
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    try:
+        from seed_obo import _unescape_obo
+    except ImportError:
+        return value
+    return _unescape_obo(value)
+
+
 def evidence_block(citations: list[str], label: str, indent: str = "  ") -> list[str]:
     """Byte-identical to what `seed_obo.py` now emits for a citation def-source.
 
@@ -152,6 +166,7 @@ def main() -> int:
         citations, dropped = [], []
         for i in bad:
             v = _ITEM.match(lines[i]).group(2).strip().strip("\"'")
+            v = _unescape(v)
             (citations if RELOCATABLE.match(v) else dropped).append(v)
         for c in citations:
             print(f"  {rel}\n      move to evidence: {c}")
@@ -175,7 +190,15 @@ def main() -> int:
                 end = ei + 1
                 while end < len(kept) and not _TOP_KEY.match(kept[end]):
                     end += 1
-                kept = kept[:end] + evidence_block(citations, label, indent)[1:] + kept[end:]
+                # The existing evidence list's OWN indent, which need not match the
+                # xrefs one — 10k+ records write the two keys in different styles,
+                # and reusing the xrefs indent produced unparseable YAML.
+                ev_indent = next((m.group(1) for m in
+                                  (_ITEM.match(ln) for ln in kept[ei + 1:end]) if m),
+                                 indent)
+                kept = (kept[:end]
+                        + evidence_block(citations, label, ev_indent)[1:]
+                        + kept[end:])
             else:
                 lic = next((i for i, ln in enumerate(kept)
                             if ln.startswith("license:")), len(kept))

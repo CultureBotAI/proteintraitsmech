@@ -59,14 +59,24 @@ def has_graph(text: str, graph_id: str) -> bool:
         (`- graph_id: "reaction_chemistry"`) or one with a trailing comment.
     """
     want = graph_id.strip()
-    for line in _section_lines(text, "causal_graphs"):
+    section = list(_section_lines(text, "causal_graphs"))
+    item_indent = next((re.escape(m.group(1)) for m in
+                        (re.match(r"^(\s*)-\s", ln) for ln in section) if m), None)
+    for line in section:
         # Only a graph's OWN `graph_id` key counts. PyYAML writes it as the first
         # key of the list item (`- graph_id: …`) or, for a hand-formatted record,
         # at the item's own indent — never deeper. Accepting arbitrary indentation
         # let a nested scalar spoof it, e.g. a `description: |-` block whose text
         # happens to read `graph_id: reaction_chemistry`, which would make a builder
         # skip a graph the record does not have.
-        m = re.match(r"(?:\s{0,2})(?:-\s*)?graph_id:\s*(.+?)\s*$", line)
+        # The item indent is whatever THIS section uses, not a hardcoded 0-2.
+        # Hardcoding meant a 4-space record returned False here while
+        # append_to_section handled it correctly — so a builder would append a
+        # second graph with an id the record already had, and the audit would then
+        # fail on the duplicate. Latent: no record indents that deeply today.
+        if item_indent is None:
+            continue
+        m = re.match(rf"{item_indent}(?:-\s*)?graph_id:\s*(.+?)\s*$", line)
         if not m:
             continue
         value = m.group(1)

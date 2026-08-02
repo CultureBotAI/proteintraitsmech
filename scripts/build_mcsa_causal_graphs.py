@@ -34,6 +34,7 @@ Ambler Ser70/Lys73/Ser130/Glu166 = UniProt 68/71/128/164).
 from __future__ import annotations
 
 import argparse
+import collections
 import json
 import re
 import sys
@@ -339,7 +340,8 @@ def splice(text: str, graph: dict, mid: int) -> str | None:
     if spliced == out:
         return None          # refused; caller skips rather than writing a
                              # history entry for a graph that was not added
-    return append_to_section(spliced, "curation_history", hist)
+    out2 = append_to_section(spliced, "curation_history", hist)
+    return None if out2 == spliced else out2
 
 
 def main() -> int:
@@ -351,9 +353,11 @@ def main() -> int:
     args = ap.parse_args()
 
     cache, files, cath_ok = load_cache(), record_files(), kb_cath()
-    stat = {"written": 0, "skip_has_graph": 0, "no_mechanism": 0,
+    # Counter, not dict: the refusal path increments a key the literal did not
+    # declare, which raised KeyError instead of counting the skip.
+    stat = collections.Counter({"written": 0, "skip_has_graph": 0, "no_mechanism": 0,
             "no_record": 0, "offset_ok": 0, "offset_unresolved": 0,
-            "edges": 0, "nodes": 0}
+            "edges": 0, "nodes": 0})
     done = 0
     for mid in sorted(cache):
         if args.only and mid != args.only:

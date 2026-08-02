@@ -285,6 +285,29 @@ def parse_def(raw: str) -> tuple[str, list[str]]:
     return (text, sources)
 
 
+def _unescape_obo(value: str) -> str:
+    """Decode OBO 1.2 backslash escapes inside a value.
+
+    OBO escapes the separators it uses structurally, so a DOI carrying a colon
+    arrives as `10.1002/(SICI)1520-6327(1997)35\\:1`. Copying that through verbatim
+    shipped a DOI that does not resolve — GO:0016087 had exactly this. Only the
+    escapes OBO defines are decoded; an unrecognised `\\x` is left alone rather than
+    silently eating the backslash.
+    """
+    out, i = [], 0
+    mapping = {"n": "\n", "W": " ", "t": "\t", ":": ":", ",": ",", '"': '"',
+               "\\": "\\", "(": "(", ")": ")", "[": "[", "]": "]", "{": "{", "}": "}"}
+    while i < len(value):
+        c = value[i]
+        if c == "\\" and i + 1 < len(value) and value[i + 1] in mapping:
+            out.append(mapping[value[i + 1]])
+            i += 2
+        else:
+            out.append(c)
+            i += 1
+    return "".join(out)
+
+
 def normalise_source(token: str) -> str | None:
     """Map an OBO def-source token to a CURIE our schema accepts, or None
     to drop it. PubMed/DOI are canonicalised; other CURIE-shaped tokens
@@ -297,9 +320,9 @@ def normalise_source(token: str) -> str | None:
         return None
     low = prefix.lower()
     if low in {"pubmed", "pmid"}:
-        return f"PMID:{local}"
+        return f"PMID:{_unescape_obo(local)}"
     if low == "doi":
-        return f"DOI:{local}"
+        return f"DOI:{_unescape_obo(local)}"
     # Drop free-text / URL / internal-note sources.
     if low in {"url", "http", "https", "omo"}:
         return None

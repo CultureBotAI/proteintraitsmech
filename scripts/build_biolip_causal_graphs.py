@@ -301,6 +301,12 @@ def main() -> int:
             stat["skipped: could not splice the graph into the record"] += 1
             continue
         out = append_to_section(spliced, "curation_history", hist)
+        if out == spliced:
+            # The history splice was refused too. Writing the graph while
+            # silently leaving history empty would flip mapping_status to
+            # REVIEWED with no audit trail of why.
+            stat["skipped: could not splice the history into the record"] += 1
+            continue
         if args.apply:
             f.write_text(out, encoding="utf-8")
         elif done == 0:
