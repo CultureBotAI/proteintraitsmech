@@ -326,27 +326,40 @@ def test_append_matches_indentation_for_any_section_not_just_graphs():
 
 
 @pytest.mark.parametrize("indent", ["", "  "])
-def test_migration_handles_both_xref_list_styles(indent):
-    """Found by review. The migration matched only `^  - `, but both list styles
-    occur in the corpus at scale, so it silently skipped offenders in column-0
-    records — it worked only because all 28 real offenders happened to be indented.
-    Widening the match alone was not enough: `evidence_block` always emitted two
-    spaces, which would have mixed indentation into a column-0 record, the same
-    corruption class the graph helper hit."""
+def test_migration_end_to_end_on_a_real_file(indent, tmp_path, monkeypatch):
+    """Runs the ACTUAL migration over a real file and parses the result.
+
+    The previous version of this test called `offenders()` and `evidence_block()`
+    separately and asserted on each — it never spliced, never parsed, and never
+    checked the offending xref was gone. It would have passed if the migration had
+    stopped inserting evidence entirely, or inserted it in the wrong place. That is
+    the third test in this file to have been written that way, so this one drives
+    main() and asserts on the file that lands on disk."""
     import importlib.util
     spec = importlib.util.spec_from_file_location(
         "fx", Path(__file__).resolve().parent.parent / "scripts" / "fix_noncurie_xrefs.py")
     fx = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(fx)
-    text = (f"identifier: GO:1\nxrefs:\n{indent}- DOI:10.1000/ex\n"
-            f"{indent}- GOC:a\nlicense: CC0\n")
-    lines = text.splitlines(keepends=True)
-    bad = fx.offenders(lines)
-    assert bad, "offender not detected for this list style"
-    got = fx._ITEM.match(lines[bad[0]])
-    assert got.group(1) == indent and got.group(2) == "DOI:10.1000/ex"
-    block = "".join(fx.evidence_block(["DOI:10.1000/ex"], "GO", indent))
-    assert block.splitlines()[1] == f"{indent}- reference: DOI:10.1000/ex"
+
+    traits = tmp_path / "traits"
+    (traits / "go").mkdir(parents=True)
+    rec = traits / "go" / "probe.yaml"
+    rec.write_text(
+        f"identifier: GO:1\nlabel: \"probe\"\ntrait_axis: FUNCTION\n"
+        f"xrefs:\n{indent}- DOI:10.1000/ex\n{indent}- GOC:a\nlicense: CC-BY 4.0\n",
+        encoding="utf-8")
+    monkeypatch.setattr(fx, "TRAITS", traits)
+    monkeypatch.setattr(fx, "REPO_ROOT", tmp_path)
+    monkeypatch.setattr(sys, "argv", ["fix_noncurie_xrefs.py", "--apply"])
+    fx.main()
+
+    out = yaml.safe_load(rec.read_text(encoding="utf-8"))
+    assert out["xrefs"] == ["GOC:a"], "the offending xref was not removed"
+    assert out["evidence"][0]["reference"] == "DOI:10.1000/ex", "not relocated"
+    assert out["label"] == "probe" and out["license"] == "CC-BY 4.0"
+    # and the emitted indent matches the record's own style
+    body = rec.read_text(encoding="utf-8")
+    assert f"\nevidence:\n{indent}- reference:" in body
 
 
 def test_has_graph_ignores_a_dashless_mapping():

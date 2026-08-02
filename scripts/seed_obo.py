@@ -362,7 +362,10 @@ def parse_xref(raw: str) -> str | None:
     # values as evidence: a forced re-seed would have deleted what the migration
     # deliberately kept. Hand it back tagged so the caller can route it to evidence.
     if prefix == "DOI" or "/" in local:
-        return ("evidence", f"{prefix}:{local}")
+        # Unescape here too: an explicit `xref: DOI:10.1002/example\:part` line
+        # reaches this branch, not normalise_source(), so decoding only there left
+        # the malformed backslash reachable by a second route.
+        return ("evidence", f"{prefix}:{_unescape_obo(local)}", "xref")
     curie = f"{prefix}:{local}"
     return curie if _CURIE_RE.match(curie) else None
 
@@ -463,9 +466,9 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
     citations: list[str] = []
     for raw in entry.get("xref") or []:
         curie = parse_xref(raw)
-        if isinstance(curie, tuple):          # ("evidence", value) — a citation/URL
-            if curie[1] not in citations:
-                citations.append(curie[1])
+        if isinstance(curie, tuple):          # ("evidence", value, origin)
+            if curie[1] not in [c for c, _ in citations]:
+                citations.append((curie[1], curie[2]))
         elif curie and curie not in seen_x:
             seen_x.add(curie)
             xrefs.append(curie)
@@ -485,8 +488,8 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
         # is a category error here, because it contains "/" and can never satisfy
         # the CURIE pattern.
         if curie.startswith("DOI:"):
-            if curie not in citations:
-                citations.append(curie)
+            if curie not in [c for c, _ in citations]:
+                citations.append((curie, "def"))
         elif curie not in seen_x and _CURIE_RE.match(curie):
             seen_x.add(curie)
             xrefs.append(curie)
@@ -523,9 +526,14 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
         lines.extend(f"  - {x}" for x in xrefs)
     if citations:
         lines.append("evidence:")
-        for c in citations:
+        for c, origin in citations:
+            where = "definition source" if origin == "def" else "cross-reference"
             lines.append(f"  - reference: {c}")
-            lines.append(f"    notes: {yaml_escape(src.release_prefix + ' definition source')}")
+            # "verbatim; not independently resolved" is not hedging — two migrated GO
+            # DOIs are truncated SICI/journal fragments that 404, and they are exactly
+            # what GO asserts. Claiming them as resolved references would be false;
+            # dropping them would discard provenance GO still publishes.
+            lines.append(f"    notes: {yaml_escape(src.release_prefix + ' ' + where + ' (verbatim; not independently resolved)')}")
 
     lines.append(f"license: {src.license}")
     return "\n".join(lines) + "\n"

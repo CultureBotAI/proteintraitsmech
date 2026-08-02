@@ -138,7 +138,12 @@ def evidence_block(citations: list[str], label: str, indent: str = "  ") -> list
     out = ["evidence:\n"]
     for c in citations:
         out.append(f"{indent}- reference: {c}\n")
-        out.append(f'{indent}  notes: "{label} definition source"\n')
+        # Must match seed_obo.py's wording exactly, including the honesty caveat:
+        # two of these migrated GO DOIs are truncated SICI/journal fragments that
+        # 404. They are what GO asserts, so they are preserved rather than dropped,
+        # but they are not claimed as resolved.
+        out.append(f'{indent}  notes: "{label} definition source '
+                   f'(verbatim; not independently resolved)"\n')
     return out
 
 
