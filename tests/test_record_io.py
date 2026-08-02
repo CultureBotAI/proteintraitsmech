@@ -285,3 +285,23 @@ def test_has_graph_ignores_a_nested_scalar_inside_the_section():
             "  nodes: []\n")
     assert has_graph(text, "other")
     assert not has_graph(text, "reaction_chemistry")
+
+
+def test_append_matches_the_existing_section_indentation():
+    """LIVE CORRUPTION found by review. PyYAML emits list items at column 0, but two
+    corpus records indent theirs by two spaces — `beta-lactamase-class-a-mcsa2` and
+    `-class-b1-mcsa15`, which are also the only records carrying hand-written
+    residue→substrate edges. Appending column-0 items into a two-space list produced
+    unparseable YAML on exactly those two. Earlier tests named those records for
+    has_graph but never tried appending to them."""
+    text = ("identifier: X:1\n"
+            "causal_graphs:\n"
+            "  - graph_id: old\n"
+            "    nodes: []\n"
+            "license: CC0\n")
+    payload = yaml.safe_dump({"causal_graphs": [{"graph_id": "new"}]},
+                             sort_keys=False, allow_unicode=True, width=100)
+    out = append_to_section(text, "causal_graphs", payload)
+    rec = yaml.safe_load(out)                       # raised before the fix
+    assert [g["graph_id"] for g in rec["causal_graphs"]] == ["old", "new"]
+    assert rec["license"] == "CC0"

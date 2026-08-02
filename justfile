@@ -42,7 +42,7 @@ test *args:
     uv run pytest tests/ {{args}}
 
 sources-check:
-    python3 scripts/check_sources.py
+    uv run python scripts/check_sources.py
 
 # Structural-integrity audit of causal graphs
 audit-graphs *args:

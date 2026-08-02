@@ -136,6 +136,22 @@ def append_to_section(text: str, key: str, payload: str) -> str:
     end = start + 1
     while end < len(lines) and not _TOP_KEY.match(lines[end]):
         end += 1
+
+    # Re-indent the payload to match the section it joins. PyYAML always emits list
+    # items at column 0, but a hand-curated record may indent them — two do, and they
+    # are `beta-lactamase-class-a-mcsa2` and `-class-b1-mcsa15`, the only records
+    # carrying hand-written residue→substrate edges. Appending column-0 items into a
+    # two-space list produced unparseable YAML on exactly those two.
+    indent = ""
+    for ln in lines[start + 1:end]:
+        m = re.match(r"^(\s*)-\s", ln)
+        if m:
+            indent = m.group(1)
+            break
+    if indent:
+        items = "".join(indent + ln if ln.strip() else ln
+                        for ln in items.splitlines(keepends=True))
+
     head = "".join(lines[:end])
     # `license:` is optional, so a section can be the last thing in the file — and
     # if its final line has no newline, appending fuses the two: `edges: []` +

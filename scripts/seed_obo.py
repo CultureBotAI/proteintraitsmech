@@ -333,10 +333,13 @@ def parse_xref(raw: str) -> str | None:
     # Non-grounding lexical sources some OBO files attach as xrefs.
     if prefix in {"WordNet", "url", "URL"}:
         return None
-    # DOIs (and any local with a '/') are citations, not CURIE xrefs — they fail
-    # the schema's xref pattern and belong in `evidence`. Drop them from xrefs.
+    # A DOI (or any local containing '/') is a citation, not a CURIE xref — it
+    # cannot satisfy the schema's xref pattern. Returning None here DISCARDED it,
+    # which disagreed with fix_noncurie_xrefs.py, and that migration preserves such
+    # values as evidence: a forced re-seed would have deleted what the migration
+    # deliberately kept. Hand it back tagged so the caller can route it to evidence.
     if prefix == "DOI" or "/" in local:
-        return None
+        return ("evidence", f"{prefix}:{local}")
     curie = f"{prefix}:{local}"
     return curie if _CURIE_RE.match(curie) else None
 
@@ -434,9 +437,13 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
             parents.append(pid)
 
     xrefs, seen_x = [], set()
+    citations: list[str] = []
     for raw in entry.get("xref") or []:
         curie = parse_xref(raw)
-        if curie and curie not in seen_x:
+        if isinstance(curie, tuple):          # ("evidence", value) — a citation/URL
+            if curie[1] not in citations:
+                citations.append(curie[1])
+        elif curie and curie not in seen_x:
             seen_x.add(curie)
             xrefs.append(curie)
     # A definition source that is a citation (DOI/PMID) is NOT an xref. A DOI always
@@ -445,7 +452,6 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
     # They are real provenance — GO still names them as the definition source — so
     # they go to `evidence`, whose `reference` range accepts a DOI, rather than being
     # discarded. Non-citation sources (GOC:, etc.) stay as xrefs.
-    citations: list[str] = []
     for tok in def_sources:
         curie = normalise_source(tok)
         if not curie:
