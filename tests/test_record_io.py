@@ -430,3 +430,55 @@ def test_migration_merge_into_existing_evidence(shape, expect_refused):
     else:
         refs = [e["reference"] for e in yaml.safe_load(merged)["evidence"]]
         assert refs == ["PMID:1", "DOI:10.1000/ex"]
+
+
+# --- mutations round 9 named as "highly plausible future edits" -----------------
+
+def test_has_graph_finds_a_target_in_the_SECOND_graph():
+    """MUTATION: `if value == want: return True` -> `return value == want`. Every
+    prior test had one graph in the section, so the early return was never exercised
+    and the mutation stayed green — while a builder would stop finding any graph but
+    the first and start appending duplicates."""
+    text = ("causal_graphs:\n"
+            "- graph_id: reaction_chemistry\n  nodes: []\n"
+            "- graph_id: catalytic_residues_mcsa1\n  nodes: []\n")
+    assert has_graph(text, "reaction_chemistry")
+    assert has_graph(text, "catalytic_residues_mcsa1")   # the mutation loses this
+
+
+def test_append_writes_every_item_not_just_the_first():
+    """MUTATION: truncate `items` at the second column-0 `- `. All prior payloads
+    held exactly one item, so the mutation stayed green — while a migration
+    relocating two citations would silently drop the second."""
+    payload = yaml.safe_dump(
+        {"causal_graphs": [{"graph_id": "a"}, {"graph_id": "b"}]},
+        sort_keys=False, allow_unicode=True, width=100)
+    # Key ABSENT: this path inserts `payload` whole.
+    out = append_to_section("identifier: X:1\nlicense: CC0\n", "causal_graphs", payload)
+    assert [g["graph_id"] for g in yaml.safe_load(out)["causal_graphs"]] == ["a", "b"]
+    # Key PRESENT: this path splices `items`, and is the one the mutation hits —
+    # the absent-key case above cannot catch it, which is why both are asserted.
+    existing = "identifier: X:1\ncausal_graphs:\n- graph_id: z\n  nodes: []\nlicense: CC0\n"
+    out2 = append_to_section(existing, "causal_graphs", payload)
+    assert [g["graph_id"] for g in yaml.safe_load(out2)["causal_graphs"]] == ["z", "a", "b"]
+
+
+def test_each_builder_checks_its_own_graph_id():
+    """MUTATION: copy/paste a sibling's graph_id into a builder's has_graph call —
+    e.g. BioLiP checking for `reaction_chemistry`. No builder is imported by any
+    test, so every such regression stays green and the builder silently duplicates
+    graphs on its next run."""
+    import re as _re
+    expected = {"build_biolip_causal_graphs.py": "ligand_binding",
+                "build_metalpdb_causal_graphs.py": "metal_coordination",
+                "build_mcsa_causal_graphs.py": "catalysis",
+                "build_rhea_causal_graphs.py": "reaction_chemistry",
+                "build_ec_causal_graphs.py": "reaction_chemistry"}
+    scripts = Path(__file__).resolve().parent.parent / "scripts"
+    for name, want in expected.items():
+        src = (scripts / name).read_text(encoding="utf-8")
+        called = _re.findall(r'has_graph\(\s*text\s*,\s*[fr]?["\']([^"\']+)["\']', src)
+        assert want in called, f"{name} should test has_graph(..., {want!r}), got {called}"
+        # and it must equal the graph_id it actually writes
+        written = _re.findall(r'"graph_id":\s*["\']([^"\']+)["\']', src)
+        assert not written or want in written, f"{name}: writes {written}, checks {want!r}"

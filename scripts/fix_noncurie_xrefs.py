@@ -67,7 +67,11 @@ TRAITS = REPO_ROOT / "data" / "traits"
 CURIE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
 # `EvidenceItem.reference` documents its range as "PMID:…, DOI:…, a database CURIE,
 # or an opaque URL", so a URL is relocatable evidence, not junk to discard.
-RELOCATABLE = re.compile(r"^(DOI:|PMID:|https?://)", re.I)
+# Must match seed_obo.parse_xref's rule exactly, or a re-seed and this migration
+# disagree: the seeder routes ANY local containing "/" to evidence, plus DOI/PMID.
+# Relocating only DOI/PMID/HTTP dropped values like `EC:1.2/3` that the seeder keeps.
+# A value with no slash that is not a CURIE (e.g. `CATH:???????`) is dropped by both.
+RELOCATABLE = re.compile(r"^(DOI:|PMID:|https?://)|^[^:]+:[^:]*/", re.I)
 
 
 def _origins_from_obo() -> dict[tuple[str, str], str]:
@@ -163,7 +167,8 @@ def _unescape(value: str) -> str:
     return _unescape_obo(value)
 
 
-def evidence_block(citations, label: str, indent: str = "  ") -> list[str]:
+def evidence_block(citations: "list[tuple[str, str]] | list[str]", label: str,
+                   indent: str = "  ") -> list[str]:
     """Byte-identical to what `seed_obo.py` now emits for a citation def-source.
 
     This matters more than the note reading nicely: if the migration and the seeder
@@ -231,8 +236,20 @@ def main() -> int:
         # An xrefs: key whose every item was invalid must go too, or it is left as an
         # empty mapping value and stops parsing as a list.
         xi = next((i for i, ln in enumerate(kept) if ln.startswith("xrefs:")), None)
-        if xi is not None and not _ITEM.match(kept[xi + 1] if xi + 1 < len(kept) else ""):
-            kept.pop(xi)
+        if xi is not None:
+            # Scan the WHOLE section, not just the next line. A blank line or a
+            # comment after the removed item made this think the list was empty, so
+            # it deleted `xrefs:` while items were still below — and PyYAML then
+            # folded the orphaned `- GOC:a` into the previous scalar, silently
+            # corrupting the identifier.
+            j, still_has_items = xi + 1, False
+            while j < len(kept) and not _TOP_KEY.match(kept[j]):
+                if _ITEM.match(kept[j]):
+                    still_has_items = True
+                    break
+                j += 1
+            if not still_has_items:
+                del kept[xi:j]
 
         if citations:
             # Reuse append_to_section rather than splicing by hand: it already
@@ -244,7 +261,12 @@ def main() -> int:
             # disagreed with the ones already there. Only when the key is absent
             # does the payload's own indent survive, so use the record's style then.
             has_ev = any(ln.startswith("evidence:") for ln in kept)
-            payload = "".join(evidence_block([c for c, _ in citations], label,
+            # Pass the (value, origin) pairs through. An earlier version mapped
+            # them to bare values here, silently discarding the def/xref origin that
+            # _origins_from_obo() had just computed — so every relocated citation was
+            # labelled a definition source regardless, exactly what that lookup was
+            # added to prevent.
+            payload = "".join(evidence_block(citations, label,
                                              "" if has_ev else indent))
             merged = append_to_section("".join(kept), "evidence", payload)
             if merged == "".join(kept):

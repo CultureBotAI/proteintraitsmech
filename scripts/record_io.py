@@ -118,7 +118,9 @@ def append_to_section(text: str, key: str, payload: str) -> str:
       * key absent  → the payload is inserted whole, before `license:` if the record
         has one (it is the last key by convention), else at the end.
 
-    Returns the original text unchanged only if `payload` has no items.
+    Returns the original text unchanged when `payload` has no items, and also
+    when the key carries an inline value it cannot safely extend — callers
+    treat "unchanged" as "could not splice, skip this record".
     """
     lines = text.splitlines(keepends=True)
     items = payload.split("\n", 1)[1] if "\n" in payload else ""

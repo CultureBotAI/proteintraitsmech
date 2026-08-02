@@ -342,7 +342,7 @@ def parse_synonym(raw: str) -> tuple[str, str] | None:
     return (text, scope_map.get(m.group(2), "RELATED_SYNONYM"))
 
 
-def parse_xref(raw: str) -> str | None:
+def parse_xref(raw: str) -> "str | tuple[str, str, str] | None":
     raw = raw.strip()
     if raw.startswith('"') and raw.endswith('"'):
         raw = raw[1:-1]

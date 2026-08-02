@@ -358,8 +358,9 @@ def main() -> int:
         out = append_to_section(spliced, "curation_history", hist)
         if out == spliced:
             # The history splice was refused too. Writing the graph while
-            # silently leaving history empty would flip mapping_status to
-            # REVIEWED with no audit trail of why.
+            # silently leaving history empty would leave no audit trail of
+            # why the record changed. (This builder does not touch
+            # mapping_status; its five twins do.)
             stat["skipped: could not splice the history into the record"] += 1
             continue
         stat["written"] += 1

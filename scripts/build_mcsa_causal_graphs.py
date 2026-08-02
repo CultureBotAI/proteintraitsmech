@@ -320,7 +320,7 @@ def build_graph(entry: dict, residues: list, offset, cath_ok: set) -> dict | Non
             "nodes": nodes, "edges": edges}
 
 
-def splice(text: str, graph: dict, mid: int) -> str | None:
+def splice(text: str, graph: dict, mid: int) -> "tuple[str | None, str]":
     block = yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False,
                            allow_unicode=True, width=100, default_flow_style=False)
     hist = yaml.safe_dump({"curation_history": [{
@@ -338,10 +338,11 @@ def splice(text: str, graph: dict, mid: int) -> str | None:
     # discarding the existing graph.
     spliced = append_to_section(out, "causal_graphs", block)
     if spliced == out:
-        return None          # refused; caller skips rather than writing a
-                             # history entry for a graph that was not added
+        return None, "graph"
     out2 = append_to_section(spliced, "curation_history", hist)
-    return None if out2 == spliced else out2
+    if out2 == spliced:
+        return None, "history"
+    return out2, ""
 
 
 def main() -> int:
@@ -377,9 +378,12 @@ def main() -> int:
         if graph is None:
             stat["no_mechanism"] += 1
             continue
-        new = splice(text, graph, mid)
+        # Report WHICH splice refused. Returning a bare None made the caller blame
+        # the graph even when the graph went in fine and the history was refused —
+        # diagnostic only, but it would have sent a reader to the wrong place.
+        new, why = splice(text, graph, mid)
         if new is None:
-            stat["skipped: could not splice the graph into the record"] += 1
+            stat[f"skipped: could not splice the {why} into the record"] += 1
             continue
         stat["written"] += 1
         stat["edges"] += len(graph["edges"])
