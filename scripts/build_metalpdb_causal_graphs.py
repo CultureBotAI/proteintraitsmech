@@ -260,8 +260,14 @@ def main() -> int:
         # top-level `causal_graphs:` would make PyYAML silently keep only the last,
         # discarding the existing graph. append_to_section handles both the
         # key-present and key-absent cases.
-        out = append_to_section(out, "causal_graphs", block)
-        out = append_to_section(out, "curation_history", hist)
+        spliced = append_to_section(out, "causal_graphs", block)
+        if spliced == out:
+            # append_to_section refused (an inline flow value it cannot
+            # safely extend). Skip rather than flip mapping_status and write
+            # a history entry claiming a graph was added that was not.
+            stat["skipped: could not splice the graph into the record"] += 1
+            continue
+        out = append_to_section(spliced, "curation_history", hist)
         if args.apply:
             f.write_text(out, encoding="utf-8")
         elif done == 0:

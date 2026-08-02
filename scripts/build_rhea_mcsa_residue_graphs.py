@@ -350,11 +350,15 @@ def main() -> int:
                        f"set equality"),
             "llm_assisted": True}]}, sort_keys=False, allow_unicode=True, width=100)
 
-        out = append_to_section(text, "causal_graphs", block)
-        out = append_to_section(out, "curation_history", hist)
-        if out == text:
-            stat["skipped: could not splice into the record"] += 1
+        spliced = append_to_section(text, "causal_graphs", block)
+        if spliced == text:
+            # Checked on the GRAPH splice alone. The old guard compared the
+            # final text, so a refused graph whose history splice succeeded
+            # looked like success and wrote a history entry claiming a graph
+            # that is not there.
+            stat["skipped: could not splice the graph into the record"] += 1
             continue
+        out = append_to_section(spliced, "curation_history", hist)
         if args.apply:
             rpath.write_text(out, encoding="utf-8")
         elif done == 0:

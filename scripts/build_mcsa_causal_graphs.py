@@ -319,7 +319,7 @@ def build_graph(entry: dict, residues: list, offset, cath_ok: set) -> dict | Non
             "nodes": nodes, "edges": edges}
 
 
-def splice(text: str, graph: dict, mid: int) -> str:
+def splice(text: str, graph: dict, mid: int) -> str | None:
     block = yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False,
                            allow_unicode=True, width=100, default_flow_style=False)
     hist = yaml.safe_dump({"curation_history": [{
@@ -335,8 +335,11 @@ def splice(text: str, graph: dict, mid: int) -> str:
     # already carry another builder's graph (and its history), and a second
     # top-level `causal_graphs:` would make PyYAML silently keep only the last,
     # discarding the existing graph.
-    out = append_to_section(out, "causal_graphs", block)
-    return append_to_section(out, "curation_history", hist)
+    spliced = append_to_section(out, "causal_graphs", block)
+    if spliced == out:
+        return None          # refused; caller skips rather than writing a
+                             # history entry for a graph that was not added
+    return append_to_section(spliced, "curation_history", hist)
 
 
 def main() -> int:
@@ -370,10 +373,13 @@ def main() -> int:
         if graph is None:
             stat["no_mechanism"] += 1
             continue
+        new = splice(text, graph, mid)
+        if new is None:
+            stat["skipped: could not splice the graph into the record"] += 1
+            continue
         stat["written"] += 1
         stat["edges"] += len(graph["edges"])
         stat["nodes"] += len(graph["nodes"])
-        new = splice(text, graph, mid)
         if args.apply:
             path.write_text(new, encoding="utf-8")
         elif done == 0:

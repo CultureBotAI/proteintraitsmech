@@ -60,7 +60,13 @@ def has_graph(text: str, graph_id: str) -> bool:
     """
     want = graph_id.strip()
     for line in _section_lines(text, "causal_graphs"):
-        m = re.match(r"\s*(?:-\s*)?graph_id:\s*(.+?)\s*$", line)
+        # Only a graph's OWN `graph_id` key counts. PyYAML writes it as the first
+        # key of the list item (`- graph_id: …`) or, for a hand-formatted record,
+        # at the item's own indent — never deeper. Accepting arbitrary indentation
+        # let a nested scalar spoof it, e.g. a `description: |-` block whose text
+        # happens to read `graph_id: reaction_chemistry`, which would make a builder
+        # skip a graph the record does not have.
+        m = re.match(r"(?:\s{0,2})(?:-\s*)?graph_id:\s*(.+?)\s*$", line)
         if not m:
             continue
         value = m.group(1)
@@ -130,7 +136,14 @@ def append_to_section(text: str, key: str, payload: str) -> str:
     end = start + 1
     while end < len(lines) and not _TOP_KEY.match(lines[end]):
         end += 1
-    return "".join(lines[:end]) + items + "".join(lines[end:])
+    head = "".join(lines[:end])
+    # `license:` is optional, so a section can be the last thing in the file — and
+    # if its final line has no newline, appending fuses the two: `edges: []` +
+    # `- graph_id: g2` -> `edges: []- graph_id: g2`. The key-absent branch below
+    # guards this; the key-present branch did not.
+    if head and not head.endswith("\n"):
+        head += "\n"
+    return head + items + "".join(lines[end:])
 
 
 def insert_before_license(text: str, payload: str) -> str:

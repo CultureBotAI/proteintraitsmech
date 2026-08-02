@@ -450,7 +450,12 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
         curie = normalise_source(tok)
         if not curie:
             continue
-        if curie.startswith(("DOI:", "PMID:")):
+        # DOI only, NOT PMID. A PMID is a valid CURIE and has always lived in
+        # `xrefs` — 17,054 GO records carry one — so routing PMIDs to `evidence`
+        # would make the next re-seed rewrite all of them for no gain. Only the DOI
+        # is a category error here, because it contains "/" and can never satisfy
+        # the CURIE pattern.
+        if curie.startswith("DOI:"):
             if curie not in citations:
                 citations.append(curie)
         elif curie not in seen_x and _CURIE_RE.match(curie):

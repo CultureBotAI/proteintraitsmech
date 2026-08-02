@@ -126,16 +126,20 @@ def test_has_graph_is_specific_not_merely_any_graph():
 
 
 @pytest.mark.parametrize("line", [
+    "- graph_id: reaction_chemistry",        # 40,113 records look exactly like this
+    "  - graph_id: reaction_chemistry",      # 2 records do
     "  graph_id: reaction_chemistry",
-    "- graph_id: reaction_chemistry",
-    "  - graph_id: reaction_chemistry",
-    "    graph_id:   reaction_chemistry   ",
+    "  graph_id:   reaction_chemistry   ",
 ])
-def test_has_graph_tolerates_indentation_and_list_dash(line):
+def test_has_graph_tolerates_the_indentation_records_actually_use(line):
     """REGRESSION. `graph_id` is the first key of a list item, so PyYAML emits it as
-    `- graph_id: …`. A first attempt at this fix anchored on `^\\s*graph_id:`, which
-    matches none of the real records — turning "skip what is done" into "append a
-    duplicate every run". This case is the one that failed."""
+    `- graph_id: …`. A first attempt anchored on `^\\s*graph_id:`, which matches none
+    of the real records — turning "skip what is done" into "append a duplicate every
+    run".
+
+    Measured across the corpus: 40,113 graph_id lines sit at column 0 with `- `, and
+    2 at a two-space indent. Nothing deeper, which is why anything deeper is treated
+    as nested content rather than a graph key — see the spoofing test below."""
     assert has_graph(f"causal_graphs:\n{line}\n", "reaction_chemistry")
 
 
@@ -162,9 +166,14 @@ def test_insert_before_license_appends_when_absent():
 def test_inline_flow_value_is_refused_not_corrupted(inline):
     """LATENT. Appending block-style items under a key that carries an INLINE value
     produces unparseable YAML. No record is written this way, so this cannot fire
-    today — the helper returns the text unchanged, and every caller already treats
-    "unchanged" as "could not splice, skip". Found by adversarially fuzzing record
-    shapes rather than by any failure in the corpus."""
+    today, and the helper returns the text unchanged.
+
+    An earlier version of this docstring claimed "every caller already treats
+    unchanged as could not splice, skip". That was false: review found the builders
+    flipped mapping_status to REVIEWED and appended a history entry claiming a graph
+    had been added, without noticing the refusal. The callers now check the graph
+    splice on its own and skip. This test still only covers the helper's no-op — the
+    caller behaviour is not exercised here, and saying so is the point."""
     text = f"identifier: X:1\n{inline}\nlicense: CC0\n"
     assert append_to_section(text, "causal_graphs", GRAPH_BLOCK) == text
 
@@ -242,3 +251,37 @@ def test_second_builder_appends_rather_than_duplicating_the_key():
     assert out.count("\ncausal_graphs:") + out.startswith("causal_graphs:") == 1
     assert [g["graph_id"] for g in yaml.safe_load(out)["causal_graphs"]] == \
         ["g1", "reaction_chemistry"]
+
+
+# --- second codex review ------------------------------------------------------
+
+def test_append_into_existing_final_section_without_trailing_newline():
+    """`license:` is optional, so a section can be the last thing in the file. If its
+    final line has no newline, appending fused the two:
+    `edges: []` + `- graph_id: g2` -> `edges: []- graph_id: g2`. The key-ABSENT
+    branch was guarded; the key-PRESENT branch was not, and the earlier EOF test
+    only covered the absent case."""
+    text = ("identifier: X:1\n"
+            "causal_graphs:\n"
+            "- graph_id: g1\n"
+            "  nodes: []\n"
+            "  edges: []")            # no trailing newline, no license
+    payload = yaml.safe_dump({"causal_graphs": [{"graph_id": "g2"}]},
+                             sort_keys=False, allow_unicode=True, width=100)
+    out = append_to_section(text, "causal_graphs", payload)
+    assert [g["graph_id"] for g in yaml.safe_load(out)["causal_graphs"]] == ["g1", "g2"]
+
+
+def test_has_graph_ignores_a_nested_scalar_inside_the_section():
+    """A `description: |-` block INSIDE causal_graphs whose text reads
+    `graph_id: reaction_chemistry` used to count as having that graph, because the
+    match allowed arbitrary indentation. A builder would then permanently skip a
+    graph the record does not have. The earlier prose test only covered prose
+    OUTSIDE the section."""
+    text = ("causal_graphs:\n"
+            "- graph_id: other\n"
+            "  description: |-\n"
+            "    graph_id: reaction_chemistry\n"
+            "  nodes: []\n")
+    assert has_graph(text, "other")
+    assert not has_graph(text, "reaction_chemistry")
