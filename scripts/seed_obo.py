@@ -285,6 +285,29 @@ def parse_def(raw: str) -> tuple[str, list[str]]:
     return (text, sources)
 
 
+def _unescape_obo(value: str) -> str:
+    """Decode OBO 1.2 backslash escapes inside a value.
+
+    OBO escapes the separators it uses structurally, so a DOI carrying a colon
+    arrives as `10.1002/(SICI)1520-6327(1997)35\\:1`. Copying that through verbatim
+    shipped a DOI that does not resolve — GO:0016087 had exactly this. Only the
+    escapes OBO defines are decoded; an unrecognised `\\x` is left alone rather than
+    silently eating the backslash.
+    """
+    out, i = [], 0
+    mapping = {"n": "\n", "W": " ", "t": "\t", ":": ":", ",": ",", '"': '"',
+               "\\": "\\", "(": "(", ")": ")", "[": "[", "]": "]", "{": "{", "}": "}"}
+    while i < len(value):
+        c = value[i]
+        if c == "\\" and i + 1 < len(value) and value[i + 1] in mapping:
+            out.append(mapping[value[i + 1]])
+            i += 2
+        else:
+            out.append(c)
+            i += 1
+    return "".join(out)
+
+
 def normalise_source(token: str) -> str | None:
     """Map an OBO def-source token to a CURIE our schema accepts, or None
     to drop it. PubMed/DOI are canonicalised; other CURIE-shaped tokens
@@ -297,9 +320,9 @@ def normalise_source(token: str) -> str | None:
         return None
     low = prefix.lower()
     if low in {"pubmed", "pmid"}:
-        return f"PMID:{local}"
+        return f"PMID:{_unescape_obo(local)}"
     if low == "doi":
-        return f"DOI:{local}"
+        return f"DOI:{_unescape_obo(local)}"
     # Drop free-text / URL / internal-note sources.
     if low in {"url", "http", "https", "omo"}:
         return None
@@ -319,7 +342,7 @@ def parse_synonym(raw: str) -> tuple[str, str] | None:
     return (text, scope_map.get(m.group(2), "RELATED_SYNONYM"))
 
 
-def parse_xref(raw: str) -> str | None:
+def parse_xref(raw: str) -> "str | tuple[str, str, str] | None":
     raw = raw.strip()
     if raw.startswith('"') and raw.endswith('"'):
         raw = raw[1:-1]
@@ -333,10 +356,16 @@ def parse_xref(raw: str) -> str | None:
     # Non-grounding lexical sources some OBO files attach as xrefs.
     if prefix in {"WordNet", "url", "URL"}:
         return None
-    # DOIs (and any local with a '/') are citations, not CURIE xrefs — they fail
-    # the schema's xref pattern and belong in `evidence`. Drop them from xrefs.
+    # A DOI (or any local containing '/') is a citation, not a CURIE xref — it
+    # cannot satisfy the schema's xref pattern. Returning None here DISCARDED it,
+    # which disagreed with fix_noncurie_xrefs.py, and that migration preserves such
+    # values as evidence: a forced re-seed would have deleted what the migration
+    # deliberately kept. Hand it back tagged so the caller can route it to evidence.
     if prefix == "DOI" or "/" in local:
-        return None
+        # Unescape here too: an explicit `xref: DOI:10.1002/example\:part` line
+        # reaches this branch, not normalise_source(), so decoding only there left
+        # the malformed backslash reachable by a second route.
+        return ("evidence", f"{prefix}:{_unescape_obo(local)}", "xref")
     curie = f"{prefix}:{local}"
     return curie if _CURIE_RE.match(curie) else None
 
@@ -434,14 +463,35 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
             parents.append(pid)
 
     xrefs, seen_x = [], set()
+    citations: list[str] = []
     for raw in entry.get("xref") or []:
         curie = parse_xref(raw)
-        if curie and curie not in seen_x:
+        if isinstance(curie, tuple):          # ("evidence", value, origin)
+            if curie[1] not in [c for c, _ in citations]:
+                citations.append((curie[1], curie[2]))
+        elif curie and curie not in seen_x:
             seen_x.add(curie)
             xrefs.append(curie)
+    # A definition source that is a DOI is NOT an xref (PMID is — it is a valid
+    # CURIE and stays put; see the note on the DOI-only branch below). A DOI always
+    # contains "/", which the schema's CURIE pattern forbids, so routing these into
+    # `xrefs` produced 28 records that failed closed-mode validation (issue #90).
+    # They are real provenance — GO still names them as the definition source — so
+    # they go to `evidence`, whose `reference` range accepts a DOI, rather than being
+    # discarded. Non-citation sources (GOC:, etc.) stay as xrefs.
     for tok in def_sources:
         curie = normalise_source(tok)
-        if curie and curie not in seen_x:
+        if not curie:
+            continue
+        # DOI only, NOT PMID. A PMID is a valid CURIE and has always lived in
+        # `xrefs` — 17,054 GO records carry one — so routing PMIDs to `evidence`
+        # would make the next re-seed rewrite all of them for no gain. Only the DOI
+        # is a category error here, because it contains "/" and can never satisfy
+        # the CURIE pattern.
+        if curie.startswith("DOI:"):
+            if curie not in [c for c, _ in citations]:
+                citations.append((curie, "def"))
+        elif curie not in seen_x and _CURIE_RE.match(curie):
             seen_x.add(curie)
             xrefs.append(curie)
 
@@ -475,6 +525,16 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
     if xrefs:
         lines.append("xrefs:")
         lines.extend(f"  - {x}" for x in xrefs)
+    if citations:
+        lines.append("evidence:")
+        for c, origin in citations:
+            where = "definition source" if origin == "def" else "cross-reference"
+            lines.append(f"  - reference: {c}")
+            # "verbatim; not independently resolved" is not hedging — two migrated GO
+            # DOIs are truncated SICI/journal fragments that 404, and they are exactly
+            # what GO asserts. Claiming them as resolved references would be false;
+            # dropping them would discard provenance GO still publishes.
+            lines.append(f"    notes: {yaml_escape(src.release_prefix + ' ' + where + ' (verbatim; not independently resolved)')}")
 
     lines.append(f"license: {src.license}")
     return "\n".join(lines) + "\n"

@@ -4,11 +4,18 @@
   python3 scripts/build_rhea_mcsa_residue_graphs.py --limit 3   # dry run
   python3 scripts/build_rhea_mcsa_residue_graphs.py --apply
 
-After round 16 the corpus has two mechanism subgraphs that never meet. An M-CSA
+After round 16 the corpus has two mechanism subgraphs that rarely meet. An M-CSA
 graph says *these residues do the chemistry* (RESIDUE → STATE step → STATE step);
 a Rhea graph says *these substrates become those products* (MOLECULAR_FUNCTION →
-CHEMICAL). Measured over the M-CSA records: **there is no RESIDUE → CHEMICAL edge
-anywhere in the corpus**, so nothing answers "which residues run this reaction".
+CHEMICAL). Across the 1,001 seeder-generated M-CSA graphs the two halves join only
+at the top, so nothing there answers "which residues run this reaction".
+
+The corpus is **not** free of RESIDUE → CHEMICAL edges, and an earlier version of
+this docstring wrongly claimed it was. There are 1,870: 1,865 residue→metal from
+MetalPDB, and 5 hand-curated in `beta-lactamase-class-a-mcsa2` and
+`beta-lactamase-class-b1-mcsa15` — three pointing at the substrate, two at the water
+of hydrolysis. Those two records do at curation time exactly what this script cannot
+do at scale, and are the worked example to generalise from.
 
 WHAT THIS DOES NOT DO, AND WHY
 ------------------------------
@@ -31,7 +38,7 @@ All 1,003 M-CSA entries carry `reaction.compounds` with a `chebi_id` and a
 the join is checkable: an M-CSA entry matches a Rhea reaction when its reactant set
 **equals** one Rhea side and its product set **equals** the other, as sets of ChEBI
 CURIEs. EC agreement is required first (to bound the candidates) but is never
-sufficient on its own — 285 EC-matched pairs fail the ChEBI check and are dropped.
+sufficient on its own — 289 EC-matched pairs fail the ChEBI check and are dropped.
 
 **47 of the 472 matches are reverse-oriented**: M-CSA's reactants equal Rhea's `_R`
 side. Both sources are right — a Rhea master is undirected and M-CSA curates the
@@ -57,6 +64,8 @@ from pathlib import Path
 
 import yaml
 
+from record_io import append_to_section, has_graph
+
 import rhea_rdf
 from build_rhea_causal_graphs import short
 
@@ -69,38 +78,6 @@ P_AGENT = ("is a catalytic agent in", "RO:0002500")   # causal agent in process
 P_CLOSE = ("has its catalytic mechanism curated by", "skos:closeMatch")
 TIMESTAMP = "2026-07-30T00:00:00Z"
 GRAPH_ID = "catalytic_residues"
-
-
-_TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
-
-
-def append_to_section(text: str, key: str, payload: str) -> str:
-    """Append `payload` (a full `key:\\n  - …` YAML block) to the record's existing
-    `key:` section, or insert it whole if the record has no such key.
-
-    Written as a section-aware splice rather than a string replace because the
-    earlier version stripped the parent `key:` line off the payload unconditionally
-    and only put it back on one of three branches — so a record that lacked the key
-    (any freshly seeded Rhea record, which has no `curation_history`) got a bare
-    sequence item spliced under a mapping, i.e. unparseable YAML, and the
-    `out == text` guard did not catch it because the text *had* changed.
-
-    Appending rather than prepending also keeps `curation_history` in chronological
-    order; the previous version inserted new events ahead of older ones.
-    """
-    lines = text.splitlines(keepends=True)
-    start = next((i for i, ln in enumerate(lines) if ln.startswith(f"{key}:")), None)
-    if start is None:
-        # No such section: insert the whole block before `license:` (the record's
-        # last key by convention) or append it at the end.
-        lic = next((i for i, ln in enumerate(lines) if ln.startswith("license:")), None)
-        at = lic if lic is not None else len(lines)
-        return "".join(lines[:at]) + payload + "".join(lines[at:])
-    end = start + 1
-    while end < len(lines) and not _TOP_KEY.match(lines[end]):
-        end += 1
-    items = payload.split("\n", 1)[1]      # drop the duplicate `key:` line
-    return "".join(lines[:end]) + items + "".join(lines[end:])
 
 
 def mcsa_entries() -> dict[str, dict]:
@@ -353,17 +330,13 @@ def main() -> int:
         # Match the whole graph_id, not a prefix: `..._mcsa45` is a substring of
         # `..._mcsa454`, so a plain `in` test would report a genuinely new entry as
         # already wired and silently never write it.
-        if re.search(rf"^\s*graph_id:\s*{re.escape(GRAPH_ID)}_mcsa{mid}\s*$",
-                     text, re.M):
+        if has_graph(text, f"{GRAPH_ID}_mcsa{mid}"):
             stat["already wired"] += 1
             continue
         graph, why = build(rid, rh.reactions[rid], mid, join, entries[mid], mpath)
         if graph is None:
             stat[f"skipped: {why}"] += 1
             continue
-        stat["written"] += 1
-        stat["residue edges"] += len(graph["edges"]) - 1
-        stat["reverse-oriented"] += (join["orientation"] == "RL")
 
         block = yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False,
                                allow_unicode=True, width=100, default_flow_style=False)
@@ -374,11 +347,25 @@ def main() -> int:
                        f"set equality"),
             "llm_assisted": True}]}, sort_keys=False, allow_unicode=True, width=100)
 
-        out = append_to_section(text, "causal_graphs", block)
-        out = append_to_section(out, "curation_history", hist)
-        if out == text:
-            stat["skipped: could not splice into the record"] += 1
+        spliced = append_to_section(text, "causal_graphs", block)
+        if spliced == text:
+            # Checked on the GRAPH splice alone. The old guard compared the
+            # final text, so a refused graph whose history splice succeeded
+            # looked like success and wrote a history entry claiming a graph
+            # that is not there.
+            stat["skipped: could not splice the graph into the record"] += 1
             continue
+        out = append_to_section(spliced, "curation_history", hist)
+        if out == spliced:
+            # The history splice was refused too. Writing the graph while
+            # silently leaving history empty would leave no audit trail of
+            # why the record changed. (This builder does not touch
+            # mapping_status; its five twins do.)
+            stat["skipped: could not splice the history into the record"] += 1
+            continue
+        stat["written"] += 1
+        stat["residue edges"] += len(graph["edges"]) - 1
+        stat["reverse-oriented"] += (join["orientation"] == "RL")
         if args.apply:
             rpath.write_text(out, encoding="utf-8")
         elif done == 0:

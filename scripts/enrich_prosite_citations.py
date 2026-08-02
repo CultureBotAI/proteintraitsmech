@@ -21,6 +21,8 @@ import time
 import urllib.request
 from pathlib import Path
 
+from record_io import insert_before_license
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 DOC = REPO_ROOT / "data" / "raw" / "prosite.doc"
@@ -104,7 +106,7 @@ def main() -> int:
             continue
         block = evidence_block(pmids, pmid2doi, "")
         if re.search(r"^license:", text, re.M):
-            new = re.sub(r"^license:", block + "license:", text, count=1, flags=re.M)
+            new = insert_before_license(text, block)
         else:
             new = text.rstrip("\n") + "\n" + block
         touched += 1

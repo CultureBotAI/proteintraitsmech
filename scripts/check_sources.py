@@ -27,7 +27,13 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = REPO_ROOT / "download.yaml"
 SCRIPTS = REPO_ROOT / "scripts"
 
-STATUSES = {"seeded", "candidate", "deferred", "rejected"}
+# `superseded` and `enrichment` describe two roles the original four could not:
+# a source replaced by a better one but kept for provenance (ENIGMA trait-onto-map,
+# superseded by ExPASy ENZYME), and a source used to enrich existing records rather
+# than to seed new ones (ChEBI, via build_chebi_sidecar.py). Both were already in
+# download.yaml and were failing this gate; forcing them into `seeded` or `rejected`
+# would have discarded exactly what distinguishes them. Issue #91.
+STATUSES = {"seeded", "candidate", "deferred", "rejected", "superseded", "enrichment"}
 RESTRICTIVE = ("noncommercial", "non-commercial", "-nc", "byncnd", "by-nc",
                "noderiv", "-nd", "login", "registration", "flagged")
 

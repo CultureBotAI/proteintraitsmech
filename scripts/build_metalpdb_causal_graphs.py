@@ -44,6 +44,8 @@ from pathlib import Path
 
 import yaml
 
+from record_io import append_to_section, has_graph
+
 REPO = Path(__file__).resolve().parent.parent
 XML = REPO / "data" / "raw" / "metalpdb" / "flat_db_file.xml.gz"
 ROOT = REPO / "data" / "traits" / "structure" / "metal_site" / "metalpdb"
@@ -230,7 +232,7 @@ def main() -> int:
 
     for f in sorted(ROOT.glob("*.yaml")):
         text = f.read_text(encoding="utf-8")
-        if "causal_graphs:" in text:
+        if has_graph(text, "metal_coordination"):
             stat["already has a graph"] += 1
             continue
         record = yaml.safe_load(text)
@@ -238,9 +240,6 @@ def main() -> int:
         if graph is None:
             stat[f"skipped: {why}"] += 1
             continue
-        stat["written"] += 1
-        stat["edges"] += len(graph["edges"])
-        stat["nodes"] += len(graph["nodes"])
         block = yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False,
                                allow_unicode=True, width=100,
                                default_flow_style=False)
@@ -253,10 +252,28 @@ def main() -> int:
             "llm_assisted": True}]}, sort_keys=False, allow_unicode=True, width=100)
         out = re.sub(r"^mapping_status:\s*SEEDED\s*$", "mapping_status: REVIEWED",
                      text, count=1, flags=re.M)
-        if re.search(r"^license:", out, re.M):
-            out = re.sub(r"^license:", block + hist + "license:", out, count=1, flags=re.M)
-        else:
-            out = out.rstrip("\n") + "\n" + block + hist
+        # Append into each section rather than inserting a fresh key: a record may
+        # already carry another builder's graph (and its history), and a second
+        # top-level `causal_graphs:` would make PyYAML silently keep only the last,
+        # discarding the existing graph. append_to_section handles both the
+        # key-present and key-absent cases.
+        spliced = append_to_section(out, "causal_graphs", block)
+        if spliced == out:
+            # append_to_section refused (an inline flow value it cannot
+            # safely extend). Skip rather than flip mapping_status and write
+            # a history entry claiming a graph was added that was not.
+            stat["skipped: could not splice the graph into the record"] += 1
+            continue
+        out = append_to_section(spliced, "curation_history", hist)
+        if out == spliced:
+            # The history splice was refused too. Writing the graph while
+            # silently leaving history empty would flip mapping_status to
+            # REVIEWED with no audit trail of why.
+            stat["skipped: could not splice the history into the record"] += 1
+            continue
+        stat["written"] += 1
+        stat["edges"] += len(graph["edges"])
+        stat["nodes"] += len(graph["nodes"])
         if args.apply:
             f.write_text(out, encoding="utf-8")
         elif done == 0:

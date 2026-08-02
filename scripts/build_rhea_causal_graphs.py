@@ -58,6 +58,8 @@ from pathlib import Path
 
 import yaml
 
+from record_io import append_to_section, has_graph
+
 import rhea_rdf
 
 REPO = Path(__file__).resolve().parent.parent
@@ -418,7 +420,7 @@ def main() -> int:
         # Skip on THIS builder's graph_id, not on the presence of any graph at all.
         # A record that gained a `catalytic_residues_*` graph first would otherwise be
         # permanently skipped here and never get its reaction chemistry.
-        if re.search(r"^\s*graph_id:\s*reaction_chemistry\s*$", text, re.M):
+        if has_graph(text, "reaction_chemistry"):
             stat["already has a graph"] += 1
             continue
         m = re.search(r"^identifier:\s*RHEA:(\d+)\s*$", text, re.M)
@@ -433,10 +435,6 @@ def main() -> int:
         if graph is None:
             stat[f"skipped: {info}"] += 1
             continue
-        stat["written"] += 1
-        stat["nodes"] += len(graph["nodes"])
-        stat["edges"] += len(graph["edges"])
-        stat["ungrounded nodes"] += info
 
         block = yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False,
                                allow_unicode=True, width=100,
@@ -450,15 +448,29 @@ def main() -> int:
             "llm_assisted": True}]}, sort_keys=False, allow_unicode=True, width=100)
         out = re.sub(r"^mapping_status:\s*SEEDED\s*$", "mapping_status: REVIEWED",
                      text, count=1, flags=re.M)
-        if re.search(r"^license:", out, re.M):
-            # lambda, not a replacement string: a literal template would interpret
-            # any backslash or \g in the spliced YAML. No Rhea/ENZYME release has
-            # one today, which is exactly why this would surface as corruption long
-            # after the change that introduced it.
-            out = re.sub(r"^license:", lambda _m: block + hist + "license:", out,
-                         count=1, flags=re.M)
-        else:
-            out = out.rstrip("\n") + "\n" + block + hist
+        # Append into each section rather than inserting a fresh key: a record may
+        # already carry another builder's graph (and its history), and a second
+        # top-level `causal_graphs:` would make PyYAML silently keep only the last,
+        # discarding the existing graph. append_to_section handles both the
+        # key-present and key-absent cases.
+        spliced = append_to_section(out, "causal_graphs", block)
+        if spliced == out:
+            # append_to_section refused (an inline flow value it cannot
+            # safely extend). Skip rather than flip mapping_status and write
+            # a history entry claiming a graph was added that was not.
+            stat["skipped: could not splice the graph into the record"] += 1
+            continue
+        out = append_to_section(spliced, "curation_history", hist)
+        if out == spliced:
+            # The history splice was refused too. Writing the graph while
+            # silently leaving history empty would flip mapping_status to
+            # REVIEWED with no audit trail of why.
+            stat["skipped: could not splice the history into the record"] += 1
+            continue
+        stat["written"] += 1
+        stat["nodes"] += len(graph["nodes"])
+        stat["edges"] += len(graph["edges"])
+        stat["ungrounded nodes"] += info
         if args.apply:
             f.write_text(out, encoding="utf-8")
         elif done == 0:

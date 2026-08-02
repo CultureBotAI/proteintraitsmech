@@ -63,6 +63,11 @@ def folded(text: str) -> list[str]:
     return [">-", f"  {text}"]
 
 
+# A CATH representative domain id is alphanumeric; `???????` is CATH's
+# placeholder for "none", and must never become a CURIE.
+_REP_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
+
+
 def build_yaml(code: str, name: str, rep: str, category: str, level: str) -> str:
     parent = code.rsplit(".", 1)[0] if "." in code else ""
     # Unnamed nodes (CATH gives no textual name) are still real classification
@@ -74,7 +79,8 @@ def build_yaml(code: str, name: str, rep: str, category: str, level: str) -> str
     else:
         label = f"CATH {level} {code}"
         definition = (f"CATH {level} {code} — an (unnamed) CATH classification "
-                      f"node; representative domain {rep}.")
+                      + (f"node; representative domain {rep}."
+                         if _REP_RE.match(rep or "") else "node."))
     lines = [f"identifier: CATH:{code}", f"label: {yaml_escape(label)}"]
     f = folded(definition)
     lines.append(f"definition: {f[0]}")
@@ -87,7 +93,12 @@ def build_yaml(code: str, name: str, rep: str, category: str, level: str) -> str
     if parent:
         lines.append("parent_traits:")
         lines.append(f"  - CATH:{parent}")
-    if rep:
+    # CATH writes `???????` where it has no representative domain. That is a
+    # placeholder, not an identifier: `CATH:???????` fails the schema's CURIE
+    # pattern and was one of the 28 records breaking `validate-all` (issue #90).
+    # Guarding here is what makes that fix durable — otherwise `seed_cath.py
+    # --force --apply` recreates it.
+    if rep and _REP_RE.match(rep):
         lines.append("xrefs:")
         lines.append(f"  - CATH:{rep}")
     lines.append(f"license: {LICENSE}")

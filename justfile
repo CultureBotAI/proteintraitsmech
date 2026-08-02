@@ -33,10 +33,17 @@ validate-linkml *args:
 audit-schema:
     uv run python scripts/audit_schema.py
 
-# Validate the data-source registry (data/sources.yaml) and cross-check it
-# against the seeders. Warns on restrictive (NC/ND) licences + orphan seeders.
+# Unit tests for the pure helpers (scripts/record_io.py and friends). These do NOT
+# touch data/traits - `validate-all` and `audit-graphs` are the data gates.
+# Run the unit tests
+test *args:
+    uv run pytest tests/ {{args}}
+
+# Cross-checks download.yaml against the seeders; warns on restrictive (NC/ND)
+# licences and orphan seeders.
+# Validate the data-source registry
 sources-check:
-    python3 scripts/check_sources.py
+    uv run python scripts/check_sources.py
 
 # Structural-integrity audit of causal graphs
 audit-graphs *args:

@@ -34,10 +34,13 @@ Ambler Ser70/Lys73/Ser130/Glu166 = UniProt 68/71/128/164).
 from __future__ import annotations
 
 import argparse
+import collections
 import json
 import re
 import sys
 from pathlib import Path
+
+from record_io import append_to_section, has_graph
 
 try:
     import yaml
@@ -317,7 +320,7 @@ def build_graph(entry: dict, residues: list, offset, cath_ok: set) -> dict | Non
             "nodes": nodes, "edges": edges}
 
 
-def splice(text: str, graph: dict, mid: int) -> str:
+def splice(text: str, graph: dict, mid: int) -> "tuple[str | None, str]":
     block = yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False,
                            allow_unicode=True, width=100, default_flow_style=False)
     hist = yaml.safe_dump({"curation_history": [{
@@ -329,9 +332,17 @@ def splice(text: str, graph: dict, mid: int) -> str:
         "llm_assisted": True}]}, sort_keys=False, allow_unicode=True, width=100)
     out = re.sub(r"^mapping_status:\s*SEEDED\s*$", "mapping_status: REVIEWED",
                  text, count=1, flags=re.M)
-    if re.search(r"^license:", out, re.M):
-        return re.sub(r"^license:", block + hist + "license:", out, count=1, flags=re.M)
-    return out.rstrip("\n") + "\n" + block + hist
+    # Append into each section rather than inserting a fresh key: a record may
+    # already carry another builder's graph (and its history), and a second
+    # top-level `causal_graphs:` would make PyYAML silently keep only the last,
+    # discarding the existing graph.
+    spliced = append_to_section(out, "causal_graphs", block)
+    if spliced == out:
+        return None, "graph"
+    out2 = append_to_section(spliced, "curation_history", hist)
+    if out2 == spliced:
+        return None, "history"
+    return out2, ""
 
 
 def main() -> int:
@@ -343,9 +354,11 @@ def main() -> int:
     args = ap.parse_args()
 
     cache, files, cath_ok = load_cache(), record_files(), kb_cath()
-    stat = {"written": 0, "skip_has_graph": 0, "no_mechanism": 0,
+    # Counter, not dict: the refusal path increments a key the literal did not
+    # declare, which raised KeyError instead of counting the skip.
+    stat = collections.Counter({"written": 0, "skip_has_graph": 0, "no_mechanism": 0,
             "no_record": 0, "offset_ok": 0, "offset_unresolved": 0,
-            "edges": 0, "nodes": 0}
+            "edges": 0, "nodes": 0})
     done = 0
     for mid in sorted(cache):
         if args.only and mid != args.only:
@@ -354,7 +367,7 @@ def main() -> int:
             stat["no_record"] += 1
             continue
         path, text, seq = files[mid]
-        if "causal_graphs:" in text:
+        if has_graph(text, "catalysis"):
             stat["skip_has_graph"] += 1
             continue
         entry = cache[mid]
@@ -365,10 +378,16 @@ def main() -> int:
         if graph is None:
             stat["no_mechanism"] += 1
             continue
+        # Report WHICH splice refused. Returning a bare None made the caller blame
+        # the graph even when the graph went in fine and the history was refused —
+        # diagnostic only, but it would have sent a reader to the wrong place.
+        new, why = splice(text, graph, mid)
+        if new is None:
+            stat[f"skipped: could not splice the {why} into the record"] += 1
+            continue
         stat["written"] += 1
         stat["edges"] += len(graph["edges"])
         stat["nodes"] += len(graph["nodes"])
-        new = splice(text, graph, mid)
         if args.apply:
             path.write_text(new, encoding="utf-8")
         elif done == 0:
