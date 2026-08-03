@@ -28,8 +28,11 @@ type-coerced scalar in any string slot).
     rather than drift: every copy quotes the WORD forms (`null`, `yes`, `on`, `true`)
     correctly, and every copy misses the punctuation forms.
 
-They are asserted as known failures rather than skipped, so fixing any copy fails here
-and the list can only shrink. Filed as issues alongside this file.
+They are pinned by `KNOWN_GAP_COUNTS`, a baseline of how many copies fail each value, so
+BOTH directions are loud: a new gap fails, and a fixed copy also fails, telling you to
+lower the number. An earlier version used `pytest.skip()` for a copy that behaved
+correctly, which silently passed - fixing a copy merely turned a skip on and the suite
+stayed green. Filed as issues alongside this file.
 """
 
 from __future__ import annotations
@@ -161,35 +164,48 @@ def test_yaml_escape_round_trips(impl, value):
     assert loaded == value, f"{value!r} came back as {loaded!r} ({type(loaded).__name__})"
 
 
-@pytest.mark.parametrize("value", KNOWN_BAD_NUMERIC)
-@pytest.mark.parametrize("impl", [i for _, i in ESCAPERS], ids=_ids(ESCAPERS))
-def test_numeric_strings_are_a_known_gap(impl, value):
-    """A purely numeric value reads back as int/float in 9 of the 10 copies.
-
-    Recorded, not skipped: the assertion is on the CURRENT behaviour, so if a copy is
-    fixed this test fails and the fix gets noticed. Latent today - no string slot in any
-    of the 424,467 records currently holds a bare number (`14-3-3` is not a YAML number,
-    so the five labels that look numeric are in fact strings).
-    """
-    loaded = yaml.safe_load(f"key: {impl(value)}\n")["key"]
-    if loaded == value:
-        pytest.skip("this copy quotes numerics correctly")
-    assert not isinstance(loaded, str), f"{value!r} -> {loaded!r}: neither correct nor the known gap"
+# How many of the implementations currently FAIL to round-trip each known-gap value.
+# Keyed by value rather than by (filename, value): the label for an implementation is the
+# first script that carries it, so adding an alphabetically-earlier seeder that shares an
+# existing copy would churn a filename-keyed baseline for no real change.
+KNOWN_GAP_COUNTS = {
+    "123": 9, "0755": 9, "1.5": 9,            # bare numerics read back as int/float
+    "line\nbreak": 10, "tab\there": 10,       # control characters -> unparseable YAML
+    "carriage\rreturn": 10,
+    "~": 10, ".inf": 10, ".nan": 10,          # YAML 1.1 punctuation resolvers
+    # `-7` and `-.inf` are absent deliberately: a leading `-` already triggers quoting in
+    # every copy, so they round-trip correctly and must stay that way.
+}
 
 
-@pytest.mark.parametrize("value", KNOWN_BAD_CONTROL)
-@pytest.mark.parametrize("impl", [i for _, i in ESCAPERS], ids=_ids(ESCAPERS))
-def test_control_characters_are_a_known_gap(impl, value):
-    """A newline or tab in a value produces YAML that will not parse, in every copy.
-
-    The failure mode is the dangerous one: the seeder writes the file happily and the
-    record is only discovered to be broken later, by validate-all or by a reader.
-    """
+def _round_trips(impl, value: str) -> bool:
     try:
-        yaml.safe_load(f"key: {impl(value)}\n")
-    except yaml.YAMLError:
-        return                                   # the known gap
-    pytest.skip("this copy handles control characters correctly")
+        return yaml.safe_load(f"key: {impl(value)}\n")["key"] == value
+    except Exception:
+        return False
+
+
+def test_known_gaps_match_the_recorded_baseline():
+    """The known gaps may only ever shrink, and shrinking must be noticed.
+
+    An earlier version of this file expressed the gaps as `pytest.skip()` when a copy
+    behaved correctly. That silently passes: fixing a copy just turned a skip on, the
+    suite stayed green, and the commit message claiming "fixing any copy fails here"
+    was simply wrong - verified by patching one seeder to always-quote and watching the
+    run go 25 skips -> 34 skips, still green.
+
+    An explicit baseline makes both directions loud: a NEW gap fails, and a FIXED gap
+    fails too, with the instruction to shrink the number.
+    """
+    now = {value: sum(1 for _, impl in ESCAPERS if not _round_trips(impl, value))
+           for value in KNOWN_GAP_COUNTS}
+    regressed = {v: (KNOWN_GAP_COUNTS[v], n) for v, n in now.items() if n > KNOWN_GAP_COUNTS[v]}
+    improved = {v: (KNOWN_GAP_COUNTS[v], n) for v, n in now.items() if n < KNOWN_GAP_COUNTS[v]}
+    assert not regressed, (
+        "more copies now fail to round-trip these values (was, now): " + repr(regressed))
+    assert not improved, (
+        "copies were FIXED - lower these numbers in KNOWN_GAP_COUNTS (was, now): "
+        + repr(improved))
 
 
 @pytest.mark.parametrize("impl", [i for _, i in SLUGGERS], ids=_ids(SLUGGERS))
