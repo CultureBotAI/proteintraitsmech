@@ -86,7 +86,7 @@ def _origins_from_obo() -> dict[tuple[str, str], str]:
     """
     sys.path.insert(0, str(Path(__file__).resolve().parent))
     try:
-        from seed_obo import SOURCES, normalise_source, parse_xref
+        from seed_obo import SOURCES, normalise_source, parse_def, parse_xref
     except ImportError:
         return {}
     out: dict[tuple[str, str], str] = {}
@@ -99,8 +99,13 @@ def _origins_from_obo() -> dict[tuple[str, str], str]:
             if line.startswith("id: "):
                 term = line[4:].strip()
             elif line.startswith("def: ") and term:
-                bracket = line[line.rfind("[") + 1:line.rfind("]")] if "[" in line else ""
-                for tok in bracket.split(","):
+                # Use the seeder's own parse_def rather than a private rfind on the
+                # brackets. The two agreed on all 48,329 GO definitions when
+                # measured, so this changes nothing today — but two implementations
+                # of one rule is the exact shape that has diverged six times in this
+                # review cycle, and the seeder is the side that must be matched.
+                _text, srcs = parse_def(line[5:])
+                for tok in srcs:
                     c = normalise_source(tok.strip())
                     if c:
                         out.setdefault((term, c), "def")
