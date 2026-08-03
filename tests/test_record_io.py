@@ -506,6 +506,20 @@ def test_each_builder_checks_its_own_graph_id():
             assert val, f"{name}: {const.group(1)} not a module constant"
             got = val.group(1)
         assert got == want, f"{name} checks has_graph(..., {got!r}), expected {want!r}"
+
+        # And the id it WRITES must be the same expression it CHECKS. Comparing the
+        # checked id against a constant is not enough: mutating the written id to
+        # f"{GRAPH_ID}_mcsa{mid + 1}" left the check untouched and passed, because
+        # the written value resolved to no plain literal and the assertion accepted
+        # "no literals found".
+        written = _re.search(r'"graph_id":\s*(f?["\'][^"\']*["\']|f["\'][^"\']*["\'])', src)
+        wexpr = _re.search(r'"graph_id":\s*([^,\n]+)', src)
+        assert wexpr, f"{name}: no graph_id written"
+        wexpr = wexpr.group(1).strip().rstrip(",")
+        cexpr = arg
+        assert wexpr == cexpr, (
+            f"{name} writes graph_id={wexpr} but checks has_graph(..., {cexpr}) — "
+            f"these must be the same expression or the builder loses idempotence")
         # and it must equal the graph_id it actually writes
         written = _re.findall(r'"graph_id":\s*["\']([^"\']+)["\']', src)
         assert not written or want in written, f"{name}: writes {written}, checks {want!r}"
@@ -548,7 +562,7 @@ def test_obo_xref_description_is_stripped_not_misread():
     """LIVE-ON-NEXT-RESEED. OBO allows `xref: ID "description"`. The description was
     never stripped, so such an xref was DROPPED (the CURIE test failed on the space
     and quotes) — and once the slash rule was widened, any description containing a
-    `/` turned the whole string into a bogus evidence reference. 302 GO terms carry
+    `/` turned the whole string into a bogus evidence reference. 299 lines across 162 GO terms carry
     that shape, mostly Reactome."""
     import seed_obo
     assert seed_obo.parse_xref('Reactome:R-HSA-69206 "G1/S Transition"') == "Reactome:R-HSA-69206"
@@ -571,5 +585,46 @@ def test_obo_xref_spec_legal_suffixes(raw, want):
     `"[^"]*"` leaves a fragment behind on an escaped quote, the CURIE test then
     fails, and the xref is silently dropped: the exact failure that stripping was
     added to fix, one shape further out."""
+    import seed_obo
+    assert seed_obo.parse_xref(raw) == want
+
+
+def test_trailing_newline_guard_on_the_key_PRESENT_path():
+    """The earlier newline test only covered `evidence` ABSENT, so removing the
+    guard on the key-present branch left the suite green. Missed input below: the
+    payload has no trailing newline and the section already exists, which fuses
+    `PMID:1license: CC0`."""
+    text = "identifier: X:1\nevidence:\n- reference: PMID:0\nlicense: CC0\n"
+    out = append_to_section(text, "evidence", "evidence:\n- reference: PMID:1")
+    rec = yaml.safe_load(out)
+    assert [e["reference"] for e in rec["evidence"]] == ["PMID:0", "PMID:1"]
+    assert rec["license"] == "CC0"
+
+
+@pytest.mark.parametrize("module", ["seed_obo", "seed_psi_mod"])
+def test_both_obo_parsers_strip_descriptions(module):
+    """THE TWIN. `seed_psi_mod.py` has its own parse_xref and did NOT receive the
+    description-stripping fix, so `RESID:AA0001 "standard description"` was silently
+    dropped there while working in seed_obo.py. That is the sixth fix-one-forget-the-
+    twin in this cycle; both now share scripts/obo_syntax.py. Parametrised over both
+    modules so a future divergence fails here."""
+    import importlib
+    m = importlib.import_module(module)
+    assert m.parse_xref('RESID:AA0001 "standard description"') == "RESID:AA0001"
+    assert m.parse_xref("RESID:AA0001") == "RESID:AA0001"
+
+
+@pytest.mark.parametrize("raw,want", [
+    ('Reactome:R-HSA-1 "activation A/B! now"', "Reactome:R-HSA-1"),
+    ('Reactome:R-HSA-1 "activation! A/B"', "Reactome:R-HSA-1"),
+    ("EC:1.1.1.1 ! a genuine trailing comment", "EC:1.1.1.1"),
+])
+def test_bang_inside_a_description_is_not_a_comment(raw, want):
+    """OBO's `! comment` marker is ordinary text inside a quoted description.
+    Splitting on the first `!` truncated the description and left an unbalanced
+    quote — which then still contained a `/` and was misclassified as a citation,
+    recreating the exact corruption the description-stripping was added to remove.
+    The `!` handling lived in TWO places (strip_comment and the _XREF_RE pattern);
+    fixing only the first left the bug live."""
     import seed_obo
     assert seed_obo.parse_xref(raw) == want

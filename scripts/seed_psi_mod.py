@@ -36,6 +36,8 @@ from __future__ import annotations
 
 import argparse
 import re
+
+from obo_syntax import strip_comment, strip_suffixes
 import sys
 from pathlib import Path
 
@@ -161,7 +163,11 @@ def parse_obo(text: str) -> list[dict]:
 _DEF_RE = re.compile(r'^"((?:[^"\\]|\\.)*)"(?:\s*\[(.*)\])?\s*$')
 _IS_A_RE = re.compile(r"^(MOD:\d+)(?:\s*!\s*(.*))?$")
 _SYNONYM_RE = re.compile(r'^"((?:[^"\\]|\\.)*)"\s+(EXACT|BROAD|NARROW|RELATED)(?:\s+([^\s\[]+))?\s*\[.*\]?\s*$')
-_XREF_RE = re.compile(r"^([A-Za-z][A-Za-z0-9._-]*):\s*(.*?)(?:\s*(?:!.*)?)$")
+# No comment handling here: strip_comment() already removed a trailing
+# `! comment` quote-awarely. Leaving `(?:!.*)?` in the pattern re-stripped
+# it WITHOUT quote awareness, truncating a description that contains a `!`
+# and leaving an unbalanced fragment behind.
+_XREF_RE = re.compile(r"^([A-Za-z][A-Za-z0-9._-]*):\s*(.*?)\s*$")
 _XREF_TRAILING_QUOTE_RE = re.compile(r'^"(.*)"$')
 
 
@@ -224,13 +230,19 @@ def parse_xref(raw: str) -> str | None:
     raw = raw.strip()
     if raw.startswith('"') and raw.endswith('"'):
         raw = raw[1:-1]
-    # Strip trailing `! comment` if present.
-    body = raw.split("!", 1)[0].strip()
+    # Shared with seed_obo.py: quote-aware comment strip, so a `!` inside a
+    # description is not mistaken for a comment marker.
+    body = strip_comment(raw)
     m = _XREF_RE.match(body)
     if not m:
         return None
     prefix = m.group(1).strip()
     local = m.group(2).strip()
+    # OBO allows `<ID> "<description>" {<modifiers>}`. Without stripping those,
+    # a perfectly ordinary `RESID:AA0001 "standard description"` failed the CURIE
+    # test and was silently dropped — the same defect fixed in seed_obo.py, which
+    # this copy did not receive until both were pointed at obo_syntax.py.
+    local = strip_suffixes(local)
     # Some xrefs use `Origin: "S"` style — reject non-accession locals.
     if not local or local.startswith('"'):
         return None
