@@ -362,7 +362,15 @@ def parse_xref(raw: str) -> "str | tuple[str, str, str] | None":
     # (the CURIE test failed on the space and quotes), and once the slash rule below
     # was widened, any description containing "/" turned the whole string into a
     # bogus `evidence` reference — 302 GO terms carry that shape, mostly Reactome.
-    local = re.sub(r'\s+"[^"]*"\s*$', "", local).strip()
+    # OBO 1.4: `xref: <ID> "<description>" {<trailing modifiers>}`. Both suffixes
+    # are optional and both are spec-legal, so strip them in that order. A
+    # description may contain escaped quotes (\") — matching a naive "[^"]*" against
+    # one leaves a fragment behind and the CURIE test then drops the whole xref,
+    # which is the same silent-drop failure this stripping exists to fix. Neither
+    # shape occurs in the current releases; they are handled because the spec allows
+    # them, not because anything observed them.
+    local = re.sub(r"\s*\{[^{}]*\}\s*$", "", local).strip()
+    local = re.sub(r'\s+"(?:[^"\\]|\\.)*"\s*$', "", local).strip()
     if not local:
         return None
 

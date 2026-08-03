@@ -555,3 +555,21 @@ def test_obo_xref_description_is_stripped_not_misread():
     assert seed_obo.parse_xref('Reactome:R-HSA-1234 "Plain"') == "Reactome:R-HSA-1234"
     # a genuine slash-bearing identifier is still routed to evidence
     assert seed_obo.parse_xref("EC:1.2/3")[0] == "evidence"
+
+
+@pytest.mark.parametrize("raw,want", [
+    ('Reactome:R-HSA-1 "desc: with colon"', "Reactome:R-HSA-1"),
+    (r'Reactome:R-HSA-2 "say \"hi\" now"', "Reactome:R-HSA-2"),
+    ('GO:0001 "a" {is_inferred="true"}', "GO:0001"),
+    ('Reactome:R-HSA-3  "extra spaces"  ', "Reactome:R-HSA-3"),
+    ("EC:1.1.1.1", "EC:1.1.1.1"),
+])
+def test_obo_xref_spec_legal_suffixes(raw, want):
+    """OBO 1.4 allows `<ID> "<description>" {<modifiers>}`; both suffixes are
+    optional. Neither the escaped-quote nor the trailing-modifier form occurs in the
+    current releases — they are handled because the spec allows them. A naive
+    `"[^"]*"` leaves a fragment behind on an escaped quote, the CURIE test then
+    fails, and the xref is silently dropped: the exact failure that stripping was
+    added to fix, one shape further out."""
+    import seed_obo
+    assert seed_obo.parse_xref(raw) == want
