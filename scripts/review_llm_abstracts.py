@@ -51,12 +51,51 @@ PANTHER_DIR = ROOT / "data" / "traits" / "sequence" / "family" / "panther"
 VERDICTS = ROOT / "data" / "reviews" / "panther_llm_abstracts.jsonl"
 
 UNREVIEWED = "LLM-generated, not curator-reviewed"
+STUB_SOURCE = "PANTHER 19.0 (composed from the family name and its GO / protein-class annotations)"
+DEMOTED = "rejected on re-review as superfamily-level"
+
+# A synonym that is itself superfamily- or domain-level. Issue #112: the first review
+# accepted abstracts that describe the SUPERFAMILY when the record's own synonym was
+# generic, because criterion 2 (INFORMATIVE) was judged against that generic synonym
+# rather than against the family. These are the records worth a second, stricter look.
+AT_RISK_SYNONYM = re.compile(
+    r"\b(superfamily|domain[- ]containing|family|families|-like|related)\b", re.I)
 
 # The wrapper on PATH is a shell function that refuses to run and asks which profile
 # to use, so a subprocess must call the real binary with the profile in the
 # environment. A canary run in an interactive shell would not have caught this.
 CLAUDE_BIN = os.environ.get("CLAUDE_BIN", str(Path.home() / ".local/bin/claude"))
 CLAUDE_CONFIG_DIR = os.environ.get("PTM_CLAUDE_CONFIG_DIR", str(Path.home() / ".claude-work"))
+
+STRICT_RUBRIC = """\
+You are RE-reviewing protein-family definitions that a previous reviewer already approved.
+Every one is now the record's `definition`. Your only question is narrower than before:
+
+  Does this text describe THIS SPECIFIC FAMILY, or does it describe the superfamily,
+  domain or fold that the family belongs to?
+
+A definition that would read equally well on fifty sibling families is superfamily-level
+and must be rejected, however accurate it is. The test: could a reader use it to tell this
+family apart from its siblings? Concretely -
+
+  KEEP    - names what this family does that its relatives do not: its substrate, its
+            reaction, its specific role, its distinguishing feature.
+  DEMOTE  - describes the shared domain/fold/superfamily, lists what "members of this
+            family" do in general terms, or restates the synonym in longer words.
+
+Two cautions, both from real errors in the first pass:
+
+  * `synonyms` is AUTHORITATIVE for family identity; the `label` is often a PANTHER
+    domain-naming artifact and can name a completely different protein. Judge against the
+    synonym, never the label alone.
+  * a generic SYNONYM does not license a generic DEFINITION. If the synonym is
+    "GDSL esterase/lipase", the definition must still say what THIS family of GDSL
+    enzymes does, not what GDSL enzymes do.
+
+Return ONLY a JSON array, no prose and no code fence:
+[{"id": "<the id given>", "verdict": "KEEP|DEMOTE", "confidence": 0.0-1.0, \
+"reason": "<one sentence>"}]
+"""
 
 RUBRIC = """\
 You are reviewing machine-written protein-family abstracts for a curated knowledge \
@@ -156,7 +195,8 @@ def _call_reviewer(prompt: str, model: str, timeout: int) -> str:
     return proc.stdout
 
 
-def _parse_verdicts(raw: str, batch: list[dict], model: str) -> list[dict]:
+def _parse_verdicts(raw: str, batch: list[dict], model: str,
+                    allowed: set[str] | None = None) -> list[dict]:
     # Scan for every complete JSON value rather than spanning first `[` to last `]`.
     # The reviewer is asked for one array and usually sends one, but it sometimes
     # sends two (e.g. splitting a batch), and a first-to-last span then hands
@@ -187,7 +227,7 @@ def _parse_verdicts(raw: str, batch: list[dict], model: str) -> list[dict]:
         if v is None:                      # never invent a verdict for a missing answer
             continue
         verdict = str(v.get("verdict", "")).upper()
-        if verdict not in {"PROMOTE", "FLAG", "REJECT"}:
+        if verdict not in (allowed or {"PROMOTE", "FLAG", "REJECT"}):
             continue
         out.append({"id": c["id"], "path": c["path"], "verdict": verdict,
                     "confidence": v.get("confidence"), "reason": v.get("reason", ""),
@@ -326,6 +366,153 @@ def cmd_promote(args) -> int:
     return 0
 
 
+# --------------------------------------------------------------------- re-review (#112)
+
+RE_VERDICTS = ROOT / "data" / "reviews" / "panther_generic_rereview.jsonl"
+
+
+def collect_at_risk() -> list[dict]:
+    """Promoted records whose synonym is itself superfamily-level.
+
+    Not every one is wrong - this is where the risk lives, not a list of defects. The
+    other ~1,200 promoted records have a precise synonym and are not re-reviewed.
+    """
+    out = []
+    for path, rec in _yaml_records():
+        src = rec.get("definition_source") or ""
+        if "LLM-reviewed" not in src or DEMOTED in src:
+            continue
+        syn = " ".join(s.get("synonym_text") or "" for s in (rec.get("synonyms") or []))
+        if not syn or not AT_RISK_SYNONYM.search(syn):
+            continue
+        out.append({
+            "id": rec["identifier"],
+            "path": str(path.relative_to(ROOT)),
+            "label": rec.get("label", ""),
+            "synonyms": [s.get("synonym_text") for s in (rec.get("synonyms") or [])],
+            "interpro": next((x.get("object") for x in (rec.get("mapped_xrefs") or [])
+                              if str(x.get("object", "")).startswith("InterPro:")), None),
+            "definition": " ".join((rec.get("definition") or "").split()),
+        })
+    return out
+
+
+def _load_jsonl(path):
+    if not path.exists():
+        return {}
+    got = {}
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.strip():
+            v = json.loads(line)
+            got[v["id"]] = v
+    return got
+
+
+def cmd_rereview(args) -> int:
+    candidates = collect_at_risk()
+    done = _load_jsonl(RE_VERDICTS)
+    todo = [c for c in candidates if c["id"] not in done]
+    if args.shard:
+        i, n = (int(x) for x in args.shard.split("/"))
+        todo = [c for k, c in enumerate(todo) if k % n == i - 1]
+    if args.limit:
+        todo = todo[:args.limit]
+    batches = [todo[i:i + args.batch_size] for i in range(0, len(todo), args.batch_size)]
+    print(f"  at-risk promoted : {len(candidates):,}")
+    print(f"  already re-reviewed: {len(done):,}")
+    print(f"  to re-review     : {len(todo):,} in {len(batches):,} batch(es)")
+    if not args.apply:
+        print("\n  DRY RUN - no reviewer called. Re-run with --apply.")
+        return 0
+    out_path = Path(args.out) if args.out else RE_VERDICTS
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    counts = {"KEEP": 0, "DEMOTE": 0}
+    for n, batch in enumerate(batches, 1):
+        items = [{"id": c["id"], "label": c["label"], "synonyms": c["synonyms"],
+                  "interpro_entry": c["interpro"], "definition": c["definition"]}
+                 for c in batch]
+        prompt = (f"{STRICT_RUBRIC}\n\nRe-review these {len(items)} definitions:\n\n"
+                  f"{json.dumps(items, indent=1)}")
+        try:
+            raw = _call_reviewer(prompt, args.model, args.timeout)
+            verdicts = _parse_verdicts(raw, batch, args.model, allowed={"KEEP", "DEMOTE"})
+        except Exception as exc:
+            print(f"  batch {n}/{len(batches)}: FAILED ({type(exc).__name__}: {exc})"[:180])
+            continue
+        with out_path.open("a", encoding="utf-8") as fh:
+            for v in verdicts:
+                fh.write(json.dumps(v, ensure_ascii=False) + "\n")
+                counts[v["verdict"]] += 1
+        print(f"  batch {n}/{len(batches)}: {len(verdicts)}/{len(batch)}   running: {counts}")
+    print(f"\n  wrote {sum(counts.values()):,} verdicts to {out_path}")
+    return 0
+
+
+def cmd_demote(args) -> int:
+    """Reverse a promotion exactly, using the stub the record still carries.
+
+    Nothing is reconstructed: the composed definition was never deleted, only displaced,
+    so demoting restores it verbatim from `definitions[]`. The promotion event stays in
+    curation_history and a demotion event is appended - the record keeps the whole story
+    rather than pretending the promotion never happened.
+    """
+    import yaml
+    verdicts = _load_jsonl(RE_VERDICTS)
+    demote = {k: v for k, v in verdicts.items() if v["verdict"] == "DEMOTE"}
+    print(f"  re-review verdicts: {len(verdicts):,}   DEMOTE: {len(demote):,}")
+    changed = skipped = 0
+    problems = []
+    for vid, v in sorted(demote.items()):
+        path = ROOT / v["path"]
+        text = path.read_text(encoding="utf-8")
+        rec = yaml.safe_load(text)
+        # "already demoted" is recorded on the PARKED ABSTRACT, not on
+        # definition_source -- demoting restores the stub's source there, so testing
+        # definition_source never matches and a re-run walked on to report a spurious
+        # "marker not found" for every record it had already done. It failed safe, but
+        # a tool that cries wolf on a clean re-run trains you to ignore it.
+        if any(DEMOTED in (d.get("source") or "") for d in (rec.get("definitions") or [])):
+            skipped += 1
+            continue
+        stub = next((d for d in (rec.get("definitions") or [])
+                     if STUB_SOURCE in (d.get("source") or "")), None)
+        if stub is None:                     # never guess at a definition
+            problems.append(f"{vid}: stub missing, cannot demote")
+            continue
+        out = replace_scalar(text, "definition",
+                             folded("definition", " ".join((stub.get("text") or "").split())))
+        out = replace_scalar(out, "definition_source", f'definition_source: "{STUB_SOURCE}"\n')
+        out = replace_scalar(out, "mapping_status", "mapping_status: SEEDED\n")
+        # the parked abstract records that it was reviewed AND rejected, so it is not
+        # picked up as a fresh candidate by collect_candidates on a later run
+        old = f'(LLM-generated, LLM-reviewed {v["reviewer"]}, not curator-reviewed)"'
+        new = f'(LLM-generated, LLM-reviewed {v["reviewer"]}, {DEMOTED})"'
+        if old not in out:
+            problems.append(f"{vid}: parked abstract marker not found")
+            continue
+        out = out.replace(old, new)
+        event = (f'curation_history:\n  - timestamp: "{args.timestamp}"\n'
+                 f'    curator: review-llm-abstracts\n'
+                 f'    action: "Demoted definition on stricter re-review ({v["reviewer"]}): '
+                 f'describes the superfamily, not the family; PROPOSED -> SEEDED"\n'
+                 f'    llm_assisted: true\n')
+        out = append_to_section(out, "curation_history", event)
+        if out == text:
+            continue
+        changed += 1
+        if args.apply:
+            path.write_text(out, encoding="utf-8")
+    verb = "demoted" if args.apply else "would demote"
+    print(f"  {verb}: {changed:,}   already done: {skipped:,}")
+    for p in problems[:10]:
+        print(f"  PROBLEM {p}")
+    if problems:
+        print(f"  {len(problems)} record(s) could not be demoted safely and were left alone")
+    if not args.apply:
+        print("  DRY RUN - re-run with --apply to write.")
+    return 0
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -339,6 +526,21 @@ def main() -> int:
     r.add_argument("--shard", default="", metavar="i/n", help="review only shard i of n")
     r.add_argument("--out", default="", help="verdict file to append to (default: the shared one)")
     r.set_defaults(func=cmd_review)
+
+    rr = sub.add_parser("rereview", help="stricter re-review of superfamily-level promotions (#112)")
+    rr.add_argument("--apply", action="store_true")
+    rr.add_argument("--limit", type=int, default=0)
+    rr.add_argument("--batch-size", type=int, default=15)
+    rr.add_argument("--model", default="claude-sonnet-5")
+    rr.add_argument("--timeout", type=int, default=600)
+    rr.add_argument("--shard", default="", metavar="i/n")
+    rr.add_argument("--out", default="")
+    rr.set_defaults(func=cmd_rereview)
+
+    dm = sub.add_parser("demote", help="apply DEMOTE verdicts, restoring the composed stub")
+    dm.add_argument("--apply", action="store_true")
+    dm.add_argument("--timestamp", default="2026-08-03T00:00:00Z")
+    dm.set_defaults(func=cmd_demote)
 
     p = sub.add_parser("promote", help="apply PROMOTE verdicts to the records")
     p.add_argument("--apply", action="store_true")
