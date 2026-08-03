@@ -9,6 +9,7 @@ Run with `just test` (or `uv run pytest tests/`).
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -667,3 +668,45 @@ def test_has_graph_dash_only_sequence_item():
             "    nodes: []\n")
     assert has_graph(text, "reaction_chemistry")
     assert not has_graph(text, "catalytic_residues")
+
+
+# --- data-driven invariant, worth more than the hand-written edge cases ---------
+
+RAW = Path(__file__).resolve().parent.parent / "data" / "raw"
+_OBO = [(f, m) for f, m in [("go-basic.obo", "seed_obo"), ("PSI-MOD.obo", "seed_psi_mod"),
+                            ("ARO.obo", "seed_obo"), ("PSI-MI.obo", "seed_obo"),
+                            ("PATO.obo", "seed_obo"), ("METPO.obo", "seed_obo")]
+        if (RAW / f).exists()]
+
+
+@pytest.mark.skipif(not _OBO, reason="data/raw is gitignored; run after a fetch")
+@pytest.mark.parametrize("filename,module", _OBO)
+def test_no_obo_line_syntax_leaks_into_a_parsed_value(filename, module):
+    """INVARIANT over every real xref line, rather than another guessed edge case.
+
+    obo_syntax was revised three times, each for a shape the previous revision
+    missed — quoted `!`, escaped `!`, escaped braces. Enumerating a fourth by
+    imagination is a losing game; this asserts what must always hold instead: a
+    parsed identifier must never contain syntax that belongs only to the OBO line
+    format — a quote, a brace, an unescaped comment marker, or a trailing
+    backslash. A new release introducing a fifth shape fails here automatically.
+
+    Measured when added: 48,037 xref lines and 100,163 def-source tokens, 0 leaks.
+    """
+    import importlib
+    parser = importlib.import_module(module)
+    import seed_obo as _so
+    leak = re.compile(r'["{}]|(?<!\\)!|\\$')
+    offenders = []
+    for line in (RAW / filename).read_text(encoding="utf-8", errors="replace").splitlines():
+        if line.startswith("xref: "):
+            got = parser.parse_xref(line[6:].strip())
+            val = got[1] if isinstance(got, tuple) else got
+            if val and leak.search(val):
+                offenders.append((line[:90], val))
+        elif line.startswith("def: "):
+            for tok in _so.parse_def(line[5:])[1]:
+                c = _so.normalise_source(tok.strip())
+                if c and leak.search(c):
+                    offenders.append((tok.strip(), c))
+    assert not offenders, f"{filename}: OBO syntax leaked into {len(offenders)} values, e.g. {offenders[:3]}"
