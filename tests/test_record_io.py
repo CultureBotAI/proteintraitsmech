@@ -628,3 +628,42 @@ def test_bang_inside_a_description_is_not_a_comment(raw, want):
     fixing only the first left the bug live."""
     import seed_obo
     assert seed_obo.parse_xref(raw) == want
+
+
+@pytest.mark.parametrize("module", ["seed_obo", "seed_psi_mod"])
+def test_bang_handling_is_shared_by_both_parsers(module):
+    """The `!` tests previously covered seed_obo only, so reverting seed_psi_mod to a
+    naive split stayed green — uncovered behaviour, not an inert mutation."""
+    import importlib
+    m = importlib.import_module(module)
+    assert m.parse_xref('RESID:AA0001 "activation! A/B"') == "RESID:AA0001"
+    assert m.parse_xref("RESID:AA0001 ! trailing comment") == "RESID:AA0001"
+
+
+def test_escaped_bang_is_data_not_a_comment_marker():
+    """OBO defines `\\!` as a character escape. strip_comment protected backslash
+    pairs only INSIDE quotes, so an escaped bang outside them was cut, leaving a
+    dangling backslash in the identifier."""
+    import seed_obo
+    got = seed_obo.parse_xref(r"DOI:10.1/foo\!bar")
+    assert got == ("evidence", "DOI:10.1/foo!bar", "xref")
+
+
+def test_modifier_block_with_an_escaped_brace():
+    """`[^{}]` stopped at an escaped brace, so the modifier block did not match and
+    the whole xref was dropped."""
+    import seed_obo
+    assert seed_obo.parse_xref(r'GO:0001 {note="a\}b"}') == "GO:0001"
+
+
+def test_has_graph_dash_only_sequence_item():
+    """A sequence item may be a bare `-` with its mapping on following lines. The
+    indent was derived only from `- ` + content, so this returned False for a graph
+    the record really had — and the builder would append a duplicate."""
+    text = ("causal_graphs:\n"
+            "-\n"
+            "    title: x\n"
+            "    graph_id: reaction_chemistry\n"
+            "    nodes: []\n")
+    assert has_graph(text, "reaction_chemistry")
+    assert not has_graph(text, "catalytic_residues")

@@ -21,13 +21,16 @@ from __future__ import annotations
 
 import re
 
-_MODIFIERS = re.compile(r"\s*\{[^{}]*\}\s*$")
+# `[^{}]` would stop at an escaped brace inside the modifier value, so the
+# whole block failed to match and the xref was dropped. Allow `\}` and `\{`.
+_MODIFIERS = re.compile(r"\s*\{(?:[^{}\\]|\\.)*\}\s*$")
 _DESCRIPTION = re.compile(r'\s+"(?:[^"\\]|\\.)*"\s*$')
 
 # The escapes OBO defines. An unrecognised `\x` is left alone rather than silently
 # losing its backslash.
 _ESCAPES = {"n": "\n", "W": " ", "t": "\t", ":": ":", ",": ",", '"': '"',
-            "\\": "\\", "(": "(", ")": ")", "[": "[", "]": "]", "{": "{", "}": "}"}
+            "\\": "\\", "(": "(", ")": ")", "[": "[", "]": "]", "{": "{", "}": "}",
+            "!": "!"}
 
 
 def strip_comment(raw: str) -> str:
@@ -41,7 +44,10 @@ def strip_comment(raw: str) -> str:
     out, in_quote, i = [], False, 0
     while i < len(raw):
         c = raw[i]
-        if c == "\\" and in_quote and i + 1 < len(raw):
+        # A backslash escapes the next character ANYWHERE, not only inside quotes.
+        # Restricting this to quoted spans meant `DOI:10.1/foo\!bar` — a spec-legal
+        # escaped `!` — was cut at the bang, leaving a dangling backslash.
+        if c == "\\" and i + 1 < len(raw):
             out.append(raw[i:i + 2])
             i += 2
             continue

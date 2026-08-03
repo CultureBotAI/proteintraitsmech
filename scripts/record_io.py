@@ -60,8 +60,22 @@ def has_graph(text: str, graph_id: str) -> bool:
     """
     want = graph_id.strip()
     section = list(_section_lines(text, "causal_graphs"))
+    # A sequence item may be written `- key: v` OR as a bare `-` with the mapping
+    # on following lines at a deeper indent. Deriving the indent only from `- ` +
+    # content missed the second form, so has_graph returned False for a graph the
+    # record really had and the builder appended a duplicate.
     item_indent = next((re.escape(m.group(1)) for m in
                         (re.match(r"^(\s*)-\s", ln) for ln in section) if m), None)
+    if item_indent is None:
+        dash = next((ln for ln in section if ln.strip() == "-"), None)
+        if dash is not None:
+            body = next((ln for ln in section
+                         if ln.strip() and ln.strip() != "-" and not ln.lstrip().startswith("-")),
+                        None)
+            if body is not None:
+                item_indent = re.escape(body[:len(body) - len(body.lstrip())])
+                return any(_graph_id_of(ln) == want for ln in section
+                           if re.match(rf"{item_indent}\S", ln))
     for line in section:
         # Only a graph's OWN `graph_id` key counts. PyYAML writes it as the first
         # key of the list item (`- graph_id: …`) or, for a hand-formatted record,
@@ -94,6 +108,17 @@ def has_graph(text: str, graph_id: str) -> bool:
         if value == want:
             return True
     return False
+
+
+def _graph_id_of(line: str) -> str | None:
+    """The graph_id value on this line, with quoting and comments removed."""
+    m = re.match(r"\s*(?:-\s*)?graph_id:\s*(.+?)\s*$", line)
+    if not m:
+        return None
+    value = re.split(r"\s+#", m.group(1), maxsplit=1)[0].strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
+        value = value[1:-1]
+    return value
 
 
 def _section_lines(text: str, key: str):

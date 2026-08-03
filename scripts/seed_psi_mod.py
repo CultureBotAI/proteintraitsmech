@@ -168,7 +168,6 @@ _SYNONYM_RE = re.compile(r'^"((?:[^"\\]|\\.)*)"\s+(EXACT|BROAD|NARROW|RELATED)(?
 # it WITHOUT quote awareness, truncating a description that contains a `!`
 # and leaving an unbalanced fragment behind.
 _XREF_RE = re.compile(r"^([A-Za-z][A-Za-z0-9._-]*):\s*(.*?)\s*$")
-_XREF_TRAILING_QUOTE_RE = re.compile(r'^"(.*)"$')
 
 
 def parse_def(raw: str) -> tuple[str, list[str]]:
