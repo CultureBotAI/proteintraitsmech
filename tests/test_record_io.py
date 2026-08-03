@@ -851,3 +851,43 @@ def test_escaped_comma_survives_unescaping():
     from obo_syntax import unescape
     assert unescape(r"2\,4-d") == "2,4-d"
     assert unescape(r"10.1002/(SICI)1520-6327(1997)35\:1") == "10.1002/(SICI)1520-6327(1997)35:1"
+
+
+# --- payload indentation must not be added to the section's (found by a canary) -----
+
+@pytest.mark.parametrize("section_indent", ["", "  ", "    "])
+@pytest.mark.parametrize("payload_indent", ["", "  ", "    "])
+def test_append_matches_the_section_regardless_of_how_the_payload_is_indented(
+        section_indent, payload_indent):
+    """The payload's own indentation must be normalised away, not added to.
+
+    The re-indent was written when every caller passed `yaml.safe_dump` output, which
+    is always at column 0, so "add the section's indent" and "set the section's indent"
+    were indistinguishable. The first hand-written payload — indented the way the file
+    itself looks, which is the natural way to write one — was double-indented to four
+    spaces and the record stopped parsing.
+
+    Caught by the canary on the very first `demote`, on a record that already carried a
+    curation_history event. Every PANTHER record promoted in #111 had none, so the
+    insert path was used and 15,489/15,489 validated; this was one record away.
+    """
+    record = (f"label: x\ncuration_history:\n{section_indent}- timestamp: \"t1\"\n"
+              f"{section_indent}  curator: c\nlicense: CC0\n")
+    payload = (f"curation_history:\n{payload_indent}- timestamp: \"t2\"\n"
+               f"{payload_indent}  curator: c\n")
+    out = append_to_section(record, "curation_history", payload)
+    loaded = yaml.safe_load(out)
+    assert [e["timestamp"] for e in loaded["curation_history"]] == ["t1", "t2"]
+    assert loaded["license"] == "CC0"
+    assert loaded["label"] == "x"
+
+
+def test_append_preserves_deeper_continuation_lines_when_reindenting():
+    """Normalising must shift the whole item, keeping keys nested under it nested."""
+    record = 'label: x\ncuration_history:\n  - timestamp: "t1"\nlicense: CC0\n'
+    payload = ('curation_history:\n    - timestamp: "t2"\n      curator: c\n'
+               '      action: "did a thing"\n      llm_assisted: true\n')
+    out = append_to_section(record, "curation_history", payload)
+    second = yaml.safe_load(out)["curation_history"][1]
+    assert second == {"timestamp": "t2", "curator": "c",
+                      "action": "did a thing", "llm_assisted": True}
