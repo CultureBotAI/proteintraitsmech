@@ -23,7 +23,13 @@ import re
 
 # `[^{}]` would stop at an escaped brace inside the modifier value, so the
 # whole block failed to match and the xref was dropped. Allow `\}` and `\{`.
-_MODIFIERS = re.compile(r"\s*\{(?:[^{}\\]|\\.)*\}\s*$")
+# A qualifier VALUE is an OBO QuotedString, in which `{` and `}` are ordinary
+# characters needing no escape — `{note="a}b"}` is spec-legal. Treating every
+# unescaped `}` as structural made the block fail to match, so the whole xref
+# was silently dropped on reseed. Quoted spans are now consumed as a unit.
+_MODIFIERS = re.compile(
+    r'\s*\{(?:[^{}"\\]|\\.|"(?:[^"\\]|\\.)*")*\}\s*$'
+)
 _DESCRIPTION = re.compile(r'\s+"(?:[^"\\]|\\.)*"\s*$')
 
 # The escapes OBO defines. An unrecognised `\x` is left alone rather than silently

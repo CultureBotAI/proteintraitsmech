@@ -670,13 +670,50 @@ def test_has_graph_dash_only_sequence_item():
     assert not has_graph(text, "catalytic_residues")
 
 
-# --- data-driven invariant, worth more than the hand-written edge cases ---------
+# --- data-driven invariants, worth more than the hand-written edge cases --------
 
 RAW = Path(__file__).resolve().parent.parent / "data" / "raw"
-_OBO = [(f, m) for f, m in [("go-basic.obo", "seed_obo"), ("PSI-MOD.obo", "seed_psi_mod"),
-                            ("ARO.obo", "seed_obo"), ("PSI-MI.obo", "seed_obo"),
-                            ("PATO.obo", "seed_obo"), ("METPO.obo", "seed_obo")]
-        if (RAW / f).exists()]
+
+
+def _obo_releases():
+    """Every OBO release the seeders are configured to read, that is present.
+
+    Derived from `seed_obo.SOURCES` rather than a hardcoded list: the first version
+    of this test looked for `data/raw/ARO.obo` while the configured path is
+    `data/raw/aro/aro.obo`, so ARO was silently never exercised — the test reported
+    a pass over the releases it happened to name correctly.
+    """
+    import seed_obo
+    found = [(src.obo_file, seed_obo) for src in seed_obo.SOURCES.values()]
+    import seed_psi_mod
+    found.append(("PSI-MOD.obo", seed_psi_mod))
+    return [(f, m) for f, m in found if (RAW / f).exists()]
+
+
+_OBO = _obo_releases()
+# The schema's own CURIE pattern. A token that cannot satisfy it MUST be dropped,
+# so only tokens that could satisfy it are eligible to be called wrongly-dropped:
+# `Wikipedia:Meiosis#Leptotene`, `MetaCyc:DNA-LIGASE-NAD+-RXN` and `url:http\://…`
+# are all correct drops, and an invariant that flagged them would be noise.
+_CURIE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
+
+
+def _leading_id(raw):
+    """The ID token of an xref line, found without reusing the parser's own logic.
+
+    An OBO ID cannot contain an unescaped space, so the first space-delimited token
+    is the ID. Deliberately a second, independent implementation: an invariant that
+    asks the parser to check itself proves nothing.
+    """
+    out, i = [], 0
+    while i < len(raw):
+        c = raw[i]
+        if c == "\\" and i + 1 < len(raw):
+            out.append(raw[i:i + 2]); i += 2; continue
+        if c.isspace():
+            break
+        out.append(c); i += 1
+    return "".join(out)
 
 
 @pytest.mark.skipif(not _OBO, reason="data/raw is gitignored; run after a fetch")
@@ -684,23 +721,18 @@ _OBO = [(f, m) for f, m in [("go-basic.obo", "seed_obo"), ("PSI-MOD.obo", "seed_
 def test_no_obo_line_syntax_leaks_into_a_parsed_value(filename, module):
     """INVARIANT over every real xref line, rather than another guessed edge case.
 
-    obo_syntax was revised three times, each for a shape the previous revision
-    missed — quoted `!`, escaped `!`, escaped braces. Enumerating a fourth by
-    imagination is a losing game; this asserts what must always hold instead: a
-    parsed identifier must never contain syntax that belongs only to the OBO line
-    format — a quote, a brace, an unescaped comment marker, or a trailing
-    backslash. A new release introducing a fifth shape fails here automatically.
-
-    Measured when added: 48,037 xref lines and 100,163 def-source tokens, 0 leaks.
+    obo_syntax was revised four times, each for a shape the previous revision
+    missed — quoted `!`, escaped `!`, escaped braces, a brace inside a quoted
+    qualifier value. Enumerating a fifth by imagination is a losing game; this
+    asserts what must always hold instead: a parsed identifier must never contain
+    syntax belonging only to the OBO line format.
     """
-    import importlib
-    parser = importlib.import_module(module)
     import seed_obo as _so
     leak = re.compile(r'["{}]|(?<!\\)!|\\$')
     offenders = []
     for line in (RAW / filename).read_text(encoding="utf-8", errors="replace").splitlines():
         if line.startswith("xref: "):
-            got = parser.parse_xref(line[6:].strip())
+            got = module.parse_xref(line[6:].strip())
             val = got[1] if isinstance(got, tuple) else got
             if val and leak.search(val):
                 offenders.append((line[:90], val))
@@ -710,3 +742,109 @@ def test_no_obo_line_syntax_leaks_into_a_parsed_value(filename, module):
                 if c and leak.search(c):
                     offenders.append((tok.strip(), c))
     assert not offenders, f"{filename}: OBO syntax leaked into {len(offenders)} values, e.g. {offenders[:3]}"
+
+
+@pytest.mark.skipif(not _OBO, reason="data/raw is gitignored; run after a fetch")
+@pytest.mark.parametrize("filename,module", _OBO)
+def test_no_wellformed_xref_is_silently_dropped(filename, module):
+    """The other half of the invariant: nothing well-formed may vanish.
+
+    The leak check above only inspects truthy results, so a parser that returns
+    None for a line it cannot handle passes it — which is exactly how the quoted
+    `{note="a}b"}` qualifier survived a review round that ran the leak check and
+    reported a clean pass. A silent drop loses an xref on the next reseed, which is
+    quieter and worse than a malformed one.
+
+    If the leading token is CURIE-shaped, the parser must return something.
+    """
+    dropped = []
+    for line in (RAW / filename).read_text(encoding="utf-8", errors="replace").splitlines():
+        if not line.startswith("xref: "):
+            continue
+        raw = line[6:].strip()
+        # unescaped independently of the parser, so this is a real second opinion
+        token = re.sub(r"\\\\(.)", r"\\1", _leading_id(raw))
+        if not _CURIE.match(token):
+            continue                     # cannot satisfy the schema; dropping is correct
+        if module.parse_xref(raw) is None:
+            dropped.append(raw[:100])
+    assert not dropped, f"{filename}: {len(dropped)} well-formed xrefs dropped, e.g. {dropped[:5]}"
+
+
+# --- the four defects the thirteenth review found ------------------------------
+
+@pytest.mark.parametrize("raw", [
+    'GO:0001 {note="a}b"}',      # `}` inside a QuotedString qualifier value
+    'GO:0001 {note="a{b"}',      # `{` likewise
+    'GO:0001 {a="1", b="a}b"}',  # and with a preceding well-behaved qualifier
+])
+@pytest.mark.parametrize("mod", ["seed_obo", "seed_psi_mod"])
+def test_brace_inside_a_quoted_qualifier_value_does_not_drop_the_xref(raw, mod):
+    """OBO qualifier values are QuotedStrings; `{`/`}` inside them need no escape.
+
+    Treating every unescaped `}` as structural made `_MODIFIERS` fail to match, and
+    a failed match silently DROPPED the whole xref on reseed rather than producing a
+    malformed one — the quiet failure mode. Both parsers, because five of this
+    cycle's defects were a fix applied to one twin and not the other.
+    """
+    import importlib
+    assert importlib.import_module(mod).parse_xref(raw) == "GO:0001"
+
+
+def test_a_literal_scalar_containing_a_dash_cannot_spoof_has_graph():
+    """The worst shape found all cycle: wrong in BOTH directions at once.
+
+    A `description: |-` block whose text contains `- prose` made the old indent
+    inference latch onto the dash inside the scalar, after which the scalar's own
+    `graph_id:` text was read as an item key. The record reported True for a graph
+    it does not have (builder skips it forever) and False for the one it does
+    (builder appends a duplicate).
+    """
+    text = ("causal_graphs:\n-\n  graph_id: other\n  description: |-\n"
+            "    - prose\n      graph_id: reaction_chemistry\n  nodes: []\n  edges: []\n")
+    assert has_graph(text, "other") is True
+    assert has_graph(text, "reaction_chemistry") is False
+
+
+def test_flow_style_sequence_item_is_found():
+    """`- {graph_id: x}` is valid YAML and matched no branch of the old scanner.
+
+    Unlike an inline value on the key line, append_to_section does not refuse this
+    layout, so a False here meant appending a second copy of a graph already present.
+    """
+    text = "causal_graphs:\n- {graph_id: reaction_chemistry, nodes: [], edges: []}\nlicense: CC0\n"
+    assert has_graph(text, "reaction_chemistry") is True
+
+
+def test_graph_id_is_read_from_prose_nowhere_in_the_record():
+    """A folded scalar outside the section must never register as a graph."""
+    assert has_graph("definition: >-\n  compare graph_id: catalysis here\nlicense: CC0\n",
+                     "catalysis") is False
+
+
+@pytest.mark.parametrize("shape", [
+    'causal_graphs:\n  - graph_id: "catalysis"\n',       # quoted
+    "causal_graphs:\n  - graph_id: 'catalysis'\n",       # single-quoted
+    "causal_graphs:\n  -\n    graph_id: catalysis\n",    # dash-only item
+    "causal_graphs:\n  - title: t\n    graph_id: catalysis\n",   # not the first key
+    "causal_graphs:\n- graph_id: catalysis  # trailing\n",       # trailing comment
+])
+def test_every_shape_the_scanner_needed_a_branch_for_still_works(shape):
+    """Regression net for the six branches the parser replaced.
+
+    Each of these cost a review round to find. They are cheap to keep and they are
+    what proves the rewrite was a simplification rather than a trade.
+    """
+    assert has_graph(shape, "catalysis") is True
+    assert has_graph(shape, "catalysi") is False      # no substring matching
+
+
+def test_escaped_comma_survives_unescaping():
+    """`\\,` is a spec-defined OBO escape; decoding it to anything else corrupts the id.
+
+    Uncovered until the thirteenth review mutated `_ESCAPES[","]` and the suite
+    stayed green. `UM-BBD_pathwayID:2\\,4-d` is a real line in go-basic.obo.
+    """
+    from obo_syntax import unescape
+    assert unescape(r"2\,4-d") == "2,4-d"
+    assert unescape(r"10.1002/(SICI)1520-6327(1997)35\:1") == "10.1002/(SICI)1520-6327(1997)35:1"

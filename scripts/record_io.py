@@ -35,6 +35,13 @@ from __future__ import annotations
 
 import re
 
+import yaml
+
+try:                                    # libyaml is ~11x faster on these sections
+    from yaml import CSafeLoader as _Loader   # 652us vs 7.2ms per record
+except ImportError:                     # pure-Python fallback; same semantics
+    from yaml import SafeLoader as _Loader
+
 _TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
 _LIST_ITEM = re.compile(r"^\s*-\s")
 
@@ -42,83 +49,52 @@ _LIST_ITEM = re.compile(r"^\s*-\s")
 def has_graph(text: str, graph_id: str) -> bool:
     """True if the record already carries a graph with exactly this `graph_id`.
 
-    Anchored and whole-line: a substring test would report `..._mcsa454` as a match
-    for `..._mcsa45` and silently skip a record that still needs writing.
+    WHY THIS ONE READS BY PARSING, WHILE `append_to_section` STILL DOES STRING SURGERY
+    ---------------------------------------------------------------------------------
+    Writing must preserve hand formatting, so appending stays textual. *Reading* has
+    no such constraint, and inferring YAML structure from indentation was a losing
+    game: this function grew one branch per review round — indented items, dash-only
+    items, quoted values, trailing comments, `graph_id` not first, non-zero item
+    indent — and the seventh round still found two more shapes it got wrong:
 
-    Scoped to the `causal_graphs:` section, and tolerant of the ways YAML may write
-    the same value. Three ways a looser test goes wrong:
+      * a `description: |-` literal scalar whose text contains `- prose` captured the
+        item indent from a dash *inside the scalar*, after which the scalar's own
+        `graph_id:` text was read as an item key. That is the worst possible failure:
+        it reported True for a graph the record does NOT have (so the builder skips
+        it forever) and False for the one it DOES (so the builder appends a duplicate).
+      * a flow-style item, `- {graph_id: x}`, matched no branch at all, and unlike an
+        inline value on the key line `append_to_section` does not refuse it — so the
+        builder appended a second copy of a graph already present.
 
-      * `^\\s*graph_id:` matches **nothing**, because `graph_id` is the first key of
-        a list item and PyYAML writes `- graph_id: …`. That mistake turned the
-        builders from "skip records already done" into "append a duplicate on every
-        run" — worse than the over-broad test it replaced.
-      * Searching the whole document gives a **false positive** when the name appears
-        in prose, e.g. a folded `definition:` containing the words `graph_id:
-        reaction_chemistry`.
-      * Matching a bare token gives a **false negative** on a quoted value
-        (`- graph_id: "reaction_chemistry"`) or one with a trailing comment.
+    Both vanish if the section is parsed rather than pattern-matched. Only the
+    `causal_graphs:` block is handed to the parser, not the whole record, so the cost
+    stays proportional to the graphs and a folded `definition:` elsewhere cannot spoof
+    a match. A malformed section raises rather than silently answering False: every
+    one of the 424,467 records parses today, so this cannot fire on current data, and
+    a loud failure beats the silent duplication that a False would cause.
     """
     want = graph_id.strip()
-    section = list(_section_lines(text, "causal_graphs"))
-    # A sequence item may be written `- key: v` OR as a bare `-` with the mapping
-    # on following lines at a deeper indent. Deriving the indent only from `- ` +
-    # content missed the second form, so has_graph returned False for a graph the
-    # record really had and the builder appended a duplicate.
-    item_indent = next((re.escape(m.group(1)) for m in
-                        (re.match(r"^(\s*)-\s", ln) for ln in section) if m), None)
-    if item_indent is None:
-        dash = next((ln for ln in section if ln.strip() == "-"), None)
-        if dash is not None:
-            body = next((ln for ln in section
-                         if ln.strip() and ln.strip() != "-" and not ln.lstrip().startswith("-")),
-                        None)
-            if body is not None:
-                item_indent = re.escape(body[:len(body) - len(body.lstrip())])
-                return any(_graph_id_of(ln) == want for ln in section
-                           if re.match(rf"{item_indent}\S", ln))
-    for line in section:
-        # Only a graph's OWN `graph_id` key counts. PyYAML writes it as the first
-        # key of the list item (`- graph_id: …`) or, for a hand-formatted record,
-        # at the item's own indent — never deeper. Accepting arbitrary indentation
-        # let a nested scalar spoof it, e.g. a `description: |-` block whose text
-        # happens to read `graph_id: reaction_chemistry`, which would make a builder
-        # skip a graph the record does not have.
-        # The item indent is whatever THIS section uses, not a hardcoded 0-2.
-        # Hardcoding meant a 4-space record returned False here while
-        # append_to_section handled it correctly — so a builder would append a
-        # second graph with an id the record already had, and the audit would then
-        # fail on the duplicate. Latent: no record indents that deeply today.
-        if item_indent is None:
-            continue
-        # `graph_id` need not be the FIRST key of the item. PyYAML preserves dict
-        # order, so a builder that emitted {"title": ..., "graph_id": ...} would
-        # write `- title:` then `  graph_id:` — and requiring the sequence dash on
-        # the same line made has_graph miss it, so the builder appended a duplicate.
-        # A continuation key sits one level deeper than the dash.
-        m = re.match(rf"{item_indent}(?:-\s*|  )graph_id:\s*(.+?)\s*$", line)
-        if not m:
-            continue
-        value = m.group(1)
-        if value.startswith("#"):
-            continue
-        # strip a trailing comment, then surrounding quotes
-        value = re.split(r"\s+#", value, maxsplit=1)[0].strip()
-        if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-            value = value[1:-1]
-        if value == want:
-            return True
-    return False
+    return want in _graph_ids(text)
 
 
-def _graph_id_of(line: str) -> str | None:
-    """The graph_id value on this line, with quoting and comments removed."""
-    m = re.match(r"\s*(?:-\s*)?graph_id:\s*(.+?)\s*$", line)
-    if not m:
-        return None
-    value = re.split(r"\s+#", m.group(1), maxsplit=1)[0].strip()
-    if len(value) >= 2 and value[0] == value[-1] and value[0] in "\"'":
-        value = value[1:-1]
-    return value
+def _graph_ids(text: str) -> set[str]:
+    """Every `graph_id` in the record's `causal_graphs:` section."""
+    lines = text.splitlines()
+    try:
+        i = next(n for n, ln in enumerate(lines) if ln.startswith("causal_graphs:"))
+    except StopIteration:
+        return set()
+    block = [lines[i]]
+    for ln in lines[i + 1:]:
+        if ln and _TOP_KEY.match(ln):
+            break
+        block.append(ln)
+    section = yaml.load("\n".join(block), Loader=_Loader) or {}
+    graphs = section.get("causal_graphs") or []
+    if not isinstance(graphs, list):
+        return set()
+    return {str(g["graph_id"]).strip() for g in graphs
+            if isinstance(g, dict) and g.get("graph_id") is not None}
 
 
 def _section_lines(text: str, key: str):
