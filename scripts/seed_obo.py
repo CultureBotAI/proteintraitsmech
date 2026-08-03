@@ -59,6 +59,8 @@ from __future__ import annotations
 
 import argparse
 import re
+
+from obo_syntax import strip_comment, strip_suffixes, unescape
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -271,7 +273,11 @@ def parse_obo(text: str) -> list[dict]:
 _DEF_RE = re.compile(r'^"((?:[^"\\]|\\.)*)"\s*(?:\[([^\]]*)\])?.*$')
 _SYNONYM_RE = re.compile(
     r'^"((?:[^"\\]|\\.)*)"\s+(EXACT|BROAD|NARROW|RELATED)(?:\s+[^\s\[]+)?\s*\[.*\]?\s*$')
-_XREF_RE = re.compile(r"^([A-Za-z][A-Za-z0-9._-]*):\s*(.*?)(?:\s*(?:!.*)?)$")
+# No comment handling here: strip_comment() already removed a trailing
+# `! comment` quote-awarely. Leaving `(?:!.*)?` in the pattern re-stripped
+# it WITHOUT quote awareness, truncating a description that contains a `!`
+# and leaving an unbalanced fragment behind.
+_XREF_RE = re.compile(r"^([A-Za-z][A-Za-z0-9._-]*):\s*(.*?)\s*$")
 _CURIE_RE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
 
 
@@ -286,26 +292,8 @@ def parse_def(raw: str) -> tuple[str, list[str]]:
 
 
 def _unescape_obo(value: str) -> str:
-    """Decode OBO 1.2 backslash escapes inside a value.
-
-    OBO escapes the separators it uses structurally, so a DOI carrying a colon
-    arrives as `10.1002/(SICI)1520-6327(1997)35\\:1`. Copying that through verbatim
-    shipped a DOI that does not resolve — GO:0016087 had exactly this. Only the
-    escapes OBO defines are decoded; an unrecognised `\\x` is left alone rather than
-    silently eating the backslash.
-    """
-    out, i = [], 0
-    mapping = {"n": "\n", "W": " ", "t": "\t", ":": ":", ",": ",", '"': '"',
-               "\\": "\\", "(": "(", ")": ")", "[": "[", "]": "]", "{": "{", "}": "}"}
-    while i < len(value):
-        c = value[i]
-        if c == "\\" and i + 1 < len(value) and value[i + 1] in mapping:
-            out.append(mapping[value[i + 1]])
-            i += 2
-        else:
-            out.append(c)
-            i += 1
-    return "".join(out)
+    """Thin alias kept for existing callers; the implementation is shared."""
+    return unescape(value)
 
 
 def normalise_source(token: str) -> str | None:
@@ -346,7 +334,7 @@ def parse_xref(raw: str) -> "str | tuple[str, str, str] | None":
     raw = raw.strip()
     if raw.startswith('"') and raw.endswith('"'):
         raw = raw[1:-1]
-    body = raw.split("!", 1)[0].strip()
+    body = strip_comment(raw)   # quote-aware: `!` inside a description is data
     m = _XREF_RE.match(body)
     if not m:
         return None
@@ -356,6 +344,25 @@ def parse_xref(raw: str) -> "str | tuple[str, str, str] | None":
     # Non-grounding lexical sources some OBO files attach as xrefs.
     if prefix in {"WordNet", "url", "URL"}:
         return None
+    # OBO allows an optional quoted description after the identifier:
+    #   xref: Reactome:R-HSA-69206 "G1/S Transition"
+    # Strip it before anything else. Not stripping meant such an xref was DROPPED
+    # (the CURIE test failed on the space and quotes), and once the slash rule below
+    # was widened, any description containing "/" turned the whole string into a
+    # bogus `evidence` reference — 299 such lines across 162 GO terms carry that shape, mostly Reactome
+    # (302 slash-bearing lines across 164 terms in total; 3 have a genuine slash in
+    # the identifier).
+    # OBO 1.4: `xref: <ID> "<description>" {<trailing modifiers>}`. Both suffixes
+    # are optional and both are spec-legal, so strip them in that order. A
+    # description may contain escaped quotes (\") — matching a naive "[^"]*" against
+    # one leaves a fragment behind and the CURIE test then drops the whole xref,
+    # which is the same silent-drop failure this stripping exists to fix. Neither
+    # shape occurs in the current releases; they are handled because the spec allows
+    # them, not because anything observed them.
+    local = strip_suffixes(local)
+    if not local:
+        return None
+
     # A DOI (or any local containing '/') is a citation, not a CURIE xref — it
     # cannot satisfy the schema's xref pattern. Returning None here DISCARDED it,
     # which disagreed with fix_noncurie_xrefs.py, and that migration preserves such
