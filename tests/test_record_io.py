@@ -709,10 +709,13 @@ def _leading_id(raw):
     while i < len(raw):
         c = raw[i]
         if c == "\\" and i + 1 < len(raw):
-            out.append(raw[i:i + 2]); i += 2; continue
+            out.append(raw[i:i + 2])
+            i += 2
+            continue
         if c.isspace():
             break
-        out.append(c); i += 1
+        out.append(c)
+        i += 1
     return "".join(out)
 
 
