@@ -371,11 +371,18 @@ def cmd_promote(args) -> int:
 RE_VERDICTS = ROOT / "data" / "reviews" / "panther_generic_rereview.jsonl"
 
 
-def collect_at_risk() -> list[dict]:
-    """Promoted records whose synonym is itself superfamily-level.
+def collect_at_risk(only_generic_synonym: bool = False) -> list[dict]:
+    """Promoted records to re-review. By default, ALL of them.
 
-    Not every one is wrong - this is where the risk lives, not a list of defects. The
-    other ~1,200 promoted records have a precise synonym and are not re-reviewed.
+    This started as "records whose synonym is itself superfamily-level", on the theory
+    that a generic synonym is what let a generic definition through. Measured, that
+    theory is wrong: a 30-record sample of the records the filter EXCLUDED demoted at
+    36%, against 42% for the ones it selected. The filter was not a discriminator, so
+    using it would have left roughly 437 generic definitions in place while reporting
+    the issue closed.
+
+    The narrow behaviour is kept behind a flag because the measurement is worth being
+    able to reproduce, not because it should be the default.
     """
     out = []
     for path, rec in _yaml_records():
@@ -383,7 +390,7 @@ def collect_at_risk() -> list[dict]:
         if "LLM-reviewed" not in src or DEMOTED in src:
             continue
         syn = " ".join(s.get("synonym_text") or "" for s in (rec.get("synonyms") or []))
-        if not syn or not AT_RISK_SYNONYM.search(syn):
+        if only_generic_synonym and (not syn or not AT_RISK_SYNONYM.search(syn)):
             continue
         out.append({
             "id": rec["identifier"],
@@ -409,7 +416,7 @@ def _load_jsonl(path):
 
 
 def cmd_rereview(args) -> int:
-    candidates = collect_at_risk()
+    candidates = collect_at_risk(only_generic_synonym=args.only_generic_synonym)
     done = _load_jsonl(RE_VERDICTS)
     todo = [c for c in candidates if c["id"] not in done]
     if args.shard:
@@ -534,6 +541,8 @@ def main() -> int:
     rr.add_argument("--model", default="claude-sonnet-5")
     rr.add_argument("--timeout", type=int, default=600)
     rr.add_argument("--shard", default="", metavar="i/n")
+    rr.add_argument("--only-generic-synonym", action="store_true",
+                    help="reproduce the original narrow selection (see docstring)")
     rr.add_argument("--out", default="")
     rr.set_defaults(func=cmd_rereview)
 
