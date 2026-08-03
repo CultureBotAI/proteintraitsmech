@@ -49,6 +49,21 @@ sources-check:
 audit-graphs *args:
     uv run python scripts/audit_causal_graphs.py {{args}}
 
+# LLM review of InterPro's unreviewed LLM abstracts (issue #92). Dry-run by default;
+# --apply calls the reviewer and appends to data/reviews/. Resumable: a candidate that
+# already has a verdict is skipped, so an interrupted run costs only its current batch.
+# Run several in parallel with --shard i/n --out <file>.
+# Review unpromoted LLM abstracts
+review-abstracts *args:
+    uv run python scripts/review_llm_abstracts.py review {{args}}
+
+# Applies the PROMOTE verdicts: the abstract becomes `definition`, provenance records
+# that it is LLM-generated and LLM-reviewed but NOT curator-reviewed, and the status
+# becomes PROPOSED. Deterministic and idempotent - safe to re-run as verdicts arrive.
+# Promote reviewed abstracts to definitions
+promote-abstracts *args:
+    uv run python scripts/review_llm_abstracts.py promote {{args}}
+
 # Review the trait categories each source contributes + flag mis-modelled records
 review-categories *args:
     python3 scripts/review_source_categories.py {{args}}
