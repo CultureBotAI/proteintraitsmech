@@ -171,6 +171,24 @@ def append_to_section(text: str, key: str, payload: str) -> str:
         if m:
             indent = m.group(1)
             break
+    # Normalise the payload to column 0 BEFORE applying the section's indent. The
+    # original re-indent ADDED to whatever the payload already carried, which is right
+    # only while every caller passes `yaml.safe_dump` output (always column 0). A
+    # hand-written payload that indents its own items — the natural way to write one,
+    # since it is how the file itself looks — was double-indented to four spaces and
+    # the record stopped parsing. Found by the canary on the first `demote`, on a
+    # record that already carried a curation_history event.
+    payload_indent = ""
+    for ln in items.splitlines():
+        m = re.match(r"^(\s*)-\s", ln)
+        if m:
+            payload_indent = m.group(1)
+            break
+    if payload_indent:
+        items = "".join(
+            (ln[len(payload_indent):] if ln.startswith(payload_indent) else ln.lstrip())
+            if ln.strip() else ln
+            for ln in items.splitlines(keepends=True))
     if indent:
         items = "".join(indent + ln if ln.strip() else ln
                         for ln in items.splitlines(keepends=True))
