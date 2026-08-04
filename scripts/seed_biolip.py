@@ -91,8 +91,22 @@ def slugify(text: str) -> str:
 
 
 def ident_token(ccd: str) -> str:
-    """Sanitize a CCD id for use inside a proteintraitsmech: identifier."""
-    return _ID_RE.sub("_", ccd).strip("_").upper() or "LIGAND"
+    """Sanitize a CCD id for use inside a proteintraitsmech: identifier.
+
+    Uppercasing collapses exactly ONE pair across BioLiP's 6,020 ligand ids (#122):
+    the polymer pseudo-ligand `dna` — a nucleic acid, 4,233 rows — and the PDB Chemical
+    Component `DNA`, which is 1,4-dihydroxy-2-naphthoic acid with 2. They became the same
+    identifier and the same filename, so whichever seeded last silently overwrote the
+    other, and the record has been describing one molecule with the other's counts.
+
+    The polymer keeps the plain token, matching `rna` and `peptide` and the identifier
+    already published in the docs index. A CCD code that collides with a polymer name is
+    the one that moves, since it is intruding on a namespace it does not own.
+    """
+    token = _ID_RE.sub("_", ccd).strip("_").upper() or "LIGAND"
+    if ccd not in POLYMER_LIGANDS and ccd.lower() in POLYMER_LIGANDS:
+        return f"CCD_{token}"
+    return token
 
 
 def yaml_folded(indent: str, text: str) -> list[str]:
@@ -225,7 +239,13 @@ def build_yaml(lig: Ligand, meta: dict[str, dict[str, str]]) -> str:
 
 def target_path(lig: Ligand) -> Path:
     display = POLYMER_LIGANDS.get(lig.ccd, (None, lig.ccd))[1]
-    return OUT_DIR / f"{slugify(display + '-binding-site')}-{lig.ccd.lower()}.yaml"
+    # `.lower()` collides the CCD `DNA` with the polymer `dna` exactly as the identifier
+    # did (#122), so only one file existed and the last seeded won. Same rule: the CCD
+    # that intrudes on a polymer name is the one that moves.
+    stem = lig.ccd.lower()
+    if lig.ccd not in POLYMER_LIGANDS and lig.ccd.lower() in POLYMER_LIGANDS:
+        stem = f"ccd-{stem}"
+    return OUT_DIR / f"{slugify(display + '-binding-site')}-{stem}.yaml"
 
 
 def main() -> int:
