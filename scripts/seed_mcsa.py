@@ -37,6 +37,9 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 RAW_DIR = REPO_ROOT / "data" / "raw"
@@ -317,7 +320,7 @@ def main() -> int:
         stats["planned"] += 1
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(yaml_body, encoding="utf-8")
+            write_record(path, yaml_body)
             stats["written"] += 1
 
     print()

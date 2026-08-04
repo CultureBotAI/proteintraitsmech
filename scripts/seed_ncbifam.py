@@ -23,6 +23,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 # The definition composer is shared with enrich_ncbifam_definitions.py so a fresh
 # seed and the post-seed enrichment produce byte-identical definitions.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -164,9 +167,8 @@ def main() -> int:
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_yaml(acc, label, definition, axis, category,
-                                       ecs, gos, gene, family_type, model),
-                            encoding="utf-8")
+            write_record(path, build_yaml(acc, label, definition, axis, category,
+                                          ecs, gos, gene, family_type, model))
             written += 1
 
     print(f"{total} NCBIfam families → SEQ_DOMAIN / SEQ_HOMOLOGOUS_SUPERFAMILY / "

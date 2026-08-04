@@ -20,6 +20,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "leader_peptide"
 DEF_SOURCE = "ProteinTraitsMech curated RiPP-class taxonomy (antiSMASH/MIBiG/BAGEL4 nomenclature)"
@@ -105,7 +108,7 @@ def main() -> int:
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_yaml(cls, desc, syns), encoding="utf-8")
+            write_record(path, build_yaml(cls, desc, syns))
             written += 1
 
     print(f"{len(CLASSES)} RiPP leader-peptide classes → SEQ_LEADER_PEPTIDE.")

@@ -30,6 +30,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 # KOG definitions are composed by the shared enrichment composer so a fresh seed
 # matches the post-seed enrichment.
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -175,8 +178,7 @@ def main() -> int:
             return
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_yaml(acc, short, desc, category, parent),
-                            encoding="utf-8")
+            write_record(path, build_yaml(acc, short, desc, category, parent))
             written += 1
 
     for sf in sfs:

@@ -24,6 +24,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = REPO_ROOT / "data" / "raw"
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
@@ -384,7 +387,7 @@ def process(entries, target_fn, build_fn, release, apply_, force, stats):
         stats["planned"] += 1
         if apply_:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_fn(entry, release))
+            write_record(path, build_fn(entry, release))
             stats["written"] += 1
 
 

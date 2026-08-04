@@ -41,6 +41,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "repeatsdb" / "classification.json"
 OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence_structure" / "structural_repeat" / "repeatsdb"
@@ -113,7 +116,7 @@ def main() -> int:
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_yaml(rid, name, desc, parent, pdb), encoding="utf-8")
+            write_record(path, build_yaml(rid, name, desc, parent, pdb))
             written += 1
 
     print(f"{len(data)} RepeatsDB classification nodes → MIXED_STRUCTURAL_REPEAT.")

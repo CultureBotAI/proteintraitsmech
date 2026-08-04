@@ -36,6 +36,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from seed_chebi_cofactor import (  # noqa: E402
     load_names, slug, clean, yaml_escape, folded, rid, LICENSE, OUT_DIR)
 
@@ -141,8 +144,7 @@ def main() -> int:
             skipped += 1
         elif args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(
-                build_aligned(chid.split(":")[1], nm, defn, mg[chid]), encoding="utf-8")
+            write_record(path, build_aligned(chid.split(":")[1], nm, defn, mg[chid]))
             written += 1
 
     # 3-way crosswalk over the union of all chebi ids seen anywhere

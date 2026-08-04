@@ -220,3 +220,205 @@ def insert_before_license(text: str, payload: str) -> str:
     if payload and not payload.endswith("\n") and tail:
         payload += "\n"
     return "".join(lines[:lic]) + payload + tail
+
+
+# --------------------------------------------------------------- re-seed merging (#100)
+
+# Keys a curator or a review pass owns. A re-seed must never regress these on a record
+# that has been curated, however stale the seeder thinks they are.
+CURATED_SCALARS = ("definition", "definition_source", "mapping_status")
+
+
+def top_level_keys(text: str) -> list[str]:
+    """The record's top-level keys, in file order."""
+    return [m.group(1) for m in
+            (re.match(r"^([A-Za-z_][A-Za-z0-9_]*):", ln) for ln in text.splitlines()) if m]
+
+
+def extract_block(text: str, key: str) -> str | None:
+    """The `key:` line plus everything under it, up to the next top-level key."""
+    lines = text.splitlines(keepends=True)
+    start = next((i for i, ln in enumerate(lines) if ln.startswith(f"{key}:")), None)
+    if start is None:
+        return None
+    end = start + 1
+    while end < len(lines) and not (lines[end].strip() and _TOP_KEY.match(lines[end])):
+        end += 1
+    return "".join(lines[start:end])
+
+
+def replace_block(text: str, key: str, block: str) -> str:
+    """Replace a top-level key's whole block, or insert it before `license:`.
+
+    Shared rather than reimplemented: `review_llm_abstracts.py` grew its own
+    `replace_scalar` for exactly this, and one copy of a splice rule is the standing
+    lesson of #93 — the same fix has had to be applied to a forgotten twin six times.
+    """
+    lines = text.splitlines(keepends=True)
+    start = next((i for i, ln in enumerate(lines) if ln.startswith(f"{key}:")), None)
+    if not block.endswith("\n"):
+        block += "\n"
+    if start is None:
+        return insert_before_license(text, block)
+    end = start + 1
+    while end < len(lines) and not (lines[end].strip() and _TOP_KEY.match(lines[end])):
+        end += 1
+    return "".join(lines[:start]) + block + "".join(lines[end:])
+
+
+def is_curated(text: str) -> bool:
+    """True if a curator or review pass has touched this record.
+
+    Two independent signals, because either can be present without the other: a
+    status past SEEDED, or any curation_history at all. A record that has neither is
+    a pristine import and a re-seed may overwrite it freely.
+    """
+    status = re.search(r"^mapping_status:\s*(\S+)", text, re.M)
+    if status and status.group(1).strip().strip('"\'') != "SEEDED":
+        return True
+    return "\ncuration_history:" in text or text.startswith("curation_history:")
+
+
+def merge_on_reseed(existing: str, fresh: str) -> str:
+    """Fold a freshly seeded record into an existing one without losing curation.
+
+    #100: `--force` overwrote the file outright, so a re-seed would have destroyed
+    39,647 causal graphs, 96,476 evidence blocks and 1,604 reviewed definitions. The
+    flag exists to pick up a new source release, which is a real need, so the answer
+    is to let source-derived facts refresh while curated ones stay put.
+
+    TWO RULES, AND ONLY ONE OF THEM IS A JUDGEMENT CALL
+    ---------------------------------------------------
+    1. **Any top-level key the fresh record does not contain is restored, always.**
+       No heuristic guards this. If the seeder did not emit it, the seeder does not
+       own it — that covers causal_graphs and curation_history, which no seeder emits
+       at all, and evidence on the records where this seeder does not produce it.
+
+    2. **definition, definition_source, mapping_status and definitions[] are kept
+       only when the record shows curation** (status past SEEDED, or a
+       curation_history). Those ARE seeder-owned fields, so this is the policy call:
+       a curated record keeps its own, a pristine import refreshes.
+
+    The first draft gated rule 1 on the curation check too. Sweeping 500 real curated
+    records found it dropping evidence and causal_graphs from 14 of them: the graph
+    builders add `causal_graphs` without flipping mapping_status or writing a
+    curation_history, so 58,048 records carry curated content while looking pristine.
+    Gating the safe rule on a heuristic reintroduced the exact bug being fixed.
+    """
+    out = fresh
+    fresh_keys = set(top_level_keys(fresh))
+
+    # rule 1 - unconditional
+    for key in top_level_keys(existing):
+        if key in fresh_keys:
+            continue
+        block = extract_block(existing, key)
+        if block:
+            out = replace_block(out, key, block)
+
+    # rule 1b - list-valued keys are UNIONED, never replaced, on every record.
+    # `xrefs` and `trait_relations` are seeder-emitted AND enriched afterwards by the
+    # *2go mapping backfills, so "the seeder emitted it, the seeder owns it" is wrong
+    # for them: a PROSITE --force dropped 4,193 GO xrefs and 2,745 trait_relations,
+    # on records that look pristine (SEEDED, no curation_history) and so are not
+    # reached by rule 2 at all. #100's title says it -- no re-seed is safe over
+    # ENRICHED records, and enrichment does not announce itself.
+    #
+    # The trade is deliberate: a source that drops an xref no longer removes it here,
+    # so a stale entry can persist. Keeping a stale xref is recoverable; silently
+    # losing a curated mapping is not.
+    out = _union_list_keys(existing, fresh, out)
+
+    # rule 2 - only for a record that shows curation
+    if not is_curated(existing):
+        return out
+    for key in CURATED_SCALARS:
+        block = extract_block(existing, key)
+        if block:
+            out = replace_block(out, key, block)
+    old_defs = extract_block(existing, "definitions")
+    new_defs = extract_block(fresh, "definitions")
+    if old_defs and new_defs:
+        merged = _merge_definitions(old_defs, new_defs)
+        if merged:
+            out = replace_block(out, "definitions", merged)
+    elif old_defs:
+        out = replace_block(out, "definitions", old_defs)
+    return out
+
+
+# Fields that record WHERE an entry came from rather than WHAT it says. Two entries
+# differing only in these are the same fact relabelled, not two facts: PROSITE renamed
+# its relation_source from "derived" to "PROSITE documentation", and a naive union
+# appended a second copy of the same relation to 2,745 records.
+_PROVENANCE_FIELDS = frozenset({"relation_source", "mapping_source"})
+
+
+def _key(value):
+    """An identity for a list entry that ignores which run labelled it."""
+    if isinstance(value, dict):
+        return tuple(sorted((k, str(v)) for k, v in value.items()
+                            if k not in _PROVENANCE_FIELDS))
+    return str(value)
+
+
+def _union_list_keys(existing: str, fresh: str, out: str) -> str:
+    """Union every top-level key that is a list in both records, existing entries first.
+
+    Order matters: an existing entry keeps its position so a re-seed does not reshuffle
+    a curated list, and genuinely new entries are appended.
+    """
+    try:
+        old_doc, new_doc = yaml.safe_load(existing) or {}, yaml.safe_load(fresh) or {}
+    except yaml.YAMLError:
+        return out
+    if not isinstance(old_doc, dict) or not isinstance(new_doc, dict):
+        return out
+    for key, old_val in old_doc.items():
+        new_val = new_doc.get(key)
+        if key == "definitions" or not isinstance(old_val, list) or not isinstance(new_val, list):
+            continue
+        merged = list(old_val) + [v for v in new_val if _key(v) not in {_key(o) for o in old_val}]
+        if merged == old_val and old_val == new_val:
+            continue
+        block = yaml.safe_dump({key: merged}, sort_keys=False, allow_unicode=True, width=100)
+        out = replace_block(out, key, block)
+    return out
+
+
+def _merge_definitions(old_block: str, new_block: str) -> str | None:
+    """Existing `definitions[]` entries, then any fresh one not already present.
+
+    Compared on normalised text rather than on the whole item: the same abstract
+    re-seeded carries a different `source` once it has been reviewed
+    (`...LLM-reviewed...` vs `...not curator-reviewed`), and matching on the item as a
+    whole would append a duplicate of every reviewed definition on each re-seed.
+    """
+    def items(block):
+        parsed = yaml.safe_load(block) or {}
+        return parsed.get("definitions") or []
+
+    try:
+        old, new = items(old_block), items(new_block)
+    except yaml.YAMLError:
+        return None
+    seen = {" ".join(str(d.get("text") or "").split()) for d in old if isinstance(d, dict)}
+    extra = [d for d in new
+             if isinstance(d, dict) and " ".join(str(d.get("text") or "").split()) not in seen]
+    if not extra:
+        return old_block
+    tail = yaml.safe_dump({"definitions": extra}, sort_keys=False, allow_unicode=True, width=100)
+    return append_to_section(old_block, "definitions", tail)
+
+
+def write_record(path, text: str, encoding: str = "utf-8") -> None:
+    """Write a seeded record, folding it into whatever curation the file already has.
+
+    The single choke point for #100. Seeders called `path.write_text(...)` directly,
+    so `--force` replaced the file and took the curation with it. Routing every trait
+    write through here means a seeder does not have to remember the rule, which is the
+    only way it stays true across 47 of them.
+    """
+    if path.exists():
+        text = merge_on_reseed(path.read_text(encoding=encoding), text)
+    path.write_text(text, encoding=encoding)

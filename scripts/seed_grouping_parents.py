@@ -21,6 +21,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 
@@ -112,7 +115,7 @@ def main() -> int:
         print(f"  {'+ ' if args.apply else '  '}{curie}  {label!r} → {axis}/{cat}  {path.relative_to(REPO_ROOT)}")
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            write_record(path, "\n".join(lines) + "\n")
             written += 1
     verb = "wrote" if args.apply else "would write"
     print(f"{verb} {len(TARGETS) - skipped} grouping-parent nodes ({skipped} already exist)."

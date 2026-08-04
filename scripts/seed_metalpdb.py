@@ -69,6 +69,9 @@ import xml.etree.ElementTree as ET
 from collections import Counter, defaultdict
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "metalpdb" / "flat_db_file.xml.gz"
 OUT_DIR = REPO_ROOT / "data" / "traits" / "structure" / "metal_site" / "metalpdb"
@@ -399,7 +402,7 @@ def main() -> int:
         planned += 1
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(body, encoding="utf-8")
+            write_record(path, body)
             written += 1
 
     print()

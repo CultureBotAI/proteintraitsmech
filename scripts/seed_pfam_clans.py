@@ -22,6 +22,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "pfam" / "Pfam-A.clans.tsv.gz"
 OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "homologous_superfamily" / "pfam"
@@ -82,7 +85,7 @@ def main() -> int:
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_yaml(clan_acc, clan_id), encoding="utf-8")
+            write_record(path, build_yaml(clan_acc, clan_id))
             written += 1
 
     print(f"{len(clans)} Pfam clans → STRUCT_HOMOLOGOUS_SUPERFAMILY.")
