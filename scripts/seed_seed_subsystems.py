@@ -105,9 +105,28 @@ def build_spine_yaml(node_id, label, level, parent_id):
     return "\n".join(lines) + "\n"
 
 
+# BV-BRC prose occasionally has a backslash where a slash was meant -- the two keys are
+# adjacent. After JSON decoding, any backslash still followed by a letter is a literal
+# one, and this dump contains exactly two, both in the same description (#135):
+#
+#     ...including amino acid\nucleotide sequence...
+#     ...kinetic and tertiary\quaternary structural...
+#
+# `tertiary\quaternary` can only be `tertiary/quaternary`, which is what settles the
+# first: both are `/`. Scoped to a backslash before a LETTER so it cannot touch a path,
+# a Windows-style separator, or a doubled backslash.
+# The lookbehind matters: without it, `C:\\\\Users` has its SECOND backslash rewritten
+# to `C:\\/Users`. A doubled backslash is an escaped separator, not a typo.
+_STRAY_BACKSLASH = re.compile(r"(?<!\\)\\(?=[A-Za-z])")
+
+
+def _slash_for_backslash(text: str) -> str:
+    return _STRAY_BACKSLASH.sub("/", text)
+
+
 def build_subsystem_yaml(rec, node_id, parent_id, ecs):
     name = rec.get("subsystem_name") or rec.get("subsystem_id")
-    desc = " ".join((rec.get("description") or "").split())
+    desc = _slash_for_backslash(" ".join((rec.get("description") or "").split()))
     if desc:
         definition = desc
     else:
