@@ -4,8 +4,8 @@ Which open issues are safe to hand to an unattended `/goal` loop, which need a h
 first, and why. Companion to `NEXT_TASKS.md` (the durable backlog) and
 `prompts/backlog-loop-goal.md` (the workflow itself).
 
-_Reconciled 2026-08-04 against `main` at `9e132d5081e`, with one open PR accounted for.
-Every number re-measured rather than carried over._
+_Reconciled 2026-08-04 against `main` at `957a19691d3`. Every number re-measured rather
+than carried over._
 
 **Two reconciles in one day, because the loop empties the list faster than the list is
 written.** The first version's eight loop-ready issues all closed; its replacement ranked
@@ -26,16 +26,16 @@ below is a snapshot, and should be re-derived rather than trusted if much has me
 
 ---
 
-## In flight
+## Done since the last reconcile
 
-**#135, #137 and #132 are done in an open PR** and are not available to pick up. They are
-listed here only so a loop does not start them again.
+Listed so a loop does not start them again, and because what each one *corrected* is
+more reusable than what it fixed.
 
-| issue | what landed |
+| issue | what landed, and what it corrected |
 |---|---|
-| **#135** | the stray backslash is `/`, fixed in the seeder; determinate once the second occurrence (`tertiary\quaternary`) was found |
-| **#137** | spent markers cite the issues they closed, not a PR number that cannot be verified when written |
-| **#132** | a runtime harness for `build_metalpdb`, catching `break`-instead-of-`continue`, which no source-level check can |
+| **#135** | the stray backslash is `/`, fixed in the seeder. Filed as a guess; turned **determinate** once a second occurrence (`tertiary\quaternary`) was found in the same field |
+| **#137** | spent markers cite the issues they closed, not a PR number — which cannot be verified at the moment it is written |
+| **#132** | a runtime harness for `build_metalpdb`, which catches `break`-instead-of-`continue`. The issue named the wrong builder as smallest: 301 lines, not `build_mcsa`'s 416 |
 
 ---
 
@@ -43,13 +43,16 @@ listed here only so a loop does not start them again.
 
 | # | issue | why it fits now | ends when | measured cost |
 |---|---|---|---|---|
-| 1 | **#99** builders have no test coverage | **#132 made it bounded** — see below | the other four builders have the same harness | 4 builders |
+| 1 | **#141** the other four builders have no runtime harness | **#132 supplied the pattern** — see below | all five builders assert the skip path at runtime | 4 builders |
 | 2 | **#139** two U+FFFD in a BV-BRC definition | starts with a re-fetch, which is a measurement | it is known whether the loss is upstream or ours | 1 record |
 
-### #99 stopped being open-ended
+**#141 is the scoped remainder of #99.** Work #141; #99 is the umbrella and should be
+closed or re-scoped once it lands, not run alongside.
 
-It was listed as "needs a human — open-ended, needs a target". **#132 supplied the target
-and proved the pattern works.** All four remaining causal-graph builders have the shape the
+### #99 stopped being open-ended, and #141 is what is left of it
+
+#99 was listed as "needs a human — open-ended, needs a target". **#132 supplied the target
+and proved the pattern works**, and #141 records precisely what remains. All four remaining causal-graph builders have the shape the
 harness needs, checked:
 
 ```
@@ -83,7 +86,7 @@ Three issues are substantially resolved and wait on a close/keep call rather tha
 
 | issue | measured now | recommendation |
 |---|---|---|
-| **#96** "no test suite" | on `main`: **5 test files, 221 tests**, `just test`, `just lint`, and CI running both on every PR (the open PR adds a sixth file, 232) | **close** — the remainder is #99, which is now loop-ready |
+| **#96** "no test suite" | **6 test files, 232 tests**, `just test`, `just lint`, and CI running both on every PR | **close** — the remainder is #141, which is loop-ready |
 | **#110** slugify, 28 implementations | **1 with logic, 31 delegating wrappers**, AST-enforced | **close** — #124 resolved it; the wrappers exist so no record is renamed |
 | **#102** PSI-MOD Unimod xrefs | 825 dropped lines are real, but **0 terms** have `Unimod` as their only xref, against the 9 claimed | **re-scope or close** — the stated justification does not hold |
 
@@ -112,7 +115,8 @@ was wrong in roughly half the cases checked.**
   second stray backslash was found in the same field.
 - **#115's 1,142 is stale** — now **1,657**, after #112 demoted a further 515.
 - **#102's severity claim is disproven** — 0 terms, not 9.
-- **#99 was mis-filed as needing a human.** It needed a *target*, and #132 supplied one.
+- **#99 was mis-filed as needing a human.** It needed a *target*; #132 supplied one and
+  #141 now carries the remainder.
 
 ---
 
@@ -123,7 +127,7 @@ to the agent, or paste it; it is self-contained for exactly that reason.
 
 ```
 /goal                          # then feed prompts/backlog-loop-goal.md
-/goal #99                      # same, with a named issue as the hint
+/goal #141                     # same, with a named issue as the hint
 ```
 
 `prompts/` also holds three **spent** scoped prompts. Each says so in its `**Use:**` line —
