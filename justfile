@@ -57,6 +57,14 @@ sources-check:
 audit-graphs *args:
     uv run python scripts/audit_causal_graphs.py {{args}}
 
+# Reports encoding damage by source and kind. Separates REVERSIBLE damage (mojibake, C1
+# controls — repair_mojibake undoes these, and a non-zero count exits 1) from U+FFFD,
+# which is lossy: the original bytes are gone, so it is reported as a fact rather than a
+# failure. See #139.
+# Audit text-encoding damage
+audit-text *args:
+    uv run python scripts/audit_text_quality.py {{args}}
+
 # LLM review of InterPro's unreviewed LLM abstracts (issue #92). Dry-run by default;
 # --apply calls the reviewer and appends to data/reviews/. Resumable: a candidate that
 # already has a verdict is skipped, so an interrupted run costs only its current batch.
