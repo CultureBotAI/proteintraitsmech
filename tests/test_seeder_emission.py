@@ -130,16 +130,21 @@ def test_every_slugify_delegates_to_the_shared_one():
     assert not offenders, f"these carry their own slugify logic: {offenders}"
 
 
-def test_folded_copies_are_only_the_ones_with_a_different_signature():
-    """Three remain, and all three are genuinely different functions, not stale copies.
+def test_only_the_non_collapsing_folded_remains():
+    """One copy left, and it is kept for a measured reason (#125).
 
-    `seed_secondary_structure` returns a string where the shared one returns a list of
-    lines; the `enrich_*` and `review_*` ones take (key, text) and emit a whole block.
-    Folding those in would change their callers, not remove duplication.
+    The two `(key, text) -> str` variants became `yaml_emit.folded_block`, which was
+    verified to reproduce both callers' output byte for byte before they were switched.
+
+    `seed_secondary_structure.folded` stays because it returns a `str` where the shared
+    one returns a list of lines, so converting means changing its caller too. Its other
+    difference — no whitespace collapsing — turns out NOT to be load-bearing: patching
+    it to collapse and running `--apply --force` rewrote zero records, because that
+    seeder skips records that already exist. The claim that it protects
+    `coiled-coil.yaml`'s hand-wrapped definition was checked and did not hold.
     """
     names = sorted(n for n, _ in _implementations("folded"))
-    assert names == ["enrich_scop_structural_defs.py", "review_llm_abstracts.py",
-                     "seed_secondary_structure.py", "yaml_emit.py"], names
+    assert names == ["seed_secondary_structure.py", "yaml_emit.py"], names
 
 
 def test_every_seeder_is_importable():

@@ -89,6 +89,22 @@ def slug(sfx: str) -> str:
 
 
 def folded(text: str) -> str:
+    """Deliberately NOT `yaml_emit.folded`: this one does not collapse whitespace.
+
+    Kept local after #125 for two reasons, and the honest version of the first is
+    weaker than it first looked:
+
+    * it returns a `str` where the shared one returns a list of lines, so converting
+      means changing the caller as well — real work for no gain;
+    * `coiled-coil.yaml` carries a hand-wrapped two-line definition that survives only
+      because this passes the text through untouched. I claimed converting would reflow
+      it on the next `--force`; that is NOT demonstrated — patching this to collapse and
+      running `--apply --force` rewrote **zero** records, because this seeder skips
+      records that already exist. So the difference is currently unobservable, and the
+      case for leaving it alone rests on the API mismatch, not on protecting that file.
+
+    Either way the loaded YAML is identical, since `>-` folds a newline into a space.
+    """
     return ">-\n  " + text
 
 

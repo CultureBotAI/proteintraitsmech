@@ -1,5 +1,8 @@
 # Goal prompt — triage the open issues and deliver one end to end
 
+**Use:** feed to `/goal`, or paste to any agent. Live — it picks its own target from
+the open issues. This is the workflow the scoped prompts below are instances of.
+
 Feed this to the **native** `/goal`, optionally with a hint (`/goal #104`,
 `/goal tests`, `/goal cheapest thing that unblocks something else`). It is a prompt,
 not a slash command, and is self-contained so it can equally be pasted to another

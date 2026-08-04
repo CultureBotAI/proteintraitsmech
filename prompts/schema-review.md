@@ -1,5 +1,8 @@
 # Review prompt — ProteinTraitsMech axis + category schema
 
+**Use:** hand to an **independent** reviewer (codex, another agent) for a read-only
+audit. Not for the agent working in this repo, and it must not make code changes.
+
 Hand this to the codex rescue plugin (or any independent reviewer) as a
 read-only audit of the LinkML schema and its classification system. The
 reviewer must produce a written report; do **not** make code changes.

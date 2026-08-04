@@ -30,6 +30,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from yaml_emit import folded_block  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCOPE = REPO_ROOT / "data" / "raw" / "scope"
 DES = SCOPE / "dir.des.scope.2.08-stable.txt"
@@ -59,9 +62,6 @@ def load_comments() -> dict[str, str]:
     return {sid: "; ".join(parts) for sid, parts in com.items()}
 
 
-def folded(text: str, indent: str) -> str:
-    text = " ".join(text.split())
-    return f"{indent}  text: >-\n{indent}    {text}\n"
 
 
 def main() -> int:
@@ -93,7 +93,7 @@ def main() -> int:
         ind = "  "  # SCOP records use 2-space list items
         block = ("definitions:\n"
                  f"{ind}- kind: STRUCTURAL\n"
-                 + folded(comments[sid], ind)
+                 + folded_block("text", comments[sid], ind + "  ")
                  + f'{ind}  source: "{SOURCE}"\n'
                  + f"{ind}  method: SOURCED\n")
         new = re.sub(r"(?m)^(license:.*)$", block + r"\1", text, count=1) \
