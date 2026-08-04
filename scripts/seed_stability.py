@@ -35,6 +35,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
+from yaml_emit import folded, yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "traits" / "structure" / "stability" / "conditions"
@@ -85,21 +86,6 @@ CONDITIONS: tuple[tuple[str, str, str, str, tuple[str, ...]], ...] = (
      "mechanical force / applied load (mechanical unfolding)", "mechanical stress",
      ("mechanostability", "mechanical stability", "force resistance")),
 )
-
-
-def yaml_escape(text: str) -> str:
-    if not text:
-        return '""'
-    unsafe = set(': #{}[],&*!|>%@`\\"\'')
-    if (any(c in unsafe for c in text) or text[0] in "-?"
-            or text.lower() in {"null", "true", "false", "yes", "no", "on", "off"}):
-        return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
-    return text
-
-
-def folded(text: str) -> list[str]:
-    text = " ".join(text.split())
-    return [">-", f"  {text}"]
 
 
 def record(identifier: str, label: str, definition: str,

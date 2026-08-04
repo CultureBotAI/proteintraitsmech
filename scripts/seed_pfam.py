@@ -43,6 +43,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
+from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw"
@@ -67,7 +68,8 @@ _GO_RE = re.compile(r"(GO:\d{7})")
 
 
 def slugify(text: str) -> str:
-    return (_SLUG_RE.sub("-", text.lower()).strip("-")[:70]) or "pfam"
+    """Shared implementation, with this source's length and fallback (#93)."""
+    return _slugify(text, 70, 'pfam')
 
 
 def load_types() -> dict[str, str]:
@@ -101,21 +103,6 @@ def load_pfam2ipr() -> dict[str, str]:
                 pf, ipr = line.split("\t", 1)
                 out[pf.strip()] = ipr.strip()
     return out
-
-
-def yaml_escape(text: str) -> str:
-    if not text:
-        return '""'
-    unsafe = set(': #{}[],&*!|>%@`\\"\'')
-    if (any(c in unsafe for c in text) or text[0] in "-?"
-            or text.lower() in {"null", "true", "false", "yes", "no", "on", "off"}):
-        return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
-    return text
-
-
-def folded(text: str) -> list[str]:
-    text = " ".join((text or "").split())
-    return [">-", f"  {text}"]
 
 
 def build_yaml(pf, pid, desc, clan, typ, axis, category, go, ipr) -> str:

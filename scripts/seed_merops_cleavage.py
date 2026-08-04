@@ -32,6 +32,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
+from yaml_emit import folded, yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "merops" / "Substrate_search.txt"
@@ -58,22 +59,6 @@ def clean_name(name: str) -> str:
     name = re.sub(r"\s*\([^)]*\{[^)]*\)", "", name)        # ({Homo sapiens}-type)
     name = re.sub(r"\s*\{[^}]*\}", "", name)                # bare {…}
     return " ".join(name.split())
-
-
-def yaml_escape(text: str) -> str:
-    if not text:
-        return '""'
-    unsafe = set(': #{}[],&*!|>%@`\\"\'')
-    if (any(c in unsafe for c in text) or text[:1] in ("-", "?")
-            or text.lower() in {"null", "true", "false", "yes", "no", "on", "off"}
-            or re.fullmatch(r"-?\d+(?:\.\d+)?", text)):
-        return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
-    return text
-
-
-def folded(text):
-    text = " ".join((text or "").split())
-    return [">-", f"  {text}"] if text else [">-", '  ""']
 
 
 def consensus(counters):

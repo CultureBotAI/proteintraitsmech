@@ -1,38 +1,25 @@
-"""Differential tests over the YAML-emission helpers every seeder copies (issue #96).
+"""The seeders' emission helpers, now that there is one of each (#93, #109, #110).
 
-WHY THIS FILE EXISTS
---------------------
-#96 says "every correctness check is ad hoc". `tests/test_record_io.py` fixed that for
-the two *shared* primitives, but the functions that actually write all 424k records are
-not shared at all - they are copy-pasted per seeder and have drifted:
+WHAT THIS FILE USED TO BE
+-------------------------
+A differential harness: it discovered every copy of `yaml_escape`, `folded` and
+`slugify` by parsing `scripts/`, and asserted the property each had to satisfy wherever
+it lived — because there were 43, 35 and 31 of them, and testing one proved nothing
+about the other 42.
 
-    yaml_escape   43 copies, 10 distinct implementations
-    folded        35 copies, 10 distinct implementations
-    slugify       31 copies, 28 distinct implementations
+That worked. It found three real gaps in `yaml_escape` (#109) and measured that
+`slugify` had 28 distinct implementations deciding record FILENAMES (#110). Both are now
+consolidated into `scripts/yaml_emit.py`, so the harness is no longer how the behaviour
+is tested. It is kept for one job: proving the copies have not come back.
 
-Testing one copy proves nothing about the other 42. So these tests **discover every
-implementation in scripts/ by parsing the source** and assert the property each one must
-satisfy, whichever seeder it lives in. A new seeder with a new variant is covered the day
-it is added, and a copy that drifts fails here rather than in the corpus.
-
-THE PROPERTY
-------------
-`yaml_escape(s)` must produce a scalar that reads back as exactly `s` - the round trip is
-the whole job. Three classes currently fail it, all latent: no source release has yet
-produced such a value, verified against all 424,467 records (no tabs, no CRs, and no
-type-coerced scalar in any string slot).
-
-  * a value containing a newline or tab yields unparseable YAML - all 10 copies;
-  * a purely numeric value reads back as int/float, not str - 9 of 10;
-  * `~`, `.inf`, `.nan` read back as None/float - all 10. This is one gap in ten places
-    rather than drift: every copy quotes the WORD forms (`null`, `yes`, `on`, `true`)
-    correctly, and every copy misses the punctuation forms.
-
-They are pinned by `KNOWN_GAP_COUNTS`, a baseline of how many copies fail each value, so
-BOTH directions are loud: a new gap fails, and a fixed copy also fails, telling you to
-lower the number. An earlier version used `pytest.skip()` for a copy that behaved
-correctly, which silently passed - fixing a copy merely turned a skip on and the suite
-stayed green. Filed as issues alongside this file.
+WHY `slugify` STILL HAS 28 DEFINITIONS
+---------------------------------------
+Deliberately. The 28 differed in exactly two parameters — `max_len` and the `fallback`
+for an empty slug — and in nothing else. Picking one would have renamed records under
+`ecod/` (34,959), `prosite/` (3,425), `mcsa/` (1,003) and `cazy/` (557). So each seeder
+keeps a one-line wrapper passing its own two values to the shared implementation: the
+logic is shared, the parameters stay visible at the call site, and nothing is renamed.
+`test_every_slugify_delegates_to_the_shared_one` is what stops real logic reappearing.
 """
 
 from __future__ import annotations
@@ -52,12 +39,12 @@ def _load(path):
     Two details are load-bearing and both were learned by getting them wrong:
 
     * the module must be registered in `sys.modules` BEFORE `exec_module`. `@dataclass`
-      combined with `from __future__ import annotations` resolves annotations through
-      `sys.modules[cls.__module__].__dict__`, so an unregistered module makes
-      `seed_obo` fail with a baffling `'NoneType' object has no attribute '__dict__'`
-      that looks like a defect in the seeder rather than in the loader;
+      with `from __future__ import annotations` resolves annotations through
+      `sys.modules[cls.__module__].__dict__`, so an unregistered module makes `seed_obo`
+      fail with a baffling `'NoneType' object has no attribute '__dict__'` that reads
+      like a defect in the seeder rather than in the loader;
     * `scripts/` must be on `sys.path`, because seeders import their siblings
-      (`from obo_syntax import ...`) exactly as they do when run as scripts.
+      (`from yaml_emit import ...`) exactly as they do when run as scripts.
     """
     import importlib.util
     import sys
@@ -79,19 +66,7 @@ def _load(path):
 
 
 def _implementations(func_name: str) -> list[tuple[str, object]]:
-    """Every distinct source-level implementation of `func_name` under scripts/.
-
-    The module is IMPORTED and the function taken off it, rather than the function's
-    source being exec'd in a bare namespace. The first version did the latter, to avoid
-    import side effects, and every extracted `slugify` raised `NameError: _SLUG_RE` -
-    these helpers close over module-level constants, so a function lifted out of its
-    module is not the function the seeder actually calls. Testing it would have proved
-    nothing about the real one.
-
-    Seeders guard their work behind `if __name__ == "__main__":`, so importing is safe;
-    any that is not importable is reported by `test_every_seeder_is_importable` rather
-    than silently dropped here.
-    """
+    """Every distinct source-level implementation of `func_name` under scripts/."""
     seen: dict[str, tuple[str, object]] = {}
     for path in sorted(SCRIPTS.glob("*.py")):
         try:
@@ -99,10 +74,10 @@ def _implementations(func_name: str) -> list[tuple[str, object]]:
             tree = ast.parse(src)
         except (SyntaxError, UnicodeDecodeError):
             continue
-        if not any(isinstance(n, ast.FunctionDef) and n.name == func_name for n in tree.body):
+        node = next((n for n in tree.body
+                     if isinstance(n, ast.FunctionDef) and n.name == func_name), None)
+        if node is None:
             continue
-        node = next(n for n in tree.body
-                    if isinstance(n, ast.FunctionDef) and n.name == func_name)
         text = ast.get_source_segment(src, node) or ""
         if text in seen:
             continue
@@ -114,154 +89,132 @@ def _implementations(func_name: str) -> list[tuple[str, object]]:
     return list(seen.values())
 
 
-ESCAPERS = _implementations("yaml_escape")
-SLUGGERS = _implementations("slugify")
+_emit = _load(SCRIPTS / "yaml_emit.py")
+yaml_escape, folded, slugify = _emit.yaml_escape, _emit.folded, _emit.slugify
 
 
-def _ids(impls):
-    return [name for name, _ in impls]
+# --- the copies must not come back ----------------------------------------------
+
+def test_yaml_escape_has_exactly_one_implementation():
+    """43 copies, 10 of them different, is how the three #109 gaps survived unseen."""
+    impls = [n for n, _ in _implementations("yaml_escape")]
+    assert impls == ["yaml_emit.py"], f"yaml_escape reappeared in: {impls}"
 
 
-# Values that a source release can plausibly contain and that YAML 1.1 treats specially.
-ROUND_TRIPS = [
-    "plain text", "has: a colon", "trailing space ", " leading space",
-    "has # hash", "'single'", 'has "double"', "-leading dash", "*star", "&anchor",
-    "[bracket]", "{brace}", "back\\slash", "é unicode ü", "a: b: c", "%percent",
-    "|pipe", ">gt", "@at", "`tick`", "", "  ",
-    # YAML 1.1 resolves these to non-strings unless quoted. Every copy gets the WORD
-    # forms right, so these are strict assertions and a regression guard.
-    "yes", "no", "on", "off", "true", "false", "null", "None", "1e5", "14-3-3",
-]
+def test_every_slugify_delegates_to_the_shared_one():
+    """A `slugify` may pass parameters; it may not contain logic.
 
-KNOWN_BAD_NUMERIC = ["123", "0755", "1.5", "-7"]
-KNOWN_BAD_CONTROL = ["line\nbreak", "tab\there", "carriage\rreturn"]
-# The punctuation forms of the same YAML 1.1 resolvers. Every copy handles `null` and
-# `yes` but none handles `~`, `.inf` or `.nan` - the shared word list omits them. Not
-# drift between copies: all nine fail identically, so this is one gap in nine places.
-KNOWN_BAD_YAML11_PUNCT = ["~", ".inf", ".nan", "-.inf"]
-
-
-def test_the_survey_that_motivates_this_file_still_holds():
-    """If the copies are ever consolidated (#93), this file's premise changes.
-
-    Failing here is good news - it means someone deduplicated the helpers and these
-    differential tests can become ordinary tests of one implementation.
+    This is what keeps the 28 wrappers honest. A seeder that grows a real implementation
+    again — a different regex, a different strip, a different truncation — starts
+    silently deciding filenames on its own, which is #110.
     """
-    assert len(ESCAPERS) > 1, "yaml_escape appears to be shared now; simplify this file"
-    assert len(SLUGGERS) > 1, "slugify appears to be shared now; simplify this file"
+    offenders = []
+    for path in sorted(SCRIPTS.glob("*.py")):
+        if path.name == "yaml_emit.py":
+            continue
+        try:
+            src = path.read_text(encoding="utf-8")
+            tree = ast.parse(src)
+        except (SyntaxError, UnicodeDecodeError):
+            continue
+        for node in tree.body:
+            if not (isinstance(node, ast.FunctionDef) and node.name == "slugify"):
+                continue
+            body = [n for n in node.body
+                    if not (isinstance(n, ast.Expr) and isinstance(n.value, ast.Constant))]
+            ok = (len(body) == 1 and isinstance(body[0], ast.Return)
+                  and isinstance(body[0].value, ast.Call)
+                  and getattr(body[0].value.func, "id", "") == "_slugify")
+            if not ok:
+                offenders.append(path.name)
+    assert not offenders, f"these carry their own slugify logic: {offenders}"
 
 
-@pytest.mark.parametrize("value", ROUND_TRIPS)
-@pytest.mark.parametrize("impl", [i for _, i in ESCAPERS], ids=_ids(ESCAPERS))
-def test_yaml_escape_round_trips(impl, value):
-    """Whatever it emits must read back as the exact string it was given.
+def test_folded_copies_are_only_the_ones_with_a_different_signature():
+    """Three remain, and all three are genuinely different functions, not stale copies.
 
-    This is the one property the function exists to provide, and it is the property that
-    a divergent copy silently breaks - the record still parses, it just holds a bool, an
-    int, or a truncated string.
+    `seed_secondary_structure` returns a string where the shared one returns a list of
+    lines; the `enrich_*` and `review_*` ones take (key, text) and emit a whole block.
+    Folding those in would change their callers, not remove duplication.
     """
-    loaded = yaml.safe_load(f"key: {impl(value)}\n")["key"]
-    assert loaded == value, f"{value!r} came back as {loaded!r} ({type(loaded).__name__})"
-
-
-# How many of the implementations currently FAIL to round-trip each known-gap value.
-# Keyed by value rather than by (filename, value): the label for an implementation is the
-# first script that carries it, so adding an alphabetically-earlier seeder that shares an
-# existing copy would churn a filename-keyed baseline for no real change.
-KNOWN_GAP_COUNTS = {
-    "123": 9, "0755": 9, "1.5": 9,            # bare numerics read back as int/float
-    "line\nbreak": 10, "tab\there": 10,       # control characters -> unparseable YAML
-    "carriage\rreturn": 10,
-    "~": 10, ".inf": 10, ".nan": 10,          # YAML 1.1 punctuation resolvers
-    # `-7` and `-.inf` are absent deliberately: a leading `-` already triggers quoting in
-    # every copy, so they round-trip correctly and must stay that way.
-}
-
-
-def _round_trips(impl, value: str) -> bool:
-    try:
-        return yaml.safe_load(f"key: {impl(value)}\n")["key"] == value
-    except Exception:
-        return False
-
-
-def test_known_gaps_match_the_recorded_baseline():
-    """The known gaps may only ever shrink, and shrinking must be noticed.
-
-    An earlier version of this file expressed the gaps as `pytest.skip()` when a copy
-    behaved correctly. That silently passes: fixing a copy just turned a skip on, the
-    suite stayed green, and the commit message claiming "fixing any copy fails here"
-    was simply wrong - verified by patching one seeder to always-quote and watching the
-    run go 25 skips -> 34 skips, still green.
-
-    An explicit baseline makes both directions loud: a NEW gap fails, and a FIXED gap
-    fails too, with the instruction to shrink the number.
-    """
-    now = {value: sum(1 for _, impl in ESCAPERS if not _round_trips(impl, value))
-           for value in KNOWN_GAP_COUNTS}
-    regressed = {v: (KNOWN_GAP_COUNTS[v], n) for v, n in now.items() if n > KNOWN_GAP_COUNTS[v]}
-    improved = {v: (KNOWN_GAP_COUNTS[v], n) for v, n in now.items() if n < KNOWN_GAP_COUNTS[v]}
-    assert not regressed, (
-        "more copies now fail to round-trip these values (was, now): " + repr(regressed))
-    assert not improved, (
-        "copies were FIXED - lower these numbers in KNOWN_GAP_COUNTS (was, now): "
-        + repr(improved))
-
-
-@pytest.mark.parametrize("impl", [i for _, i in SLUGGERS], ids=_ids(SLUGGERS))
-def test_slugify_produces_a_usable_filename(impl):
-    """A slug becomes a path, so it must never be empty, absolute, or contain a separator.
-
-    28 distinct implementations of a function whose output is a filename is the single
-    largest divergence in the repo; these are the properties that matter regardless of
-    which variant a seeder happens to carry.
-    """
-    for value in ["Simple Label", "with/slash", "with\\backslash", "..", ".", "a" * 300,
-                  "trailing.", "Ünïcødé", "multi   space", "PTHR12345:sub"]:
-        slug = impl(value)
-        assert isinstance(slug, str)
-        assert "/" not in slug and "\\" not in slug, f"{value!r} -> {slug!r} contains a separator"
-        assert slug not in {".", ".."}, f"{value!r} -> {slug!r} is a path traversal token"
-        assert not slug.startswith("/"), f"{value!r} -> {slug!r} is absolute"
-
-
-@pytest.mark.parametrize("impl", [i for _, i in SLUGGERS], ids=_ids(SLUGGERS))
-def test_slugify_is_idempotent(impl):
-    """Re-slugging a slug must not change it, or re-running a seeder renames files."""
-    for value in ["Simple Label", "with/slash", "Ünïcødé", "multi   space"]:
-        once = impl(value)
-        assert impl(once) == once, f"{value!r}: {once!r} -> {impl(once)!r}"
-
-
-@pytest.mark.parametrize("value", KNOWN_BAD_YAML11_PUNCT)
-@pytest.mark.parametrize("impl", [i for _, i in ESCAPERS], ids=_ids(ESCAPERS))
-def test_yaml11_punctuation_resolvers_are_a_known_gap(impl, value):
-    """`~`, `.inf` and `.nan` read back as None/float in every copy.
-
-    Asserted rather than skipped, so fixing any copy fails here and the fix is noticed.
-    Latent: no record currently holds such a value, and a protein trait plausibly never
-    will - which is precisely why it would go unnoticed until it didn't.
-    """
-    loaded = yaml.safe_load(f"key: {impl(value)}\n")["key"]
-    if loaded == value:
-        pytest.skip("this copy quotes YAML 1.1 punctuation correctly")
-    assert not isinstance(loaded, str), f"{value!r} -> {loaded!r}: neither correct nor the known gap"
+    names = sorted(n for n, _ in _implementations("folded"))
+    assert names == ["enrich_scop_structural_defs.py", "review_llm_abstracts.py",
+                     "seed_secondary_structure.py", "yaml_emit.py"], names
 
 
 def test_every_seeder_is_importable():
-    """A script that cannot be imported is invisible to every test above.
-
-    `_implementations` skips modules that fail to import, which would let a broken
-    seeder quietly drop out of the differential coverage and look like a pass. This
-    names them instead. Import-time failure also means `just seed-<x>` is broken, so
-    it is worth catching on its own account.
-    """
+    """A script that cannot be imported is invisible to every test above."""
     broken = []
     for path in sorted(SCRIPTS.glob("*.py")):
         try:
             _load(path)
         except SystemExit:
-            pass                                  # argparse in module scope: not a defect
+            pass
         except Exception as exc:
             broken.append(f"{path.name}: {type(exc).__name__}: {exc}")
     assert not broken, "scripts that fail to import:\n  " + "\n  ".join(broken)
+
+
+# --- the shared implementation ---------------------------------------------------
+
+ROUND_TRIPS = [
+    "plain text", "has: a colon", "trailing space ", " leading space",
+    "has # hash", "'single'", 'has "double"', "-leading dash", "*star", "&anchor",
+    "[bracket]", "{brace}", "back\\slash", "é unicode ü", "a: b: c", "%percent",
+    "|pipe", ">gt", "@at", "`tick`", "", "  ",
+    "yes", "no", "on", "off", "true", "false", "null", "None", "1e5", "14-3-3",
+    # the three classes that were broken in EVERY copy until this consolidation (#109)
+    "123", "0755", "1.5", "-7", "1:30",
+    "~", ".inf", ".nan", "-.inf",
+    "line\nbreak", "tab\there", "carriage\rreturn",
+]
+
+
+@pytest.mark.parametrize("value", ROUND_TRIPS)
+def test_yaml_escape_round_trips(value):
+    """The one property the function exists to provide, now with no exceptions.
+
+    The last three groups are the #109 gaps, asserted rather than recorded as a
+    baseline because they are fixed. Fixing them changed no existing record: nothing in
+    the corpus is a bare numeric, a YAML 1.1 punctuation resolver, or a value carrying a
+    control character.
+    """
+    loaded = yaml.safe_load(f"key: {yaml_escape(value)}\n")["key"]
+    assert loaded == value, f"{value!r} came back as {loaded!r} ({type(loaded).__name__})"
+
+
+def test_folded_collapses_whitespace_so_a_newline_cannot_break_the_block():
+    assert folded("one\ntwo   three\n\nfour") == [">-", "  one two three four"]
+    assert folded("") == [">-", "  "]
+
+
+@pytest.mark.parametrize("value", ["Simple Label", "with/slash", "with\\backslash", "..",
+                                   ".", "a" * 300, "trailing.", "Ünïcødé", "multi   space",
+                                   "PTHR12345:sub"])
+def test_slugify_produces_a_usable_filename(value):
+    slug = slugify(value)
+    assert "/" not in slug and "\\" not in slug, f"{value!r} -> {slug!r}"
+    assert slug not in {".", ".."}, f"{value!r} -> {slug!r}"
+    assert not slug.startswith("/")
+
+
+def test_slugify_is_idempotent():
+    """Re-slugging a slug must not change it, or a re-run renames files."""
+    for value in ["Simple Label", "with/slash", "Ünïcødé", "multi   space"]:
+        once = slugify(value)
+        assert slugify(once) == once
+
+
+@pytest.mark.parametrize("max_len,expected", [(60, 60), (70, 70), (80, 80), (None, 300)])
+def test_slugify_truncation_is_a_parameter(max_len, expected):
+    """The whole reason 28 wrappers survive instead of one hardcoded length.
+
+    ecod/mcsa/obo truncate at 80, cazy at 60, prosite not at all. Hardcoding 70 — the
+    23-seeder majority — would have renamed records in all four of those directories.
+    """
+    assert len(slugify("x" * 300, max_len)) == expected
+
+
+def test_slugify_fallback_is_a_parameter():
+    assert slugify("", 70, "cath") == "cath"
+    assert slugify("!!!", 70, "pfam") == "pfam"

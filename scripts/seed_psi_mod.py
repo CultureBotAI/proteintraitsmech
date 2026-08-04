@@ -43,6 +43,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
+from yaml_emit import slugify as _slugify, yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = REPO_ROOT / "data" / "raw"
@@ -123,8 +124,8 @@ _SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
 
 
 def slugify(text: str) -> str:
-    s = _SLUG_RE.sub("-", text.lower()).strip("-")
-    return s[:80] or "term"
+    """Shared implementation, with this source's length and fallback (#93)."""
+    return _slugify(text, 80, 'term')
 
 
 def parse_obo(text: str) -> list[dict]:
@@ -279,18 +280,6 @@ def parse_is_a(raw: str) -> str | None:
 # ---------------------------------------------------------------------------
 # YAML emission (hand-formatted; no PyYAML dep in this seeder)
 # ---------------------------------------------------------------------------
-
-
-def yaml_escape(text: str) -> str:
-    if text is None:
-        return '""'
-    if not text:
-        return '""'
-    unsafe = set(': #{}[],&*!|>%@`\\"\'')
-    if (any(c in unsafe for c in text) or text[0] in "-?"
-            or text.lower() in {"null", "true", "false", "yes", "no", "on", "off"}):
-        return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
-    return text
 
 
 def yaml_folded(indent: str, text: str) -> list[str]:

@@ -42,6 +42,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
+from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "seed_subsystems"
@@ -58,8 +59,9 @@ _IDPART_RE = re.compile(r"[^A-Za-z0-9._-]+")
 _EC_RE = re.compile(r"\(EC ([0-9]+\.[0-9-]+\.[0-9-]+\.[0-9n-]+)\)")
 
 
-def slugify(t: str) -> str:
-    return (_SLUG_RE.sub("-", (t or "").lower()).strip("-")[:70]) or "seed"
+def slugify(text: str) -> str:
+    """Shared implementation, with this source's length and fallback (#93)."""
+    return _slugify(text, 70, 'seed')
 
 
 def idpart(t: str) -> str:
@@ -70,20 +72,6 @@ def idpart(t: str) -> str:
 def id_filename(node_id: str) -> str:
     """Collision-free filename from a CURIE local part (no truncation)."""
     return _SLUG_RE.sub("-", node_id.split(":", 1)[1].lower()).strip("-")
-
-
-def yaml_escape(text: str) -> str:
-    if not text:
-        return '""'
-    unsafe = set(': #{}[],&*!|>%@`\\"\'')
-    if (any(c in unsafe for c in text) or text[0] in "-?"
-            or text.lower() in {"null", "true", "false", "yes", "no", "on", "off"}):
-        return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
-    return text
-
-
-def folded(text: str) -> list[str]:
-    return [">-", f"  {' '.join((text or '').split())}"]
 
 
 def spine_ids(superclass: str, klass: str, subclass: str):
