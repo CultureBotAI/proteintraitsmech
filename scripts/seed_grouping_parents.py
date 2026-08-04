@@ -22,6 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
+from yaml_emit import slugify as _slugify, yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
@@ -45,17 +46,9 @@ RAW = REPO_ROOT / "data" / "raw"
 SLUG = re.compile(r"[^a-z0-9]+")
 
 
-def slugify(t: str) -> str:
-    return (SLUG.sub("-", t.lower()).strip("-")[:70]) or "term"
-
-
-def yaml_escape(text: str) -> str:
-    if text is None or text == "":
-        return '""'
-    unsafe = set(': #{}[],&*!|>%@`\\"\'')
-    if any(c in unsafe for c in text) or text[0] in "-?" or text.lower() in {"null", "true", "false", "yes", "no", "on", "off"}:
-        return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
-    return text
+def slugify(text: str) -> str:
+    """Shared implementation, with this source's length and fallback (#93)."""
+    return _slugify(text, 70, 'term')
 
 
 def parse_obo(path: Path, wanted: set[str]) -> dict[str, tuple[str, str]]:

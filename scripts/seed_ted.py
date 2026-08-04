@@ -57,6 +57,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
+from yaml_emit import slugify as _slugify  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = REPO_ROOT / "data" / "raw"
@@ -86,7 +87,8 @@ _SAFE = re.compile(r"[^a-z0-9]+")
 
 
 def slugify(text: str) -> str:
-    return _SAFE.sub("-", text.lower()).strip("-")
+    """Shared implementation, with this source's length and fallback (#93)."""
+    return _slugify(text, None, '')
 
 
 def parse_ted_row(row: list[str]) -> dict | None:

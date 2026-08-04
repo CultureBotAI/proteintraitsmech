@@ -22,6 +22,7 @@ import sys
 from pathlib import Path
 
 from record_io import insert_before_license
+from yaml_emit import yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
@@ -32,16 +33,6 @@ ID_RE = re.compile(r"^identifier:\s*(\S+)", re.M)
 KIND = {"SEQ_DOMAIN": "conserved domain",
         "SEQ_HOMOLOGOUS_SUPERFAMILY": "domain superfamily",
         "FUNC_ORTHOLOG_GROUP": "orthologous group"}
-
-
-def yaml_escape(text: str) -> str:
-    if not text:
-        return '""'
-    unsafe = set(': #{}[],&*!|>%@`\\"\'')
-    if any(c in unsafe for c in text) or text[0] in "-?" or text.lower() in {
-            "null", "true", "false", "yes", "no", "on", "off"}:
-        return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
-    return text
 
 
 def clean_cdd_desc(desc: str) -> str:
