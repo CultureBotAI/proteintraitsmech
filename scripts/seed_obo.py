@@ -506,7 +506,12 @@ def build_yaml(entry: dict, route: Route, src: Source, release: str) -> str | No
     lines: list[str] = []
     lines.append(f"identifier: {term_id}")
     lines.append(f"label: {yaml_escape(name)}")
-    folded = yaml_folded(definition)
+    # Decode OBO escapes before folding (#103). The citation path already did this
+    # -- `_unescape_obo` on the way to PMID:/DOI: -- but the definition text did not,
+    # so a `\n` meant as a line break was written through as two literal characters
+    # and 36 records carried it. Folding then turns the decoded newline into a space,
+    # which is what a `>-` scalar is for.
+    folded = yaml_folded(unescape(definition))
     lines.append(f"definition: {folded[0]}")
     lines.extend(folded[1:])
     lines.append(f"definition_source: {yaml_escape(release)}")
