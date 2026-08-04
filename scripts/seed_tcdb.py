@@ -33,7 +33,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
-from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
+from yaml_emit import repair_mojibake, folded, slugify as _slugify, yaml_escape  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "tcdb"
@@ -86,6 +86,10 @@ def load_substrates_by_family() -> dict[str, list[str]]:
 
 
 def build_yaml(tc, name, kind, parent, chebi):
+    # TCDB's families.tsv is UTF-8 read as cp1252 upstream, so 1.D.202's non-breaking
+    # hyphen arrives as `â€‘` (#123). The name flows into both label and definition,
+    # so repair once here at the top rather than at each use.
+    name = repair_mojibake(name)
     """kind ∈ {class, subclass, family}."""
     if kind == "family":
         definition = (f"{name} — a Transporter Classification family "

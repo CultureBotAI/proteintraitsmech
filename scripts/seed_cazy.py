@@ -43,7 +43,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
-from yaml_emit import folded, slugify as _slugify  # noqa: E402
+from yaml_emit import repair_mojibake, folded, slugify as _slugify  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw"
@@ -155,7 +155,10 @@ def build_family_yaml(fam, cls, meta, parent, ipr_entries, ipr_name):
         parts.append(f"Representative activities: {', '.join(acts[:8])}{more}.")
     if ipr_name:
         parts.append(f"Corresponds to InterPro '{ipr_name}'.")
-    definition = " ".join(parts)
+    # The CAZy dump is UTF-8 that something upstream read as cp1252, so a hyphen
+    # arrives as `â€` + a C1 control (#123). Repaired here rather than at fetch time
+    # because data/raw is already damaged and refetching does not clear it.
+    definition = repair_mojibake(" ".join(parts))
 
     lines = [f"identifier: CAZy:{fam}", f"label: {yesc(label)}"]
     f = folded(definition)
