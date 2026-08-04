@@ -1005,3 +1005,56 @@ def test_reseeding_twice_does_not_duplicate_a_definition():
 ])
 def test_is_curated_signals(text, expect):
     assert is_curated(text) is expect
+
+
+def test_enriched_list_entries_survive_a_reseed_of_a_pristine_record():
+    """The second half of #100, and the reason list-union is not gated on curation.
+
+    `xrefs` and `trait_relations` are seeder-emitted AND enriched afterwards by the
+    *2go backfills, so "the seeder emitted it, the seeder owns it" is wrong for them.
+    A real PROSITE --force dropped 4,193 GO xrefs and 2,745 trait_relations from
+    records that look pristine — SEEDED, no curation_history — and so are never
+    reached by the curated-record rule.
+    """
+    existing = ("identifier: X:1\nmapping_status: SEEDED\n"
+                "xrefs:\n  - PROSITE:SVP_I\n  - GO:0018262\nlicense: CC0\n")
+    fresh = ("identifier: X:1\nmapping_status: SEEDED\n"
+             "xrefs:\n  - PROSITE:SVP_I\nlicense: CC0\n")
+    out = yaml.safe_load(merge_on_reseed(existing, fresh))
+    assert out["xrefs"] == ["PROSITE:SVP_I", "GO:0018262"]
+
+
+def test_a_new_source_entry_is_appended_after_the_existing_ones():
+    existing = "identifier: X:1\nmapping_status: SEEDED\nxrefs:\n  - A:1\nlicense: CC0\n"
+    fresh = "identifier: X:1\nmapping_status: SEEDED\nxrefs:\n  - A:1\n  - B:2\nlicense: CC0\n"
+    assert yaml.safe_load(merge_on_reseed(existing, fresh))["xrefs"] == ["A:1", "B:2"]
+
+
+def test_relabelled_provenance_does_not_duplicate_an_entry():
+    """PROSITE renamed relation_source `derived` -> `PROSITE documentation`.
+
+    A naive union treats that as a new fact and appends a second copy of the same
+    relation — measured at 2,745 records on a real re-seed. Entries are compared on
+    everything EXCEPT the provenance fields, and the existing one is kept.
+    """
+    existing = ("identifier: X:1\nmapping_status: SEEDED\ntrait_relations:\n"
+                "  - predicate: biolink:member_of\n    object: P:1\n"
+                "    relation_source: derived\nlicense: CC0\n")
+    fresh = ("identifier: X:1\nmapping_status: SEEDED\ntrait_relations:\n"
+             "  - predicate: biolink:member_of\n    object: P:1\n"
+             "    relation_source: PROSITE documentation\nlicense: CC0\n")
+    rels = yaml.safe_load(merge_on_reseed(existing, fresh))["trait_relations"]
+    assert len(rels) == 1
+    assert rels[0]["relation_source"] == "derived"
+
+
+def test_a_genuinely_different_relation_is_still_added():
+    """The dedupe must not swallow a real second relation to another object."""
+    existing = ("identifier: X:1\nmapping_status: SEEDED\ntrait_relations:\n"
+                "  - predicate: biolink:member_of\n    object: P:1\n    relation_source: derived\n"
+                "license: CC0\n")
+    fresh = ("identifier: X:1\nmapping_status: SEEDED\ntrait_relations:\n"
+             "  - predicate: biolink:member_of\n    object: P:2\n    relation_source: derived\n"
+             "license: CC0\n")
+    rels = yaml.safe_load(merge_on_reseed(existing, fresh))["trait_relations"]
+    assert [r["object"] for r in rels] == ["P:1", "P:2"]

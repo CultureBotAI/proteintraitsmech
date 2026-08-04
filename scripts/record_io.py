@@ -316,6 +316,19 @@ def merge_on_reseed(existing: str, fresh: str) -> str:
         if block:
             out = replace_block(out, key, block)
 
+    # rule 1b - list-valued keys are UNIONED, never replaced, on every record.
+    # `xrefs` and `trait_relations` are seeder-emitted AND enriched afterwards by the
+    # *2go mapping backfills, so "the seeder emitted it, the seeder owns it" is wrong
+    # for them: a PROSITE --force dropped 4,193 GO xrefs and 2,745 trait_relations,
+    # on records that look pristine (SEEDED, no curation_history) and so are not
+    # reached by rule 2 at all. #100's title says it -- no re-seed is safe over
+    # ENRICHED records, and enrichment does not announce itself.
+    #
+    # The trade is deliberate: a source that drops an xref no longer removes it here,
+    # so a stale entry can persist. Keeping a stale xref is recoverable; silently
+    # losing a curated mapping is not.
+    out = _union_list_keys(existing, fresh, out)
+
     # rule 2 - only for a record that shows curation
     if not is_curated(existing):
         return out
@@ -331,6 +344,45 @@ def merge_on_reseed(existing: str, fresh: str) -> str:
             out = replace_block(out, "definitions", merged)
     elif old_defs:
         out = replace_block(out, "definitions", old_defs)
+    return out
+
+
+# Fields that record WHERE an entry came from rather than WHAT it says. Two entries
+# differing only in these are the same fact relabelled, not two facts: PROSITE renamed
+# its relation_source from "derived" to "PROSITE documentation", and a naive union
+# appended a second copy of the same relation to 2,745 records.
+_PROVENANCE_FIELDS = frozenset({"relation_source", "mapping_source"})
+
+
+def _key(value):
+    """An identity for a list entry that ignores which run labelled it."""
+    if isinstance(value, dict):
+        return tuple(sorted((k, str(v)) for k, v in value.items()
+                            if k not in _PROVENANCE_FIELDS))
+    return str(value)
+
+
+def _union_list_keys(existing: str, fresh: str, out: str) -> str:
+    """Union every top-level key that is a list in both records, existing entries first.
+
+    Order matters: an existing entry keeps its position so a re-seed does not reshuffle
+    a curated list, and genuinely new entries are appended.
+    """
+    try:
+        old_doc, new_doc = yaml.safe_load(existing) or {}, yaml.safe_load(fresh) or {}
+    except yaml.YAMLError:
+        return out
+    if not isinstance(old_doc, dict) or not isinstance(new_doc, dict):
+        return out
+    for key, old_val in old_doc.items():
+        new_val = new_doc.get(key)
+        if key == "definitions" or not isinstance(old_val, list) or not isinstance(new_val, list):
+            continue
+        merged = list(old_val) + [v for v in new_val if _key(v) not in {_key(o) for o in old_val}]
+        if merged == old_val and old_val == new_val:
+            continue
+        block = yaml.safe_dump({key: merged}, sort_keys=False, allow_unicode=True, width=100)
+        out = replace_block(out, key, block)
     return out
 
 
