@@ -4,10 +4,13 @@ Which open issues are safe to hand to an unattended `/goal` loop, which need a h
 first, and why. Companion to `NEXT_TASKS.md` (the durable backlog) and
 `prompts/backlog-loop-goal.md` (the workflow itself).
 
-_Reconciled 2026-08-04 against `main` at `9e132d5081e`. **All eight issues the previous
-version listed as loop-ready are now closed**, so the ranking is rebuilt from scratch.
-Every number was re-measured rather than carried over; three were wrong and are corrected
-below._
+_Reconciled 2026-08-04 against `main` at `9e132d5081e`, with one open PR accounted for.
+Every number re-measured rather than carried over._
+
+**Two reconciles in one day, because the loop empties the list faster than the list is
+written.** The first version's eight loop-ready issues all closed; its replacement ranked
+three more, and those are now done too. That churn is the point — but it means the ranking
+below is a snapshot, and should be re-derived rather than trusted if much has merged since.
 
 ---
 
@@ -21,47 +24,56 @@ below._
 4. **A gate can prove it** — `just test`, `just lint`, `just validate-all`,
    `just audit-graphs`, or a canary re-seed diffed byte-for-byte against `main`.
 
-Everything in the first table meets all four. The rest say which one they fail.
+---
+
+## In flight
+
+**#135, #137 and #132 are done in an open PR** and are not available to pick up. They are
+listed here only so a loop does not start them again.
+
+| issue | what landed |
+|---|---|
+| **#135** | the stray backslash is `/`, fixed in the seeder; determinate once the second occurrence (`tertiary\quaternary`) was found |
+| **#137** | spent markers cite the issues they closed, not a PR number that cannot be verified when written |
+| **#132** | a runtime harness for `build_metalpdb`, catching `break`-instead-of-`continue`, which no source-level check can |
 
 ---
 
 ## Loop-ready, in the order I would run them
 
-| # | issue | why it fits | ends when | measured cost |
+| # | issue | why it fits now | ends when | measured cost |
 |---|---|---|---|---|
-| 1 | **#135** BV-BRC stray backslash | now **determinate** — see below | both `\` become `/` | **1 record** |
-| 2 | **#137** a spent prompt can cite a PR that never ran it | pure docs plus one test; three options, one recommended | the marker cannot be silently wrong | 5 prompt files, 1 test |
-| 3 | **#132** builders have no runtime harness | bounded once scoped to one builder | one builder's loop driven over a temp dir — good, malformed, good | 1 builder |
+| 1 | **#99** builders have no test coverage | **#132 made it bounded** — see below | the other four builders have the same harness | 4 builders |
+| 2 | **#139** two U+FFFD in a BV-BRC definition | starts with a re-fetch, which is a measurement | it is known whether the loss is upstream or ours | 1 record |
 
-### #135 stopped needing a judgement
+### #99 stopped being open-ended
 
-It was filed as *"the upstream text probably means `/`"*, which is a guess. Re-reading the
-raw source settles it: **the same field carries two stray backslashes**, and the second
-disambiguates the first.
-
-```
-...including amino acid\nucleotide sequence, and immunological...
-...kinetic and tertiary\quaternary structural...
-```
-
-`tertiary\quaternary` can only be `tertiary/quaternary`. So both are `/` typed as `\`, the
-fix is determinate, and it is **two characters in one record** — the whole BV-BRC dump
-contains no other stray backslash-letter.
-
-### #132 names the wrong builder
-
-The issue suggests `build_mcsa_causal_graphs` as "the smallest". Measured:
+It was listed as "needs a human — open-ended, needs a target". **#132 supplied the target
+and proved the pattern works.** All four remaining causal-graph builders have the shape the
+harness needs, checked:
 
 ```
-build_metalpdb_causal_graphs.py   301   <- smallest
-build_biolip_causal_graphs.py     334
-build_ec_causal_graphs.py         385
-build_mcsa_causal_graphs.py       416
-build_rhea_causal_graphs.py       498
+                                     traits ROOT constant   raw inputs as constants
+build_biolip_causal_graphs.py                1                       3
+build_ec_causal_graphs.py                    1                       0
+build_mcsa_causal_graphs.py                  1                       1
+build_rhea_causal_graphs.py                  1                       2
 ```
 
-`build_metalpdb` is the cheaper pattern, and `build_mcsa` additionally loads an M-CSA
-cache that `build_metalpdb` does not.
+so `ROOT` is monkeypatchable and the heavy inputs are stubbable in each, exactly as in
+`tests/test_builder_runtime.py`. No production change was needed for `build_metalpdb` and
+none should be needed here. `build_ec` is the easiest of the four — no raw input at all.
+
+### #139 begins with a measurement, not a judgement
+
+The issue offers three options, and option 3 is runnable today: `just fetch-seed-subsystems`
+exists. Re-fetch, then check whether the fresh dump still contains U+FFFD. That answers
+*"is this one bad record or a live decode problem"* before anyone has to decide what the
+lost characters were.
+
+Only if the fresh dump is clean does it become a judgement — and then it is a re-seed, not
+a guess. Note the damage is **lossy**, unlike #123's reversible byte round trip, so
+`repair_mojibake` correctly declines it.
 
 ---
 
@@ -71,9 +83,9 @@ Three issues are substantially resolved and wait on a close/keep call rather tha
 
 | issue | measured now | recommendation |
 |---|---|---|
-| **#96** "no test suite" | **5 test files, 221 tests**, `just test`, `just lint`, and CI running both on every PR | **close** — the remainder is #99 and #132, both filed |
-| **#110** slugify, 28 implementations | **1 with logic, 31 delegating wrappers**, AST-enforced by `test_every_slugify_delegates_to_the_shared_one` | **close** — #124 resolved it; the wrappers exist so that no record is renamed |
-| **#102** PSI-MOD Unimod xrefs | 825 dropped lines are real, but **0 terms** have `Unimod` as their only xref, against the 9 claimed | **re-scope or close** — the stated justification does not hold; already commented on the issue |
+| **#96** "no test suite" | on `main`: **5 test files, 221 tests**, `just test`, `just lint`, and CI running both on every PR (the open PR adds a sixth file, 232) | **close** — the remainder is #99, which is now loop-ready |
+| **#110** slugify, 28 implementations | **1 with logic, 31 delegating wrappers**, AST-enforced | **close** — #124 resolved it; the wrappers exist so no record is renamed |
+| **#102** PSI-MOD Unimod xrefs | 825 dropped lines are real, but **0 terms** have `Unimod` as their only xref, against the 9 claimed | **re-scope or close** — the stated justification does not hold |
 
 ---
 
@@ -81,26 +93,26 @@ Three issues are substantially resolved and wait on a close/keep call rather tha
 
 | issue | fails | the decision only you can make |
 |---|---|---|
-| **#92**, **#115** PANTHER stubs | 2 | **6,709** records carry a composed stub; **1,657** have a reviewed abstract parked in `definitions[]`. Those 1,657 were reviewed and *declined* — improving them needs a curator, or a decision to write definitions from GO/protein-class content instead. Promoting them anyway would undo #112. |
+| **#92**, **#115** PANTHER stubs | 2 | **6,709** records carry a composed stub; **1,657** have a reviewed abstract parked in `definitions[]`. Those were reviewed and *declined* — improving them needs a curator, or a decision to write definitions from GO/protein-class content. Promoting them anyway would undo #112. |
 | **#114** first-pass rubric was lenient | 2 | whether to re-review other sources under the stricter rubric, and at what cost |
-| **#120** stale xrefs persist by design | 3 | needs per-entry provenance on `xrefs`, which is a schema change |
+| **#120** stale xrefs persist by design | 3 | needs per-entry provenance on `xrefs`, a schema change |
 | **#122** `BIOLIP_DNA` conflates two molecules | 2 | almost certainly two records, but splitting a class record is a curation act |
-| **#99** builders have no test coverage | 1 | open-ended; needs a target to be loopable. **#132 is the scoped version** — run that instead |
 | **#5** web design review | 4 | visual judgement; no gate can prove it |
 
 ---
 
-## Corrections found while reconciling
+## What the last two reconciles corrected
 
-- **#132 names the wrong builder** as smallest — it is `build_metalpdb` (301 lines), not
-  `build_mcsa` (416).
-- **#135 is determinate, not a judgement** — the second stray backslash
-  (`tertiary\quaternary`) settles what the first means.
-- **#115's 1,142 is stale**; it is now **1,657**, because #112 demoted a further 515 after
-  the issue was written. Of 6,709 stub records, those 1,657 are the ones that already have
-  a reviewed abstract on file.
-- **#102's severity claim remains disproven** — 0 terms, not 9. Recorded on the issue, in
-  case it is ever picked up from the title alone.
+Kept because the pattern matters more than the individual fixes: **issue text goes stale or
+was wrong in roughly half the cases checked.**
+
+- **#132 named the wrong builder** as smallest — `build_metalpdb` (301 lines), not
+  `build_mcsa` (416). Following the issue would have picked the more expensive pattern.
+- **#135 was filed as a guess** (*"probably means `/`"*) and turned out determinate once the
+  second stray backslash was found in the same field.
+- **#115's 1,142 is stale** — now **1,657**, after #112 demoted a further 515.
+- **#102's severity claim is disproven** — 0 terms, not 9.
+- **#99 was mis-filed as needing a human.** It needed a *target*, and #132 supplied one.
 
 ---
 
@@ -111,20 +123,16 @@ to the agent, or paste it; it is self-contained for exactly that reason.
 
 ```
 /goal                          # then feed prompts/backlog-loop-goal.md
-/goal #135                     # same, with a named issue as the hint
+/goal #99                      # same, with a named issue as the hint
 ```
 
-`prompts/` also holds three **spent** scoped prompts (`has-graph-hardening`,
-`loop-text-decoding`, `loop-code-and-docs`). They are kept as worked examples and each
-says so in its `**Use:**` line — do not run them.
+`prompts/` also holds three **spent** scoped prompts. Each says so in its `**Use:**` line —
+do not run them.
 
 Three things worth knowing before leaving a loop unattended:
 
-- **It pauses for merge approval every time.** An unattended run stops with a reviewed,
-  green PR open rather than merging it.
+- **It pauses for merge approval every time.**
 - **It will extend scope if review shows the work was incomplete rather than imperfect.**
-  On #112 it re-reviewed 1,213 extra records after sampling showed the filter that selected
-  391 was not a discriminator.
-- **It corrects issue text it finds wrong, and files what it does not fix.** Of the eight
-  issues closed since the last reconcile, four carried a wrong or stale number and two had
-  a wrong root cause. Expect the backlog to change shape as well as shrink.
+- **It corrects issue text it finds wrong, and files what it does not fix.** Expect the
+  backlog to change shape as well as shrink: this file has been rewritten twice in a day
+  for exactly that reason.
