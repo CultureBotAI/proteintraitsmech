@@ -62,3 +62,48 @@ def test_repairs_run_by_run_when_good_and_bad_text_are_mixed():
     assert "\u03b2" in out and "\u03b1" in out          # Greek survives
     assert "\u00e2\u20ac" not in out                    # mojibake gone
     assert out.endswith("b-N\u2010acetyl-lactosaminidase")
+
+
+# --- #135: a stray backslash where BV-BRC meant a slash ---------------------------
+
+def test_stray_backslash_before_a_letter_becomes_a_slash():
+    """BV-BRC prose has `\\` where `/` was meant — the keys are adjacent.
+
+    Determinate rather than guessed: the one affected description carries TWO, and the
+    second settles the first. `tertiary\\quaternary` can only be `tertiary/quaternary`,
+    so `amino acid\\nucleotide` is `amino acid/nucleotide`.
+    """
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "_seed_subsystems",
+        pathlib.Path(__file__).resolve().parent.parent / "scripts" / "seed_seed_subsystems.py")
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["_seed_subsystems"] = mod
+    spec.loader.exec_module(mod)
+    fn = mod._slash_for_backslash
+    assert fn("amino acid\\nucleotide sequence") == "amino acid/nucleotide sequence"
+    assert fn("tertiary\\quaternary structural") == "tertiary/quaternary structural"
+
+
+@pytest.mark.parametrize("text", [
+    "C:\\\\Users\\\\path",        # a doubled separator, not a typo
+    "ends with a backslash\\\\",
+    "backslash then digit \\\\1",
+    "backslash then space \\\\ x",
+    "no backslash at all",
+])
+def test_it_only_touches_a_backslash_before_a_letter(text):
+    """Scoped so it cannot rewrite a path, a separator, or a regex-looking token.
+
+    The rule is defensible only because it is narrow: after JSON decoding, a backslash
+    still followed by a letter in BV-BRC prose is a literal one, and this dump contains
+    exactly two — both the typo.
+    """
+    import importlib.util
+    spec = importlib.util.spec_from_file_location(
+        "_seed_subsystems2",
+        pathlib.Path(__file__).resolve().parent.parent / "scripts" / "seed_seed_subsystems.py")
+    mod = importlib.util.module_from_spec(spec)
+    sys.modules["_seed_subsystems2"] = mod
+    spec.loader.exec_module(mod)
+    assert mod._slash_for_backslash(text) == text

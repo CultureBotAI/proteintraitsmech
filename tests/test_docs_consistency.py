@@ -87,15 +87,36 @@ def test_every_prompt_says_how_it_is_used():
         "these prompts do not open with a `**Use:**` line: " + ", ".join(sorted(missing)))
 
 
-def test_a_spent_prompt_names_what_executed_it():
-    """A prompt marked spent must say WHICH PR ran it, or the claim cannot be checked."""
+def test_a_spent_prompt_names_the_issues_it_closed():
+    """A spent marker must cite something DURABLE and checkable.
+
+    It used to require `Executed as #NNN`, naming the PR. That was worse than useless:
+    the check verified the *pattern*, not the number, so a wrong PR passed silently —
+    and writing the marker means naming a PR that does not exist yet, so I guessed one
+    and happened to be right (#137).
+
+    The issues a prompt closed are the durable fact, are decided before the marker is
+    written, and are verifiable by anyone in one click. Which PR carried them is in
+    `git log`, where it cannot go stale.
+    """
     import re
     bad = []
     for p in PROMPTS.glob("*.md"):
         use = p.read_text(encoding="utf-8").split("\n\n")[1]
-        # `Executed as #NNN` specifically — an earlier version accepted any `#\d+`,
-        # which the line satisfies by citing the issues it closed, so removing the PR
-        # number still passed. Caught by mutating exactly that.
-        if "spent" in use and not re.search(r"Executed as #\d+", use):
+        if "spent" in use and not re.search(r"closed #\d+", use):
             bad.append(p.name)
-    assert not bad, f"these say 'spent' without naming the PR: {bad}"
+    assert not bad, f"these say 'spent' without naming the issues they closed: {bad}"
+
+
+def test_no_prompt_claims_a_pull_request_number():
+    """Guards the specific mistake #137 recorded, so it cannot come back.
+
+    A `Use:` line naming a PR is unverifiable at the moment it is written — the PR does
+    not exist yet — and nothing downstream can tell a wrong number from a right one.
+    """
+    import re
+    bad = [p.name for p in PROMPTS.glob("*.md")
+           if re.search(r"Executed as #\d+", p.read_text(encoding="utf-8").split("\n\n")[1])]
+    assert not bad, (
+        "these cite a PR number in their Use line, which cannot be verified when written: "
+        + ", ".join(sorted(bad)))
