@@ -356,13 +356,14 @@ not the individual fixes.
   reported as complete — see #114.
 
 **Tests, lint and CI, where there had been none.**
-- **First test suite** (#96, PRs #101/#108) → **232 tests** across 6 files on `main`.
+- **First test suite** (#96, PRs #101/#108) → **248 tests** across 7 files on `main`.
 - **All 63 ruff errors fixed and gated at zero** (#107, PR #121), with CI running `just
   lint` and `just test` on every PR. It immediately caught a `NameError` the import-time
   tests structurally could not.
-- **Runtime harness for `build_metalpdb`** (#132, PR #140) — catches
-  `break`-instead-of-`continue`, which no source-level check can. Extending it to the
-  other four builders is **#141, in an open PR** and not yet on `main`.
+- **Runtime harness for all five causal-graph builders** (#132/#141, PRs #140/#142) —
+  catches `break`-instead-of-`continue`, which no source-level check can. Two loop shapes:
+  four are glob-driven, `build_mcsa` is cache-driven and needs its own fixture. Covers the
+  **skip path only** — graph construction and the splice-refusal branches are #144.
 
 **Shared implementations, closing #93.**
 - `record_io` (splice, `has_graph`, re-seed merge) and `yaml_emit` (`yaml_escape`,
@@ -372,9 +373,9 @@ not the individual fixes.
 
 **Text decoding.**
 - OBO escapes now decoded in definitions, not just citations (#103); double-decoded CAZy
-  and TCDB text repaired (#123). `just audit-text` — reporting **0 reversible damage** and
-  97 lossy U+FFFD, which the re-fetch showed is upstream at BV-BRC — is **#139, in the same
-  open PR**.
+  and TCDB text repaired (#123); **`just audit-text`** added (PR #142), reporting **0
+  reversible damage** and **97 lossy U+FFFD**. The re-fetch showed that loss is upstream at
+  BV-BRC, so **#139 stays open, re-scoped** — 97 records, not the one it was filed for.
 
 **Process.**
 - `prompts/backlog-loop-goal.md` and `NEXT_TASKS_LOOP.md` — the loop workflow and its
