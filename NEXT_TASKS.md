@@ -298,7 +298,10 @@ than assumed:
 - **non-CURIE `xrefs`** — the sweep found **28** values that could not satisfy the CURIE
   pattern (27 DOIs, plus a literal `CATH:???????`). Now **0**. DOIs moved to
   `evidence.reference`, whose range accepts them; the CATH placeholder was dropped.
-  `just validate-all` passes 424,467/424,467.
+  Re-measured by the text scan this section recommends: **0 non-CURIE xref values
+  across all 424,467 records.** A full `just validate-all` was last run clean on
+  2026-08-01 and is deliberately not re-run here — it takes hours, and the scan
+  answers the same question in under a minute.
 - **`just sources-check`** — the two invalid `download.yaml` statuses (`superseded`,
   `enrichment`) were added to the checker's allowed set rather than re-statused, which
   keeps the information about what those two sources are for. Exits 0 (17 warnings, all
