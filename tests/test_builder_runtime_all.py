@@ -17,6 +17,14 @@ Two loop shapes, discovered rather than assumed:
 
 Every heavy input is stubbed. None is read before the skip happens, so nothing is lost by
 not loading a multi-gigabyte XML or an RDF dump to test a `continue`.
+
+**The stubs are deliberately minimal, and only valid for the skip path.** The Rhea one
+returns an object with `.reactions` alone, while the builders also call
+`participants_of`, `lr_child`, `reactive_parts` and `.sides` further down. These tests
+never reach that code — every fixture record either already has the graph or fails to
+parse — so the stub is sufficient here and would NOT be sufficient for a test that
+exercises graph construction. Anyone extending this file to cover the build path needs a
+fuller fake, not a wider `BUILDERS` table.
 """
 
 from __future__ import annotations
