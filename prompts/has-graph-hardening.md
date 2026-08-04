@@ -1,6 +1,6 @@
 # has_graph hardening — #105, #106, #104 as one pull request
 
-**Use:** none — spent. Executed as #131; #104, #105 and #106 are closed. Kept as a
+**Use:** none — spent; it closed #104, #105 and #106. Kept as a
 worked example of scoping a run across issues that cannot be separate PRs.
 
 > ## ✅ DONE — do not run this

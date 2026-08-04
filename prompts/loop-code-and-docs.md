@@ -1,6 +1,6 @@
 # Loop A — #94, #125, #117: code and docs, zero records
 
-**Use:** none — spent. Executed as #136; #94, #125 and #117 are closed. Kept as a
+**Use:** none — spent; it closed #94, #125 and #117. Kept as a
 worked example of an audit that correctly closed without a code change.
 
 Feed this to `/goal`, or paste it to any agent. A worked instance of
