@@ -1,5 +1,8 @@
 # Loop B — #103, #123: text decoded wrong, and the records that carry it
 
+**Use:** none — spent. Executed as #134; #103 and #123 are closed. Kept as a worked
+example: both issues had a wrong root cause, and the run corrected them.
+
 Feed this to `/goal`, or paste it to any agent. A worked instance of
 `prompts/backlog-loop-goal.md`, which remains the workflow; this supplies the scope,
 the measured facts and the traps.

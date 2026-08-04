@@ -1,5 +1,8 @@
 # has_graph hardening — #105, #106, #104 as one pull request
 
+**Use:** none — spent. Executed as #131; #104, #105 and #106 are closed. Kept as a
+worked example of scoping a run across issues that cannot be separate PRs.
+
 > ## ✅ DONE — do not run this
 >
 > Executed and merged as **#131** (`923506fc2642`) on 2026-08-04. **#104, #105 and #106

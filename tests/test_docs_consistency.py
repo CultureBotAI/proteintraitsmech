@@ -68,3 +68,34 @@ def test_no_prompt_is_wrapped_as_a_skill():
     assert not offenders, (
         "these skills wrap a prompt, which #126 removed on purpose — delete them rather "
         "than repointing: " + ", ".join(sorted(offenders)))
+
+
+def test_every_prompt_says_how_it_is_used():
+    """#117: a reader must be able to tell what kind of document they are holding.
+
+    `prompts/` mixes three kinds — a live workflow that picks its own target, scoped
+    runs that are spent once executed, and one meant for an *independent* reviewer
+    rather than for the agent reading it. Confusing the last for the first is the
+    expensive mistake: `schema-review.md` says explicitly not to make code changes.
+
+    Gated rather than documented, for the same reason as the list above: the prompts
+    list went stale twice while the mitigation was "remember to check".
+    """
+    missing = [p.name for p in PROMPTS.glob("*.md")
+               if not p.read_text(encoding="utf-8").split("\n\n")[1].startswith("**Use:**")]
+    assert not missing, (
+        "these prompts do not open with a `**Use:**` line: " + ", ".join(sorted(missing)))
+
+
+def test_a_spent_prompt_names_what_executed_it():
+    """A prompt marked spent must say WHICH PR ran it, or the claim cannot be checked."""
+    import re
+    bad = []
+    for p in PROMPTS.glob("*.md"):
+        use = p.read_text(encoding="utf-8").split("\n\n")[1]
+        # `Executed as #NNN` specifically — an earlier version accepted any `#\d+`,
+        # which the line satisfies by citing the issues it closed, so removing the PR
+        # number still passed. Caught by mutating exactly that.
+        if "spent" in use and not re.search(r"Executed as #\d+", use):
+            bad.append(p.name)
+    assert not bad, f"these say 'spent' without naming the PR: {bad}"
