@@ -26,6 +26,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CSV = REPO_ROOT / "data" / "raw" / "iedb" / "epitope_full_v3.csv"
 OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "epitope" / "iedb"
@@ -122,9 +125,7 @@ def main() -> int:
                 continue
             if args.apply:
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(
-                    build_yaml(epid, seq, row[11].strip(), acc, row[13].strip()),
-                    encoding="utf-8")
+                write_record(path, build_yaml(epid, seq, row[11].strip(), acc, row[13].strip()))
                 written += 1
 
     print(f"IEDB: {kept} linear-peptide epitope classes (UniProt-grounded, capped "

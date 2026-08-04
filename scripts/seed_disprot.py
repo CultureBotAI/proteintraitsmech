@@ -27,6 +27,9 @@ import urllib.request
 from collections import defaultdict
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = REPO_ROOT / "data" / "raw"
 CACHE_PATH = RAW_DIR / "disprot.entries.json"
@@ -175,7 +178,7 @@ def main() -> int:
             return
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(text, encoding="utf-8")
+            write_record(path, text)
             written += 1
 
     for ns, (ident, label, defn) in NAMESPACE_GROUP.items():

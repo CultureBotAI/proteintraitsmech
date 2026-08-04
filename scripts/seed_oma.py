@@ -28,6 +28,9 @@ import urllib.error
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 CACHE = REPO_ROOT / "data" / "raw" / "oma"
 OUT_DIR = REPO_ROOT / "data" / "traits" / "function" / "ortholog_group" / "oma"
@@ -180,7 +183,7 @@ def main() -> int:
             return
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(text, encoding="utf-8")
+            write_record(path, text)
             written += 1
 
     emit(f"oma-level-{slug(args.level)}.yaml", build_level(args.level))

@@ -27,7 +27,11 @@ from __future__ import annotations
 import argparse
 import re
 from collections import Counter, defaultdict
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "merops" / "Substrate_search.txt"
@@ -171,7 +175,7 @@ def main() -> int:
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            write_record(path, "\n".join(lines) + "\n")
             written += 1
 
     total = sum(1 for d in pep.values() if d["n"] >= args.min_cleavages)

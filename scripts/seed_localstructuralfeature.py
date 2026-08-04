@@ -20,6 +20,9 @@ import argparse
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 DATA_DIR = REPO_ROOT / "data" / "traits" / "structure"
 
@@ -258,7 +261,7 @@ def main() -> int:
         elif path.exists() and args.force:
             action = "OVERWRITE" if args.apply else "would-overwrite"
             if args.apply:
-                path.write_text(yaml_for(entry))
+                write_record(path, yaml_for(entry))
                 written += 1
             else:
                 would_overwrite += 1
@@ -266,7 +269,7 @@ def main() -> int:
             action = "WRITE" if args.apply else "would-write"
             if args.apply:
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(yaml_for(entry))
+                write_record(path, yaml_for(entry))
                 written += 1
 
         print(f"  [{action:16s}] {rel}")

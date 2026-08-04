@@ -23,6 +23,9 @@ import argparse
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "traits" / "structure" / "secondary"
 PFX = "proteintraitsmech:"
@@ -167,7 +170,7 @@ def main() -> int:
             continue
         if args.apply:
             OUT_DIR.mkdir(parents=True, exist_ok=True)
-            path.write_text(emit(rec), encoding="utf-8")
+            write_record(path, emit(rec))
         if exists:
             enriched += 1
         else:

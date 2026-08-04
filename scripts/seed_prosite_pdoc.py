@@ -24,6 +24,9 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "prosite.dat"
 TRAITS = REPO_ROOT / "data" / "traits"
@@ -115,7 +118,7 @@ def main() -> int:
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+            write_record(path, "\n".join(lines) + "\n")
             written += 1
 
     print(f"{len(referenced)} referenced PROSITE PDOC groups → SEQUENCE/SEQ_FAMILY.")

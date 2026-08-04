@@ -891,3 +891,117 @@ def test_append_preserves_deeper_continuation_lines_when_reindenting():
     second = yaml.safe_load(out)["curation_history"][1]
     assert second == {"timestamp": "t2", "curator": "c",
                       "action": "did a thing", "llm_assisted": True}
+
+
+# --- re-seed merging (#100) -----------------------------------------------------
+
+from record_io import is_curated, merge_on_reseed  # noqa: E402
+
+SEEDED = """identifier: X:1
+label: "A"
+definition: >-
+  the stub
+definition_source: "SRC (composed)"
+mapping_status: SEEDED
+license: CC0
+"""
+
+CURATED = """identifier: X:1
+label: "A"
+definition: >-
+  a real curated definition
+definition_source: "SRC abstract (LLM-generated, LLM-reviewed m, not curator-reviewed)"
+mapping_status: PROPOSED
+evidence:
+  - reference: PMID:1
+causal_graphs:
+  - graph_id: catalysis
+    nodes: []
+    edges: []
+curation_history:
+  - timestamp: "t"
+    curator: c
+license: CC0
+"""
+
+
+def test_a_pristine_record_is_replaced_wholesale():
+    """Nothing to protect, so --force must still do what it says."""
+    fresh = SEEDED.replace("the stub", "a fresher stub")
+    assert merge_on_reseed(SEEDED, fresh) == fresh
+
+
+def test_curator_only_keys_survive_a_reseed():
+    out = yaml.safe_load(merge_on_reseed(CURATED, SEEDED))
+    assert out["causal_graphs"][0]["graph_id"] == "catalysis"
+    assert out["curation_history"][0]["curator"] == "c"
+    assert out["evidence"][0]["reference"] == "PMID:1"
+
+
+def test_a_curated_definition_is_not_overwritten():
+    out = yaml.safe_load(merge_on_reseed(CURATED, SEEDED))
+    assert out["definition"] == "a real curated definition"
+    assert "LLM-reviewed" in out["definition_source"]
+    assert out["mapping_status"] == "PROPOSED"
+
+
+def test_source_derived_fields_still_refresh_on_a_curated_record():
+    """The whole point of --force. Curation is protected; facts are not frozen."""
+    fresh = SEEDED.replace('label: "A"', 'label: "A renamed by the new release"')
+    out = yaml.safe_load(merge_on_reseed(CURATED, fresh))
+    assert out["label"] == "A renamed by the new release"
+    assert out["definition"] == "a real curated definition"     # still protected
+
+
+def test_graphs_survive_on_a_record_that_still_looks_pristine():
+    """The 58,048-record hole, and the reason rule 1 is not gated on a heuristic.
+
+    The graph builders add `causal_graphs` without flipping mapping_status or writing
+    a curation_history, so a record can carry real curated work and still look like a
+    fresh import. The first draft gated key-restoration on `is_curated` and dropped
+    graphs and evidence from 14 of 500 sampled real records.
+    """
+    looks_pristine = CURATED.replace("mapping_status: PROPOSED", "mapping_status: SEEDED")
+    looks_pristine = looks_pristine.replace(
+        'curation_history:\n  - timestamp: "t"\n    curator: c\n', "")
+    assert is_curated(looks_pristine) is False          # the heuristic says pristine
+    out = yaml.safe_load(merge_on_reseed(looks_pristine, SEEDED))
+    assert out["causal_graphs"][0]["graph_id"] == "catalysis"   # kept anyway
+    assert out["evidence"][0]["reference"] == "PMID:1"
+
+
+def test_definitions_are_merged_not_replaced():
+    existing = CURATED.replace(
+        "license: CC0",
+        'definitions:\n  - kind: GENERAL\n    text: >-\n      curated one\n    source: "c"\nlicense: CC0')
+    fresh = SEEDED.replace(
+        "license: CC0",
+        'definitions:\n  - kind: GENERAL\n    text: >-\n      from the new release\n    source: "s"\nlicense: CC0')
+    out = yaml.safe_load(merge_on_reseed(existing, fresh))
+    texts = [" ".join(d["text"].split()) for d in out["definitions"]]
+    assert texts == ["curated one", "from the new release"]
+
+
+def test_reseeding_twice_does_not_duplicate_a_definition():
+    """The same abstract re-seeded carries a different `source` once reviewed, so
+    matching whole items would append a copy on every run."""
+    existing = CURATED.replace(
+        "license: CC0",
+        'definitions:\n  - kind: GENERAL\n    text: >-\n      shared text\n    source: "reviewed"\nlicense: CC0')
+    fresh = SEEDED.replace(
+        "license: CC0",
+        'definitions:\n  - kind: GENERAL\n    text: >-\n      shared text\n    source: "raw"\nlicense: CC0')
+    once = merge_on_reseed(existing, fresh)
+    twice = merge_on_reseed(once, fresh)
+    assert len(yaml.safe_load(once)["definitions"]) == 1
+    assert yaml.safe_load(twice)["definitions"] == yaml.safe_load(once)["definitions"]
+
+
+@pytest.mark.parametrize("text,expect", [
+    (SEEDED, False),
+    (CURATED, True),
+    (SEEDED.replace("mapping_status: SEEDED", "mapping_status: REVIEWED"), True),
+    (SEEDED.replace("license: CC0", 'curation_history:\n  - timestamp: "t"\nlicense: CC0'), True),
+])
+def test_is_curated_signals(text, expect):
+    assert is_curated(text) is expect

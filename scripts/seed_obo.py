@@ -65,6 +65,9 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = REPO_ROOT / "data" / "raw"
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
@@ -621,7 +624,7 @@ def seed_source(src: Source, args) -> dict:
         stats["planned"] += 1
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(yaml_body, encoding="utf-8")
+            write_record(path, yaml_body)
             stats["written"] += 1
 
     for d, n in sorted(stats["by_dir"].items()):

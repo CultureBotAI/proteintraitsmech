@@ -23,6 +23,9 @@ import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "ideal" / "IDEAL.xml.gz"
 OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "disorder"
@@ -135,7 +138,7 @@ def main() -> int:
     exists = path.exists()
     if args.apply and (not exists or args.force):
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(build_yaml(n_prot, examples[:EXAMPLES_CAP]), encoding="utf-8")
+        write_record(path, build_yaml(n_prot, examples[:EXAMPLES_CAP]))
 
     print(f"IDEAL: 1 ProS trait ({IDENT}); {n_prot} IDEAL proteins with a ProS "
           f"motif (examples capped at {EXAMPLES_CAP}).")

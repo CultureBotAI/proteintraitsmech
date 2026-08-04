@@ -24,6 +24,9 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw" / "merops" / "pepunit.lib"
 OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "family" / "merops"
@@ -116,8 +119,7 @@ def main() -> int:
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_yaml(fam, fam_letter[fam], tn, fam_count[fam]),
-                            encoding="utf-8")
+            write_record(path, build_yaml(fam, fam_letter[fam], tn, fam_count[fam]))
             written += 1
 
     print(f"{len(fam_letter)} MEROPS peptidase families → STRUCT_DOMAIN "

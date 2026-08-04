@@ -22,6 +22,9 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence"
 SEARCH = "https://rest.uniprot.org/uniprotkb/search"
@@ -150,7 +153,7 @@ def main() -> int:
         print(f"  {category}: {len(examples)} example proteins")
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(text, encoding="utf-8")
+            write_record(path, text)
             written += 1
 
     print(f"{len(FEATURES)} UniProt peptide feature-type classes → SEQUENCE.")

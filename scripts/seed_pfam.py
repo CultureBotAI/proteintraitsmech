@@ -41,6 +41,9 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw"
 CLANS = RAW / "pfam" / "Pfam-A.clans.tsv.gz"
@@ -191,8 +194,7 @@ def main() -> int:
                 continue
             if args.apply:
                 path.parent.mkdir(parents=True, exist_ok=True)
-                path.write_text(build_yaml(pf, pid, desc, clan, typ, axis, category, go, ipr),
-                                encoding="utf-8")
+                write_record(path, build_yaml(pf, pid, desc, clan, typ, axis, category, go, ipr))
                 stats["written"] += 1
 
     total = sum(stats["by_cat"].values())

@@ -29,6 +29,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import write_record  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 NAMES = REPO_ROOT / "data" / "raw" / "cath" / "cath-names.txt"
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
@@ -140,7 +143,7 @@ def main() -> int:
             continue
         if args.apply:
             path.parent.mkdir(parents=True, exist_ok=True)
-            path.write_text(build_yaml(code, name, rep, category, level), encoding="utf-8")
+            write_record(path, build_yaml(code, name, rep, category, level))
             stats["written"] += 1
 
     total = sum(stats["by_cat"].values())
