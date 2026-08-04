@@ -1058,3 +1058,49 @@ def test_a_genuinely_different_relation_is_still_added():
              "license: CC0\n")
     rels = yaml.safe_load(merge_on_reseed(existing, fresh))["trait_relations"]
     assert [r["object"] for r in rels] == ["P:1", "P:2"]
+
+
+# --- #105: a duplicated top-level key is corruption, not a formatting choice --------
+
+from record_io import DuplicateKeyError  # noqa: E402
+
+DUP = ("causal_graphs:\n- graph_id: first\n  nodes: []\n  edges: []\n"
+       "causal_graphs:\n- graph_id: second\n  nodes: []\n  edges: []\nlicense: CC0\n")
+
+
+def test_a_duplicated_causal_graphs_key_raises_rather_than_answering():
+    """The scan reads the FIRST block; yaml.safe_load keeps the LAST.
+
+    So on such a record any answer is arbitrary: `has_graph('second')` was False even
+    though a loader reports exactly that graph present, after which a builder appends
+    yet another copy. Raising surfaces the corruption instead of choosing a side.
+    """
+    assert yaml.safe_load(DUP)["causal_graphs"][0]["graph_id"] == "second"   # the loader
+    with pytest.raises(DuplicateKeyError):
+        has_graph(DUP, "second")
+    with pytest.raises(DuplicateKeyError):
+        has_graph(DUP, "first")
+
+
+def test_the_fix_is_not_to_prefer_the_last_block():
+    """Guards the tempting wrong fix.
+
+    Making the scan read the last block would make `has_graph` agree with PyYAML and
+    hide the duplication — which is how `insert_before_license` silently dropped a
+    record's original graphs in the first place.
+    """
+    with pytest.raises(DuplicateKeyError):
+        has_graph(DUP, "second")
+
+
+def test_a_single_causal_graphs_key_is_unaffected():
+    single = "causal_graphs:\n- graph_id: only\n  nodes: []\n  edges: []\nlicense: CC0\n"
+    assert has_graph(single, "only") is True
+    assert has_graph(single, "absent") is False
+
+
+def test_causal_graphs_inside_a_scalar_does_not_count_as_a_duplicate():
+    """Only column-0 keys are top level; the word inside a folded scalar is prose."""
+    text = ("definition: >-\n  see causal_graphs: below\n"
+            "causal_graphs:\n- graph_id: only\n  nodes: []\n  edges: []\nlicense: CC0\n")
+    assert has_graph(text, "only") is True
