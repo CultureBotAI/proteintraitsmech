@@ -6,9 +6,13 @@ convention:** update an item when work on it starts or ships (mark
 section with enough context to pick it up cold; keep absolute dates. Reconcile
 against merged PRs + `git log` before trusting it.
 
-_Last reconciled: 2026-08-01, after an independent fact-check of every number in
-this file and the round 16/17 reports. Several were wrong and are corrected in
-place, each marked CORRECTED with the date._
+_Last reconciled: 2026-08-04, against `main` at `a84da67d869`. Every checkable claim
+re-measured; the **Broken gates** section was entirely obsolete and is removed, and
+fourteen PRs merged since the previous reconcile are recorded below._
+
+_**Loop-ready work now lives in `NEXT_TASKS_LOOP.md`**, which ranks the open issues an
+unattended `/goal` run can finish and says which need a human first. This file remains the
+durable backlog: the long threads, the context, and what has shipped._
 
 ---
 
@@ -286,27 +290,28 @@ and may now be the right home for them.
 - **1,063 multi-reaction EC classes show at most 3 of their reactions.** Stated in
   each graph's description — a display cap, not a data limit.
 
-## Broken gates (small, pre-existing, blocking the "final gate" of `ingest-source`)
+## Broken gates — CLEARED (2026-08-04)
 
-Both found 2026-07-31 while ingesting PANTHER; **neither is caused by it**, and both
-were confirmed present on `main` (`git stash` + re-run).
+Both gates named here on 2026-07-31 are fixed, and both were re-measured today rather
+than assumed:
 
-- **`just validate-all` over the whole corpus fails on 28 records** — an `xrefs:`
-  value that is not a CURIE. 27 are DOIs (`DOI:10.1016/S0953-7562(96)80057-8`) —
-  every DOI contains `/`, which `^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$`
-  forbids — in `function/pathway/go` (11), `function/localization/go` (10) and
-  `function/molecular_function/go` (6); the 28th is a literal placeholder
-  `CATH:???????` in `structure/homologous_superfamily/cath/1-20-1690-30-*.yaml`.
-  The DOI fix is a seeder-level modelling call: a DOI belongs in
-  `evidence.reference` (whose range accepts it), not in `xrefs`. The CATH one is
-  simply a data bug and should be dropped.
-  **Do not diagnose this with `just validate-all`** — a full sweep is ~2,123
-  linkml-validate batches and takes hours because each failing batch re-runs
-  per-file. A direct text scan of `xrefs:` against the CURIE pattern answers it in
-  under a minute.
-- **`just sources-check` fails on 2 invalid `status` values** in `download.yaml`:
-  `superseded` (ENIGMA trait-onto-map) and `enrichment` (ChEBI). Either add them to
-  the checker's allowed set or re-status those two blocks.
+- **non-CURIE `xrefs`** — the sweep found **28** values that could not satisfy the CURIE
+  pattern (27 DOIs, plus a literal `CATH:???????`). Now **0**. DOIs moved to
+  `evidence.reference`, whose range accepts them; the CATH placeholder was dropped.
+  Re-measured by the text scan this section recommends: **0 non-CURIE xref values
+  across all 424,467 records.** A full `just validate-all` was last run clean on
+  2026-08-01 and is deliberately not re-run here — it takes hours, and the scan
+  answers the same question in under a minute.
+- **`just sources-check`** — the two invalid `download.yaml` statuses (`superseded`,
+  `enrichment`) were added to the checker's allowed set rather than re-statused, which
+  keeps the information about what those two sources are for. Exits 0 (17 warnings, all
+  the pre-existing orphan-seeder kind). Closed as #91.
+
+Kept as a heading rather than deleted because the note it carried is still worth having:
+**do not diagnose a corpus-wide validation failure with `just validate-all`** — a full
+sweep re-runs per-file on every failing batch and takes hours. A direct text scan against
+the CURIE pattern answers the same question in under a minute, and is what re-measured
+this today.
 
 ## Refinements (small, opportunistic)
 
@@ -332,6 +337,53 @@ were confirmed present on `main` (`git stash` + re-run).
   waiting for. Issue #94; best done as part of the shared splice helper in #93.
 
 ## Recently shipped (DONE)
+
+### 2026-08-01 → 08-04: the infrastructure round (14 PRs)
+
+Almost none of this was planned here. It came out of reviewing merged work, and roughly
+half of it corrected a claim in the issue that prompted it — which is the reusable lesson,
+not the individual fixes.
+
+**Data safety — the one that mattered most.**
+- **`--force` re-seeds no longer destroy curation** (#100, PR #119). Measured, not
+  estimated: the old behaviour rewrote **1,604 records, destroying 1,089 curated
+  definitions and 1,604 curation histories** on PANTHER alone; corpus-wide exposure was
+  39,647 causal graphs and 96,476 evidence blocks. Now 0 files modified. Enriched *lists*
+  are unioned too, after `seed_prosite --force` was found dropping 4,193 GO xrefs.
+
+**PANTHER definitions (#92).**
+- **1,604 LLM abstracts promoted** after LLM review (PR #111), then **515 demoted** (PR
+  #113) when a stricter re-review found them superfamily-level. Net **1,089** real
+  definitions where stubs had been. The filter that selected which to re-review turned out
+  **not to discriminate** (36% vs 42%), so the pass was extended to all 1,604 rather than
+  reported as complete — see #114.
+
+**Tests, lint and CI, where there had been none.**
+- **First test suite** (#96, PRs #101/#108) → **248 tests** across 7 files on `main`.
+- **All 63 ruff errors fixed and gated at zero** (#107, PR #121), with CI running `just
+  lint` and `just test` on every PR. It immediately caught a `NameError` the import-time
+  tests structurally could not.
+- **Runtime harness for all five causal-graph builders** (#132/#141, PRs #140/#142) —
+  catches `break`-instead-of-`continue`, which no source-level check can. Two loop shapes:
+  four are glob-driven, `build_mcsa` is cache-driven and needs its own fixture. Covers the
+  **skip path only** — graph construction and the splice-refusal branches are #144.
+
+**Shared implementations, closing #93.**
+- `record_io` (splice, `has_graph`, re-seed merge) and `yaml_emit` (`yaml_escape`,
+  `folded`, `slugify`). `yaml_escape` went 43 copies → **1**; `slugify` 28 distinct
+  implementations → 1 plus parameter-only wrappers, so **no record was renamed**. Closed
+  #109 and, in effect, #110.
+
+**Text decoding.**
+- OBO escapes now decoded in definitions, not just citations (#103); double-decoded CAZy
+  and TCDB text repaired (#123); **`just audit-text`** added (PR #142), reporting **0
+  reversible damage** and **97 lossy U+FFFD**. The re-fetch showed that loss is upstream at
+  BV-BRC, so **#139 stays open, re-scoped** — 97 records, not the one it was filed for.
+
+**Process.**
+- `prompts/backlog-loop-goal.md` and `NEXT_TASKS_LOOP.md` — the loop workflow and its
+  ranking. Three scoped prompts are kept as spent worked examples.
+
 
 - **Causal-graph mechanism layer, rounds 12–16** (2026-07-28 → 2026-07-30, PRs
   #77, #80–#89) — the mechanism layer went from 6,180 to **39,647** records with
