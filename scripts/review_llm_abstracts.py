@@ -44,7 +44,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from record_io import append_to_section, insert_before_license  # noqa: E402
+from record_io import append_to_section, insert_before_license
+from yaml_emit import folded_block  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 PANTHER_DIR = ROOT / "data" / "traits" / "sequence" / "family" / "panther"
@@ -304,9 +305,6 @@ def replace_scalar(text: str, key: str, value: str) -> str:
     return "".join(lines[:i] + [value if value.endswith("\n") else value + "\n"] + lines[j:])
 
 
-def folded(key: str, text: str) -> str:
-    """`key: >-` with the text as one long line, matching how the seeders write it."""
-    return f"{key}: >-\n  {' '.join(text.split())}\n"
 
 
 def promoted_source(interpro: str | None, reviewer: str) -> str:
@@ -339,7 +337,7 @@ def cmd_promote(args) -> int:
                          if str(x.get("object", "")).startswith("InterPro:")), None)
         body = " ".join((abstract.get("text") or "").split())
 
-        out = replace_scalar(text, "definition", folded("definition", body))
+        out = replace_scalar(text, "definition", folded_block("definition", body))
         out = replace_scalar(out, "definition_source", promoted_source(interpro, v["reviewer"]))
         # the parked copy records that it was reviewed, so the file is self-describing
         out = out.replace(f'source: "{interpro} abstract ({UNREVIEWED})"',
@@ -487,7 +485,7 @@ def cmd_demote(args) -> int:
             problems.append(f"{vid}: stub missing, cannot demote")
             continue
         out = replace_scalar(text, "definition",
-                             folded("definition", " ".join((stub.get("text") or "").split())))
+                             folded_block("definition", stub.get("text") or ""))
         out = replace_scalar(out, "definition_source", f'definition_source: "{STUB_SOURCE}"\n')
         out = replace_scalar(out, "mapping_status", "mapping_status: SEEDED\n")
         # the parked abstract records that it was reviewed AND rejected, so it is not

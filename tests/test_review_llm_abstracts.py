@@ -16,8 +16,9 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "scripts"))
 
 from review_llm_abstracts import (  # noqa: E402
-    _parse_verdicts, folded, promoted_source, replace_scalar,
+    _parse_verdicts, promoted_source, replace_scalar,
 )
+from yaml_emit import folded_block as folded  # noqa: E402
 
 BATCH = [{"id": "PANTHER:PTHR1", "path": "p.yaml"}, {"id": "PANTHER:PTHR2", "path": "q.yaml"}]
 

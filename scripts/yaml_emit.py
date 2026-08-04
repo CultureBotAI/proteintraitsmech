@@ -175,3 +175,16 @@ def _CP1252_ENCODABLE(ch: str) -> bool:
         return True
     except UnicodeEncodeError:
         return False
+
+
+def folded_block(key: str, text: str, indent: str = "") -> str:
+    """A whole `key: >-` block as one string, ready to splice into a record.
+
+    The list-returning `folded` above is what a seeder wants when it is assembling
+    `lines`; this is what a caller wants when it is splicing a finished block into
+    existing text. Both collapse whitespace, so they cannot disagree about the value —
+    they differ only in shape (#125).
+
+    `indent` prefixes both lines, for a block nested under another key.
+    """
+    return f"{indent}{key}: >-\n{indent}  {' '.join((text or '').split())}\n"
