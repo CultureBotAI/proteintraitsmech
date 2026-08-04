@@ -74,22 +74,59 @@ def has_graph(text: str, graph_id: str) -> bool:
     a loud failure beats the silent duplication that a False would cause.
     """
     want = graph_id.strip()
-    return want in _graph_ids(text)
+    return want in graph_ids(text)
 
 
-def _graph_ids(text: str) -> set[str]:
-    """Every `graph_id` in the record's `causal_graphs:` section."""
+class RecordError(ValueError):
+    """This record cannot be read, and the caller should skip it rather than guess.
+
+    One type for every "unusable record" reason, so a builder catches this instead of
+    `yaml.YAMLError` (#104). That keeps the parser choice inside this module: callers
+    do not import yaml, and a future change of loader does not touch six builders.
+    Deliberately narrower than `Exception`, which would swallow real bugs.
+    """
+
+
+class DuplicateKeyError(RecordError):
+    """A record carries the same top-level key twice, so its value is ambiguous."""
+
+
+def graph_ids(text: str) -> set[str]:
+    """Every `graph_id` in the record's `causal_graphs:` section.
+
+    Raises `DuplicateKeyError` if `causal_graphs:` appears twice at top level (#105).
+    This block-scan reads the FIRST occurrence; `yaml.safe_load` keeps the LAST, so on
+    such a record the two disagree and `has_graph` answers from the block a loader
+    discards — reporting a graph absent that a reader sees, after which a builder
+    appends yet another copy.
+
+    Raising rather than picking a side is the point. A duplicated top-level key is
+    corruption, not a formatting choice: it is exactly what `insert_before_license`
+    produced when it added a second `causal_graphs:` key, and PyYAML then silently
+    dropped the original graphs. Preferring the last block would make `has_graph` agree
+    with the loader and hide that failure completely.
+
+    Latent and pre-existing: 0 of 424,467 records carry a duplicated top-level key, and
+    the textual scanner this replaced had the same first-block behaviour.
+    """
     lines = text.splitlines()
     try:
         i = next(n for n, ln in enumerate(lines) if ln.startswith("causal_graphs:"))
     except StopIteration:
         return set()
+    if any(ln.startswith("causal_graphs:") for ln in lines[i + 1:]):
+        raise DuplicateKeyError(
+            "record has more than one top-level 'causal_graphs:' key; this scan reads "
+            "the first, yaml.safe_load keeps the last, so the answer would be arbitrary")
     block = [lines[i]]
     for ln in lines[i + 1:]:
         if ln and _TOP_KEY.match(ln):
             break
         block.append(ln)
-    section = yaml.load("\n".join(block), Loader=_Loader) or {}
+    try:
+        section = yaml.load("\n".join(block), Loader=_Loader) or {}
+    except yaml.YAMLError as exc:                       # unparseable section (#104)
+        raise RecordError(f"causal_graphs section does not parse: {exc}") from exc
     graphs = section.get("causal_graphs") or []
     if not isinstance(graphs, list):
         return set()

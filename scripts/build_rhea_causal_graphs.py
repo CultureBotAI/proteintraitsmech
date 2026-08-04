@@ -58,7 +58,7 @@ from pathlib import Path
 
 import yaml
 
-from record_io import append_to_section, has_graph
+from record_io import RecordError, append_to_section, has_graph
 
 import rhea_rdf
 
@@ -420,7 +420,15 @@ def main() -> int:
         # Skip on THIS builder's graph_id, not on the presence of any graph at all.
         # A record that gained a `catalytic_residues_*` graph first would otherwise be
         # permanently skipped here and never get its reaction chemistry.
-        if has_graph(text, "reaction_chemistry"):
+        try:
+            seen = has_graph(text, "reaction_chemistry")
+        except RecordError as exc:
+            # One unreadable record must not abort a run that has already
+            # written to earlier ones (#104). Warn with the path and skip.
+            stat["skipped: record could not be read"] += 1
+            print(f"  WARN unreadable {f}: {exc}", file=sys.stderr)
+            continue
+        if seen:
             stat["already has a graph"] += 1
             continue
         m = re.search(r"^identifier:\s*RHEA:(\d+)\s*$", text, re.M)

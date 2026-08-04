@@ -475,8 +475,14 @@ def test_each_builder_checks_its_own_graph_id():
     # copy/paste regression there stayed green. Discovering the set from disk means
     # a newly added builder is covered without anyone remembering to add it.
     scripts = Path(__file__).resolve().parent.parent / "scripts"
+    # Two shapes count, because #106 moved one builder off has_graph: a direct
+    # `has_graph(text, <id>)`, or `graph_id = <id>` tested against a cached set of ids.
+    # Both name the id explicitly, which is what this test is really about; only the
+    # call shape differs. Discovering on either keeps the builder covered instead of
+    # letting it drop silently out of the set.
     builders = sorted(p.name for p in scripts.glob("build_*.py")
-                      if "has_graph(" in p.read_text(encoding="utf-8"))
+                      if "has_graph(" in (src := p.read_text(encoding="utf-8"))
+                      or _re.search(r"^\s*graph_id\s*=", src, _re.M))
     assert len(builders) >= 6, f"expected every converted builder, found {builders}"
     expected = {"build_biolip_causal_graphs.py": "ligand_binding",
                 "build_metalpdb_causal_graphs.py": "metal_coordination",
@@ -494,7 +500,12 @@ def test_each_builder_checks_its_own_graph_id():
         # appears elsewhere in the file (e.g. as GRAPH_ID), so it passed no matter
         # what has_graph was actually called with.
         arg = _re.search(r"has_graph\(\s*text\s*,\s*([^)]+)\)", src)
-        assert arg, f"{name} does not call has_graph(text, ...)"
+        if arg is None:
+            # the #106 shape: `graph_id = <id>` then `if graph_id in <cached set>`
+            arg = _re.search(r"^\s*graph_id\s*=\s*(.+?)\s*$", src, _re.M)
+            assert arg, f"{name} neither calls has_graph(text, ...) nor assigns graph_id"
+            assert _re.search(r"\bgraph_id\s+in\b", src), (
+                f"{name} assigns graph_id but never tests it for membership")
         arg = arg.group(1).strip()
         # either a literal "want", or an f-string built from a constant equal to want
         literal = _re.fullmatch(r'["\']([^"\']+)["\']', arg)
@@ -1058,3 +1069,113 @@ def test_a_genuinely_different_relation_is_still_added():
              "license: CC0\n")
     rels = yaml.safe_load(merge_on_reseed(existing, fresh))["trait_relations"]
     assert [r["object"] for r in rels] == ["P:1", "P:2"]
+
+
+# --- #105: a duplicated top-level key is corruption, not a formatting choice --------
+
+from record_io import DuplicateKeyError  # noqa: E402
+
+DUP = ("causal_graphs:\n- graph_id: first\n  nodes: []\n  edges: []\n"
+       "causal_graphs:\n- graph_id: second\n  nodes: []\n  edges: []\nlicense: CC0\n")
+
+
+def test_a_duplicated_causal_graphs_key_raises_rather_than_answering():
+    """The scan reads the FIRST block; yaml.safe_load keeps the LAST.
+
+    So on such a record any answer is arbitrary: `has_graph('second')` was False even
+    though a loader reports exactly that graph present, after which a builder appends
+    yet another copy. Raising surfaces the corruption instead of choosing a side.
+    """
+    assert yaml.safe_load(DUP)["causal_graphs"][0]["graph_id"] == "second"   # the loader
+    with pytest.raises(DuplicateKeyError):
+        has_graph(DUP, "second")
+    with pytest.raises(DuplicateKeyError):
+        has_graph(DUP, "first")
+
+
+def test_the_fix_is_not_to_prefer_the_last_block():
+    """Guards the tempting wrong fix.
+
+    Making the scan read the last block would make `has_graph` agree with PyYAML and
+    hide the duplication — which is how `insert_before_license` silently dropped a
+    record's original graphs in the first place.
+    """
+    with pytest.raises(DuplicateKeyError):
+        has_graph(DUP, "second")
+
+
+def test_a_single_causal_graphs_key_is_unaffected():
+    single = "causal_graphs:\n- graph_id: only\n  nodes: []\n  edges: []\nlicense: CC0\n"
+    assert has_graph(single, "only") is True
+    assert has_graph(single, "absent") is False
+
+
+def test_causal_graphs_inside_a_scalar_does_not_count_as_a_duplicate():
+    """Only column-0 keys are top level; the word inside a folded scalar is prose."""
+    text = ("definition: >-\n  see causal_graphs: below\n"
+            "causal_graphs:\n- graph_id: only\n  nodes: []\n  edges: []\nlicense: CC0\n")
+    assert has_graph(text, "only") is True
+
+
+# --- #104: an unreadable record must not abort a run mid-write ---------------------
+
+from record_io import RecordError  # noqa: E402
+
+
+@pytest.mark.parametrize("text,kind", [
+    ("causal_graphs:\n  - graph_id: [unclosed\nlicense: CC0\n", "malformed section"),
+    ("causal_graphs:\n- graph_id: a\ncausal_graphs:\n- graph_id: b\nlicense: CC0\n",
+     "duplicated key"),
+])
+def test_an_unusable_record_raises_one_type(text, kind):
+    """One exception type for every "cannot read this record" reason.
+
+    Callers catch `RecordError` rather than `yaml.YAMLError`, which keeps the parser
+    choice inside record_io: no builder imports yaml for this, and changing loader does
+    not touch six files. Narrower than `Exception`, which would swallow real bugs.
+    """
+    with pytest.raises(RecordError):
+        has_graph(text, "anything")
+
+
+def test_every_builder_catches_recorderror_around_its_check():
+    """MUTATION: drop the try/except from a builder and this fails.
+
+    `has_graph` raises on an unreadable record deliberately — returning False would make
+    the builder append a duplicate, which is silent corruption. But an uncaught raise
+    aborts the run partway through, AFTER earlier records have been written. Every
+    builder must catch, warn with the path, and skip.
+
+    Source-level because no builder has a test harness (#99); this is the enforceable
+    form until one exists.
+    """
+    import re as _re
+    scripts = Path(__file__).resolve().parent.parent / "scripts"
+    builders = sorted(p for p in scripts.glob("build_*.py")
+                      if "has_graph(" in (src := p.read_text(encoding="utf-8"))
+                      or "graph_ids(" in src)
+    assert len(builders) >= 6, f"expected six builders, found {[b.name for b in builders]}"
+    offenders = []
+    for b in builders:
+        src = b.read_text(encoding="utf-8")
+        if "except RecordError" not in src:
+            offenders.append(f"{b.name}: no `except RecordError`")
+            continue
+        # That the warning names a variable which actually EXISTS is left to ruff's
+        # F821, which is a CI gate and does it properly — it is what caught
+        # build_mcsa_causal_graphs warning with `{f}` when its path variable is
+        # `path`. Reimplementing that here got the loop-bound `for f in ...` case
+        # wrong and would have been a worse copy of a check that already runs.
+        if not _re.search(r"WARN unreadable \{\w+\}", src):
+            offenders.append(f"{b.name}: catches but does not warn with the path")
+    assert not offenders, "builders that would abort a run on one bad record:\n  " + \
+        "\n  ".join(offenders)
+
+
+def test_the_handler_is_not_a_bare_except():
+    """`except Exception` here would hide real bugs as "unreadable record"."""
+    scripts = Path(__file__).resolve().parent.parent / "scripts"
+    bad = [p.name for p in scripts.glob("build_*.py")
+           if "except Exception" in p.read_text(encoding="utf-8")
+           and "WARN unreadable" in p.read_text(encoding="utf-8")]
+    assert not bad, f"these catch too broadly around the record check: {bad}"

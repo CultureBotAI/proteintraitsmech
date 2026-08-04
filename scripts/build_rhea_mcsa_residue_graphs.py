@@ -64,7 +64,7 @@ from pathlib import Path
 
 import yaml
 
-from record_io import append_to_section, has_graph
+from record_io import RecordError, append_to_section, graph_ids
 
 import rhea_rdf
 from build_rhea_causal_graphs import short
@@ -317,6 +317,11 @@ def main() -> int:
 
     stat = collections.Counter()
     done = 0
+    # graph ids per record, parsed once (#106). 472 join pairs touch only 430 distinct
+    # Rhea records -- 35 are visited more than once, up to 4 times -- so the same
+    # section was parsed 42 times over. The cache is updated on write rather than
+    # invalidated, because the loop appends to a record it may visit again.
+    ids_by_path: dict = {}
     for mid, join in sorted(joins.items(), key=lambda kv: int(kv[0])):
         rid = join["rhea"]
         rpath, mpath = rhea_paths.get(rid), paths.get(mid)
@@ -327,10 +332,20 @@ def main() -> int:
             stat["skipped: M-CSA entry is not a KB record"] += 1
             continue
         text = rpath.read_text(encoding="utf-8")
-        # Match the whole graph_id, not a prefix: `..._mcsa45` is a substring of
-        # `..._mcsa454`, so a plain `in` test would report a genuinely new entry as
-        # already wired and silently never write it.
-        if has_graph(text, f"{GRAPH_ID}_mcsa{mid}"):
+        if rpath not in ids_by_path:
+            try:
+                ids_by_path[rpath] = graph_ids(text)
+            except RecordError as exc:
+                # One unreadable record must not abort a run that has already written
+                # to earlier ones (#104). Warn with the path and skip.
+                stat["skipped: record could not be read"] += 1
+                print(f"  WARN unreadable {rpath}: {exc}", file=sys.stderr)
+                continue
+        # Whole-id membership, not a prefix test: `..._mcsa45` is a substring of
+        # `..._mcsa454`, so a plain `in` on the text would report a genuinely new entry
+        # as already wired and silently never write it. A set gives that for free.
+        graph_id = f"{GRAPH_ID}_mcsa{mid}"
+        if graph_id in ids_by_path[rpath]:
             stat["already wired"] += 1
             continue
         graph, why = build(rid, rh.reactions[rid], mid, join, entries[mid], mpath)
@@ -366,6 +381,14 @@ def main() -> int:
         stat["written"] += 1
         stat["residue edges"] += len(graph["edges"]) - 1
         stat["reverse-oriented"] += (join["orientation"] == "RL")
+        # Defensive, not required today: every iteration tests a DIFFERENT id
+        # (`_mcsa{mid}`, and mids are unique), so a stale entry is never queried even
+        # on the 35 records this loop visits more than once. Kept because that is a
+        # property of the current id scheme rather than of the cache, and the failure
+        # it would cause — appending a graph the record already has — is silent.
+        # Removing this line breaks no test and no dry run, which is exactly why the
+        # reasoning is written down here instead of being left implicit.
+        ids_by_path[rpath].add(graph_id)
         if args.apply:
             rpath.write_text(out, encoding="utf-8")
         elif done == 0:
