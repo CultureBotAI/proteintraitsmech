@@ -1,14 +1,33 @@
 # has_graph hardening — #105, #106, #104 as one pull request
 
-Feed this to `/goal`, or paste it to any agent. It is a prompt, not a slash command,
-and is self-contained. Named after the work rather than the command, per #126.
+> ## ✅ DONE — do not run this
+>
+> Executed and merged as **#131** (`923506fc2642`) on 2026-08-04. **#104, #105 and #106
+> are closed.** Running it again would re-do finished work.
+>
+> Kept as a **worked example** of scoping a multi-issue run: what a dependency check
+> looks like when issues cannot be separate PRs, and what it means to carry measured
+> facts into a prompt instead of trusting the issue text. For a live run, use
+> `prompts/backlog-loop-goal.md`, which picks its own target.
+>
+> **What actually happened**, including where this prompt was wrong:
+>
+> - **#106's premise did not hold.** This prompt repeated the issue's claim that the
+>   builder parses a record once per M-CSA id. It does not — there is one call per
+>   iteration. The real redundancy was 42 repeat visits across 472 iterations, ~27 ms,
+>   not the "N parses per record" both the issue and this file asserted.
+> - **The `yaml.YAMLError` instruction was superseded.** Catching it in six builders
+>   would leak the parser choice out of `record_io`; #131 introduced `RecordError`
+>   instead, with `DuplicateKeyError` as a subclass.
+> - **The trap list earned itself.** "Stop if `data/traits` shows any modification"
+>   and "assert the mutation target exists" both held; nothing was written, and every
+>   mutation was verified to fire.
 
 A worked instance of `prompts/backlog-loop-goal.md`, not a replacement for it: that
-file is the workflow, this supplies the scope, the measured facts and the traps for
-one specific run. `NEXT_TASKS_LOOP.md` lists these three as the first loop-ready
-issues.
+file is the workflow, this supplied the scope, the measured facts and the traps for
+one specific run.
 
-_Facts measured on `main` at `e39111ffe7a`, 2026-08-04._
+_Facts measured on `main` at `e39111ffe7a`, 2026-08-04. Superseded by #131._
 
 ---
 
@@ -83,4 +102,4 @@ diff the output **byte for byte**. Do not accept "it still runs".
   `git status` shows `data/traits` modified, something is wrong — stop and find out
   what before going further.
 
-Pause and ask before merging. Prior approval of another PR is not approval of this one.
+_(Original closing instruction: pause and ask before merging. #131 did.)_
