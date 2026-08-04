@@ -1115,3 +1115,67 @@ def test_causal_graphs_inside_a_scalar_does_not_count_as_a_duplicate():
     text = ("definition: >-\n  see causal_graphs: below\n"
             "causal_graphs:\n- graph_id: only\n  nodes: []\n  edges: []\nlicense: CC0\n")
     assert has_graph(text, "only") is True
+
+
+# --- #104: an unreadable record must not abort a run mid-write ---------------------
+
+from record_io import RecordError  # noqa: E402
+
+
+@pytest.mark.parametrize("text,kind", [
+    ("causal_graphs:\n  - graph_id: [unclosed\nlicense: CC0\n", "malformed section"),
+    ("causal_graphs:\n- graph_id: a\ncausal_graphs:\n- graph_id: b\nlicense: CC0\n",
+     "duplicated key"),
+])
+def test_an_unusable_record_raises_one_type(text, kind):
+    """One exception type for every "cannot read this record" reason.
+
+    Callers catch `RecordError` rather than `yaml.YAMLError`, which keeps the parser
+    choice inside record_io: no builder imports yaml for this, and changing loader does
+    not touch six files. Narrower than `Exception`, which would swallow real bugs.
+    """
+    with pytest.raises(RecordError):
+        has_graph(text, "anything")
+
+
+def test_every_builder_catches_recorderror_around_its_check():
+    """MUTATION: drop the try/except from a builder and this fails.
+
+    `has_graph` raises on an unreadable record deliberately — returning False would make
+    the builder append a duplicate, which is silent corruption. But an uncaught raise
+    aborts the run partway through, AFTER earlier records have been written. Every
+    builder must catch, warn with the path, and skip.
+
+    Source-level because no builder has a test harness (#99); this is the enforceable
+    form until one exists.
+    """
+    import re as _re
+    scripts = Path(__file__).resolve().parent.parent / "scripts"
+    builders = sorted(p for p in scripts.glob("build_*.py")
+                      if "has_graph(" in (src := p.read_text(encoding="utf-8"))
+                      or "_graph_ids(" in src)
+    assert len(builders) >= 6, f"expected six builders, found {[b.name for b in builders]}"
+    offenders = []
+    for b in builders:
+        src = b.read_text(encoding="utf-8")
+        if "except RecordError" not in src:
+            offenders.append(f"{b.name}: no `except RecordError`")
+            continue
+        # That the warning names a variable which actually EXISTS is left to ruff's
+        # F821, which is a CI gate and does it properly — it is what caught
+        # build_mcsa_causal_graphs warning with `{f}` when its path variable is
+        # `path`. Reimplementing that here got the loop-bound `for f in ...` case
+        # wrong and would have been a worse copy of a check that already runs.
+        if not _re.search(r"WARN unreadable \{\w+\}", src):
+            offenders.append(f"{b.name}: catches but does not warn with the path")
+    assert not offenders, "builders that would abort a run on one bad record:\n  " + \
+        "\n  ".join(offenders)
+
+
+def test_the_handler_is_not_a_bare_except():
+    """`except Exception` here would hide real bugs as "unreadable record"."""
+    scripts = Path(__file__).resolve().parent.parent / "scripts"
+    bad = [p.name for p in scripts.glob("build_*.py")
+           if "except Exception" in p.read_text(encoding="utf-8")
+           and "WARN unreadable" in p.read_text(encoding="utf-8")]
+    assert not bad, f"these catch too broadly around the record check: {bad}"

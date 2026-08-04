@@ -77,7 +77,17 @@ def has_graph(text: str, graph_id: str) -> bool:
     return want in _graph_ids(text)
 
 
-class DuplicateKeyError(ValueError):
+class RecordError(ValueError):
+    """This record cannot be read, and the caller should skip it rather than guess.
+
+    One type for every "unusable record" reason, so a builder catches this instead of
+    `yaml.YAMLError` (#104). That keeps the parser choice inside this module: callers
+    do not import yaml, and a future change of loader does not touch six builders.
+    Deliberately narrower than `Exception`, which would swallow real bugs.
+    """
+
+
+class DuplicateKeyError(RecordError):
     """A record carries the same top-level key twice, so its value is ambiguous."""
 
 
@@ -113,7 +123,10 @@ def _graph_ids(text: str) -> set[str]:
         if ln and _TOP_KEY.match(ln):
             break
         block.append(ln)
-    section = yaml.load("\n".join(block), Loader=_Loader) or {}
+    try:
+        section = yaml.load("\n".join(block), Loader=_Loader) or {}
+    except yaml.YAMLError as exc:                       # unparseable section (#104)
+        raise RecordError(f"causal_graphs section does not parse: {exc}") from exc
     graphs = section.get("causal_graphs") or []
     if not isinstance(graphs, list):
         return set()

@@ -40,7 +40,7 @@ import re
 import sys
 from pathlib import Path
 
-from record_io import append_to_section, has_graph
+from record_io import RecordError, append_to_section, has_graph
 
 try:
     import yaml
@@ -367,7 +367,15 @@ def main() -> int:
             stat["no_record"] += 1
             continue
         path, text, seq = files[mid]
-        if has_graph(text, "catalysis"):
+        try:
+            seen = has_graph(text, "catalysis")
+        except RecordError as exc:
+            # One unreadable record must not abort a run that has already
+            # written to earlier ones (#104). Warn with the path and skip.
+            stat["skipped: record could not be read"] += 1
+            print(f"  WARN unreadable {path}: {exc}", file=sys.stderr)
+            continue
+        if seen:
             stat["skip_has_graph"] += 1
             continue
         entry = cache[mid]

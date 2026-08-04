@@ -44,7 +44,7 @@ from pathlib import Path
 
 import yaml
 
-from record_io import append_to_section, has_graph
+from record_io import RecordError, append_to_section, has_graph
 
 REPO = Path(__file__).resolve().parent.parent
 XML = REPO / "data" / "raw" / "metalpdb" / "flat_db_file.xml.gz"
@@ -232,7 +232,15 @@ def main() -> int:
 
     for f in sorted(ROOT.glob("*.yaml")):
         text = f.read_text(encoding="utf-8")
-        if has_graph(text, "metal_coordination"):
+        try:
+            seen = has_graph(text, "metal_coordination")
+        except RecordError as exc:
+            # One unreadable record must not abort a run that has already
+            # written to earlier ones (#104). Warn with the path and skip.
+            stat["skipped: record could not be read"] += 1
+            print(f"  WARN unreadable {f}: {exc}", file=sys.stderr)
+            continue
+        if seen:
             stat["already has a graph"] += 1
             continue
         record = yaml.safe_load(text)

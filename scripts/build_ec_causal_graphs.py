@@ -46,7 +46,7 @@ from pathlib import Path
 
 import yaml
 
-from record_io import append_to_section, has_graph
+from record_io import RecordError, append_to_section, has_graph
 
 import rhea_rdf
 from build_rhea_causal_graphs import (COEF_TEXT, MAX_PROTEINS, P_CLOSE, P_ENABLES,
@@ -309,7 +309,15 @@ def main() -> int:
         text = f.read_text(encoding="utf-8")
         # Skip on THIS builder's graph_id rather than on any graph being present, so
         # a record that gained some other graph first is not locked out of its own.
-        if has_graph(text, "reaction_chemistry"):
+        try:
+            seen = has_graph(text, "reaction_chemistry")
+        except RecordError as exc:
+            # One unreadable record must not abort a run that has already
+            # written to earlier ones (#104). Warn with the path and skip.
+            stat["skipped: record could not be read"] += 1
+            print(f"  WARN unreadable {f}: {exc}", file=sys.stderr)
+            continue
+        if seen:
             stat["already has a graph"] += 1
             continue
         m = re.search(r"^identifier:\s*EC:(\S+)\s*$", text, re.M)
