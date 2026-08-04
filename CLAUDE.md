@@ -18,6 +18,8 @@ no wrapper, on purpose.
   dependency check, branch, work, gates, PR, adversarial review, issues from that review,
   triage, merge, delete the branch. Feed it to the native `/goal`.
 - **`prompts/schema-review.md`** — schema review pass.
+- **`prompts/has-graph-hardening.md`** — ✅ **done, do not run** (#131). Kept as a worked
+  example of scoping a run across issues that cannot be separate PRs.
 
 ⚠️ **Do not wrap these as custom commands.** `.claude/skills/goal/SKILL.md` existed for that
 and was removed: it registered a custom `/goal` that SHADOWED the native one instead of
