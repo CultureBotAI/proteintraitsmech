@@ -475,8 +475,14 @@ def test_each_builder_checks_its_own_graph_id():
     # copy/paste regression there stayed green. Discovering the set from disk means
     # a newly added builder is covered without anyone remembering to add it.
     scripts = Path(__file__).resolve().parent.parent / "scripts"
+    # Two shapes count, because #106 moved one builder off has_graph: a direct
+    # `has_graph(text, <id>)`, or `graph_id = <id>` tested against a cached set of ids.
+    # Both name the id explicitly, which is what this test is really about; only the
+    # call shape differs. Discovering on either keeps the builder covered instead of
+    # letting it drop silently out of the set.
     builders = sorted(p.name for p in scripts.glob("build_*.py")
-                      if "has_graph(" in p.read_text(encoding="utf-8"))
+                      if "has_graph(" in (src := p.read_text(encoding="utf-8"))
+                      or _re.search(r"^\s*graph_id\s*=", src, _re.M))
     assert len(builders) >= 6, f"expected every converted builder, found {builders}"
     expected = {"build_biolip_causal_graphs.py": "ligand_binding",
                 "build_metalpdb_causal_graphs.py": "metal_coordination",
@@ -494,7 +500,12 @@ def test_each_builder_checks_its_own_graph_id():
         # appears elsewhere in the file (e.g. as GRAPH_ID), so it passed no matter
         # what has_graph was actually called with.
         arg = _re.search(r"has_graph\(\s*text\s*,\s*([^)]+)\)", src)
-        assert arg, f"{name} does not call has_graph(text, ...)"
+        if arg is None:
+            # the #106 shape: `graph_id = <id>` then `if graph_id in <cached set>`
+            arg = _re.search(r"^\s*graph_id\s*=\s*(.+?)\s*$", src, _re.M)
+            assert arg, f"{name} neither calls has_graph(text, ...) nor assigns graph_id"
+            assert _re.search(r"\bgraph_id\s+in\b", src), (
+                f"{name} assigns graph_id but never tests it for membership")
         arg = arg.group(1).strip()
         # either a literal "want", or an f-string built from a constant equal to want
         literal = _re.fullmatch(r'["\']([^"\']+)["\']', arg)
