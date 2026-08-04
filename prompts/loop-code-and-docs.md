@@ -78,9 +78,13 @@ behaviour preserved or left alone with a comment saying why.
 
 ## #117 — say how each prompt is meant to be used
 
-`prompts/` holds five files and `CLAUDE.md` lists all five (verify that is still true —
-it has gone stale twice already, in #130 and again when these two prompts were added). What #117 asks for is a one-line note **in each file** saying how it is used, so
-a reader can tell which kind of document they are holding without consulting `CLAUDE.md`.
+`CLAUDE.md` lists every file in `prompts/`, and `tests/test_docs_consistency.py` now
+enforces that in both directions — an unlisted prompt fails, and so does a dangling
+reference. You do not need to check it by hand; that list went stale twice in one day
+while the mitigation was "remember to check".
+
+What #117 asks for is a one-line note **in each file** saying how it is used, so a reader
+can tell which kind of document they are holding without consulting `CLAUDE.md`.
 
 **Option 1 in the issue is dead** — it proposed a skill wrapper, which #126 deleted on
 purpose. I have already commented saying so. Do not re-add one.
