@@ -104,3 +104,74 @@ def slugify(text: str, max_len: int | None = 70, fallback: str = "entry") -> str
         slugify(name, None, "ps")      # prosite, which never truncated
     """
     return (_SLUG_RE.sub("-", text.lower()).strip("-")[:max_len]) or fallback
+
+
+# --------------------------------------------------------------- source-text repair
+
+def _mojibake_bytes(text: str) -> bytes:
+    """The bytes a double-decode started from, if this text is one.
+
+    Encoded per character because the damage mixes two tables: `€` (U+20AC) exists only
+    in cp1252, while a C1 control such as U+0090 exists only in latin-1. A single
+    `.encode("cp1252")` raises on the second and a single `.encode("latin-1")` raises on
+    the first, so either alone silently declines to repair half the real cases.
+    """
+    out = bytearray()
+    for ch in text:
+        try:
+            out += ch.encode("cp1252")
+        except UnicodeEncodeError:
+            if ord(ch) >= 0x100:
+                raise
+            out.append(ord(ch))
+    return bytes(out)
+
+
+def repair_mojibake(text: str) -> str:
+    """Undo a UTF-8-decoded-as-cp1252 round trip, or return the text unchanged.
+
+    Sources here serve UTF-8 that something upstream read as cp1252, so a hyphen
+    (U+2010, bytes `E2 80 90`) arrives as `â€` + U+0090 and `ü` arrives as `Ã¼`. The
+    damage is reversible exactly because it is a pure byte round trip: re-encode by the
+    wrong table, decode by the right one.
+
+    Only applies when the result is valid UTF-8, so text that is merely non-ASCII —
+    Greek letters in a CAZy fold name, an em dash written correctly — is left alone.
+    That is what makes this safe to run over every incoming string rather than over a
+    hand-maintained list of known-bad values.
+    """
+    if text.isascii():
+        return text
+    # Repair RUN BY RUN, not whole-string. A CAZy definition carries correctly encoded
+    # Greek (`(β / α) 8 barrel`, U+03B2) beside the damaged hyphen, and Greek has no
+    # cp1252 byte -- so an all-or-nothing repair raises on it and silently declines to
+    # fix the rest of the string. That is exactly what happened on GH20: the seeder ran,
+    # the record was rewritten, and the mojibake was still there.
+    out, run = [], []
+
+    def flush():
+        if not run:
+            return
+        chunk = "".join(run)
+        try:
+            out.append(_mojibake_bytes(chunk).decode("utf-8"))
+        except (UnicodeDecodeError, UnicodeEncodeError, ValueError):
+            out.append(chunk)
+        run.clear()
+
+    for ch in text:
+        if ord(ch) < 0x100 or _CP1252_ENCODABLE(ch):
+            run.append(ch)
+        else:
+            flush()
+            out.append(ch)
+    flush()
+    return "".join(out)
+
+
+def _CP1252_ENCODABLE(ch: str) -> bool:
+    try:
+        ch.encode("cp1252")
+        return True
+    except UnicodeEncodeError:
+        return False

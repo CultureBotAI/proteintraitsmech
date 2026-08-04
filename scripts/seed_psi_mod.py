@@ -37,7 +37,7 @@ from __future__ import annotations
 import argparse
 import re
 
-from obo_syntax import strip_comment, strip_suffixes
+from obo_syntax import strip_comment, strip_suffixes, unescape
 import sys
 from pathlib import Path
 
@@ -339,7 +339,8 @@ def build_yaml(entry: dict, release: str) -> str | None:
     lines: list[str] = []
     lines.append(f"identifier: {term_id}")
     lines.append(f"label: {yaml_escape(name)}")
-    folded = yaml_folded("", definition)
+    # Same OBO escape decoding as seed_obo (#103); MOD:01946 carried a literal `\n`.
+    folded = yaml_folded("", unescape(definition))
     lines.append(f"definition: {folded[0]}")
     lines.extend(folded[1:])
     lines.append(f"definition_source: {yaml_escape(release)}")
