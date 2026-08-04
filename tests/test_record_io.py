@@ -1153,7 +1153,7 @@ def test_every_builder_catches_recorderror_around_its_check():
     scripts = Path(__file__).resolve().parent.parent / "scripts"
     builders = sorted(p for p in scripts.glob("build_*.py")
                       if "has_graph(" in (src := p.read_text(encoding="utf-8"))
-                      or "_graph_ids(" in src)
+                      or "graph_ids(" in src)
     assert len(builders) >= 6, f"expected six builders, found {[b.name for b in builders]}"
     offenders = []
     for b in builders:

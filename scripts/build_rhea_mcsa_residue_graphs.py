@@ -64,7 +64,7 @@ from pathlib import Path
 
 import yaml
 
-from record_io import RecordError, _graph_ids, append_to_section
+from record_io import RecordError, append_to_section, graph_ids
 
 import rhea_rdf
 from build_rhea_causal_graphs import short
@@ -334,7 +334,7 @@ def main() -> int:
         text = rpath.read_text(encoding="utf-8")
         if rpath not in ids_by_path:
             try:
-                ids_by_path[rpath] = _graph_ids(text)
+                ids_by_path[rpath] = graph_ids(text)
             except RecordError as exc:
                 # One unreadable record must not abort a run that has already written
                 # to earlier ones (#104). Warn with the path and skip.

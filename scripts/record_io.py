@@ -74,7 +74,7 @@ def has_graph(text: str, graph_id: str) -> bool:
     a loud failure beats the silent duplication that a False would cause.
     """
     want = graph_id.strip()
-    return want in _graph_ids(text)
+    return want in graph_ids(text)
 
 
 class RecordError(ValueError):
@@ -91,7 +91,7 @@ class DuplicateKeyError(RecordError):
     """A record carries the same top-level key twice, so its value is ambiguous."""
 
 
-def _graph_ids(text: str) -> set[str]:
+def graph_ids(text: str) -> set[str]:
     """Every `graph_id` in the record's `causal_graphs:` section.
 
     Raises `DuplicateKeyError` if `causal_graphs:` appears twice at top level (#105).
