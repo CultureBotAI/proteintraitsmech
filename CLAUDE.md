@@ -8,6 +8,21 @@ A LinkML-schema-governed **knowledge base of protein sequence & structure traits
 
 Sibling to dismech / TraitMech / CultureMech / MediaIngredientMech — same "one YAML per record + LinkML validation + evidence-backed causal graphs" model.
 
+## Prompts
+
+Hand-over prompts live in `prompts/`. They are **prompts, not slash commands** — feed them to
+a native command, or paste them to another agent or an independent reviewer. No frontmatter,
+no wrapper, on purpose.
+
+- **`prompts/backlog-loop-goal.md`** — triage the open issues and deliver one end to end:
+  dependency check, branch, work, gates, PR, adversarial review, issues from that review,
+  triage, merge, delete the branch. Feed it to the native `/goal`.
+- **`prompts/schema-review.md`** — schema review pass.
+
+⚠️ **Do not wrap these as custom commands.** `.claude/skills/goal/SKILL.md` existed for that
+and was removed: it registered a custom `/goal` that SHADOWED the native one instead of
+feeding it. If such a wrapper reappears, delete it rather than repointing it.
+
 ## Common commands
 
 All operational commands are `just` recipes (see `justfile`). Use `uv` for Python — seeding scripts are stdlib-only and can also run under `python3` directly.
