@@ -83,12 +83,19 @@ Re-measured on `main`, not copied from the issue text:
 
 ## Running the loop
 
+The workflow is `prompts/backlog-loop-goal.md`. It is a **prompt, not a command** —
+#126 removed the `.claude/skills/goal/` wrapper deliberately — so it has to be fed to
+the agent rather than assumed:
+
 ```
-/goal            # ranks the open issues itself and proposes one
-/goal #105       # skip the ranking pause and take a named issue
+/goal                          # then feed prompts/backlog-loop-goal.md
+/goal #105                     # same, with a named issue as the hint
 ```
 
-Two things worth knowing before leaving it unattended:
+or, equivalently and with no dependence on any command existing, paste the file. It is
+self-contained for exactly that reason, and works the same handed to another agent.
+
+Three things worth knowing before leaving it unattended:
 
 - **`/goal` pauses for merge approval every time.** Prior approval of one PR is not
   approval of the next, so an unattended run stops with a reviewed, green PR open rather
@@ -96,3 +103,6 @@ Two things worth knowing before leaving it unattended:
 - **It will extend scope if review shows the work was incomplete rather than imperfect.**
   On #112 it re-reviewed 1,213 extra records after sampling showed the filter that chose
   391 was not a discriminator. Budget for that on anything touching many records.
+- **It files issues for what it does not fix, and corrects issue text it finds wrong.**
+  Compiling this file alone produced corrections to #102, #115 and #117. Expect the
+  backlog to change shape as well as shrink.
