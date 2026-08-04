@@ -20,6 +20,10 @@ no wrapper, on purpose.
 - **`prompts/schema-review.md`** — schema review pass.
 - **`prompts/has-graph-hardening.md`** — ✅ **done, do not run** (#131). Kept as a worked
   example of scoping a run across issues that cannot be separate PRs.
+- **`prompts/loop-code-and-docs.md`** — scoped run for #94, #125, #117. Code and docs,
+  touches no records.
+- **`prompts/loop-text-decoding.md`** — scoped run for #103, #123. Text decoded wrong;
+  changes 39 records.
 
 ⚠️ **Do not wrap these as custom commands.** `.claude/skills/goal/SKILL.md` existed for that
 and was removed: it registered a custom `/goal` that SHADOWED the native one instead of
