@@ -2,7 +2,7 @@
 
 Which open issues are safe to hand to an unattended `/goal` loop, which need a human
 first, and why. Companion to `NEXT_TASKS.md` (the durable backlog) and
-`prompts/goal.md` (the workflow itself).
+`prompts/backlog-loop-goal.md` (the workflow itself).
 
 _Compiled 2026-08-04, against `main` at `52807b6ad35`. Every number below was
 re-measured rather than copied from the issue text. **Four were wrong** and are corrected
@@ -36,7 +36,7 @@ one, and says which.
 | 2 | **#106** residue builder re-parses the section once per `graph_id` | mechanical; `_graph_ids` already returns the whole set | one parse per record, membership tested against the set | 1,003 records, seconds either way |
 | 3 | **#104** `has_graph` raises on a malformed section and no builder catches it | six builders, one identical `try/except` each | a bad record is warned about and skipped, not a crash mid-run | cannot fire today — all 424,467 records parse |
 | 4 | **#125** three `folded()` variants, each a different signature | three call sites, all covered by `just test` | one `folded` with an optional `key`, three callers updated | 3 call sites |
-| 5 | **#117** `prompts/schema-review.md` is not discoverable as a command | the pattern is already set by `.claude/skills/goal/` | each `prompts/*.md` says whether it is invocable | 2 files |
+| 5 | **#117** `prompts/*.md` do not say how they are meant to be used | two-line docs change; #126 settled the approach — a note, **not** a command wrapper | each `prompts/*.md` opens with how it is used | 2 files |
 | 6 | **#103** OBO escapes decoded for citations but not definitions | bounded set, `validate-all` proves it | **37** records (issue says 36) carry a literal `\n` → 0 | 37 records |
 | 7 | **#123** two records carry mojibake, one re-seeds to different bytes each run | tiny, and the fix is in the fetch/decode step | both records stable across two consecutive re-seeds | 2 records |
 | 8 | **#94** audit round-15 builders for the two defect classes fixed in `5e9e920` | investigative but bounded; the two classes are precisely defined | every round-15 builder checked, findings filed | 2 builders |
