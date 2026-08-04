@@ -76,7 +76,8 @@ def main() -> int:
         m = re.search(r"(?m)^identifier:\s*NCBIfam:(\S+)", text)
         if not m:
             continue
-        acc = m.group(1); ft = ftmap.get(acc, "")
+        acc = m.group(1)
+        ft = ftmap.get(acc, "")
         if ft == "PfamEq":
             axis, cat, dst, key = "FUNCTION", "FUNC_PROTEIN_FAMILY", "function/protein_family/ncbifam", "ncbifam_pfameq"
         elif ft == "PfamAutoEq":
@@ -90,7 +91,8 @@ def main() -> int:
                                text, count=1)[0]
         if args.apply:
             (TRAITS / dst).mkdir(parents=True, exist_ok=True)
-            (TRAITS / dst / p.name).write_text(text, encoding="utf-8"); p.unlink()
+            (TRAITS / dst / p.name).write_text(text, encoding="utf-8")
+            p.unlink()
         n[key] += 1
 
     # ---- 2. CDD protein-cluster prefixes ----
@@ -103,8 +105,10 @@ def main() -> int:
         text = drop_parents(set_line(set_line(text, "trait_axis", "FUNCTION"),
                                      "trait_category", "FUNC_PROTEIN_FAMILY"))
         if args.apply:
-            d = TRAITS / "function" / "protein_family" / "cdd"; d.mkdir(parents=True, exist_ok=True)
-            (d / p.name).write_text(text, encoding="utf-8"); p.unlink()
+            d = TRAITS / "function" / "protein_family" / "cdd"
+            d.mkdir(parents=True, exist_ok=True)
+            (d / p.name).write_text(text, encoding="utf-8")
+            p.unlink()
         n["cdd_family"] += 1
 
     # ---- 3. InterPro sites ----
@@ -114,8 +118,10 @@ def main() -> int:
             text = p.read_text(encoding="utf-8")
             text = set_line(set_line(text, "trait_axis", "SEQUENCE"), "trait_category", cat)
             if args.apply:
-                d = TRAITS / "sequence" / sub / "interpro"; d.mkdir(parents=True, exist_ok=True)
-                (d / p.name).write_text(text, encoding="utf-8"); p.unlink()
+                d = TRAITS / "sequence" / sub / "interpro"
+                d.mkdir(parents=True, exist_ok=True)
+                (d / p.name).write_text(text, encoding="utf-8")
+                p.unlink()
             n["interpro_site"] += 1
 
     print(f"{'migrated' if args.apply else 'would migrate'}: {n}")

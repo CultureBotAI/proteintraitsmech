@@ -72,7 +72,7 @@ P_OUTPUT = ("has output", "RO:0002234")
 
 def load_cache() -> dict:
     return {e["mcsa_id"]: e for e in
-            (json.loads(l) for l in CACHE.open(encoding="utf-8"))}
+            (json.loads(ln) for ln in CACHE.open(encoding="utf-8"))}
 
 
 def kb_cath() -> set:

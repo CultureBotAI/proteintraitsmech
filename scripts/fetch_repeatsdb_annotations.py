@@ -41,7 +41,7 @@ def get_json(url: str, tries: int = 4):
         try:
             with urllib.request.urlopen(url, timeout=45) as r:
                 return json.load(r)
-        except Exception as e:  # noqa: BLE001
+        except Exception:  # noqa: BLE001
             if i == tries - 1:
                 raise
             time.sleep(1.5 * (i + 1))

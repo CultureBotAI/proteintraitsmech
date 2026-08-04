@@ -260,8 +260,8 @@ def build(rid: str, rxn: dict, mid: str, join: dict, entry: dict,
         edges.append({
             "subject": n["node_id"],
             "predicate": P_AGENT[0], "predicate_id": P_AGENT[1], "object": "activity",
-            "description": (f"M-CSA lists this residue as catalytic for the mechanism "
-                            f"that carries out this reaction."),
+            "description": ("M-CSA lists this residue as catalytic for the mechanism "
+                            "that carries out this reaction."),
             "evidence": [{
                 "reference": mcsa_curie,
                 "snippet": re.sub(r"^M-CSA roles:\s*", "", n.get("description", "")

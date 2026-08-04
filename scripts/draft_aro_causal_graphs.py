@@ -117,7 +117,7 @@ def build_graph(ident: str, label: str, mech: list, drug: list, names: dict, ref
           "        node_type: PHENOTYPE",
           "    edges:"]
     for i, mid in enumerate(mech):
-        L += [f"      - subject: determinant",
+        L += ["      - subject: determinant",
               "        predicate: participates in (resistance mechanism)",
               "        predicate_id: RO:0000056",
               f"        object: mech{i}",
@@ -133,7 +133,7 @@ def build_graph(ident: str, label: str, mech: list, drug: list, names: dict, ref
           "        object: resistance",
           *_ev(ref, "Auto-drafted: determinant → resistance phenotype; snippet pending curation.")]
     for i, did in enumerate(drug[:MAX_DRUGS]):
-        L += [f"      - subject: resistance",
+        L += ["      - subject: resistance",
               "        predicate: related to (resistance is to)",
               f"        object: drug{i}",
               *_ev(ref, f"Auto-drafted from ARO confers_resistance_to_drug_class {did}; snippet pending curation.")]
@@ -164,7 +164,7 @@ def main() -> int:
         label = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M).group(1)
         block = build_graph(ident, label, mech, drug, names, first_reference(text))
         lines = text.splitlines()
-        lic = next((i for i, l in enumerate(lines) if l.startswith("license:")), len(lines))
+        lic = next((i for i, ln in enumerate(lines) if ln.startswith("license:")), len(lines))
         new = "\n".join(lines[:lic] + block + lines[lic:]) + "\n"
         if args.apply:
             pth.write_text(new, encoding="utf-8")

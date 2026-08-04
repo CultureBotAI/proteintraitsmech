@@ -1,0 +1,40 @@
+# Runs the two gates that do not need the source releases.
+#
+# Issue #107 is that ruff was a declared dev dependency with config in pyproject.toml
+# that NOTHING ever ran, so the error count could only go up — and it had, to 63. A
+# `just lint` recipe alone would not have fixed that: a gate nobody runs is the thing
+# being complained about. This is what makes it a gate.
+#
+# `validate-all`, `audit-graphs` and `sources-check` are deliberately NOT here. They
+# read data/raw, which is gitignored and multi-gigabyte, so they stay local commands
+# run by whoever changes the data.
+name: checks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install just
+        uses: extractions/setup-just@v2
+
+      - run: uv sync --extra dev
+
+      # Lint first: it is seconds, and it catches the class of defect that the tests
+      # structurally cannot. A NameError inside a function body only fires when that
+      # line runs, so the import-time test added in #108 passes over it — exactly how
+      # `write_record` reached a PR uncalled and undefined in seed_ncbifam (#100).
+      - run: just lint
+
+      - run: just test

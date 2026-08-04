@@ -167,7 +167,6 @@ def infer_source(identifier: str, path: Path) -> str:
 # re-seeding 276k records.
 def parent_predicate(rec_id: str, parent: str) -> str:
     rp = rec_id.split(":", 1)[0]
-    pp = parent.split(":", 1)[0]
     if rp == "Pfam" and parent.startswith("Pfam:CL"):
         return "biolink:member_of"          # family → clan
     if rec_id.startswith("COG:") and parent.startswith("proteintraitsmech:COG_CATEGORY_"):
@@ -608,7 +607,7 @@ def main() -> int:
 
     axes_by = {"src": _axes_by("src"), "cat": _axes_by("cat"), "sta": _axes_by("sta")}
 
-    labels_path = write_labels(records)
+    write_labels(records)
 
     pairs = split_detail(records)
     det_count, det_files, det_mb = write_detail(pairs)

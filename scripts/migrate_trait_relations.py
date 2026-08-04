@@ -105,7 +105,7 @@ def main() -> int:
                 break
         # collect parent_traits block bounds + values
         try:
-            start = next(i for i, l in enumerate(lines) if l.rstrip() == "parent_traits:")
+            start = next(i for i, ln in enumerate(lines) if ln.rstrip() == "parent_traits:")
         except StopIteration:
             continue
         end = start + 1

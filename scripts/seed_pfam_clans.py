@@ -52,7 +52,7 @@ def build_yaml(clan_acc, clan_id):
                   f"superfamily grouping of evolutionarily related Pfam "
                   f"families sharing structure/function.")
     lines = [f"identifier: Pfam:{clan_acc}", f"label: {yaml_escape(label)}",
-             f"definition: >-", f"  {definition}",
+             "definition: >-", f"  {definition}",
              "definition_source: Pfam (clan)", "trait_axis: SEQUENCE",
              "trait_category: SEQ_HOMOLOGOUS_SUPERFAMILY",
              "term_kind: CLASS", "mapping_status: SEEDED",

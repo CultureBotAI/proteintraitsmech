@@ -77,8 +77,8 @@ def wanted_codes() -> dict:
 def load_sites(codes) -> dict:
     """pdb code -> [site dicts], for the entries the corpus actually references."""
     buf = io.StringIO("".join(
-        AMP.sub("&amp;", l)
-        for l in gzip.open(XML, "rt", errors="replace")))
+        AMP.sub("&amp;", ln)
+        for ln in gzip.open(XML, "rt", errors="replace")))
     out = collections.defaultdict(list)
     for _ev, el in ET.iterparse(buf, events=("end",)):
         if el.tag != "site":
@@ -132,7 +132,7 @@ def build(record, sites_by_code):
                 continue
             if (metal.get("name") or "").lower() not in (s["periodic_name"] or "").lower():
                 continue
-            if any(l["residue_name"].upper() in AA3 for l in s["ligands"]):
+            if any(ln["residue_name"].upper() in AA3 for ln in s["ligands"]):
                 chosen.append((ce, code, s))
                 break
         if len(chosen) >= 3:      # a class needs exemplars, not every occurrence
@@ -157,25 +157,25 @@ def build(record, sites_by_code):
                      f"flat_db_file.xml.gz; MetalPDB also lists non-protein "
                      f"coordinating ligands (water, nucleotides) that are not "
                      f"written as nodes here.")
-        for l in s["ligands"]:
-            rn = l["residue_name"].upper()
-            if rn not in AA3 or not l["residue_pdb_number"]:
+        for ln in s["ligands"]:
+            rn = ln["residue_name"].upper()
+            if rn not in AA3 or not ln["residue_pdb_number"]:
                 continue
             # the PDB code belongs in the id: the same residue number in two
             # exemplar structures is two different residues in two different
             # proteins, and must not collapse into one node
-            nid = f"res{code}{rn}{l['residue_pdb_number']}{l['chain_letter']}"
+            nid = f"res{code}{rn}{ln['residue_pdb_number']}{ln['chain_letter']}"
             nid = re.sub(r"[^A-Za-z0-9_]", "", nid)
             if nid in seen:
                 continue
             seen.add(nid)
             snippet = (f"residue_name {rn}; residue_pdb_number "
-                       f"{l['residue_pdb_number']}; chain_letter {l['chain_letter']}"
-                       + (f"; donor {l['donor']}" if l["donor"] else "")
-                       + (f"; distance {l['distance']}" if l["distance"] else ""))
+                       f"{ln['residue_pdb_number']}; chain_letter {ln['chain_letter']}"
+                       + (f"; donor {ln['donor']}" if ln["donor"] else "")
+                       + (f"; distance {ln['distance']}" if ln["distance"] else ""))
             nodes.append({"node_id": nid,
-                          "label": (f"coordinating {rn}{l['residue_pdb_number']} "
-                                    f"(PDB {code} chain {l['chain_letter']} author "
+                          "label": (f"coordinating {rn}{ln['residue_pdb_number']} "
+                                    f"(PDB {code} chain {ln['chain_letter']} author "
                                     f"numbering; no UniProt position asserted)"),
                           "node_type": "RESIDUE",
                           **({"grounding": acc} if acc else {})})
@@ -187,8 +187,8 @@ def build(record, sites_by_code):
                          "notes": base_note}]
             edges.append({"subject": nid, "predicate": P_INTERACTS[0],
                           "predicate_id": P_INTERACTS[1], "object": "metal",
-                          "description": (f"{rn}{l['residue_pdb_number']} donates "
-                                          f"{l['donor'] or 'a donor atom'} to the "
+                          "description": (f"{rn}{ln['residue_pdb_number']} donates "
+                                          f"{ln['donor'] or 'a donor atom'} to the "
                                           f"coordinated {metal.get('name')}."),
                           "evidence": ev()})
             edges.append({"subject": nid, "predicate": P_PART_OF[0],

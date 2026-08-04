@@ -230,7 +230,6 @@ def main() -> int:
           "A high lift here means the map is separating provenance, not biology.",
           "", "| axis | records | sources | source purity | chance | lift |",
           "|---|--:|--:|--:|--:|--:|"]
-    order = np.argsort(axis)
     for ax in sorted(set(axis.tolist())):
         m = axis == ax
         if m.sum() < 200 or len(set(source[m].tolist())) < 2:

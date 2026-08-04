@@ -57,8 +57,8 @@ def set_label(text: str, new: str) -> str:
 
 def set_definition(text: str, new_def: str) -> str:
     lines = text.split("\n")
-    for i, l in enumerate(lines):
-        if l.startswith("definition:"):
+    for i, ln in enumerate(lines):
+        if ln.startswith("definition:"):
             j = i + 1
             while j < len(lines) and lines[j].startswith("  "):
                 j += 1

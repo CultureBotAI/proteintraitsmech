@@ -120,8 +120,10 @@ def parse_interpro_cazy():
         for _ev, el in ET.iterparse(fh, events=("end",)):
             if el.tag != "interpro":
                 continue
-            ipr = el.get("id"); typ = el.get("type", "")
-            ne = el.find("name"); name = (ne.text or "").strip() if ne is not None else ""
+            ipr = el.get("id")
+            typ = el.get("type", "")
+            ne = el.find("name")
+            name = (ne.text or "").strip() if ne is not None else ""
             for x in el.iter("db_xref"):
                 if x.get("db") == "CAZY" and x.get("dbkey"):
                     f = x.get("dbkey")
@@ -136,8 +138,10 @@ def build_family_yaml(fam, cls, meta, parent, ipr_entries, ipr_name):
     single = CLASS_INFO[cls][0]
     num = fam[len(cls):]
     label = f"{single} family {num} ({fam})"
-    clan = meta.get("clan"); mech = norm_mech(meta.get("mechanism"))
-    fold = clean_fold(meta.get("fold")); acts = meta.get("activities") or []
+    clan = meta.get("clan")
+    mech = norm_mech(meta.get("mechanism"))
+    fold = clean_fold(meta.get("fold"))
+    acts = meta.get("activities") or []
     ec = (meta.get("ec") or [])[:EC_CAP]
     n_act = meta.get("n_activities") or 0
 
@@ -157,7 +161,9 @@ def build_family_yaml(fam, cls, meta, parent, ipr_entries, ipr_name):
     definition = " ".join(parts)
 
     lines = [f"identifier: CAZy:{fam}", f"label: {yesc(label)}"]
-    f = folded(definition); lines.append(f"definition: {f[0]}"); lines.extend(f[1:])
+    f = folded(definition)
+    lines.append(f"definition: {f[0]}")
+    lines.extend(f[1:])
     lines.append("definition_source: CAZy")
     lines.append("trait_axis: SEQUENCE")
     lines.append("trait_category: SEQ_FAMILY")
@@ -189,7 +195,9 @@ def build_family_yaml(fam, cls, meta, parent, ipr_entries, ipr_name):
 
 def build_group_yaml(ident, label, definition, parent=None):
     lines = [f"identifier: CAZy:{ident}", f"label: {yesc(label)}"]
-    f = folded(definition); lines.append(f"definition: {f[0]}"); lines.extend(f[1:])
+    f = folded(definition)
+    lines.append(f"definition: {f[0]}")
+    lines.extend(f[1:])
     lines.append("definition_source: CAZy")
     lines.append("trait_axis: SEQUENCE")
     lines.append("trait_category: SEQ_FAMILY")
@@ -258,7 +266,8 @@ def main() -> int:
             write_record(path, content)
             written += 1
 
-    n_class = len(classes_present); n_clan = len(clans)
+    n_class = len(classes_present)
+    n_clan = len(clans)
     n_fam = len(files) - n_class - n_clan
     print(f"CAZy: {n_class} class nodes, {n_clan} clan nodes, {n_fam} family records "
           f"({sum(1 for f in fams if fam2ipr.get(f))} families carry InterPro mapped_xrefs)")

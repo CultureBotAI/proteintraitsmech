@@ -160,7 +160,7 @@ def main() -> int:
         return 2
 
     idx = json.loads(INDEX.read_text(encoding="utf-8"))
-    rows = [json.loads(l) for l in JSONL.open(encoding="utf-8")]
+    rows = [json.loads(ln) for ln in JSONL.open(encoding="utf-8")]
     for r in rows:
         # signature traits only — see SIG_PREFIXES for why GO/EC are excluded
         r["_ts"] = {t for t in r["traits"]

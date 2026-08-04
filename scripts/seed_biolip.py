@@ -269,7 +269,7 @@ def main() -> int:
             ligands.setdefault(ccd, Ligand(ccd)).add_row(cols)
 
     kept = [lig for lig in ligands.values() if lig.occ >= args.min_occurrences]
-    kept.sort(key=lambda l: (-l.occ, l.ccd))
+    kept.sort(key=lambda ln: (-ln.occ, ln.ccd))
 
     # occurrence-count distribution (bucketed)
     buckets = {"1": 0, "2-4": 0, "5-9": 0, "10-49": 0, "50-99": 0, "100+": 0}
