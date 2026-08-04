@@ -1,10 +1,14 @@
 # Goal prompt — triage the open issues and deliver one end to end
 
-Invoke as `/goal`, optionally with a hint (`/goal #104`, `/goal tests`, `/goal
-cheapest thing that unblocks something else`). The slash command is
-`.claude/skills/goal/SKILL.md`, which is a thin pointer at this file — a document
-under `prompts/` is not on its own a slash command, so the two travel together.
-This file is the content; edit it here.
+Feed this to the **native** `/goal`, optionally with a hint (`/goal #104`,
+`/goal tests`, `/goal cheapest thing that unblocks something else`). It is a prompt,
+not a slash command, and is self-contained so it can equally be pasted to another
+agent or an independent reviewer.
+
+**Do not wrap it as a custom command.** `.claude/skills/goal/SKILL.md` used to exist
+for that and was deleted: it registered a custom `/goal` that SHADOWED the native one
+rather than feeding it, which is the opposite of the intent. If such a wrapper
+reappears pointing here, delete it rather than repointing it.
 
 Pick the highest-value open issue that is actually startable, and carry it all the
 way: branch → work → gates → PR → adversarial review → issues from that review →
