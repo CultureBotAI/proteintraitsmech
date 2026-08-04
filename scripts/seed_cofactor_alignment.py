@@ -165,8 +165,6 @@ def main() -> int:
         with CROSSWALK.open("w", encoding="utf-8", newline="") as fh:
             csv.writer(fh, delimiter="\t").writerows(rows)
 
-    shared_all3 = sum(1 for c in all_ids
-                      if ours.get(c) and c in mg and c in PFAS_NAME_CHEBI)
     print(f"Cofactor alignment: MG={len(mg)} curated, ours(before)={len(ours)-len(missing)}, "
           f"MG-missing-from-ours={len(missing)} → {'added' if args.apply else 'would add'} "
           f"{written if args.apply else len(missing)-skipped}; skipped {skipped}.")

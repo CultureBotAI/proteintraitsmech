@@ -564,12 +564,10 @@ def target_path(entry: dict, route: Route, src: Source) -> Path:
 
 def read_release_stamp(path: Path, prefix: str) -> str:
     header = path.read_text(encoding="utf-8", errors="replace").splitlines()[:30]
-    version = date = ""
+    version = ""
     for line in header:
         if line.startswith("data-version:"):
             version = line.split(":", 1)[1].strip()
-        elif line.startswith("date:"):
-            date = line.split(":", 1)[1].strip()
     # Prefer an explicit YYYY-MM-DD found anywhere in the header block.
     m = re.search(r"\d{4}-\d{2}-\d{2}", "\n".join(header))
     iso = m.group(0) if m else ""

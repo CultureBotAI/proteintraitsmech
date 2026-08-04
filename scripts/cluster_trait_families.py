@@ -237,7 +237,7 @@ def main() -> int:
     labels = record_labels({c for core in cores for c in core[:1]})
     clustered = sum(len(f) for f in families)
     sizes = sorted((len(f) for f in families), reverse=True) or [0]
-    L = [f"# Multi-trait families (DiviK-style divisive clustering)", "",
+    L = ["# Multi-trait families (DiviK-style divisive clustering)", "",
          f"matrix: {X.shape[0]:,} proteins × {X.shape[1]:,} signature traits "
          f"(GO/EC excluded — they cluster by annotation depth, not architecture)",
          "",
@@ -273,8 +273,8 @@ def main() -> int:
         # gitignored, so without this a reader cannot tell what this file was
         # clustered from, and the hyperparameters materially change it (#64).
         fh.write(f"# built: {datetime.now(timezone.utc).strftime('%Y-%m-%d')}\n")
-        fh.write(f"# script: cluster_trait_families.py (DiviK, "
-                 f"doi:10.1186/s12859-022-05093-z)\n")
+        fh.write("# script: cluster_trait_families.py (DiviK, "
+                 "doi:10.1186/s12859-022-05093-z)\n")
         fh.write(f"# matrix: {X.shape[0]:,} proteins x {X.shape[1]:,} signature "
                  f"traits, {organisms} organisms\n")
         fh.write(f"# params: min_support={args.min_support} min_size={args.min_size} "

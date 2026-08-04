@@ -58,7 +58,7 @@ def main() -> int:
     go_mf = {c for c, (ax, cat) in idx.items()
              if c.startswith("GO:") and cat == "FUNC_MOLECULAR_FUNCTION"}
 
-    rows = [json.loads(l) for l in JSONL.open(encoding="utf-8")]
+    rows = [json.loads(ln) for ln in JSONL.open(encoding="utf-8")]
     # signature-trait feature vocab (most frequent) + GO-MF label vocab.
     # Under --holdout-taxon the vocabularies are built from the training rows
     # only: choosing the top-N features with knowledge of the held-out proteome

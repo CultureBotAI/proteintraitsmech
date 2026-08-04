@@ -260,7 +260,7 @@ def fetch_and_chop(stype: str, sid: str, chain: str, rng: str, dest: Path) -> bo
                 continue
         if ln.startswith(("ATOM", "HETATM", "TER", "END")):
             lines.append(ln)
-    if not any(l.startswith("ATOM") for l in lines):
+    if not any(ln.startswith("ATOM") for ln in lines):
         return False
     dest.write_text("\n".join(lines) + "\n")
     return True

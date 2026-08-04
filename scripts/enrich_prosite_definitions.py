@@ -41,8 +41,8 @@ def build_maps() -> tuple[dict[str, str], dict[str, str]]:
         if not m:
             continue
         title, prose, started = "", [], False
-        for l in m.group(1).split("\n"):
-            s = l.strip()
+        for ln in m.group(1).split("\n"):
+            s = ln.strip()
             if s and set(s) <= {"*"}:                 # banner ***
                 continue
             if s.startswith("*") and s.endswith("*"):  # * Title *
@@ -82,8 +82,8 @@ def pru_to_ps() -> dict[str, str]:
 
 def set_definition(text: str, new_def: str) -> str:
     lines = text.split("\n")
-    for i, l in enumerate(lines):
-        if l.startswith("definition:"):
+    for i, ln in enumerate(lines):
+        if ln.startswith("definition:"):
             j = i + 1
             while j < len(lines) and lines[j].startswith("  "):
                 j += 1

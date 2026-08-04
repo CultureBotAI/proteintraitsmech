@@ -143,8 +143,8 @@ def main() -> int:
                     help="use only the cache; do not hit PDBe")
     args = ap.parse_args()
 
-    entries = {json.loads(l)["mcsa_id"]: json.loads(l)
-               for l in ENTRIES.open(encoding="utf-8")}
+    entries = {json.loads(ln)["mcsa_id"]: json.loads(ln)
+               for ln in ENTRIES.open(encoding="utf-8")}
     stat = collections.Counter()
 
     for f in sorted(MCSA_DIR.glob("*.yaml")):

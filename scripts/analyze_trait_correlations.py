@@ -71,7 +71,7 @@ def main() -> int:
     def cat(t):
         return (idx.get(t) or ["", ""])[1]
 
-    rows = [json.loads(l) for l in JSONL.open(encoding="utf-8")]
+    rows = [json.loads(ln) for ln in JSONL.open(encoding="utf-8")]
     N = len(rows)
     # Provenance stamped onto every emitted edge. Derived from the matrix rather
     # than hardcoded — these rules were human-only through phase 5 and the

@@ -39,6 +39,14 @@ audit-schema:
 test *args:
     uv run pytest tests/ {{args}}
 
+# Static checks over the Python. Gated at ZERO rather than ratcheted from a baseline:
+# the 63 pre-existing errors were all trivial (semicolons, `l` as a variable name,
+# unused locals, f-strings without placeholders) and are fixed, so there is no number
+# to remember and no reason for the count to be anything but zero. See #107.
+# Lint the Python
+lint *args:
+    uv run ruff check scripts/ tests/ {{args}}
+
 # Cross-checks download.yaml against the seeders; warns on restrictive (NC/ND)
 # licences and orphan seeders.
 # Validate the data-source registry

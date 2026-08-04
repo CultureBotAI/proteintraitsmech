@@ -81,7 +81,6 @@ def main() -> int:
            else "cuda" if torch.cuda.is_available() else "cpu")
     V = torch.from_numpy(vecs).to(dev).to(torch.float16)      # [N, d], normalized
 
-    idx_of = {rid: i for i, rid in enumerate(ids)}
     neighbors: dict[str, list] = {}
     tier5: list = []
     seen_pair: set = set()

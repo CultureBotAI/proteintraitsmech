@@ -97,7 +97,7 @@ def main() -> int:
     ap.add_argument("--out")
     args = ap.parse_args()
 
-    rows = [json.loads(l) for l in JSONL.open(encoding="utf-8")]
+    rows = [json.loads(ln) for ln in JSONL.open(encoding="utf-8")]
     for r in rows:
         r["_ts"] = trait_set(r)
 
@@ -134,7 +134,7 @@ def main() -> int:
     trait_func = mine(tr_supp, tr_co, tr_n, STRUCT_PREF + SEQ_PREF, FUNC_PREF,
                       args.min_support, args.min_conf, args.min_lift)
 
-    L = [f"# Held-out-organism replication of the cross-axis rules",
+    L = ["# Held-out-organism replication of the cross-axis rules",
          "",
          f"trained on **{labels[train_key]}** ({tr_n:,} proteins), "
          f"support≥{args.min_support}, conf≥{args.min_conf}, lift≥{args.min_lift}; "

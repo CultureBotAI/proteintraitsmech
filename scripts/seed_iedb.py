@@ -98,7 +98,8 @@ def main() -> int:
     written = skipped = kept = scanned = 0
     with CSV.open(encoding="utf-8", errors="replace", newline="") as fh:
         r = csv.reader(fh)
-        next(r, None); next(r, None)                     # 2 header rows
+        next(r, None)
+        next(r, None)                     # 2 header rows
         for row in r:
             if args.limit and kept >= args.limit:
                 break

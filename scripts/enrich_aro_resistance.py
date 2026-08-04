@@ -99,11 +99,11 @@ def _yq(text: str) -> str:
 def relation_block(drug: dict, mech: dict) -> list[str]:
     lines = ["trait_relations:"]
     for obj, (via, vname) in sorted(mech.items()):
-        lines += [f"  - predicate: RO:0000056",
+        lines += ["  - predicate: RO:0000056",
                   f"    object: {obj}",
                   f"    relation_source: {_yq(f'ARO participates_in (mechanism) via {via} {vname}')}"]
     for obj, (via, vname) in sorted(drug.items()):
-        lines += [f"  - predicate: biolink:related_to",
+        lines += ["  - predicate: biolink:related_to",
                   f"    object: {obj}",
                   f"    relation_source: {_yq(f'ARO confers_resistance_to_drug_class via {via} {vname}')}"]
     return lines
@@ -113,7 +113,7 @@ def insert_after_parents(text: str, block: list[str]) -> str:
     """Insert `block` after the parent_traits list (if present) else after
     mapping_status — preserving everything else verbatim."""
     lines = text.splitlines()
-    ms = next((i for i, l in enumerate(lines) if l.startswith("mapping_status:")), None)
+    ms = next((i for i, ln in enumerate(lines) if ln.startswith("mapping_status:")), None)
     if ms is None:
         return text
     at = ms + 1

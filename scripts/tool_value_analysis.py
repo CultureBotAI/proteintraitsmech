@@ -139,7 +139,8 @@ def main() -> int:
     by_eff = sorted(rows, key=lambda r: -r["efficiency"])
     cum_v = cum_c = 0.0
     for r in by_eff:
-        cum_v += r["value_share"]; cum_c += r["compute_share"]
+        cum_v += r["value_share"]
+        cum_c += r["compute_share"]
         print(f"  +{r['tool']:<13} eff={r['efficiency']:.2f}  "
               f"cum value {cum_v*100:5.1f}%  cum compute {cum_c*100:5.1f}%")
         if cum_v >= 0.80:

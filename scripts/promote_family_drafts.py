@@ -434,7 +434,7 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
           "    edges:"]
     for i, mid in enumerate(mech):
         snip = cfg["mech"].get(mid) or next(iter(cfg["mech"].values()))
-        L += [f"      - subject: determinant",
+        L += ["      - subject: determinant",
               "        predicate: participates in (resistance mechanism)",
               "        predicate_id: RO:0000056",
               f"        object: mech{i}",
@@ -450,7 +450,7 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
           "        object: resistance",
           *_ev(ref, cfg["det_res"], "Determinant → resistance phenotype.")]
     for i, did in enumerate(drug[:D.MAX_DRUGS]):
-        L += [f"      - subject: resistance",
+        L += ["      - subject: resistance",
               "        predicate: related to (resistance is to)",
               f"        object: drug{i}",
               *_ev(ref, cfg["res_drug"], f"Resistance to {names.get(did, did)}.")]
@@ -527,8 +527,8 @@ def main() -> int:
         mech, drug = D.parse_relations(text)
         block = promoted_graph(ident, label, mech, drug, names, cfg)
         lines = text.splitlines()
-        cg = next(i for i, l in enumerate(lines) if l.startswith("causal_graphs:"))
-        lic = next(i for i, l in enumerate(lines) if l.startswith("license:"))
+        cg = next(i for i, ln in enumerate(lines) if ln.startswith("causal_graphs:"))
+        lic = next(i for i, ln in enumerate(lines) if ln.startswith("license:"))
         new_lines = lines[:cg] + block + curation_event() + lines[lic:]
         new = "\n".join(new_lines) + "\n"
         new = re.sub(r"^mapping_status: SEEDED$", "mapping_status: REVIEWED", new, flags=re.M)
