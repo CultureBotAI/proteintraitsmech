@@ -107,3 +107,76 @@ def test_it_only_touches_a_backslash_before_a_letter(text):
     sys.modules["_seed_subsystems2"] = mod
     spec.loader.exec_module(mod)
     assert mod._slash_for_backslash(text) == text
+
+
+# --- #139: restoring characters the SOURCE lost -----------------------------------
+
+from lossy_text_errata import UNRESOLVED, repair as repair_lossy  # noqa: E402
+
+FFFD = "�"
+
+
+@pytest.mark.parametrize("damaged,restored", [
+    ("Earth" + FFFD + "s homeostasis", "Earth’s homeostasis"),
+    ("it doesn" + FFFD + "t occur", "it doesn’t occur"),
+    ("acyl-CoA" + FFFD + "s, which", "acyl-CoA’s, which"),
+])
+def test_apostrophes(damaged, restored):
+    assert repair_lossy(damaged) == restored
+
+
+def test_primes_and_arrow():
+    assert repair_lossy("3" + FFFD + "-5" + FFFD + " helicase") == "3′-5′ helicase"
+    assert repair_lossy("The 3'" + FFFD + "5'-exonuclease") == "The 3'→5'-exonuclease"
+
+
+def test_paired_quotes_only():
+    """A MATCHED pair becomes quotes; a lone mark is left alone.
+
+    That asymmetry is the safety property: an unmatched mark is far more likely to be a
+    dash than an opening quote, and guessing wrong rewrites prose.
+    """
+    assert repair_lossy("protein with " + FFFD + "double-wing" + FFFD + " motif") == \
+        "protein with “double-wing” motif"
+    lone = "see " + FFFD + "The phylogenetic tree of CobN"
+    assert repair_lossy(lone) == lone
+
+
+def test_page_ranges_become_en_dashes():
+    assert repair_lossy("109(41):16402" + FFFD + "16403") == "109(41):16402–16403"
+    assert repair_lossy("PNAS, 102:1169 " + FFFD + "1174") == "PNAS, 102:1169–1174"
+
+
+@pytest.mark.parametrize("damaged,restored", [
+    ("Hyyryl" + FFFD + "inen H", "Hyyryläinen H"),
+    ("Oppeg" + FFFD + "rd C", "Oppegård C"),
+    ("S" + FFFD + "rensen", "Sørensen"),
+    ("Rodr" + FFFD + "guez", "Rodríguez"),
+    ("Leskel" + FFFD + " S", "Leskelä S"),
+])
+def test_surnames_come_from_the_table_not_a_rule(damaged, restored):
+    """Accented letters in names are inferred by RECOGNISING the name.
+
+    No rule can do this — `Schw?r` is Schwär, `Mu?oz` is Muñoz, and the letter differs
+    per name. A rule that guessed would write a wrong name into a curated record, which
+    is worse than leaving the damage visible.
+    """
+    assert repair_lossy(damaged) == restored
+
+
+@pytest.mark.parametrize("damaged", sorted(UNRESOLVED))
+def test_names_that_are_not_confident_are_left_alone(damaged):
+    """The three surnames with more than one plausible spelling stay damaged.
+
+    Deliberate: `just audit-text` keeps counting them, so the residue is visible rather
+    than quietly declared fixed.
+    """
+    text = "author " + damaged.replace("_", FFFD) + " et al."
+    assert repair_lossy(text) == text
+    assert FFFD in repair_lossy(text)
+
+
+def test_undamaged_text_is_untouched():
+    for s in ["plain ascii text", "already curly “quoted”", "3′-5′ helicase",
+              "Hyyryläinen H", ""]:
+        assert repair_lossy(s) == s

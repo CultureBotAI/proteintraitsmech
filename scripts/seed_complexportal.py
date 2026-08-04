@@ -27,6 +27,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lossy_text_errata import repair as _repair_lossy  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
 from yaml_emit import folded, yaml_escape  # noqa: E402
 
@@ -87,7 +90,7 @@ def build_yaml(ac, name, taxon_name, members, subparts, gos, description):
     tail += f", from {taxon_name}." if taxon_name else "."
     d = d.rstrip(".") + "." + tail
     lines = [f"identifier: ComplexPortal:{ac}", f"label: {yaml_escape(label)}"]
-    f = folded(d)
+    f = folded(_repair_lossy(d))   # 3'->5' arrow (#139)
     lines += [f"definition: {f[0]}", *f[1:]]
     lines += ["definition_source: Complex Portal", "trait_axis: FUNCTION",
               "trait_category: FUNC_INTERACTION_PARTNER", "term_kind: CLASS",
