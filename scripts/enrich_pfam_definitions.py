@@ -73,7 +73,41 @@ def load_ipr_abstracts(wanted: set[str]) -> dict[str, str]:
     return out
 
 
-def set_definition(text: str, new_def: str) -> str:
+def borrowed_source(ipr: str, pf: str) -> str:
+    """What `definition_source` must say once the definition is InterPro's prose.
+
+    This script replaces a Pfam record's definition with the ABSTRACT OF THE
+    INTERPRO ENTRY Pfam maps to, and used to leave `definition_source: Pfam`
+    untouched (#173). The text's real origin was then unrecoverable from the
+    record, which cost real time twice:
+
+      * #171 could not identify which script wrote these definitions, because
+        the source label pointed at Pfam; it took `git log --follow` on an
+        individual record to find out.
+      * `repair_interpro_abstracts` keys on the source naming an InterPro
+        abstract, so it skipped every one of these -- which is why #170 shipped
+        with 3,431 records still carrying deleted cross-references.
+
+    `mapped_xrefs: {object: InterPro:…, mapping_source: pfam2interpro}` is not a
+    substitute: that asserts a signature-to-entry MAPPING, which is a different
+    claim from "this definition's text is that entry's abstract".
+
+    Matches the convention the member-DB seeders already use.
+    """
+    return (f'"InterPro:{ipr} abstract '
+            f'(Pfam {pf} maps to this entry via pfam2interpro)"')
+
+
+def set_definition(text: str, new_def: str, new_src: str | None = None) -> str:
+    """Replace the definition block, and its `definition_source` when given.
+
+    Both together: a definition and a source that disagree is the defect this
+    fixes, so they are never written apart.
+
+    (`startswith("definition:")` already excludes `definition_source:` -- ":"
+    against "_" -- so no extra guard is needed. An earlier version added one;
+    mutation testing showed no test could tell it apart, because it was dead.)
+    """
     lines = text.split("\n")
     for i, ln in enumerate(lines):
         if ln.startswith("definition:"):
@@ -81,8 +115,22 @@ def set_definition(text: str, new_def: str) -> str:
             while j < len(lines) and lines[j].startswith("  "):
                 j += 1
             block = ["definition: >-", "  " + " ".join(new_def.split())]
+            if new_src is not None and j < len(lines) and \
+                    lines[j].startswith("definition_source:"):
+                block.append(f"definition_source: {new_src}")
+                j += 1
             return "\n".join(lines[:i] + block + lines[j:])
     return text
+
+
+def enrich_record(text: str, ipr: str, pf: str, abstract: str) -> str:
+    """One record's new content: the abstract AND the source that names it.
+
+    Extracted so the wiring is testable. Mutation testing found that tests
+    calling `set_definition` directly could not catch the main loop dropping the
+    source argument -- which is the original defect, restored.
+    """
+    return set_definition(text, abstract, borrowed_source(ipr, pf))
 
 
 def main() -> int:
@@ -112,24 +160,35 @@ def main() -> int:
     abstracts = load_ipr_abstracts(wanted)
     print(f"{len(abstracts):,} InterPro entries have a usable abstract")
 
-    updated = 0
+    updated = relabelled = 0
     for path, pf in records:
-        ab = abstracts.get(pf2ipr.get(pf, ""))
+        ipr = pf2ipr.get(pf, "")
+        ab = abstracts.get(ipr)
         if not ab:
             continue
         text = path.read_text(encoding="utf-8", errors="replace")
-        new = set_definition(text, ab)
+        new = enrich_record(text, ipr, pf, ab)
         if new != text:
-            updated += 1
+            # A record whose definition was already ours and only the SOURCE
+            # moves is the #173 backfill; one whose text changes too is the
+            # ordinary enrichment. Counted apart so a re-run is readable.
+            if " ".join(ab.split()) in text:
+                relabelled += 1
+            else:
+                updated += 1
             if args.apply:
                 path.write_text(new, encoding="utf-8")
-            if args.limit and updated >= args.limit:
+            if args.limit and updated + relabelled >= args.limit:
                 break
 
     verb = "updated" if args.apply else "would update"
     print(f"{verb} {updated:,} Pfam definitions from InterPro abstracts"
           + ("" if args.apply else "  (dry-run; pass --apply)"))
-    if args.limit and updated >= args.limit:
+    if relabelled:
+        print(f"  {'relabelled' if args.apply else 'would relabel'} "
+              f"{relabelled:,} whose text was already correct but whose "
+              f"definition_source still said 'Pfam' (#173)")
+    if args.limit and updated + relabelled >= args.limit:
         print(f"  PARTIAL: stopped at --limit {args.limit}")
     return 0
 
