@@ -358,3 +358,60 @@ def test_only_the_buildable_record_gains_a_graph(builder, capsys):
     assert "causal_graphs" in (root / "ok.yaml").read_text(encoding="utf-8")
     assert (root / "nometal.yaml").read_text(encoding="utf-8") == \
         nometal.replace("MetalPDB:ZN_MONONUCLEAR_TEST", "MetalPDB:NO_METAL")
+
+
+# --- review round 3: the filters that stop a FALSE claim ---------------------------
+#
+# Probing the builder with mismatched inputs found no defects — every filter
+# behaves correctly. They are pinned here because what they prevent is not a
+# crash or a malformed record but a WRONG one: a graph asserting that these
+# residues coordinate that metal, which validates cleanly and is simply untrue.
+
+def build_only(record_yaml, sites):
+    """`build()` alone, for the filters — no filesystem needed."""
+    mod = importlib.import_module(BUILDER)
+    return mod.build(yaml.safe_load(record_yaml), sites)
+
+
+def test_a_different_metal_does_not_produce_a_graph():
+    """The record is a zinc site; the site is iron. Matching anyway would claim
+    these residues coordinate a metal they do not."""
+    graph, why = build_only(RECORD, {"1abc": [dict(SITE, periodic_name="Iron")]})
+    assert graph is None and "no site matched" in why
+
+
+def test_a_different_nuclearity_does_not_produce_a_graph():
+    """"mononuclear zinc site" is in the label, so a dinuclear site is a
+    different coordination class — a real distinction, not a formatting one."""
+    graph, why = build_only(RECORD, {"1abc": [dict(SITE, nuclearity="dinuclear")]})
+    assert graph is None and "no site matched" in why
+
+
+def test_a_record_with_no_chebi_metal_is_skipped():
+    graph, why = build_only(
+        RECORD.replace("chemical_participants:\n  - name: Zinc\n"
+                       "    chebi: CHEBI:29105\n", ""), {"1abc": [SITE]})
+    assert graph is None and "no CHEBI metal" in why
+
+
+def test_a_ligand_with_no_residue_number_cannot_become_a_node():
+    """A residue node without a position is not localisable, so it is not a
+    residue trait. The whole graph goes rather than emitting a node that cannot
+    be pointed at."""
+    site = dict(SITE, ligands=[{"residue_name": "HIS", "residue_pdb_number": "",
+                                "chain_letter": "A", "donor": "", "distance": ""}])
+    graph, why = build_only(RECORD, {"1abc": [site]})
+    assert graph is None and "no protein residue" in why
+
+
+def test_at_most_three_exemplar_structures_are_used():
+    """"a class needs exemplars, not every occurrence" — the cap keeps a
+    class-level record from accumulating one node set per structure in the PDB."""
+    rec = RECORD.replace(
+        '  - protein_id: UniProtKB:P00001\n'
+        '    note: "MetalPDB entry PDB 1abc, site A"',
+        "".join(f'  - protein_id: UniProtKB:P{i:05d}\n'
+                f'    note: "MetalPDB entry PDB {i}abc"\n' for i in range(1, 6)).rstrip())
+    graph, _ = build_only(rec, {f"{i}abc": [SITE] for i in range(1, 6)})
+    codes = {n["node_id"][3:7] for n in graph["nodes"] if n["node_type"] == "RESIDUE"}
+    assert len(codes) == 3, f"used {len(codes)} exemplar structures: {sorted(codes)}"
