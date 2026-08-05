@@ -40,6 +40,16 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 OUT_DIR = REPO_ROOT / "data" / "raw" / "interpro_members"
 API = "https://www.ebi.ac.uk/interpro/api/entry/{db}/?page_size={n}"
 
+# Files EBI hosts for a member database that the API does not expose. SFLD's
+# superfamily/group/family hierarchy is the case that matters: the API reports
+# `hierarchy: null` for every SFLD accession at all three levels, so without this
+# a subgroup literally named "I" (SFLDG01162) arrives with nothing to say which
+# superfamily it is subgroup I *of*.
+EXTRA_FILES = {
+    "sfld": ["https://ftp.ebi.ac.uk/pub/databases/interpro/databases/sfld/4/"
+             "sfld_hierarchy_flat.txt"],
+}
+
 # The six UniProt "Family and domain databases" that PTM has no records for.
 # Keys are InterPro's own `source_database` spelling, which is also the API path.
 DATABASES = ("pirsf", "prints", "ssf", "sfld", "smart", "hamap")
@@ -93,6 +103,12 @@ def fetch_db(db: str, apply: bool) -> int:
 
     if apply:
         OUT_DIR.mkdir(parents=True, exist_ok=True)
+        for extra in EXTRA_FILES.get(db, []):
+            name = extra.rsplit("/", 1)[-1]
+            req = urllib.request.Request(extra, headers={"User-Agent": USER_AGENT})
+            with urllib.request.urlopen(req, timeout=90) as fh:
+                (OUT_DIR / name).write_bytes(fh.read())
+            print(f"  {db}: fetched {name}")
         out = OUT_DIR / f"{db}.jsonl"
         out.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows),
                        encoding="utf-8")

@@ -172,3 +172,48 @@ def test_an_unintegrated_signature_still_gets_a_record():
     assert r["identifier"] == "SFLD:SFLDF00099"
     assert "mapped_xrefs" not in r, "nothing to cross-reference without an entry"
     assert r["definitions"][0]["method"] == "GENERATED"
+
+
+# --- SFLD hierarchy (#162 review) ---------------------------------------------------
+
+def test_the_immediate_parent_is_the_deepest_ancestor_not_the_last(tmp_path,
+                                                                   monkeypatch):
+    """EBI's file lists ANCESTORS, unordered. Taking the last token would be the
+    obvious reading and is wrong: `SFLDF00425: SFLDS00029 SFLDG01116` happens to
+    end with the group, but `SFLDF00045: SFLDG01129 SFLDG01135 SFLDS00003` ends
+    with the superfamily. Depth is derived from the file itself -- an ancestor's
+    own ancestor count.
+    """
+    import seed_interpro_members as sim
+    f = tmp_path / "h.txt"
+    f.write_text(
+        "SFLDS00003:\n"                       # root, no ancestors
+        "SFLDG01129: SFLDS00003\n"            # group under the root
+        "SFLDG01135: SFLDS00003 SFLDG01129\n"  # nested group, deeper
+        "SFLDF00045: SFLDG01129 SFLDG01135 SFLDS00003\n",  # ends with the ROOT
+        encoding="utf-8")
+    monkeypatch.setattr(sim, "SFLD_HIERARCHY", f)
+    parents = sim.sfld_parents()
+    assert parents["SFLDF00045"] == "SFLDG01135", "took the last token, not the deepest"
+    assert parents["SFLDG01135"] == "SFLDG01129"
+    assert parents["SFLDG01129"] == "SFLDS00003"
+    assert "SFLDS00003" not in parents, "a root has no parent"
+
+
+def test_a_missing_hierarchy_file_is_not_fatal(tmp_path, monkeypatch):
+    """The hierarchy is an enrichment; its absence must not stop a seed."""
+    import seed_interpro_members as sim
+    monkeypatch.setattr(sim, "SFLD_HIERARCHY", tmp_path / "absent.txt")
+    assert sim.sfld_parents() == {}
+
+
+def test_parent_traits_is_emitted_as_a_curie_list():
+    text, _, _ = build_yaml("sfld", sig("SFLDG01162", "I"), entry(),
+                            {"SFLDG01162": "SFLDS00036"})
+    r = yaml.safe_load(text)
+    assert r["parent_traits"] == ["SFLD:SFLDS00036"]
+
+
+def test_no_parent_traits_key_when_there_is_no_parent():
+    text, _, _ = build_yaml("sfld", sig("SFLDS00036", "enolase superfamily"), entry(), {})
+    assert "parent_traits" not in yaml.safe_load(text)

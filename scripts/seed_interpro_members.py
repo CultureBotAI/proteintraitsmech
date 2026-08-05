@@ -69,6 +69,7 @@ from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MEMBERS_DIR = REPO_ROOT / "data" / "raw" / "interpro_members"
 INTERPRO = REPO_ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
+SFLD_HIERARCHY = MEMBERS_DIR / "sfld_hierarchy_flat.txt"
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 DEF_CAP = 1800
 
@@ -233,13 +234,47 @@ def interpro_entries() -> dict[str, dict]:
     return out
 
 
+def sfld_parents() -> dict[str, str]:
+    """SFLD accession -> its IMMEDIATE parent, from EBI's hierarchy file.
+
+    The InterPro API reports `hierarchy: null` for every SFLD accession at all
+    three levels, so this is the only route to the superfamily/group/family
+    structure. Without it, a subgroup literally named "I" (SFLDG01162) says
+    nothing at all -- subgroup I *of what*?
+
+    The file gives ANCESTORS, not a parent, one line per entry:
+
+        SFLDF00425: SFLDS00029 SFLDG01116
+        SFLDG01162: SFLDS00036
+
+    and the ancestors are unordered, so "the last one" is not the parent. The
+    immediate parent is the DEEPEST ancestor, and depth is derivable from the
+    file itself: an ancestor's own ancestor count. Emitting the full ancestor
+    list instead would be redundant -- `parent_traits` is subClassOf, which is
+    transitive.
+    """
+    if not SFLD_HIERARCHY.exists():
+        return {}
+    ancestors: dict[str, list[str]] = {}
+    for line in SFLD_HIERARCHY.read_text(encoding="utf-8").splitlines():
+        if ":" not in line:
+            continue
+        acc, rest = line.split(":", 1)
+        ancestors[acc.strip()] = rest.split()
+    depth = {a: len(ancestors.get(a, ())) for a in
+             {x for v in ancestors.values() for x in v} | set(ancestors)}
+    return {acc: max(anc, key=lambda a: depth.get(a, 0))
+            for acc, anc in ancestors.items() if anc}
+
+
 def compose_definition(prefix: str, acc: str, label: str, kind: str) -> str:
     """Fallback when the signature has no usable InterPro abstract."""
     return (f"{label} — a protein {kind} modelled by the {prefix} signature {acc}. "
             f"No curated InterPro abstract is available for this signature.")
 
 
-def build_yaml(db: str, sig: dict, entry: dict | None) -> tuple[str, str, str]:
+def build_yaml(db: str, sig: dict, entry: dict | None,
+               parents: dict[str, str] | None = None) -> tuple[str, str, str]:
     """Return (yaml_text, subdir, identifier) for one member signature."""
     prefix, fallback, _ = MEMBER_DBS[db]
     acc = sig["accession"]
@@ -265,6 +300,10 @@ def build_yaml(db: str, sig: dict, entry: dict | None) -> tuple[str, str, str]:
               f"trait_category: {category}",
               "term_kind: CLASS",
               "mapping_status: SEEDED"]
+
+    parent = (parents or {}).get(acc)
+    if parent:
+        lines += ["parent_traits:", f"  - {prefix}:{parent}"]
 
     if entry and entry.get("name") and entry["name"].strip().lower() != label.strip().lower():
         lines += ["synonyms:",
@@ -334,6 +373,9 @@ def main() -> int:
     print("indexing InterPro abstracts…", file=sys.stderr)
     entries = interpro_entries()
     print(f"  {len(entries):,} InterPro entries", file=sys.stderr)
+    parents = sfld_parents() if db == "sfld" else {}
+    if db == "sfld":
+        print(f"  {len(parents):,} SFLD parent links", file=sys.stderr)
 
     # identifier -> current path, so idempotency survives a signature being
     # renamed upstream (the filename embeds the label, the identifier does not).
@@ -377,8 +419,10 @@ def main() -> int:
             bump("definition: composed (integrating entry has no abstract)")
         else:
             bump("definition: composed (not integrated into InterPro)")
+        bump("parent_traits: linked" if parents.get(acc)
+             else "parent_traits: none (top level or absent from the hierarchy)")
 
-        text, subdir, ident = build_yaml(db, sig, entry)
+        text, subdir, ident = build_yaml(db, sig, entry, parents)
         out_dir = TRAITS_DIR / subdir
         path = out_dir / f"{slugify(sig['name'] or acc, fallback)}-{acc.lower()}.yaml"
 
