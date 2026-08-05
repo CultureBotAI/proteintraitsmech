@@ -65,6 +65,12 @@ audit-graphs *args:
 audit-text *args:
     uv run python scripts/audit_text_quality.py {{args}}
 
+# Audit whether definitions read as prose (#149). Fails on definitions WE composed;
+# reports, without failing, the same defects in curator-written source abstracts we
+# reproduce faithfully.
+audit-prose *args:
+    uv run python scripts/audit_prose_quality.py {{args}}
+
 # LLM review of InterPro's unreviewed LLM abstracts (issue #92). Dry-run by default;
 # --apply calls the reviewer and appends to data/reviews/. Resumable: a candidate that
 # already has a verdict is skipped, so an interrupted run costs only its current batch.
