@@ -23,7 +23,10 @@ Every emitted record carries:
   - identifier: MOD:NNNNN
   - definition: OBO `def` text (source citations stripped)
   - parent_traits: is_a targets (MOD CURIEs)
-  - xrefs: OBO xref lines (Unimod / RESID / etc.)
+  - xrefs: OBO xref lines (Unimod / RESID / GNOme / etc.). PSI-MOD writes some
+    of these with the whole CURIE in the quoted-description slot
+    (`xref: Unimod: "Unimod:162"`); those are unwrapped, while internal
+    annotation keys (Origin, Remap, Formula, …) are filtered out first (#102).
   - synonyms: OBO synonym lines
   - license: CC-BY-4.0
   - mapping_status: SEEDED
@@ -226,6 +229,9 @@ def parse_synonym(raw: str) -> tuple[str, str] | None:
     return (text, scope_map.get(scope, "RELATED_SYNONYM"))
 
 
+_CURIE_RE = re.compile(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$")
+
+
 def parse_xref(raw: str) -> str | None:
     """Return a CURIE for an OBO xref, or None to skip. PSI-MOD embeds a
     number of non-CURIE keys (Origin, Source, TermSpec, Formula, DiffMono,
@@ -246,13 +252,39 @@ def parse_xref(raw: str) -> str | None:
     # test and was silently dropped — the same defect fixed in seed_obo.py, which
     # this copy did not receive until both were pointed at obo_syntax.py.
     local = strip_suffixes(local)
-    # Some xrefs use `Origin: "S"` style — reject non-accession locals.
-    if not local or local.startswith('"'):
-        return None
-    # Filter internal PSI-MOD annotation keys.
+    # Filter internal PSI-MOD annotation keys. THIS MUST PRECEDE THE UNWRAP
+    # BELOW: `Remap` is one of these and its value is a quoted CURIE
+    # (`xref: Remap: "MOD:00599"`), so unwrapping first would rewrite the prefix
+    # to `MOD` and walk straight past this filter. It did, in the first draft of
+    # this fix — 28 records gained MOD xrefs that are remapping directives, not
+    # cross-references.
     if prefix in {"Origin", "Source", "TermSpec", "Formula", "DiffFormula",
                   "DiffAvg", "DiffMono", "MassAvg", "MassMono",
                   "Remap", "Comment"}:
+        return None
+    # PSI-MOD writes some cross-references with the WHOLE CURIE inside OBO's
+    # quoted-description slot:
+    #
+    #     xref: Unimod: "Unimod:162"
+    #
+    # so the prefix is `Unimod` and the local part is the quoted string
+    # `"Unimod:162"`. The guard below exists for `Origin: "S"`-style
+    # pseudo-xrefs, and it rejected these too — silently dropping all 825
+    # Unimod lines, of which nine terms had no duplicate anywhere else and lost
+    # their only reference (#102).
+    #
+    # Unwrap only when the quoted content is ITSELF a well-formed CURIE. That
+    # readmits `Unimod: "Unimod:162"` without readmitting `Origin: "S"`, whose
+    # content is not one.
+    if local.startswith('"') and local.endswith('"'):
+        inner = local[1:-1].strip()
+        if _CURIE_RE.match(inner):
+            local = inner.split(":", 1)[1]
+            prefix = inner.split(":", 1)[0]
+        else:
+            return None
+    # Some xrefs use `Origin: "S"` style — reject non-accession locals.
+    if not local or local.startswith('"'):
         return None
     # Prefer canonical prefix casing for the sources we already use.
     prefix_map = {
@@ -265,7 +297,7 @@ def parse_xref(raw: str) -> str | None:
     prefix = prefix_map.get(prefix, prefix)
     curie = f"{prefix}:{local}"
     # Final schema-pattern check: must match ^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$
-    if not re.match(r"^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$", curie):
+    if not _CURIE_RE.match(curie):
         return None
     return curie
 
