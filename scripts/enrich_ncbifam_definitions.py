@@ -31,6 +31,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import is_curated  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw"
 TSV = RAW / "ncbifam" / "hmm_PGAP.tsv"
@@ -112,6 +115,23 @@ def compose(m: dict, acc: str, axis: str, ecn: dict, gon: dict) -> str:
     return " ".join(s.split())
 
 
+
+def should_enrich(text: str) -> bool:
+    """False for a record showing curation.
+
+    This script REPLACES a record's definition in place. Without this, a
+    curator's rewrite is silently overwritten on the next run -- no warning, no
+    counter, nothing outside git (#175). `record_io.merge_on_reseed` gives
+    seeders that protection for free, but only on the re-seed path; an in-place
+    editor has to ask.
+
+    Exposed as a function, not inlined, so the CALLER is testable. Mutation
+    testing on #173 showed that tests exercising a helper directly cannot catch
+    the main loop failing to call it -- which is the failure that matters.
+    """
+    return not is_curated(text)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--apply", action="store_true", help="write changes (default: dry-run)")
@@ -134,13 +154,16 @@ def main() -> int:
         if d.is_dir():
             files += sorted(d.glob("*.yaml"))
 
-    done = skip = nometa = 0
+    done = skip = nometa = curated = 0
     # Replace the definition folded-block + its definition_source line ONLY.
     # MULTILINE only (NO DOTALL) so `.` never crosses a newline — a DOTALL `.*$`
     # would eat the rest of the file.
     DEF_RE = re.compile(r"(?m)^definition:[ \t]*>-\n(?:[ \t]+.*\n)+?definition_source:.*$")
     for p in files:
         text = p.read_text(encoding="utf-8")
+        if not should_enrich(text):
+            curated += 1
+            continue
         if SOURCE in text:
             skip += 1
             continue
@@ -159,6 +182,8 @@ def main() -> int:
         if args.apply:
             p.write_text(new, encoding="utf-8")
 
+    if curated:
+        print(f"  skipped {curated:,} showing curation (definition left alone, #175)")
     print(f"NCBIfam definitions: {'recomposed' if args.apply else 'would recompose'} {done:,} "
           f"| already done {skip:,} | no metadata/def {nometa:,}")
     if not args.apply:
