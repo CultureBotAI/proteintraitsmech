@@ -82,6 +82,11 @@ _TAG = re.compile(r"<[^>]+>")
 # gone: "[ ]", "[ , ]", "( )", "( , )".
 _EMPTY_BRACKETS = re.compile(r"\s*[\[(]\s*(?:,\s*)*[\])]")
 _SPACE_BEFORE_PUNCT = re.compile(r"\s+([.,;:])")
+# InterPro writes `( <db_xref/> )` with spaces around the element. Deleting the
+# element left `( )`, which the bracket sweep removed; SUBSTITUTING it leaves
+# `( Pfam:PF02310 )`, which is faithful but reads badly -- 4,663 records.
+_PAD_OPEN = re.compile(r"([\[(])\s+")
+_PAD_CLOSE = re.compile(r"\s+([\])])")
 
 
 def render_xref(db: str, key: str) -> str:
@@ -108,6 +113,8 @@ def clean_abstract(raw: str) -> str:
     txt = _TAG.sub(" ", txt)
     txt = html.unescape(txt)
     txt = _EMPTY_BRACKETS.sub("", txt)
+    txt = _PAD_OPEN.sub(r"\1", txt)
+    txt = _PAD_CLOSE.sub(r"\1", txt)
     txt = _SPACE_BEFORE_PUNCT.sub(r"\1", txt)
     return " ".join(txt.split())
 

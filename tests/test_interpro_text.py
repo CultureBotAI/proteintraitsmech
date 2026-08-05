@@ -127,3 +127,12 @@ def test_the_prefix_map_covers_every_database_seen_inline():
     for db in ("INTERPRO", "EC", "SWISSPROT", "PFAM", "PDBE", "CAZY", "NCBIFAM",
                "PROSITEDOC", "GENPROP", "PIRSF", "SSF", "PROSITE"):
         assert db in DB_PREFIX, db
+
+
+def test_padding_inside_brackets_is_closed_up():
+    """InterPro writes `( <db_xref/> )`. Deleting the element left `( )`, which
+    the sweep removed; substituting leaves `( Pfam:PF02310 )` -- faithful but
+    badly set. 4,663 records had it before this."""
+    raw = '<p>a domain ( <db_xref db="PFAM" dbkey="PF02310"/> ) and more</p>'
+    assert clean_abstract(raw) == "a domain (Pfam:PF02310) and more"
+    assert clean_abstract("<p>x [ y ] z</p>") == "x [y] z"
