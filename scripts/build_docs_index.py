@@ -149,6 +149,19 @@ def infer_source(identifier: str, path: Path) -> str:
         return "NCBIfam"
     if identifier.startswith("CDD:"):
         return "CDD"
+    # InterPro member databases seeded from the EBI API (#162).
+    if identifier.startswith("PIRSF:"):
+        return "PIRSF"
+    if identifier.startswith("SMART:"):
+        return "SMART"
+    if identifier.startswith("HAMAP:"):
+        return "HAMAP"
+    if identifier.startswith("PRINTS:"):
+        return "PRINTS"
+    if identifier.startswith("SUPERFAMILY:"):
+        return "SUPERFAMILY"
+    if identifier.startswith("SFLD:"):
+        return "SFLD"
     if identifier.startswith("MEROPS:"):
         return "MEROPS"
     if identifier.startswith(("proteintraitsmech:UNIPROTKB_", "proteintraitsmech:UNIPROT_FT_")):
