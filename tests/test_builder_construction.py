@@ -316,3 +316,45 @@ def test_the_same_residue_number_in_two_structures_stays_two_nodes(tmp_path,
     assert len(residues) == len(set(residues)), "residue node ids collide"
     assert any("1abc" in r for r in residues) and any("2xyz" in r for r in residues), \
         f"the PDB code is not in the residue node id: {residues}"
+
+
+# --- review round 2: dry-run safety and the counter assertion ----------------------
+
+def test_a_dry_run_writes_nothing(tmp_path, monkeypatch, capsys):
+    """Every seeder and builder in this repo is dry-run by default; a builder
+    that wrote without --apply would corrupt a corpus on an exploratory run. The
+    construction path was untested, so this had never been exercised — and the
+    write is the very last statement, after all the work that makes it look like
+    the run succeeded.
+    """
+    mod = importlib.import_module(BUILDER)
+    root = tmp_path / "metalpdb"
+    root.mkdir()
+    monkeypatch.setattr(mod, "ROOT", root)
+    monkeypatch.setattr(mod, "wanted_codes", lambda: ["1abc"])
+    monkeypatch.setattr(mod, "load_sites", lambda codes: SITES)
+    monkeypatch.setattr(sys, "argv", [BUILDER])          # no --apply
+    p = root / "r.yaml"
+    p.write_text(RECORD, encoding="utf-8")
+    err = run(mod, capsys)
+    assert "Dry run" in err
+    assert "written" in err, "the dry run must still REPORT what it would do"
+    assert p.read_text(encoding="utf-8") == RECORD, "a dry run modified a record"
+
+
+def test_only_the_buildable_record_gains_a_graph(builder, capsys):
+    """Stronger than reading the counter out of stderr: check the corpus. A
+    record the builder cannot build from must be left exactly as it was, not
+    written with an empty or partial graph."""
+    mod, root = builder
+    (root / "ok.yaml").write_text(RECORD, encoding="utf-8")
+    nometal = RECORD.replace("chemical_participants:\n  - name: Zinc\n"
+                             "    chebi: CHEBI:29105\n", "")
+    (root / "nometal.yaml").write_text(
+        nometal.replace("MetalPDB:ZN_MONONUCLEAR_TEST", "MetalPDB:NO_METAL"),
+        encoding="utf-8")
+    err = run(mod, capsys)
+    assert "no CHEBI metal" in err
+    assert "causal_graphs" in (root / "ok.yaml").read_text(encoding="utf-8")
+    assert (root / "nometal.yaml").read_text(encoding="utf-8") == \
+        nometal.replace("MetalPDB:ZN_MONONUCLEAR_TEST", "MetalPDB:NO_METAL")
