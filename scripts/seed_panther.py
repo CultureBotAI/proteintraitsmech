@@ -63,6 +63,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from interpro_text import clean_abstract as _clean  # noqa: E402
 from record_io import write_record  # noqa: E402
 from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 
@@ -150,13 +151,12 @@ def interpro_index() -> dict[str, dict]:
 
 
 def clean_abstract(raw: str) -> str:
-    """Strip InterPro markup. Its inline `<db_xref/>` citations leave `[ ]`
-    husks once tags are removed; those are dropped rather than shipped."""
-    txt = re.sub(r"<[^>]+>", " ", raw)
-    txt = html.unescape(txt)
-    txt = re.sub(r"\[\s*(,\s*)*\]", "", txt)
-    txt = re.sub(r"\s+([.,;:])", r"\1", txt)
-    return " ".join(txt.split())
+    """Delegates to the shared cleaner (#159).
+
+    This stripped every tag with one regex, which deleted inline `<db_xref/>`
+    citations along with the markup -- the accession the sentence was about.
+    """
+    return _clean(raw)
 
 
 def parse_annotations(parts: list[str]) -> dict:

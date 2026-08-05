@@ -49,6 +49,7 @@ import xml.etree.ElementTree as ET
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from interpro_text import clean_abstract_element  # noqa: E402
 from record_io import write_record  # noqa: E402
 from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 
@@ -126,13 +127,13 @@ def parse_interpro2go() -> dict[str, list[str]]:
 
 
 def clean_abstract(el) -> str:
-    if el is None:
-        return ""
-    text = " ".join("".join(el.itertext()).split())
-    # Stripped <cite>/<dbxref> tags leave empty "[ ]" / "[ , ]" or "( )" / "( , )"
-    # stubs — drop them.
-    text = re.sub(r"\s*[\[(]\s*(?:,\s*)*[\])]", "", text)
-    text = " ".join(text.split())
+    """Delegates to the shared cleaner (#159); only the cap is local.
+
+    This used `el.itertext()`, which cannot see attributes, so every inline
+    `<db_xref db=... dbkey=.../>` lost the accession it carried before anything
+    could read it. `interpro_text` substitutes those as CURIEs instead.
+    """
+    text = clean_abstract_element(el)
     if len(text) > DEF_CAP:
         text = text[: DEF_CAP - 1].rstrip() + "…"
     return text
