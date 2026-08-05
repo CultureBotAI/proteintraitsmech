@@ -284,6 +284,47 @@
     them. "conserved at taxon rank (id)" = a conserved/clade-specific record
     with an NCBITaxon xref.
 
+# PRINTS — protein fingerprints (ordered motif sets), via the EBI InterPro API
+-
+  url: https://www.ebi.ac.uk/interpro/api/entry/prints/
+  local_name: interpro_members/prints.jsonl
+  name: PRINTS protein fingerprints
+  source: prints
+  license: CC0-1.0 (InterPro CC0 dedication names InterPro, Pfam, PRINTS and SFLD)
+  license_url: https://interpro-documentation.readthedocs.io/en/latest/license.html
+  status: seeded
+  tag: api
+  hierarchy: true
+  trait_categories: [SEQ_FAMILY, SEQ_DOMAIN, SEQ_REPEAT, SEQ_PTM_SITE]
+  seeder: seed_interpro_members.py
+  note: >-
+    2,106 fingerprints routed by signature type (2,013 family, 78 domain, 14
+    repeat, 1 PTM), so the category is per-entry, not per-source. A fingerprint
+    is an ORDERED SET of motifs; one fingerprint becomes one record and the motif
+    count is stated, but individual motifs are not seeded -- there is no
+    SEQ_FINGERPRINT category and the motifs are not in the API. PRINTS 42.0
+    (2012-06-14) is frozen upstream.
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/databases/prints/42.0/prints42_0.kdat
+  local_name: interpro_members/prints42_0.kdat
+  source: prints
+  status: seeded
+  note: >-
+    The real titles. The API's `name` for a fingerprint is its CODE -- PR00001 is
+    "GLABLOOD" there, and the detail endpoint returns {"name": null, "short":
+    "GLABLOOD"}, i.e. no full name exists in the API at all. This file has a
+    title for all 2,106 ("Coagulation factor GLA domain signature") and the
+    motif count.
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/databases/prints/42.0/FingerPRINTShierarchy21Feb2012
+  local_name: interpro_members/FingerPRINTShierarchy21Feb2012
+  source: prints
+  status: seeded
+  note: >-
+    Fingerprint hierarchy; the API reports hierarchy null for PRINTS. Field 5
+    lists whole descendant SUBTREES by code, so the immediate parent is the
+    nearest enclosing set. 1,026 of 2,106 records get a parent from it.
+
 # ============================== DOCUMENTATION / METADATA ENRICHMENT ==========
 # Per-source documentation (prose) + entry-metadata files that enrich existing
 # seeded records' definitions / labels / citations (the prosite.doc analog).

@@ -48,6 +48,15 @@ API = "https://www.ebi.ac.uk/interpro/api/entry/{db}/?page_size={n}"
 EXTRA_FILES = {
     "sfld": ["https://ftp.ebi.ac.uk/pub/databases/interpro/databases/sfld/4/"
              "sfld_hierarchy_flat.txt"],
+    # PRINTS needs two. The API's `name` for a fingerprint is its CODE, not a
+    # name -- PR00001 comes back as "GLABLOOD", and the detail endpoint shows
+    # why: {"name": null, "short": "GLABLOOD"}. There is no full name in the API
+    # at all. The .kdat carries a real title ("Glassy blood signature") for all
+    # 2,106, plus the motif count. The hierarchy file is the same story as SFLD.
+    "prints": ["https://ftp.ebi.ac.uk/pub/databases/interpro/databases/prints/"
+               "42.0/prints42_0.kdat",
+               "https://ftp.ebi.ac.uk/pub/databases/interpro/databases/prints/"
+               "42.0/FingerPRINTShierarchy21Feb2012"],
 }
 
 # The six UniProt "Family and domain databases" that PTM has no records for.
