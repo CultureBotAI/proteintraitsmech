@@ -249,3 +249,70 @@ def test_a_second_run_adds_nothing(builder, capsys):
     err = run(mod, capsys)
     assert "already has a graph" in err
     assert p.read_text(encoding="utf-8") == first
+
+
+# --- review round 1: the graph's SHAPE, not just its presence -----------------------
+
+def test_the_graph_has_exactly_the_expected_nodes_and_edges(builder, capsys):
+    """Asserting only that nodes and edges are non-empty would pass on a graph
+    with the wrong content. The fixture's site has three ligands, two of them
+    protein, so the shape is fully determined: metal + site + 2 residues, and
+    each residue coordinates the metal and is part of the site, plus the metal's
+    own part-of edge."""
+    mod, root = builder
+    (root / "r.yaml").write_text(RECORD, encoding="utf-8")
+    run(mod, capsys)
+    g = yaml.safe_load((root / "r.yaml").read_text(encoding="utf-8"))["causal_graphs"][0]
+    assert [n["node_type"] for n in g["nodes"]] == \
+        ["CHEMICAL", "MOTIF", "RESIDUE", "RESIDUE"]
+    assert len(g["edges"]) == 5, [e["predicate"] for e in g["edges"]]
+    assert {e["object"] for e in g["edges"]} == {"metal", "site"}
+
+
+def test_the_metal_node_is_grounded_to_the_records_chebi(builder, capsys):
+    """"Ground the node, cite the edge" — a CHEMICAL node with no CHEBI is a
+    label, not a grounding."""
+    mod, root = builder
+    (root / "r.yaml").write_text(RECORD, encoding="utf-8")
+    run(mod, capsys)
+    g = yaml.safe_load((root / "r.yaml").read_text(encoding="utf-8"))["causal_graphs"][0]
+    metal = next(n for n in g["nodes"] if n["node_id"] == "metal")
+    assert metal["grounding"] == "CHEBI:29105"
+
+
+SECOND_SITE = dict(SITE, site_name="ZN_2",
+                   ligands=[{"residue_name": "HIS", "residue_pdb_number": "94",
+                             "chain_letter": "A", "donor": "NE2", "distance": "2.1"}])
+
+
+def test_the_same_residue_number_in_two_structures_stays_two_nodes(tmp_path,
+                                                                   monkeypatch,
+                                                                   capsys):
+    """A documented invariant with a stated failure mode, and nothing tested it.
+
+    The builder puts the PDB code in the residue node id, with the comment: "the
+    same residue number in two exemplar structures is two different residues in
+    two different proteins, and must not collapse into one node". Drop the code
+    from the id and His94 of 1abc silently becomes His94 of 2xyz — one node
+    carrying two proteins' evidence.
+    """
+    mod = importlib.import_module(BUILDER)
+    root = tmp_path / "metalpdb"
+    root.mkdir()
+    monkeypatch.setattr(mod, "ROOT", root)
+    monkeypatch.setattr(mod, "wanted_codes", lambda: ["1abc", "2xyz"])
+    monkeypatch.setattr(mod, "load_sites",
+                        lambda codes: {"1abc": [SITE], "2xyz": [SECOND_SITE]})
+    monkeypatch.setattr(sys, "argv", [BUILDER, "--apply"])
+    (root / "r.yaml").write_text(
+        RECORD.replace('    note: "MetalPDB entry PDB 1abc, site A"',
+                       '    note: "MetalPDB entry PDB 1abc, site A"\n'
+                       '  - protein_id: UniProtKB:P00002\n'
+                       '    note: "MetalPDB entry PDB 2xyz, site A"'),
+        encoding="utf-8")
+    run(mod, capsys)
+    g = yaml.safe_load((root / "r.yaml").read_text(encoding="utf-8"))["causal_graphs"][0]
+    residues = [n["node_id"] for n in g["nodes"] if n["node_type"] == "RESIDUE"]
+    assert len(residues) == len(set(residues)), "residue node ids collide"
+    assert any("1abc" in r for r in residues) and any("2xyz" in r for r in residues), \
+        f"the PDB code is not in the residue node id: {residues}"
