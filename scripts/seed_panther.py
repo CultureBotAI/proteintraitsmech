@@ -237,7 +237,8 @@ def subfamily_consensus(lines=None) -> dict[str, tuple[dict, int]]:
     return out
 
 
-def compose_from_subfamilies(pid: str, label: str, agreed: dict, n_sub: int) -> str:
+def compose_from_subfamilies(pid: str, label: str, agreed: dict, n_sub: int,
+                            ranker=None) -> str:
     """A definition for a family PANTHER annotates only through its subfamilies.
 
     Says so in the prose. "Subfamilies are annotated with ..." is a different claim from
@@ -254,7 +255,8 @@ def compose_from_subfamilies(pid: str, label: str, agreed: dict, n_sub: int) -> 
     for key, lead in (("mf", "Subfamilies are annotated with the molecular function"),
                       ("bp", "Subfamilies participate in"),
                       ("cc", "Subfamilies localise to")):
-        names = [n for n, _ in agreed[key]][:3]
+        terms = ranker.rank(agreed[key]) if ranker is not None else agreed[key]
+        names = [n for n, _ in terms][:3]
         if names:
             bits.append(f"{lead} {', '.join(names)}.")
     return " ".join(bits)
@@ -265,7 +267,15 @@ SUBFAMILY_SOURCE = (f"{RELEASE} (composed from the family name and the GO / "
                     f"subfamilies)")
 
 
-def compose_definition(pid: str, label: str, ann: dict) -> str:
+def compose_definition(pid: str, label: str, ann: dict, ranker=None) -> str:
+    """`ranker` is a `go_hierarchy.GoRanker`, or None to keep the source's order.
+
+    With one, redundant ancestors are dropped and the rest ordered most-specific-first
+    before the three-term cap applies, so the cap keeps the terms that say the most
+    rather than the ones with the lowest GO ids (#152). None reproduces the pre-#152
+    text exactly, which is what the recompose script needs to identify untouched
+    records and what the tests use to avoid depending on a 38k-term ontology file.
+    """
     bits = [f"{label} — a full-length protein family modelled by the "
             f"{RELEASE} profile HMM {pid}."]
     if ann["classes"]:
@@ -281,19 +291,21 @@ def compose_definition(pid: str, label: str, ann: dict) -> str:
     for key, lead in (("mf", "Members are annotated with the molecular function"),
                       ("bp", "Members participate in"),
                       ("cc", "Members localise to")):
-        names = [n for n, _ in ann[key]][:3]
+        terms = ranker.rank(ann[key]) if ranker is not None else ann[key]
+        names = [n for n, _ in terms][:3]
         if names:
             bits.append(f"{lead} {', '.join(names)}.")
     return " ".join(bits)
 
 
-def build_yaml(pid: str, label: str, ann: dict, ipr: dict | None) -> str:
+def build_yaml(pid: str, label: str, ann: dict, ipr: dict | None,
+               ranker=None) -> str:
     curated = bool(ipr and ipr["abstract"] and (not ipr["llm"] or ipr["reviewed"]))
     if curated:
         definition = ipr["abstract"][:DEF_CAP]
         source = f"InterPro:{ipr['ipr']} abstract (PANTHER {pid} is a member signature)"
     else:
-        definition = compose_definition(pid, label, ann)
+        definition = compose_definition(pid, label, ann, ranker)
         source = (f"{RELEASE} (composed from the family name and its GO / "
                   f"protein-class annotations)")
 
@@ -358,6 +370,19 @@ def main() -> int:
         print(f"missing {RAW} — run `just fetch-panther`", file=sys.stderr)
         return 1
 
+    # Load the GO hierarchy up front so a missing ontology fails before any record is
+    # written, the same way a missing InterPro release does. Without it the composer
+    # would silently fall back to source order and emit definitions that differ from
+    # every other record's (#152).
+    from go_hierarchy import GO_OBO, GoRanker  # noqa: PLC0415
+    if not GO_OBO.exists():
+        print(f"missing {GO_OBO} — run `just fetch-obo` first; refusing to seed with "
+              f"unranked GO terms", file=sys.stderr)
+        return 1
+    ranker = GoRanker()
+    print(f"  {len(ranker.parents):,} GO terms indexed for term ranking",
+          file=sys.stderr)
+
     print("indexing InterPro abstracts…", file=sys.stderr)
     ipr_idx = interpro_index()
     print(f"  {len(ipr_idx):,} PANTHER families integrated into InterPro",
@@ -415,7 +440,7 @@ def main() -> int:
             bump("skipped: already present")
             continue
 
-        text = build_yaml(pid, label, ann, ipr)
+        text = build_yaml(pid, label, ann, ipr, ranker)
         curated = bool(ipr and ipr["abstract"] and (not ipr["llm"] or ipr["reviewed"]))
         bump("definition: curated InterPro abstract" if curated
              else "definition: composed from PANTHER annotations")
