@@ -1179,3 +1179,103 @@ def test_the_handler_is_not_a_bare_except():
            if "except Exception" in p.read_text(encoding="utf-8")
            and "WARN unreadable" in p.read_text(encoding="utf-8")]
     assert not bad, f"these catch too broadly around the record check: {bad}"
+
+
+# --- write_record's precondition, and the same-source rule (#148) ------------------
+
+from record_io import write_record  # noqa: E402
+
+# A curated record carrying one definitions[] entry, the shape every seeder emits.
+WITH_DEFS = """identifier: X:1
+label: "A"
+definition: >-
+  a real curated definition
+definition_source: "SRC composed"
+mapping_status: PROPOSED
+definitions:
+  - kind: GENERAL
+    text: >-
+      a real curated definition
+    source: "SRC composed"
+    method: GENERATED
+curation_history:
+  - timestamp: "t"
+    curator: c
+license: CC0
+"""
+
+
+def _defs(text):
+    return (yaml.safe_load(text) or {}).get("definitions") or []
+
+
+def test_reseeding_the_same_source_with_changed_text_does_not_append():
+    """#148. Two entries citing one source is one definition plus a stale copy.
+
+    Fires on a real re-seed too: an upstream release whose abstract text changed used
+    to leave both the old and the new text in the record, with no way to tell which
+    was current. Rule 2 has already decided the curated record's own version wins.
+    """
+    fresh = WITH_DEFS.replace("a real curated definition", "upstream reworded this")
+    merged = merge_on_reseed(WITH_DEFS, fresh)
+    entries = _defs(merged)
+    assert len(entries) == 1, f"appended a same-source duplicate: {entries}"
+    assert entries[0]["text"].strip() == "a real curated definition"
+
+
+def test_a_genuinely_new_source_is_still_appended():
+    """The rule must not block the case the merge exists for."""
+    fresh = WITH_DEFS.replace(
+        "curation_history:",
+        "  - kind: GENERAL\n"
+        "    text: >-\n"
+        "      an abstract that only just became available\n"
+        '    source: "OTHER abstract"\n'
+        "    method: GENERATED\n"
+        "curation_history:")
+    entries = _defs(merge_on_reseed(WITH_DEFS, fresh))
+    assert len(entries) == 2, entries
+    assert {e["source"] for e in entries} == {"SRC composed", "OTHER abstract"}
+
+
+def test_an_edited_copy_routed_through_merge_loses_the_edit(tmp_path):
+    """The trap, pinned as executable documentation rather than left as folklore.
+
+    This is NOT desired behaviour being locked in -- it is `merge_on_reseed` doing
+    exactly its job (rule 2: a curated record keeps its own CURATED_SCALARS) on an
+    input that violates write_record's precondition. It cost 566 silently-unrepaired
+    records before being caught. If someone later makes the edit survive, this test
+    failing is the prompt to check they have not reopened #100.
+    """
+    p = tmp_path / "r.yaml"
+    p.write_text(WITH_DEFS, encoding="utf-8")
+    edited = WITH_DEFS.replace("a real curated definition", "repaired text")
+    write_record(p, edited)
+    out = p.read_text(encoding="utf-8")
+    assert "repaired text" not in out.split("definitions:")[0], \
+        "definition: was expected to be reverted by rule 2"
+    assert len(_defs(out)) == 1, "the same-source rule should still prevent a duplicate"
+
+
+def test_merge_false_writes_an_in_place_edit_verbatim(tmp_path):
+    """What a repair/migration/errata script needs, and what #148 asked for."""
+    p = tmp_path / "r.yaml"
+    p.write_text(WITH_DEFS, encoding="utf-8")
+    edited = WITH_DEFS.replace("a real curated definition", "repaired text")
+    write_record(p, edited, merge=False)
+    assert p.read_text(encoding="utf-8") == edited
+
+
+def test_merge_false_still_creates_a_missing_file(tmp_path):
+    p = tmp_path / "new.yaml"
+    write_record(p, WITH_DEFS, merge=False)
+    assert p.read_text(encoding="utf-8") == WITH_DEFS
+
+
+def test_merge_defaults_to_true_so_no_seeder_changes_behaviour(tmp_path):
+    """99 call sites across 48 seeders rely on the default."""
+    p = tmp_path / "r.yaml"
+    p.write_text(WITH_DEFS, encoding="utf-8")
+    fresh = WITH_DEFS.replace("PROPOSED", "SEEDED")
+    write_record(p, fresh)
+    assert "mapping_status: PROPOSED" in p.read_text(encoding="utf-8")
