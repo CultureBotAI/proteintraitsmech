@@ -70,7 +70,10 @@ def main() -> int:
         if not needed.exists():
             print(f"missing {needed}", file=sys.stderr)
             return 2
+    # Two rankers: the gate compares against what the composer produced
+    # BEFORE #157 resolved obsolete terms, and the write uses the new one.
     ranker = GoRanker()
+    prior = GoRanker(resolve_obsolete=False)
     print(f"GO terms indexed: {len(ranker.parents):,}", file=sys.stderr)
 
     raw = {}
@@ -106,14 +109,14 @@ def main() -> int:
                 skipped += 1
                 continue
             agreed, n_sub = hit
-            old = _collapse(compose_from_subfamilies(pid, label, agreed, n_sub))
+            old = _collapse(compose_from_subfamilies(pid, label, agreed, n_sub, prior))
             new = _collapse(compose_from_subfamilies(pid, label, agreed, n_sub, ranker))
             counted = agreed
         else:
             ann = parse_annotations(parts)
             if not has_annotations(ann):
                 continue                  # a name-only stub has no terms to rank
-            old = _collapse(compose_definition(pid, label, ann))
+            old = _collapse(compose_definition(pid, label, ann, prior))
             new = _collapse(compose_definition(pid, label, ann, ranker))
             counted = ann
 
