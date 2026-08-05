@@ -73,6 +73,8 @@ OUT_DIR = REPO_ROOT / "data" / "traits" / "sequence" / "family" / "panther"
 LICENSE = "CC-BY 4.0"
 RELEASE = "PANTHER 19.0"
 DEF_CAP = 1800
+# Minimum annotated subfamilies before their consensus may speak for the family (#150).
+MIN_SUBFAMILIES = 2
 
 _SLUG_RE = re.compile(r"[^A-Za-z0-9]+")
 _UNNAMED = {"FAMILY NOT NAMED", "SUBFAMILY NOT NAMED", ""}
@@ -177,6 +179,90 @@ def parse_annotations(parts: list[str]) -> dict:
             pathways.append((m.group(1).strip(), m.group(2)))
     return {"mf": gos(2), "bp": gos(3), "cc": gos(4),
             "classes": [c for c in classes if c], "pathways": pathways}
+
+
+def has_annotations(ann: dict) -> bool:
+    return any(ann[k] for k in ("mf", "bp", "cc", "classes"))
+
+
+def subfamily_consensus(lines=None) -> dict[str, tuple[dict, int]]:
+    """Per family, the annotations EVERY one of its annotated subfamilies carries.
+
+    PANTHER annotates the subfamily (`PTHR12652:SF23`) far more often than the family.
+    3,596 families are annotation-free at source, but 339 of them have at least one
+    annotated subfamily -- so the release does say something about the family, just not
+    on the family's own row (#150).
+
+    Two deliberate restrictions, because a family-level definition composed from
+    subfamily rows asserts something the source does not state directly:
+
+      * at least MIN_SUBFAMILIES annotated subfamilies must exist, so a single outlier
+        subfamily cannot speak for the whole family;
+      * a term must appear in EVERY annotated subfamily, not merely in a majority. A GO
+        term carried by 2 of 10 subfamilies describes those two, not the family.
+
+    Intersection rather than majority is what makes the claim safe to state, and it is
+    what costs the most coverage: 339 families have an annotated subfamily, 243 have two
+    or more, and 228 of those share a term. The callers phrase the result as
+    subfamily-derived so it can never be read as a family-level source annotation.
+
+    Returns {family_pid: (annotations, number_of_annotated_subfamilies)}.
+
+    `lines` defaults to the raw release; tests pass their own rows so the rule can be
+    exercised without the 88 MB file.
+    """
+    groups: dict[str, list[dict]] = {}
+    for line in (RAW.open(encoding="utf-8") if lines is None else lines):
+        parts = line.rstrip("\n").split("\t")
+        pid = parts[0].strip()
+        if ":SF" not in pid:
+            continue
+        ann = parse_annotations(parts)
+        if has_annotations(ann):
+            groups.setdefault(pid.split(":")[0], []).append(ann)
+
+    out: dict[str, tuple[dict, int]] = {}
+    for family, anns in groups.items():
+        if len(anns) < MIN_SUBFAMILIES:
+            continue
+        agreed: dict = {"pathways": []}
+        for key in ("mf", "bp", "cc"):
+            shared = set.intersection(*({go for _, go in a[key]} for a in anns))
+            names = {go: n for a in anns for n, go in a[key]}
+            # Sorted by CURIE so the composed text is stable across runs.
+            agreed[key] = [(names[go], go) for go in sorted(shared)]
+        agreed["classes"] = sorted(set.intersection(*(set(a["classes"]) for a in anns)))
+        if has_annotations(agreed):
+            out[family] = (agreed, len(anns))
+    return out
+
+
+def compose_from_subfamilies(pid: str, label: str, agreed: dict, n_sub: int) -> str:
+    """A definition for a family PANTHER annotates only through its subfamilies.
+
+    Says so in the prose. "Subfamilies are annotated with ..." is a different claim from
+    "Members are annotated with ...", and the difference is the whole reason this is
+    allowed to exist -- see subfamily_consensus.
+    """
+    bits = [f"{label} — a full-length protein family modelled by the "
+            f"{RELEASE} profile HMM {pid}.",
+            f"{RELEASE} records no annotations on the family itself; the following are "
+            f"shared by all {n_sub} of its annotated subfamilies."]
+    if agreed["classes"]:
+        bits.append("PANTHER protein class: "
+                    + ", ".join(agreed["classes"][:3]) + ".")
+    for key, lead in (("mf", "Subfamilies are annotated with the molecular function"),
+                      ("bp", "Subfamilies participate in"),
+                      ("cc", "Subfamilies localise to")):
+        names = [n for n, _ in agreed[key]][:3]
+        if names:
+            bits.append(f"{lead} {', '.join(names)}.")
+    return " ".join(bits)
+
+
+SUBFAMILY_SOURCE = (f"{RELEASE} (composed from the family name and the GO / "
+                    f"protein-class annotations shared by all of its annotated "
+                    f"subfamilies)")
 
 
 def compose_definition(pid: str, label: str, ann: dict) -> str:
