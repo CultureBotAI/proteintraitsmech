@@ -80,7 +80,7 @@ def main() -> int:
             raw[p[0].strip()] = p
     consensus = subfamily_consensus()
 
-    changed = unchanged = skipped = 0
+    changed = unchanged = skipped = already = 0
     terms_before = terms_after = 0
     for path in sorted(OUT_DIR.rglob("*.yaml")):
         text = path.read_text(encoding="utf-8")
@@ -121,7 +121,13 @@ def main() -> int:
             unchanged += 1
             continue
         if old != current:
-            skipped += 1                  # edited since it was composed
+            # Distinguish "a previous run already did this" from "a curator changed
+            # it". Both leave `old != current`, but lumping them together made a
+            # re-run report 1,569 records as edited-since, which reads as damage.
+            if new == current:
+                already += 1
+            else:
+                skipped += 1
             continue
         for key in ("mf", "bp", "cc"):
             terms_before += min(3, len(counted[key]))
@@ -134,6 +140,8 @@ def main() -> int:
 
     print(f"{'recomposed' if args.apply else 'would recompose'}: {changed:,}")
     print(f"  already identical after ranking: {unchanged:,}")
+    if already:
+        print(f"  already recomposed by a prior run: {already:,}")
     if skipped:
         print(f"  skipped (edited since, or no source row): {skipped:,}")
     print(f"  GO terms shown in changed records: {terms_before:,} -> {terms_after:,}")
