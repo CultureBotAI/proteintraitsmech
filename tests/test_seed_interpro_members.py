@@ -298,3 +298,24 @@ def test_a_missing_prints_release_is_not_fatal(tmp_path, monkeypatch):
     monkeypatch.setattr(sim, "PRINTS_KDAT", tmp_path / "absent")
     monkeypatch.setattr(sim, "PRINTS_HIERARCHY", tmp_path / "absent")
     assert sim.prints_titles() == {} and sim.prints_parents() == {}
+
+
+# --- HAMAP variant rules (#162 review) ----------------------------------------------
+
+@pytest.mark.parametrize("acc", ["MF_00001", "MF_00036_A", "MF_00036_B"])
+def test_hamap_variant_rules_are_not_excluded(acc):
+    """THE SHIPPED BUG, caught by the seeder's own skip counter. The pattern was
+    `^MF_\\d+$`, which silently excluded 102 accessions of the form MF_00036_A /
+    MF_00036_B -- HAMAP's variant rules, 51 pairs.
+
+    They are not duplicates of something already seeded: NONE of the 102 has a
+    base rule in the release. `MF_00036` does not exist; only _A and _B do. So
+    the pattern dropped 102 families outright, and a silent `continue` would have
+    hidden it. The counter is what surfaced it.
+    """
+    assert MEMBER_DBS["hamap"][2].match(acc), acc
+
+
+def test_the_hamap_pattern_still_rejects_a_foreign_accession():
+    for acc in ("PR00001", "SFLDF00001", "MF_", "MF_00036_"):
+        assert not MEMBER_DBS["hamap"][2].match(acc), acc
