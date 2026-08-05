@@ -40,6 +40,8 @@ just validate <file.yaml>                     # linkml-validate one record (targ
 just validate-all                             # strict closed-mode validation over every trait YAML
 just audit-schema                             # programmatic schema-quality probes
 just audit-graphs                             # structural-integrity audit of causal graphs
+just audit-text                               # encoding damage (mojibake / C1 / U+FFFD)
+just audit-prose                              # do definitions read as prose (#149)
 
 # Fetch + seed pipelines (idempotent; dry-run by default, --apply to write)
 just fetch-prosite && just seed-prosite --apply
