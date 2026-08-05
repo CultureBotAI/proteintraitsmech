@@ -184,9 +184,17 @@ def compose_definition(pid: str, label: str, ann: dict) -> str:
             f"{RELEASE} profile HMM {pid}."]
     if ann["classes"]:
         bits.append("PANTHER protein class: " + ", ".join(ann["classes"][:3]) + ".")
+    # Each clause is a standalone sentence. The leads used to read "and
+    # participate in" / "and localise to", which only parsed when the molecular
+    # function clause preceded them -- any family annotated with BP or CC but no
+    # MF got a sentence starting "and". Since bits are joined after each already
+    # ends in ".", the "and" forms never worked at all: 1,707 records read
+    # "... profile HMM PTHR46022. and localise to cell periphery." Standalone
+    # sentences are correct for all eight present/absent combinations without
+    # any conditional grammar. See scripts/repair_panther_definitions.py.
     for key, lead in (("mf", "Members are annotated with the molecular function"),
-                      ("bp", "and participate in"),
-                      ("cc", "and localise to")):
+                      ("bp", "Members participate in"),
+                      ("cc", "Members localise to")):
         names = [n for n, _ in ann[key]][:3]
         if names:
             bits.append(f"{lead} {', '.join(names)}.")
