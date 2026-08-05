@@ -111,7 +111,7 @@ MEMBER_DBS: dict[str, tuple[str, str, re.Pattern]] = {
     "ssf":    ("SUPERFAMILY", "superfamily", re.compile(r"^SSF\d+$")),
     "sfld":   ("SFLD",        "sfld",        re.compile(r"^SFLD[SGF]\d+$")),
     "smart":  ("SMART",       "smart",       re.compile(r"^SM\d+$")),
-    "hamap":  ("HAMAP",       "hamap",       re.compile(r"^MF_\d+$")),
+    "hamap":  ("HAMAP",       "hamap",       re.compile(r"^MF_\d+(_[A-Z])?$")),
 }
 
 # InterPro signature `type` -> (axis, category, directory under data/traits/).
