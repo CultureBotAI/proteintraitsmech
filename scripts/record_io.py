@@ -430,32 +430,75 @@ def _merge_definitions(old_block: str, new_block: str) -> str | None:
     re-seeded carries a different `source` once it has been reviewed
     (`...LLM-reviewed...` vs `...not curator-reviewed`), and matching on the item as a
     whole would append a duplicate of every reviewed definition on each re-seed.
+
+    A fresh entry is also dropped when the record ALREADY HAS AN ENTRY FROM THAT
+    SOURCE, even though the text differs (#148). Two entries citing one source with
+    two different texts is not two definitions, it is one definition and a stale copy,
+    and this function is only reached for a curated record — where rule 2 has already
+    decided the record's own version wins. Without this, the same source restating
+    itself appended silently:
+
+      * a re-seed against a new release whose abstract text changed, and
+      * any caller passing an EDITED copy of the file rather than a fresh record,
+        which appended a second entry beside the one it meant to replace (the
+        failure mode `write_record` now documents, measured at 1,707 records).
+
+    The invariant it defends holds across the corpus today: of 9,711 records carrying
+    more than one `definitions[]` entry, ZERO have two entries sharing a source.
     """
     def items(block):
         parsed = yaml.safe_load(block) or {}
         return parsed.get("definitions") or []
 
+    def norm(value):
+        return " ".join(str(value or "").split())
+
     try:
         old, new = items(old_block), items(new_block)
     except yaml.YAMLError:
         return None
-    seen = {" ".join(str(d.get("text") or "").split()) for d in old if isinstance(d, dict)}
+    seen = {norm(d.get("text")) for d in old if isinstance(d, dict)}
+    seen_sources = {norm(d.get("source")) for d in old if isinstance(d, dict)}
+    seen_sources.discard("")
     extra = [d for d in new
-             if isinstance(d, dict) and " ".join(str(d.get("text") or "").split()) not in seen]
+             if isinstance(d, dict) and norm(d.get("text")) not in seen
+             and norm(d.get("source")) not in seen_sources]
     if not extra:
         return old_block
     tail = yaml.safe_dump({"definitions": extra}, sort_keys=False, allow_unicode=True, width=100)
     return append_to_section(old_block, "definitions", tail)
 
 
-def write_record(path, text: str, encoding: str = "utf-8") -> None:
+def write_record(path, text: str, encoding: str = "utf-8", *, merge: bool = True) -> None:
     """Write a seeded record, folding it into whatever curation the file already has.
 
     The single choke point for #100. Seeders called `path.write_text(...)` directly,
     so `--force` replaced the file and took the curation with it. Routing every trait
     write through here means a seeder does not have to remember the rule, which is the
     only way it stays true across 47 of them.
+
+    PRECONDITION: `text` IS A FRESHLY GENERATED RECORD
+    --------------------------------------------------
+    Not an edited copy of the file at `path`. `merge_on_reseed` reads `text` as "what
+    the seeder would emit today" and reconciles it against the file; hand it an edited
+    copy of that same file and it reconciles the record against itself, which fails in
+    two ways that no gate catches because both outputs are schema-legal:
+
+      * `CURATED_SCALARS` (definition, definition_source, mapping_status) are restored
+        from the file on any curated record, so an edit to one of them is REVERTED;
+      * a changed `definitions[]` entry no longer matches by text, so it is appended
+        beside the entry it was meant to replace rather than replacing it.
+
+    Measured, on a repair that edited definitions in place and routed the result
+    through here: 566 of 1,707 records silently kept the text the repair had removed,
+    and 1,707 duplicate `definitions[]` blocks were added (#148). The same-source rule
+    in `_merge_definitions` now absorbs the second failure, but the first is exactly
+    what rule 2 is for and cannot be fixed here.
+
+    **Pass `merge=False` for an in-place edit of an existing record.** That writes the
+    text given, unchanged -- which is what a repair, migration or errata script wants,
+    and what `path.write_text` would have done.
     """
-    if path.exists():
+    if merge and path.exists():
         text = merge_on_reseed(path.read_text(encoding=encoding), text)
     path.write_text(text, encoding=encoding)
