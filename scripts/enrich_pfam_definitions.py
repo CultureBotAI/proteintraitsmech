@@ -24,15 +24,26 @@ TRAITS = REPO_ROOT / "data" / "traits"
 PF2IPR = REPO_ROOT / "data" / "raw" / "mappings" / "pfam2interpro.tsv"
 XML_GZ = REPO_ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 ID_RE = re.compile(r"^identifier:\s*(Pfam:PF\d+)", re.M)
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from interpro_text import clean_abstract_element  # noqa: E402
+
 DEF_CAP = 1800
 
 
 def clean_abstract(el) -> str:
-    if el is None:
-        return ""
-    text = " ".join("".join(el.itertext()).split())
-    text = re.sub(r"\s*\[\s*(?:,\s*)*\]", "", text)     # empty [ ] / [ , ] cite stubs
-    text = " ".join(text.split())
+    """Delegates to the shared cleaner (#159, #171); only the cap is local.
+
+    This was the FOURTH copy of the abstract cleaning, and the last to be found.
+    It had both of the defects the others had, and its own variant of the second:
+
+      * `el.itertext()` cannot see attributes, so every inline
+        `<db_xref db=... dbkey=.../>` lost the accession it carried -- 16,699
+        across the release, including 5,521 EC numbers;
+      * it swept only `[ ]` husks, never `( )`. That is precisely why Pfam
+        records carried the empty-paren tell while InterPro's own did not, and
+        why 3,431 remained after #170 fixed the other three copies.
+    """
+    text = clean_abstract_element(el)
     if len(text) > DEF_CAP:
         text = text[:DEF_CAP - 1].rstrip() + "…"
     return text
@@ -77,6 +88,8 @@ def set_definition(text: str, new_def: str) -> str:
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--limit", type=int, default=0,
+                    help="stop after N updated records (canary runs)")
     args = ap.parse_args()
     for f in (PF2IPR, XML_GZ):
         if not f.exists():
@@ -110,10 +123,14 @@ def main() -> int:
             updated += 1
             if args.apply:
                 path.write_text(new, encoding="utf-8")
+            if args.limit and updated >= args.limit:
+                break
 
     verb = "updated" if args.apply else "would update"
     print(f"{verb} {updated:,} Pfam definitions from InterPro abstracts"
           + ("" if args.apply else "  (dry-run; pass --apply)"))
+    if args.limit and updated >= args.limit:
+        print(f"  PARTIAL: stopped at --limit {args.limit}")
     return 0
 
 

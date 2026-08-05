@@ -136,3 +136,16 @@ def test_padding_inside_brackets_is_closed_up():
     raw = '<p>a domain ( <db_xref db="PFAM" dbkey="PF02310"/> ) and more</p>'
     assert clean_abstract(raw) == "a domain (Pfam:PF02310) and more"
     assert clean_abstract("<p>x [ y ] z</p>") == "x [y] z"
+
+
+def test_a_parenthesised_xref_survives_as_a_readable_reference():
+    """The Pfam case (#171). `enrich_pfam_definitions` was the FOURTH copy of
+    this cleaning and the last found; it used itertext() (blind to attributes)
+    and swept only `[ ]`, never `( )`. That combination is exactly why Pfam
+    records kept the empty-paren tell after the other three were fixed."""
+    raw = ('<p>contains an N-terminal BRCA2 repeat-like region '
+           '( <db_xref db="INTERPRO" dbkey="IPR063564"/> ) that mediates '
+           'interaction</p>')
+    assert clean_abstract(raw) == (
+        "contains an N-terminal BRCA2 repeat-like region (InterPro:IPR063564) "
+        "that mediates interaction")

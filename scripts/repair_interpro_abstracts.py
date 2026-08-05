@@ -126,6 +126,11 @@ def _slice(text: str) -> str:
     return text[:DEF_CAP]
 
 
+def _collapse(text: str) -> str:
+    """What `folded()` writes: whitespace collapsed to single spaces."""
+    return " ".join(text.split())
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--apply", action="store_true")
@@ -164,12 +169,20 @@ def main() -> int:
         # Two old cleaners produced two different strings from one abstract;
         # a record could have come from either.
         olds = (old_clean_string(raw), old_clean_element(raw))
-        candidates = {f(o) for o in olds for f in (_cap, _slice, str)}
+        # THREE truncation variants, not two. `folded()` collapses whitespace on
+        # the way to disk, so a plain slice that happens to end on a space
+        # reaches the file one character shorter -- 1,799 where the slice is
+        # 1,800. Matching only the uncollapsed forms left those records
+        # permanently unrepairable, which is what the residual `( )` records
+        # turned out to be.
+        candidates = {g(f(o)) for o in olds for f in (_cap, _slice, str)
+                      for g in (str, _collapse)}
         # Reproduce the cap the record was written with, so a repaired long
         # definition keeps the same length policy it had.
-        capped_new = _slice(new) if current == _slice(olds[0]) or \
-            current == _slice(olds[1]) else _cap(new)
-        if current in (capped_new, new, _cap(new), _slice(new)):
+        capped_new = _slice(new) if current in {_slice(o) for o in olds} | \
+            {_collapse(_slice(o)) for o in olds} else _cap(new)
+        if current in (capped_new, new, _cap(new), _slice(new),
+                       _collapse(capped_new)):
             already += 1
             continue
         if current not in candidates:
