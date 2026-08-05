@@ -81,3 +81,32 @@ def test_no_composed_record_still_carries_the_dangling_and():
                  if ". and participate in" in (t := p.read_text(encoding="utf-8"))
                  or ". and localise to" in t]
     assert offenders == [], f"{len(offenders)} records still malformed: {offenders[:5]}"
+
+
+# --- term ranking in the composers (#152) ------------------------------------------
+
+def test_ranker_none_reproduces_the_pre_ranking_text():
+    """Load-bearing. `repair_panther_definitions` and
+    `revert_rejected_subfamily_definitions` identify an untouched record by
+    recomposing it and comparing byte for byte. If passing no ranker stopped
+    reproducing the old text, both would silently match nothing and report success
+    having changed no records.
+    """
+    ann = _ann([("catalytic activity", "GO:0003824"),
+                ("exonuclease activity", "GO:0004527")])
+    out = compose_definition("PTHR1", "SOME FAMILY", ann)
+    assert "catalytic activity, exonuclease activity" in out
+
+
+def test_a_ranker_prunes_ancestors_and_orders_by_specificity():
+    class _Stub:
+        """Stands in for GoRanker: exonuclease activity is the specific one."""
+        def rank(self, terms):
+            keep = [t for t in terms if t[1] != "GO:0003824"]
+            return keep or list(terms)
+
+    ann = _ann([("catalytic activity", "GO:0003824"),
+                ("exonuclease activity", "GO:0004527")])
+    out = compose_definition("PTHR1", "SOME FAMILY", ann, _Stub())
+    assert "exonuclease activity" in out
+    assert "catalytic activity" not in out
