@@ -602,6 +602,18 @@ fetch-interpro:
       https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/interpro.xml.gz
     @ls -la data/raw/interpro/
 
+# Fetch InterPro member-database signature lists (PIRSF/PRINTS/SSF/SFLD/SMART/HAMAP)
+# from the EBI API. The FTP has no per-member-DB file, and SUPERFAMILY has no name
+# at all in interpro.xml.gz -- see the script docstring. Dry-run by default.
+fetch-interpro-members *args:
+    uv run python scripts/fetch_interpro_members.py {{args}}
+
+# Seed data/traits/ from an InterPro member database. Requires
+# `just fetch-interpro` and `just fetch-interpro-members --db <db> --apply`.
+# Dry-run by default; --apply to write.
+seed-interpro-members *args:
+    python3 scripts/seed_interpro_members.py {{args}}
+
 # Seed data/traits/ from InterPro entries (Domain, Homologous_superfamily,
 # Repeat, Conserved_site, Active/Binding_site, PTM; Family excluded by
 # default). Requires `just fetch-interpro`. Dry-run by default; --apply.

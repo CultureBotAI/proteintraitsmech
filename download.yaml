@@ -514,13 +514,35 @@
   status: candidate
   trait_categories: [SEQ_MODIFIED_RESIDUE, SEQ_GLYCOSYLATION_SITE, SEQ_CROSSLINK_SITE]
 -
-  url: http://sfld.rbvi.ucsf.edu/archive/django/download/index.html
-  name: SFLD (enzyme superfamilies)
+  url: https://www.ebi.ac.uk/interpro/api/entry/sfld/
+  local_name: interpro_members/sfld.jsonl
+  name: SFLD (Structure-Function Linkage Database) enzyme superfamilies
   source: sfld
-  license: free (UCSF)
-  status: candidate
+  license: CC0-1.0 (InterPro CC0 dedication names InterPro, Pfam, PRINTS and SFLD)
+  license_url: https://interpro-documentation.readthedocs.io/en/latest/license.html
+  status: seeded
+  tag: api
   hierarchy: true
-  trait_categories: [FUNC_ENZYMATIC_ACTIVITY]
+  trait_categories: [FUNC_PROTEIN_FAMILY]
+  seeder: seed_interpro_members.py
+  note: >-
+    Seeded from the EBI InterPro API, not sfld.rbvi.ucsf.edu: the API is the
+    CC0-dedicated route and carries the signature name, type and integrating
+    entry. FUNC_PROTEIN_FAMILY, not FUNC_ENZYMATIC_ACTIVITY as previously
+    registered -- that category holds reactions (EC, Rhea), and SFLD classes are
+    protein families defined by conserved chemistry, the same test that routes
+    NCBIfam equivalogs to FUNCTION. 303 signatures, of which 163 are integrated
+    into InterPro and take its curated abstract; the other 140 get a composed
+    definition. SFLD release 4 (2018-09-07) is frozen upstream.
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/databases/sfld/4/sfld_hierarchy_flat.txt
+  local_name: interpro_members/sfld_hierarchy_flat.txt
+  source: sfld
+  status: seeded
+  note: >-
+    Superfamily/group/family ancestry. The InterPro API reports `hierarchy: null`
+    for every SFLD accession, so this file is the only route to parent_traits;
+    266 of 303 records get a parent from it.
 -
   url: https://3did.irbbarcelona.org/download/current/3did_flat.gz
   local_name: 3did_flat.gz
