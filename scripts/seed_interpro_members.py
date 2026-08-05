@@ -63,6 +63,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from interpro_text import clean_abstract as _clean  # noqa: E402
 from record_io import write_record  # noqa: E402
 from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 
@@ -155,18 +156,12 @@ def is_curated_abstract(entry: dict | None) -> bool:
 
 
 def clean_abstract(raw: str) -> str:
-    """Strip InterPro markup, leaving the prose.
+    """Delegates to the shared cleaner (#159).
 
-    NOTE: this drops inline `<db_xref/>` citations along with the tags, which
-    truncates sentences that were about the referenced accession -- tracked in
-    #159. Kept identical to seed_panther.clean_abstract so a fix lands in one
-    place rather than diverging here.
+    This stripped every tag with one regex, which deleted inline `<db_xref/>`
+    citations along with the markup -- the accession the sentence was about.
     """
-    txt = re.sub(r"<[^>]+>", " ", raw)
-    txt = html.unescape(txt)
-    txt = re.sub(r"\[\s*(,\s*)*\]", "", txt)
-    txt = re.sub(r"\s+([.,;:])", r"\1", txt)
-    return " ".join(txt.split())
+    return _clean(raw)
 
 
 def interpro_entries() -> dict[str, dict]:

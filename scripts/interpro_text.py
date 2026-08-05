@@ -1,0 +1,125 @@
+#!/usr/bin/env python3
+"""InterPro abstract cleaning, in one place, without destroying the citations (#159).
+
+An InterPro abstract is XML prose with two kinds of inline element:
+
+    <cite idref="PUB00004911"/>                      bibliography pointer
+    <db_xref db="PFAM" dbkey="PF07730"/>             THE ACCESSION THE SENTENCE IS ABOUT
+
+Every seeder stripped both with `re.sub(r"<[^>]+>", " ", raw)` and then swept up
+the leftover brackets. For `<cite/>` that is right -- the idref is an InterPro
+-internal key, meaningless outside their database. For `<db_xref/>` it is not:
+the element IS the content. InterPro writes
+
+    This domain is usually find associated with <db_xref db="PFAM" dbkey="PF07730"/> .
+
+and the corpus received
+
+    This domain is usually find associated with .
+
+The cross-reference destroyed, the sentence truncated. Measured across the
+release: **16,699 inline db_xrefs inside abstracts**, of which 5,521 are EC
+numbers and 2,930 are UniProt accessions -- the most specific facts in the text.
+9,857 entries are affected.
+
+The visible damage undercounts it. A truncation only looks broken when it lands
+next to punctuation: `... with .` or `... (  )`. An xref in the middle of a
+sentence simply vanishes and leaves grammatical prose that has quietly lost its
+referent, which no gate can detect.
+
+So `db_xref` is now SUBSTITUTED with a readable CURIE rather than deleted.
+
+THREE COPIES BECAME ONE
+-----------------------
+`seed_interpro`, `seed_panther` and `seed_interpro_members` each had their own
+`clean_abstract`, and they had already diverged: seed_interpro swept up both
+`[ ]` and `( )` husks, the other two only `[ ]`. That is why the empty-paren tell
+appears in PANTHER and PRINTS records but not InterPro's own -- same bug, two
+different symptoms, because the cleanup differed. This is the sixth time in this
+repo that one fix landed in one copy and not its twin.
+"""
+
+from __future__ import annotations
+
+import html
+import re
+
+# InterPro's `db` attribute -> the corpus-canonical CURIE prefix. Same spellings
+# as scripts/fetch_interpro_frame.py's DB_PREFIX, extended with the databases
+# that appear only as inline citations (EC, SWISSPROT, PDBE, CAZY, GENPROP).
+DB_PREFIX: dict[str, str] = {
+    "INTERPRO": "InterPro",
+    "EC": "EC",
+    "SWISSPROT": "UniProtKB",
+    "PFAM": "Pfam",
+    "PDBE": "PDB",
+    "PDB": "PDB",
+    "CAZY": "CAZy",
+    "NCBIFAM": "NCBIfam",
+    "PROSITEDOC": "PROSITE",
+    "PROSITE": "PROSITE",
+    "PROFILE": "PROSITE",
+    "GENPROP": "GenProp",
+    "PIRSF": "PIRSF",
+    "SSF": "SUPERFAMILY",
+    "SFLD": "SFLD",
+    "SMART": "SMART",
+    "PRINTS": "PRINTS",
+    "PANTHER": "PANTHER",
+    "CDD": "CDD",
+    "CATHGENE3D": "CATH",
+    "HAMAP": "HAMAP",
+    "METACYC": "MetaCyc",
+    "REACTOME": "Reactome",
+    "IUPHAR": "IUPHAR",
+    "GO": "GO",
+}
+
+_DB_XREF = re.compile(r'<db_xref\s+[^>]*?db="([^"]+)"\s+dbkey="([^"]+)"[^>]*/>')
+_CITE = re.compile(r"<cite\s+[^>]*/>")
+_TAG = re.compile(r"<[^>]+>")
+# A bracket pair left holding nothing, or nothing but commas, once <cite/> is
+# gone: "[ ]", "[ , ]", "( )", "( , )".
+_EMPTY_BRACKETS = re.compile(r"\s*[\[(]\s*(?:,\s*)*[\])]")
+_SPACE_BEFORE_PUNCT = re.compile(r"\s+([.,;:])")
+
+
+def render_xref(db: str, key: str) -> str:
+    """`db="PFAM" dbkey="PF07730"` -> `Pfam:PF07730`.
+
+    An unknown database keeps its own name rather than being dropped: losing the
+    accession is the bug being fixed, and a slightly odd prefix is a much smaller
+    problem than a missing referent.
+    """
+    prefix = DB_PREFIX.get(db.upper(), db)
+    return f"{prefix}:{key}"
+
+
+def clean_abstract(raw: str) -> str:
+    """InterPro abstract XML -> prose, with cross-references preserved as CURIEs.
+
+    Order matters. `db_xref` must be substituted BEFORE the generic tag strip, or
+    the element is gone before anything can read its attributes -- which is
+    exactly how the original lost them. `cite` is removed before the bracket
+    sweep so the brackets it leaves behind are empty by then.
+    """
+    txt = _DB_XREF.sub(lambda m: render_xref(m.group(1), m.group(2)), raw)
+    txt = _CITE.sub("", txt)
+    txt = _TAG.sub(" ", txt)
+    txt = html.unescape(txt)
+    txt = _EMPTY_BRACKETS.sub("", txt)
+    txt = _SPACE_BEFORE_PUNCT.sub(r"\1", txt)
+    return " ".join(txt.split())
+
+
+def clean_abstract_element(el) -> str:
+    """Same, for an ElementTree element (`seed_interpro` parses that way).
+
+    `itertext()` cannot see attributes, so the element is re-serialised first and
+    then run through the string path. Doing it this way keeps ONE implementation
+    of the substitution rather than a second one that drifts.
+    """
+    if el is None:
+        return ""
+    import xml.etree.ElementTree as ET
+    return clean_abstract(ET.tostring(el, encoding="unicode"))

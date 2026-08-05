@@ -116,6 +116,12 @@ CHECKS: dict[str, object] = {
     "empty clause": re.compile(r"\b(?:class|function|in|to|with)\b:?\s+\.(?:\s|$)"),
     # Double space inside a folded scalar means the value was assembled with a gap.
     "double space": re.compile(r"\S {2,}\S"),
+    # A bracket pair holding nothing. This is the OTHER tell of the deleted-xref
+    # bug (#159): where the accession sat inside parentheses, the parentheses
+    # survived and the content did not -- "alanyl-tRNA synthetase) ( ) is an
+    # alpha4 tetramer". None of the four checks above sees it, so 4,525 records
+    # were reported clean while carrying it.
+    "empty brackets": re.compile(r"[\[(]\s*(?:,\s*)*[\])]"),
 }
 
 
