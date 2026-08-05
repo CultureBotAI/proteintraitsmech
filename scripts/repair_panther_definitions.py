@@ -163,6 +163,11 @@ def main() -> int:
     verb = "repaired" if args.apply else "would repair"
     print(f"{verb}: {repaired:,} records ({occurrences:,} occurrences of the "
           f"composed string)")
+    if args.limit and repaired >= args.limit:
+        # The loop stopped early, so every count below covers only the files
+        # scanned before the limit was hit -- not the corpus.
+        print(f"PARTIAL: stopped at --limit {args.limit}; the counts below cover "
+              f"only the records scanned so far")
     if already:
         print(f"already repaired by a prior run: {already:,}")
     if never_composed:
