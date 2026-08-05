@@ -70,6 +70,8 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 MEMBERS_DIR = REPO_ROOT / "data" / "raw" / "interpro_members"
 INTERPRO = REPO_ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 SFLD_HIERARCHY = MEMBERS_DIR / "sfld_hierarchy_flat.txt"
+PRINTS_KDAT = MEMBERS_DIR / "prints42_0.kdat"
+PRINTS_HIERARCHY = MEMBERS_DIR / "FingerPRINTShierarchy21Feb2012"
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 DEF_CAP = 1800
 
@@ -267,18 +269,106 @@ def sfld_parents() -> dict[str, str]:
             for acc, anc in ancestors.items() if anc}
 
 
-def compose_definition(prefix: str, acc: str, label: str, kind: str) -> str:
+def prints_titles() -> dict[str, dict]:
+    """PRINTS accession -> its real title and motif count, from the .kdat.
+
+    The API cannot supply this. A fingerprint's `name` in the API is its CODE:
+    PR00001 comes back as "GLABLOOD", and the detail endpoint shows why --
+    `{"name": null, "short": "GLABLOOD"}`. There is no full name there at all,
+    so seeding from the API alone would label 2,106 records with strings like
+    RETINOIDXR and MTVERTEBRATE.
+
+    The .kdat is a tagged flat file; the two tags that matter are
+
+        gx; PR00439                 accession
+        gt; 11-S seed storage protein family signature
+
+    and `gn; COMPOUND(6)` gives the number of motifs, which is worth stating
+    because a fingerprint IS an ordered set of motifs -- that is what
+    distinguishes it from a single-motif signature.
+    """
+    if not PRINTS_KDAT.exists():
+        return {}
+    out: dict[str, dict] = {}
+    acc = title = motifs = None
+    for line in PRINTS_KDAT.open(encoding="utf-8", errors="replace"):
+        if line.startswith("gc;"):
+            acc = title = motifs = None
+        elif line.startswith("gx;"):
+            acc = line[3:].strip()
+        elif line.startswith("gt;"):
+            title = line[3:].strip()
+        elif line.startswith("gn;"):
+            m = re.search(r"\((\d+)\)", line)
+            motifs = int(m.group(1)) if m else None
+        if acc and title is not None:
+            out[acc] = {"title": title, "motifs": motifs}
+    return out
+
+
+def prints_parents() -> dict[str, str]:
+    """PRINTS accession -> its immediate parent, from the FingerPRINTS hierarchy.
+
+    Format is `CODE|ACCESSION|evalue|level|descendant,codes` with `*` for a leaf.
+    Note field 5 lists DESCENDANTS by code, not the parent, and lists the whole
+    subtree rather than direct children -- GPCRRHODOPSN names hundreds. So the
+    immediate parent of X is the entry with the SMALLEST descendant set that
+    still contains X, which is the same "nearest enclosing set" rule
+    `sfld_parents` uses, inverted.
+    """
+    if not PRINTS_HIERARCHY.exists():
+        return {}
+    code_to_acc: dict[str, str] = {}
+    subtree: dict[str, set[str]] = {}
+    for line in PRINTS_HIERARCHY.read_text(encoding="utf-8", errors="replace").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        parts = line.split("|")
+        if len(parts) < 5:
+            continue
+        code, acc, kids = parts[0].strip(), parts[1].strip(), parts[4].strip()
+        code_to_acc[code] = acc
+        if kids and kids != "*":
+            subtree[code] = {k.strip() for k in kids.split(",") if k.strip()}
+    parents: dict[str, str] = {}
+    for child_code, child_acc in code_to_acc.items():
+        holders = [c for c, kids in subtree.items()
+                   if child_code in kids and c != child_code]
+        if holders:
+            nearest = min(holders, key=lambda c: len(subtree[c]))
+            parents[child_acc] = code_to_acc[nearest]
+    return parents
+
+
+def resolve_label(sig: dict, titles: dict[str, dict] | None) -> str:
+    """The record's label, and the string its filename is slugified from.
+
+    Computed in one place because the two must agree: the first PRINTS canary
+    produced `label: "Coagulation factor GLA domain signature"` in a file named
+    `glablood-pr00001.yaml`, because the path was slugified from the API's code
+    while the label came from the source release's title.
+    """
+    extra = (titles or {}).get(sig["accession"]) or {}
+    return extra.get("title") or sig["name"] or sig["accession"]
+
+
+def compose_definition(prefix: str, acc: str, label: str, kind: str,
+                       motifs: int | None = None) -> str:
     """Fallback when the signature has no usable InterPro abstract."""
-    return (f"{label} — a protein {kind} modelled by the {prefix} signature {acc}. "
+    what = (f"a {motifs}-element fingerprint" if motifs
+            else f"a protein {kind} signature")
+    return (f"{label} — {what} modelled by {prefix} {acc}. "
             f"No curated InterPro abstract is available for this signature.")
 
 
 def build_yaml(db: str, sig: dict, entry: dict | None,
-               parents: dict[str, str] | None = None) -> tuple[str, str, str]:
+               parents: dict[str, str] | None = None,
+               titles: dict[str, dict] | None = None) -> tuple[str, str, str]:
     """Return (yaml_text, subdir, identifier) for one member signature."""
     prefix, fallback, _ = MEMBER_DBS[db]
     acc = sig["accession"]
-    label = sig["name"] or acc
+    extra = (titles or {}).get(acc) or {}
+    label = resolve_label(sig, titles)
     axis, category, subdir = DB_OVERRIDE.get(db) or TYPE_MAP[sig["type"]]
     ipr = sig.get("integrated")
     kind = sig["type"].replace("_", " ")
@@ -288,7 +378,8 @@ def build_yaml(db: str, sig: dict, entry: dict | None,
         source = f"InterPro:{ipr} abstract ({prefix} {acc} is a member signature)"
         method = "SOURCED"
     else:
-        definition = compose_definition(prefix, acc, label, kind)
+        definition = compose_definition(prefix, acc, label, kind,
+                                        extra.get("motifs"))
         source = f"{prefix} signature name (composed; no curated InterPro abstract)"
         method = "GENERATED"
 
@@ -373,9 +464,13 @@ def main() -> int:
     print("indexing InterPro abstracts…", file=sys.stderr)
     entries = interpro_entries()
     print(f"  {len(entries):,} InterPro entries", file=sys.stderr)
-    parents = sfld_parents() if db == "sfld" else {}
-    if db == "sfld":
-        print(f"  {len(parents):,} SFLD parent links", file=sys.stderr)
+    parents = {"sfld": sfld_parents, "prints": prints_parents}.get(
+        db, dict)()
+    titles = prints_titles() if db == "prints" else {}
+    if parents:
+        print(f"  {len(parents):,} parent links", file=sys.stderr)
+    if titles:
+        print(f"  {len(titles):,} titles from the source release", file=sys.stderr)
 
     # identifier -> current path, so idempotency survives a signature being
     # renamed upstream (the filename embeds the label, the identifier does not).
@@ -422,9 +517,9 @@ def main() -> int:
         bump("parent_traits: linked" if parents.get(acc)
              else "parent_traits: none (top level or absent from the hierarchy)")
 
-        text, subdir, ident = build_yaml(db, sig, entry, parents)
+        text, subdir, ident = build_yaml(db, sig, entry, parents, titles)
         out_dir = TRAITS_DIR / subdir
-        path = out_dir / f"{slugify(sig['name'] or acc, fallback)}-{acc.lower()}.yaml"
+        path = out_dir / f"{slugify(resolve_label(sig, titles), fallback)}-{acc.lower()}.yaml"
 
         existing = by_identifier.get(ident)
         if existing is not None and not args.force:

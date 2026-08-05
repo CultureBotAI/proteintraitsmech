@@ -217,3 +217,84 @@ def test_parent_traits_is_emitted_as_a_curie_list():
 def test_no_parent_traits_key_when_there_is_no_parent():
     text, _, _ = build_yaml("sfld", sig("SFLDS00036", "enolase superfamily"), entry(), {})
     assert "parent_traits" not in yaml.safe_load(text)
+
+
+# --- PRINTS: titles and hierarchy from the source release ---------------------------
+
+KDAT = """gc; 11SGLOBULIN
+gx; PR00439
+gn; COMPOUND(6)
+gt; 11-S seed storage protein family signature
+gd; Some prose.
+gc; GLABLOOD
+gx; PR00001
+gn; COMPOUND(4)
+gt; Coagulation factor GLA domain signature
+"""
+
+
+def test_prints_titles_come_from_the_kdat_not_the_api(tmp_path, monkeypatch):
+    """The API's `name` for a fingerprint is its CODE. PR00001 comes back as
+    "GLABLOOD", and the detail endpoint shows `{"name": null, "short":
+    "GLABLOOD"}` -- there is no full name there at all. Seeding from the API
+    alone would label 2,106 records RETINOIDXR, MTVERTEBRATE and the like."""
+    import seed_interpro_members as sim
+    f = tmp_path / "k.kdat"
+    f.write_text(KDAT, encoding="utf-8")
+    monkeypatch.setattr(sim, "PRINTS_KDAT", f)
+    titles = sim.prints_titles()
+    assert titles["PR00001"]["title"] == "Coagulation factor GLA domain signature"
+    assert titles["PR00439"]["motifs"] == 6
+
+
+def test_the_label_and_the_filename_are_derived_from_the_same_string(tmp_path,
+                                                                    monkeypatch):
+    """THE CANARY'S FINDING. The first run produced
+    `label: "Coagulation factor GLA domain signature"` inside a file named
+    `glablood-pr00001.yaml`, because the path was slugified from the API code
+    while the label came from the release title."""
+    import seed_interpro_members as sim
+    titles = {"PR00001": {"title": "Coagulation factor GLA domain signature",
+                          "motifs": 4}}
+    s = sig("PR00001", "GLABLOOD", "domain")
+    assert sim.resolve_label(s, titles) == "Coagulation factor GLA domain signature"
+    text, _, _ = build_yaml("prints", s, entry(), None, titles)
+    assert yaml.safe_load(text)["label"] == sim.resolve_label(s, titles)
+
+
+def test_the_motif_count_is_stated_when_a_definition_is_composed():
+    """A fingerprint IS an ordered set of motifs; the count is what distinguishes
+    it from a single-motif signature, and it is the only substantive thing we can
+    say about one with no abstract."""
+    titles = {"PR00099": {"title": "Some signature", "motifs": 5}}
+    text, _, _ = build_yaml("prints", sig("PR00099", "CODE", "family",
+                                          integrated=None), None, None, titles)
+    assert "5-element fingerprint" in yaml.safe_load(text)["definition"]
+
+
+HIER = """# Last update 21-02-2012
+TOP|PR00010|1e-04|2|MID,LEAF
+MID|PR00020|1e-04|1|LEAF
+LEAF|PR00030|1e-04|0|*
+"""
+
+
+def test_the_prints_parent_is_the_nearest_enclosing_subtree(tmp_path, monkeypatch):
+    """Field 5 lists DESCENDANTS by code, and the whole subtree rather than direct
+    children -- GPCRRHODOPSN names hundreds. So "an entry that lists X" is not X's
+    parent; the nearest one is, i.e. the smallest descendant set containing X."""
+    import seed_interpro_members as sim
+    f = tmp_path / "h.txt"
+    f.write_text(HIER, encoding="utf-8")
+    monkeypatch.setattr(sim, "PRINTS_HIERARCHY", f)
+    parents = sim.prints_parents()
+    assert parents["PR00030"] == "PR00020", "took the outer subtree, not the nearest"
+    assert parents["PR00020"] == "PR00010"
+    assert "PR00010" not in parents
+
+
+def test_a_missing_prints_release_is_not_fatal(tmp_path, monkeypatch):
+    import seed_interpro_members as sim
+    monkeypatch.setattr(sim, "PRINTS_KDAT", tmp_path / "absent")
+    monkeypatch.setattr(sim, "PRINTS_HIERARCHY", tmp_path / "absent")
+    assert sim.prints_titles() == {} and sim.prints_parents() == {}
