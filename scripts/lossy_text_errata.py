@@ -83,7 +83,11 @@ _RANGE_DASH = re.compile(rf"([0-9]) ?\{FFFD}([0-9])")
 _ARROW = re.compile(rf"([0-9]')\{FFFD}([0-9]')")
 _CHEM_HYPHEN = re.compile(rf"([0-9]),?([0-9])?\{FFFD}([a-z])")
 _SPACED_DASH = re.compile(rf" \{FFFD} ")
-_WORD_DASH = re.compile(rf"([A-Za-z]{{2,}})\{FFFD}([A-Z][a-z])")
+# joins a word to a following capitalised word or all-caps acronym. The second token
+# starts with a capital and continues with any letter, so an acronym (`GSH`, `NADP`) is
+# caught as well as a CamelCase word. Requiring a lowercase second letter missed the
+# acronym case its own example named — `Methylglyoxal<F>GSH`, `ferredoxin<F>NADP` (#139).
+_WORD_DASH = re.compile(rf"([A-Za-z]{{2,}})\{FFFD}([A-Z][A-Za-z])")
 
 
 def repair(text: str) -> str:

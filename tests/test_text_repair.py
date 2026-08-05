@@ -148,6 +148,23 @@ def test_page_ranges_become_en_dashes():
 
 
 @pytest.mark.parametrize("damaged,restored", [
+    # the two real corpus cases (#139): a word joined to an all-caps acronym. The mark
+    # sits between two chemical/protein names, where a dash is the only reading.
+    ("Methylglyoxal" + FFFD + "GSH hemithioacetal", "Methylglyoxal–GSH hemithioacetal"),
+    ("ferredoxin" + FFFD + "NADP+ reductase", "ferredoxin–NADP+ reductase"),
+    # a CamelCase second word still works — the case the rule already handled
+    ("some" + FFFD + "Domain protein", "some–Domain protein"),
+])
+def test_word_to_capitalised_word_becomes_en_dash(damaged, restored):
+    """A word before a capitalised word or acronym: the mark is a dash.
+
+    The rule used to require a lowercase second letter, so it silently missed acronyms
+    like GSH and NADP even though its own example named `Methylglyoxal<F>GSH`.
+    """
+    assert repair_lossy(damaged) == restored
+
+
+@pytest.mark.parametrize("damaged,restored", [
     ("Hyyryl" + FFFD + "inen H", "Hyyryläinen H"),
     ("Oppeg" + FFFD + "rd C", "Oppegård C"),
     ("S" + FFFD + "rensen", "Sørensen"),
