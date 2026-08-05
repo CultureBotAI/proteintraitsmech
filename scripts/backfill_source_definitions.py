@@ -24,6 +24,9 @@ from pathlib import Path
 from record_io import insert_before_license
 from yaml_emit import yaml_escape  # noqa: E402
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from record_io import is_curated  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 CDDID = REPO_ROOT / "data" / "raw" / "cdd" / "cddid_all.tbl.gz"
@@ -130,6 +133,18 @@ def enrich_ncbifam(text: str, product: str, model: str, gene: str) -> tuple[str,
     return new, new != text
 
 
+
+def should_enrich(text: str) -> bool:
+    """False for a record showing curation.
+
+    This script REPLACES a record's definition in place, so without this a
+    curator's rewrite is silently overwritten on the next run (#175). See
+    tests/test_inplace_editor_guards.py; the guard is a function rather than an
+    inline check so the CALLER can be tested, which is what #173 showed matters.
+    """
+    return not is_curated(text)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--apply", action="store_true")
@@ -137,12 +152,16 @@ def main() -> int:
     args = ap.parse_args()
 
     counts = {"cdd": 0, "ncbifam": 0}
+    curated = 0
     if args.source in ("cdd", "both"):
         cddid = load_cddid()
         for path in TRAITS.rglob("*.yaml"):
             if "/cdd/" not in str(path):
                 continue
             text = path.read_text(encoding="utf-8", errors="replace")
+            if not should_enrich(text):
+                curated += 1
+                continue
             m = ID_RE.search(text)
             if not m or not m.group(1).startswith("CDD:"):
                 continue
@@ -160,6 +179,9 @@ def main() -> int:
             if "/ncbifam/" not in str(path):
                 continue
             text = path.read_text(encoding="utf-8", errors="replace")
+            if not should_enrich(text):
+                curated += 1
+                continue
             m = ID_RE.search(text)
             if not m or not m.group(1).startswith("NCBIfam:"):
                 continue
@@ -173,6 +195,8 @@ def main() -> int:
                     path.write_text(new, encoding="utf-8")
 
     verb = "updated" if args.apply else "would update"
+    if curated:
+        print(f"  skipped {curated:,} showing curation (definition left alone, #175)")
     print(f"{verb}: CDD {counts['cdd']:,}, NCBIfam {counts['ncbifam']:,}"
           + ("" if args.apply else "  (dry-run; pass --apply)"))
     return 0
