@@ -51,7 +51,13 @@ RECORDS = REPO / "data" / "traits" / "sequence" / "family" / "panther"
 OUT = REPO / "research" / "subfamily-definition-review.jsonl"
 
 BATCH = 12
-MIN_PROMPT_CHARS = 1500
+# Measured on the ENTRIES, never on the whole prompt. The rubric is 1,431 characters
+# of boilerplate, so a whole-prompt threshold is really a test of the rubric: an empty
+# batch came to 1,432 chars and cleared a 1,500 limit by 68 characters of luck, and one
+# entry cleared it regardless of whether the other eleven were there. The guard exists
+# because a codex run in this repo fabricated 25 records from an input that never
+# arrived -- it has to fail when the DATA is missing, not when the prompt is short.
+MIN_ENTRY_CHARS = 40
 # A 12-entry batch takes ~4m50s wall-clock and almost no local CPU (3s user), so the
 # limit is the provider, not this machine. Serial, 228 records is ~95 minutes.
 WORKERS = 4
@@ -117,14 +123,19 @@ def load_records() -> list[dict]:
     return out
 
 
-def build_prompt(batch: list[dict]) -> str:
-    lines = [RUBRIC, ""]
+def render_entries(batch: list[dict]) -> str:
+    """Just the data, so it can be length-checked without the rubric masking it."""
+    lines = []
     for r in batch:
         lines.append(f'- id: {r["id"]}')
         lines.append(f'  family name: {r["label"]}')
         lines.append(f'  annotated subfamilies: {r["n_subfamilies"]}')
         lines.append(f'  borrowed terms: {r["claim"]}')
     return "\n".join(lines)
+
+
+def build_prompt(batch: list[dict]) -> str:
+    return RUBRIC + "\n\n" + render_entries(batch)
 
 
 def extract_json(stdout: str):
@@ -145,9 +156,17 @@ def extract_json(stdout: str):
 
 
 def review_batch(batch: list[dict]) -> tuple[list[dict] | None, str]:
-    prompt = build_prompt(batch)
-    if len(prompt) < MIN_PROMPT_CHARS:
-        return None, f"prompt too short ({len(prompt)} chars) -- refusing to call"
+    if not batch:
+        return None, "empty batch -- refusing to call"
+    entries = render_entries(batch)
+    if len(entries) < MIN_ENTRY_CHARS * len(batch):
+        return None, (f"entries too short ({len(entries)} chars for {len(batch)} "
+                      f"records) -- refusing to call")
+    blank = [r["id"] for r in batch if not str(r.get("claim", "")).strip()
+             or not str(r.get("label", "")).strip()]
+    if blank:
+        return None, f"records with no label or no claim: {blank[:4]} -- refusing to call"
+    prompt = RUBRIC + "\n\n" + entries
     proc = subprocess.run(MODEL_CMD + [prompt], capture_output=True, text=True)
     if proc.returncode != 0:
         return None, f"codex exited {proc.returncode}: {proc.stderr[-200:]}"
