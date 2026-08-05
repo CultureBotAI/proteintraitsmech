@@ -25,6 +25,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lossy_text_errata import repair as _repair_lossy  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
 from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 
@@ -61,6 +64,7 @@ def build_category_yaml(letter, desc):
 
 def build_cog_yaml(cog, name, cats, gene, pathway):
     extra = f" Functional context: {pathway}." if pathway else ""
+    name = _repair_lossy(name)   # 3′-5′ primes and curly quotes (#139)
     definition = (f"{name} — a cluster of orthologous genes ({cog}); members "
                   f"are orthologues with a conserved function.{extra}")
     lines = [f"identifier: COG:{cog}", f"label: {yaml_escape(name)}"]

@@ -223,3 +223,42 @@ def test_slugify_truncation_is_a_parameter(max_len, expected):
 def test_slugify_fallback_is_a_parameter():
     assert slugify("", 70, "cath") == "cath"
     assert slugify("!!!", 70, "pfam") == "pfam"
+
+
+# --- #122: a CCD code must not collide with a polymer pseudo-ligand ----------------
+
+def test_biolip_ligand_identifiers_do_not_collide():
+    """`ident_token` uppercases, which collapsed `dna` and `DNA` into one record.
+
+    BioLiP's polymer pseudo-ligand `dna` is a nucleic acid with 4,233 rows; the PDB
+    Chemical Component `DNA` is 1,4-dihydroxy-2-naphthoic acid with 2. They produced the
+    same identifier AND the same filename, so whichever seeded last silently overwrote
+    the other — the record described one molecule with the other's counts.
+
+    Exactly one pair collides across BioLiP's 6,020 ligand ids, which is why the fix is
+    narrow: the CCD that intrudes on a polymer name moves, the polymer keeps the plain
+    token already published in the docs index.
+    """
+    mod = _load(SCRIPTS / "seed_biolip.py")
+    polymers = list(mod.POLYMER_LIGANDS)
+    for name in polymers:
+        assert mod.ident_token(name) != mod.ident_token(name.upper()), (
+            f"polymer {name!r} and CCD {name.upper()!r} share an identifier token")
+
+
+def test_biolip_colliding_ligands_get_different_filenames():
+    """The identifier alone is not enough — the path collided too.
+
+    Fixing only `ident_token` left both writing `...-dna.yaml`, so there was still one
+    file and the second record silently did not exist.
+    """
+    mod = _load(SCRIPTS / "seed_biolip.py")
+
+    class _Lig:
+        def __init__(self, ccd):
+            self.ccd, self.occ, self.pdb_ids, self.examples = ccd, 1, {"1abc"}, []
+
+    for name in mod.POLYMER_LIGANDS:
+        a = mod.target_path(_Lig(name))
+        b = mod.target_path(_Lig(name.upper()))
+        assert a != b, f"{name!r} and {name.upper()!r} write to the same file: {a.name}"

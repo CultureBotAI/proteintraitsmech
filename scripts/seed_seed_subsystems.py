@@ -41,6 +41,9 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+from lossy_text_errata import repair as _repair_lossy  # noqa: E402
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
 from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
 
@@ -126,7 +129,8 @@ def _slash_for_backslash(text: str) -> str:
 
 def build_subsystem_yaml(rec, node_id, parent_id, ecs):
     name = rec.get("subsystem_name") or rec.get("subsystem_id")
-    desc = _slash_for_backslash(" ".join((rec.get("description") or "").split()))
+    # #135 (stray backslash) then #139 (characters the source lost to U+FFFD)
+    desc = _repair_lossy(_slash_for_backslash(" ".join((rec.get("description") or "").split())))
     if desc:
         definition = desc
     else:

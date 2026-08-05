@@ -110,6 +110,16 @@ Judge each abstract on four things:
    family is the main risk and must be rejected.
 2. INFORMATIVE - does it say materially more than the label already says? "X is a \
    family of X proteins" is a stub, not a definition.
+2b. FAMILY-SPECIFIC, not superfamily-level. Could a reader use this to tell THIS family \
+   apart from its siblings? A description of the shared domain, fold or superfamily is \
+   accurate and still not a definition of this family. Judged against the family, NOT \
+   against a generic synonym: if the synonym is "GDSL esterase/lipase", the abstract \
+   must still say what THIS family of GDSL enzymes does. \
+   This criterion was added after the fact (#114): the first pass over PANTHER promoted \
+   1,604 abstracts and a stricter second pass demoted 515 of them - 32% - almost all for \
+   exactly this. Criterion 2 alone passes superfamily prose, because against a label like \
+   "GDSL-LIKE LIPASE/ACYLHYDROLASE-RELATED" a competent description of GDSL esterases \
+   genuinely does say more.
 3. SUPPORTED - does it avoid specifics it cannot know? Invented accessions, EC \
    numbers, citations, organisms, residue positions or mechanisms are disqualifying. \
    General, hedged statements of family function are fine.
@@ -119,7 +129,11 @@ Judge each abstract on four things:
 Verdict for each:
   PROMOTE - all four hold; safe to use as the definition verbatim.
   FLAG    - probably fine but something needs a human eye; say what in `concerns`.
-  REJECT  - fails 1, 2, 3 or 4.
+  REJECT  - fails 1, 2, 2b, 3 or 4.
+
+`synonyms` is AUTHORITATIVE for family identity; the `label` is often a source-side \
+domain-naming artifact that can name a different protein entirely. An audit that judged \
+on the label alone produced four false accusations out of five.
 
 Be strict. FLAG or REJECT when uncertain: an abstract left parked costs nothing, and a \
 wrong definition on a class record propagates. Do NOT rewrite or improve the text - \
