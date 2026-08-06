@@ -25,7 +25,7 @@ causal_graphs:
   - graph_id: resistance
     title: Mycobacterium tuberculosis gyrA mutations conferring resistance to moxifloxacin → mechanism → resistance (curated from ARO relations + literature)
     description: >-
-      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:24576155). Target alteration, not drug inactivation: GyrA is the quinolone's target, and QRDR substitutions reduce drug binding to the gyrase–DNA cleavage complex.
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:24576155). Target alteration, not drug inactivation: GyrA is the quinolone's target, and QRDR substitutions reduce drug binding to the gyrase-DNA cleavage complex.
     nodes:
       - node_id: determinant
         label: Mycobacterium tuberculosis gyrA mutations conferring resistance to moxifloxacin
@@ -39,7 +39,7 @@ causal_graphs:
         label: fluoroquinolone antibiotic
         node_type: CHEMICAL
         grounding: ARO:0000001
-      - node_id: gyra_domain
+      - node_id: domain
         label: "DNA gyrase/topoisomerase IV, subunit A domain (carries the QRDR)"
         node_type: DOMAIN
         grounding: Pfam:PF00521
@@ -54,7 +54,7 @@ causal_graphs:
         node_type: MOLECULAR_FUNCTION
         grounding: GO:0003918
       - node_id: cleavage_complex
-        label: gyrase-DNA cleavage complex
+        label: enzyme-DNA cleavage complex
         node_type: STATE
         description: >-
           The covalent enzyme-cleaved DNA intermediate that quinolones bind and stabilise. Ungrounded, as with the M-CSA reaction-intermediate STATE nodes.
@@ -103,7 +103,7 @@ causal_graphs:
           - reference: PMID:24576155
             snippet: "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes."
             notes: Resistance to fluoroquinolone antibiotic.
-      - subject: gyra_domain
+      - subject: domain
         predicate: part of (the subunit-A domain of this determinant)
         predicate_id: BFO:0000050
         object: determinant
@@ -114,7 +114,7 @@ causal_graphs:
       - subject: qrdr
         predicate: part of (the QRDR lies in the subunit-A domain)
         predicate_id: BFO:0000050
-        object: gyra_domain
+        object: domain
         description: >-
           The QRDR is the N-terminal GyrA region in which quinolone-resistance substitutions occur.
         evidence:
@@ -124,21 +124,21 @@ causal_graphs:
           - reference: InterPro:IPR002205
             snippet: domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges
             notes: "Places the N-terminal GyrA region inside this domain entry. The containment of residues 67-106 in it is an inference FROM THESE TWO SOURCES TOGETHER, not a single asserted statement."
-      - subject: gyra_domain
-        predicate: enables (DNA breakage-reunion)
+      - subject: domain
+        predicate: enables (type II topoisomerase activity)
         predicate_id: RO:0002327
         object: gyrase_activity
         evidence:
-          - reference: InterPro:IPR002205
-            snippet: domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges
-            notes: The subunit-A domain carries the breakage-reunion activity that the quinolone acts on.
+          - reference: PMID:24576155
+            snippet: "The subunits in gyrase are GyrA and GyrB. The homologous subunits in topoisomerase IV are ParC and ParE in Gram-negative species and GrlA and GrlB in Gram-positive species. GyrA (and the equivalent topoisomerase IV subunit) contains the active site tyrosine residue. GyrB (and the equivalent topoisomerase IV subunit) contains the ATPase domain as well as the TOPRIM domain, which binds the divalent metal ions involved in DNA cleavage and ligation."
+            notes: "Aldred 2014, the subunit/domain architecture of gyrase and topoisomerase IV."
       - subject: gyrase_activity
         predicate: causally upstream of (forms the covalent intermediate)
         predicate_id: RO:0002411
         object: cleavage_complex
         evidence:
           - reference: PMID:24576155
-            snippet: "To maintain genomic integrity during this process, the enzymes form covalent bonds between active site tyrosine residues and the newly generated 5'-DNA termini."
+            snippet: "To maintain genomic integrity during this process, the enzymes form covalent bonds between active site tyrosine residues and the newly generated 5′-DNA termini."
             notes: "Aldred 2014. The cleavage complex is the enzyme's own catalytic intermediate, present with or without drug."
       - subject: drug0
         predicate: molecularly interacts with (intercalates and blocks ligation)
@@ -151,11 +151,11 @@ causal_graphs:
             snippet: "As a result of their intercalation, quinolones increase the steady-state concentration of cleavage complexes by acting as physical blocks to ligation."
             notes: Aldred 2014. This is the drug-ACTION arm; resistance is the loss of it.
       - subject: qrdr
-        predicate: negatively regulates (substitution lowers drug affinity)
+        predicate: negatively regulates (substitution lowers drug action)
         predicate_id: RO:0002212
         object: cleavage_complex
         description: >-
-          The causal core of this family: a QRDR substitution lowers the affinity of the enzyme for the quinolone, so fewer drug-stabilised cleavage complexes form at a given drug concentration.
+          The causal core: a QRDR substitution reduces the drug's ability to trap this enzyme, so fewer drug-stabilised cleavage complexes form at a given drug concentration.
         evidence:
           - reference: PMID:24576155
             snippet: "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes."

@@ -35,6 +35,85 @@ ARO_DIR = D.ARO_DIR
 # family ARO id → curated evidence. `reference` is the family's characterisation
 # paper; `mech[<mechanism ARO id>]`, `mech_res`, `det_res`, `res_drug` are verbatim
 # snippets for each edge role.
+
+# ---------------------------------------------------------------------------------------
+# Quinolone action, shared by the four fluoroquinolone target-alteration families (gyrA,
+# gyrB, parC, parE). The DRUG's half of the mechanism is identical for all of them — one
+# drug class, one target enzyme family — so it is written once. What differs per family,
+# and is NOT shared below, is which subunit is altered, which domain the QRDR sits in, and
+# which paper reports its substitutions.
+#
+# All five are pasted from PMID:24576155 (Aldred, Kerns & Osheroff 2014, PMC3985860),
+# including its U+2032 primes. Superscript reference markers are dropped, nothing else.
+_FQ_CLEAVAGE = "To maintain genomic integrity during this process, the enzymes form covalent bonds between active site tyrosine residues and the newly generated 5′-DNA termini."
+_FQ_INTERCALATE = "As a result of their intercalation, quinolones increase the steady-state concentration of cleavage complexes by acting as physical blocks to ligation."
+_FQ_CELL_DEATH = "If the strand breaks overwhelm these processes, they can lead to cell death. This is the primary mechanism that quinolones use to kill bacterial cells"
+_FQ_AFFINITY = "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes."
+# the sentence that settles which subunit is which — and therefore which of the four
+# families can reuse gyrA's domain node and which cannot.
+_FQ_SUBUNITS = "The subunits in gyrase are GyrA and GyrB. The homologous subunits in topoisomerase IV are ParC and ParE in Gram-negative species and GrlA and GrlB in Gram-positive species. GyrA (and the equivalent topoisomerase IV subunit) contains the active site tyrosine residue. GyrB (and the equivalent topoisomerase IV subunit) contains the ATPase domain as well as the TOPRIM domain, which binds the divalent metal ions involved in DNA cleavage and ligation."
+
+# InterPro abstracts that the two Pfam KB records' definitions are taken from.
+_IPR_A_SUBUNIT = "domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges"
+_IPR_B_SUBUNIT = "There are four functional domains in topoisomerase II: domain 1 (N-terminal of gyrB) is an ATPase, domain 2 (C-terminal of gyrB) is responsible for subunit interactions, domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges, and domain 4 (C-terminal of gyrA) is able to non-specifically bind DNA."
+
+
+def _fq_shared_edges(qrdr_regulates_evidence: list) -> list:
+    """The quinolone-action arm, identical for gyrA/gyrB/parC/parE.
+
+    Only the `qrdr → cleavage_complex` edge differs between families, because the
+    evidence that a substitution in THAT subunit's QRDR reduces drug action is
+    subunit-specific — the A-subunit serine/acidic pair forms the water-metal ion bridge
+    and the B-subunit residues do not, so citing the A-subunit affinity result on a gyrB
+    record would be citing the wrong experiment.
+    """
+    return [
+        {"subject": "domain", "object": "gyrase_activity",
+         "predicate": "enables (type II topoisomerase activity)", "predicate_id": "RO:0002327",
+         "evidence": [{"reference": "PMID:24576155", "snippet": _FQ_SUBUNITS,
+                       "notes": "Aldred 2014, the subunit/domain architecture of gyrase and topoisomerase IV."}]},
+        {"subject": "gyrase_activity", "object": "cleavage_complex",
+         "predicate": "causally upstream of (forms the covalent intermediate)", "predicate_id": "RO:0002411",
+         "evidence": [{"reference": "PMID:24576155", "snippet": _FQ_CLEAVAGE,
+                       "notes": "Aldred 2014. The cleavage complex is the enzyme's own catalytic intermediate, present with or without drug."}]},
+        {"subject": "drug0", "object": "cleavage_complex",
+         "predicate": "molecularly interacts with (intercalates and blocks ligation)", "predicate_id": "RO:0002436",
+         "description": "Quinolone action: the drug binds the cleaved complex and blocks religation, raising the steady-state level of DNA breaks.",
+         "evidence": [{"reference": "PMID:24576155", "snippet": _FQ_INTERCALATE,
+                       "notes": "Aldred 2014. This is the drug-ACTION arm; resistance is the loss of it."}]},
+        {"subject": "qrdr", "object": "cleavage_complex",
+         "predicate": "negatively regulates (substitution lowers drug action)", "predicate_id": "RO:0002212",
+         "description": "The causal core: a QRDR substitution reduces the drug's ability to trap this enzyme, so fewer drug-stabilised cleavage complexes form at a given drug concentration.",
+         "evidence": qrdr_regulates_evidence},
+        {"subject": "cleavage_complex", "object": "cell_death",
+         "predicate": "causally upstream of (drug-stabilised breaks kill the cell)", "predicate_id": "RO:0002411",
+         "description": "Why fewer stabilised complexes means survival: the complexes are what kill the cell.",
+         "evidence": [{"reference": "PMID:24576155", "snippet": _FQ_CELL_DEATH, "notes": "Aldred 2014."}]},
+    ]
+
+
+def _fq_shared_nodes(qrdr_label: str, qrdr_description: str) -> list:
+    """Everything except the `domain` node.
+
+    `protein_traits["primary_key"]` already emits that one, and emitting it here as well
+    produced a **duplicate `node_id: domain`** — which `just validate` accepts without
+    complaint (the schema has no uniqueness constraint on `node_id`) and only
+    `just audit-graphs` rejects. Caught by promoting one record per family before the
+    rest, which is the only reason it is not in 29 records.
+    """
+    return [
+        {"node_id": "qrdr", "label": qrdr_label, "node_type": "MOTIF",
+         "description": qrdr_description},
+        {"node_id": "gyrase_activity",
+         "label": "DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity",
+         "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0003918"},
+        {"node_id": "cleavage_complex", "label": "enzyme-DNA cleavage complex", "node_type": "STATE",
+         "description": "The covalent enzyme-cleaved DNA intermediate that quinolones bind and stabilise. Ungrounded, as with the M-CSA reaction-intermediate STATE nodes."},
+        {"node_id": "cell_death", "label": "bacterial cell death", "node_type": "PHENOTYPE",
+         "grounding": "GO:0008219"},
+    ]
+
+
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
     # gyrA — fluoroquinolone TARGET ALTERATION (ARO:3003292, "fluoroquinolone resistant
@@ -50,88 +129,168 @@ FAMILY_SNIPPETS = {
     # carried on the QRDR node rather than a residue node per record.
     "ARO:3003292": {
         "reference": "PMID:24576155",       # Aldred, Kerns & Osheroff 2014, Biochemistry
-        "mech": {
-            "ARO:3000212": "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes.",
-        },
-        "mech_res": "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes.",
+        "mech": {"ARO:3000212": _FQ_AFFINITY},
+        "mech_res": _FQ_AFFINITY,
         "det_res": "the amino acids that most frequently are associated with quinolone resistance are Ser83 (based on E. coli GyrA numbering) and an acidic residue four amino acids downstream",
-        "res_drug": "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes.",
-        "note": "Target alteration, not drug inactivation: GyrA is the quinolone's target, and QRDR substitutions reduce drug binding to the gyrase–DNA cleavage complex.",
+        "res_drug": _FQ_AFFINITY,
+        "note": "Target alteration, not drug inactivation: GyrA is the quinolone's target, and QRDR substitutions reduce drug binding to the gyrase-DNA cleavage complex.",
         "protein_traits": {
-            "primary_key": "gyra_domain",
-            "gyra_domain": ("Pfam:PF00521", "DNA gyrase/topoisomerase IV, subunit A domain (carries the QRDR)", "DOMAIN",
-                            "This entry represents a domain found in type IIA topoisomerases, such as bacterial DNA topoisomerase IV (C subunit, ParC), bacterial DNA gyrases (A subunit, GyrA), and mammalian DNA toposiomerases II."),
+            "primary_key": "domain",
+            "domain": ("Pfam:PF00521", "DNA gyrase/topoisomerase IV, subunit A domain (carries the QRDR)", "DOMAIN",
+                       "This entry represents a domain found in type IIA topoisomerases, such as bacterial DNA topoisomerase IV (C subunit, ParC), bacterial DNA gyrases (A subunit, GyrA), and mammalian DNA toposiomerases II."),
             "part_pred": "part of (the subunit-A domain of this determinant)",
             "part_note": "KB trait record Pfam:PF00521; snippet is the InterPro:IPR002205 abstract that record's definition is taken from, not this repo's prose.",
-            # deliberately no `fold` and no `enables_mech`: see the report's open questions.
+            # deliberately no `fold` and no `enables_mech`: see the round-18 report.
         },
-        "extra_nodes": [
-            # the label says "substituted in this determinant" because the edge below
-            # asserts that this node negatively regulates cleavage-complex formation, and
-            # the evidence is about MUTATION of these residues, not about the region as
-            # such. An unqualified "QRDR of GyrA" would make the graph claim that the
-            # wild-type region lowers drug affinity, which no source says.
-            {"node_id": "qrdr", "label": "quinolone resistance-determining region (QRDR) of GyrA, substituted in this determinant",
-             "node_type": "MOTIF",
-             "description": "GyrA residues 67-106, Ser83 and the acidic residue four positions downstream being the most frequently substituted. Positions are stated in the E. coli GyrA frame; the equivalent positions differ per organism (e.g. Ala90/Asp94 in M. tuberculosis), so no per-record residue node is asserted. Ungrounded: no ontology term denotes the QRDR."},
-            {"node_id": "gyrase_activity", "label": "DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity",
-             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0003918"},
-            {"node_id": "cleavage_complex", "label": "gyrase-DNA cleavage complex", "node_type": "STATE",
-             "description": "The covalent enzyme-cleaved DNA intermediate that quinolones bind and stabilise. Ungrounded, as with the M-CSA reaction-intermediate STATE nodes."},
-            {"node_id": "cell_death", "label": "bacterial cell death", "node_type": "PHENOTYPE",
-             "grounding": "GO:0008219"},
-        ],
+        # the QRDR label says "substituted in this determinant" because the edge below
+        # asserts that this node negatively regulates cleavage-complex formation, and the
+        # evidence is about MUTATION of these residues, not the region as such.
+        "extra_nodes": _fq_shared_nodes(
+            "quinolone resistance-determining region (QRDR) of GyrA, substituted in this determinant",
+            "GyrA residues 67-106, Ser83 and the acidic residue four positions downstream being the most frequently substituted. Positions are stated in the E. coli GyrA frame; the equivalent positions differ per organism (e.g. Ala90/Asp94 in M. tuberculosis), so no per-record residue node is asserted. Ungrounded: no ontology term denotes the QRDR.",),
         "extra_edges": [
-            {"subject": "qrdr", "object": "gyra_domain",
+            {"subject": "qrdr", "object": "domain",
              "predicate": "part of (the QRDR lies in the subunit-A domain)", "predicate_id": "BFO:0000050",
              "description": "The QRDR is the N-terminal GyrA region in which quinolone-resistance substitutions occur.",
              "evidence": [
                  {"reference": "PMID:2168148",
                   "snippet": "quinolone resistance was caused by a point mutation within the region between amino acids 67 and 106, especially in the vicinity of amino acid 83, of the GyrA protein",
                   "notes": "Yoshida et al. 1990, the paper that defined the QRDR; cited by these ARO records themselves."},
-                 {"reference": "InterPro:IPR002205",
-                  "snippet": "domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges",
+                 {"reference": "InterPro:IPR002205", "snippet": _IPR_A_SUBUNIT,
                   "notes": "Places the N-terminal GyrA region inside this domain entry. The containment of residues 67-106 in it is an inference FROM THESE TWO SOURCES TOGETHER, not a single asserted statement."},
              ]},
-            {"subject": "gyra_domain", "object": "gyrase_activity",
-             "predicate": "enables (DNA breakage-reunion)", "predicate_id": "RO:0002327",
+        ] + _fq_shared_edges([
+            {"reference": "PMID:24576155", "snippet": _FQ_AFFINITY,
+             "notes": "Aldred 2014. Mutation of the QRDR serine or the acidic residue, which together form the water-metal ion bridge to the drug."},
+        ]),
+    },
+    # ---------------------------------------------------------------------------------
+    # parC — fluoroquinolone (ARO:3000619). ParC is topoisomerase IV's HOMOLOGUE OF GyrA,
+    # so it reuses gyrA's domain node (Pfam:PF00521) and the same water-metal ion bridge
+    # result — which is legitimate only because Aldred states the homology outright and
+    # because the affinity sentence names "gyrase OR topoisomerase IV".
+    "ARO:3000619": {
+        "reference": "PMID:24576155",
+        "mech": {"ARO:3000212": _FQ_AFFINITY},
+        "mech_res": _FQ_AFFINITY,
+        "det_res": "Mutations were found in parC that encoded Thr57-Ser, Thr66-Ile, and Ser80-Arg substitutions.",
+        "res_drug": _FQ_AFFINITY,
+        "note": "Target alteration. ParC is the topoisomerase IV subunit homologous to GyrA and carries the equivalent QRDR.",
+        # ARO:3003702 is "Pseudomonas aeruginosa gyrA AND parC conferring resistance to
+        # fluoroquinolones" — a determinant naming BOTH subunits, sitting under the parC
+        # family. Both are A subunits so the domain node would be right, but the QRDR node
+        # would be labelled ParC-only and the record is about two QRDRs. It needs a graph
+        # with one QRDR node per subunit, which is a different config, not this one.
+        "exclude": ("ARO:3003702",),
+        "protein_traits": {
+            "primary_key": "domain",
+            "domain": ("Pfam:PF00521", "DNA gyrase/topoisomerase IV, subunit A domain (carries the QRDR)", "DOMAIN",
+                       "This entry represents a domain found in type IIA topoisomerases, such as bacterial DNA topoisomerase IV (C subunit, ParC), bacterial DNA gyrases (A subunit, GyrA), and mammalian DNA toposiomerases II."),
+            "part_pred": "part of (the subunit-A domain of this determinant)",
+            "part_note": "KB trait record Pfam:PF00521; its InterPro:IPR002205 abstract names ParC explicitly as a member.",
+        },
+        "extra_nodes": _fq_shared_nodes(
+            "quinolone resistance-determining region (QRDR) of ParC, substituted in this determinant",
+            "The topoisomerase IV counterpart of the GyrA QRDR: Ser80 and the acidic residue four positions downstream in the E. coli ParC frame (Ser84/Glu88 in A. baumannii topoisomerase IV). Positions differ per organism, so no per-record residue node is asserted. Ungrounded: no ontology term denotes the QRDR.",),
+        "extra_edges": [
+            {"subject": "qrdr", "object": "domain",
+             "predicate": "part of (the QRDR lies in the subunit-A domain)", "predicate_id": "BFO:0000050",
+             "description": "ParC is topoisomerase IV's homologue of GyrA, so its QRDR sits in the same subunit-A domain entry.",
              "evidence": [
-                 {"reference": "InterPro:IPR002205",
-                  "snippet": "domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges",
-                  "notes": "The subunit-A domain carries the breakage-reunion activity that the quinolone acts on."},
+                 {"reference": "PMID:24576155", "snippet": _FQ_SUBUNITS,
+                  "notes": "Aldred 2014 states the GyrA/ParC subunit homology this reuse depends on."},
+                 {"reference": "PMID:15388468",
+                  "snippet": "Mutations were found in parC that encoded Thr57-Ser, Thr66-Ile, and Ser80-Arg substitutions.",
+                  "notes": "Eaves et al. 2004, Salmonella enterica: the parC QRDR substitutions themselves."},
              ]},
-            {"subject": "gyrase_activity", "object": "cleavage_complex",
-             "predicate": "causally upstream of (forms the covalent intermediate)", "predicate_id": "RO:0002411",
+        ] + _fq_shared_edges([
+            {"reference": "PMID:24576155", "snippet": _FQ_AFFINITY,
+             "notes": "Aldred 2014. The sentence names topoisomerase IV alongside gyrase, so it applies to ParC directly rather than by analogy."},
+            {"reference": "PMID:24576155",
+             "snippet": "In A. baumannii topoisomerase IV, these residues are Ser84 and Glu88, respectively.",
+             "notes": "Aldred 2014, identifying the water-metal ion bridge pair in a topoisomerase IV A subunit."},
+        ]),
+    },
+    # ---------------------------------------------------------------------------------
+    # gyrB — fluoroquinolone (ARO:3000864). A DIFFERENT SUBUNIT and a different story: the
+    # B subunit carries the ATPase and TOPRIM domains, NOT the active-site tyrosine and NOT
+    # the water-metal ion bridge serine/acidic pair. So it must not reuse gyrA's domain node
+    # or gyrA's affinity evidence — citing the A-subunit experiment on a gyrB record would
+    # be citing the wrong experiment. Its QRDR and its evidence are its own.
+    "ARO:3000864": {
+        "reference": "PMID:22290942",       # Pantel et al. 2012, AAC
+        "mech": {"ARO:3000212": "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540)."},
+        "mech_res": "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540).",
+        "det_res": "all nine type 1 mutants had a point mutation from aspartic acid to asparagine at amino acid 426 and that all four type 2 mutants had a point mutation from lysine to glutamic acid at amino acid 447",
+        "res_drug": "We measured FQ MICs and also DNA gyrase inhibition by FQs in order to unequivocally clarify the role of these mutations in FQ resistance.",
+        "note": "Target alteration in the B subunit, which contributes the TOPRIM domain rather than the active-site tyrosine — a different route from the GyrA/ParC water-metal ion bridge.",
+        "protein_traits": {
+            "primary_key": "domain",
+            "domain": ("Pfam:PF00204", "DNA gyrase B subunit domain (carries the GyrB QRDR)", "DOMAIN",
+                       _IPR_B_SUBUNIT),
+            "part_pred": "part of (the subunit-B domain of this determinant)",
+            "part_note": "KB trait record Pfam:PF00204; snippet is the InterPro:IPR013506 abstract that record's definition is taken from.",
+        },
+        "extra_nodes": _fq_shared_nodes(
+            "quinolone resistance-determining region (QRDR) of GyrB, substituted in this determinant",
+            "A separate QRDR from GyrA's: Asp426 and Lys447 in the E. coli GyrB frame, extended to positions 500-540 in M. tuberculosis. These residues are NOT the water-metal ion bridge pair, which lies in the A subunit. Ungrounded: no ontology term denotes the QRDR.",),
+        "extra_edges": [
+            {"subject": "qrdr", "object": "domain",
+             "predicate": "part of (the QRDR lies in the subunit-B domain)", "predicate_id": "BFO:0000050",
+             "description": "The GyrB QRDR is a region of the B subunit distinct from the GyrA QRDR.",
              "evidence": [
-                 {"reference": "PMID:24576155",
-                  "snippet": "To maintain genomic integrity during this process, the enzymes form covalent bonds between active site tyrosine residues and the newly generated 5'-DNA termini.",
-                  "notes": "Aldred 2014. The cleavage complex is the enzyme's own catalytic intermediate, present with or without drug."},
+                 {"reference": "PMID:1656869",
+                  "snippet": "all nine type 1 mutants had a point mutation from aspartic acid to asparagine at amino acid 426 and that all four type 2 mutants had a point mutation from lysine to glutamic acid at amino acid 447",
+                  "notes": "Yoshida et al. 1991, the paper that defined the gyrB QRDR in E. coli — the B-subunit counterpart of PMID:2168148."},
+                 {"reference": "PMID:22290942",
+                  "snippet": "These findings help us to refine the definition of GyrB QRDR, which is extended to positions 500 to 540.",
+                  "notes": "Pantel et al. 2012 extend the GyrB QRDR in M. tuberculosis; the frame differs from E. coli's."},
              ]},
-            {"subject": "drug0", "object": "cleavage_complex",
-             "predicate": "molecularly interacts with (intercalates and blocks ligation)", "predicate_id": "RO:0002436",
-             "description": "Quinolone action: the drug binds the cleaved complex and blocks religation, raising the steady-state level of DNA breaks.",
+        ] + _fq_shared_edges([
+            {"reference": "PMID:22290942",
+             "snippet": "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540).",
+             "notes": "Pantel et al. 2012 measured DNA gyrase inhibition by FQs with reconstituted mutant GyrB, so this is the B subunit's OWN evidence, not the A subunit's affinity result."},
+        ]),
+    },
+    # ---------------------------------------------------------------------------------
+    # parE — fluoroquinolone (ARO:3003313). Topoisomerase IV's homologue of GyrB, so it
+    # takes the B-subunit shape, not gyrA's.
+    "ARO:3003313": {
+        "reference": "PMID:15388468",       # Eaves et al. 2004, AAC (Salmonella enterica)
+        "mech": {"ARO:3000212": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys."},
+        "mech_res": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
+        # NOT the paper's "isolates ... were examined for mutations in the QRDR of gyrA,
+        # gyrB, parC, and parE" sentence, which is METHODS and asserts nothing causal. The
+        # finding sentence is the weakest honest evidence available for parE, and the notes
+        # say what tier it is rather than letting a reader assume a measurement.
+        "det_res": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
+        "res_drug": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
+        "note": "Target alteration in topoisomerase IV's B subunit, the homologue of GyrB.",
+        "protein_traits": {
+            "primary_key": "domain",
+            "domain": ("Pfam:PF00204", "DNA gyrase B / topoisomerase IV subunit B domain (carries the ParE QRDR)", "DOMAIN",
+                       _IPR_B_SUBUNIT),
+            "part_pred": "part of (the subunit-B domain of this determinant)",
+            "part_note": "KB trait record Pfam:PF00204, the shared B-subunit domain; Aldred 2014 states the GyrB/ParE homology.",
+        },
+        "extra_nodes": _fq_shared_nodes(
+            "quinolone resistance-determining region (QRDR) of ParE, substituted in this determinant",
+            "The topoisomerase IV counterpart of the GyrB QRDR: Glu453, His461, Ala498, Val512 and Ser518 in the Salmonella enterica ParE frame. As in GyrB, these are not the water-metal ion bridge pair. Ungrounded: no ontology term denotes the QRDR.",),
+        "extra_edges": [
+            {"subject": "qrdr", "object": "domain",
+             "predicate": "part of (the QRDR lies in the subunit-B domain)", "predicate_id": "BFO:0000050",
              "evidence": [
-                 {"reference": "PMID:24576155",
-                  "snippet": "As a result of their intercalation, quinolones increase the steady-state concentration of cleavage complexes by acting as physical blocks to ligation.",
-                  "notes": "Aldred 2014. This is the drug-ACTION arm; resistance is the loss of it."},
+                 {"reference": "PMID:15388468",
+                  "snippet": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
+                  "notes": "Eaves et al. 2004: the parE QRDR substitutions themselves."},
+                 {"reference": "PMID:24576155", "snippet": _FQ_SUBUNITS,
+                  "notes": "Aldred 2014 states the GyrB/ParE subunit homology that puts ParE in the same B-subunit domain entry."},
              ]},
-            {"subject": "qrdr", "object": "cleavage_complex",
-             "predicate": "negatively regulates (substitution lowers drug affinity)", "predicate_id": "RO:0002212",
-             "description": "The causal core of this family: a QRDR substitution lowers the affinity of the enzyme for the quinolone, so fewer drug-stabilised cleavage complexes form at a given drug concentration.",
-             "evidence": [
-                 {"reference": "PMID:24576155",
-                  "snippet": "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes.",
-                  "notes": "Aldred 2014. Mutation of the QRDR serine or the acidic residue, which together form the water-metal ion bridge to the drug."},
-             ]},
-            {"subject": "cleavage_complex", "object": "cell_death",
-             "predicate": "causally upstream of (drug-stabilised breaks kill the cell)", "predicate_id": "RO:0002411",
-             "description": "Why fewer stabilised complexes means survival: the complexes are what kill the cell.",
-             "evidence": [
-                 {"reference": "PMID:24576155",
-                  "snippet": "If the strand breaks overwhelm these processes, they can lead to cell death. This is the primary mechanism that quinolones use to kill bacterial cells",
-                  "notes": "Aldred 2014."},
-             ]},
-        ],
+        ] + _fq_shared_edges([
+            {"reference": "PMID:15388468",
+             "snippet": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
+             "notes": "Eaves et al. 2004. These are association data from clinical isolates, NOT the reconstituted-enzyme inhibition measurement available for GyrB — a weaker basis, recorded as such."},
+        ]),
     },
     # KPC β-lactamase (class A serine carbapenemase) — PMID:28388065 (KPC-2 mechanism)
     "ARO:3000059": {
@@ -647,13 +806,19 @@ def main() -> int:
     terms = E.parse_obo(E.OBO)
     names = D.obo_names(D.OBO)
 
-    promoted = skip_done = skip_nodraft = 0
+    promoted = skip_done = skip_nodraft = skip_excluded = 0
     for pth in sorted(ARO_DIR.glob("*.yaml")):
         text = pth.read_text(encoding="utf-8")
         ident_m = re.search(r"^identifier:\s*(ARO:\S+)", text, re.M)
         if not ident_m:
             continue
         if args.family not in E.ancestry(terms, ident_m.group(1)):
+            continue
+        if ident_m.group(1) in cfg.get("exclude", ()):
+            # a descendant whose mechanism the family config does NOT describe. Named per
+            # family rather than filtered by a rule, because the reason differs each time
+            # and "why is this one not promoted" should be answerable from the config.
+            skip_excluded += 1
             continue
         is_draft = "graph_id: resistance-draft" in text
         is_ours = "Promoted auto-draft to curated" in text     # this promoter's own output
@@ -682,7 +847,8 @@ def main() -> int:
 
     fam_name = terms.get(args.family, {}).get("name", args.family)
     print(f"family {args.family} ({fam_name}): {promoted:,} drafts promoted to REVIEWED")
-    print(f"  skipped (already curated): {skip_done:,} | skipped (no draft): {skip_nodraft:,}")
+    print(f"  skipped (already curated): {skip_done:,} | skipped (no draft): {skip_nodraft:,}"
+          f" | skipped (excluded by config): {skip_excluded:,}")
     print("APPLIED." if args.apply else "Dry-run — pass --apply to write.")
     return 0
 

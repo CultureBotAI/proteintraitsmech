@@ -20,6 +20,8 @@ import importlib
 import pathlib
 import sys
 
+import pytest
+
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "scripts"))
 
 promote = importlib.import_module("promote_family_drafts")
@@ -99,3 +101,49 @@ def test_the_two_regressions_the_canary_found_stay_fixed():
     assert "grounding: GO:0046677" in out
     # one `predicate:` line per edge, and every one of them a `predicate_id:` too
     assert out.count("predicate: ") == out.count("predicate_id: ") > 0
+
+
+# --- round 19: the four fluoroquinolone target-alteration families ------------------
+
+FQ_FAMILIES = ["ARO:3003292", "ARO:3000619", "ARO:3000864", "ARO:3003313"]  # gyrA parC gyrB parE
+
+
+@pytest.mark.parametrize("family", FQ_FAMILIES)
+def test_no_duplicate_node_ids(family):
+    """`protein_traits` and `extra_nodes` must not both define the same node.
+
+    They did: the shared `_fq_shared_nodes` helper emitted a `domain` node while
+    `protein_traits["primary_key"]` was also `domain`, so every record got
+    `node_id: domain` twice. **`just validate` accepts that** — the schema has no
+    uniqueness constraint on `node_id` — and only `just audit-graphs` calls it an error.
+    It reached three records because one per family was promoted before the rest.
+    """
+    out = _graph(promote.FAMILY_SNIPPETS[family])
+    ids = [ln.split("node_id: ", 1)[1] for ln in out.splitlines() if "- node_id: " in ln]
+    assert len(ids) == len(set(ids)), f"{family}: duplicates {sorted(set(i for i in ids if ids.count(i) > 1))}"
+
+
+@pytest.mark.parametrize("family", FQ_FAMILIES)
+def test_every_edge_of_a_shipped_family_is_cited(family):
+    """The corpus invariant (369,291/369,291 snippet-cited) held at the config level."""
+    out = _graph(promote.FAMILY_SNIPPETS[family])
+    blocks = out.split("      - subject: ")[1:]
+    assert blocks, "no edges emitted"
+    for b in blocks:
+        assert "snippet: " in b, f"{family}: an edge has no snippet"
+
+
+def test_the_a_and_b_subunits_do_not_share_a_domain_node():
+    """gyrB/parE must NOT route through the A-subunit domain, and vice versa.
+
+    The B subunit carries the ATPase and TOPRIM domains, not the active-site tyrosine and
+    not the water–metal ion bridge pair, so reusing gyrA's `Pfam:PF00521` node there would
+    assert the wrong protein trait — and citing the A-subunit affinity experiment on a
+    gyrB record would cite the wrong experiment.
+    """
+    a = {f: promote.FAMILY_SNIPPETS[f]["protein_traits"]["domain"][0]
+         for f in ("ARO:3003292", "ARO:3000619")}
+    b = {f: promote.FAMILY_SNIPPETS[f]["protein_traits"]["domain"][0]
+         for f in ("ARO:3000864", "ARO:3003313")}
+    assert set(a.values()) == {"Pfam:PF00521"}
+    assert set(b.values()) == {"Pfam:PF00204"}

@@ -50,12 +50,13 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   1,194.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   1,166.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
    **Round 18 (2026-08-05) closed the gyrA fluoroquinolone family: 25 records,
-   275 cited edges** — `research/causal-graphs-round18.md`.
+   275 cited edges** — `research/causal-graphs-round18.md`. **Round 19 (2026-08-05)
+   closed parC, gyrB and parE: 28 more, 308 edges** — `research/causal-graphs-round19.md`.
 
    **"No shared family config fits" — this item's own claim — is wrong for the
    target-alteration genes, and round 18 measured it.** 25 of the 30 gyrA drafts are
@@ -67,8 +68,19 @@ cleared._
    two-component regulators — which is where it came from.
 
    Ranked remainder, by whether one family term covers them:
-   - **gyrB (18) · parC (14) · parE (8)** — the rest of the fluoroquinolone target set,
-     same mechanism and same two papers as gyrA. Reuses round 18's config almost as-is.
+   - ~~**gyrB (18) · parC (14) · parE (8)** — same mechanism and same two papers as
+     gyrA.~~ **DONE (round 19), and the premise was wrong on both counts.** Only **29**
+     of those 40 are fluoroquinolone (the rest are **aminocoumarin**, a different drug),
+     and they are **two** mechanisms, not one: ParC is topoisomerase IV's homologue of
+     GyrA (A subunit, `Pfam:PF00521`, water-metal ion bridge), while GyrB and ParE are
+     the **B** subunits (`Pfam:PF00204`, ATPase + TOPRIM) whose QRDR residues are not
+     that pair — so they need their own papers (PMID:1656869, PMID:22290942) and must not
+     cite the A-subunit affinity experiment.
+   - **Aminocoumarin gyrB/parE (~5)** — ARO:3000479, ARO:3000457. A **third** shape:
+     novobiocin binds the GyrB **ATPase** site (`Pfam:PF02518` is in the KB). Next.
+   - **ARO:3003702** (P. aeruginosa gyrA **and** parC) — the first determinant naming two
+     subunits; needs a config with one QRDR node per subunit. Held out by the promoter's
+     new per-family `exclude` list.
    - **van* clusters (~100)** — vanR/S/X/H/A/B/G/L/F/Y/M/I/P; one mechanism
      (D-Ala-D-Ala → D-Ala-D-Lac remodelling) plus two-component regulation.
    - **rpoB/rpoC (20)**, **katG/ahpC/fabG1/ethA/msh* (~40)**, **16S/23S rRNA (~22)**.
