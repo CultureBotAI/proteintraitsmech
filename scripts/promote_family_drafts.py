@@ -168,6 +168,65 @@ def _requires_vanhax(ident: str, label: str, text: str):
                 f"downstream nodes name both")
     return None
 
+def _requires_ser_cluster(ident: str, label: str, text: str):
+    """These configs describe the D-Ala-D-SER route, so refuse a D-Ala-D-Lac cluster.
+
+    The mirror of `_requires_vanhax`, and written BEFORE the fan-out this time rather than
+    after shipping 12 wrong records: a cluster carrying vanH is the depsipeptide route
+    (rounds 20-21) and its genes are not these. Checked against the corpus's own
+    per-cluster gene records.
+    """
+    m = re.search(r"gene in (van[A-Z]+) cluster", label)
+    if not m:
+        if "cluster" in label:
+            return ("label names a cluster but does not match the expected shape, so the "
+                    "cluster's gene content cannot be checked")
+        return None
+    genes = _van_cluster_genes().get(m.group(1), set())
+    if "vanH" in genes:
+        return (f"cluster {m.group(1)} carries vanH, so it is the D-Ala-D-Lac route "
+                f"(rounds 20-21), not the D-Ala-D-Ser route this config describes")
+    return None
+
+
+# The D-Ala-D-Ser arm, shared by the ligase, vanT and vanXY. Every record here belongs to a
+# vanC/E/G/L/N cluster, where resistance comes from a precursor ending in D-Ala-D-SER
+# rather than D-Ala-D-Lac. PMID:10817725 states the whole three-gene division of labour in
+# one sentence, which is why it appears on all three families.
+_SER_CLUSTER = "Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes a membrane-bound serine racemase that provides D-Ser for the synthetic pathway."
+_SER_PRECURSOR = "Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser] for cell wall assembly and prevent synthesis of peptidoglycan precursors ending in D-Ala."
+
+
+def _ser_shared_nodes() -> list:
+    return [
+        {"node_id": "precursor_ser",
+         "label": "UDP-MurNAc-pentapeptide[D-Ser] (precursor ending in D-Ala-D-Ser)",
+         "node_type": "STATE",
+         "description": "The replacement precursor. Ungrounded: ChEBI has the amino acids but not the UDP-MurNAc pentapeptides."},
+        {"node_id": "precursor_dala",
+         "label": "UDP-MurNAc-pentapeptide[D-Ala] (the precursor glycopeptides bind)",
+         "node_type": "STATE",
+         "description": "The normal precursor, whose synthesis this pathway prevents. Ungrounded, as above."},
+    ]
+
+
+def _ser_shared_edges() -> list:
+    return [
+        {"subject": "precursor_ser", "object": "precursor_dala",
+         "predicate": "negatively regulates (replaces the D-Ala-ending precursor)",
+         "predicate_id": "RO:0002212",
+         "description": "The causal core of the VanC route: the wall is assembled from the D-Ser precursor instead, and the D-Ala-ending one is not made.",
+         "evidence": [{"reference": "PMID:10817725", "snippet": _SER_PRECURSOR,
+                       "notes": "Arias, Courvalin & Reynolds 2000. Both halves in one sentence: what is synthesised, and what is prevented."}]},
+        {"subject": "drug0", "object": "precursor_dala",
+         "predicate": "molecularly interacts with (binds the D-Ala-D-Ala terminus)",
+         "predicate_id": "RO:0002436",
+         "requires": {"drug0": "ARO:3000081"},
+         "description": "Drug action: the glycopeptide binds the D-Ala terminus. Replacing it is what confers resistance.",
+         "evidence": [{"reference": "PMID:10817725", "snippet": _SER_PRECURSOR,
+                       "notes": "The precursor named here is the one the drug binds; the VanC route prevents its synthesis."}]},
+    ]
+
 # ---------------------------------------------------------------------------------------
 # The VanS-VanR regulatory arm, shared by both halves of the two-component system. Every
 # snippet is from PMID:1556077 (Arthur, Molinas & Courvalin 1992), which characterised the
@@ -226,6 +285,143 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # The D-Ala-D-Ser route (vanC/E/G/L/N clusters): three enzymes, one shared downstream.
+    # Round 21 covered the D-Ala-D-Lac route's vanH; this is the other terminus.
+    "ARO:3002979": {      # D-Ala-D-Ser ligase: vanC, vanE, vanG, vanL, vanN
+        "curated": "2026-08-06T00:00:00Z",
+        "precondition": _requires_ser_cluster,
+        "reference": "PMID:10817725",
+        "mech": {"ARO:3000213": _SER_CLUSTER},
+        "mech_res": _SER_CLUSTER,
+        "det_res": _SER_PRECURSOR,
+        "res_drug": _SER_PRECURSOR,
+        "note": "Precursor substitution with D-serine: the ligase makes D-Ala-D-Ser instead of D-Ala-D-Ala.",
+        "extra_nodes": _ser_shared_nodes() + [
+            {"node_id": "ligase_activity", "label": "D-alanine--D-serine ligase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "EC:6.3.2.35",
+             "description": "KB trait record for the activity this determinant carries."},
+            {"node_id": "dala_dser", "label": "D-Ala-D-Ser dipeptide", "node_type": "CHEMICAL",
+             "description": "Ungrounded: ChEBI has D-alanine and D-serine but not this dipeptide."},
+        ],
+        "extra_edges": _ser_shared_edges() + [
+            {"subject": "determinant", "object": "ligase_activity",
+             "predicate": "enables (D-Ala-D-Ser ligation)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+                           "notes": "Arias et al. 2000: vanC-1 encodes the ligase that synthesises the dipeptide."}]},
+            {"subject": "ligase_activity", "object": "dala_dser",
+             "predicate": "has output", "predicate_id": "RO:0002234",
+             "evidence": [{"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+                           "notes": "The dipeptide D-Ala-D-Ser, for addition to UDP-MurNAc-tripeptide."}]},
+            {"subject": "dala_dser", "object": "precursor_ser",
+             "predicate": "causally upstream of (is added to the tripeptide)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+                           "notes": "Addition to UDP-MurNAc-tripeptide is what makes the pentapeptide[D-Ser]."}]},
+        ],
+    },
+    "ARO:3000372": {      # vanT: the membrane-bound serine racemase that supplies D-Ser
+        "curated": "2026-08-06T00:00:00Z",
+        "precondition": _requires_ser_cluster,
+        "reference": "PMID:10209740",
+        "mech": {"ARO:3000213": "The protein was overexpressed in Escherichia coli, and serine racemase activity was detected in the membrane but not in the cytoplasmic fraction after centrifugation of sonicated cells, whereas alanine racemase activity was located almost exclusively in the cytoplasm."},
+        "mech_res": _SER_CLUSTER,
+        "det_res": [
+            {"reference": "PMID:10209740", "snippet": "The protein was overexpressed in Escherichia coli, and serine racemase activity was detected in the membrane but not in the cytoplasmic fraction after centrifugation of sonicated cells, whereas alanine racemase activity was located almost exclusively in the cytoplasm.",
+             "notes": "Arias et al. 1999 localised the activity to the membrane, which is what distinguishes VanT from the cytoplasmic alanine racemase."},
+            {"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+             "notes": "And what that activity is for: providing D-Ser for the synthetic pathway."},
+        ],
+        "res_drug": _SER_PRECURSOR,
+        "note": "Supplies the D-serine the ligase needs; confers no resistance by itself.",
+        "extra_nodes": _ser_shared_nodes() + [
+            {"node_id": "family", "label": "membrane-bound serine racemase VanT",
+             "node_type": "PROTEIN", "grounding": "NCBIfam:NF033132",
+             "description": "KB protein-trait record for the VanT family."},
+            {"node_id": "racemase", "label": "serine racemase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0030378"},
+            {"node_id": "d_serine", "label": "D-serine", "node_type": "CHEMICAL",
+             "grounding": "CHEBI:16523"},
+            {"node_id": "ligase_gene", "label": "D-Ala-D-Ser ligase of the van cluster",
+             "node_type": "PROTEIN", "grounding": "ARO:3002979",
+             "description": "KB record, curated in this same round -- the enzyme that consumes this D-serine."},
+        ],
+        "extra_edges": _ser_shared_edges() + [
+            {"subject": "determinant", "object": "family",
+             "predicate": "member of (the VanT serine-racemase family)", "predicate_id": "RO:0002350",
+             "evidence": [
+                 {"reference": "PMID:10209740", "snippet": "The protein was overexpressed in Escherichia coli, and serine racemase activity was detected in the membrane but not in the cytoplasmic fraction after centrifugation of sonicated cells, whereas alanine racemase activity was located almost exclusively in the cytoplasm.",
+                  "notes": "Establishes what VanT is, by overexpression and fractionation."},
+                 {"reference": "NCBIfam:NF033132", "snippet": "membrane-bound serine racemase VanT",
+                  "notes": "NCBIfam's own product name for the family this node grounds to. NOT the KB record's definition, which this repo composes."},
+             ]},
+            {"subject": "family", "object": "racemase",
+             "predicate": "enables (serine racemisation)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:10209740", "snippet": "The protein was overexpressed in Escherichia coli, and serine racemase activity was detected in the membrane but not in the cytoplasmic fraction after centrifugation of sonicated cells, whereas alanine racemase activity was located almost exclusively in the cytoplasm.",
+                           "notes": "Membrane fraction only, unlike the host alanine racemase."}]},
+            {"subject": "racemase", "object": "d_serine",
+             "predicate": "has output", "predicate_id": "RO:0002234",
+             "evidence": [{"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+                           "notes": "vanT provides D-Ser for the synthetic pathway."}]},
+            {"subject": "d_serine", "object": "ligase_gene",
+             "predicate": "causally upstream of (is the ligase's substrate)", "predicate_id": "RO:0002411",
+             "description": "Routes this record through the ligase record curated in the same round rather than restating the ligase's mechanism.",
+             "evidence": [{"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+                           "notes": "The ligase synthesises D-Ala-D-Ser; vanT is what makes the D-Ser available."}]},
+        ],
+    },
+    "ARO:3000496": {      # vanXY: one protein, two activities, and a telling specificity
+        "curated": "2026-08-06T00:00:00Z",
+        "precondition": _requires_ser_cluster,
+        "reference": "PMID:10564477",
+        "mech": {"ARO:3000213": "The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC (Mr 22 318), which had both of these activities."},
+        "mech_res": _SER_CLUSTER,
+        "det_res": [
+            {"reference": "PMID:10564477", "snippet": "The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC (Mr 22 318), which had both of these activities.",
+             "notes": "Reynolds, Arias & Courvalin 1999: one 22 kDa protein carries both the D,D-dipeptidase and the D,D-carboxypeptidase activity."},
+            {"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+             "notes": "What those activities do in the pathway: hydrolyse D-Ala-D-Ala and remove D-Ala from the pentapeptide."},
+        ],
+        "res_drug": _SER_PRECURSOR,
+        "note": "Removes the D-Ala-ending precursor and its dipeptide, leaving the D-Ser route.",
+        "extra_nodes": _ser_shared_nodes() + [
+            {"node_id": "family", "label": "D,D-carboxypeptidase/D,D-dipeptidase VanXY",
+             "node_type": "PROTEIN", "grounding": "NCBIfam:NF000380",
+             "description": "KB protein-trait record for the VanXY family."},
+            {"node_id": "dipeptidase", "label": "dipeptidase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0016805"},
+            {"node_id": "carboxypeptidase", "label": "serine-type D-Ala-D-Ala carboxypeptidase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0009002"},
+            {"node_id": "dala_dala", "label": "D-alanyl-D-alanine", "node_type": "CHEMICAL",
+             "grounding": "CHEBI:16576"},
+        ],
+        "extra_edges": _ser_shared_edges() + [
+            {"subject": "determinant", "object": "family",
+             "predicate": "member of (the VanXY bifunctional family)", "predicate_id": "RO:0002350",
+             "evidence": [
+                 {"reference": "PMID:10564477", "snippet": "The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC (Mr 22 318), which had both of these activities.",
+                  "notes": "Establishes what VanXY is."},
+                 {"reference": "NCBIfam:NF000380", "snippet": "D,D-carboxypeptidase/D,D-dipeptidase VanXY",
+                  "notes": "NCBIfam's own product name for the family this node grounds to."},
+             ]},
+            {"subject": "family", "object": "dipeptidase",
+             "predicate": "enables (D,D-dipeptidase activity)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:10564477", "snippet": "The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC (Mr 22 318), which had both of these activities.",
+                           "notes": "The 'both of these activities' are the D,D-dipeptidase and the D,D-carboxypeptidase named in the title."}]},
+            {"subject": "family", "object": "carboxypeptidase",
+             "predicate": "enables (D,D-carboxypeptidase activity)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:10564477", "snippet": "The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC (Mr 22 318), which had both of these activities.",
+                           "notes": "The second of the two activities."}]},
+            {"subject": "dipeptidase", "object": "dala_dala",
+             "predicate": "has input (hydrolyses)", "predicate_id": "RO:0002233",
+             "description": "And it spares the resistant route: very low activity against D-Ala-D-Ser, none against the D-Ser pentapeptide.",
+             "evidence": [{"reference": "PMID:10564477", "snippet": "It had very low dipeptidase activity against D-Ala-D-Ser, unlike VanX, and no activity against UDP-MurNAc-pentapeptide[D-Ser], unlike VanY.",
+                           "notes": "The negative result is what makes the pathway work -- the enzyme does not destroy the precursor it is helping to leave in place."}]},
+            {"subject": "carboxypeptidase", "object": "precursor_dala",
+             "predicate": "negatively regulates (removes the terminal D-Ala)", "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+                           "notes": "vanXY(C) removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala]."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # vanR — the response regulator (ARO:3000574). A FOURTH kind of mechanism: regulation.
     # vanR neither destroys the drug, nor alters a target, nor remodels a precursor — it
@@ -1245,7 +1441,7 @@ _GENERIC_LABEL_WORDS = {"domain", "protein", "this", "carries", "subunit", "fami
                         "beta", "class", "site"}
 
 KB_PREFIXES = ("ARO:", "Pfam:", "NCBIfam:", "PROSITE:", "CATH:", "InterPro:", "CDD:",
-               "MEROPS:", "TED:", "GO:")
+               "MEROPS:", "TED:", "GO:", "EC:", "SFLD:", "PANTHER:", "HAMAP:")
 
 
 def config_curies(cfg: dict) -> set[str]:

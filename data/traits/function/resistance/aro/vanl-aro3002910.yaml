@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3002979
 trait_relations:
@@ -22,11 +22,11 @@ evidence:
 - reference: DOI:10.1128/AAC.01516-07
   notes: PMID:18458129 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] vanL → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: vanL → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:10817725). Precursor substitution with D-serine: the ligase makes D-Ala-D-Ser instead of D-Ala-D-Ala.'
   nodes:
   - node_id: determinant
     label: vanL
@@ -40,6 +40,24 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: precursor_ser
+    label: UDP-MurNAc-pentapeptide[D-Ser] (precursor ending in D-Ala-D-Ser)
+    node_type: STATE
+    description: 'The replacement precursor. Ungrounded: ChEBI has the amino acids but not the UDP-MurNAc
+      pentapeptides.'
+  - node_id: precursor_dala
+    label: UDP-MurNAc-pentapeptide[D-Ala] (the precursor glycopeptides bind)
+    node_type: STATE
+    description: The normal precursor, whose synthesis this pathway prevents. Ungrounded, as above.
+  - node_id: ligase_activity
+    label: D-alanine--D-serine ligase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: EC:6.3.2.35
+    description: KB trait record for the activity this determinant carries.
+  - node_id: dala_dser
+    label: D-Ala-D-Ser dipeptide
+    node_type: CHEMICAL
+    description: 'Ungrounded: ChEBI has D-alanine and D-serine but not this dipeptide.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,45 +71,101 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.01516-07
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
-    - reference: ARO:3002910
-      snippet: VanL is a D-Ala-D-Ala ligase homolog that can synthesize D-Ala-D-Ser, an alternative substrate
-        for peptidoglycan synthesis that reduces vancomycin binding affinity in Enterococcus faecalis.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: Family mechanism ARO:3000213.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01516-07
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01516-07
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3002906
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: CARD asserts a resistance relation on ARO:3002906 (Van ligase), an is_a ancestor of ARO:3002910.
+    - reference: PMID:10817725
+      snippet: Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser]
+        for cell wall assembly and prevent synthesis of peptidoglycan precursors ending in D-Ala.
+      notes: Determinant → resistance phenotype.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3002906
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
       notes: Asserted on ARO:3002906 (Van ligase), an is_a ancestor of this record's ARO:3002910; inherited
         by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+  - subject: precursor_ser
+    predicate: negatively regulates (replaces the D-Ala-ending precursor)
+    predicate_id: RO:0002212
+    object: precursor_dala
+    description: 'The causal core of the VanC route: the wall is assembled from the D-Ser precursor instead,
+      and the D-Ala-ending one is not made.'
+    evidence:
+    - reference: PMID:10817725
+      snippet: Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser]
+        for cell wall assembly and prevent synthesis of peptidoglycan precursors ending in D-Ala.
+      notes: 'Arias, Courvalin & Reynolds 2000. Both halves in one sentence: what is synthesised, and
+        what is prevented.'
+  - subject: drug0
+    predicate: molecularly interacts with (binds the D-Ala-D-Ala terminus)
+    predicate_id: RO:0002436
+    object: precursor_dala
+    description: 'Drug action: the glycopeptide binds the D-Ala terminus. Replacing it is what confers
+      resistance.'
+    evidence:
+    - reference: PMID:10817725
+      snippet: Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser]
+        for cell wall assembly and prevent synthesis of peptidoglycan precursors ending in D-Ala.
+      notes: The precursor named here is the one the drug binds; the VanC route prevents its synthesis.
+  - subject: determinant
+    predicate: enables (D-Ala-D-Ser ligation)
+    predicate_id: RO:0002327
+    object: ligase_activity
+    evidence:
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: 'Arias et al. 2000: vanC-1 encodes the ligase that synthesises the dipeptide.'
+  - subject: ligase_activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: dala_dser
+    evidence:
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: The dipeptide D-Ala-D-Ser, for addition to UDP-MurNAc-tripeptide.
+  - subject: dala_dser
+    predicate: causally upstream of (is added to the tripeptide)
+    predicate_id: RO:0002411
+    object: precursor_ser
+    evidence:
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: Addition to UDP-MurNAc-tripeptide is what makes the pentapeptide[D-Ser].
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
