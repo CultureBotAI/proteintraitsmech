@@ -372,3 +372,49 @@ def test_config_curies_sees_list_form_standard_edge_evidence():
                         {"reference": "PMID:1", "snippet": "s", "notes": "n"}])
     curies = promote.config_curies(cfg)
     assert "NCBIfam:NF000492" in curies and "PMID:1" not in curies
+
+
+# --- Codex review of #202: what five self-review rounds missed --------------------
+
+def test_an_uncovered_mechanism_raises_instead_of_substituting_another_snippet():
+    """The promoter used to write ANOTHER mechanism's evidence and stamp it REVIEWED.
+
+    `cfg["mech"].get(mid) or next(iter(cfg["mech"].values()))` — a family member carrying
+    a mechanism the config has no snippet for silently got the config's *first* snippet,
+    with `notes: Family mechanism <the uncovered id>` asserting a provenance nobody
+    established. 1,044 already-promoted records did (#203); the promotion path now skips.
+    """
+    with pytest.raises(promote.UncoveredMechanism) as exc:
+        _graph(_cfg(), mech=("ARO:3000212", "ARO:9999999"))
+    assert exc.value.mechanism_id == "ARO:9999999"
+
+
+def test_the_van_precondition_fails_closed_on_an_unparsed_cluster_label():
+    """A label that names a cluster but does not parse must be refused, not passed.
+
+    It returned None for any unmatched label, so a future shape (`vanC1`, a case change)
+    would fail OPEN and receive the vanH/vanX graph.
+    """
+    pre = promote.FAMILY_SNIPPETS["ARO:3000574"]["precondition"]
+    assert pre("ARO:X", "vanR gene in vanQ1 cluster", "") is not None
+    assert pre("ARO:X", "vanR", "") is None          # genuinely no cluster: still passes
+
+
+def test_verify_flags_a_family_with_no_candidates_and_a_stale_exclude():
+    """Zero candidates is unchecked, not verified — a renamed family id reads as healthy."""
+    promote._IDENTIFIER_INDEX = set()
+    try:
+        assert promote.verify("ARO:0000000", _cfg(), {}, []) >= 1
+        assert promote.verify("ARO:0000000", _cfg(exclude=("ARO:1234567",)), {},
+                              [("ARO:7654321", "x", "")]) >= 1
+    finally:
+        promote._IDENTIFIER_INDEX = None
+
+
+def test_a_quoted_identifier_is_still_matched():
+    """`identifier: "ARO:3001234"` is valid YAML; the regex used to miss it entirely,
+    silently omitting the record from both verification and promotion."""
+    import re as _re
+    pat = _re.compile(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', _re.M)
+    assert pat.search('identifier: "ARO:3001234"\n').group(1) == "ARO:3001234"
+    assert pat.search("identifier: ARO:3001234\n").group(1) == "ARO:3001234"
