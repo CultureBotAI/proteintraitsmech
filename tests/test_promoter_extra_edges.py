@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import importlib
 import pathlib
+import re
 import sys
 
 import pytest
@@ -127,7 +128,7 @@ def test_no_duplicate_node_ids(family):
 def test_every_edge_of_a_shipped_family_is_cited(family):
     """The corpus invariant (369,291/369,291 snippet-cited) held at the config level."""
     out = _graph(promote.FAMILY_SNIPPETS[family])
-    blocks = out.split("      - subject: ")[1:]
+    blocks = out.split("\n  - subject: ")[1:]
     assert blocks, "no edges emitted"
     for b in blocks:
         assert "snippet: " in b, f"{family}: an edge has no snippet"
@@ -158,7 +159,7 @@ def test_a_string_snippet_still_makes_exactly_one_evidence_item():
     output, or re-promoting any of them would rewrite records for no reason.
     """
     out = _graph(_cfg())
-    blocks = out.split("      - subject: ")[1:]
+    blocks = out.split("\n  - subject: ")[1:]
     for b in blocks:
         assert b.count("- reference: ") == 1
 
@@ -168,7 +169,7 @@ def test_a_list_snippet_makes_one_item_per_entry_with_its_own_reference():
         {"reference": "PMID:11", "snippet": "observed", "notes": "association"},
         {"reference": "PMID:22", "snippet": "measured", "notes": "mechanism"},
     ]))
-    edge = [b for b in out.split("      - subject: ")[1:] if "confers resistance" in b][0]
+    edge = [b for b in out.split("\n  - subject: ")[1:] if "confers resistance" in b][0]
     assert edge.count("- reference: ") == 2
     assert "PMID:11" in edge and "PMID:22" in edge
     assert "association" in edge and "mechanism" in edge
@@ -186,7 +187,7 @@ def test_the_b_subunits_cite_two_sources_for_their_causal_edge(family, n):
     makes visible instead of burying in prose.
     """
     out = _graph(promote.FAMILY_SNIPPETS[family])
-    edge = [b for b in out.split("      - subject: ")[1:] if "confers resistance" in b][0]
+    edge = [b for b in out.split("\n  - subject: ")[1:] if "confers resistance" in b][0]
     assert edge.count("- reference: ") == n
 
 
@@ -206,7 +207,7 @@ def test_vanx_cites_the_loss_of_function_experiment_for_its_causal_edge():
     """The inactivation result is what makes the edge causal rather than correlative."""
     out = _graph(promote.FAMILY_SNIPPETS["ARO:3000011"],
                  mech=("ARO:3000213",), drug=("ARO:3000081",))
-    edge = [b for b in out.split("      - subject: ")[1:] if "confers resistance" in b][0]
+    edge = [b for b in out.split("\n  - subject: ")[1:] if "confers resistance" in b][0]
     assert edge.count("- reference: ") == 2
     assert "Insertional inactivation of vanX" in edge
 
@@ -227,6 +228,49 @@ def test_vanh_uses_member_of_a_family_not_part_of_a_domain():
     out = _graph(cfg, mech=("ARO:3000213",), drug=("ARO:3000081",))
     assert "grounding: NCBIfam:NF000492" in out
     assert "Pfam:PF00389" not in out
-    edge = [b for b in out.split("      - subject: ")[1:] if "object: family" in b][0]
+    edge = [b for b in out.split("\n  - subject: ")[1:] if "object: family" in b][0]
     assert "RO:0002350" in edge                       # member of, not BFO:0000050
     assert edge.count("- reference: ") == 2           # paper + NCBIfam, joined explicitly
+
+
+# --- #194 / #191: layout parity with the builders, and per-family curation dates ----
+
+def test_the_promoter_emits_the_same_layout_as_the_builders():
+    """Hand-built indentation drifted from what the 40,115 existing graphs use (#194).
+
+    The five `build_*_causal_graphs.py` scripts all dump with `default_flow_style=False`,
+    which does NOT indent sequences under a mapping key. The promoter indented them, so
+    re-promoting one record changed ~150 lines with no change of content. Both now go
+    through the same dumper, so a re-promotion diff shows content and nothing else.
+    """
+    out = _graph(_cfg())
+    assert out.startswith("causal_graphs:\n- graph_id: resistance")
+    assert "\n  nodes:\n  - node_id: determinant" in out
+    assert "\n  edges:\n  - subject: determinant" in out
+
+
+def test_edge_keys_are_in_the_builders_order():
+    """`subject, predicate, predicate_id, object, [description], evidence`.
+
+    The ~6,180 records promoted before round 18 carry a different order — predicate_id and
+    description AFTER evidence — but the 34,000+ builder-written graphs use this one, so
+    the promoter converges on the majority rather than preserving its own outlier.
+    """
+    out = _graph(_cfg())
+    edge = out.split("\n  - subject: ")[1]
+    keys = [ln.strip().split(":")[0] for ln in edge.splitlines() if re.match(r"^    \w", ln)]
+    assert keys[:3] == ["predicate", "predicate_id", "object"]
+
+
+def test_a_family_carries_its_own_curation_date():
+    """One hardcoded constant made 6,235 records claim 2026-07-21, 53 of them wrongly (#191).
+
+    Per-family instead of `now()`, because every builder hardcodes its round's date on
+    purpose: a re-run must not churn timestamps.
+    """
+    assert promote.curation_event({"curated": "2026-08-05T00:00:00Z"})[1].endswith(
+        "2026-08-05T00:00:00Z'")
+    assert promote.LEGACY_PROMOTION in promote.curation_event({})[1]
+    for fam in ["ARO:3003292", "ARO:3000619", "ARO:3000864", "ARO:3003313",
+                "ARO:3000011", "ARO:3000006"]:
+        assert promote.FAMILY_SNIPPETS[fam]["curated"] == "2026-08-05T00:00:00Z"
