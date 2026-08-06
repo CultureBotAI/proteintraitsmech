@@ -29,134 +29,153 @@ evidence:
 - reference: DOI:10.2807/1560-7917.ES.2021.26.36.2100767
   notes: PMID:34505571 (aro citation)
 causal_graphs:
-  - graph_id: resistance
-    title: vanX gene in vanP cluster → mechanism → resistance (curated from ARO relations + literature)
-    description: >-
-      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:7854121). Precursor depletion: VanX removes D-Ala-D-Ala so the pentapeptide that glycopeptides bind is not synthesised.
-    nodes:
-      - node_id: determinant
-        label: vanX gene in vanP cluster
-        node_type: PROTEIN
-        grounding: ARO:3007190
-      - node_id: mech0
-        label: restructuring of bacterial cell wall conferring antibiotic resistance
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:3000213
-      - node_id: drug0
-        label: glycopeptide antibiotic
-        node_type: CHEMICAL
-        grounding: ARO:3000081
-      - node_id: domain
-        label: "D-Ala-D-Ala dipeptidase domain (MEROPS M15D, the VanX subfamily)"
-        node_type: DOMAIN
-        grounding: Pfam:PF01427
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: dipeptidase
-        label: "D,D-dipeptidase activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: GO:0016805
-      - node_id: dala_dala
-        label: D-alanyl-D-alanine
-        node_type: CHEMICAL
-        grounding: CHEBI:16576
-      - node_id: pentapeptide
-        label: UDP-MurNAc-pentapeptide terminating in D-Ala-D-Ala
-        node_type: STATE
-        description: >-
-          The peptidoglycan precursor glycopeptides bind. Ungrounded: ChEBI has the D-Ala-D-Ala dipeptide but not this UDP-MurNAc pentapeptide as a distinct term.
-      - node_id: resistance
-        label: antibiotic resistance phenotype
-        node_type: PHENOTYPE
-        grounding: GO:0046677
-        description: >-
-          Resistance phenotype conferred by this determinant. Grounded to the nearest
-          available superclass: ARO models determinants and mechanisms but has no term
-          for the resistance phenotype itself.
-    edges:
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech0
-        evidence:
-          - reference: PMID:7854121
-            snippet: "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface."
-            notes: "Family mechanism ARO:3000213."
-      - subject: mech0
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:7854121
-            snippet: "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface."
-            notes: "Mechanism ARO:3000213 → resistance."
-      - subject: determinant
-        predicate: causally upstream of (confers resistance)
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:7854121
-            snippet: "Insertional inactivation of vanX led to increased synthesis of pentapeptide with a resulting change in the ratio of pentadepsipeptide: pentapeptide to less than 1:1."
-            notes: "Reynolds et al. 1994. Knocking out vanX restores the pentapeptide the drug binds — the requirement demonstrated by loss of function, not by association."
-          - reference: PMID:7854121
-            snippet: "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface."
-            notes: "The authors' own summary of the causal chain, in one sentence."
-      - subject: resistance
-        predicate: related to (resistance is to)
-        predicate_id: biolink:related_to
-        object: drug0
-        evidence:
-          - reference: PMID:7854121
-            snippet: "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface."
-            notes: Resistance to glycopeptide antibiotic.
-      - subject: domain
-        predicate: part of (the dipeptidase domain of this determinant)
-        predicate_id: BFO:0000050
-        object: determinant
-        evidence:
-          - reference: Pfam:PF01427
-            snippet: "This group of metallopeptidases belong to MEROPS peptidase family M15 (clan MD), subfamily M15D (vanX D-Ala-D-Ala dipeptidase). The D-alanyl-D-alanine dipeptidase enzyme from Enterococcus faecalis is also known as the vancomycin resistance protein VanX, and hydrolyses D-ala-D-ala."
-            notes: "KB trait record Pfam:PF01427; snippet is the InterPro:IPR000755 abstract that record's definition is taken from, which names VanX as the subfamily M15D enzyme."
-      - subject: domain
-        predicate: "enables (D,D-dipeptidase activity)"
-        predicate_id: RO:0002327
-        object: dipeptidase
-        evidence:
-          - reference: PMID:7854121
-            snippet: "Expression of vanX in E. faecalis and Escherichia coli resulted in production of a D,D-dipeptidase that hydrolysed D-Ala-D-Ala."
-            notes: "Reynolds et al. 1994, heterologous expression in two hosts."
-      - subject: dipeptidase
-        predicate: has input (hydrolyses)
-        predicate_id: RO:0002233
-        object: dala_dala
-        description: >-
-          The enzyme is specific: the pentadepsipeptide, the pentapeptide and D-Ala-D-Lac are not substrates.
-        evidence:
-          - reference: PMID:7854121
-            snippet: "Pentadepsipeptide, pentapeptide and D-Ala-D-Lac were not substrates for the enzyme."
-            notes: "Reynolds et al. 1994. The negative result is what makes the target specific — VanX destroys the free dipeptide, not the assembled precursor."
-      - subject: dipeptidase
-        predicate: negatively regulates (depletes the precursor)
-        predicate_id: RO:0002212
-        object: pentapeptide
-        description: >-
-          The causal core: with D-Ala-D-Ala hydrolysed, the pentapeptide the drug binds is not synthesised.
-        evidence:
-          - reference: PMID:7854121
-            snippet: "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface."
-            notes: Reynolds et al. 1994.
-      - subject: drug0
-        predicate: molecularly interacts with (binds the D-Ala-D-Ala terminus)
-        predicate_id: RO:0002436
-        object: pentapeptide
-        description: >-
-          Drug action: glycopeptides bind the D-Ala-D-Ala terminus of the precursor at the cell surface. Removing that terminus is what confers resistance.
-        evidence:
-          - reference: PMID:7854121
-            snippet: subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface
-            notes: Reynolds et al. 1994; the drug-ACTION arm this determinant removes.
+- graph_id: resistance
+  title: vanX gene in vanP cluster → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:7854121). Precursor depletion: VanX removes D-Ala-D-Ala so the pentapeptide that glycopeptides
+    bind is not synthesised.'
+  nodes:
+  - node_id: determinant
+    label: vanX gene in vanP cluster
+    node_type: PROTEIN
+    grounding: ARO:3007190
+  - node_id: mech0
+    label: restructuring of bacterial cell wall conferring antibiotic resistance
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3000213
+  - node_id: drug0
+    label: glycopeptide antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:3000081
+  - node_id: domain
+    label: D-Ala-D-Ala dipeptidase domain (MEROPS M15D, the VanX subfamily)
+    node_type: DOMAIN
+    grounding: Pfam:PF01427
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: dipeptidase
+    label: D,D-dipeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0016805
+  - node_id: dala_dala
+    label: D-alanyl-D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16576
+  - node_id: pentapeptide
+    label: UDP-MurNAc-pentapeptide terminating in D-Ala-D-Ala
+    node_type: STATE
+    description: 'The peptidoglycan precursor glycopeptides bind. Ungrounded: ChEBI has the D-Ala-D-Ala
+      dipeptide but not this UDP-MurNAc pentapeptide as a distinct term.'
+  - node_id: resistance
+    label: antibiotic resistance phenotype
+    node_type: PHENOTYPE
+    grounding: GO:0046677
+    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
+      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
+      itself.'
+  edges:
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech0
+    evidence:
+    - reference: PMID:7854121
+      snippet: These results establish that VanX is required for production of a D,D-dipeptidase that
+        hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides
+        to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface.
+      notes: Family mechanism ARO:3000213.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:7854121
+      snippet: These results establish that VanX is required for production of a D,D-dipeptidase that
+        hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides
+        to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface.
+      notes: Mechanism ARO:3000213 → resistance.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:7854121
+      snippet: 'Insertional inactivation of vanX led to increased synthesis of pentapeptide with a resulting
+        change in the ratio of pentadepsipeptide: pentapeptide to less than 1:1.'
+      notes: Reynolds et al. 1994. Knocking out vanX restores the pentapeptide the drug binds — the requirement
+        demonstrated by loss of function, not by association.
+    - reference: PMID:7854121
+      snippet: These results establish that VanX is required for production of a D,D-dipeptidase that
+        hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides
+        to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface.
+      notes: The authors' own summary of the causal chain, in one sentence.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
+    object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+    evidence:
+    - reference: ARO:3000011
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
+      notes: Asserted on ARO:3000011 (vanX), an is_a ancestor of this record's ARO:3007190; inherited
+        by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: domain
+    predicate: part of (the dipeptidase domain of this determinant)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF01427
+      snippet: This group of metallopeptidases belong to MEROPS peptidase family M15 (clan MD), subfamily
+        M15D (vanX D-Ala-D-Ala dipeptidase). The D-alanyl-D-alanine dipeptidase enzyme from Enterococcus
+        faecalis is also known as the vancomycin resistance protein VanX, and hydrolyses D-ala-D-ala.
+      notes: KB trait record Pfam:PF01427; snippet is the InterPro:IPR000755 abstract that record's definition
+        is taken from, which names VanX as the subfamily M15D enzyme.
+  - subject: domain
+    predicate: enables (D,D-dipeptidase activity)
+    predicate_id: RO:0002327
+    object: dipeptidase
+    evidence:
+    - reference: PMID:7854121
+      snippet: Expression of vanX in E. faecalis and Escherichia coli resulted in production of a D,D-dipeptidase
+        that hydrolysed D-Ala-D-Ala.
+      notes: Reynolds et al. 1994, heterologous expression in two hosts.
+  - subject: dipeptidase
+    predicate: has input (hydrolyses)
+    predicate_id: RO:0002233
+    object: dala_dala
+    description: 'The enzyme is specific: the pentadepsipeptide, the pentapeptide and D-Ala-D-Lac are
+      not substrates.'
+    evidence:
+    - reference: PMID:7854121
+      snippet: Pentadepsipeptide, pentapeptide and D-Ala-D-Lac were not substrates for the enzyme.
+      notes: Reynolds et al. 1994. The negative result is what makes the target specific — VanX destroys
+        the free dipeptide, not the assembled precursor.
+  - subject: dipeptidase
+    predicate: negatively regulates (depletes the precursor)
+    predicate_id: RO:0002212
+    object: pentapeptide
+    description: 'The causal core: with D-Ala-D-Ala hydrolysed, the pentapeptide the drug binds is not
+      synthesised.'
+    evidence:
+    - reference: PMID:7854121
+      snippet: These results establish that VanX is required for production of a D,D-dipeptidase that
+        hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides
+        to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface.
+      notes: Reynolds et al. 1994.
+  - subject: drug0
+    predicate: molecularly interacts with (binds the D-Ala-D-Ala terminus)
+    predicate_id: RO:0002436
+    object: pentapeptide
+    description: 'Drug action: glycopeptides bind the D-Ala-D-Ala terminus of the precursor at the cell
+      surface. Removing that terminus is what confers resistance.'
+    evidence:
+    - reference: PMID:7854121
+      snippet: subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors
+        at the cell surface
+      notes: Reynolds et al. 1994; the drug-ACTION arm this determinant removes.
 curation_history:
-  - timestamp: "2026-07-21T00:00:00Z"
-    curator: edison-causal-graphs
-    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
-    llm_assisted: true
+- timestamp: '2026-08-05T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

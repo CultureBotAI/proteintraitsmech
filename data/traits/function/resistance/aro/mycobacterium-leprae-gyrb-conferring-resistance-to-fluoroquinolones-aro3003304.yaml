@@ -25,160 +25,191 @@ evidence:
 - reference: DOI:10.1371/journal.pntd.0001838
   notes: PMID:23071850 (aro citation)
 causal_graphs:
-  - graph_id: resistance
-    title: Mycobacterium leprae gyrB conferring resistance to fluoroquinolones → mechanism → resistance (curated from ARO relations + literature)
-    description: >-
-      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:22290942). Target alteration in the B subunit, which contributes the TOPRIM domain rather than the active-site tyrosine — a different route from the GyrA/ParC water-metal ion bridge.
-    nodes:
-      - node_id: determinant
-        label: Mycobacterium leprae gyrB conferring resistance to fluoroquinolones
-        node_type: PROTEIN
-        grounding: ARO:3003304
-      - node_id: mech0
-        label: mutation conferring antibiotic resistance
-        node_type: MOLECULAR_FUNCTION
-        grounding: ARO:3000212
-      - node_id: drug0
-        label: fluoroquinolone antibiotic
-        node_type: CHEMICAL
-        grounding: ARO:0000001
-      - node_id: domain
-        label: DNA gyrase B subunit domain (carries the GyrB QRDR)
-        node_type: DOMAIN
-        grounding: Pfam:PF00204
-        description: KB protein-trait record carrying the mechanism.
-      - node_id: qrdr
-        label: "quinolone resistance-determining region (QRDR) of GyrB, substituted in this determinant"
-        node_type: MOTIF
-        description: >-
-          A separate QRDR from GyrA's: Asp426 and Lys447 in the E. coli GyrB frame, extended to positions 500-540 in M. tuberculosis. These residues are NOT the water-metal ion bridge pair, which lies in the A subunit. Ungrounded: no ontology term denotes the QRDR.
-      - node_id: gyrase_activity
-        label: "DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity"
-        node_type: MOLECULAR_FUNCTION
-        grounding: GO:0003918
-      - node_id: cleavage_complex
-        label: enzyme-DNA cleavage complex
-        node_type: STATE
-        description: >-
-          The covalent enzyme-cleaved DNA intermediate that quinolones bind and stabilise. Ungrounded, as with the M-CSA reaction-intermediate STATE nodes.
-      - node_id: cell_death
-        label: bacterial cell death
-        node_type: PHENOTYPE
-        grounding: GO:0008219
-      - node_id: resistance
-        label: antibiotic resistance phenotype
-        node_type: PHENOTYPE
-        grounding: GO:0046677
-        description: >-
-          Resistance phenotype conferred by this determinant. Grounded to the nearest
-          available superclass: ARO models determinants and mechanisms but has no term
-          for the resistance phenotype itself.
-    edges:
-      - subject: determinant
-        predicate: participates in (resistance mechanism)
-        predicate_id: RO:0000056
-        object: mech0
-        evidence:
-          - reference: PMID:22290942
-            snippet: "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540)."
-            notes: "Family mechanism ARO:3000212."
-      - subject: mech0
-        predicate: causally upstream of
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:22290942
-            snippet: "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540)."
-            notes: "Mechanism ARO:3000212 → resistance."
-      - subject: determinant
-        predicate: causally upstream of (confers resistance)
-        predicate_id: RO:0002411
-        object: resistance
-        evidence:
-          - reference: PMID:1656869
-            snippet: all nine type 1 mutants had a point mutation from aspartic acid to asparagine at amino acid 426 and that all four type 2 mutants had a point mutation from lysine to glutamic acid at amino acid 447
-            notes: Yoshida et al. 1991 identified the gyrB QRDR substitutions in quinolone-resistant E. coli mutants.
-          - reference: PMID:22290942
-            snippet: We measured FQ MICs and also DNA gyrase inhibition by FQs in order to unequivocally clarify the role of these mutations in FQ resistance.
-            notes: "Pantel et al. 2012 reconstituted gyrase with mutant GyrB subunits and measured inhibition, so the causal step here rests on a measurement rather than on association."
-      - subject: resistance
-        predicate: related to (resistance is to)
-        predicate_id: biolink:related_to
-        object: drug0
-        evidence:
-          - reference: PMID:22290942
-            snippet: We measured FQ MICs and also DNA gyrase inhibition by FQs in order to unequivocally clarify the role of these mutations in FQ resistance.
-            notes: Resistance to fluoroquinolone antibiotic.
-      - subject: domain
-        predicate: part of (the subunit-B domain of this determinant)
-        predicate_id: BFO:0000050
-        object: determinant
-        evidence:
-          - reference: Pfam:PF00204
-            snippet: "There are four functional domains in topoisomerase II: domain 1 (N-terminal of gyrB) is an ATPase, domain 2 (C-terminal of gyrB) is responsible for subunit interactions, domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges, and domain 4 (C-terminal of gyrA) is able to non-specifically bind DNA."
-            notes: "KB trait record Pfam:PF00204; snippet is the InterPro:IPR013506 abstract that record's definition is taken from."
-      - subject: qrdr
-        predicate: part of (the QRDR lies in the subunit-B domain)
-        predicate_id: BFO:0000050
-        object: domain
-        description: >-
-          The GyrB QRDR is a region of the B subunit distinct from the GyrA QRDR.
-        evidence:
-          - reference: PMID:1656869
-            snippet: all nine type 1 mutants had a point mutation from aspartic acid to asparagine at amino acid 426 and that all four type 2 mutants had a point mutation from lysine to glutamic acid at amino acid 447
-            notes: "Yoshida et al. 1991, the paper that defined the gyrB QRDR in E. coli — the B-subunit counterpart of PMID:2168148."
-          - reference: PMID:22290942
-            snippet: "These findings help us to refine the definition of GyrB QRDR, which is extended to positions 500 to 540."
-            notes: Pantel et al. 2012 extend the GyrB QRDR in M. tuberculosis; the frame differs from E. coli's.
-      - subject: domain
-        predicate: enables (type II topoisomerase activity)
-        predicate_id: RO:0002327
-        object: gyrase_activity
-        evidence:
-          - reference: PMID:24576155
-            snippet: "The subunits in gyrase are GyrA and GyrB. The homologous subunits in topoisomerase IV are ParC and ParE in Gram-negative species and GrlA and GrlB in Gram-positive species. GyrA (and the equivalent topoisomerase IV subunit) contains the active site tyrosine residue. GyrB (and the equivalent topoisomerase IV subunit) contains the ATPase domain as well as the TOPRIM domain, which binds the divalent metal ions involved in DNA cleavage and ligation."
-            notes: "Aldred 2014, the subunit/domain architecture of gyrase and topoisomerase IV."
-      - subject: gyrase_activity
-        predicate: causally upstream of (forms the covalent intermediate)
-        predicate_id: RO:0002411
-        object: cleavage_complex
-        evidence:
-          - reference: PMID:24576155
-            snippet: "To maintain genomic integrity during this process, the enzymes form covalent bonds between active site tyrosine residues and the newly generated 5′-DNA termini."
-            notes: "Aldred 2014. The cleavage complex is the enzyme's own catalytic intermediate, present with or without drug."
-      - subject: drug0
-        predicate: molecularly interacts with (intercalates and blocks ligation)
-        predicate_id: RO:0002436
-        object: cleavage_complex
-        description: >-
-          Quinolone action: the drug binds the cleaved complex and blocks religation, raising the steady-state level of DNA breaks.
-        evidence:
-          - reference: PMID:24576155
-            snippet: "As a result of their intercalation, quinolones increase the steady-state concentration of cleavage complexes by acting as physical blocks to ligation."
-            notes: Aldred 2014. This is the drug-ACTION arm; resistance is the loss of it.
-      - subject: qrdr
-        predicate: negatively regulates (substitution lowers drug action)
-        predicate_id: RO:0002212
-        object: cleavage_complex
-        description: >-
-          The causal core: a QRDR substitution reduces the drug's ability to trap this enzyme, so fewer drug-stabilised cleavage complexes form at a given drug concentration.
-        evidence:
-          - reference: PMID:22290942
-            snippet: "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540)."
-            notes: "Pantel et al. 2012 measured DNA gyrase inhibition by FQs with reconstituted mutant GyrB, so this is the B subunit's OWN evidence, not the A subunit's affinity result."
-      - subject: cleavage_complex
-        predicate: causally upstream of (drug-stabilised breaks kill the cell)
-        predicate_id: RO:0002411
-        object: cell_death
-        description: >-
-          Why fewer stabilised complexes means survival: the complexes are what kill the cell.
-        evidence:
-          - reference: PMID:24576155
-            snippet: "If the strand breaks overwhelm these processes, they can lead to cell death. This is the primary mechanism that quinolones use to kill bacterial cells"
-            notes: Aldred 2014.
+- graph_id: resistance
+  title: Mycobacterium leprae gyrB conferring resistance to fluoroquinolones → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:22290942). Target alteration in the B subunit, which contributes the TOPRIM domain rather than
+    the active-site tyrosine — a different route from the GyrA/ParC water-metal ion bridge.
+  nodes:
+  - node_id: determinant
+    label: Mycobacterium leprae gyrB conferring resistance to fluoroquinolones
+    node_type: PROTEIN
+    grounding: ARO:3003304
+  - node_id: mech0
+    label: mutation conferring antibiotic resistance
+    node_type: MOLECULAR_FUNCTION
+    grounding: ARO:3000212
+  - node_id: drug0
+    label: fluoroquinolone antibiotic
+    node_type: CHEMICAL
+    grounding: ARO:0000001
+  - node_id: domain
+    label: DNA gyrase B subunit domain (carries the GyrB QRDR)
+    node_type: DOMAIN
+    grounding: Pfam:PF00204
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: qrdr
+    label: quinolone resistance-determining region (QRDR) of GyrB, substituted in this determinant
+    node_type: MOTIF
+    description: 'A separate QRDR from GyrA''s: Asp426 and Lys447 in the E. coli GyrB frame, extended
+      to positions 500-540 in M. tuberculosis. These residues are NOT the water-metal ion bridge pair,
+      which lies in the A subunit. Ungrounded: no ontology term denotes the QRDR.'
+  - node_id: gyrase_activity
+    label: DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0003918
+  - node_id: cleavage_complex
+    label: enzyme-DNA cleavage complex
+    node_type: STATE
+    description: The covalent enzyme-cleaved DNA intermediate that quinolones bind and stabilise. Ungrounded,
+      as with the M-CSA reaction-intermediate STATE nodes.
+  - node_id: cell_death
+    label: bacterial cell death
+    node_type: PHENOTYPE
+    grounding: GO:0008219
+  - node_id: resistance
+    label: antibiotic resistance phenotype
+    node_type: PHENOTYPE
+    grounding: GO:0046677
+    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
+      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
+      itself.'
+  edges:
+  - subject: determinant
+    predicate: participates in (resistance mechanism)
+    predicate_id: RO:0000056
+    object: mech0
+    evidence:
+    - reference: PMID:22290942
+      snippet: All these substitutions are clearly implicated in FQ resistance, underlining the presence
+        of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues
+        NTE, 538 to 540).
+      notes: Family mechanism ARO:3000212.
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:22290942
+      snippet: All these substitutions are clearly implicated in FQ resistance, underlining the presence
+        of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues
+        NTE, 538 to 540).
+      notes: Mechanism ARO:3000212 → resistance.
+  - subject: determinant
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: PMID:1656869
+      snippet: all nine type 1 mutants had a point mutation from aspartic acid to asparagine at amino
+        acid 426 and that all four type 2 mutants had a point mutation from lysine to glutamic acid at
+        amino acid 447
+      notes: Yoshida et al. 1991 identified the gyrB QRDR substitutions in quinolone-resistant E. coli
+        mutants.
+    - reference: PMID:22290942
+      snippet: We measured FQ MICs and also DNA gyrase inhibition by FQs in order to unequivocally clarify
+        the role of these mutations in FQ resistance.
+      notes: Pantel et al. 2012 reconstituted gyrase with mutant GyrB subunits and measured inhibition,
+        so the causal step here rests on a measurement rather than on association.
+  - subject: determinant
+    predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
+    object: drug0
+    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
+    evidence:
+    - reference: ARO:3000864
+      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
+      notes: Asserted on ARO:3000864 (fluoroquinolone resistant gyrB), an is_a ancestor of this record's
+        ARO:3003304; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: domain
+    predicate: part of (the subunit-B domain of this determinant)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF00204
+      snippet: 'There are four functional domains in topoisomerase II: domain 1 (N-terminal of gyrB) is
+        an ATPase, domain 2 (C-terminal of gyrB) is responsible for subunit interactions, domain 3 (N-terminal
+        of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA
+        bridges, and domain 4 (C-terminal of gyrA) is able to non-specifically bind DNA.'
+      notes: KB trait record Pfam:PF00204; snippet is the InterPro:IPR013506 abstract that record's definition
+        is taken from.
+  - subject: qrdr
+    predicate: part of (the QRDR lies in the subunit-B domain)
+    predicate_id: BFO:0000050
+    object: domain
+    description: The GyrB QRDR is a region of the B subunit distinct from the GyrA QRDR.
+    evidence:
+    - reference: PMID:1656869
+      snippet: all nine type 1 mutants had a point mutation from aspartic acid to asparagine at amino
+        acid 426 and that all four type 2 mutants had a point mutation from lysine to glutamic acid at
+        amino acid 447
+      notes: Yoshida et al. 1991, the paper that defined the gyrB QRDR in E. coli — the B-subunit counterpart
+        of PMID:2168148.
+    - reference: PMID:22290942
+      snippet: These findings help us to refine the definition of GyrB QRDR, which is extended to positions
+        500 to 540.
+      notes: Pantel et al. 2012 extend the GyrB QRDR in M. tuberculosis; the frame differs from E. coli's.
+  - subject: domain
+    predicate: enables (type II topoisomerase activity)
+    predicate_id: RO:0002327
+    object: gyrase_activity
+    evidence:
+    - reference: PMID:24576155
+      snippet: The subunits in gyrase are GyrA and GyrB. The homologous subunits in topoisomerase IV are
+        ParC and ParE in Gram-negative species and GrlA and GrlB in Gram-positive species. GyrA (and the
+        equivalent topoisomerase IV subunit) contains the active site tyrosine residue. GyrB (and the
+        equivalent topoisomerase IV subunit) contains the ATPase domain as well as the TOPRIM domain,
+        which binds the divalent metal ions involved in DNA cleavage and ligation.
+      notes: Aldred 2014, the subunit/domain architecture of gyrase and topoisomerase IV.
+  - subject: gyrase_activity
+    predicate: causally upstream of (forms the covalent intermediate)
+    predicate_id: RO:0002411
+    object: cleavage_complex
+    evidence:
+    - reference: PMID:24576155
+      snippet: To maintain genomic integrity during this process, the enzymes form covalent bonds between
+        active site tyrosine residues and the newly generated 5′-DNA termini.
+      notes: Aldred 2014. The cleavage complex is the enzyme's own catalytic intermediate, present with
+        or without drug.
+  - subject: drug0
+    predicate: molecularly interacts with (intercalates and blocks ligation)
+    predicate_id: RO:0002436
+    object: cleavage_complex
+    description: 'Quinolone action: the drug binds the cleaved complex and blocks religation, raising
+      the steady-state level of DNA breaks.'
+    evidence:
+    - reference: PMID:24576155
+      snippet: As a result of their intercalation, quinolones increase the steady-state concentration
+        of cleavage complexes by acting as physical blocks to ligation.
+      notes: Aldred 2014. This is the drug-ACTION arm; resistance is the loss of it.
+  - subject: qrdr
+    predicate: negatively regulates (substitution lowers drug action)
+    predicate_id: RO:0002212
+    object: cleavage_complex
+    description: 'The causal core: a QRDR substitution reduces the drug''s ability to trap this enzyme,
+      so fewer drug-stabilised cleavage complexes form at a given drug concentration.'
+    evidence:
+    - reference: PMID:22290942
+      snippet: All these substitutions are clearly implicated in FQ resistance, underlining the presence
+        of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues
+        NTE, 538 to 540).
+      notes: Pantel et al. 2012 measured DNA gyrase inhibition by FQs with reconstituted mutant GyrB,
+        so this is the B subunit's OWN evidence, not the A subunit's affinity result.
+  - subject: cleavage_complex
+    predicate: causally upstream of (drug-stabilised breaks kill the cell)
+    predicate_id: RO:0002411
+    object: cell_death
+    description: 'Why fewer stabilised complexes means survival: the complexes are what kill the cell.'
+    evidence:
+    - reference: PMID:24576155
+      snippet: If the strand breaks overwhelm these processes, they can lead to cell death. This is the
+        primary mechanism that quinolones use to kill bacterial cells
+      notes: Aldred 2014.
 curation_history:
-  - timestamp: "2026-07-21T00:00:00Z"
-    curator: edison-causal-graphs
-    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
-    llm_assisted: true
+- timestamp: '2026-08-05T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -24,6 +24,8 @@ from __future__ import annotations
 import argparse
 import re
 import sys
+
+import yaml
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -129,6 +131,7 @@ FAMILY_SNIPPETS = {
     # Pfam:PF00389 was the obvious domain candidate and is NOT used: its abstract never
     # names VanH, so citing it for a membership claim would be the defect filed as #196.
     "ARO:3000006": {
+        "curated": "2026-08-05T00:00:00Z",
         "reference": "PMID:1931965",        # Bugg et al. 1991, Biochemistry
         "mech": {"ARO:3000213": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.'},
         "mech_res": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.',
@@ -204,6 +207,7 @@ FAMILY_SNIPPETS = {
     # 14 and carry no drafts; what is left of the van clusters is the accessory and
     # regulatory machinery, of which this is the crispest.
     "ARO:3000011": {
+        "curated": "2026-08-05T00:00:00Z",
         "reference": "PMID:7854121",        # Reynolds et al. 1994, Mol Microbiol
         "mech": {"ARO:3000213": "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface."},
         "mech_res": "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface.",
@@ -286,6 +290,7 @@ FAMILY_SNIPPETS = {
     # per-organism is the RESIDUE NUMBERING, not the mechanism — hence the frame caveat
     # carried on the QRDR node rather than a residue node per record.
     "ARO:3003292": {
+        "curated": "2026-08-05T00:00:00Z",
         "reference": "PMID:24576155",       # Aldred, Kerns & Osheroff 2014, Biochemistry
         "mech": {"ARO:3000212": _FQ_AFFINITY},
         "mech_res": _FQ_AFFINITY,
@@ -328,6 +333,7 @@ FAMILY_SNIPPETS = {
     # result — which is legitimate only because Aldred states the homology outright and
     # because the affinity sentence names "gyrase OR topoisomerase IV".
     "ARO:3000619": {
+        "curated": "2026-08-05T00:00:00Z",
         "reference": "PMID:24576155",
         "mech": {"ARO:3000212": _FQ_AFFINITY},
         "mech_res": _FQ_AFFINITY,
@@ -376,6 +382,7 @@ FAMILY_SNIPPETS = {
     # or gyrA's affinity evidence — citing the A-subunit experiment on a gyrB record would
     # be citing the wrong experiment. Its QRDR and its evidence are its own.
     "ARO:3000864": {
+        "curated": "2026-08-05T00:00:00Z",
         "reference": "PMID:22290942",       # Pantel et al. 2012, AAC
         "mech": {"ARO:3000212": "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540)."},
         "mech_res": "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540).",
@@ -423,6 +430,7 @@ FAMILY_SNIPPETS = {
     # parE — fluoroquinolone (ARO:3003313). Topoisomerase IV's homologue of GyrB, so it
     # takes the B-subunit shape, not gyrA's.
     "ARO:3003313": {
+        "curated": "2026-08-05T00:00:00Z",
         "reference": "PMID:15388468",       # Eaves et al. 2004, AAC (Salmonella enterica)
         "mech": {"ARO:3000212": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys."},
         "mech_res": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
@@ -818,28 +826,6 @@ FAMILY_SNIPPETS["ARO:0010001"] = _domfam(  # ATP-binding cassette (ABC) efflux p
     "The ABC transporter exports the drug using ATP hydrolysis.")
 
 
-def _ev(ref: str, snippet, note: str) -> list[str]:
-    """Emit an edge's `evidence:` block from a family config's snippet field (#190).
-
-    `snippet` is EITHER a plain string — one item citing the family's own `reference`,
-    which is what every family wrote before this and still writes — OR a list of
-    `{reference, snippet, notes}` dicts, for a claim that genuinely rests on more than
-    one source.
-
-    The one-item form was a real limit, not a stylistic one. parE's causal claim has two
-    parts: the substitutions were **observed** in clinical isolates (PMID:15388468), and
-    the **mechanism** was measured on the other B subunit and carried across by a stated
-    homology (PMID:22290942 + PMID:24576155). With one slot the second part could only
-    live in a `notes` string, where nothing reading `evidence[]` would find it.
-    """
-    L = ["        evidence:"]
-    for item in _evidence_items(snippet, ref, note):
-        L += [f"          - reference: {item['reference']}",
-              f"            snippet: {D._yq(item['snippet'])}",
-              f"            notes: {D._yq(item['notes'])}"]
-    return L
-
-
 def _evidence_items(spec, ref: str, note: str) -> list[dict]:
     if isinstance(spec, str):
         return [{"reference": ref, "snippet": spec, "notes": note}]
@@ -847,144 +833,175 @@ def _evidence_items(spec, ref: str, note: str) -> list[dict]:
              "notes": i.get("notes", note)} for i in spec]
 
 
-def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, cfg: dict) -> list[str]:
+def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, cfg: dict,
+                   terms: dict | None = None) -> list[str]:
+    """Build the curated graph as data, then let PyYAML lay it out (#194).
+
+    This used to concatenate indented strings by hand, which drifted from the layout the
+    five `build_*_causal_graphs.py` scripts produce with
+
+        yaml.safe_dump(..., sort_keys=False, allow_unicode=True, width=100,
+                       default_flow_style=False)
+
+    and therefore from the 40,115 graphs already in the corpus. Re-promoting one KPC record
+    changed 148 lines / 166 deletions with no change of content — which made re-promotion
+    effectively unavailable for the ~28 families written before round 18. Same dumper, same
+    settings, same layout: a re-promotion diff now shows content and nothing else.
+    """
     ref = cfg["reference"]
     note = cfg.get("note", "")
-    L = ["causal_graphs:",
-         "  - graph_id: resistance",
-         "    title: " + D._yq(f"{label} → mechanism → resistance (curated from ARO relations + literature)"),
-         "    description: >-",
-         f"      Curated resistance-causation graph (promoted from the ARO auto-draft). "
-         f"Determinant → inherited mechanism → resistance phenotype → drug classes; edges "
-         f"carry the family's verbatim literature evidence ({ref}). {note}",
-         "    nodes:",
-         "      - node_id: determinant",
-         f"        label: {D._yq(label)}",
-         "        node_type: PROTEIN",
-         f"        grounding: {ident}"]
+    nodes = [{"node_id": "determinant", "label": label, "node_type": "PROTEIN",
+              "grounding": ident}]
     for i, mid in enumerate(mech):
-        L += [f"      - node_id: mech{i}",
-              f"        label: {D._yq(names.get(mid, mid))}",
-              "        node_type: MOLECULAR_FUNCTION",
-              f"        grounding: {mid}"]
+        nodes.append({"node_id": f"mech{i}", "label": names.get(mid, mid),
+                      "node_type": "MOLECULAR_FUNCTION", "grounding": mid})
     for i, did in enumerate(drug[:D.MAX_DRUGS]):
-        L += [f"      - node_id: drug{i}",
-              f"        label: {D._yq(names.get(did, did))}",
-              "        node_type: CHEMICAL",
-              f"        grounding: {did}"]
+        nodes.append({"node_id": f"drug{i}", "label": names.get(did, did),
+                      "node_type": "CHEMICAL", "grounding": did})
     pt = cfg.get("protein_traits")
     if pt:
-        pkey = pt.get("primary_key", "active_site")   # id of the primary trait node
+        pkey = pt.get("primary_key", "active_site")
         for key in ([pkey] + (["fold"] if "fold" in pt else [])):
             cid, lab, ntype, _ = pt[key]
-            L += [f"      - node_id: {key}",
-                  f"        label: {D._yq(lab)}",
-                  f"        node_type: {ntype}",
-                  f"        grounding: {cid}",
-                  "        description: KB protein-trait record carrying the mechanism."]
+            nodes.append({"node_id": key, "label": lab, "node_type": ntype,
+                          "grounding": cid,
+                          "description": "KB protein-trait record carrying the mechanism."})
     for n in cfg.get("extra_nodes", []):
-        L += [f"      - node_id: {n['node_id']}",
-              f"        label: {D._yq(n['label'])}",
-              f"        node_type: {n['node_type']}"]
+        node = {"node_id": n["node_id"], "label": n["label"], "node_type": n["node_type"]}
         if n.get("grounding"):
-            L.append(f"        grounding: {n['grounding']}")
+            node["grounding"] = n["grounding"]
         if n.get("description"):
-            L += ["        description: >-", f"          {n['description']}"]
-    L += ["      - node_id: resistance",
-          "        label: antibiotic resistance phenotype",
-          "        node_type: PHENOTYPE",
-          # the auto-draft grounded this node and the promoter used to drop the grounding,
-          # so promoting a draft turned a grounded node into a label-only one. Same
-          # nearest-superclass caveat the draft carried.
-          "        grounding: GO:0046677",
-          "        description: >-",
-          "          Resistance phenotype conferred by this determinant. Grounded to the nearest",
-          "          available superclass: ARO models determinants and mechanisms but has no term",
-          "          for the resistance phenotype itself.",
-          "    edges:"]
+            node["description"] = n["description"]
+        nodes.append(node)
+    nodes.append({
+        "node_id": "resistance", "label": "antibiotic resistance phenotype",
+        "node_type": "PHENOTYPE", "grounding": "GO:0046677",
+        "description": ("Resistance phenotype conferred by this determinant. Grounded to the "
+                        "nearest available superclass: ARO models determinants and mechanisms "
+                        "but has no term for the resistance phenotype itself.")})
+
+    edges = []
     for i, mid in enumerate(mech):
         snip = cfg["mech"].get(mid) or next(iter(cfg["mech"].values()))
-        L += ["      - subject: determinant",
-              "        predicate: participates in (resistance mechanism)",
-              "        predicate_id: RO:0000056",
-              f"        object: mech{i}",
-              *_ev(ref, snip, f"Family mechanism {mid}.")]
-        L += [f"      - subject: mech{i}",
-              "        predicate: causally upstream of",
-              "        predicate_id: RO:0002411",
-              "        object: resistance",
-              *_ev(ref, cfg["mech_res"], f"Mechanism {mid} → resistance.")]
-    L += ["      - subject: determinant",
-          "        predicate: causally upstream of (confers resistance)",
-          "        predicate_id: RO:0002411",
-          "        object: resistance",
-          *_ev(ref, cfg["det_res"], "Determinant → resistance phenotype.")]
+        edges.append(_edge("determinant", "participates in (resistance mechanism)",
+                           "RO:0000056", f"mech{i}", ref, snip, f"Family mechanism {mid}."))
+        edges.append(_edge(f"mech{i}", "causally upstream of", "RO:0002411", "resistance",
+                           ref, cfg["mech_res"], f"Mechanism {mid} \u2192 resistance."))
+    edges.append(_edge("determinant", "causally upstream of (confers resistance)",
+                       "RO:0002411", "resistance", ref, cfg["det_res"],
+                       "Determinant \u2192 resistance phenotype."))
     for i, did in enumerate(drug[:D.MAX_DRUGS]):
-        L += ["      - subject: resistance",
-              "        predicate: related to (resistance is to)",
-              # the only edge this builder emitted with NO predicate_id, so promoting a
-              # draft *added* an audit warning the draft did not have (the draft's drug
-              # edge carries ARO:2000001). `biolink:related_to` matches both the readable
-              # label and what the ARO seeder already puts in `trait_relations`.
-              "        predicate_id: biolink:related_to",
-              f"        object: drug{i}",
-              *_ev(ref, cfg["res_drug"], f"Resistance to {names.get(did, did)}.")]
-    # Route the mechanism through the KB's own protein-trait records.
+        # `determinant -> drug`, carrying ARO's own confers_resistance_to_drug_class, is
+        # the shape BOTH the auto-draft and the 6,180 records promoted before round 18
+        # use. The interim `resistance -> drug` edge was this promoter's alone (#194).
+        #
+        # Its evidence is CARD's assertion, not the family's literature snippet, because
+        # the edge says "CARD asserts this" — regenerated from the obo so it matches what
+        # the older records carry rather than overwriting it with a hydrolysis quote.
+        assertion = _drug_assertion(ident, did, terms) if terms else None
+        d_ref, d_snip, d_note = assertion or (ref, cfg["res_drug"],
+                                              f"Resistance to {names.get(did, did)}.")
+        edges.append(_edge("determinant", "confers resistance to (drug class)",
+                           "ARO:2000001", f"drug{i}", d_ref, d_snip, d_note,
+                           description=(f"CARD asserts that this determinant confers resistance "
+                                        f"to {names.get(did, did)}.")))
     if pt:
         pkey = pt.get("primary_key", "active_site")
         p_cid, _, _, p_snip = pt[pkey]
-        L += [f"      - subject: {pkey}",
-              f"        predicate: {pt.get('part_pred', 'part of (active site of the protein)')}",
-              "        predicate_id: BFO:0000050",
-              "        object: determinant",
-              *_ev(p_cid, p_snip, pt.get("part_note", "KB trait: the class-A active-site signature carried by this determinant."))]
+        edges.append(_edge(pkey, pt.get("part_pred", "part of (active site of the protein)"),
+                           "BFO:0000050", "determinant", p_cid, p_snip,
+                           pt.get("part_note", "KB trait: the class-A active-site signature "
+                                               "carried by this determinant.")))
         if "fold" in pt:
             fo_cid, _, _, fo_snip = pt["fold"]
-            L += ["      - subject: determinant",
-                  "        predicate: member of (adopts fold)",
-                  "        predicate_id: RO:0002350",
-                  "        object: fold",
-                  *_ev(fo_cid, fo_snip, pt.get("fold_note", "KB trait: the DD-peptidase/beta-lactamase superfamily fold."))]
+            edges.append(_edge("determinant", "member of (adopts fold)", "RO:0002350", "fold",
+                               fo_cid, fo_snip,
+                               pt.get("fold_note", "KB trait: the DD-peptidase/beta-lactamase "
+                                                   "superfamily fold.")))
         em = pt.get("enables_mech")
         if em in mech:
-            L += [f"      - subject: {pkey}",
-                  f"        predicate: {pt.get('enable_pred', 'enables (catalysis)')}",
-                  "        predicate_id: RO:0002327",
-                  f"        object: mech{mech.index(em)}",
-                  *_ev(ref, cfg["mech"][em], pt.get("enable_note", "The active site carries out the serine β-lactam hydrolysis mechanism."))]
-    # Family-specific mechanism edges. The fixed determinant→mechanism→resistance shape
-    # above was written for enzymatic INACTIVATION (an active site that hydrolyses the
-    # drug) and cannot express other resistance routes — target alteration, efflux,
-    # target protection — where the causation runs through a region of the target and a
-    # drug–target complex that never form part of that shape.
+            edges.append(_edge(pkey, pt.get("enable_pred", "enables (catalysis)"), "RO:0002327",
+                               f"mech{mech.index(em)}", ref, cfg["mech"][em],
+                               pt.get("enable_note", "The active site carries out the serine "
+                                                     "beta-lactam hydrolysis mechanism.")))
+    # Family-specific mechanism edges. The fixed determinant->mechanism->resistance shape
+    # above was written for enzymatic INACTIVATION and cannot express other resistance
+    # routes -- target alteration, precursor depletion, efflux -- where the causation runs
+    # through parts of the target and complexes that shape has no place for.
     #
     # An edge whose subject or object is not among THIS record's nodes is skipped rather
-    # than emitted dangling: the mechanism and drug nodes come from each member's own ARO
+    # than emitted dangling: mechanism and drug nodes come from each member's own ARO
     # relations, so a family member need not carry the one an edge names.
-    defined = {ln.split("node_id: ", 1)[1] for ln in L if "- node_id: " in ln}
+    defined = {n["node_id"] for n in nodes}
     for e in cfg.get("extra_edges", []):
         if e["subject"] not in defined or e["object"] not in defined:
             continue
-        L += [f"      - subject: {e['subject']}",
-              f"        predicate: {D._yq(e['predicate'])}",
-              f"        predicate_id: {e['predicate_id']}",
-              f"        object: {e['object']}"]
+        edge = {"subject": e["subject"], "predicate": e["predicate"],
+                "predicate_id": e["predicate_id"], "object": e["object"]}
         if e.get("description"):
-            L += ["        description: >-", f"          {e['description']}"]
-        L.append("        evidence:")
-        for ev in e["evidence"]:
-            L += [f"          - reference: {ev['reference']}",
-                  f"            snippet: {D._yq(ev['snippet'])}",
-                  f"            notes: {D._yq(ev['notes'])}"]
-    return L
+            edge["description"] = e["description"]
+        edge["evidence"] = [{"reference": i["reference"], "snippet": i["snippet"],
+                             "notes": i.get("notes", "")} for i in e["evidence"]]
+        edges.append(edge)
+
+    graph = {
+        "graph_id": "resistance",
+        "title": f"{label} \u2192 mechanism \u2192 resistance (curated from ARO relations + literature)",
+        "description": (f"Curated resistance-causation graph (promoted from the ARO auto-draft). "
+                        f"Determinant \u2192 inherited mechanism \u2192 resistance phenotype \u2192 drug "
+                        f"classes; edges carry the family's verbatim literature evidence "
+                        f"({ref}). {note}"),
+        "nodes": nodes,
+        "edges": edges,
+    }
+    return yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False, allow_unicode=True,
+                          width=100, default_flow_style=False).splitlines()
 
 
-def curation_event() -> list[str]:
-    return ["curation_history:",
-            "  - timestamp: \"2026-07-21T00:00:00Z\"",
-            "    curator: edison-causal-graphs",
-            "    action: \"Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED\"",
-            "    llm_assisted: true"]
+def _drug_assertion(ident: str, did: str, terms: dict):
+    """CARD's own `confers_resistance_to_drug_class` line, and the term it sits on.
+
+    A variant record rarely asserts the relation itself — it inherits it from a family or
+    class ancestor — so this walks `is_a` from the record upward and returns the first term
+    that asserts it. Returns None if nothing in the ancestry does, in which case the caller
+    falls back to the family's literature snippet.
+    """
+    for anc in [ident] + [a for a in E.ancestry(terms, ident) if a != ident]:
+        for rel in terms.get(anc, {}).get("rel", []):
+            if rel.startswith("confers_resistance_to_drug_class") and did in rel:
+                return (anc, f"relationship: {rel}",
+                        f"Asserted on {anc} ({terms[anc].get('name', anc)}), an is_a ancestor "
+                        f"of this record's {ident}; inherited by this variant. CARD/ARO "
+                        f"release in data/raw/aro/aro.obo.")
+    return None
+
+
+def _edge(subject: str, predicate: str, predicate_id: str, obj: str, ref: str, snippet,
+          note: str, description: str | None = None) -> dict:
+    edge = {"subject": subject, "predicate": predicate, "predicate_id": predicate_id,
+            "object": obj}
+    if description:
+        edge["description"] = description
+    edge["evidence"] = _evidence_items(snippet, ref, note)
+    return edge
+
+
+# The date each family was promoted. Every `build_*_causal_graphs.py` hardcodes its round's
+# date as a module constant, deliberately: a re-run must not churn timestamps. That
+# convention breaks for THIS script, which is run again for every new family — one constant
+# meant 6,235 records all claimed 2026-07-21, including 53 curated two weeks later (#191).
+# So the date is per family, defaulting to the rounds 12–14 date the older ones really have.
+LEGACY_PROMOTION = "2026-07-21T00:00:00Z"
+
+
+def curation_event(cfg: dict) -> list[str]:
+    return yaml.safe_dump({"curation_history": [{
+        "timestamp": cfg.get("curated", LEGACY_PROMOTION),
+        "curator": "edison-causal-graphs",
+        "action": ("Promoted auto-draft to curated causal_graphs with family verbatim "
+                   "snippets; SEEDED -> REVIEWED"),
+        "llm_assisted": True}]}, sort_keys=False, allow_unicode=True,
+        width=100, default_flow_style=False).splitlines()
 
 
 def main() -> int:
@@ -1030,11 +1047,11 @@ def main() -> int:
         ident = ident_m.group(1)
         label = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M).group(1)
         mech, drug = D.parse_relations(text)
-        block = promoted_graph(ident, label, mech, drug, names, cfg)
+        block = promoted_graph(ident, label, mech, drug, names, cfg, terms)
         lines = text.splitlines()
         cg = next(i for i, ln in enumerate(lines) if ln.startswith("causal_graphs:"))
         lic = next(i for i, ln in enumerate(lines) if ln.startswith("license:"))
-        new_lines = lines[:cg] + block + curation_event() + lines[lic:]
+        new_lines = lines[:cg] + block + curation_event(cfg) + lines[lic:]
         new = "\n".join(new_lines) + "\n"
         new = re.sub(r"^mapping_status: SEEDED$", "mapping_status: REVIEWED", new, flags=re.M)
         if args.apply:
