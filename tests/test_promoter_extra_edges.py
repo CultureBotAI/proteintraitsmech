@@ -306,3 +306,39 @@ def test_the_regulator_families_are_fully_grounded(family):
     blocks = out.split("\n  - node_id: ")[1:]
     ungrounded = [b.splitlines()[0] for b in blocks if "grounding:" not in b]
     assert not ungrounded, f"{family}: label-only nodes {ungrounded}"
+
+
+# --- #201 / #199: the verify guard, and structural self-identification -------------
+
+def test_config_curies_collects_groundings_and_references():
+    curies = promote.config_curies(promote.FAMILY_SNIPPETS["ARO:3000006"])   # vanH
+    assert "NCBIfam:NF000492" in curies          # a node grounding
+    assert not any(c.startswith("PMID") for c in curies)   # papers are not KB records
+
+
+def test_the_vanrs_precondition_derives_the_exclusions_that_were_hand_written():
+    """The 12 records round 22 held back are now DERIVED, not listed (#201).
+
+    A hand-maintained `exclude` tuple is correct only until the corpus changes under it.
+    The predicate asks the corpus the same question every run: does this record's cluster
+    contain the genes my downstream nodes name?
+    """
+    pre = promote.FAMILY_SNIPPETS["ARO:3000574"]["precondition"]
+    # a D-Ala-D-Lac cluster has both, so it passes
+    assert pre("ARO:3002919", "vanR gene in vanA cluster", "") is None
+    # a D-Ala-D-Ser cluster has neither, so it is refused with a reason naming them
+    reason = pre("ARO:3002922", "vanR gene in vanC cluster", "")
+    assert reason and "vanH" in reason and "vanX" in reason
+    # vanI has vanX but no vanH — the partial case, which a letter-based rule would miss.
+    # Assert on the "has no ..." clause, not the whole string: the reason also lists the
+    # genes the cluster DOES have, and vanX is one of them.
+    reason = pre("ARO:3003728", "vanR gene in vanI cluster", "")
+    assert reason and "has no vanH (" in reason and "has no vanH or vanX" not in reason
+    # the family-level record carries no cluster and is the term the evidence describes
+    assert pre("ARO:3000574", "vanR", "") is None
+
+
+def test_neither_van_config_still_carries_a_hand_written_exclude_list():
+    for fam in ("ARO:3000574", "ARO:3000071"):
+        assert "exclude" not in promote.FAMILY_SNIPPETS[fam]
+        assert callable(promote.FAMILY_SNIPPETS[fam]["precondition"])

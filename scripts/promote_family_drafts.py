@@ -33,6 +33,7 @@ import draft_aro_causal_graphs as D            # parse_relations, obo_names, _yq
 import enrich_aro_resistance as E              # ancestry, parse_obo
 
 ARO_DIR = D.ARO_DIR
+TRAITS_ROOT = Path(__file__).resolve().parent.parent / "data" / "traits"
 
 # family ARO id → curated evidence. `reference` is the family's characterisation
 # paper; `mech[<mechanism ARO id>]`, `mech_res`, `det_res`, `res_drug` are verbatim
@@ -116,6 +117,48 @@ def _fq_shared_nodes(qrdr_label: str, qrdr_description: str) -> list:
     ]
 
 
+def _van_cluster_genes() -> dict:
+    """cluster letter -> the van genes the corpus records for that cluster.
+
+    Built from the corpus's own `van<G> gene in van<C> cluster` records, which is why the
+    vanR/vanS precondition below is a query rather than a judgement about biology.
+    """
+    global _VAN_CLUSTERS
+    if _VAN_CLUSTERS is None:
+        idx: dict[str, set[str]] = {}
+        for pth in ARO_DIR.glob("*.yaml"):
+            m = re.search(r'^label:\s*"?(van[A-Z]+) gene in (van[A-Z]) cluster"?\s*$',
+                          pth.read_text(encoding="utf-8"), re.M)
+            if m:
+                idx.setdefault(m.group(2), set()).add(m.group(1))
+        _VAN_CLUSTERS = idx
+    return _VAN_CLUSTERS
+
+
+_VAN_CLUSTERS = None
+
+
+def _requires_vanhax(ident: str, label: str, text: str):
+    """vanR/vanS graphs name vanH and vanX downstream — so the cluster must have them.
+
+    The evidence is VanA-type (PMID:1556077, Tn1546/pIP816). The D-Ala-D-Ser clusters
+    encode vanT and vanXY instead, and vanI has vanX but no vanH, so promoting those would
+    assert an operon composition false for that cluster (#201).
+
+    A record with no cluster in its label is the family-level concept (`vanR`, `vanS`) and
+    passes: it is the general term the VanA-type description is written against.
+    """
+    m = re.search(r"gene in (van[A-Z]) cluster", label)
+    if not m:
+        return None
+    genes = _van_cluster_genes().get(m.group(1), set())
+    missing = [g for g in ("vanH", "vanX") if g not in genes]
+    if missing:
+        return (f"cluster {m.group(1)} has no {' or '.join(missing)} "
+                f"(records present: {' '.join(sorted(genes)) or 'none'}); this config's "
+                f"downstream nodes name both")
+    return None
+
 # ---------------------------------------------------------------------------------------
 # The VanS-VanR regulatory arm, shared by both halves of the two-component system. Every
 # snippet is from PMID:1556077 (Arthur, Molinas & Courvalin 1992), which characterised the
@@ -181,16 +224,11 @@ FAMILY_SNIPPETS = {
     # own mechanisms are curated, rather than restating them.
     "ARO:3000574": {
         "curated": "2026-08-06T00:00:00Z",
-        # Clusters whose operon this config does NOT describe. The evidence is VanA-type
-        # (PMID:1556077, Tn1546/pIP816), and the downstream nodes are vanH + vanX. The
-        # D-Ala-D-Ser clusters (vanC/E/G/L/N) encode vanT and vanXY instead and have
-        # NEITHER; vanI has vanX but no vanH. Promoting them would assert an operon
-        # composition that is false for that cluster -- checked gene by gene against the
-        # corpus's own "van* gene in van* cluster" records, not assumed from the letter.
-        "exclude": ("ARO:3002922", "ARO:3002924", "ARO:3002926", "ARO:3003728",
-                    "ARO:3002927", "ARO:3002929",   # vanR in vanC/E/G/I/L/N
-                    "ARO:3002933", "ARO:3002935", "ARO:3002937", "ARO:3003726",
-                    "ARO:3002938", "ARO:3002940"),  # vanS in vanC/E/G/I/L/N
+        # Was a hand-written list of 12 ARO ids; now DERIVED from the corpus (#201). The
+        # evidence is VanA-type (PMID:1556077, Tn1546/pIP816) and the downstream nodes are
+        # vanH + vanX, so a cluster lacking either is excluded — re-evaluated every run
+        # rather than frozen at the moment someone looked.
+        "precondition": _requires_vanhax,
         "reference": "PMID:1556077",        # Arthur, Molinas & Courvalin 1992, J Bacteriol
         "mech": {"ARO:3000213": _VANRS_REG},
         "mech_res": _VANRS_REG,
@@ -233,16 +271,11 @@ FAMILY_SNIPPETS = {
     # difference is upstream, where VanS phosphorylates rather than being phosphorylated.
     "ARO:3000071": {
         "curated": "2026-08-06T00:00:00Z",
-        # Clusters whose operon this config does NOT describe. The evidence is VanA-type
-        # (PMID:1556077, Tn1546/pIP816), and the downstream nodes are vanH + vanX. The
-        # D-Ala-D-Ser clusters (vanC/E/G/L/N) encode vanT and vanXY instead and have
-        # NEITHER; vanI has vanX but no vanH. Promoting them would assert an operon
-        # composition that is false for that cluster -- checked gene by gene against the
-        # corpus's own "van* gene in van* cluster" records, not assumed from the letter.
-        "exclude": ("ARO:3002922", "ARO:3002924", "ARO:3002926", "ARO:3003728",
-                    "ARO:3002927", "ARO:3002929",   # vanR in vanC/E/G/I/L/N
-                    "ARO:3002933", "ARO:3002935", "ARO:3002937", "ARO:3003726",
-                    "ARO:3002938", "ARO:3002940"),  # vanS in vanC/E/G/I/L/N
+        # Was a hand-written list of 12 ARO ids; now DERIVED from the corpus (#201). The
+        # evidence is VanA-type (PMID:1556077, Tn1546/pIP816) and the downstream nodes are
+        # vanH + vanX, so a cluster lacking either is excluded — re-evaluated every run
+        # rather than frozen at the moment someone looked.
+        "precondition": _requires_vanhax,
         "reference": "PMID:1556077",
         "mech": {"ARO:3000213": _VANRS_REG},
         "mech_res": _VANRS_REG,
@@ -1130,6 +1163,97 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
                           width=100, default_flow_style=False).splitlines()
 
 
+# ---------------------------------------------------------------------------------------
+# `--verify`: check a family config's claims against the records it would promote (#201).
+#
+# Ancestry says the records are RELATED. It does not say the config's MECHANISM is true of
+# each one, and three rounds shipped or nearly shipped graphs where it was not:
+#
+#   round 19  gyrB/parE would have reused gyrA's water-metal ion bridge result -- wrong
+#             subunit, wrong domain, wrong residues.
+#   round 19  ARO:3003702 is "gyrA AND parC"; the parC config gave it a ParC-only QRDR.
+#   round 22  the vanR/vanS config's downstream is vanH + vanX; six clusters have neither.
+#             12 records shipped asserting an operon composition false for their cluster.
+#
+# Every gate passed on all three: schema-valid, fully grounded, every edge snippet-cited.
+# Correct form, false content -- so the check has to be about CONTENT, per record.
+#
+# Two checks, because the three failures are two different kinds:
+#
+#   * RESOLVABLE  -- every KB CURIE a config grounds a node to must exist as a record.
+#                    Catches typos and stale identifiers. Cheap and fully general.
+#   * PRECONDITION -- a per-family predicate over each candidate record. The vanR case is
+#                    a query, not a judgement: "does this record's cluster contain the
+#                    genes my downstream nodes name?" is answerable from the corpus.
+#                    Configs are Python, so this is a callable, and a failing record is
+#                    SKIPPED with its reason printed rather than silently promoted.
+KB_PREFIXES = ("ARO:", "Pfam:", "NCBIfam:", "PROSITE:", "CATH:", "InterPro:", "CDD:",
+               "MEROPS:", "TED:", "UniProtKB:")
+
+
+def config_curies(cfg: dict) -> set[str]:
+    """Every KB CURIE this config grounds a node to, or cites as a reference."""
+    out = set()
+    pt = cfg.get("protein_traits") or {}
+    for key, val in pt.items():
+        if isinstance(val, tuple) and val and isinstance(val[0], str):
+            out.add(val[0])
+    for n in cfg.get("extra_nodes", []):
+        if n.get("grounding"):
+            out.add(n["grounding"])
+    for e in cfg.get("extra_edges", []):
+        for ev in e.get("evidence", []):
+            out.add(ev["reference"])
+    return {c for c in out if c.startswith(KB_PREFIXES) and not c.startswith("PMID")}
+
+
+_IDENTIFIER_INDEX: set[str] | None = None
+
+
+def record_identifiers(root: Path) -> set[str]:
+    """Every record identifier in the corpus, read from each file's first line.
+
+    `identifier:` is line 1 of every trait record, so this reads one line per file rather
+    than parsing 429k YAML documents. Even so it costs ~70s, which is why it is cached for
+    the process and why `--verify-all` exists: 36 separate `--verify` runs would rebuild
+    it 36 times and take half an hour.
+    """
+    global _IDENTIFIER_INDEX
+    if _IDENTIFIER_INDEX is not None:
+        return _IDENTIFIER_INDEX
+    found = set()
+    for pth in root.rglob("*.yaml"):
+        with pth.open(encoding="utf-8") as fh:
+            first = fh.readline()
+        if first.startswith("identifier:"):
+            found.add(first.split(":", 1)[1].strip().strip('"'))
+    _IDENTIFIER_INDEX = found
+    return found
+
+
+def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
+    """Report what the config claims that its records do not support. Returns a count."""
+    problems = 0
+    curies = config_curies(cfg)
+    if curies:
+        known = record_identifiers(TRAITS_ROOT)
+        for c in sorted(curies):
+            if c not in known:
+                print(f"  UNRESOLVED  {c} is grounded/cited by {family} but is not a record")
+                problems += 1
+    pre = cfg.get("precondition")
+    if pre:
+        for ident, label, text in candidates:
+            reason = pre(ident, label, text)
+            if reason:
+                print(f"  PRECONDITION  {ident} ({label}): {reason}")
+                problems += 1
+    print(f"verify {family}: {len(curies)} KB CURIEs checked, "
+          f"{len(candidates)} candidate records, {problems} problem(s)")
+    return problems
+
+
+
 def _drug_assertion(ident: str, did: str, terms: dict):
     """CARD's own `confers_resistance_to_drug_class` line, and the term it sits on.
 
@@ -1176,22 +1300,54 @@ def curation_event(cfg: dict) -> list[str]:
         width=100, default_flow_style=False).splitlines()
 
 
+
+def _candidates(family: str, terms: dict) -> list:
+    """Every draft-or-promoted record whose is_a ancestry includes this family."""
+    out = []
+    for pth in sorted(ARO_DIR.glob("*.yaml")):
+        text = pth.read_text(encoding="utf-8")
+        ident_m = re.search(r"^identifier:\s*(ARO:\S+)", text, re.M)
+        if not ident_m or family not in E.ancestry(terms, ident_m.group(1)):
+            continue
+        label_m = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M)
+        out.append((ident_m.group(1), label_m.group(1) if label_m else "", text))
+    return out
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--family", required=True, help="family ARO id (must be in FAMILY_SNIPPETS)")
+    ap.add_argument("--family", help="family ARO id (must be in FAMILY_SNIPPETS)")
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--drafts-only", action="store_true",
                     help="only promote resistance-draft graphs; never re-promote already-"
                          "curated members (use for broad class/family nodes so they don't "
                          "overwrite more-specific family configs)")
     ap.add_argument("--limit", type=int, default=0)
+    ap.add_argument("--verify", action="store_true",
+                    help="check the config's claims against the records it would promote "
+                         "(#201) and exit; writes nothing")
+    ap.add_argument("--verify-all", action="store_true",
+                    help="run --verify for every family in FAMILY_SNIPPETS, in one process "
+                         "so the corpus index is built once; writes nothing")
     args = ap.parse_args()
+    if not args.family and not args.verify_all:
+        ap.error("--family is required unless --verify-all is given")
+    if args.verify_all:
+        terms = E.parse_obo(E.OBO)
+        total = 0
+        for fam in FAMILY_SNIPPETS:
+            total += verify(fam, FAMILY_SNIPPETS[fam], terms, _candidates(fam, terms))
+        print(f"\n--verify-all: {len(FAMILY_SNIPPETS)} families, {total} problem(s)")
+        return 1 if total else 0
     cfg = FAMILY_SNIPPETS.get(args.family)
     if not cfg:
         print(f"no curated snippets for {args.family}; add it to FAMILY_SNIPPETS")
         return 2
     terms = E.parse_obo(E.OBO)
     names = D.obo_names(D.OBO)
+
+    if args.verify:
+        return 1 if verify(args.family, cfg, terms, _candidates(args.family, terms)) else 0
 
     promoted = skip_done = skip_nodraft = skip_excluded = 0
     for pth in sorted(ARO_DIR.glob("*.yaml")):
@@ -1207,8 +1363,25 @@ def main() -> int:
             # and "why is this one not promoted" should be answerable from the config.
             skip_excluded += 1
             continue
+        pre = cfg.get("precondition")
+        if pre:
+            # the same exclusion, DERIVED rather than listed. A hand-maintained `exclude`
+            # tuple is correct only until the corpus changes under it; a predicate is
+            # re-evaluated every run (#201).
+            label_m = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M)
+            reason = pre(ident_m.group(1), label_m.group(1) if label_m else "", text)
+            if reason:
+                if not args.apply:
+                    print(f"  precondition skip: {ident_m.group(1)} — {reason}")
+                skip_excluded += 1
+                continue
         is_draft = "graph_id: resistance-draft" in text
-        is_ours = "Promoted auto-draft to curated" in text     # this promoter's own output
+        # This promoter's own output is identified by the GRAPH it writes, not by prose in
+        # a curation_history sentence that PyYAML may wrap at width=100 (#199). The old
+        # check grepped "Promoted auto-draft to curated"; had a wrap ever landed inside
+        # that phrase, every promoted record would have looked hand-curated and been
+        # silently skipped, and the run would still have exited 0.
+        is_ours = "graph_id: resistance\n" in text or text.rstrip().endswith("graph_id: resistance")
         if is_draft:
             pass                                                # a draft → promote
         elif is_ours and not args.drafts_only:
