@@ -480,3 +480,17 @@ def test_the_same_curation_event_is_not_appended_twice():
     if ev not in history:
         history.append(ev)
     assert len(history) == 1
+
+
+def test_promoting_a_draft_removes_the_draft_graph():
+    """The promoter owns BOTH ids: it consumes `resistance-draft` and produces `resistance`.
+
+    Filtering only `resistance` left a promoted draft carrying its own superseded draft
+    graph beside the curated one. The canary missed it because it exercised the
+    RE-promote path, where the graph is already `resistance` — not the primary
+    promote-a-draft path, which is the one with 1,133 records still to run through it.
+    """
+    assert promote.OWNED_GRAPH_IDS == {"resistance", "resistance-draft"}
+    graphs = [{"graph_id": "resistance-draft"}, {"graph_id": "reaction_chemistry"}]
+    kept = [g for g in graphs if g.get("graph_id") not in promote.OWNED_GRAPH_IDS]
+    assert [g["graph_id"] for g in kept] == ["reaction_chemistry"]

@@ -1359,6 +1359,10 @@ def _drug_assertion(ident: str, did: str, terms: dict):
     return None
 
 
+# The graph ids this promoter owns: the draft it consumes and the graph it produces.
+OWNED_GRAPH_IDS = frozenset({"resistance", "resistance-draft"})
+
+
 class UncoveredMechanism(Exception):
     """A candidate carries a mechanism the family config has no snippet for."""
 
@@ -1524,8 +1528,14 @@ def main() -> int:
         # Neither loss is visible in the diff of a record that only ever had our graph,
         # which is why it survived six rounds.
         doc = yaml.safe_load(text) or {}
+        # BOTH ids, because this promoter owns both: `resistance-draft` is what it
+        # consumes and `resistance` is what it produces. Filtering only `resistance` left
+        # a promoted draft carrying its own superseded draft graph alongside the curated
+        # one -- caught in review because the canary had exercised the RE-promote path
+        # (where the graph is already `resistance`) and not the primary promote-a-draft
+        # path, which is the one that runs 1,133 more times.
         graphs = [g for g in (doc.get("causal_graphs") or [])
-                  if g.get("graph_id") != "resistance"]
+                  if g.get("graph_id") not in OWNED_GRAPH_IDS]
         graphs.append(graph)
         history = list(doc.get("curation_history") or [])
         event = curation_entry(cfg)
