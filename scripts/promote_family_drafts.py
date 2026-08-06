@@ -142,10 +142,14 @@ FAMILY_SNIPPETS = {
         "note": "Precursor depletion: VanX removes D-Ala-D-Ala so the pentapeptide that glycopeptides bind is not synthesised.",
         "protein_traits": {
             "primary_key": "domain",
-            "domain": ("Pfam:PF01427", "D-Ala-D-Ala dipeptidase domain", "DOMAIN",
-                       "Expression of vanX in E. faecalis and Escherichia coli resulted in production of a D,D-dipeptidase that hydrolysed D-Ala-D-Ala."),
+            # the snippet must establish that THIS domain is THIS determinant's, which an
+            # activity result does not. The KB record's own InterPro abstract names VanX
+            # outright, so it is the right evidence for the part-of edge; Reynolds' activity
+            # result stays on the `domain enables dipeptidase` edge, where it belongs.
+            "domain": ("Pfam:PF01427", "D-Ala-D-Ala dipeptidase domain (MEROPS M15D, the VanX subfamily)", "DOMAIN",
+                       "This group of metallopeptidases belong to MEROPS peptidase family M15 (clan MD), subfamily M15D (vanX D-Ala-D-Ala dipeptidase). The D-alanyl-D-alanine dipeptidase enzyme from Enterococcus faecalis is also known as the vancomycin resistance protein VanX, and hydrolyses D-ala-D-ala."),
             "part_pred": "part of (the dipeptidase domain of this determinant)",
-            "part_note": "KB trait record Pfam:PF01427 (D-ala-D-ala dipeptidase). Snippet is the enzyme activity Reynolds et al. demonstrated for the vanX product, since the domain node is here to carry that activity.",
+            "part_note": "KB trait record Pfam:PF01427; snippet is the InterPro:IPR000755 abstract that record's definition is taken from, which names VanX as the subfamily M15D enzyme.",
         },
         "extra_nodes": [
             {"node_id": "dipeptidase", "label": "D,D-dipeptidase activity", "node_type": "MOLECULAR_FUNCTION",
