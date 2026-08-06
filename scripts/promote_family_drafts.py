@@ -116,6 +116,81 @@ def _fq_shared_nodes(qrdr_label: str, qrdr_description: str) -> list:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # vanH — the OTHER end of the depsipeptide pathway (ARO:3000006). vanX (round 20)
+    # removes the drug's binding target; vanH supplies the D-hydroxy acid that the
+    # already-promoted vanA/vanB ligases esterify to build the replacement. One 1991 paper
+    # (PMID:1931965) purified the enzyme and measured the affinity loss the whole mechanism
+    # exists to produce, so all six mechanism edges come from it.
+    #
+    # NO `protein_traits` BLOCK, deliberately. Its fixed edge is `domain part of
+    # determinant`, and the honest KB trait for VanH is a protein FAMILY
+    # (NCBIfam:NF000492), which a determinant is a MEMBER of, not composed of. The
+    # membership edge is written explicitly below with the predicate that means it.
+    # Pfam:PF00389 was the obvious domain candidate and is NOT used: its abstract never
+    # names VanH, so citing it for a membership claim would be the defect filed as #196.
+    "ARO:3000006": {
+        "reference": "PMID:1931965",        # Bugg et al. 1991, Biochemistry
+        "mech": {"ARO:3000213": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.'},
+        "mech_res": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.',
+        "det_res": [
+            {"reference": "PMID:1931965", "snippet": 'We report purification of VanH to homogeneity, characterization as a D-specific alpha-keto acid dehydrogenase, and comparison with D-lactate dehydrogenases from Leuconostoc mesenteroides and Lactobacillus leichmanii.',
+             "notes": "Bugg et al. 1991 purified VanH and characterised the activity; this is the determinant's molecular function, established by purification rather than by sequence similarity."},
+            {"reference": "PMID:1931965", "snippet": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.',
+             "notes": "The same paper measured what that activity buys: a >1000-fold weaker vancomycin binding constant for the modified precursor."},
+        ],
+        "res_drug": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.',
+        "note": "Precursor substitution: VanH makes the D-hydroxy acid that replaces the terminal D-Ala, so the drug's binding site is rebuilt rather than removed.",
+        "extra_nodes": [
+            {"node_id": "family", "label": "D-lactate dehydrogenase VanH (NCBIfam family)",
+             "node_type": "PROTEIN", "grounding": "NCBIfam:NF000492",
+             "description": "KB protein-trait record for the VanH family. A family, not a domain — hence `member of` rather than `part of`."},
+            {"node_id": "dh_activity", "label": "D-lactate dehydrogenase (NAD+) activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0008720"},
+            {"node_id": "d_hydroxy_acid", "label": "D-hydroxy acid product of VanH ((R)-lactate)",
+             "node_type": "CHEMICAL", "grounding": "CHEBI:16004",
+             "description": "Grounded to (R)-lactate, the physiological product. Bugg et al.'s best in vitro substrate for the downstream VanA ligase was D-2-hydroxybutyrate, which is what their quoted measurements use — the node is grounded to the physiological compound and the snippets say which was assayed."},
+            {"node_id": "depsipeptide", "label": "peptidoglycan precursor terminating in D-Ala-D-hydroxy acid",
+             "node_type": "STATE",
+             "description": "The rebuilt precursor. Ungrounded: ChEBI has no term for the UDP-MurNAc pentadepsipeptide."},
+            {"node_id": "van_complex", "label": "vancomycin-target complex", "node_type": "STATE",
+             "description": "The drug bound to the precursor terminus. Ungrounded: a complex, not a compound."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "family",
+             "predicate": "member of (the VanH D-lactate dehydrogenase family)", "predicate_id": "RO:0002350",
+             "description": "Routes this determinant through the KB's own VanH family record.",
+             "evidence": [
+                 {"reference": "PMID:1931965", "snippet": 'We report purification of VanH to homogeneity, characterization as a D-specific alpha-keto acid dehydrogenase, and comparison with D-lactate dehydrogenases from Leuconostoc mesenteroides and Lactobacillus leichmanii.',
+                  "notes": "Establishes what VanH is, by purification."},
+                 {"reference": "NCBIfam:NF000492", "snippet": "D-lactate dehydrogenase VanH",
+                  "notes": "NCBIfam's own product name for profile-HMM NF000492 — the KB trait record this node grounds to. The join of the two is stated rather than implied: the paper says what VanH does, NCBIfam names the family that does it. NOT the KB record's definition text, which this repo composes."},
+             ]},
+            {"subject": "family", "object": "dh_activity",
+             "predicate": "enables (D-specific alpha-keto acid reduction)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:1931965", "snippet": 'We report purification of VanH to homogeneity, characterization as a D-specific alpha-keto acid dehydrogenase, and comparison with D-lactate dehydrogenases from Leuconostoc mesenteroides and Lactobacillus leichmanii.',
+                           "notes": "Bugg et al. 1991; compared directly with the D-lactate dehydrogenases of Leuconostoc and Lactobacillus."}]},
+            {"subject": "dh_activity", "object": "d_hydroxy_acid",
+             "predicate": "has output", "predicate_id": "RO:0002234",
+             "evidence": [{"reference": "PMID:1931965", "snippet": 'VanA was found to catalyze ester bond formation between D-alanine and the D-hydroxy acid products of VanH, the best substrate being D-2-hydroxybutyrate (Km = 0.60 mM).',
+                           "notes": "Names the D-hydroxy acids as the products of VanH, and the ligase that consumes them."}]},
+            {"subject": "d_hydroxy_acid", "object": "depsipeptide",
+             "predicate": "causally upstream of (is esterified and incorporated)", "predicate_id": "RO:0002411",
+             "description": "The VanH product is esterified to D-alanine by the ligase and the ester is incorporated into the precursor.",
+             "evidence": [{"reference": "PMID:1931965", "snippet": 'The VanA product D-alanyl-D-2-hydroxybutyrate could then be incorporated into the UDPMurNAc-pentapeptide peptidoglycan precursor by D-Ala-D-Ala adding enzyme from Escherichia coli or by crude extract from E. faecium BM4147.',
+                           "notes": "Incorporation shown with both a purified E. coli adding enzyme and a crude E. faecium extract."}]},
+            {"subject": "depsipeptide", "object": "van_complex",
+             "predicate": "negatively regulates (>1000-fold weaker binding)", "predicate_id": "RO:0002212",
+             "description": "The causal core, and it is quantified: replacing the terminal D-Ala raises the vancomycin Kd from 54 microM to >73 mM.",
+             "evidence": [{"reference": "PMID:1931965", "snippet": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.',
+                           "notes": "The authors' own molecular rationale for high-level resistance, including the disrupted hydrogen bond."}]},
+            {"subject": "drug0", "object": "van_complex",
+             "predicate": "molecularly interacts with (binds the precursor terminus)", "predicate_id": "RO:0002436",
+             "description": "Drug action: vancomycin binds the D-Ala-D-Ala terminus with Kd = 54 microM. This is the interaction the depsipeptide degrades.",
+             "evidence": [{"reference": "PMID:1931965", "snippet": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.',
+                           "notes": "The same sentence carries both arms: the drug's normal affinity and its loss."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # vanX — glycopeptide resistance by PRECURSOR DEPLETION (ARO:3000011). A third kind of
     # mechanism again: not drug inactivation (β-lactamases), not target alteration
     # (gyrA/parC), but removal of the drug's BINDING TARGET. VanX is a D,D-dipeptidase that

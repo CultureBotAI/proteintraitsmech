@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000006
 trait_relations:
@@ -29,75 +29,155 @@ evidence:
 - reference: DOI:10.2807/1560-7917.ES.2021.26.36.2100767
   notes: PMID:34505571 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] vanH gene in vanP cluster → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
-  nodes:
-  - node_id: determinant
-    label: vanH gene in vanP cluster
-    node_type: PROTEIN
-    grounding: ARO:3007188
-  - node_id: mech0
-    label: restructuring of bacterial cell wall conferring antibiotic resistance
-    node_type: MOLECULAR_FUNCTION
-    grounding: ARO:3000213
-  - node_id: drug0
-    label: glycopeptide antibiotic
-    node_type: CHEMICAL
-    grounding: ARO:3000081
-  - node_id: resistance
-    label: antibiotic resistance phenotype
-    node_type: PHENOTYPE
-    grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
-  edges:
-  - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech0
-    evidence:
-    - reference: DOI:10.2807/1560-7917.ES.2021.26.36.2100767
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
-    - reference: ARO:3007188
-      snippet: vanH variant in the vanP cluster.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.2807/1560-7917.ES.2021.26.36.2100767
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.2807/1560-7917.ES.2021.26.36.2100767
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000006
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: CARD asserts a resistance relation on ARO:3000006 (vanH), an is_a ancestor of ARO:3007188.
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    object: drug0
-    evidence:
-    - reference: ARO:3000006
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted on ARO:3000006 (vanH), an is_a ancestor of this record's ARO:3007188; inherited
-        by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+  - graph_id: resistance
+    title: vanH gene in vanP cluster → mechanism → resistance (curated from ARO relations + literature)
+    description: >-
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:1931965). Precursor substitution: VanH makes the D-hydroxy acid that replaces the terminal D-Ala, so the drug's binding site is rebuilt rather than removed.
+    nodes:
+      - node_id: determinant
+        label: vanH gene in vanP cluster
+        node_type: PROTEIN
+        grounding: ARO:3007188
+      - node_id: mech0
+        label: restructuring of bacterial cell wall conferring antibiotic resistance
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:3000213
+      - node_id: drug0
+        label: glycopeptide antibiotic
+        node_type: CHEMICAL
+        grounding: ARO:3000081
+      - node_id: family
+        label: D-lactate dehydrogenase VanH (NCBIfam family)
+        node_type: PROTEIN
+        grounding: NCBIfam:NF000492
+        description: >-
+          KB protein-trait record for the VanH family. A family, not a domain — hence `member of` rather than `part of`.
+      - node_id: dh_activity
+        label: D-lactate dehydrogenase (NAD+) activity
+        node_type: MOLECULAR_FUNCTION
+        grounding: GO:0008720
+      - node_id: d_hydroxy_acid
+        label: D-hydroxy acid product of VanH ((R)-lactate)
+        node_type: CHEMICAL
+        grounding: CHEBI:16004
+        description: >-
+          Grounded to (R)-lactate, the physiological product. Bugg et al.'s best in vitro substrate for the downstream VanA ligase was D-2-hydroxybutyrate, which is what their quoted measurements use — the node is grounded to the physiological compound and the snippets say which was assayed.
+      - node_id: depsipeptide
+        label: peptidoglycan precursor terminating in D-Ala-D-hydroxy acid
+        node_type: STATE
+        description: >-
+          The rebuilt precursor. Ungrounded: ChEBI has no term for the UDP-MurNAc pentadepsipeptide.
+      - node_id: van_complex
+        label: vancomycin-target complex
+        node_type: STATE
+        description: >-
+          The drug bound to the precursor terminus. Ungrounded: a complex, not a compound.
+      - node_id: resistance
+        label: antibiotic resistance phenotype
+        node_type: PHENOTYPE
+        grounding: GO:0046677
+        description: >-
+          Resistance phenotype conferred by this determinant. Grounded to the nearest
+          available superclass: ARO models determinants and mechanisms but has no term
+          for the resistance phenotype itself.
+    edges:
+      - subject: determinant
+        predicate: participates in (resistance mechanism)
+        predicate_id: RO:0000056
+        object: mech0
+        evidence:
+          - reference: PMID:1931965
+            snippet: "The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance."
+            notes: "Family mechanism ARO:3000213."
+      - subject: mech0
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: PMID:1931965
+            snippet: "The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance."
+            notes: "Mechanism ARO:3000213 → resistance."
+      - subject: determinant
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: PMID:1931965
+            snippet: "We report purification of VanH to homogeneity, characterization as a D-specific alpha-keto acid dehydrogenase, and comparison with D-lactate dehydrogenases from Leuconostoc mesenteroides and Lactobacillus leichmanii."
+            notes: "Bugg et al. 1991 purified VanH and characterised the activity; this is the determinant's molecular function, established by purification rather than by sequence similarity."
+          - reference: PMID:1931965
+            snippet: "The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance."
+            notes: "The same paper measured what that activity buys: a >1000-fold weaker vancomycin binding constant for the modified precursor."
+      - subject: resistance
+        predicate: related to (resistance is to)
+        predicate_id: biolink:related_to
+        object: drug0
+        evidence:
+          - reference: PMID:1931965
+            snippet: "The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance."
+            notes: Resistance to glycopeptide antibiotic.
+      - subject: determinant
+        predicate: member of (the VanH D-lactate dehydrogenase family)
+        predicate_id: RO:0002350
+        object: family
+        description: >-
+          Routes this determinant through the KB's own VanH family record.
+        evidence:
+          - reference: PMID:1931965
+            snippet: "We report purification of VanH to homogeneity, characterization as a D-specific alpha-keto acid dehydrogenase, and comparison with D-lactate dehydrogenases from Leuconostoc mesenteroides and Lactobacillus leichmanii."
+            notes: "Establishes what VanH is, by purification."
+          - reference: NCBIfam:NF000492
+            snippet: D-lactate dehydrogenase VanH
+            notes: "NCBIfam's own product name for profile-HMM NF000492 — the KB trait record this node grounds to. The join of the two is stated rather than implied: the paper says what VanH does, NCBIfam names the family that does it. NOT the KB record's definition text, which this repo composes."
+      - subject: family
+        predicate: enables (D-specific alpha-keto acid reduction)
+        predicate_id: RO:0002327
+        object: dh_activity
+        evidence:
+          - reference: PMID:1931965
+            snippet: "We report purification of VanH to homogeneity, characterization as a D-specific alpha-keto acid dehydrogenase, and comparison with D-lactate dehydrogenases from Leuconostoc mesenteroides and Lactobacillus leichmanii."
+            notes: Bugg et al. 1991; compared directly with the D-lactate dehydrogenases of Leuconostoc and Lactobacillus.
+      - subject: dh_activity
+        predicate: has output
+        predicate_id: RO:0002234
+        object: d_hydroxy_acid
+        evidence:
+          - reference: PMID:1931965
+            snippet: "VanA was found to catalyze ester bond formation between D-alanine and the D-hydroxy acid products of VanH, the best substrate being D-2-hydroxybutyrate (Km = 0.60 mM)."
+            notes: "Names the D-hydroxy acids as the products of VanH, and the ligase that consumes them."
+      - subject: d_hydroxy_acid
+        predicate: causally upstream of (is esterified and incorporated)
+        predicate_id: RO:0002411
+        object: depsipeptide
+        description: >-
+          The VanH product is esterified to D-alanine by the ligase and the ester is incorporated into the precursor.
+        evidence:
+          - reference: PMID:1931965
+            snippet: The VanA product D-alanyl-D-2-hydroxybutyrate could then be incorporated into the UDPMurNAc-pentapeptide peptidoglycan precursor by D-Ala-D-Ala adding enzyme from Escherichia coli or by crude extract from E. faecium BM4147.
+            notes: Incorporation shown with both a purified E. coli adding enzyme and a crude E. faecium extract.
+      - subject: depsipeptide
+        predicate: "negatively regulates (>1000-fold weaker binding)"
+        predicate_id: RO:0002212
+        object: van_complex
+        description: >-
+          The causal core, and it is quantified: replacing the terminal D-Ala raises the vancomycin Kd from 54 microM to >73 mM.
+        evidence:
+          - reference: PMID:1931965
+            snippet: "The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance."
+            notes: "The authors' own molecular rationale for high-level resistance, including the disrupted hydrogen bond."
+      - subject: drug0
+        predicate: molecularly interacts with (binds the precursor terminus)
+        predicate_id: RO:0002436
+        object: van_complex
+        description: >-
+          Drug action: vancomycin binds the D-Ala-D-Ala terminus with Kd = 54 microM. This is the interaction the depsipeptide degrades.
+        evidence:
+          - reference: PMID:1931965
+            snippet: "The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance."
+            notes: "The same sentence carries both arms: the drug's normal affinity and its loss."
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0
