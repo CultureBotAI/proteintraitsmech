@@ -148,6 +148,52 @@ def test_page_ranges_become_en_dashes():
 
 
 @pytest.mark.parametrize("damaged,restored", [
+    # the two real corpus cases (#139): a word joined to an all-caps acronym. The mark
+    # sits between two chemical/protein names, where a dash is the only reading.
+    ("Methylglyoxal" + FFFD + "GSH hemithioacetal", "Methylglyoxal–GSH hemithioacetal"),
+    ("ferredoxin" + FFFD + "NADP+ reductase", "ferredoxin–NADP+ reductase"),
+    # a CamelCase second word still works — the case the rule already handled
+    ("some" + FFFD + "Domain protein", "some–Domain protein"),
+])
+def test_word_to_capitalised_word_becomes_en_dash(damaged, restored):
+    """A word before a capitalised word or acronym: the mark is a dash.
+
+    The rule used to require a lowercase second letter, so it silently missed acronyms
+    like GSH and NADP even though its own example named `Methylglyoxal<F>GSH`.
+    """
+    assert repair_lossy(damaged) == restored
+
+
+# Every repair rule carries an inline example in `lossy_text_errata`. Each one is
+# repeated here so the example is CHECKED rather than merely asserted in a comment.
+RULE_EXAMPLES = [
+    ("_ARROW", "3'" + FFFD + "5'", "3'→5'"),
+    ("_APOSTROPHE", "Earth" + FFFD + "s", "Earth’s"),
+    ("_PRIME", "3" + FFFD + "-5" + FFFD, "3′-5′"),
+    ("_RANGE_DASH", "16402" + FFFD + "16403", "16402–16403"),
+    ("_CHEM_HYPHEN", "2" + FFFD + "oxoglutarate", "2-oxoglutarate"),
+    ("_WORD_DASH", "Methylglyoxal" + FFFD + "GSH", "Methylglyoxal–GSH"),
+    ("_SPACED_DASH", "clause " + FFFD + " dash", "clause—dash"),
+]
+
+
+@pytest.mark.parametrize("rule,damaged,restored",
+                         RULE_EXAMPLES, ids=[r[0] for r in RULE_EXAMPLES])
+def test_every_rule_repairs_its_own_documented_example(rule, damaged, restored):
+    """Each rule's inline example must actually be repaired by that rule (#182).
+
+    This is the invariant form of the per-shape tests above, and it exists because the
+    comment on a rule is a promise nothing was checking. `_WORD_DASH` carried the example
+    `Methylglyoxal<F>GSH` while its pattern required a lowercase second letter, so it
+    never matched the acronym it claimed to handle and two records kept a visible U+FFFD
+    (#139). A rule whose example drifts from its behaviour now fails here instead of
+    going unnoticed until someone greps the corpus.
+    """
+    assert repair_lossy(damaged) == restored
+    assert FFFD not in repair_lossy(damaged)
+
+
+@pytest.mark.parametrize("damaged,restored", [
     ("Hyyryl" + FFFD + "inen H", "Hyyryläinen H"),
     ("Oppeg" + FFFD + "rd C", "Oppegård C"),
     ("S" + FFFD + "rensen", "Sørensen"),
