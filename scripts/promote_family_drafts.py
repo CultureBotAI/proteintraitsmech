@@ -116,7 +116,159 @@ def _fq_shared_nodes(qrdr_label: str, qrdr_description: str) -> list:
     ]
 
 
+# ---------------------------------------------------------------------------------------
+# The VanS-VanR regulatory arm, shared by both halves of the two-component system. Every
+# snippet is from PMID:1556077 (Arthur, Molinas & Courvalin 1992), which characterised the
+# system and mapped the promoter it activates.
+#
+# THESE TWO FAMILIES CONFER NO RESISTANCE THEMSELVES. They switch on the genes that do —
+# and those genes are already curated records in this corpus, so the downstream nodes are
+# ARO:3000006 (vanH, round 21) and ARO:3000011 (vanX, round 20) rather than free-text
+# labels. This is the first round whose graphs point at earlier rounds' output.
+_VANRS_REG = 'Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR two-component regulatory system encoded by the proximal part of the cluster.'
+_VANRS_PROMOTER = 'Analysis of transcriptional fusions with a reporter gene and RNA mapping indicated that the VanR-VanS two-component regulatory system activates a promoter used for cotranscription of the vanH, vanA, and vanX resistance genes.'
+_VANRS_NECESSARY = 'The distal part of the van cluster encodes VanH, VanA, and a third enzyme, VanX, all of which are necessary for resistance.'
+_VANRS_INDUCIBLE = 'Plasmid pIP816 of Enterococcus faecium BM4147 confers inducible resistance to vancomycin and encodes the VanH dehydrogenase and the VanA ligase for synthesis of depsipeptide-containing peptidoglycan precursors which bind the antibiotic with reduced affinity.'
+
+
+def _vanrs_downstream() -> tuple[list, list]:
+    """The half of the graph that is identical for vanR and vanS: transcription of the
+    resistance operon, and the two enzyme records that operon encodes."""
+    nodes = [
+        {"node_id": "transcription",
+         "label": "positive regulation of DNA-templated transcription (the vanHAX promoter)",
+         "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0045893"},
+        {"node_id": "vanh_gene", "label": "vanH (D-lactate dehydrogenase of the van cluster)",
+         "node_type": "PROTEIN", "grounding": "ARO:3000006",
+         "description": "KB record, curated in round 21 — the mechanism this regulator switches on."},
+        {"node_id": "vanx_gene", "label": "vanX (D,D-dipeptidase of the van cluster)",
+         "node_type": "PROTEIN", "grounding": "ARO:3000011",
+         "description": "KB record, curated in round 20."},
+    ]
+    edges = [
+        {"subject": "transcription", "object": "vanh_gene",
+         "predicate": "positively regulates (cotranscribed from the induced promoter)",
+         "predicate_id": "RO:0002213",
+         "evidence": [{"reference": "PMID:1556077", "snippet": _VANRS_PROMOTER,
+                       "notes": "Arthur et al. 1992 mapped the promoter by transcriptional fusion and RNA mapping; vanH is one of the three genes cotranscribed from it."}]},
+        {"subject": "transcription", "object": "vanx_gene",
+         "predicate": "positively regulates (cotranscribed from the induced promoter)",
+         "predicate_id": "RO:0002213",
+         "evidence": [{"reference": "PMID:1556077", "snippet": _VANRS_PROMOTER,
+                       "notes": "Same promoter, same experiment; vanX is the third gene of the cotranscript."}]},
+        {"subject": "vanh_gene", "object": "resistance",
+         "predicate": "causally upstream of (the mechanism this regulator induces)",
+         "predicate_id": "RO:0002411",
+         "description": "The regulator confers no resistance itself; the enzymes it induces do.",
+         "evidence": [{"reference": "PMID:1556077", "snippet": _VANRS_NECESSARY,
+                       "notes": "Arthur et al. 1992. VanH's own mechanism is curated on ARO:3000006 (round 21)."}]},
+        {"subject": "vanx_gene", "object": "resistance",
+         "predicate": "causally upstream of (the mechanism this regulator induces)",
+         "predicate_id": "RO:0002411",
+         "description": "The regulator confers no resistance itself; the enzymes it induces do.",
+         "evidence": [{"reference": "PMID:1556077", "snippet": _VANRS_NECESSARY,
+                       "notes": "Arthur et al. 1992. VanX's own mechanism is curated on ARO:3000011 (round 20)."}]},
+    ]
+    return nodes, edges
+
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # vanR — the response regulator (ARO:3000574). A FOURTH kind of mechanism: regulation.
+    # vanR neither destroys the drug, nor alters a target, nor remodels a precursor — it
+    # transcribes the genes that do. So its graph ends at ARO:3000006 / ARO:3000011, whose
+    # own mechanisms are curated, rather than restating them.
+    "ARO:3000574": {
+        "curated": "2026-08-06T00:00:00Z",
+        "reference": "PMID:1556077",        # Arthur, Molinas & Courvalin 1992, J Bacteriol
+        "mech": {"ARO:3000213": _VANRS_REG},
+        "mech_res": _VANRS_REG,
+        "det_res": [
+            {"reference": "PMID:1556077", "snippet": 'VanR was a transcriptional activator related to response regulators of the OmpR subclass.',
+             "notes": "Arthur et al. 1992. VanR is a transcriptional activator, not a resistance enzyme."},
+            {"reference": "PMID:1556077", "snippet": _VANRS_NECESSARY,
+             "notes": "What it activates is what confers resistance: the resistance step is one edge further down this graph, on ARO:3000006 and ARO:3000011."},
+        ],
+        "res_drug": _VANRS_INDUCIBLE,
+        "note": "Regulation, not resistance: VanR activates the promoter of the vanHAX operon, and resistance is inducible for that reason.",
+        "extra_nodes": _vanrs_downstream()[0] + [
+            {"node_id": "family", "label": "VanR-ABDEGLN family response regulator transcription factor",
+             "node_type": "PROTEIN", "grounding": "NCBIfam:NF033117",
+             "description": "KB protein-trait record for the VanR family. A family, not a domain — hence `member of`."},
+            {"node_id": "activity", "label": "phosphorelay response regulator activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0000156"},
+        ],
+        "extra_edges": _vanrs_downstream()[1] + [
+            {"subject": "determinant", "object": "family",
+             "predicate": "member of (the VanR response-regulator family)", "predicate_id": "RO:0002350",
+             "evidence": [
+                 {"reference": "PMID:1556077", "snippet": 'VanR was a transcriptional activator related to response regulators of the OmpR subclass.',
+                  "notes": "Establishes what VanR is."},
+                 {"reference": "NCBIfam:NF033117", "snippet": "VanR-ABDEGLN family response regulator transcription factor",
+                  "notes": "NCBIfam's own product name for the profile-HMM family this node grounds to; the join with the paper is stated rather than implied. NOT the KB record's definition, which this repo composes."},
+             ]},
+            {"subject": "family", "object": "activity",
+             "predicate": "enables (response-regulator phosphorelay)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:1556077", "snippet": 'VanS stimulated VanR-dependent transcription and was related to membrane-associated histidine protein kinases which control the level of phosphorylation of response regulators.',
+                           "notes": "Named here from the kinase's side: VanS controls the phosphorylation level of response regulators, of which VanR is one."}]},
+            {"subject": "activity", "object": "transcription",
+             "predicate": "causally upstream of (activates the promoter)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:1556077", "snippet": _VANRS_PROMOTER,
+                           "notes": "Arthur et al. 1992."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
+    # vanS — the sensor histidine kinase (ARO:3000071). Same downstream half as vanR; the
+    # difference is upstream, where VanS phosphorylates rather than being phosphorylated.
+    "ARO:3000071": {
+        "curated": "2026-08-06T00:00:00Z",
+        "reference": "PMID:1556077",
+        "mech": {"ARO:3000213": _VANRS_REG},
+        "mech_res": _VANRS_REG,
+        "det_res": [
+            {"reference": "PMID:1556077", "snippet": 'VanS stimulated VanR-dependent transcription and was related to membrane-associated histidine protein kinases which control the level of phosphorylation of response regulators.',
+             "notes": "Arthur et al. 1992. VanS is a sensor kinase, not a resistance enzyme."},
+            {"reference": "PMID:1556077", "snippet": _VANRS_NECESSARY,
+             "notes": "What it ultimately switches on is what confers resistance."},
+        ],
+        "res_drug": _VANRS_INDUCIBLE,
+        "note": "Regulation, not resistance: VanS stimulates VanR-dependent transcription of the vanHAX operon.",
+        "extra_nodes": _vanrs_downstream()[0] + [
+            {"node_id": "family", "label": "vancomycin resistance histidine kinase VanS",
+             "node_type": "PROTEIN", "grounding": "NCBIfam:NF033091",
+             "description": "KB protein-trait record for the VanS family. A family, not a domain — hence `member of`."},
+            {"node_id": "activity", "label": "phosphorelay sensor kinase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0000155"},
+            {"node_id": "vanr_protein", "label": "VanR response regulator", "node_type": "PROTEIN",
+             "grounding": "ARO:3000574",
+             "description": "KB record for the partner regulator, curated in the same round."},
+        ],
+        "extra_edges": _vanrs_downstream()[1] + [
+            {"subject": "determinant", "object": "family",
+             "predicate": "member of (the VanS sensor-kinase family)", "predicate_id": "RO:0002350",
+             "evidence": [
+                 {"reference": "PMID:1556077", "snippet": 'VanS stimulated VanR-dependent transcription and was related to membrane-associated histidine protein kinases which control the level of phosphorylation of response regulators.',
+                  "notes": "Establishes what VanS is."},
+                 {"reference": "NCBIfam:NF033091", "snippet": "vancomycin resistance histidine kinase VanS",
+                  "notes": "NCBIfam's own product name for the profile-HMM family this node grounds to. NOT the KB record's definition, which this repo composes."},
+             ]},
+            {"subject": "family", "object": "activity",
+             "predicate": "enables (sensor histidine kinase phosphorelay)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:1556077", "snippet": 'VanS stimulated VanR-dependent transcription and was related to membrane-associated histidine protein kinases which control the level of phosphorylation of response regulators.',
+                           "notes": "Arthur et al. 1992: related to membrane-associated histidine protein kinases that control response-regulator phosphorylation."}]},
+            {"subject": "activity", "object": "vanr_protein",
+             "predicate": "positively regulates (phosphorylates the partner regulator)",
+             "predicate_id": "RO:0002213",
+             "description": "The phosphorelay step: VanS controls VanR's phosphorylation level, and VanR is what binds the promoter.",
+             "evidence": [{"reference": "PMID:1556077", "snippet": 'VanS stimulated VanR-dependent transcription and was related to membrane-associated histidine protein kinases which control the level of phosphorylation of response regulators.',
+                           "notes": "The paper states the stimulation and the kinase relationship; it does not report a direct phosphotransfer assay, so the edge claims regulation rather than a measured transfer."}]},
+            {"subject": "vanr_protein", "object": "transcription",
+             "predicate": "causally upstream of (activates the promoter)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:1556077", "snippet": _VANRS_PROMOTER,
+                           "notes": "Arthur et al. 1992."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # vanH — the OTHER end of the depsipeptide pathway (ARO:3000006). vanX (round 20)
     # removes the drug's binding target; vanH supplies the D-hydroxy acid that the
