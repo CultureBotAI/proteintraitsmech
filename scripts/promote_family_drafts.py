@@ -168,6 +168,47 @@ def _requires_vanhax(ident: str, label: str, text: str):
                 f"downstream nodes name both")
     return None
 
+
+def _vanrs_ser_downstream() -> tuple[list, list]:
+    """The D-Ala-D-Ser clusters' regulon: the ligase, vanT and vanXY (#208).
+
+    Same two-component evidence as the vanH/vanX variant -- PMID:1556077 characterised the
+    system -- but the genes it induces are this cluster's, and all three are now curated
+    records (round 23), so the graph points at them instead of restating their chemistry.
+    """
+    nodes = [
+        {"node_id": "transcription",
+         "label": "positive regulation of DNA-templated transcription (the van resistance operon)",
+         "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0045893"},
+        {"node_id": "ligase_gene", "label": "D-Ala-D-Ser ligase of the van cluster",
+         "node_type": "PROTEIN", "grounding": "ARO:3002979",
+         "description": "KB record, curated in round 23."},
+        {"node_id": "vant_gene", "label": "vanT (membrane serine racemase of the van cluster)",
+         "node_type": "PROTEIN", "grounding": "ARO:3000372",
+         "description": "KB record, curated in round 23."},
+        {"node_id": "vanxy_gene", "label": "vanXY (D,D-dipeptidase/carboxypeptidase of the van cluster)",
+         "node_type": "PROTEIN", "grounding": "ARO:3000496",
+         "description": "KB record, curated in round 23."},
+    ]
+    edges = []
+    for node, what in (("ligase_gene", "the D-Ala-D-Ser ligase"),
+                       ("vant_gene", "vanT"), ("vanxy_gene", "vanXY")):
+        edges.append(
+            {"subject": "transcription", "object": node,
+             "predicate": "positively regulates (induced with the resistance operon)",
+             "predicate_id": "RO:0002213",
+             "evidence": [{"reference": "PMID:1556077", "snippet": _VANRS_REG,
+                           "notes": f"Arthur et al. 1992 established that the two-component system regulates the resistance enzymes at the transcriptional level; in a D-Ala-D-Ser cluster {what} is one of them."}]})
+        edges.append(
+            {"subject": node, "object": "resistance",
+             "predicate": "causally upstream of (the mechanism this regulator induces)",
+             "predicate_id": "RO:0002411",
+             "description": "The regulator confers no resistance itself; the enzymes it induces do.",
+             "evidence": [{"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+                           "notes": f"Arias et al. 2000: the three genes sufficient for VanC-type resistance, of which {what} is one. Its own mechanism is curated on its record."}]})
+    return nodes, edges
+
+
 def _requires_ser_cluster(ident: str, label: str, text: str):
     """These configs describe the D-Ala-D-SER route, so refuse a D-Ala-D-Lac cluster.
 
@@ -427,7 +468,8 @@ FAMILY_SNIPPETS = {
     # vanR neither destroys the drug, nor alters a target, nor remodels a precursor — it
     # transcribes the genes that do. So its graph ends at ARO:3000006 / ARO:3000011, whose
     # own mechanisms are curated, rather than restating them.
-    "ARO:3000574": {
+    "ARO:3000574": [
+    {
         "curated": "2026-08-06T00:00:00Z",
         # Was a hand-written list of 12 ARO ids; now DERIVED from the corpus (#201). The
         # evidence is VanA-type (PMID:1556077, Tn1546/pIP816) and the downstream nodes are
@@ -471,10 +513,42 @@ FAMILY_SNIPPETS = {
                            "notes": "Arthur et al. 1992."}]},
         ],
     },
+        {
+            "curated": "2026-08-06T00:00:00Z",
+            "precondition": _requires_ser_cluster,
+            "reference": "PMID:1556077",
+            "mech": {"ARO:3000213": _VANRS_REG},
+            "mech_res": _VANRS_REG,
+            "det_res": [
+                {"reference": "PMID:1556077", "snippet": _VANRS_REG,
+                 "notes": "Arthur et al. 1992. vanR is part of the two-component system that regulates the resistance enzymes; it is not one of them."},
+                {"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+                 "notes": "In a D-Ala-D-Ser cluster the enzymes it induces are the ligase, vanT and vanXY -- all three curated records (round 23)."},
+            ],
+            "res_drug": _VANRS_INDUCIBLE,
+            "note": "Regulation, not resistance, in a D-Ala-D-Ser cluster: the operon it induces is the ligase, vanT and vanXY.",
+            "extra_nodes": _vanrs_ser_downstream()[0] + [
+                {"node_id": "family", "label": "VanR-ABDEGLN family response regulator transcription factor",
+                 "node_type": "PROTEIN", "grounding": "NCBIfam:NF033117",
+                 "description": "KB protein-trait record for the vanR family."},
+            ],
+            "extra_edges": _vanrs_ser_downstream()[1] + [
+                {"subject": "determinant", "object": "family",
+                 "predicate": "member of (the vanR family)", "predicate_id": "RO:0002350",
+                 "evidence": [
+                     {"reference": "PMID:1556077", "snippet": _VANRS_REG,
+                      "notes": "Establishes the two-component system this determinant belongs to."},
+                     {"reference": "NCBIfam:NF033117", "snippet": "VanR-ABDEGLN family response regulator transcription factor",
+                      "notes": "NCBIfam's own product name for the family this node grounds to."},
+                 ]},
+            ],
+        },
+    ],
     # ---------------------------------------------------------------------------------
     # vanS — the sensor histidine kinase (ARO:3000071). Same downstream half as vanR; the
     # difference is upstream, where VanS phosphorylates rather than being phosphorylated.
-    "ARO:3000071": {
+    "ARO:3000071": [
+    {
         "curated": "2026-08-06T00:00:00Z",
         # Was a hand-written list of 12 ARO ids; now DERIVED from the corpus (#201). The
         # evidence is VanA-type (PMID:1556077, Tn1546/pIP816) and the downstream nodes are
@@ -527,6 +601,37 @@ FAMILY_SNIPPETS = {
                            "notes": "Arthur et al. 1992."}]},
         ],
     },
+        {
+            "curated": "2026-08-06T00:00:00Z",
+            "precondition": _requires_ser_cluster,
+            "reference": "PMID:1556077",
+            "mech": {"ARO:3000213": _VANRS_REG},
+            "mech_res": _VANRS_REG,
+            "det_res": [
+                {"reference": "PMID:1556077", "snippet": _VANRS_REG,
+                 "notes": "Arthur et al. 1992. vanS is part of the two-component system that regulates the resistance enzymes; it is not one of them."},
+                {"reference": "PMID:10817725", "snippet": _SER_CLUSTER,
+                 "notes": "In a D-Ala-D-Ser cluster the enzymes it induces are the ligase, vanT and vanXY -- all three curated records (round 23)."},
+            ],
+            "res_drug": _VANRS_INDUCIBLE,
+            "note": "Regulation, not resistance, in a D-Ala-D-Ser cluster: the operon it induces is the ligase, vanT and vanXY.",
+            "extra_nodes": _vanrs_ser_downstream()[0] + [
+                {"node_id": "family", "label": "vancomycin resistance histidine kinase VanS",
+                 "node_type": "PROTEIN", "grounding": "NCBIfam:NF033091",
+                 "description": "KB protein-trait record for the vanS family."},
+            ],
+            "extra_edges": _vanrs_ser_downstream()[1] + [
+                {"subject": "determinant", "object": "family",
+                 "predicate": "member of (the vanS family)", "predicate_id": "RO:0002350",
+                 "evidence": [
+                     {"reference": "PMID:1556077", "snippet": _VANRS_REG,
+                      "notes": "Establishes the two-component system this determinant belongs to."},
+                     {"reference": "NCBIfam:NF033091", "snippet": "vancomycin resistance histidine kinase VanS",
+                      "notes": "NCBIfam's own product name for the family this node grounds to."},
+                 ]},
+            ],
+        },
+    ],
     # ---------------------------------------------------------------------------------
     # vanH — the OTHER end of the depsipeptide pathway (ARO:3000006). vanX (round 20)
     # removes the drug's binding target; vanH supplies the D-hydroxy acid that the
@@ -1659,6 +1764,48 @@ def _candidates(family: str, terms: dict) -> list:
     return out
 
 
+def family_configs(family: str) -> list:
+    """A family's config, or its configs — plural where one family spans two mechanisms.
+
+    `vanR`/`vanS` are one ARO family each but sit in BOTH van routes: the D-Ala-D-Lac
+    clusters induce vanH + vanX, the D-Ala-D-Ser clusters induce the ligase, vanT and
+    vanXY. The right downstream is a property of the RECORD, not of the family, so a
+    single config per family id cannot serve them (#208).
+
+    The selector is the `precondition` each config already carries for #201 — the same
+    predicate that refuses a record is what chooses between configs, so nothing new has to
+    be written to make this work.
+    """
+    entry = FAMILY_SNIPPETS.get(family)
+    if entry is None:
+        return []
+    return list(entry) if isinstance(entry, list) else [entry]
+
+
+def config_for(family: str, ident: str, label: str, text: str):
+    """The first config whose precondition passes, or None if every one refuses.
+
+    A config without a precondition matches everything, so it must be last in the list —
+    `_check_config_order` asserts that at import rather than letting a catch-all silently
+    shadow a specific config.
+    """
+    for cfg in family_configs(family):
+        pre = cfg.get("precondition")
+        if pre is None or pre(ident, label, text) is None:
+            return cfg
+    return None
+
+
+def _check_config_order() -> None:
+    for fam in FAMILY_SNIPPETS:
+        cfgs = family_configs(fam)
+        for cfg in cfgs[:-1]:
+            if cfg.get("precondition") is None:
+                raise ValueError(
+                    f"{fam}: a config with no precondition matches every record, so it "
+                    f"must be last; one before it would silently shadow the rest")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--family", help="family ARO id (must be in FAMILY_SNIPPETS)")
@@ -1684,7 +1831,9 @@ def main() -> int:
         terms = E.parse_obo(E.OBO)
         total = 0
         for fam in FAMILY_SNIPPETS:
-            total += verify(fam, FAMILY_SNIPPETS[fam], terms, _candidates(fam, terms))
+            cands = _candidates(fam, terms)
+            for cfg_i in family_configs(fam):
+                total += verify(fam, cfg_i, terms, cands)
         print(f"\n--verify-all: {len(FAMILY_SNIPPETS)} families, {total} problem(s) "
               f"(precondition skips are expected and do not count)")
         return 1 if total else 0
@@ -1696,7 +1845,9 @@ def main() -> int:
     names = D.obo_names(D.OBO)
 
     if args.verify:
-        return 1 if verify(args.family, cfg, terms, _candidates(args.family, terms)) else 0
+        cands = _candidates(args.family, terms)
+        return 1 if sum(verify(args.family, c, terms, cands)
+                        for c in family_configs(args.family)) else 0
 
     promoted = repromoted = skip_done = skip_nodraft = skip_excluded = 0
     skip_unreadable = 0
@@ -1707,24 +1858,27 @@ def main() -> int:
             continue
         if args.family not in E.ancestry(terms, ident_m.group(1)):
             continue
-        if ident_m.group(1) in cfg.get("exclude", ()):
-            # a descendant whose mechanism the family config does NOT describe. Named per
-            # family rather than filtered by a rule, because the reason differs each time
-            # and "why is this one not promoted" should be answerable from the config.
+        label_for_cfg = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M)
+        label_text = label_for_cfg.group(1) if label_for_cfg else ""
+        # SELECT the config first, then apply its exclusions. A family may carry several
+        # configs (#208) -- vanR/vanS span both van routes -- and the `precondition` each
+        # already has for #201 is the selector: the predicate that refuses a record is
+        # what chooses between configs.
+        record_cfg = config_for(args.family, ident_m.group(1), label_text, text)
+        if record_cfg is None:
+            if not args.apply:
+                reasons = [c["precondition"](ident_m.group(1), label_text, text)
+                           for c in family_configs(args.family)]
+                print(f"  precondition skip: {ident_m.group(1)} — "
+                      f"{'; '.join(r for r in reasons if r)}")
             skip_excluded += 1
             continue
-        pre = cfg.get("precondition")
-        if pre:
-            # the same exclusion, DERIVED rather than listed. A hand-maintained `exclude`
-            # tuple is correct only until the corpus changes under it; a predicate is
-            # re-evaluated every run (#201).
-            label_m = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M)
-            reason = pre(ident_m.group(1), label_m.group(1) if label_m else "", text)
-            if reason:
-                if not args.apply:
-                    print(f"  precondition skip: {ident_m.group(1)} — {reason}")
-                skip_excluded += 1
-                continue
+        if ident_m.group(1) in record_cfg.get("exclude", ()):
+            # a descendant this config's mechanism does NOT describe, named rather than
+            # derived because the reason differs each time and "why is this one not
+            # promoted" should be answerable from the config.
+            skip_excluded += 1
+            continue
         is_draft = "graph_id: resistance-draft" in text
         # This promoter's own output is identified STRUCTURALLY -- by the graph id it
         # writes and the curator it stamps -- not by prose in a curation_history sentence
@@ -1755,7 +1909,7 @@ def main() -> int:
         label = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M).group(1)
         mech, drug = D.parse_relations(text)
         try:
-            graph = promoted_graph_dict(ident, label, mech, drug, names, cfg, terms)
+            graph = promoted_graph_dict(ident, label, mech, drug, names, record_cfg, terms)
         except UncoveredMechanism as exc:
             # the config has no snippet for this member's mechanism. Skipping is the only
             # honest option: the alternative was writing a different mechanism's evidence.
@@ -1796,7 +1950,7 @@ def main() -> int:
                   if g.get("graph_id") not in OWNED_GRAPH_IDS]
         graphs.append(graph)
         history = list(doc.get("curation_history") or [])
-        event = curation_entry(cfg)
+        event = curation_entry(record_cfg)
         if event not in history:
             history.append(event)
         new = RIO.replace_block(text, "causal_graphs", "\n".join(_dump({"causal_graphs": graphs})))
@@ -1823,6 +1977,9 @@ def main() -> int:
           f" | skipped (unreadable): {skip_unreadable:,}")
     print("APPLIED." if args.apply else "Dry-run — pass --apply to write.")
     return 0
+
+
+_check_config_order()
 
 
 if __name__ == "__main__":
