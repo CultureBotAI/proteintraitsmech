@@ -494,3 +494,18 @@ def test_promoting_a_draft_removes_the_draft_graph():
     graphs = [{"graph_id": "resistance-draft"}, {"graph_id": "reaction_chemistry"}]
     kept = [g for g in graphs if g.get("graph_id") not in promote.OWNED_GRAPH_IDS]
     assert [g["graph_id"] for g in kept] == ["reaction_chemistry"]
+
+
+def test_a_duplicated_causal_graphs_key_is_refused_not_silently_collapsed():
+    """`yaml.safe_load` keeps the LAST duplicate block and discards the earlier one.
+
+    Merging through a loader would therefore quietly delete graphs on exactly the
+    corrupted record `record_io.graph_ids` was written to catch. 0 records carry a
+    duplicate today; the point is not to be the tool that hides it.
+    """
+    dup = ("identifier: ARO:3009999\n"
+           "causal_graphs:\n- graph_id: a\n"
+           "causal_graphs:\n- graph_id: b\n"
+           "license: CC-BY 4.0\n")
+    with pytest.raises(promote.RIO.RecordError):
+        promote.RIO.graph_ids(dup)

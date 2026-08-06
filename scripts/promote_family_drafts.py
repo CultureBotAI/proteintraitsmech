@@ -1527,7 +1527,22 @@ def main() -> int:
         #     one event no matter how many times it has been promoted.
         # Neither loss is visible in the diff of a record that only ever had our graph,
         # which is why it survived six rounds.
-        doc = yaml.safe_load(text) or {}
+        # `record_io.graph_ids` raises on a duplicated top-level `causal_graphs:` key, and
+        # that check has to come FIRST: `yaml.safe_load` silently keeps the LAST such block
+        # and discards the earlier one, so merging through a loader would quietly delete
+        # graphs on exactly the corrupted record record_io was written to catch. 0 records
+        # carry a duplicate today; the point is not to be the tool that hides it.
+        #
+        # A parse failure is skipped rather than raised: the old line-splice never parsed,
+        # so it could not crash mid-run and leave a partial batch written.
+        try:
+            RIO.graph_ids(text)
+            doc = yaml.safe_load(text) or {}
+        except (RIO.RecordError, yaml.YAMLError) as exc:
+            print(f"  unparseable, skipped: {ident} — {type(exc).__name__}: "
+                  f"{str(exc).splitlines()[0][:90]}")
+            skip_excluded += 1
+            continue
         # BOTH ids, because this promoter owns both: `resistance-draft` is what it
         # consumes and `resistance` is what it produces. Filtering only `resistance` left
         # a promoted draft carrying its own superseded draft graph alongside the curated
