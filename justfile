@@ -569,6 +569,18 @@ draft-aro-causal-graphs *args:
 promote-family-drafts *args:
     python3 scripts/promote_family_drafts.py {{args}}
 
+# Check every family config's claims against the records it would promote (#201).
+# Ancestry says the records are RELATED; it does not say the config's MECHANISM is true
+# of each one, and three rounds shipped or nearly shipped graphs where it was not --
+# every one of them schema-valid, fully grounded and snippet-cited. Two checks: every KB
+# CURIE a config grounds a node to must resolve to a record, and each family's optional
+# `precondition` must hold for every candidate. Writes nothing; exits non-zero on any
+# problem. ~1 minute for all families (the corpus index is built once).
+# LOCAL ONLY -- needs data/raw/aro/aro.obo for ancestry, and data/raw is gitignored, so
+# this cannot run in CI. Run it before a promotion round, not as a merge gate.
+verify-family-drafts *args:
+    python3 scripts/promote_family_drafts.py --verify-all {{args}}
+
 # Download the CATH classification names (C/A/T/H hierarchy nodes; CC-BY 4.0).
 fetch-cath:
     mkdir -p data/raw/cath

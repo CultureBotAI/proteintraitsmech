@@ -306,3 +306,115 @@ def test_the_regulator_families_are_fully_grounded(family):
     blocks = out.split("\n  - node_id: ")[1:]
     ungrounded = [b.splitlines()[0] for b in blocks if "grounding:" not in b]
     assert not ungrounded, f"{family}: label-only nodes {ungrounded}"
+
+
+# --- #201 / #199: the verify guard, and structural self-identification -------------
+
+def test_config_curies_collects_groundings_and_references():
+    curies = promote.config_curies(promote.FAMILY_SNIPPETS["ARO:3000006"])   # vanH
+    assert "NCBIfam:NF000492" in curies          # a node grounding
+    assert not any(c.startswith("PMID") for c in curies)   # papers are not KB records
+
+
+def test_the_vanrs_precondition_derives_the_exclusions_that_were_hand_written():
+    """The 12 records round 22 held back are now DERIVED, not listed (#201).
+
+    A hand-maintained `exclude` tuple is correct only until the corpus changes under it.
+    The predicate asks the corpus the same question every run: does this record's cluster
+    contain the genes my downstream nodes name?
+    """
+    pre = promote.FAMILY_SNIPPETS["ARO:3000574"]["precondition"]
+    # a D-Ala-D-Lac cluster has both, so it passes
+    assert pre("ARO:3002919", "vanR gene in vanA cluster", "") is None
+    # a D-Ala-D-Ser cluster has neither, so it is refused with a reason naming them
+    reason = pre("ARO:3002922", "vanR gene in vanC cluster", "")
+    assert reason and "vanH" in reason and "vanX" in reason
+    # vanI has vanX but no vanH — the partial case, which a letter-based rule would miss.
+    # Assert on the "has no ..." clause, not the whole string: the reason also lists the
+    # genes the cluster DOES have, and vanX is one of them.
+    reason = pre("ARO:3003728", "vanR gene in vanI cluster", "")
+    assert reason and "has no vanH (" in reason and "has no vanH or vanX" not in reason
+    # the family-level record carries no cluster and is the term the evidence describes
+    assert pre("ARO:3000574", "vanR", "") is None
+
+
+def test_neither_van_config_still_carries_a_hand_written_exclude_list():
+    for fam in ("ARO:3000574", "ARO:3000071"):
+        assert "exclude" not in promote.FAMILY_SNIPPETS[fam]
+        assert callable(promote.FAMILY_SNIPPETS[fam]["precondition"])
+
+
+def test_a_precondition_skip_is_not_a_verify_failure():
+    """The guard refusing a record is it WORKING, not a problem to fix.
+
+    vanR/vanS correctly refuse 12 records every run. Counting those as failures would
+    leave `just verify-family-drafts` permanently red, and a gate that is always red is a
+    gate nobody reads. Only an unresolved CURIE — a config grounding a node to something
+    that is not a record — is an error.
+    """
+    cfg = promote.FAMILY_SNIPPETS["ARO:3000574"]
+    candidates = [("ARO:3002922", "vanR gene in vanC cluster", ""),
+                  ("ARO:3002919", "vanR gene in vanA cluster", "")]
+    # seed the corpus index rather than letting `verify` build it: the real one reads one
+    # line from each of 429k files (~70s), which is fine for a pre-round check and absurd
+    # in a unit test. Seeding also makes this hermetic — it tests the exit-code rule, not
+    # what happens to be in data/traits today.
+    promote._IDENTIFIER_INDEX = set(promote.config_curies(cfg))
+    try:
+        assert promote.verify("ARO:3000574", cfg, {}, candidates) == 0
+    finally:
+        promote._IDENTIFIER_INDEX = None
+
+
+def test_config_curies_sees_list_form_standard_edge_evidence():
+    """Since #190 a standard edge may carry a list, and an item can cite a KB record."""
+    cfg = _cfg(det_res=[{"reference": "NCBIfam:NF000492", "snippet": "s", "notes": "n"},
+                        {"reference": "PMID:1", "snippet": "s", "notes": "n"}])
+    curies = promote.config_curies(cfg)
+    assert "NCBIfam:NF000492" in curies and "PMID:1" not in curies
+
+
+# --- Codex review of #202: what five self-review rounds missed --------------------
+
+def test_an_uncovered_mechanism_raises_instead_of_substituting_another_snippet():
+    """The promoter used to write ANOTHER mechanism's evidence and stamp it REVIEWED.
+
+    `cfg["mech"].get(mid) or next(iter(cfg["mech"].values()))` — a family member carrying
+    a mechanism the config has no snippet for silently got the config's *first* snippet,
+    with `notes: Family mechanism <the uncovered id>` asserting a provenance nobody
+    established. 1,044 already-promoted records did (#203); the promotion path now skips.
+    """
+    with pytest.raises(promote.UncoveredMechanism) as exc:
+        _graph(_cfg(), mech=("ARO:3000212", "ARO:9999999"))
+    assert exc.value.mechanism_id == "ARO:9999999"
+
+
+def test_the_van_precondition_fails_closed_on_an_unparsed_cluster_label():
+    """A label that names a cluster but does not parse must be refused, not passed.
+
+    It returned None for any unmatched label, so a future shape (`vanC1`, a case change)
+    would fail OPEN and receive the vanH/vanX graph.
+    """
+    pre = promote.FAMILY_SNIPPETS["ARO:3000574"]["precondition"]
+    assert pre("ARO:X", "vanR gene in vanQ1 cluster", "") is not None
+    assert pre("ARO:X", "vanR", "") is None          # genuinely no cluster: still passes
+
+
+def test_verify_flags_a_family_with_no_candidates_and_a_stale_exclude():
+    """Zero candidates is unchecked, not verified — a renamed family id reads as healthy."""
+    promote._IDENTIFIER_INDEX = set()
+    try:
+        assert promote.verify("ARO:0000000", _cfg(), {}, []) >= 1
+        assert promote.verify("ARO:0000000", _cfg(exclude=("ARO:1234567",)), {},
+                              [("ARO:7654321", "x", "")]) >= 1
+    finally:
+        promote._IDENTIFIER_INDEX = None
+
+
+def test_a_quoted_identifier_is_still_matched():
+    """`identifier: "ARO:3001234"` is valid YAML; the regex used to miss it entirely,
+    silently omitting the record from both verification and promotion."""
+    import re as _re
+    pat = _re.compile(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', _re.M)
+    assert pat.search('identifier: "ARO:3001234"\n').group(1) == "ARO:3001234"
+    assert pat.search("identifier: ARO:3001234\n").group(1) == "ARO:3001234"
