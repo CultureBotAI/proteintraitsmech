@@ -31,6 +31,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import draft_aro_causal_graphs as D            # parse_relations, obo_names, _yq, MAX_DRUGS
 import enrich_aro_resistance as E              # ancestry, parse_obo
+import record_io as RIO                        # replace_block, shared splice rules
 
 ARO_DIR = D.ARO_DIR
 TRAITS_ROOT = Path(__file__).resolve().parent.parent / "data" / "traits"
@@ -1045,8 +1046,8 @@ def _evidence_items(spec, ref: str, note: str) -> list[dict]:
              "notes": i.get("notes", note)} for i in spec]
 
 
-def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, cfg: dict,
-                   terms: dict | None = None) -> list[str]:
+def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: dict,
+                        cfg: dict, terms: dict | None = None) -> dict:
     """Build the curated graph as data, then let PyYAML lay it out (#194).
 
     This used to concatenate indented strings by hand, which drifted from the layout the
@@ -1174,8 +1175,17 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
         "nodes": nodes,
         "edges": edges,
     }
-    return yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False, allow_unicode=True,
-                          width=100, default_flow_style=False).splitlines()
+    return graph
+
+
+def promoted_graph(*args, **kwargs) -> list[str]:
+    """The graph as YAML lines — `causal_graphs:` with this one graph under it."""
+    return _dump({"causal_graphs": [promoted_graph_dict(*args, **kwargs)]})
+
+
+def _dump(obj) -> list[str]:
+    return yaml.safe_dump(obj, sort_keys=False, allow_unicode=True, width=100,
+                          default_flow_style=False).splitlines()
 
 
 # ---------------------------------------------------------------------------------------
@@ -1349,6 +1359,10 @@ def _drug_assertion(ident: str, did: str, terms: dict):
     return None
 
 
+# The graph ids this promoter owns: the draft it consumes and the graph it produces.
+OWNED_GRAPH_IDS = frozenset({"resistance", "resistance-draft"})
+
+
 class UncoveredMechanism(Exception):
     """A candidate carries a mechanism the family config has no snippet for."""
 
@@ -1375,14 +1389,18 @@ def _edge(subject: str, predicate: str, predicate_id: str, obj: str, ref: str, s
 LEGACY_PROMOTION = "2026-07-21T00:00:00Z"
 
 
-def curation_event(cfg: dict) -> list[str]:
-    return yaml.safe_dump({"curation_history": [{
+def curation_entry(cfg: dict) -> dict:
+    return {
         "timestamp": cfg.get("curated", LEGACY_PROMOTION),
         "curator": "edison-causal-graphs",
         "action": ("Promoted auto-draft to curated causal_graphs with family verbatim "
                    "snippets; SEEDED -> REVIEWED"),
-        "llm_assisted": True}]}, sort_keys=False, allow_unicode=True,
-        width=100, default_flow_style=False).splitlines()
+        "llm_assisted": True,
+    }
+
+
+def curation_event(cfg: dict) -> list[str]:
+    return _dump({"curation_history": [curation_entry(cfg)]})
 
 
 
@@ -1404,9 +1422,12 @@ def main() -> int:
     ap.add_argument("--family", help="family ARO id (must be in FAMILY_SNIPPETS)")
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--drafts-only", action="store_true",
-                    help="only promote resistance-draft graphs; never re-promote already-"
-                         "curated members (use for broad class/family nodes so they don't "
-                         "overwrite more-specific family configs)")
+                    help="accepted for compatibility and now the DEFAULT; see --repromote")
+    ap.add_argument("--repromote", action="store_true",
+                    help="also rewrite this promoter's own existing `resistance` graphs "
+                         "(needed after a config change). Off by default: rewriting a "
+                         "graph a curator may have improved is destructive, and the safe "
+                         "behaviour should not depend on remembering a flag (#204)")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--verify", action="store_true",
                     help="check the config's claims against the records it would promote "
@@ -1436,6 +1457,7 @@ def main() -> int:
         return 1 if verify(args.family, cfg, terms, _candidates(args.family, terms)) else 0
 
     promoted = repromoted = skip_done = skip_nodraft = skip_excluded = 0
+    skip_unreadable = 0
     for pth in sorted(ARO_DIR.glob("*.yaml")):
         text = pth.read_text(encoding="utf-8")
         ident_m = re.search(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', text, re.M)
@@ -1479,27 +1501,65 @@ def main() -> int:
                    and "curator: edison-causal-graphs" in text)
         if is_draft:
             pass                                                # a draft → promote
-        elif is_ours and not args.drafts_only:
-            pass                                                # re-promote our own output (config change)
+        elif is_ours and args.repromote:
+            pass                                # re-promote our own output (config change)
         else:
-            skip_done += 1                                       # hand-curated / already-curated (drafts-only) → never clobber
+            # already curated, and re-promotion was not asked for. Was the default until
+            # #204: a curator who improves a promoted graph and leaves the history entry
+            # in place had that work silently rewritten by the next --apply.
+            skip_done += 1
             continue
         ident = ident_m.group(1)
         label = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M).group(1)
         mech, drug = D.parse_relations(text)
         try:
-            block = promoted_graph(ident, label, mech, drug, names, cfg, terms)
+            graph = promoted_graph_dict(ident, label, mech, drug, names, cfg, terms)
         except UncoveredMechanism as exc:
             # the config has no snippet for this member's mechanism. Skipping is the only
             # honest option: the alternative was writing a different mechanism's evidence.
             print(f"  mechanism skip: {ident} — no snippet for {exc.mechanism_id}")
             skip_excluded += 1
             continue
-        lines = text.splitlines()
-        cg = next(i for i, ln in enumerate(lines) if ln.startswith("causal_graphs:"))
-        lic = next(i for i, ln in enumerate(lines) if ln.startswith("license:"))
-        new_lines = lines[:cg] + block + curation_event(cfg) + lines[lic:]
-        new = "\n".join(new_lines) + "\n"
+        # MERGE, never splice-and-replace (#204). The old write took every line between
+        # `causal_graphs:` and `license:` and threw it away, which destroys
+        #   * any OTHER graph on the record -- a builder's `reaction_chemistry`, a
+        #     curator's hand-written one -- because they live in the same section, and
+        #   * the whole curation_history, which is why every promoted record has exactly
+        #     one event no matter how many times it has been promoted.
+        # Neither loss is visible in the diff of a record that only ever had our graph,
+        # which is why it survived six rounds.
+        # `record_io.graph_ids` raises on a duplicated top-level `causal_graphs:` key, and
+        # that check has to come FIRST: `yaml.safe_load` silently keeps the LAST such block
+        # and discards the earlier one, so merging through a loader would quietly delete
+        # graphs on exactly the corrupted record record_io was written to catch. 0 records
+        # carry a duplicate today; the point is not to be the tool that hides it.
+        #
+        # A parse failure is skipped rather than raised: the old line-splice never parsed,
+        # so it could not crash mid-run and leave a partial batch written.
+        try:
+            RIO.graph_ids(text)
+            doc = yaml.safe_load(text) or {}
+        except (RIO.RecordError, yaml.YAMLError) as exc:
+            print(f"  unparseable, skipped: {ident} — {type(exc).__name__}: "
+                  f"{str(exc).splitlines()[0][:90]}")
+            skip_unreadable += 1
+            continue
+        # BOTH ids, because this promoter owns both: `resistance-draft` is what it
+        # consumes and `resistance` is what it produces. Filtering only `resistance` left
+        # a promoted draft carrying its own superseded draft graph alongside the curated
+        # one -- caught in review because the canary had exercised the RE-promote path
+        # (where the graph is already `resistance`) and not the primary promote-a-draft
+        # path, which is the one that runs 1,133 more times.
+        graphs = [g for g in (doc.get("causal_graphs") or [])
+                  if g.get("graph_id") not in OWNED_GRAPH_IDS]
+        graphs.append(graph)
+        history = list(doc.get("curation_history") or [])
+        event = curation_entry(cfg)
+        if event not in history:
+            history.append(event)
+        new = RIO.replace_block(text, "causal_graphs", "\n".join(_dump({"causal_graphs": graphs})))
+        new = RIO.replace_block(new, "curation_history",
+                                "\n".join(_dump({"curation_history": history})))
         new = re.sub(r"^mapping_status: SEEDED$", "mapping_status: REVIEWED", new, flags=re.M)
         if args.apply:
             pth.write_text(new, encoding="utf-8")
@@ -1517,7 +1577,8 @@ def main() -> int:
           f"({fresh:,} draft{'' if fresh == 1 else 's'} promoted to REVIEWED, "
           f"{repromoted:,} already-curated re-promoted)")
     print(f"  skipped (already curated): {skip_done:,} | skipped (no draft): {skip_nodraft:,}"
-          f" | skipped (excluded by config): {skip_excluded:,}")
+          f" | skipped (excluded by config): {skip_excluded:,}"
+          f" | skipped (unreadable): {skip_unreadable:,}")
     print("APPLIED." if args.apply else "Dry-run — pass --apply to write.")
     return 0
 

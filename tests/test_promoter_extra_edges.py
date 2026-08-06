@@ -418,3 +418,94 @@ def test_a_quoted_identifier_is_still_matched():
     pat = _re.compile(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', _re.M)
     assert pat.search('identifier: "ARO:3001234"\n').group(1) == "ARO:3001234"
     assert pat.search("identifier: ARO:3001234\n").group(1) == "ARO:3001234"
+
+
+# --- #204: re-promotion must not destroy what it did not write --------------------
+
+def _record_with_two_graphs() -> str:
+    return (
+        "identifier: ARO:3009999\n"
+        'label: "test determinant"\n'
+        "mapping_status: REVIEWED\n"
+        "causal_graphs:\n"
+        "- graph_id: reaction_chemistry\n"
+        "  title: a builder's graph\n"
+        "  nodes:\n"
+        "  - node_id: a\n"
+        "    label: a\n"
+        "    node_type: PROTEIN\n"
+        "  edges: []\n"
+        "- graph_id: resistance\n"
+        "  title: the promoter's graph\n"
+        "  nodes: []\n"
+        "  edges: []\n"
+        "curation_history:\n"
+        "- timestamp: '2026-01-01T00:00:00Z'\n"
+        "  curator: a-human\n"
+        "  action: hand-checked the residue numbering\n"
+        "  llm_assisted: false\n"
+        "license: CC-BY 4.0\n")
+
+
+def test_re_promotion_preserves_another_builders_graph_and_prior_history():
+    """The old write path took every line between `causal_graphs:` and `license:`.
+
+    That destroys any OTHER graph on the record and the whole curation_history — which is
+    why every promoted record carried exactly one event however many times it had been
+    promoted. Invisible in the diff of a record that only ever had our graph, which is how
+    it survived six rounds (#204).
+    """
+    import yaml as _yaml
+    text = _record_with_two_graphs()
+    doc = _yaml.safe_load(text)
+    graphs = [g for g in doc["causal_graphs"] if g.get("graph_id") != "resistance"]
+    graphs.append({"graph_id": "resistance", "title": "rewritten", "nodes": [], "edges": []})
+    history = list(doc["curation_history"]) + [promote.curation_entry({})]
+    new = promote.RIO.replace_block(
+        text, "causal_graphs", "\n".join(promote._dump({"causal_graphs": graphs})))
+    new = promote.RIO.replace_block(
+        new, "curation_history", "\n".join(promote._dump({"curation_history": history})))
+    out = _yaml.safe_load(new)
+    assert [g["graph_id"] for g in out["causal_graphs"]] == ["reaction_chemistry", "resistance"]
+    assert out["causal_graphs"][0]["title"] == "a builder's graph"     # untouched
+    assert out["causal_graphs"][1]["title"] == "rewritten"             # ours, replaced
+    assert [h["curator"] for h in out["curation_history"]] == ["a-human", "edison-causal-graphs"]
+    assert out["license"] == "CC-BY 4.0"
+
+
+def test_the_same_curation_event_is_not_appended_twice():
+    """Re-promoting repeatedly must not grow the history without bound."""
+    ev = promote.curation_entry({"curated": "2026-08-06T00:00:00Z"})
+    history = [ev]
+    if ev not in history:
+        history.append(ev)
+    assert len(history) == 1
+
+
+def test_promoting_a_draft_removes_the_draft_graph():
+    """The promoter owns BOTH ids: it consumes `resistance-draft` and produces `resistance`.
+
+    Filtering only `resistance` left a promoted draft carrying its own superseded draft
+    graph beside the curated one. The canary missed it because it exercised the
+    RE-promote path, where the graph is already `resistance` — not the primary
+    promote-a-draft path, which is the one with 1,133 records still to run through it.
+    """
+    assert promote.OWNED_GRAPH_IDS == {"resistance", "resistance-draft"}
+    graphs = [{"graph_id": "resistance-draft"}, {"graph_id": "reaction_chemistry"}]
+    kept = [g for g in graphs if g.get("graph_id") not in promote.OWNED_GRAPH_IDS]
+    assert [g["graph_id"] for g in kept] == ["reaction_chemistry"]
+
+
+def test_a_duplicated_causal_graphs_key_is_refused_not_silently_collapsed():
+    """`yaml.safe_load` keeps the LAST duplicate block and discards the earlier one.
+
+    Merging through a loader would therefore quietly delete graphs on exactly the
+    corrupted record `record_io.graph_ids` was written to catch. 0 records carry a
+    duplicate today; the point is not to be the tool that hides it.
+    """
+    dup = ("identifier: ARO:3009999\n"
+           "causal_graphs:\n- graph_id: a\n"
+           "causal_graphs:\n- graph_id: b\n"
+           "license: CC-BY 4.0\n")
+    with pytest.raises(promote.RIO.RecordError):
+        promote.RIO.graph_ids(dup)
