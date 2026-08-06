@@ -342,3 +342,33 @@ def test_neither_van_config_still_carries_a_hand_written_exclude_list():
     for fam in ("ARO:3000574", "ARO:3000071"):
         assert "exclude" not in promote.FAMILY_SNIPPETS[fam]
         assert callable(promote.FAMILY_SNIPPETS[fam]["precondition"])
+
+
+def test_a_precondition_skip_is_not_a_verify_failure():
+    """The guard refusing a record is it WORKING, not a problem to fix.
+
+    vanR/vanS correctly refuse 12 records every run. Counting those as failures would
+    leave `just verify-family-drafts` permanently red, and a gate that is always red is a
+    gate nobody reads. Only an unresolved CURIE — a config grounding a node to something
+    that is not a record — is an error.
+    """
+    cfg = promote.FAMILY_SNIPPETS["ARO:3000574"]
+    candidates = [("ARO:3002922", "vanR gene in vanC cluster", ""),
+                  ("ARO:3002919", "vanR gene in vanA cluster", "")]
+    # seed the corpus index rather than letting `verify` build it: the real one reads one
+    # line from each of 429k files (~70s), which is fine for a pre-round check and absurd
+    # in a unit test. Seeding also makes this hermetic — it tests the exit-code rule, not
+    # what happens to be in data/traits today.
+    promote._IDENTIFIER_INDEX = set(promote.config_curies(cfg))
+    try:
+        assert promote.verify("ARO:3000574", cfg, {}, candidates) == 0
+    finally:
+        promote._IDENTIFIER_INDEX = None
+
+
+def test_config_curies_sees_list_form_standard_edge_evidence():
+    """Since #190 a standard edge may carry a list, and an item can cite a KB record."""
+    cfg = _cfg(det_res=[{"reference": "NCBIfam:NF000492", "snippet": "s", "notes": "n"},
+                        {"reference": "PMID:1", "snippet": "s", "notes": "n"}])
+    curies = promote.config_curies(cfg)
+    assert "NCBIfam:NF000492" in curies and "PMID:1" not in curies

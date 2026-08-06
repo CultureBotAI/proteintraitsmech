@@ -576,6 +576,8 @@ promote-family-drafts *args:
 # CURIE a config grounds a node to must resolve to a record, and each family's optional
 # `precondition` must hold for every candidate. Writes nothing; exits non-zero on any
 # problem. ~1 minute for all families (the corpus index is built once).
+# LOCAL ONLY -- needs data/raw/aro/aro.obo for ancestry, and data/raw is gitignored, so
+# this cannot run in CI. Run it before a promotion round, not as a merge gate.
 verify-family-drafts *args:
     python3 scripts/promote_family_drafts.py --verify-all {{args}}
 

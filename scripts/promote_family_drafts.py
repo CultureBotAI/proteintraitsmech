@@ -1187,8 +1187,12 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
 #                    genes my downstream nodes name?" is answerable from the corpus.
 #                    Configs are Python, so this is a callable, and a failing record is
 #                    SKIPPED with its reason printed rather than silently promoted.
+# Prefixes that ARE record identifiers in data/traits. `UniProtKB:` is deliberately NOT
+# here: UniProt accessions appear in `canonical_examples`, never as a record identifier
+# (UniProt-seeded records are minted as `proteintraitsmech:UNIPROTKB_…`), so including it
+# would report a false UNRESOLVED for any config that grounded a node to a protein.
 KB_PREFIXES = ("ARO:", "Pfam:", "NCBIfam:", "PROSITE:", "CATH:", "InterPro:", "CDD:",
-               "MEROPS:", "TED:", "UniProtKB:")
+               "MEROPS:", "TED:")
 
 
 def config_curies(cfg: dict) -> set[str]:
@@ -1204,7 +1208,20 @@ def config_curies(cfg: dict) -> set[str]:
     for e in cfg.get("extra_edges", []):
         for ev in e.get("evidence", []):
             out.add(ev["reference"])
-    return {c for c in out if c.startswith(KB_PREFIXES) and not c.startswith("PMID")}
+    # standard-edge snippets too: since #190 any of them may be a list of evidence items,
+    # and one of those can cite a KB record rather than a paper — vanH's membership edge
+    # cites NCBIfam:NF000492. Scanning only extra_edges would miss that whole shape.
+    for field in ("mech_res", "det_res", "res_drug"):
+        out.update(_field_references(cfg.get(field)))
+    for val in (cfg.get("mech") or {}).values():
+        out.update(_field_references(val))
+    return {c for c in out if c.startswith(KB_PREFIXES)}
+
+
+def _field_references(spec) -> set[str]:
+    if isinstance(spec, list):
+        return {i["reference"] for i in spec if isinstance(i, dict) and "reference" in i}
+    return set()
 
 
 _IDENTIFIER_INDEX: set[str] | None = None
@@ -1232,7 +1249,14 @@ def record_identifiers(root: Path) -> set[str]:
 
 
 def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
-    """Report what the config claims that its records do not support. Returns a count."""
+    """Report what a config claims that its records do not support.
+
+    Returns the count of PROBLEMS, which is deliberately not the count of everything
+    printed. A precondition skip is the guard working as intended -- the vanR/vanS config
+    correctly refuses 12 records every run -- so counting those as failures would leave
+    `just verify-family-drafts` permanently red and therefore ignored. Only an unresolved
+    CURIE is an error: it means a config grounds a node to something that is not a record.
+    """
     problems = 0
     curies = config_curies(cfg)
     if curies:
@@ -1241,15 +1265,16 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
             if c not in known:
                 print(f"  UNRESOLVED  {c} is grounded/cited by {family} but is not a record")
                 problems += 1
+    skips = 0
     pre = cfg.get("precondition")
     if pre:
         for ident, label, text in candidates:
             reason = pre(ident, label, text)
             if reason:
-                print(f"  PRECONDITION  {ident} ({label}): {reason}")
-                problems += 1
-    print(f"verify {family}: {len(curies)} KB CURIEs checked, "
-          f"{len(candidates)} candidate records, {problems} problem(s)")
+                print(f"  would skip  {ident} ({label}): {reason}")
+                skips += 1
+    print(f"verify {family}: {len(curies)} KB CURIEs checked, {len(candidates)} candidate "
+          f"records, {skips} precondition skip(s), {problems} problem(s)")
     return problems
 
 
@@ -1337,7 +1362,8 @@ def main() -> int:
         total = 0
         for fam in FAMILY_SNIPPETS:
             total += verify(fam, FAMILY_SNIPPETS[fam], terms, _candidates(fam, terms))
-        print(f"\n--verify-all: {len(FAMILY_SNIPPETS)} families, {total} problem(s)")
+        print(f"\n--verify-all: {len(FAMILY_SNIPPETS)} families, {total} problem(s) "
+              f"(precondition skips are expected and do not count)")
         return 1 if total else 0
     cfg = FAMILY_SNIPPETS.get(args.family)
     if not cfg:
@@ -1349,7 +1375,7 @@ def main() -> int:
     if args.verify:
         return 1 if verify(args.family, cfg, terms, _candidates(args.family, terms)) else 0
 
-    promoted = skip_done = skip_nodraft = skip_excluded = 0
+    promoted = repromoted = skip_done = skip_nodraft = skip_excluded = 0
     for pth in sorted(ARO_DIR.glob("*.yaml")):
         text = pth.read_text(encoding="utf-8")
         ident_m = re.search(r"^identifier:\s*(ARO:\S+)", text, re.M)
@@ -1376,12 +1402,21 @@ def main() -> int:
                 skip_excluded += 1
                 continue
         is_draft = "graph_id: resistance-draft" in text
-        # This promoter's own output is identified by the GRAPH it writes, not by prose in
-        # a curation_history sentence that PyYAML may wrap at width=100 (#199). The old
-        # check grepped "Promoted auto-draft to curated"; had a wrap ever landed inside
-        # that phrase, every promoted record would have looked hand-curated and been
-        # silently skipped, and the run would still have exited 0.
-        is_ours = "graph_id: resistance\n" in text or text.rstrip().endswith("graph_id: resistance")
+        # This promoter's own output is identified STRUCTURALLY -- by the graph id it
+        # writes and the curator it stamps -- not by prose in a curation_history sentence
+        # that PyYAML wraps at width=100 (#199). Had a wrap landed inside the old grepped
+        # phrase, every promoted record would have looked hand-curated, been skipped, and
+        # the run would still have exited 0.
+        #
+        # BOTH conditions, not just the graph id. Re-promotion REPLACES everything between
+        # `causal_graphs:` and `license:`, so what counts as "ours" decides what may be
+        # overwritten. `graph_id: resistance` alone would also match a graph a curator
+        # happened to name that; the conjunction is narrower. Checked: all 6,266 records
+        # carrying that graph id also carry this curator, so the conjunction loses nothing
+        # today and refuses to clobber a hand-written graph tomorrow. Both are short
+        # single-token lines, so neither can be split by wrapping.
+        is_ours = ("graph_id: resistance\n" in text
+                   and "curator: edison-causal-graphs" in text)
         if is_draft:
             pass                                                # a draft → promote
         elif is_ours and not args.drafts_only:
@@ -1402,11 +1437,18 @@ def main() -> int:
         if args.apply:
             pth.write_text(new, encoding="utf-8")
         promoted += 1
+        repromoted += 0 if is_draft else 1
         if args.limit and promoted >= args.limit:
             break
 
     fam_name = terms.get(args.family, {}).get("name", args.family)
-    print(f"family {args.family} ({fam_name}): {promoted:,} drafts promoted to REVIEWED")
+    # `promoted` counts fresh drafts AND re-promotions of this promoter's own output, and
+    # reporting both as "drafts promoted" is how a re-run of an already-curated family
+    # reads as if 232 drafts existed. Say which is which.
+    fresh = promoted - repromoted
+    print(f"family {args.family} ({fam_name}): {promoted:,} records written "
+          f"({fresh:,} draft{'' if fresh == 1 else 's'} promoted to REVIEWED, "
+          f"{repromoted:,} already-curated re-promoted)")
     print(f"  skipped (already curated): {skip_done:,} | skipped (no draft): {skip_nodraft:,}"
           f" | skipped (excluded by config): {skip_excluded:,}")
     print("APPLIED." if args.apply else "Dry-run — pass --apply to write.")
