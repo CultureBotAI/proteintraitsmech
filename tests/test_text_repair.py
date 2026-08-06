@@ -230,6 +230,19 @@ def test_names_that_are_not_confident_are_left_alone():
         assert FFFD in repair_lossy(text)
 
 
+def test_a_spaced_surname_beats_the_spaced_dash_rule():
+    """`Ó Cuív` must be restored before ` <F> ` is read as a clause dash (#146).
+
+    The compound entry `_ Cu_v` is the first table key whose leading mark can sit
+    between two spaces, which is exactly what `_SPACED_DASH` matches. SURNAMES runs
+    before every regex, so it wins — but nothing pinned that until now, and the corpus
+    occurrence is preceded by `(` so it does not exercise the collision. Reorder
+    `repair()` and this fails; without it, the name would silently become `—Cuív`.
+    """
+    damaged = "reported by " + FFFD + " Cu" + FFFD + "v et al., 2004"
+    assert repair_lossy(damaged) == "reported by Ó Cuív et al., 2004"
+
+
 def test_a_name_is_never_both_resolved_and_unresolved():
     """The two tables must not disagree about the same name (#146).
 
