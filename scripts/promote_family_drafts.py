@@ -221,7 +221,16 @@ FAMILY_SNIPPETS = {
         "reference": "PMID:22290942",       # Pantel et al. 2012, AAC
         "mech": {"ARO:3000212": "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540)."},
         "mech_res": "All these substitutions are clearly implicated in FQ resistance, underlining the presence of a hot spot region housing most of the GyrB substitutions implicated in FQ resistance (residues NTE, 538 to 540).",
-        "det_res": "all nine type 1 mutants had a point mutation from aspartic acid to asparagine at amino acid 426 and that all four type 2 mutants had a point mutation from lysine to glutamic acid at amino acid 447",
+        # the substitutions (1991) and the measurement that they cause resistance (2012).
+        # Two separate results, and the second is what makes this a causal edge at all.
+        "det_res": [
+            {"reference": "PMID:1656869",
+             "snippet": "all nine type 1 mutants had a point mutation from aspartic acid to asparagine at amino acid 426 and that all four type 2 mutants had a point mutation from lysine to glutamic acid at amino acid 447",
+             "notes": "Yoshida et al. 1991 identified the gyrB QRDR substitutions in quinolone-resistant E. coli mutants."},
+            {"reference": "PMID:22290942",
+             "snippet": "We measured FQ MICs and also DNA gyrase inhibition by FQs in order to unequivocally clarify the role of these mutations in FQ resistance.",
+             "notes": "Pantel et al. 2012 reconstituted gyrase with mutant GyrB subunits and measured inhibition, so the causal step here rests on a measurement rather than on association."},
+        ],
         "res_drug": "We measured FQ MICs and also DNA gyrase inhibition by FQs in order to unequivocally clarify the role of these mutations in FQ resistance.",
         "note": "Target alteration in the B subunit, which contributes the TOPRIM domain rather than the active-site tyrosine — a different route from the GyrA/ParC water-metal ion bridge.",
         "protein_traits": {
@@ -259,11 +268,20 @@ FAMILY_SNIPPETS = {
         "reference": "PMID:15388468",       # Eaves et al. 2004, AAC (Salmonella enterica)
         "mech": {"ARO:3000212": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys."},
         "mech_res": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
+        # Two sources, because parE's causal claim genuinely has two parts (#190): the
+        # substitutions were OBSERVED in clinical isolates, and the MECHANISM was measured
+        # on the other B subunit and carried across by a stated homology. Before #190 the
+        # second part could only sit in a `notes` string.
+        #
         # NOT the paper's "isolates ... were examined for mutations in the QRDR of gyrA,
-        # gyrB, parC, and parE" sentence, which is METHODS and asserts nothing causal. The
-        # finding sentence is the weakest honest evidence available for parE, and the notes
-        # say what tier it is rather than letting a reader assume a measurement.
-        "det_res": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
+        # gyrB, parC, and parE" sentence, which is METHODS and asserts nothing causal.
+        "det_res": [
+            {"reference": "PMID:15388468",
+             "snippet": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
+             "notes": "Eaves et al. 2004. ASSOCIATION from clinical isolates — the substitutions are observed in resistant Salmonella enterica, not shown to cause resistance in a reconstituted enzyme."},
+            {"reference": "PMID:24576155", "snippet": _FQ_SUBUNITS,
+             "notes": "The homology that carries GyrB's mechanism to ParE: Aldred 2014 states ParE is topoisomerase IV's B subunit, and the reconstituted-enzyme measurement exists for GyrB (PMID:22290942), not for ParE itself. This is the weaker of the four fluoroquinolone families and is recorded as such."},
+        ],
         "res_drug": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
         "note": "Target alteration in topoisomerase IV's B subunit, the homologue of GyrB.",
         "protein_traits": {
@@ -642,11 +660,33 @@ FAMILY_SNIPPETS["ARO:0010001"] = _domfam(  # ATP-binding cassette (ABC) efflux p
     "The ABC transporter exports the drug using ATP hydrolysis.")
 
 
-def _ev(ref: str, snippet: str, note: str) -> list[str]:
-    return ["        evidence:",
-            f"          - reference: {ref}",
-            f"            snippet: {D._yq(snippet)}",
-            f"            notes: {D._yq(note)}"]
+def _ev(ref: str, snippet, note: str) -> list[str]:
+    """Emit an edge's `evidence:` block from a family config's snippet field (#190).
+
+    `snippet` is EITHER a plain string — one item citing the family's own `reference`,
+    which is what every family wrote before this and still writes — OR a list of
+    `{reference, snippet, notes}` dicts, for a claim that genuinely rests on more than
+    one source.
+
+    The one-item form was a real limit, not a stylistic one. parE's causal claim has two
+    parts: the substitutions were **observed** in clinical isolates (PMID:15388468), and
+    the **mechanism** was measured on the other B subunit and carried across by a stated
+    homology (PMID:22290942 + PMID:24576155). With one slot the second part could only
+    live in a `notes` string, where nothing reading `evidence[]` would find it.
+    """
+    L = ["        evidence:"]
+    for item in _evidence_items(snippet, ref, note):
+        L += [f"          - reference: {item['reference']}",
+              f"            snippet: {D._yq(item['snippet'])}",
+              f"            notes: {D._yq(item['notes'])}"]
+    return L
+
+
+def _evidence_items(spec, ref: str, note: str) -> list[dict]:
+    if isinstance(spec, str):
+        return [{"reference": ref, "snippet": spec, "notes": note}]
+    return [{"reference": i["reference"], "snippet": i["snippet"],
+             "notes": i.get("notes", note)} for i in spec]
 
 
 def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, cfg: dict) -> list[str]:
