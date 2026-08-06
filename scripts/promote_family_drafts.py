@@ -36,6 +36,103 @@ ARO_DIR = D.ARO_DIR
 # paper; `mech[<mechanism ARO id>]`, `mech_res`, `det_res`, `res_drug` are verbatim
 # snippets for each edge role.
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # gyrA — fluoroquinolone TARGET ALTERATION (ARO:3003292, "fluoroquinolone resistant
+    # gyrA"). The first family here that does NOT inactivate its drug: the determinant is
+    # the drug's target, and resistance comes from substitutions in the QRDR that lower
+    # the affinity of the gyrase–DNA complex for the quinolone. So it is also the first
+    # family to use `extra_nodes`/`extra_edges` — see the note in `promoted_graph`.
+    #
+    # NEXT_TASKS.md said of these drafts that "no shared family config fits — needs
+    # per-gene evidence". For gyrA that is wrong, and measurably so: 24 of the 30 gyrA
+    # drafts are is_a descendants of ARO:3003292 and share ONE mechanism. What is genuinely
+    # per-organism is the RESIDUE NUMBERING, not the mechanism — hence the frame caveat
+    # carried on the QRDR node rather than a residue node per record.
+    "ARO:3003292": {
+        "reference": "PMID:24576155",       # Aldred, Kerns & Osheroff 2014, Biochemistry
+        "mech": {
+            "ARO:3000212": "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes.",
+        },
+        "mech_res": "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes.",
+        "det_res": "the amino acids that most frequently are associated with quinolone resistance are Ser83 (based on E. coli GyrA numbering) and an acidic residue four amino acids downstream",
+        "res_drug": "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes.",
+        "note": "Target alteration, not drug inactivation: GyrA is the quinolone's target, and QRDR substitutions reduce drug binding to the gyrase–DNA cleavage complex.",
+        "protein_traits": {
+            "primary_key": "gyra_domain",
+            "gyra_domain": ("Pfam:PF00521", "DNA gyrase/topoisomerase IV, subunit A domain (carries the QRDR)", "DOMAIN",
+                            "This entry represents a domain found in type IIA topoisomerases, such as bacterial DNA topoisomerase IV (C subunit, ParC), bacterial DNA gyrases (A subunit, GyrA), and mammalian DNA toposiomerases II."),
+            "part_pred": "part of (the subunit-A domain of this determinant)",
+            "part_note": "KB trait record Pfam:PF00521; snippet is the InterPro:IPR002205 abstract that record's definition is taken from, not this repo's prose.",
+            # deliberately no `fold` and no `enables_mech`: see the report's open questions.
+        },
+        "extra_nodes": [
+            # the label says "substituted in this determinant" because the edge below
+            # asserts that this node negatively regulates cleavage-complex formation, and
+            # the evidence is about MUTATION of these residues, not about the region as
+            # such. An unqualified "QRDR of GyrA" would make the graph claim that the
+            # wild-type region lowers drug affinity, which no source says.
+            {"node_id": "qrdr", "label": "quinolone resistance-determining region (QRDR) of GyrA, substituted in this determinant",
+             "node_type": "MOTIF",
+             "description": "GyrA residues 67-106, Ser83 and the acidic residue four positions downstream being the most frequently substituted. Positions are stated in the E. coli GyrA frame; the equivalent positions differ per organism (e.g. Ala90/Asp94 in M. tuberculosis), so no per-record residue node is asserted. Ungrounded: no ontology term denotes the QRDR."},
+            {"node_id": "gyrase_activity", "label": "DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0003918"},
+            {"node_id": "cleavage_complex", "label": "gyrase-DNA cleavage complex", "node_type": "STATE",
+             "description": "The covalent enzyme-cleaved DNA intermediate that quinolones bind and stabilise. Ungrounded, as with the M-CSA reaction-intermediate STATE nodes."},
+            {"node_id": "cell_death", "label": "bacterial cell death", "node_type": "PHENOTYPE",
+             "grounding": "GO:0008219"},
+        ],
+        "extra_edges": [
+            {"subject": "qrdr", "object": "gyra_domain",
+             "predicate": "part of (the QRDR lies in the subunit-A domain)", "predicate_id": "BFO:0000050",
+             "description": "The QRDR is the N-terminal GyrA region in which quinolone-resistance substitutions occur.",
+             "evidence": [
+                 {"reference": "PMID:2168148",
+                  "snippet": "quinolone resistance was caused by a point mutation within the region between amino acids 67 and 106, especially in the vicinity of amino acid 83, of the GyrA protein",
+                  "notes": "Yoshida et al. 1990, the paper that defined the QRDR; cited by these ARO records themselves."},
+                 {"reference": "InterPro:IPR002205",
+                  "snippet": "domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges",
+                  "notes": "Places the N-terminal GyrA region inside this domain entry. The containment of residues 67-106 in it is an inference FROM THESE TWO SOURCES TOGETHER, not a single asserted statement."},
+             ]},
+            {"subject": "gyra_domain", "object": "gyrase_activity",
+             "predicate": "enables (DNA breakage-reunion)", "predicate_id": "RO:0002327",
+             "evidence": [
+                 {"reference": "InterPro:IPR002205",
+                  "snippet": "domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges",
+                  "notes": "The subunit-A domain carries the breakage-reunion activity that the quinolone acts on."},
+             ]},
+            {"subject": "gyrase_activity", "object": "cleavage_complex",
+             "predicate": "causally upstream of (forms the covalent intermediate)", "predicate_id": "RO:0002411",
+             "evidence": [
+                 {"reference": "PMID:24576155",
+                  "snippet": "To maintain genomic integrity during this process, the enzymes form covalent bonds between active site tyrosine residues and the newly generated 5'-DNA termini.",
+                  "notes": "Aldred 2014. The cleavage complex is the enzyme's own catalytic intermediate, present with or without drug."},
+             ]},
+            {"subject": "drug0", "object": "cleavage_complex",
+             "predicate": "molecularly interacts with (intercalates and blocks ligation)", "predicate_id": "RO:0002436",
+             "description": "Quinolone action: the drug binds the cleaved complex and blocks religation, raising the steady-state level of DNA breaks.",
+             "evidence": [
+                 {"reference": "PMID:24576155",
+                  "snippet": "As a result of their intercalation, quinolones increase the steady-state concentration of cleavage complexes by acting as physical blocks to ligation.",
+                  "notes": "Aldred 2014. This is the drug-ACTION arm; resistance is the loss of it."},
+             ]},
+            {"subject": "qrdr", "object": "cleavage_complex",
+             "predicate": "negatively regulates (substitution lowers drug affinity)", "predicate_id": "RO:0002212",
+             "description": "The causal core of this family: a QRDR substitution lowers the affinity of the enzyme for the quinolone, so fewer drug-stabilised cleavage complexes form at a given drug concentration.",
+             "evidence": [
+                 {"reference": "PMID:24576155",
+                  "snippet": "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes.",
+                  "notes": "Aldred 2014. Mutation of the QRDR serine or the acidic residue, which together form the water-metal ion bridge to the drug."},
+             ]},
+            {"subject": "cleavage_complex", "object": "cell_death",
+             "predicate": "causally upstream of (drug-stabilised breaks kill the cell)", "predicate_id": "RO:0002411",
+             "description": "Why fewer stabilised complexes means survival: the complexes are what kill the cell.",
+             "evidence": [
+                 {"reference": "PMID:24576155",
+                  "snippet": "If the strand breaks overwhelm these processes, they can lead to cell death. This is the primary mechanism that quinolones use to kill bacterial cells",
+                  "notes": "Aldred 2014."},
+             ]},
+        ],
+    },
     # KPC β-lactamase (class A serine carbapenemase) — PMID:28388065 (KPC-2 mechanism)
     "ARO:3000059": {
         "reference": "PMID:28388065",
@@ -428,9 +525,25 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
                   f"        node_type: {ntype}",
                   f"        grounding: {cid}",
                   "        description: KB protein-trait record carrying the mechanism."]
+    for n in cfg.get("extra_nodes", []):
+        L += [f"      - node_id: {n['node_id']}",
+              f"        label: {D._yq(n['label'])}",
+              f"        node_type: {n['node_type']}"]
+        if n.get("grounding"):
+            L.append(f"        grounding: {n['grounding']}")
+        if n.get("description"):
+            L += ["        description: >-", f"          {n['description']}"]
     L += ["      - node_id: resistance",
           "        label: antibiotic resistance phenotype",
           "        node_type: PHENOTYPE",
+          # the auto-draft grounded this node and the promoter used to drop the grounding,
+          # so promoting a draft turned a grounded node into a label-only one. Same
+          # nearest-superclass caveat the draft carried.
+          "        grounding: GO:0046677",
+          "        description: >-",
+          "          Resistance phenotype conferred by this determinant. Grounded to the nearest",
+          "          available superclass: ARO models determinants and mechanisms but has no term",
+          "          for the resistance phenotype itself.",
           "    edges:"]
     for i, mid in enumerate(mech):
         snip = cfg["mech"].get(mid) or next(iter(cfg["mech"].values()))
@@ -452,6 +565,11 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
     for i, did in enumerate(drug[:D.MAX_DRUGS]):
         L += ["      - subject: resistance",
               "        predicate: related to (resistance is to)",
+              # the only edge this builder emitted with NO predicate_id, so promoting a
+              # draft *added* an audit warning the draft did not have (the draft's drug
+              # edge carries ARO:2000001). `biolink:related_to` matches both the readable
+              # label and what the ARO seeder already puts in `trait_relations`.
+              "        predicate_id: biolink:related_to",
               f"        object: drug{i}",
               *_ev(ref, cfg["res_drug"], f"Resistance to {names.get(did, did)}.")]
     # Route the mechanism through the KB's own protein-trait records.
@@ -477,6 +595,30 @@ def promoted_graph(ident: str, label: str, mech: list, drug: list, names: dict, 
                   "        predicate_id: RO:0002327",
                   f"        object: mech{mech.index(em)}",
                   *_ev(ref, cfg["mech"][em], pt.get("enable_note", "The active site carries out the serine β-lactam hydrolysis mechanism."))]
+    # Family-specific mechanism edges. The fixed determinant→mechanism→resistance shape
+    # above was written for enzymatic INACTIVATION (an active site that hydrolyses the
+    # drug) and cannot express other resistance routes — target alteration, efflux,
+    # target protection — where the causation runs through a region of the target and a
+    # drug–target complex that never form part of that shape.
+    #
+    # An edge whose subject or object is not among THIS record's nodes is skipped rather
+    # than emitted dangling: the mechanism and drug nodes come from each member's own ARO
+    # relations, so a family member need not carry the one an edge names.
+    defined = {ln.split("node_id: ", 1)[1] for ln in L if "- node_id: " in ln}
+    for e in cfg.get("extra_edges", []):
+        if e["subject"] not in defined or e["object"] not in defined:
+            continue
+        L += [f"      - subject: {e['subject']}",
+              f"        predicate: {D._yq(e['predicate'])}",
+              f"        predicate_id: {e['predicate_id']}",
+              f"        object: {e['object']}"]
+        if e.get("description"):
+            L += ["        description: >-", f"          {e['description']}"]
+        L.append("        evidence:")
+        for ev in e["evidence"]:
+            L += [f"          - reference: {ev['reference']}",
+                  f"            snippet: {D._yq(ev['snippet'])}",
+                  f"            notes: {D._yq(ev['notes'])}"]
     return L
 
 

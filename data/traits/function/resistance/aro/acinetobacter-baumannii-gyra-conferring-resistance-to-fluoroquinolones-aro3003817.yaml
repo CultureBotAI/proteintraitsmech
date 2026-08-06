@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003292
 trait_relations:
@@ -28,79 +28,157 @@ evidence:
 - reference: DOI:10.1345/aph.1P084
   notes: PMID:21304033 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Acinetobacter baumannii gyrA conferring resistance to fluoroquinolones → mechanism →
-    resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
-  nodes:
-  - node_id: determinant
-    label: Acinetobacter baumannii gyrA conferring resistance to fluoroquinolones
-    node_type: PROTEIN
-    grounding: ARO:3003817
-  - node_id: mech0
-    label: mutation conferring antibiotic resistance
-    node_type: MOLECULAR_FUNCTION
-    grounding: ARO:3000212
-  - node_id: drug0
-    label: fluoroquinolone antibiotic
-    node_type: CHEMICAL
-    grounding: ARO:0000001
-  - node_id: resistance
-    label: antibiotic resistance phenotype
-    node_type: PHENOTYPE
-    grounding: GO:0046677
-    description: 'Resistance phenotype conferred by this determinant. Grounded to the nearest available
-      superclass: ARO models determinants and mechanisms but has no term for the resistance phenotype
-      itself.'
-  edges:
-  - subject: determinant
-    predicate: participates in (resistance mechanism)
-    predicate_id: RO:0000056
-    object: mech0
-    evidence:
-    - reference: DOI:10.1093/jac/dkh368
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003817
-      snippet: Mutations in the A subunit of DNA gyrase reduce its affinity for fluoroquinolones, thereby
-        conferring resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1093/jac/dkh368
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
-  - subject: determinant
-    predicate: causally upstream of (confers resistance)
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1093/jac/dkh368
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003817
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000023 ! enoxacin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
-  - subject: determinant
-    predicate: confers resistance to (drug class)
-    object: drug0
-    evidence:
-    - reference: ARO:3003292
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
-      notes: Asserted on ARO:3003292 (fluoroquinolone resistant gyrA), an is_a ancestor of this record's
-        ARO:3003817; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
+  - graph_id: resistance
+    title: Acinetobacter baumannii gyrA conferring resistance to fluoroquinolones → mechanism → resistance (curated from ARO relations + literature)
+    description: >-
+      Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence (PMID:24576155). Target alteration, not drug inactivation: GyrA is the quinolone's target, and QRDR substitutions reduce drug binding to the gyrase–DNA cleavage complex.
+    nodes:
+      - node_id: determinant
+        label: Acinetobacter baumannii gyrA conferring resistance to fluoroquinolones
+        node_type: PROTEIN
+        grounding: ARO:3003817
+      - node_id: mech0
+        label: mutation conferring antibiotic resistance
+        node_type: MOLECULAR_FUNCTION
+        grounding: ARO:3000212
+      - node_id: drug0
+        label: fluoroquinolone antibiotic
+        node_type: CHEMICAL
+        grounding: ARO:0000001
+      - node_id: gyra_domain
+        label: "DNA gyrase/topoisomerase IV, subunit A domain (carries the QRDR)"
+        node_type: DOMAIN
+        grounding: Pfam:PF00521
+        description: KB protein-trait record carrying the mechanism.
+      - node_id: qrdr
+        label: "quinolone resistance-determining region (QRDR) of GyrA, substituted in this determinant"
+        node_type: MOTIF
+        description: >-
+          GyrA residues 67-106, Ser83 and the acidic residue four positions downstream being the most frequently substituted. Positions are stated in the E. coli GyrA frame; the equivalent positions differ per organism (e.g. Ala90/Asp94 in M. tuberculosis), so no per-record residue node is asserted. Ungrounded: no ontology term denotes the QRDR.
+      - node_id: gyrase_activity
+        label: "DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity"
+        node_type: MOLECULAR_FUNCTION
+        grounding: GO:0003918
+      - node_id: cleavage_complex
+        label: gyrase-DNA cleavage complex
+        node_type: STATE
+        description: >-
+          The covalent enzyme-cleaved DNA intermediate that quinolones bind and stabilise. Ungrounded, as with the M-CSA reaction-intermediate STATE nodes.
+      - node_id: cell_death
+        label: bacterial cell death
+        node_type: PHENOTYPE
+        grounding: GO:0008219
+      - node_id: resistance
+        label: antibiotic resistance phenotype
+        node_type: PHENOTYPE
+        grounding: GO:0046677
+        description: >-
+          Resistance phenotype conferred by this determinant. Grounded to the nearest
+          available superclass: ARO models determinants and mechanisms but has no term
+          for the resistance phenotype itself.
+    edges:
+      - subject: determinant
+        predicate: participates in (resistance mechanism)
+        predicate_id: RO:0000056
+        object: mech0
+        evidence:
+          - reference: PMID:24576155
+            snippet: "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes."
+            notes: "Family mechanism ARO:3000212."
+      - subject: mech0
+        predicate: causally upstream of
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: PMID:24576155
+            snippet: "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes."
+            notes: "Mechanism ARO:3000212 → resistance."
+      - subject: determinant
+        predicate: causally upstream of (confers resistance)
+        predicate_id: RO:0002411
+        object: resistance
+        evidence:
+          - reference: PMID:24576155
+            snippet: the amino acids that most frequently are associated with quinolone resistance are Ser83 (based on E. coli GyrA numbering) and an acidic residue four amino acids downstream
+            notes: Determinant → resistance phenotype.
+      - subject: resistance
+        predicate: related to (resistance is to)
+        predicate_id: biolink:related_to
+        object: drug0
+        evidence:
+          - reference: PMID:24576155
+            snippet: "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes."
+            notes: Resistance to fluoroquinolone antibiotic.
+      - subject: gyra_domain
+        predicate: part of (the subunit-A domain of this determinant)
+        predicate_id: BFO:0000050
+        object: determinant
+        evidence:
+          - reference: Pfam:PF00521
+            snippet: "This entry represents a domain found in type IIA topoisomerases, such as bacterial DNA topoisomerase IV (C subunit, ParC), bacterial DNA gyrases (A subunit, GyrA), and mammalian DNA toposiomerases II."
+            notes: "KB trait record Pfam:PF00521; snippet is the InterPro:IPR002205 abstract that record's definition is taken from, not this repo's prose."
+      - subject: qrdr
+        predicate: part of (the QRDR lies in the subunit-A domain)
+        predicate_id: BFO:0000050
+        object: gyra_domain
+        description: >-
+          The QRDR is the N-terminal GyrA region in which quinolone-resistance substitutions occur.
+        evidence:
+          - reference: PMID:2168148
+            snippet: "quinolone resistance was caused by a point mutation within the region between amino acids 67 and 106, especially in the vicinity of amino acid 83, of the GyrA protein"
+            notes: "Yoshida et al. 1990, the paper that defined the QRDR; cited by these ARO records themselves."
+          - reference: InterPro:IPR002205
+            snippet: domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges
+            notes: "Places the N-terminal GyrA region inside this domain entry. The containment of residues 67-106 in it is an inference FROM THESE TWO SOURCES TOGETHER, not a single asserted statement."
+      - subject: gyra_domain
+        predicate: enables (DNA breakage-reunion)
+        predicate_id: RO:0002327
+        object: gyrase_activity
+        evidence:
+          - reference: InterPro:IPR002205
+            snippet: domain 3 (N-terminal of gyrA) is responsible for the breaking-rejoining function through its capacity to form protein-DNA bridges
+            notes: The subunit-A domain carries the breakage-reunion activity that the quinolone acts on.
+      - subject: gyrase_activity
+        predicate: causally upstream of (forms the covalent intermediate)
+        predicate_id: RO:0002411
+        object: cleavage_complex
+        evidence:
+          - reference: PMID:24576155
+            snippet: "To maintain genomic integrity during this process, the enzymes form covalent bonds between active site tyrosine residues and the newly generated 5'-DNA termini."
+            notes: "Aldred 2014. The cleavage complex is the enzyme's own catalytic intermediate, present with or without drug."
+      - subject: drug0
+        predicate: molecularly interacts with (intercalates and blocks ligation)
+        predicate_id: RO:0002436
+        object: cleavage_complex
+        description: >-
+          Quinolone action: the drug binds the cleaved complex and blocks religation, raising the steady-state level of DNA breaks.
+        evidence:
+          - reference: PMID:24576155
+            snippet: "As a result of their intercalation, quinolones increase the steady-state concentration of cleavage complexes by acting as physical blocks to ligation."
+            notes: Aldred 2014. This is the drug-ACTION arm; resistance is the loss of it.
+      - subject: qrdr
+        predicate: negatively regulates (substitution lowers drug affinity)
+        predicate_id: RO:0002212
+        object: cleavage_complex
+        description: >-
+          The causal core of this family: a QRDR substitution lowers the affinity of the enzyme for the quinolone, so fewer drug-stabilised cleavage complexes form at a given drug concentration.
+        evidence:
+          - reference: PMID:24576155
+            snippet: "Furthermore, mutation of either residue significantly decreases the affinity of gyrase or topoisomerase IV for quinolones, and mutation of both residues abolishes the ability of clinically relevant quinolones to stabilize cleavage complexes."
+            notes: "Aldred 2014. Mutation of the QRDR serine or the acidic residue, which together form the water-metal ion bridge to the drug."
+      - subject: cleavage_complex
+        predicate: causally upstream of (drug-stabilised breaks kill the cell)
+        predicate_id: RO:0002411
+        object: cell_death
+        description: >-
+          Why fewer stabilised complexes means survival: the complexes are what kill the cell.
+        evidence:
+          - reference: PMID:24576155
+            snippet: "If the strand breaks overwhelm these processes, they can lead to cell death. This is the primary mechanism that quinolones use to kill bacterial cells"
+            notes: Aldred 2014.
+curation_history:
+  - timestamp: "2026-07-21T00:00:00Z"
+    curator: edison-causal-graphs
+    action: "Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED"
+    llm_assisted: true
 license: CC-BY 4.0
