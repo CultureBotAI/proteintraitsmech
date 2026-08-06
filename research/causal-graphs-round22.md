@@ -2,7 +2,7 @@
 topic: causal-graphs
 round: 22
 date: 2026-08-06
-target: aro/FUNC_RESISTANCE — vanR (ARO:3000574) and vanS (ARO:3000071), 28 records
+target: aro/FUNC_RESISTANCE — vanR (ARO:3000574) and vanS (ARO:3000071), 16 records
 prior_round: causal-graphs-round21.md
 ---
 
@@ -47,6 +47,31 @@ stimulation and the kinase relationship but reports no direct phosphotransfer as
 `notes` say so. A phosphotransfer edge would need the biochemistry paper, which this round
 did not use.
 
+## The correction this round needed: not every cluster has the operon
+
+The first promotion covered **all 28** vanR/vanS drafts. That was wrong, and the review
+caught it by asking whether the config's claim holds for every descendant rather than for
+the family term.
+
+The evidence is **VanA-type** (PMID:1556077 studied Tn1546/pIP816), and the downstream
+nodes are vanH and vanX. But the van clusters do not all have those genes. Checked gene by
+gene against the corpus's own `van* gene in van* cluster` records rather than inferred from
+the cluster letter:
+
+| cluster | vanH | vanX | genes present |
+|---|---|---|---|
+| vanA · vanB · vanD · vanF · vanM · vanO · vanP | ✅ | ✅ | vanH vanX … |
+| vanC · vanE · vanG · vanL · vanN | ❌ | ❌ | **vanT, vanXY** — the D-Ala-D-Ser route |
+| vanI | ❌ | ✅ | vanK vanW vanX |
+
+So **12 records were promoted asserting an operon composition false for their cluster**,
+and are now excluded and left as drafts. They need a config whose downstream is vanT and
+vanXY — which is the round already queued for the D-Ala-D-Ser side.
+
+This is the third time a family-level config has over-reached (round 19's A/B subunits;
+round 19's combined gyrA+parC record; now this), and the first where the check that caught
+it was *data* — the corpus's own per-cluster gene records — rather than reading.
+
 ## Fully grounded — the first time in this thread
 
 **9–10 nodes per record, every one with a CURIE; corpus warnings unchanged at 5,976.**
@@ -54,8 +79,8 @@ did not use.
 Rounds 18–21 each added 1–2 label-only nodes per record — the QRDR, the pentapeptide, the
 drug–target complex — because no ontology names them. A regulatory story has no such gap:
 GO has the processes (`GO:0000155`, `GO:0000156`, `GO:0045893`), ARO has the genes, and
-NCBIfam has the families (`NF033117` VanR, `NF033091` VanS). The 28 records added **154
-nodes and 210 edges and not one warning**.
+NCBIfam has the families (`NF033117` VanR, `NF033091` VanS). The 16 records added **136 nodes
+and 184 edges and not one warning**.
 
 The family nodes follow round 21's rule: a determinant is a **member of** a family
 (`RO:0002350`), not composed of one, and the snippet is NCBIfam's own **product name**, not
@@ -64,17 +89,21 @@ don't-cite-yourself rule).
 
 ## Provenance
 
-* records touched: **28** (14 vanR + 14 vanS) · SEEDED → REVIEWED · edges written: **210**
-* corpus after: **39,647 records · 40,115 graphs · 347,968 nodes · 369,594 edges ·
-  0 errors · 369,594/369,594 edges snippet-cited**
+* records touched: **16** (8 vanR + 8 vanS, the vanH/vanX-bearing clusters only) ·
+  SEEDED → REVIEWED · edges written: **184** · 12 deliberately left as drafts
+* corpus after: **39,647 records · 40,115 graphs · 347,902 nodes · 369,504 edges ·
+  0 errors · 369,504/369,504 edges snippet-cited**
 * warnings **5,976 → 5,976** — unchanged
-* `just validate` on all 28 individually: **0 failures**
-* drafts remaining: **1,149 → 1,121**
+* `just validate` on all 16 individually: **0 failures**
+* drafts remaining: **1,149 → 1,133**
 
 ## Open questions
 
-* **vanY (7) + vanXY (6)** are both D,D-carboxypeptidases and remain the best candidate for
-  one config covering two families — the first such chance since round 18.
+* **The D-Ala-D-Ser side is now one coherent round**: the 12 excluded vanR/vanS records,
+  the 6 D-Ala-D-Ser ligases, vanT (7) and vanXY (6) all belong to the same clusters and
+  share a downstream. Doing them together is better than doing vanY/vanXY alone.
+* **vanY (7) + vanXY (6)** are both D,D-carboxypeptidases and remain a candidate for one
+  config covering two families.
 * **The phosphotransfer edge is understated on purpose.** PMID:8981985 reports that VanS
   *negatively* controls VanR-mediated activation in the absence of drug — i.e. it is
   bifunctional, kinase and phosphatase. That is a real refinement and needs its own round;

@@ -181,6 +181,16 @@ FAMILY_SNIPPETS = {
     # own mechanisms are curated, rather than restating them.
     "ARO:3000574": {
         "curated": "2026-08-06T00:00:00Z",
+        # Clusters whose operon this config does NOT describe. The evidence is VanA-type
+        # (PMID:1556077, Tn1546/pIP816), and the downstream nodes are vanH + vanX. The
+        # D-Ala-D-Ser clusters (vanC/E/G/L/N) encode vanT and vanXY instead and have
+        # NEITHER; vanI has vanX but no vanH. Promoting them would assert an operon
+        # composition that is false for that cluster -- checked gene by gene against the
+        # corpus's own "van* gene in van* cluster" records, not assumed from the letter.
+        "exclude": ("ARO:3002922", "ARO:3002924", "ARO:3002926", "ARO:3003728",
+                    "ARO:3002927", "ARO:3002929",   # vanR in vanC/E/G/I/L/N
+                    "ARO:3002933", "ARO:3002935", "ARO:3002937", "ARO:3003726",
+                    "ARO:3002938", "ARO:3002940"),  # vanS in vanC/E/G/I/L/N
         "reference": "PMID:1556077",        # Arthur, Molinas & Courvalin 1992, J Bacteriol
         "mech": {"ARO:3000213": _VANRS_REG},
         "mech_res": _VANRS_REG,
@@ -223,6 +233,16 @@ FAMILY_SNIPPETS = {
     # difference is upstream, where VanS phosphorylates rather than being phosphorylated.
     "ARO:3000071": {
         "curated": "2026-08-06T00:00:00Z",
+        # Clusters whose operon this config does NOT describe. The evidence is VanA-type
+        # (PMID:1556077, Tn1546/pIP816), and the downstream nodes are vanH + vanX. The
+        # D-Ala-D-Ser clusters (vanC/E/G/L/N) encode vanT and vanXY instead and have
+        # NEITHER; vanI has vanX but no vanH. Promoting them would assert an operon
+        # composition that is false for that cluster -- checked gene by gene against the
+        # corpus's own "van* gene in van* cluster" records, not assumed from the letter.
+        "exclude": ("ARO:3002922", "ARO:3002924", "ARO:3002926", "ARO:3003728",
+                    "ARO:3002927", "ARO:3002929",   # vanR in vanC/E/G/I/L/N
+                    "ARO:3002933", "ARO:3002935", "ARO:3002937", "ARO:3003726",
+                    "ARO:3002938", "ARO:3002940"),  # vanS in vanC/E/G/I/L/N
         "reference": "PMID:1556077",
         "mech": {"ARO:3000213": _VANRS_REG},
         "mech_res": _VANRS_REG,
