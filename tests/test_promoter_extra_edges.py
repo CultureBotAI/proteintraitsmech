@@ -287,7 +287,7 @@ def test_the_regulators_end_at_the_enzyme_records_they_induce(family):
     round whose graphs point at earlier rounds' output, and it is the property that would
     silently break if someone replaced the nodes with free-text labels.
     """
-    out = _graph(promote.FAMILY_SNIPPETS[family], mech=("ARO:3000213",), drug=("ARO:3000081",))
+    out = _graph(promote.family_configs(family)[0], mech=("ARO:3000213",), drug=("ARO:3000081",))
     assert "grounding: ARO:3000006" in out          # vanH, round 21
     assert "grounding: ARO:3000011" in out          # vanX, round 20
     downstream = [b for b in out.split("\n  - subject: ")[1:] if "object: resistance" in b]
@@ -302,7 +302,7 @@ def test_the_regulator_families_are_fully_grounded(family):
     the drug–target complex) because no ontology names them. A regulatory story has no
     such gap: GO has the processes, ARO has the genes, NCBIfam has the families.
     """
-    out = _graph(promote.FAMILY_SNIPPETS[family], mech=("ARO:3000213",), drug=("ARO:3000081",))
+    out = _graph(promote.family_configs(family)[0], mech=("ARO:3000213",), drug=("ARO:3000081",))
     blocks = out.split("\n  - node_id: ")[1:]
     ungrounded = [b.splitlines()[0] for b in blocks if "grounding:" not in b]
     assert not ungrounded, f"{family}: label-only nodes {ungrounded}"
@@ -323,7 +323,7 @@ def test_the_vanrs_precondition_derives_the_exclusions_that_were_hand_written():
     The predicate asks the corpus the same question every run: does this record's cluster
     contain the genes my downstream nodes name?
     """
-    pre = promote.FAMILY_SNIPPETS["ARO:3000574"]["precondition"]
+    pre = promote.family_configs("ARO:3000574")[0]["precondition"]
     # a D-Ala-D-Lac cluster has both, so it passes
     assert pre("ARO:3002919", "vanR gene in vanA cluster", "") is None
     # a D-Ala-D-Ser cluster has neither, so it is refused with a reason naming them
@@ -340,8 +340,9 @@ def test_the_vanrs_precondition_derives_the_exclusions_that_were_hand_written():
 
 def test_neither_van_config_still_carries_a_hand_written_exclude_list():
     for fam in ("ARO:3000574", "ARO:3000071"):
-        assert "exclude" not in promote.FAMILY_SNIPPETS[fam]
-        assert callable(promote.FAMILY_SNIPPETS[fam]["precondition"])
+        for cfg in promote.family_configs(fam):       # two each since #208
+            assert "exclude" not in cfg
+            assert callable(cfg["precondition"])
 
 
 def test_a_precondition_skip_is_not_a_verify_failure():
@@ -352,7 +353,7 @@ def test_a_precondition_skip_is_not_a_verify_failure():
     gate nobody reads. Only an unresolved CURIE — a config grounding a node to something
     that is not a record — is an error.
     """
-    cfg = promote.FAMILY_SNIPPETS["ARO:3000574"]
+    cfg = promote.family_configs("ARO:3000574")[0]
     candidates = [("ARO:3002922", "vanR gene in vanC cluster", ""),
                   ("ARO:3002919", "vanR gene in vanA cluster", "")]
     # seed the corpus index rather than letting `verify` build it: the real one reads one
@@ -395,7 +396,7 @@ def test_the_van_precondition_fails_closed_on_an_unparsed_cluster_label():
     It returned None for any unmatched label, so a future shape (`vanC1`, a case change)
     would fail OPEN and receive the vanH/vanX graph.
     """
-    pre = promote.FAMILY_SNIPPETS["ARO:3000574"]["precondition"]
+    pre = promote.family_configs("ARO:3000574")[0]["precondition"]
     assert pre("ARO:X", "vanR gene in vanQ1 cluster", "") is not None
     assert pre("ARO:X", "vanR", "") is None          # genuinely no cluster: still passes
 
@@ -622,3 +623,38 @@ def test_ec_and_the_other_record_prefixes_are_checked_by_verify():
     for prefix in ("EC:", "GO:", "SFLD:", "PANTHER:", "HAMAP:"):
         assert prefix in promote.KB_PREFIXES
     assert "EC:6.3.2.35" in promote.config_curies(promote.FAMILY_SNIPPETS["ARO:3002979"])
+
+
+# --- #208: a family may carry several configs, chosen by their preconditions -------
+
+def test_a_family_can_carry_two_configs_selected_by_precondition():
+    """vanR/vanS span BOTH van routes, and the right downstream is a property of the
+    RECORD, not the family. The `precondition` each config already has for #201 is the
+    selector — the predicate that refuses a record is what chooses between configs."""
+    assert len(promote.family_configs("ARO:3000574")) == 2
+    lac = promote.config_for("ARO:3000574", "ARO:1", "vanR gene in vanA cluster", "")
+    ser = promote.config_for("ARO:3000574", "ARO:2", "vanR gene in vanC cluster", "")
+    assert lac is not ser
+    lac_ids = {n.get("grounding") for n in lac["extra_nodes"]}
+    ser_ids = {n.get("grounding") for n in ser["extra_nodes"]}
+    assert {"ARO:3000006", "ARO:3000011"} <= lac_ids            # vanH, vanX
+    assert {"ARO:3002979", "ARO:3000372", "ARO:3000496"} <= ser_ids   # ligase, vanT, vanXY
+    assert not (lac_ids & ser_ids & {"ARO:3000006", "ARO:3002979"})
+
+
+def test_a_catch_all_config_may_not_shadow_a_specific_one():
+    """A config without a precondition matches everything, so it must be last.
+
+    Checked at import (`_check_config_order`) rather than left to be discovered when a
+    family silently stops using the config that was written for it.
+    """
+    promote.FAMILY_SNIPPETS["ARO:9999999"] = [dict(_cfg()), dict(_cfg())]
+    try:
+        with pytest.raises(ValueError, match="must be last"):
+            promote._check_config_order()
+    finally:
+        del promote.FAMILY_SNIPPETS["ARO:9999999"]
+
+
+def test_every_shipped_family_passes_the_config_order_check():
+    promote._check_config_order()

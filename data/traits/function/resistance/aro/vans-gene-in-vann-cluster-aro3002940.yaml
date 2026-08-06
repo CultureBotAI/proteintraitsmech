@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000071
 trait_relations:
@@ -29,11 +29,12 @@ evidence:
 - reference: DOI:10.1128/AAC.00714-11
   notes: PMID:21807981 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] vanS gene in vanN cluster → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: vanS gene in vanN cluster → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:1556077). Regulation, not resistance, in a D-Ala-D-Ser cluster: the operon it induces is the
+    ligase, vanT and vanXY.'
   nodes:
   - node_id: determinant
     label: vanS gene in vanN cluster
@@ -47,6 +48,30 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: transcription
+    label: positive regulation of DNA-templated transcription (the van resistance operon)
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0045893
+  - node_id: ligase_gene
+    label: D-Ala-D-Ser ligase of the van cluster
+    node_type: PROTEIN
+    grounding: ARO:3002979
+    description: KB record, curated in round 23.
+  - node_id: vant_gene
+    label: vanT (membrane serine racemase of the van cluster)
+    node_type: PROTEIN
+    grounding: ARO:3000372
+    description: KB record, curated in round 23.
+  - node_id: vanxy_gene
+    label: vanXY (D,D-dipeptidase/carboxypeptidase of the van cluster)
+    node_type: PROTEIN
+    grounding: ARO:3000496
+    description: KB record, curated in round 23.
+  - node_id: family
+    label: vancomycin resistance histidine kinase VanS
+    node_type: PROTEIN
+    grounding: NCBIfam:NF033091
+    description: KB protein-trait record for the vanS family.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,44 +85,130 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.00714-11
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
-    - reference: ARO:3002940
-      snippet: Also known as vanSN, is a vanS variant found in the vanN gene cluster.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+    - reference: PMID:1556077
+      snippet: Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR
+        two-component regulatory system encoded by the proximal part of the cluster.
+      notes: Family mechanism ARO:3000213.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00714-11
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: PMID:1556077
+      snippet: Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR
+        two-component regulatory system encoded by the proximal part of the cluster.
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00714-11
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000071
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: CARD asserts a resistance relation on ARO:3000071 (vanS), an is_a ancestor of ARO:3002940.
+    - reference: PMID:1556077
+      snippet: Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR
+        two-component regulatory system encoded by the proximal part of the cluster.
+      notes: Arthur et al. 1992. vanS is part of the two-component system that regulates the resistance
+        enzymes; it is not one of them.
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: In a D-Ala-D-Ser cluster the enzymes it induces are the ligase, vanT and vanXY -- all three
+        curated records (round 23).
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3000071
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
       notes: Asserted on ARO:3000071 (vanS), an is_a ancestor of this record's ARO:3002940; inherited
         by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+  - subject: transcription
+    predicate: positively regulates (induced with the resistance operon)
+    predicate_id: RO:0002213
+    object: ligase_gene
+    evidence:
+    - reference: PMID:1556077
+      snippet: Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR
+        two-component regulatory system encoded by the proximal part of the cluster.
+      notes: Arthur et al. 1992 established that the two-component system regulates the resistance enzymes
+        at the transcriptional level; in a D-Ala-D-Ser cluster the D-Ala-D-Ser ligase is one of them.
+  - subject: ligase_gene
+    predicate: causally upstream of (the mechanism this regulator induces)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The regulator confers no resistance itself; the enzymes it induces do.
+    evidence:
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: 'Arias et al. 2000: the three genes sufficient for VanC-type resistance, of which the D-Ala-D-Ser
+        ligase is one. Its own mechanism is curated on its record.'
+  - subject: transcription
+    predicate: positively regulates (induced with the resistance operon)
+    predicate_id: RO:0002213
+    object: vant_gene
+    evidence:
+    - reference: PMID:1556077
+      snippet: Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR
+        two-component regulatory system encoded by the proximal part of the cluster.
+      notes: Arthur et al. 1992 established that the two-component system regulates the resistance enzymes
+        at the transcriptional level; in a D-Ala-D-Ser cluster vanT is one of them.
+  - subject: vant_gene
+    predicate: causally upstream of (the mechanism this regulator induces)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The regulator confers no resistance itself; the enzymes it induces do.
+    evidence:
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: 'Arias et al. 2000: the three genes sufficient for VanC-type resistance, of which vanT is
+        one. Its own mechanism is curated on its record.'
+  - subject: transcription
+    predicate: positively regulates (induced with the resistance operon)
+    predicate_id: RO:0002213
+    object: vanxy_gene
+    evidence:
+    - reference: PMID:1556077
+      snippet: Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR
+        two-component regulatory system encoded by the proximal part of the cluster.
+      notes: Arthur et al. 1992 established that the two-component system regulates the resistance enzymes
+        at the transcriptional level; in a D-Ala-D-Ser cluster vanXY is one of them.
+  - subject: vanxy_gene
+    predicate: causally upstream of (the mechanism this regulator induces)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The regulator confers no resistance itself; the enzymes it induces do.
+    evidence:
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: 'Arias et al. 2000: the three genes sufficient for VanC-type resistance, of which vanXY is
+        one. Its own mechanism is curated on its record.'
+  - subject: determinant
+    predicate: member of (the vanS family)
+    predicate_id: RO:0002350
+    object: family
+    evidence:
+    - reference: PMID:1556077
+      snippet: Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR
+        two-component regulatory system encoded by the proximal part of the cluster.
+      notes: Establishes the two-component system this determinant belongs to.
+    - reference: NCBIfam:NF033091
+      snippet: vancomycin resistance histidine kinase VanS
+      notes: NCBIfam's own product name for the family this node grounds to.
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

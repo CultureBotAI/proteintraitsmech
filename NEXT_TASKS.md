@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   1,114.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   1,102.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -89,8 +89,8 @@ cleared._
      Measured in round 20: `ARO:3002978` (D-Ala-D-Lac ligase, vanA/B/D/M) has **0 drafts**
      — round 14 promoted them. What remains is the accessory and regulatory machinery,
      organised by **gene role**, each needing its own edges and evidence:
-     vanR **14** · vanS **14** — **16 of 28 done (round 22)**; the 12 in D-Ala-D-Ser
-     clusters are held back, see below · ~~vanX **9**~~ **DONE (round 20)** ·
+     ~~vanR **14** · vanS **14**~~ **DONE — 16 in round 22, the other 12 in round 24
+     once #208 let a family carry two configs** · ~~vanX **9**~~ **DONE (round 20)** ·
      ~~vanH **8**~~ **DONE (round 21)** · vanY **7** · ~~vanT **7** · D-Ala-D-Ser ligases **6** · vanXY **6**~~
      **DONE (round 23)** · ~30 others.
      Next, and now one coherent round: **the D-Ala-D-Ser side** — the 12 vanR/vanS
