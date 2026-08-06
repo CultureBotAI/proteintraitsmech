@@ -83,7 +83,7 @@ bind what the enzyme makes. The graph has to carry both arms — drug action and
 |---|---|---|---|
 | `determinant` | PROTEIN | the record's own `ARO:` id | |
 | `gyra_domain` | DOMAIN | **`Pfam:PF00521`** | KB record `data/traits/sequence/domain/pfam/dna-topoisoiv-pf00521.yaml` |
-| `qrdr` | MOTIF | — | no ontology term denotes the QRDR; frame caveat carried in `description` |
+| `qrdr` | MOTIF | — | labelled *substituted in this determinant*; no ontology term denotes the QRDR; frame caveat in `description` |
 | `gyrase_activity` | MOLECULAR_FUNCTION | `GO:0003918` | checked non-obsolete against OLS (#157) |
 | `cleavage_complex` | STATE | — | same class as the 4,023 M-CSA reaction-intermediate STATE nodes |
 | `cell_death` | PHENOTYPE | `GO:0008219` | |
@@ -158,6 +158,9 @@ Both are now fixed for every family, and pinned by `tests/test_promoter_extra_ed
   triclosan resistance is not the QRDR story and CARD's own definition is thin;
   `ARO:3003702` is a combined **gyrA and parC** record; `ARO:3000273` is the
   topoisomerase-subunit parent above the fluoroquinolone/triclosan split.
+* **The extra-edge guard checks that a node exists, not that it is the right one** — filed
+  as #188. Safe here (all 25 records have `drug0 = ARO:0000001`, verified), but `drug0` is
+  positional and the van clusters carry several drug classes per record.
 * **`resistance --related to--> drug0` now carries `biolink:related_to`.** That is a weak
   predicate for a real relation; ARO's own `ARO:2000001` (confers_resistance_to_drug_class)
   is stronger but has the determinant, not the phenotype, as its subject. Worth revisiting

@@ -66,7 +66,12 @@ FAMILY_SNIPPETS = {
             # deliberately no `fold` and no `enables_mech`: see the report's open questions.
         },
         "extra_nodes": [
-            {"node_id": "qrdr", "label": "quinolone resistance-determining region (QRDR) of GyrA",
+            # the label says "substituted in this determinant" because the edge below
+            # asserts that this node negatively regulates cleavage-complex formation, and
+            # the evidence is about MUTATION of these residues, not about the region as
+            # such. An unqualified "QRDR of GyrA" would make the graph claim that the
+            # wild-type region lowers drug affinity, which no source says.
+            {"node_id": "qrdr", "label": "quinolone resistance-determining region (QRDR) of GyrA, substituted in this determinant",
              "node_type": "MOTIF",
              "description": "GyrA residues 67-106, Ser83 and the acidic residue four positions downstream being the most frequently substituted. Positions are stated in the E. coli GyrA frame; the equivalent positions differ per organism (e.g. Ala90/Asp94 in M. tuberculosis), so no per-record residue node is asserted. Ungrounded: no ontology term denotes the QRDR."},
             {"node_id": "gyrase_activity", "label": "DNA topoisomerase type II (double strand cut, ATP-hydrolyzing) activity",
