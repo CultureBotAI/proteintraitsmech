@@ -509,3 +509,34 @@ def test_a_duplicated_causal_graphs_key_is_refused_not_silently_collapsed():
            "license: CC-BY 4.0\n")
     with pytest.raises(promote.RIO.RecordError):
         promote.RIO.graph_ids(dup)
+
+
+# --- #188: the extra-edge guard checks identity, not just existence ---------------
+
+def test_an_edge_is_skipped_when_its_required_grounding_does_not_match():
+    """`drug0` is POSITIONAL — whatever that record's ARO relations produced, in order.
+
+    An edge naming it therefore gets that record's first drug, whatever it is, and a
+    drug-specific snippet would be attached to the wrong drug. Every fluoroquinolone and
+    glycopeptide family was verified to carry the drug its snippet is about, but nothing
+    enforced it, and the van clusters carry several drug classes each.
+    """
+    cfg = _cfg(extra_edges=[{
+        "subject": "drug0", "object": "determinant", "predicate": "p",
+        "predicate_id": "RO:0002436", "requires": {"drug0": "ARO:0000001"},
+        "evidence": [{"reference": "PMID:1", "snippet": "s", "notes": "n"}]}])
+    right = _graph(cfg, drug=("ARO:0000001",))          # the drug the edge was written for
+    wrong = _graph(cfg, drug=("ARO:3000081",))          # a different drug class
+    assert "subject: drug0" in right
+    assert "subject: drug0" not in wrong
+
+
+@pytest.mark.parametrize("family,node,want", [
+    ("ARO:3003292", "drug0", "ARO:0000001"),    # gyrA — quinolone snippet
+    ("ARO:3000011", "drug0", "ARO:3000081"),    # vanX — glycopeptide snippet
+    ("ARO:3000006", "drug0", "ARO:3000081"),    # vanH — vancomycin Kd
+])
+def test_drug_specific_edges_state_the_drug_they_were_written_for(family, node, want):
+    reqs = [e.get("requires") for e in promote.FAMILY_SNIPPETS[family]["extra_edges"]
+            if e.get("requires")]
+    assert {node: want} in reqs
