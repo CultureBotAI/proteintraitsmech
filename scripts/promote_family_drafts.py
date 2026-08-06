@@ -82,6 +82,7 @@ def _fq_shared_edges(qrdr_regulates_evidence: list) -> list:
                        "notes": "Aldred 2014. The cleavage complex is the enzyme's own catalytic intermediate, present with or without drug."}]},
         {"subject": "drug0", "object": "cleavage_complex",
          "predicate": "molecularly interacts with (intercalates and blocks ligation)", "predicate_id": "RO:0002436",
+         "requires": {"drug0": "ARO:0000001"},      # the snippet is about quinolones
          "description": "Quinolone action: the drug binds the cleaved complex and blocks religation, raising the steady-state level of DNA breaks.",
          "evidence": [{"reference": "PMID:24576155", "snippet": _FQ_INTERCALATE,
                        "notes": "Aldred 2014. This is the drug-ACTION arm; resistance is the loss of it."}]},
@@ -405,6 +406,7 @@ FAMILY_SNIPPETS = {
             # above, which is where the causation is.
             {"subject": "van_complex", "object": "drug0",
              "predicate": "has part (the bound glycopeptide)", "predicate_id": "BFO:0000051",
+             "requires": {"drug0": "ARO:3000081"},   # the Kd is vancomycin's
              "description": "Defines the complex: vancomycin bound to the precursor terminus, Kd = 54 microM against D-Ala-D-Ala. This is what the depsipeptide prevents.",
              "evidence": [{"reference": "PMID:1931965", "snippet": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.',
                            "notes": "The same sentence carries both arms: the drug's normal affinity and its loss."}]},
@@ -482,6 +484,7 @@ FAMILY_SNIPPETS = {
              ]},
             {"subject": "drug0", "object": "pentapeptide",
              "predicate": "molecularly interacts with (binds the D-Ala-D-Ala terminus)", "predicate_id": "RO:0002436",
+             "requires": {"drug0": "ARO:3000081"},   # the snippet is about glycopeptides
              "description": "Drug action: glycopeptides bind the D-Ala-D-Ala terminus of the precursor at the cell surface. Removing that terminus is what confers resistance.",
              "evidence": [
                  {"reference": "PMID:7854121",
@@ -1153,9 +1156,25 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
     # An edge whose subject or object is not among THIS record's nodes is skipped rather
     # than emitted dangling: mechanism and drug nodes come from each member's own ARO
     # relations, so a family member need not carry the one an edge names.
-    defined = {n["node_id"] for n in nodes}
+    defined = {n["node_id"]: n.get("grounding") for n in nodes}
+    skipped = []
     for e in cfg.get("extra_edges", []):
         if e["subject"] not in defined or e["object"] not in defined:
+            skipped.append((e["subject"], e["object"], "endpoint not on this record"))
+            continue
+        # IDENTITY, not just existence (#188). `drug0`/`mech0` are POSITIONAL — whatever
+        # that record's own ARO relations produced, in order — so an edge naming `drug0`
+        # gets that record's first drug, whatever it is. Every fluoroquinolone and
+        # glycopeptide family was verified to have the drug its snippet is about, but
+        # nothing enforced it, and the van clusters carry several drug classes each.
+        # `requires` lets an edge state the grounding it was written for.
+        mismatch = next(((k, want, defined.get(k))
+                         for k, want in (e.get("requires") or {}).items()
+                         if defined.get(k) != want), None)
+        if mismatch:
+            k, want, got = mismatch
+            skipped.append((e["subject"], e["object"],
+                            f"{k} is {got or 'ungrounded'}, edge requires {want}"))
             continue
         edge = {"subject": e["subject"], "predicate": e["predicate"],
                 "predicate_id": e["predicate_id"], "object": e["object"]}
@@ -1164,6 +1183,10 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
         edge["evidence"] = [{"reference": i["reference"], "snippet": i["snippet"],
                              "notes": i.get("notes", "")} for i in e["evidence"]]
         edges.append(edge)
+    # A dropped edge used to be invisible: the promoter reports records, not edges, so a
+    # family author could reasonably believe all their edges were written (#188).
+    for subj, obj, why in skipped:
+        print(f"    edge skipped on {ident}: {subj} -> {obj} ({why})")
 
     graph = {
         "graph_id": "resistance",
