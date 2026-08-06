@@ -1239,6 +1239,11 @@ def _dump(obj) -> list[str]:
 # here: UniProt accessions appear in `canonical_examples`, never as a record identifier
 # (UniProt-seeded records are minted as `proteintraitsmech:UNIPROTKB_…`), so including it
 # would report a false UNRESOLVED for any config that grounded a node to a protein.
+# words that appear in a domain label without distinguishing it, so a snippet echoing
+# only these has not named the domain.
+_GENERIC_LABEL_WORDS = {"domain", "protein", "this", "carries", "subunit", "family",
+                        "beta", "class", "site"}
+
 KB_PREFIXES = ("ARO:", "Pfam:", "NCBIfam:", "PROSITE:", "CATH:", "InterPro:", "CDD:",
                "MEROPS:", "TED:", "GO:")
 
@@ -1349,6 +1354,24 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
                       f"has no snippet in this config")
     if uncovered_records > 3:
         print(f"  uncovered mechanism  ... and {uncovered_records - 3:,} more in {family}")
+    # A part-of edge asserts "this determinant HAS this domain", and its evidence is the
+    # 4-tuple's snippet. Nothing checks that the snippet supports a MEMBERSHIP claim: 27 of
+    # 33 families cite a bare source entry TITLE ("Beta-lactamase class-A active site"),
+    # which identifies the signature without saying this determinant carries it (#196).
+    # Reported, not failed -- it is a curation backlog like the uncovered mechanisms, and
+    # the fix is per family: substitute the source abstract, as vanX does with the
+    # InterPro:IPR000755 text that names VanX outright.
+    thin_partof = 0
+    pt = cfg.get("protein_traits")
+    if pt:
+        key = pt.get("primary_key", "active_site")
+        cid, lab, _, snip = pt[key]
+        label_words = [w for w in re.findall(r"[A-Za-z-]{4,}", lab)
+                       if w.lower() not in _GENERIC_LABEL_WORDS]
+        if len(snip) < 60 or not any(w.lower() in snip.lower() for w in label_words):
+            thin_partof = 1
+            print(f"  thin part-of evidence  {family}: {cid} cites {snip[:52]!r} — a bare "
+                  f"entry title does not establish that this determinant has the domain")
     skips = 0
     pre = cfg.get("precondition")
     if pre:
@@ -1359,7 +1382,7 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
                 skips += 1
     print(f"verify {family}: {len(curies)} KB CURIEs checked, {len(candidates)} candidate "
           f"records, {skips} precondition skip(s), {uncovered_records} uncovered-mechanism "
-          f"record(s), {problems} problem(s)")
+          f"record(s), {thin_partof} thin part-of, {problems} problem(s)")
     return problems
 
 

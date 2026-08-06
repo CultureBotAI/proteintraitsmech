@@ -540,3 +540,39 @@ def test_drug_specific_edges_state_the_drug_they_were_written_for(family, node, 
     reqs = [e.get("requires") for e in promote.FAMILY_SNIPPETS[family]["extra_edges"]
             if e.get("requires")]
     assert {node: want} in reqs
+
+
+# --- #196: a part-of snippet must support a MEMBERSHIP claim ----------------------
+
+def test_verify_flags_a_bare_entry_title_as_thin_partof_evidence(capsys):
+    """"Beta-lactamase class-A active site" identifies a signature.
+
+    It does not say this determinant carries it, which is what the part-of edge asserts.
+    27 of 33 families cite such a title (#196). Reported, not failed: the fix is per
+    family — substitute the source abstract, as vanX does with the InterPro:IPR000755
+    text that names VanX outright.
+    """
+    promote._IDENTIFIER_INDEX = {"PROSITE:PS00146"}
+    try:
+        cfg = _cfg(protein_traits={
+            "primary_key": "active_site",
+            "active_site": ("PROSITE:PS00146", "class A beta-lactamase active-site signature",
+                            "MOTIF", "Beta-lactamase class-A active site")})
+        assert promote.verify("ARO:1", cfg, {}, [("ARO:2", "x", "")]) == 0   # not a failure
+        assert "thin part-of evidence" in capsys.readouterr().out
+    finally:
+        promote._IDENTIFIER_INDEX = None
+
+
+def test_a_snippet_that_names_the_domain_is_not_flagged(capsys):
+    promote._IDENTIFIER_INDEX = {"Pfam:PF01427"}
+    try:
+        cfg = _cfg(protein_traits={
+            "primary_key": "domain",
+            "domain": ("Pfam:PF01427", "D-Ala-D-Ala dipeptidase domain (MEROPS M15D)", "DOMAIN",
+                       "This group of metallopeptidases belong to MEROPS peptidase family M15 "
+                       "(clan MD), subfamily M15D (vanX D-Ala-D-Ala dipeptidase).")})
+        promote.verify("ARO:1", cfg, {}, [("ARO:2", "x", "")])
+        assert "thin part-of evidence" not in capsys.readouterr().out
+    finally:
+        promote._IDENTIFIER_INDEX = None
