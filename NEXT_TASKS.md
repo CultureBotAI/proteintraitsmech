@@ -49,18 +49,35 @@ after 15 phases; the per-protein-YAML ask was answered with measurements rather
 than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
-1. **Per-gene curation of the remaining 1,219 resistance causal-graph drafts.**
-   Still open — **re-counted 2026-07-30, unchanged at 1,219.** The family-level
-   promotion is done (6,180 REVIEWED). PR #84 made every draft edge *cited* (the
-   corpus is 100% snippet-covered), so these are no longer defective — they are
-   simply still `graph_id: resistance-draft` rather than family-wired graphs.
-   The tail is genuinely per-gene: `ARO:0000031` gene-variant point mutants
-   (gyrA/rpoB/16S/23S — each a different target protein), efflux subunits,
-   two-component regulators, rRNA mutations, single genes. No shared family config
-   fits — needs per-gene evidence.
+1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
+   1,194.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
+   defective — they are simply still `graph_id: resistance-draft` rather than
+   family-wired graphs.
+   **Round 18 (2026-08-05) closed the gyrA fluoroquinolone family: 25 records,
+   275 cited edges** — `research/causal-graphs-round18.md`.
+
+   **"No shared family config fits" — this item's own claim — is wrong for the
+   target-alteration genes, and round 18 measured it.** 25 of the 30 gyrA drafts are
+   `is_a` descendants of one family term (ARO:3003292) sharing one mechanism, one drug
+   class and one pair of papers; `promote_family_drafts.py` covered them in one run.
+   What is genuinely per-organism is the **residue numbering** (Ser83/Asp87 in E. coli
+   GyrA = Ala90/Asp94 in M. tuberculosis), not the mechanism. The claim does still hold
+   for the **565** drafts whose label carries no gene symbol at all — efflux subunits,
+   two-component regulators — which is where it came from.
+
+   Ranked remainder, by whether one family term covers them:
+   - **gyrB (18) · parC (14) · parE (8)** — the rest of the fluoroquinolone target set,
+     same mechanism and same two papers as gyrA. Reuses round 18's config almost as-is.
+   - **van* clusters (~100)** — vanR/S/X/H/A/B/G/L/F/Y/M/I/P; one mechanism
+     (D-Ala-D-Ala → D-Ala-D-Lac remodelling) plus two-component regulation.
+   - **rpoB/rpoC (20)**, **katG/ahpC/fabG1/ethA/msh* (~40)**, **16S/23S rRNA (~22)**.
+   - **565 with no gene symbol** — per-record triage, genuinely not a family PR.
+
    Tracker: `grep -rl "graph_id: resistance-draft" data/traits/function/resistance/aro/`.
    Skill: `edison-causal-graphs`; promoter: `promote_family_drafts.py`
-   (`FAMILY_SNIPPETS`).
+   (`FAMILY_SNIPPETS`, now with `extra_nodes`/`extra_edges` for mechanisms the fixed
+   inactivation shape cannot express).
 
 2. ~~**Join Rhea reaction chemistry to the M-CSA catalytic residues that perform
    it.**~~ **DONE (2026-07-30, round 17, PR #89)** — 427 Rhea records gained 468
