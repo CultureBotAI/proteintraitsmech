@@ -164,6 +164,35 @@ def test_word_to_capitalised_word_becomes_en_dash(damaged, restored):
     assert repair_lossy(damaged) == restored
 
 
+# Every repair rule carries an inline example in `lossy_text_errata`. Each one is
+# repeated here so the example is CHECKED rather than merely asserted in a comment.
+RULE_EXAMPLES = [
+    ("_ARROW", "3'" + FFFD + "5'", "3'→5'"),
+    ("_APOSTROPHE", "Earth" + FFFD + "s", "Earth’s"),
+    ("_PRIME", "3" + FFFD + "-5" + FFFD, "3′-5′"),
+    ("_RANGE_DASH", "16402" + FFFD + "16403", "16402–16403"),
+    ("_CHEM_HYPHEN", "2" + FFFD + "oxoglutarate", "2-oxoglutarate"),
+    ("_WORD_DASH", "Methylglyoxal" + FFFD + "GSH", "Methylglyoxal–GSH"),
+    ("_SPACED_DASH", "clause " + FFFD + " dash", "clause—dash"),
+]
+
+
+@pytest.mark.parametrize("rule,damaged,restored",
+                         RULE_EXAMPLES, ids=[r[0] for r in RULE_EXAMPLES])
+def test_every_rule_repairs_its_own_documented_example(rule, damaged, restored):
+    """Each rule's inline example must actually be repaired by that rule (#182).
+
+    This is the invariant form of the per-shape tests above, and it exists because the
+    comment on a rule is a promise nothing was checking. `_WORD_DASH` carried the example
+    `Methylglyoxal<F>GSH` while its pattern required a lowercase second letter, so it
+    never matched the acronym it claimed to handle and two records kept a visible U+FFFD
+    (#139). A rule whose example drifts from its behaviour now fails here instead of
+    going unnoticed until someone greps the corpus.
+    """
+    assert repair_lossy(damaged) == restored
+    assert FFFD not in repair_lossy(damaged)
+
+
 @pytest.mark.parametrize("damaged,restored", [
     ("Hyyryl" + FFFD + "inen H", "Hyyryläinen H"),
     ("Oppeg" + FFFD + "rd C", "Oppegård C"),
