@@ -111,7 +111,7 @@ def test_it_only_touches_a_backslash_before_a_letter(text):
 
 # --- #139: restoring characters the SOURCE lost -----------------------------------
 
-from lossy_text_errata import UNRESOLVED, repair as repair_lossy  # noqa: E402
+from lossy_text_errata import SURNAMES, UNRESOLVED, repair as repair_lossy  # noqa: E402
 
 FFFD = "�"
 
@@ -199,6 +199,12 @@ def test_every_rule_repairs_its_own_documented_example(rule, damaged, restored):
     ("S" + FFFD + "rensen", "Sørensen"),
     ("Rodr" + FFFD + "guez", "Rodríguez"),
     ("Leskel" + FFFD + " S", "Leskelä S"),
+    # the three resolved in #146, each in the citation context it occurs in
+    ("Cohen SP1, H" + FFFD + "chler H, Levy SB. 1993",
+     "Cohen SP1, Hächler H, Levy SB. 1993"),
+    ("Haase I1, M" + FFFD + "rtl S, Köhler P", "Haase I1, Mörtl S, Köhler P"),
+    # both tokens of a two-token surname were damaged, so the table entry spans the space
+    ("(" + FFFD + " Cu" + FFFD + "v et al., 2004)", "(Ó Cuív et al., 2004)"),
 ])
 def test_surnames_come_from_the_table_not_a_rule(damaged, restored):
     """Accented letters in names are inferred by RECOGNISING the name.
@@ -210,16 +216,41 @@ def test_surnames_come_from_the_table_not_a_rule(damaged, restored):
     assert repair_lossy(damaged) == restored
 
 
-@pytest.mark.parametrize("damaged", sorted(UNRESOLVED))
-def test_names_that_are_not_confident_are_left_alone(damaged):
-    """The three surnames with more than one plausible spelling stay damaged.
+def test_names_that_are_not_confident_are_left_alone():
+    """Whatever is in UNRESOLVED stays damaged — `just audit-text` keeps counting it.
 
-    Deliberate: `just audit-text` keeps counting them, so the residue is visible rather
-    than quietly declared fixed.
+    UNRESOLVED is empty since #146, so today this asserts nothing about any name. It is
+    written as a loop rather than a `parametrize` for exactly that reason: an empty
+    `parametrize` collects as one skipped test, which reads like a passing invariant
+    while checking nothing. The disjointness assertion below always runs.
     """
-    text = "author " + damaged.replace("_", FFFD) + " et al."
-    assert repair_lossy(text) == text
-    assert FFFD in repair_lossy(text)
+    for damaged in sorted(UNRESOLVED):
+        text = "author " + damaged.replace("_", FFFD) + " et al."
+        assert repair_lossy(text) == text, f"{damaged} must stay damaged"
+        assert FFFD in repair_lossy(text)
+
+
+def test_a_spaced_surname_beats_the_spaced_dash_rule():
+    """`Ó Cuív` must be restored before ` <F> ` is read as a clause dash (#146).
+
+    The compound entry `_ Cu_v` is the first table key whose leading mark can sit
+    between two spaces, which is exactly what `_SPACED_DASH` matches. SURNAMES runs
+    before every regex, so it wins — but nothing pinned that until now, and the corpus
+    occurrence is preceded by `(` so it does not exercise the collision. Reorder
+    `repair()` and this fails; without it, the name would silently become `—Cuív`.
+    """
+    damaged = "reported by " + FFFD + " Cu" + FFFD + "v et al., 2004"
+    assert repair_lossy(damaged) == "reported by Ó Cuív et al., 2004"
+
+
+def test_a_name_is_never_both_resolved_and_unresolved():
+    """The two tables must not disagree about the same name (#146).
+
+    SURNAMES runs before every rule, so an entry present in both would be silently
+    restored while UNRESOLVED claims it was left visible — the table would be lying
+    rather than merely incomplete.
+    """
+    assert UNRESOLVED.isdisjoint(SURNAMES)
 
 
 def test_undamaged_text_is_untouched():

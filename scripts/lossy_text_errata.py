@@ -59,15 +59,21 @@ SURNAMES = {
     # them; found only in the residue after the first pass
     "Leskel_ ": "Leskelä ",           # Finnish; B. subtilis secretion, with Hyyryläinen
     "Massengo-Tiass_ ": "Massengo-Tiassé ",
+    # the three that were UNRESOLVED until #146. Each was decided by looking up the
+    # citation the damaged name sits in, not by picking the commoner spelling: the
+    # record names the paper, and the paper's own index entry names the author.
+    "H_chler": "Hächler",             # PMID 8383113 `Cohen SP, Hächler H, Levy SB.`
+    "M_rtl": "Mörtl",                 # PMID 12603336 `Haase I, Mörtl S, Köhler P, …`
+    # a two-token surname, and BOTH tokens were damaged: the Ó particle and the í.
+    # Crossref 10.1128/JB.186.10.2996-3005.2004 gives family `Ó Cuív`, given `Páraic`.
+    "_ Cu_v": "Ó Cuív",
 }
 
 # Damaged forms whose restoration is NOT confident enough to write into a record.
-# Left as U+FFFD deliberately; `just audit-text` keeps counting them.
-UNRESOLVED = {
-    "H_chler",     # Hächler / Höchler / Hüchler all plausible
-    "M_rtl",       # Märtl / Mörtl
-    "Cu_v",        # likely Ó Cuív, but the given-name context is missing
-}
+# Left as U+FFFD deliberately; `just audit-text` keeps counting them. Empty since #146 —
+# the three names that lived here were resolved from their citations. Kept, rather than
+# deleted with its test, because it is where the next unresolvable name goes.
+UNRESOLVED: set[str] = set()
 
 # Specific strings whose restoration is unambiguous but which no general rule catches.
 LITERALS = {
