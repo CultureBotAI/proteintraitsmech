@@ -183,9 +183,13 @@ FAMILY_SNIPPETS = {
              "description": "The causal core, and it is quantified: replacing the terminal D-Ala raises the vancomycin Kd from 54 microM to >73 mM.",
              "evidence": [{"reference": "PMID:1931965", "snippet": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.',
                            "notes": "The authors' own molecular rationale for high-level resistance, including the disrupted hydrogen bond."}]},
-            {"subject": "drug0", "object": "van_complex",
-             "predicate": "molecularly interacts with (binds the precursor terminus)", "predicate_id": "RO:0002436",
-             "description": "Drug action: vancomycin binds the D-Ala-D-Ala terminus with Kd = 54 microM. This is the interaction the depsipeptide degrades.",
+            # NOT `drug0 molecularly interacts with van_complex`: the drug is a CONSTITUENT
+            # of that complex, so an interaction edge between them is circular. The complex
+            # HAS the drug as a part; the affinity claim lives on the depsipeptide edge
+            # above, which is where the causation is.
+            {"subject": "van_complex", "object": "drug0",
+             "predicate": "has part (the bound glycopeptide)", "predicate_id": "BFO:0000051",
+             "description": "Defines the complex: vancomycin bound to the precursor terminus, Kd = 54 microM against D-Ala-D-Ala. This is what the depsipeptide prevents.",
              "evidence": [{"reference": "PMID:1931965", "snippet": 'The vancomycin binding constant of a synthetic modified peptidoglycan analogue N-acetyl-D-alanyl-D-2-hydroxybutyrate (Kd greater than 73 mM) was greater than 1000-fold higher than the binding constant for N-acetyl-D-alanyl-D-alanine (Kd = 54 microM), partly due to the disruption of a hydrogen bond in the vancomycin-target complex, thus providing a molecular rationale for high-level vancomycin resistance.',
                            "notes": "The same sentence carries both arms: the drug's normal affinity and its loss."}]},
         ],

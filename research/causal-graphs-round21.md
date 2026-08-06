@@ -63,13 +63,20 @@ family --enables [RO:0002327]-->                     dh_activity (GO:0008720)
 dh_activity --has output [RO:0002234]-->             D-hydroxy acid (CHEBI:16004)
 D-hydroxy acid --causally upstream of [RO:0002411]-->depsipeptide
 depsipeptide --negatively regulates [RO:0002212]-->  vancomycin-target complex   ← causal core
-drug0 (glycopeptide) --molecularly interacts with [RO:0002436]--> vancomycin-target complex
+vancomycin-target complex --has part [BFO:0000051]--> drug0 (glycopeptide)
 ```
 
 **One grounding caveat is stated on the node itself:** `d_hydroxy_acid` is grounded to
 `CHEBI:16004` ((R)-lactate), the physiological product, while the quoted measurements used
 D-2-hydroxybutyrate, the best in vitro substrate. The node says which is which rather than
 letting the CURIE imply the assay used lactate.
+
+**One edge was corrected in review.** It read `drug0 --molecularly interacts with-->
+van_complex`, which is circular: the drug is a *constituent* of that complex, not something
+that interacts with it. It is now `van_complex --has part--> drug0`, which defines the
+complex; the affinity claim was always on the `depsipeptide` edge, where the causation is.
+Round 20 did not have this problem because its drug edge points at the **precursor**
+(`drug0 --molecularly interacts with--> pentapeptide`), which is a real interaction.
 
 ## Provenance
 
