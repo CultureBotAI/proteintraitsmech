@@ -1457,6 +1457,7 @@ def main() -> int:
         return 1 if verify(args.family, cfg, terms, _candidates(args.family, terms)) else 0
 
     promoted = repromoted = skip_done = skip_nodraft = skip_excluded = 0
+    skip_unreadable = 0
     for pth in sorted(ARO_DIR.glob("*.yaml")):
         text = pth.read_text(encoding="utf-8")
         ident_m = re.search(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', text, re.M)
@@ -1541,7 +1542,7 @@ def main() -> int:
         except (RIO.RecordError, yaml.YAMLError) as exc:
             print(f"  unparseable, skipped: {ident} — {type(exc).__name__}: "
                   f"{str(exc).splitlines()[0][:90]}")
-            skip_excluded += 1
+            skip_unreadable += 1
             continue
         # BOTH ids, because this promoter owns both: `resistance-draft` is what it
         # consumes and `resistance` is what it produces. Filtering only `resistance` left
@@ -1576,7 +1577,8 @@ def main() -> int:
           f"({fresh:,} draft{'' if fresh == 1 else 's'} promoted to REVIEWED, "
           f"{repromoted:,} already-curated re-promoted)")
     print(f"  skipped (already curated): {skip_done:,} | skipped (no draft): {skip_nodraft:,}"
-          f" | skipped (excluded by config): {skip_excluded:,}")
+          f" | skipped (excluded by config): {skip_excluded:,}"
+          f" | skipped (unreadable): {skip_unreadable:,}")
     print("APPLIED." if args.apply else "Dry-run — pass --apply to write.")
     return 0
 
