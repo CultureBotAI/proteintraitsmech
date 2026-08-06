@@ -576,3 +576,49 @@ def test_a_snippet_that_names_the_domain_is_not_flagged(capsys):
         assert "thin part-of evidence" not in capsys.readouterr().out
     finally:
         promote._IDENTIFIER_INDEX = None
+
+
+# --- round 23: the D-Ala-D-Ser route ----------------------------------------------
+
+SER_FAMILIES = ["ARO:3002979", "ARO:3000372", "ARO:3000496"]   # ligase, vanT, vanXY
+
+
+@pytest.mark.parametrize("family", SER_FAMILIES)
+def test_the_ser_families_refuse_a_d_ala_d_lac_cluster(family):
+    """Written BEFORE the fan-out this time, unlike round 22's (#201).
+
+    A cluster carrying vanH is the depsipeptide route of rounds 20–21, and its genes are
+    not these.
+    """
+    pre = promote.FAMILY_SNIPPETS[family]["precondition"]
+    assert pre("ARO:X", "vanT gene in vanC cluster", "") is None        # D-Ala-D-Ser
+    assert pre("ARO:X", "vanH gene in vanA cluster", "") is not None    # D-Ala-D-Lac
+    assert pre("ARO:X", "vanT", "") is None                             # family-level term
+
+
+def test_vant_ends_at_the_ligase_record_curated_in_the_same_round():
+    """Cross-round citation, now within a round: vanT supplies the ligase's substrate."""
+    out = _graph(promote.FAMILY_SNIPPETS["ARO:3000372"],
+                 mech=("ARO:3000213",), drug=("ARO:3000081",))
+    assert "grounding: ARO:3002979" in out
+    edge = [b for b in out.split("\n  - subject: ")[1:] if "object: ligase_gene" in b][0]
+    assert "RO:0002411" in edge
+
+
+def test_vanxy_cites_the_negative_result_that_makes_the_pathway_coherent():
+    """The enzyme clears the D-Ala route WITHOUT destroying the D-Ser precursor.
+
+    Same device as round 20's vanX: a graph recording only what an enzyme does cannot
+    explain why the cell survives its own clean-up.
+    """
+    out = _graph(promote.FAMILY_SNIPPETS["ARO:3000496"],
+                 mech=("ARO:3000213",), drug=("ARO:3000081",))
+    assert "very low dipeptidase activity against D-Ala-D-Ser" in out
+
+
+def test_ec_and_the_other_record_prefixes_are_checked_by_verify():
+    """`EC:` was missing, so `EC:6.3.2.35` was written unchecked — found by running the
+    guard on this round's own configs before promoting."""
+    for prefix in ("EC:", "GO:", "SFLD:", "PANTHER:", "HAMAP:"):
+        assert prefix in promote.KB_PREFIXES
+    assert "EC:6.3.2.35" in promote.config_curies(promote.FAMILY_SNIPPETS["ARO:3002979"])

@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000496
 trait_relations:
@@ -31,11 +31,11 @@ evidence:
 - reference: DOI:10.1128/AAC.01541-05
   notes: PMID:16723588 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] vanXY gene in vanG cluster → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: vanXY gene in vanG cluster → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:10564477). Removes the D-Ala-ending precursor and its dipeptide, leaving the D-Ser route.
   nodes:
   - node_id: determinant
     label: vanXY gene in vanG cluster
@@ -49,6 +49,32 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: precursor_ser
+    label: UDP-MurNAc-pentapeptide[D-Ser] (precursor ending in D-Ala-D-Ser)
+    node_type: STATE
+    description: 'The replacement precursor. Ungrounded: ChEBI has the amino acids but not the UDP-MurNAc
+      pentapeptides.'
+  - node_id: precursor_dala
+    label: UDP-MurNAc-pentapeptide[D-Ala] (the precursor glycopeptides bind)
+    node_type: STATE
+    description: The normal precursor, whose synthesis this pathway prevents. Ungrounded, as above.
+  - node_id: family
+    label: D,D-carboxypeptidase/D,D-dipeptidase VanXY
+    node_type: PROTEIN
+    grounding: NCBIfam:NF000380
+    description: KB protein-trait record for the VanXY family.
+  - node_id: dipeptidase
+    label: dipeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0016805
+  - node_id: carboxypeptidase
+    label: serine-type D-Ala-D-Ala carboxypeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0009002
+  - node_id: dala_dala
+    label: D-alanyl-D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:16576
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,44 +88,128 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.01541-05
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
-    - reference: ARO:3003069
-      snippet: Also known as vanXYG, is a vanXY variant found in the vanG gene cluster.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+    - reference: PMID:10564477
+      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
+        (Mr 22 318), which had both of these activities.
+      notes: Family mechanism ARO:3000213.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01541-05
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: PMID:10564477
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01541-05
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000496
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: CARD asserts a resistance relation on ARO:3000496 (vanXY), an is_a ancestor of ARO:3003069.
+    - reference: PMID:10564477
+      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
+        (Mr 22 318), which had both of these activities.
+      notes: 'Reynolds, Arias & Courvalin 1999: one 22 kDa protein carries both the D,D-dipeptidase and
+        the D,D-carboxypeptidase activity.'
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: 'What those activities do in the pathway: hydrolyse D-Ala-D-Ala and remove D-Ala from the
+        pentapeptide.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3000496
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
       notes: Asserted on ARO:3000496 (vanXY), an is_a ancestor of this record's ARO:3003069; inherited
         by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+  - subject: precursor_ser
+    predicate: negatively regulates (replaces the D-Ala-ending precursor)
+    predicate_id: RO:0002212
+    object: precursor_dala
+    description: 'The causal core of the VanC route: the wall is assembled from the D-Ser precursor instead,
+      and the D-Ala-ending one is not made.'
+    evidence:
+    - reference: PMID:10817725
+      snippet: Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser]
+        for cell wall assembly and prevent synthesis of peptidoglycan precursors ending in D-Ala.
+      notes: 'Arias, Courvalin & Reynolds 2000. Both halves in one sentence: what is synthesised, and
+        what is prevented.'
+  - subject: drug0
+    predicate: molecularly interacts with (binds the D-Ala-D-Ala terminus)
+    predicate_id: RO:0002436
+    object: precursor_dala
+    description: 'Drug action: the glycopeptide binds the D-Ala terminus. Replacing it is what confers
+      resistance.'
+    evidence:
+    - reference: PMID:10817725
+      snippet: Glycopeptide-resistant enterococci of the VanC type synthesize UDP-muramyl-pentapeptide[D-Ser]
+        for cell wall assembly and prevent synthesis of peptidoglycan precursors ending in D-Ala.
+      notes: The precursor named here is the one the drug binds; the VanC route prevents its synthesis.
+  - subject: determinant
+    predicate: member of (the VanXY bifunctional family)
+    predicate_id: RO:0002350
+    object: family
+    evidence:
+    - reference: PMID:10564477
+      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
+        (Mr 22 318), which had both of these activities.
+      notes: Establishes what VanXY is.
+    - reference: NCBIfam:NF000380
+      snippet: D,D-carboxypeptidase/D,D-dipeptidase VanXY
+      notes: NCBIfam's own product name for the family this node grounds to.
+  - subject: family
+    predicate: enables (D,D-dipeptidase activity)
+    predicate_id: RO:0002327
+    object: dipeptidase
+    evidence:
+    - reference: PMID:10564477
+      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
+        (Mr 22 318), which had both of these activities.
+      notes: The 'both of these activities' are the D,D-dipeptidase and the D,D-carboxypeptidase named
+        in the title.
+  - subject: family
+    predicate: enables (D,D-carboxypeptidase activity)
+    predicate_id: RO:0002327
+    object: carboxypeptidase
+    evidence:
+    - reference: PMID:10564477
+      snippet: The open reading frame downstream from vanC-1 encoded a soluble protein designated VanXYC
+        (Mr 22 318), which had both of these activities.
+      notes: The second of the two activities.
+  - subject: dipeptidase
+    predicate: has input (hydrolyses)
+    predicate_id: RO:0002233
+    object: dala_dala
+    description: 'And it spares the resistant route: very low activity against D-Ala-D-Ser, none against
+      the D-Ser pentapeptide.'
+    evidence:
+    - reference: PMID:10564477
+      snippet: It had very low dipeptidase activity against D-Ala-D-Ser, unlike VanX, and no activity
+        against UDP-MurNAc-pentapeptide[D-Ser], unlike VanY.
+      notes: The negative result is what makes the pathway work -- the enzyme does not destroy the precursor
+        it is helping to leave in place.
+  - subject: carboxypeptidase
+    predicate: negatively regulates (removes the terminal D-Ala)
+    predicate_id: RO:0002212
+    object: precursor_dala
+    evidence:
+    - reference: PMID:10817725
+      snippet: 'Three genes are sufficient for resistance: vanC-1 encodes a ligase that synthesizes the
+        dipeptide D-Ala-D-Ser for addition to UDP-MurNAc-tripeptide, vanXY(C) encodes a D,D-dipeptidase-carboxypeptidase
+        that hydrolyzes D-Ala-D-Ala and removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala], and vanT encodes
+        a membrane-bound serine racemase that provides D-Ser for the synthetic pathway.'
+      notes: vanXY(C) removes D-Ala from UDP-MurNAc-pentapeptide[D-Ala].
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
