@@ -209,3 +209,24 @@ def test_vanx_cites_the_loss_of_function_experiment_for_its_causal_edge():
     edge = [b for b in out.split("      - subject: ")[1:] if "confers resistance" in b][0]
     assert edge.count("- reference: ") == 2
     assert "Insertional inactivation of vanX" in edge
+
+
+# --- round 21: vanH, a family node rather than a domain node ----------------------
+
+def test_vanh_uses_member_of_a_family_not_part_of_a_domain():
+    """A determinant is a MEMBER of a protein family, not composed of one.
+
+    `protein_traits` only emits `domain part of determinant`, so vanH deliberately has no
+    `protein_traits` block: its KB trait is `NCBIfam:NF000492`, a family. The obvious
+    alternative — `Pfam:PF00389`, the D-isomer 2-hydroxyacid dehydrogenase catalytic
+    domain — is **not** used, because its abstract never names VanH and citing it for a
+    membership claim is the defect filed as #196.
+    """
+    cfg = promote.FAMILY_SNIPPETS["ARO:3000006"]
+    assert "protein_traits" not in cfg
+    out = _graph(cfg, mech=("ARO:3000213",), drug=("ARO:3000081",))
+    assert "grounding: NCBIfam:NF000492" in out
+    assert "Pfam:PF00389" not in out
+    edge = [b for b in out.split("      - subject: ")[1:] if "object: family" in b][0]
+    assert "RO:0002350" in edge                       # member of, not BFO:0000050
+    assert edge.count("- reference: ") == 2           # paper + NCBIfam, joined explicitly
