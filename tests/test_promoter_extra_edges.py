@@ -658,3 +658,26 @@ def test_a_catch_all_config_may_not_shadow_a_specific_one():
 
 def test_every_shipped_family_passes_the_config_order_check():
     promote._check_config_order()
+
+
+# --- round 25: vanY, and the mirror precondition -----------------------------------
+
+def test_vany_refuses_a_d_ala_d_ser_cluster():
+    """PMID:10094630 measured R-D-Ala-D-Ala and R-D-Ala-D-Lac substrates, not D-Ser.
+
+    The one vanY draft in a vanG cluster is held back rather than given a graph whose
+    evidence does not cover its substrate — caught before the first `--apply`, unlike
+    round 22.
+    """
+    pre = promote.family_configs("ARO:3000077")[0]["precondition"]
+    assert pre("ARO:X", "vanY gene in vanA cluster", "") is None        # D-Ala-D-Lac
+    reason = pre("ARO:X", "vanY gene in vanG cluster", "")
+    assert reason and "D-Ala-D-Ser route" in reason
+
+
+def test_vany_records_why_two_d_d_peptidases_are_not_redundant():
+    out = _graph(promote.family_configs("ARO:3000077")[0],
+                 mech=("ARO:3000213",), drug=("ARO:3000081",))
+    assert "non-overlapping functions" in out          # VanX vs VanY division of labour
+    assert "17- to 67-fold higher" in out              # the quantified preference
+    assert "but not the dipeptide D-Ala-D-Ala" in out  # the negative result
