@@ -259,7 +259,11 @@ FAMILY_SNIPPETS = {
         "reference": "PMID:15388468",       # Eaves et al. 2004, AAC (Salmonella enterica)
         "mech": {"ARO:3000212": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys."},
         "mech_res": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
-        "det_res": "Salmonella enterica isolates (n = 182) were examined for mutations in the quinolone resistance-determining region of gyrA, gyrB, parC, and parE.",
+        # NOT the paper's "isolates ... were examined for mutations in the QRDR of gyrA,
+        # gyrB, parC, and parE" sentence, which is METHODS and asserts nothing causal. The
+        # finding sentence is the weakest honest evidence available for parE, and the notes
+        # say what tier it is rather than letting a reader assume a measurement.
+        "det_res": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
         "res_drug": "Novel mutations were also found in parE encoding Glu453-Gly, His461-Tyr, Ala498-Thr, Val512-Gly, and Ser518-Cys.",
         "note": "Target alteration in topoisomerase IV's B subunit, the homologue of GyrB.",
         "protein_traits": {
