@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   1,149.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   1,133.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -89,13 +89,15 @@ cleared._
      Measured in round 20: `ARO:3002978` (D-Ala-D-Lac ligase, vanA/B/D/M) has **0 drafts**
      — round 14 promoted them. What remains is the accessory and regulatory machinery,
      organised by **gene role**, each needing its own edges and evidence:
-     vanR **14** · vanS **14** · ~~vanX **9**~~ **DONE (round 20)** · ~~vanH **8**~~
-     **DONE (round 21)** · vanY **7** · vanT **7** · D-Ala-D-Ser ligases **6** ·
-     vanXY **6** · ~30 others.
-     Next: **vanR/vanS** (28, the biggest block and a *fourth* shape — regulatory
-     induction of the cluster, not modification of a precursor). Then **vanY/vanXY**
-     (13, both D,D-carboxypeptidases, so probably one shared mechanism) and the
-     **D-Ala-D-Ser ligases** (6, the vanC/E/G/L/N terminus).
+     vanR **14** · vanS **14** — **16 of 28 done (round 22)**; the 12 in D-Ala-D-Ser
+     clusters are held back, see below · ~~vanX **9**~~ **DONE (round 20)** ·
+     ~~vanH **8**~~ **DONE (round 21)** · vanY **7** · vanT **7** ·
+     D-Ala-D-Ser ligases **6** · vanXY **6** · ~30 others.
+     Next, and now one coherent round: **the D-Ala-D-Ser side** — the 12 vanR/vanS
+     records round 22 held back (clusters vanC/E/G/I/L/N have no vanH, and all but vanI
+     no vanX), the **D-Ala-D-Ser ligases** (6), **vanT** (7, the serine racemase) and
+     **vanXY** (6). They share clusters and a downstream, so one round covers them.
+     Then **vanY** (7).
    - **rpoB/rpoC (20)**, **katG/ahpC/fabG1/ethA/msh* (~40)**, **16S/23S rRNA (~22)**.
    - **565 with no gene symbol** — per-record triage, genuinely not a family PR.
 

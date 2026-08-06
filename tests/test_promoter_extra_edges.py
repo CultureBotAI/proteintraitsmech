@@ -274,3 +274,35 @@ def test_a_family_carries_its_own_curation_date():
     for fam in ["ARO:3003292", "ARO:3000619", "ARO:3000864", "ARO:3003313",
                 "ARO:3000011", "ARO:3000006"]:
         assert promote.FAMILY_SNIPPETS[fam]["curated"] == "2026-08-05T00:00:00Z"
+
+
+# --- round 22: vanR/vanS, regulation, and graphs that point at earlier rounds ------
+
+@pytest.mark.parametrize("family", ["ARO:3000574", "ARO:3000071"])   # vanR, vanS
+def test_the_regulators_end_at_the_enzyme_records_they_induce(family):
+    """vanR/vanS confer no resistance themselves — they transcribe the genes that do.
+
+    Those genes are already curated records here (vanH round 21, vanX round 20), so the
+    graph ends at their ARO ids rather than restating their mechanisms. This is the first
+    round whose graphs point at earlier rounds' output, and it is the property that would
+    silently break if someone replaced the nodes with free-text labels.
+    """
+    out = _graph(promote.FAMILY_SNIPPETS[family], mech=("ARO:3000213",), drug=("ARO:3000081",))
+    assert "grounding: ARO:3000006" in out          # vanH, round 21
+    assert "grounding: ARO:3000011" in out          # vanX, round 20
+    downstream = [b for b in out.split("\n  - subject: ")[1:] if "object: resistance" in b]
+    assert any("vanh_gene" in b or "vanx_gene" in b for b in downstream)
+
+
+@pytest.mark.parametrize("family", ["ARO:3000574", "ARO:3000071"])
+def test_the_regulator_families_are_fully_grounded(family):
+    """Every node has a CURIE — the first families in this thread for which that is true.
+
+    Rounds 18–21 each added 1–2 label-only nodes per record (the QRDR, the pentapeptide,
+    the drug–target complex) because no ontology names them. A regulatory story has no
+    such gap: GO has the processes, ARO has the genes, NCBIfam has the families.
+    """
+    out = _graph(promote.FAMILY_SNIPPETS[family], mech=("ARO:3000213",), drug=("ARO:3000081",))
+    blocks = out.split("\n  - node_id: ")[1:]
+    ungrounded = [b.splitlines()[0] for b in blocks if "grounding:" not in b]
+    assert not ungrounded, f"{family}: label-only nodes {ungrounded}"

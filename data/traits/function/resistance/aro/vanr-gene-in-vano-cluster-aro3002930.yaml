@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000574
 trait_relations:
@@ -29,11 +29,12 @@ evidence:
 - reference: DOI:10.1128/AAC.01880-13
   notes: PMID:24342631 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] vanR gene in vanO cluster → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: vanR gene in vanO cluster → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:1556077). Regulation, not resistance: VanR activates the promoter of the vanHAX operon, and
+    resistance is inducible for that reason.'
   nodes:
   - node_id: determinant
     label: vanR gene in vanO cluster
@@ -47,6 +48,29 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: transcription
+    label: positive regulation of DNA-templated transcription (the vanHAX promoter)
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0045893
+  - node_id: vanh_gene
+    label: vanH (D-lactate dehydrogenase of the van cluster)
+    node_type: PROTEIN
+    grounding: ARO:3000006
+    description: KB record, curated in round 21 — the mechanism this regulator switches on.
+  - node_id: vanx_gene
+    label: vanX (D,D-dipeptidase of the van cluster)
+    node_type: PROTEIN
+    grounding: ARO:3000011
+    description: KB record, curated in round 20.
+  - node_id: family
+    label: VanR-ABDEGLN family response regulator transcription factor
+    node_type: PROTEIN
+    grounding: NCBIfam:NF033117
+    description: KB protein-trait record for the VanR family. A family, not a domain — hence `member of`.
+  - node_id: activity
+    label: phosphorelay response regulator activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0000156
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,44 +84,118 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.01880-13
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
-    - reference: ARO:3002930
-      snippet: Also known as vanRO, is a vanR variant found in the vanO gene cluster.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+    - reference: PMID:1556077
+      snippet: Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR
+        two-component regulatory system encoded by the proximal part of the cluster.
+      notes: Family mechanism ARO:3000213.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01880-13
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: PMID:1556077
+      snippet: Synthesis of these enzymes was regulated at the transcriptional level by the VanS-VanR
+        two-component regulatory system encoded by the proximal part of the cluster.
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01880-13
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000574
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: CARD asserts a resistance relation on ARO:3000574 (vanR), an is_a ancestor of ARO:3002930.
+    - reference: PMID:1556077
+      snippet: VanR was a transcriptional activator related to response regulators of the OmpR subclass.
+      notes: Arthur et al. 1992. VanR is a transcriptional activator, not a resistance enzyme.
+    - reference: PMID:1556077
+      snippet: The distal part of the van cluster encodes VanH, VanA, and a third enzyme, VanX, all of
+        which are necessary for resistance.
+      notes: 'What it activates is what confers resistance: the resistance step is one edge further down
+        this graph, on ARO:3000006 and ARO:3000011.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3000574
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
       notes: Asserted on ARO:3000574 (vanR), an is_a ancestor of this record's ARO:3002930; inherited
         by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+  - subject: transcription
+    predicate: positively regulates (cotranscribed from the induced promoter)
+    predicate_id: RO:0002213
+    object: vanh_gene
+    evidence:
+    - reference: PMID:1556077
+      snippet: Analysis of transcriptional fusions with a reporter gene and RNA mapping indicated that
+        the VanR-VanS two-component regulatory system activates a promoter used for cotranscription of
+        the vanH, vanA, and vanX resistance genes.
+      notes: Arthur et al. 1992 mapped the promoter by transcriptional fusion and RNA mapping; vanH is
+        one of the three genes cotranscribed from it.
+  - subject: transcription
+    predicate: positively regulates (cotranscribed from the induced promoter)
+    predicate_id: RO:0002213
+    object: vanx_gene
+    evidence:
+    - reference: PMID:1556077
+      snippet: Analysis of transcriptional fusions with a reporter gene and RNA mapping indicated that
+        the VanR-VanS two-component regulatory system activates a promoter used for cotranscription of
+        the vanH, vanA, and vanX resistance genes.
+      notes: Same promoter, same experiment; vanX is the third gene of the cotranscript.
+  - subject: vanh_gene
+    predicate: causally upstream of (the mechanism this regulator induces)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The regulator confers no resistance itself; the enzymes it induces do.
+    evidence:
+    - reference: PMID:1556077
+      snippet: The distal part of the van cluster encodes VanH, VanA, and a third enzyme, VanX, all of
+        which are necessary for resistance.
+      notes: Arthur et al. 1992. VanH's own mechanism is curated on ARO:3000006 (round 21).
+  - subject: vanx_gene
+    predicate: causally upstream of (the mechanism this regulator induces)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The regulator confers no resistance itself; the enzymes it induces do.
+    evidence:
+    - reference: PMID:1556077
+      snippet: The distal part of the van cluster encodes VanH, VanA, and a third enzyme, VanX, all of
+        which are necessary for resistance.
+      notes: Arthur et al. 1992. VanX's own mechanism is curated on ARO:3000011 (round 20).
+  - subject: determinant
+    predicate: member of (the VanR response-regulator family)
+    predicate_id: RO:0002350
+    object: family
+    evidence:
+    - reference: PMID:1556077
+      snippet: VanR was a transcriptional activator related to response regulators of the OmpR subclass.
+      notes: Establishes what VanR is.
+    - reference: NCBIfam:NF033117
+      snippet: VanR-ABDEGLN family response regulator transcription factor
+      notes: NCBIfam's own product name for the profile-HMM family this node grounds to; the join with
+        the paper is stated rather than implied. NOT the KB record's definition, which this repo composes.
+  - subject: family
+    predicate: enables (response-regulator phosphorelay)
+    predicate_id: RO:0002327
+    object: activity
+    evidence:
+    - reference: PMID:1556077
+      snippet: VanS stimulated VanR-dependent transcription and was related to membrane-associated histidine
+        protein kinases which control the level of phosphorylation of response regulators.
+      notes: 'Named here from the kinase''s side: VanS controls the phosphorylation level of response
+        regulators, of which VanR is one.'
+  - subject: activity
+    predicate: causally upstream of (activates the promoter)
+    predicate_id: RO:0002411
+    object: transcription
+    evidence:
+    - reference: PMID:1556077
+      snippet: Analysis of transcriptional fusions with a reporter gene and RNA mapping indicated that
+        the VanR-VanS two-component regulatory system activates a promoter used for cotranscription of
+        the vanH, vanA, and vanX resistance genes.
+      notes: Arthur et al. 1992.
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
