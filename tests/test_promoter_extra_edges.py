@@ -147,3 +147,44 @@ def test_the_a_and_b_subunits_do_not_share_a_domain_node():
          for f in ("ARO:3000864", "ARO:3003313")}
     assert set(a.values()) == {"Pfam:PF00521"}
     assert set(b.values()) == {"Pfam:PF00204"}
+
+
+# --- #190: a standard edge may carry more than one EvidenceItem --------------------
+
+def test_a_string_snippet_still_makes_exactly_one_evidence_item():
+    """Backward compatibility is the whole safety property here.
+
+    28 of the 32 families write a plain string and must keep emitting byte-identical
+    output, or re-promoting any of them would rewrite records for no reason.
+    """
+    out = _graph(_cfg())
+    blocks = out.split("      - subject: ")[1:]
+    for b in blocks:
+        assert b.count("- reference: ") == 1
+
+
+def test_a_list_snippet_makes_one_item_per_entry_with_its_own_reference():
+    out = _graph(_cfg(det_res=[
+        {"reference": "PMID:11", "snippet": "observed", "notes": "association"},
+        {"reference": "PMID:22", "snippet": "measured", "notes": "mechanism"},
+    ]))
+    edge = [b for b in out.split("      - subject: ")[1:] if "confers resistance" in b][0]
+    assert edge.count("- reference: ") == 2
+    assert "PMID:11" in edge and "PMID:22" in edge
+    assert "association" in edge and "mechanism" in edge
+
+
+@pytest.mark.parametrize("family,n", [("ARO:3000864", 2), ("ARO:3003313", 2),
+                                      ("ARO:3003292", 1), ("ARO:3000619", 1)])
+def test_the_b_subunits_cite_two_sources_for_their_causal_edge(family, n):
+    """gyrB and parE each need two: the substitutions, and why they cause resistance.
+
+    gyrB: Yoshida 1991 found the substitutions, Pantel 2012 measured that they confer
+    resistance. parE: Eaves 2004 observed them in isolates, and the mechanism is carried
+    across from GyrB by the subunit homology Aldred 2014 states — parE has no
+    reconstituted-enzyme measurement of its own, which is exactly what the second item
+    makes visible instead of burying in prose.
+    """
+    out = _graph(promote.FAMILY_SNIPPETS[family])
+    edge = [b for b in out.split("      - subject: ")[1:] if "confers resistance" in b][0]
+    assert edge.count("- reference: ") == n
