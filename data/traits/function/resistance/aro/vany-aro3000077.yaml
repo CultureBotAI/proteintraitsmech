@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3002976
 trait_relations:
@@ -25,11 +25,12 @@ evidence:
 - reference: DOI:10.1086/491711
   notes: PMID:16323116 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] vanY → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: vanY → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:10094630). Removes the terminal D-Ala from assembled precursors, preferring the D-Ala-D-Ala
+    target of glycopeptides by 17- to 67-fold.
   nodes:
   - node_id: determinant
     label: vanY
@@ -43,6 +44,23 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: family
+    label: D,D-carboxypeptidase VanY
+    node_type: PROTEIN
+    grounding: NCBIfam:NF000380
+    description: KB protein-trait record for the VanXY/VanY D,D-carboxypeptidase family.
+  - node_id: carboxypeptidase
+    label: serine-type D-Ala-D-Ala carboxypeptidase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0009002
+  - node_id: precursor_dala
+    label: peptidoglycan precursor ending in R-D-Ala-D-Ala (the glycopeptide target)
+    node_type: STATE
+    description: 'Ungrounded: ChEBI has the dipeptide but not the assembled precursor.'
+  - node_id: tetrapeptide
+    label: UDP-MurNAc-tetrapeptide
+    node_type: STATE
+    description: The product of removing the terminal D-Ala. Ungrounded, as above.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -56,45 +74,114 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1073/pnas.1402259111
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
-    - reference: ARO:3000077
-      snippet: VanY is a D,D-carboxypeptidase that cleaves removes the terminal D-Ala from peptidoglycan
-        for the addition of D-Lactate. The D-Ala-D-Lac peptidoglycan subunits have reduced binding affinity
-        with vancomycin compared to D-Ala-D-Ala.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+    - reference: PMID:10094630
+      snippet: The enzyme was a Zn2+-dependent D,D-carboxypeptidase that cleaved the C-terminal residue
+        of peptidoglycan precursors ending in R-D-Ala-D-Ala or R-D-Ala-D-Lac but not the dipeptide D-Ala-D-Ala.
+      notes: Family mechanism ARO:3000213.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1073/pnas.1402259111
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: PMID:10094630
+      snippet: In Enterococcus faecalis, VanY was present in membrane and cytoplasmic fractions, produced
+        UDP-MurNAc-tetrapeptide from cytoplasmic peptidoglycan precursors and was required for high-level
+        glycopeptide resistance in a medium supplemented with D-Ala.
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1073/pnas.1402259111
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000077
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:10094630
+      snippet: In Enterococcus faecalis, VanY was present in membrane and cytoplasmic fractions, produced
+        UDP-MurNAc-tetrapeptide from cytoplasmic peptidoglycan precursors and was required for high-level
+        glycopeptide resistance in a medium supplemented with D-Ala.
+      notes: 'Arthur et al. 1998: required for HIGH-LEVEL resistance, and only in D-Ala-supplemented medium
+        -- a conditional requirement, stated as such rather than flattened to ''confers resistance''.'
+    - reference: PMID:10094630
+      snippet: The specificity constants kcat/Km were 17- to 67-fold higher for substrates ending in the
+        R-D-Ala-D-Ala target of glycopeptides.
+      notes: 'And why: it prefers the drug''s own target by 17- to 67-fold in kcat/Km.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3000077
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted directly on ARO:3000077 (vanY) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+      notes: Asserted on ARO:3000077 (vanY), an is_a ancestor of this record's ARO:3000077; inherited
+        by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: member of (the VanY D,D-carboxypeptidase family)
+    predicate_id: RO:0002350
+    object: family
+    evidence:
+    - reference: PMID:10094630
+      snippet: The enzyme was a Zn2+-dependent D,D-carboxypeptidase that cleaved the C-terminal residue
+        of peptidoglycan precursors ending in R-D-Ala-D-Ala or R-D-Ala-D-Lac but not the dipeptide D-Ala-D-Ala.
+      notes: Establishes what VanY is, by purification from a baculovirus expression system.
+    - reference: NCBIfam:NF000380
+      snippet: D,D-carboxypeptidase/D,D-dipeptidase VanXY
+      notes: NCBIfam's own product name for the family this node grounds to.
+  - subject: family
+    predicate: enables (Zn2+-dependent D,D-carboxypeptidation)
+    predicate_id: RO:0002327
+    object: carboxypeptidase
+    evidence:
+    - reference: PMID:10094630
+      snippet: The enzyme was a Zn2+-dependent D,D-carboxypeptidase that cleaved the C-terminal residue
+        of peptidoglycan precursors ending in R-D-Ala-D-Ala or R-D-Ala-D-Lac but not the dipeptide D-Ala-D-Ala.
+      notes: And what it does NOT cleave -- the free dipeptide -- which is what makes it non-redundant
+        with VanX.
+  - subject: carboxypeptidase
+    predicate: has input (cleaves the C-terminal residue)
+    predicate_id: RO:0002233
+    object: precursor_dala
+    description: 'It prefers the drug''s own target: kcat/Km is 17- to 67-fold higher for R-D-Ala-D-Ala
+      than for the resistant R-D-Ala-D-Lac.'
+    evidence:
+    - reference: PMID:10094630
+      snippet: The specificity constants kcat/Km were 17- to 67-fold higher for substrates ending in the
+        R-D-Ala-D-Ala target of glycopeptides.
+      notes: 'The preference is the point: VanY strips the precursor the drug binds far faster than the
+        one that confers resistance.'
+  - subject: carboxypeptidase
+    predicate: has output
+    predicate_id: RO:0002234
+    object: tetrapeptide
+    evidence:
+    - reference: PMID:10094630
+      snippet: In Enterococcus faecalis, VanY was present in membrane and cytoplasmic fractions, produced
+        UDP-MurNAc-tetrapeptide from cytoplasmic peptidoglycan precursors and was required for high-level
+        glycopeptide resistance in a medium supplemented with D-Ala.
+      notes: UDP-MurNAc-tetrapeptide, from cytoplasmic peptidoglycan precursors.
+  - subject: precursor_dala
+    predicate: molecularly interacts with (is the glycopeptide target)
+    predicate_id: RO:0002436
+    object: drug0
+    description: 'Drug action: the glycopeptide binds this precursor''s D-Ala-D-Ala terminus, which is
+      the residue VanY removes.'
+    evidence:
+    - reference: PMID:10094630
+      snippet: The specificity constants kcat/Km were 17- to 67-fold higher for substrates ending in the
+        R-D-Ala-D-Ala target of glycopeptides.
+      notes: The paper names R-D-Ala-D-Ala as the target of glycopeptides.
+  - subject: carboxypeptidase
+    predicate: causally upstream of (removes the drug's binding site)
+    predicate_id: RO:0002411
+    object: resistance
+    description: 'Non-redundant with VanX: VanX hydrolyses the free dipeptide, VanY strips D-Ala from
+      membrane-bound lipid intermediates.'
+    evidence:
+    - reference: PMID:10094630
+      snippet: Thus, VanX and VanY had non-overlapping functions involving the hydrolysis of D-Ala-D-Ala
+        and the removal of D-Ala from membrane-bound lipid intermediates respectively.
+      notes: The authors' own summary of the division of labour, and the reason both genes exist.
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

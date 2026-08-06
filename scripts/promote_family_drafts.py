@@ -209,6 +209,27 @@ def _vanrs_ser_downstream() -> tuple[list, list]:
     return nodes, edges
 
 
+def _requires_lac_cluster(ident: str, label: str, text: str):
+    """VanY's characterisation is VanA-type (Tn1546), so refuse a D-Ala-D-Ser cluster.
+
+    PMID:10094630 measured the enzyme on precursors ending in R-D-Ala-D-Ala or
+    R-D-Ala-D-Lac. It says nothing about R-D-Ala-D-Ser, so the one vanY draft in a vanG
+    cluster is held back rather than given a graph whose evidence does not cover its
+    substrate. The mirror of `_requires_ser_cluster` (#201).
+    """
+    m = re.search(r"gene in (van[A-Z]+) cluster", label)
+    if not m:
+        if "cluster" in label:
+            return ("label names a cluster but does not match the expected shape, so the "
+                    "cluster's gene content cannot be checked")
+        return None
+    genes = _van_cluster_genes().get(m.group(1), set())
+    if "vanH" not in genes:
+        return (f"cluster {m.group(1)} has no vanH, so it is the D-Ala-D-Ser route; this "
+                f"config's evidence measured R-D-Ala-D-Ala and R-D-Ala-D-Lac substrates only")
+    return None
+
+
 def _requires_ser_cluster(ident: str, label: str, text: str):
     """These configs describe the D-Ala-D-SER route, so refuse a D-Ala-D-Lac cluster.
 
@@ -326,6 +347,72 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # vanY -- the D,D-carboxypeptidase, and the last enzyme family of the van set. Unlike
+    # vanX it acts on the ASSEMBLED precursor rather than the free dipeptide, and the two
+    # were shown to be non-redundant.
+    "ARO:3000077": {
+        "curated": "2026-08-06T00:00:00Z",
+        "precondition": _requires_lac_cluster,
+        "reference": "PMID:10094630",     # Arthur, Depardieu, Cabanie, Reynolds & Courvalin 1998
+        "mech": {"ARO:3000213": "The enzyme was a Zn2+-dependent D,D-carboxypeptidase that cleaved the C-terminal residue of peptidoglycan precursors ending in R-D-Ala-D-Ala or R-D-Ala-D-Lac but not the dipeptide D-Ala-D-Ala."},
+        "mech_res": "In Enterococcus faecalis, VanY was present in membrane and cytoplasmic fractions, produced UDP-MurNAc-tetrapeptide from cytoplasmic peptidoglycan precursors and was required for high-level glycopeptide resistance in a medium supplemented with D-Ala.",
+        "det_res": [
+            {"reference": "PMID:10094630", "snippet": "In Enterococcus faecalis, VanY was present in membrane and cytoplasmic fractions, produced UDP-MurNAc-tetrapeptide from cytoplasmic peptidoglycan precursors and was required for high-level glycopeptide resistance in a medium supplemented with D-Ala.",
+             "notes": "Arthur et al. 1998: required for HIGH-LEVEL resistance, and only in D-Ala-supplemented medium -- a conditional requirement, stated as such rather than flattened to 'confers resistance'."},
+            {"reference": "PMID:10094630", "snippet": "The specificity constants kcat/Km were 17- to 67-fold higher for substrates ending in the R-D-Ala-D-Ala target of glycopeptides.",
+             "notes": "And why: it prefers the drug's own target by 17- to 67-fold in kcat/Km."},
+        ],
+        "res_drug": "The specificity constants kcat/Km were 17- to 67-fold higher for substrates ending in the R-D-Ala-D-Ala target of glycopeptides.",
+        "note": "Removes the terminal D-Ala from assembled precursors, preferring the D-Ala-D-Ala target of glycopeptides by 17- to 67-fold.",
+        "extra_nodes": [
+            {"node_id": "family", "label": "D,D-carboxypeptidase VanY", "node_type": "PROTEIN",
+             "grounding": "NCBIfam:NF000380",
+             "description": "KB protein-trait record for the VanXY/VanY D,D-carboxypeptidase family."},
+            {"node_id": "carboxypeptidase", "label": "serine-type D-Ala-D-Ala carboxypeptidase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0009002"},
+            {"node_id": "precursor_dala",
+             "label": "peptidoglycan precursor ending in R-D-Ala-D-Ala (the glycopeptide target)",
+             "node_type": "STATE",
+             "description": "Ungrounded: ChEBI has the dipeptide but not the assembled precursor."},
+            {"node_id": "tetrapeptide", "label": "UDP-MurNAc-tetrapeptide", "node_type": "STATE",
+             "description": "The product of removing the terminal D-Ala. Ungrounded, as above."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "family",
+             "predicate": "member of (the VanY D,D-carboxypeptidase family)", "predicate_id": "RO:0002350",
+             "evidence": [
+                 {"reference": "PMID:10094630", "snippet": "The enzyme was a Zn2+-dependent D,D-carboxypeptidase that cleaved the C-terminal residue of peptidoglycan precursors ending in R-D-Ala-D-Ala or R-D-Ala-D-Lac but not the dipeptide D-Ala-D-Ala.",
+                  "notes": "Establishes what VanY is, by purification from a baculovirus expression system."},
+                 {"reference": "NCBIfam:NF000380", "snippet": "D,D-carboxypeptidase/D,D-dipeptidase VanXY",
+                  "notes": "NCBIfam's own product name for the family this node grounds to."},
+             ]},
+            {"subject": "family", "object": "carboxypeptidase",
+             "predicate": "enables (Zn2+-dependent D,D-carboxypeptidation)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:10094630", "snippet": "The enzyme was a Zn2+-dependent D,D-carboxypeptidase that cleaved the C-terminal residue of peptidoglycan precursors ending in R-D-Ala-D-Ala or R-D-Ala-D-Lac but not the dipeptide D-Ala-D-Ala.",
+                           "notes": "And what it does NOT cleave -- the free dipeptide -- which is what makes it non-redundant with VanX."}]},
+            {"subject": "carboxypeptidase", "object": "precursor_dala",
+             "predicate": "has input (cleaves the C-terminal residue)", "predicate_id": "RO:0002233",
+             "description": "It prefers the drug's own target: kcat/Km is 17- to 67-fold higher for R-D-Ala-D-Ala than for the resistant R-D-Ala-D-Lac.",
+             "evidence": [{"reference": "PMID:10094630", "snippet": "The specificity constants kcat/Km were 17- to 67-fold higher for substrates ending in the R-D-Ala-D-Ala target of glycopeptides.",
+                           "notes": "The preference is the point: VanY strips the precursor the drug binds far faster than the one that confers resistance."}]},
+            {"subject": "carboxypeptidase", "object": "tetrapeptide",
+             "predicate": "has output", "predicate_id": "RO:0002234",
+             "evidence": [{"reference": "PMID:10094630", "snippet": "In Enterococcus faecalis, VanY was present in membrane and cytoplasmic fractions, produced UDP-MurNAc-tetrapeptide from cytoplasmic peptidoglycan precursors and was required for high-level glycopeptide resistance in a medium supplemented with D-Ala.",
+                           "notes": "UDP-MurNAc-tetrapeptide, from cytoplasmic peptidoglycan precursors."}]},
+            {"subject": "precursor_dala", "object": "drug0",
+             "predicate": "molecularly interacts with (is the glycopeptide target)", "predicate_id": "RO:0002436",
+             "requires": {"drug0": "ARO:3000081"},
+             "description": "Drug action: the glycopeptide binds this precursor's D-Ala-D-Ala terminus, which is the residue VanY removes.",
+             "evidence": [{"reference": "PMID:10094630", "snippet": "The specificity constants kcat/Km were 17- to 67-fold higher for substrates ending in the R-D-Ala-D-Ala target of glycopeptides.",
+                           "notes": "The paper names R-D-Ala-D-Ala as the target of glycopeptides."}]},
+            {"subject": "carboxypeptidase", "object": "resistance",
+             "predicate": "causally upstream of (removes the drug's binding site)", "predicate_id": "RO:0002411",
+             "description": "Non-redundant with VanX: VanX hydrolyses the free dipeptide, VanY strips D-Ala from membrane-bound lipid intermediates.",
+             "evidence": [{"reference": "PMID:10094630", "snippet": "Thus, VanX and VanY had non-overlapping functions involving the hydrolysis of D-Ala-D-Ala and the removal of D-Ala from membrane-bound lipid intermediates respectively.",
+                           "notes": "The authors' own summary of the division of labour, and the reason both genes exist."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # The D-Ala-D-Ser route (vanC/E/G/L/N clusters): three enzymes, one shared downstream.
     # Round 21 covered the D-Ala-D-Lac route's vanH; this is the other terminus.
