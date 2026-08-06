@@ -188,3 +188,24 @@ def test_the_b_subunits_cite_two_sources_for_their_causal_edge(family, n):
     out = _graph(promote.FAMILY_SNIPPETS[family])
     edge = [b for b in out.split("      - subject: ")[1:] if "confers resistance" in b][0]
     assert edge.count("- reference: ") == n
+
+
+# --- round 20: vanX, a mechanism that is neither inactivation nor target alteration ---
+
+def test_vanx_routes_through_its_own_domain_and_not_a_topoisomerase_one():
+    """Each family's `domain` node must be the trait that carries ITS mechanism.
+
+    Four families now share the `domain` node id, so a copy-paste that left
+    `Pfam:PF00521` on vanX would still emit a valid, cited, non-duplicated graph — and
+    assert that a vancomycin dipeptidase is a DNA gyrase subunit. No gate would catch it.
+    """
+    assert promote.FAMILY_SNIPPETS["ARO:3000011"]["protein_traits"]["domain"][0] == "Pfam:PF01427"
+
+
+def test_vanx_cites_the_loss_of_function_experiment_for_its_causal_edge():
+    """The inactivation result is what makes the edge causal rather than correlative."""
+    out = _graph(promote.FAMILY_SNIPPETS["ARO:3000011"],
+                 mech=("ARO:3000213",), drug=("ARO:3000081",))
+    edge = [b for b in out.split("      - subject: ")[1:] if "confers resistance" in b][0]
+    assert edge.count("- reference: ") == 2
+    assert "Insertional inactivation of vanX" in edge

@@ -116,6 +116,81 @@ def _fq_shared_nodes(qrdr_label: str, qrdr_description: str) -> list:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # vanX — glycopeptide resistance by PRECURSOR DEPLETION (ARO:3000011). A third kind of
+    # mechanism again: not drug inactivation (β-lactamases), not target alteration
+    # (gyrA/parC), but removal of the drug's BINDING TARGET. VanX is a D,D-dipeptidase that
+    # destroys D-Ala-D-Ala, so the pentapeptide glycopeptides bind is not made.
+    #
+    # The resistance ligases themselves (vanA/B/D/M, D-Ala-D-Lac) were promoted in round
+    # 14 and carry no drafts; what is left of the van clusters is the accessory and
+    # regulatory machinery, of which this is the crispest.
+    "ARO:3000011": {
+        "reference": "PMID:7854121",        # Reynolds et al. 1994, Mol Microbiol
+        "mech": {"ARO:3000213": "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface."},
+        "mech_res": "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface.",
+        # two items (#190): the genetic requirement, then the mechanism it implies. The
+        # inactivation experiment is what makes this causal rather than correlative.
+        "det_res": [
+            {"reference": "PMID:7854121",
+             "snippet": "Insertional inactivation of vanX led to increased synthesis of pentapeptide with a resulting change in the ratio of pentadepsipeptide: pentapeptide to less than 1:1.",
+             "notes": "Reynolds et al. 1994. Knocking out vanX restores the pentapeptide the drug binds — the requirement demonstrated by loss of function, not by association."},
+            {"reference": "PMID:7854121",
+             "snippet": "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface.",
+             "notes": "The authors' own summary of the causal chain, in one sentence."},
+        ],
+        "res_drug": "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface.",
+        "note": "Precursor depletion: VanX removes D-Ala-D-Ala so the pentapeptide that glycopeptides bind is not synthesised.",
+        "protein_traits": {
+            "primary_key": "domain",
+            "domain": ("Pfam:PF01427", "D-Ala-D-Ala dipeptidase domain", "DOMAIN",
+                       "Expression of vanX in E. faecalis and Escherichia coli resulted in production of a D,D-dipeptidase that hydrolysed D-Ala-D-Ala."),
+            "part_pred": "part of (the dipeptidase domain of this determinant)",
+            "part_note": "KB trait record Pfam:PF01427 (D-ala-D-ala dipeptidase). Snippet is the enzyme activity Reynolds et al. demonstrated for the vanX product, since the domain node is here to carry that activity.",
+        },
+        "extra_nodes": [
+            {"node_id": "dipeptidase", "label": "D,D-dipeptidase activity", "node_type": "MOLECULAR_FUNCTION",
+             "grounding": "GO:0016805"},
+            {"node_id": "dala_dala", "label": "D-alanyl-D-alanine", "node_type": "CHEMICAL",
+             "grounding": "CHEBI:16576"},
+            {"node_id": "pentapeptide", "label": "UDP-MurNAc-pentapeptide terminating in D-Ala-D-Ala",
+             "node_type": "STATE",
+             "description": "The peptidoglycan precursor glycopeptides bind. Ungrounded: ChEBI has the D-Ala-D-Ala dipeptide but not this UDP-MurNAc pentapeptide as a distinct term."},
+        ],
+        "extra_edges": [
+            {"subject": "domain", "object": "dipeptidase",
+             "predicate": "enables (D,D-dipeptidase activity)", "predicate_id": "RO:0002327",
+             "evidence": [
+                 {"reference": "PMID:7854121",
+                  "snippet": "Expression of vanX in E. faecalis and Escherichia coli resulted in production of a D,D-dipeptidase that hydrolysed D-Ala-D-Ala.",
+                  "notes": "Reynolds et al. 1994, heterologous expression in two hosts."},
+             ]},
+            {"subject": "dipeptidase", "object": "dala_dala",
+             "predicate": "has input (hydrolyses)", "predicate_id": "RO:0002233",
+             "description": "The enzyme is specific: the pentadepsipeptide, the pentapeptide and D-Ala-D-Lac are not substrates.",
+             "evidence": [
+                 {"reference": "PMID:7854121",
+                  "snippet": "Pentadepsipeptide, pentapeptide and D-Ala-D-Lac were not substrates for the enzyme.",
+                  "notes": "Reynolds et al. 1994. The negative result is what makes the target specific — VanX destroys the free dipeptide, not the assembled precursor."},
+             ]},
+            {"subject": "dipeptidase", "object": "pentapeptide",
+             "predicate": "negatively regulates (depletes the precursor)", "predicate_id": "RO:0002212",
+             "description": "The causal core: with D-Ala-D-Ala hydrolysed, the pentapeptide the drug binds is not synthesised.",
+             "evidence": [
+                 {"reference": "PMID:7854121",
+                  "snippet": "These results establish that VanX is required for production of a D,D-dipeptidase that hydrolyses D-Ala-D-Ala, thereby preventing pentapeptide synthesis and subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface.",
+                  "notes": "Reynolds et al. 1994."},
+             ]},
+            {"subject": "drug0", "object": "pentapeptide",
+             "predicate": "molecularly interacts with (binds the D-Ala-D-Ala terminus)", "predicate_id": "RO:0002436",
+             "description": "Drug action: glycopeptides bind the D-Ala-D-Ala terminus of the precursor at the cell surface. Removing that terminus is what confers resistance.",
+             "evidence": [
+                 {"reference": "PMID:7854121",
+                  "snippet": "subsequent binding of glycopeptides to D-Ala-D-Ala-containing peptidoglycan precursors at the cell surface",
+                  "notes": "Reynolds et al. 1994; the drug-ACTION arm this determinant removes."},
+             ]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # gyrA — fluoroquinolone TARGET ALTERATION (ARO:3003292, "fluoroquinolone resistant
     # gyrA"). The first family here that does NOT inactivate its drug: the determinant is
     # the drug's target, and resistance comes from substitutions in the QRDR that lower

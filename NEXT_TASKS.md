@@ -50,13 +50,15 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   1,166.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   1,157.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
    **Round 18 (2026-08-05) closed the gyrA fluoroquinolone family: 25 records,
    275 cited edges** — `research/causal-graphs-round18.md`. **Round 19 (2026-08-05)
    closed parC, gyrB and parE: 28 more, 308 edges** — `research/causal-graphs-round19.md`.
+   **Round 20 closed vanX: 9 records, 81 edges, and a third kind of mechanism —
+   precursor depletion** — `research/causal-graphs-round20.md`.
 
    **"No shared family config fits" — this item's own claim — is wrong for the
    target-alteration genes, and round 18 measured it.** 25 of the 30 gyrA drafts are
@@ -81,8 +83,15 @@ cleared._
    - **ARO:3003702** (P. aeruginosa gyrA **and** parC) — the first determinant naming two
      subunits; needs a config with one QRDR node per subunit. Held out by the promoter's
      new per-family `exclude` list.
-   - **van* clusters (~100)** — vanR/S/X/H/A/B/G/L/F/Y/M/I/P; one mechanism
-     (D-Ala-D-Ala → D-Ala-D-Lac remodelling) plus two-component regulation.
+   - **van* clusters (~103) — NOT one mechanism, and the ligases are already done.**
+     Measured in round 20: `ARO:3002978` (D-Ala-D-Lac ligase, vanA/B/D/M) has **0 drafts**
+     — round 14 promoted them. What remains is the accessory and regulatory machinery,
+     organised by **gene role**, each needing its own edges and evidence:
+     vanR **14** · vanS **14** · ~~vanX **9**~~ **DONE (round 20)** · vanH **8** ·
+     vanY **7** · vanT **7** · D-Ala-D-Ser ligases **6** · vanXY **6** · ~30 others.
+     Next: **vanH** (8, completes the depsipeptide pathway from the other end;
+     PMID:1931965 located). Then **vanR/vanS** (28, a regulatory shape — induction of the
+     cluster, not modification of a precursor).
    - **rpoB/rpoC (20)**, **katG/ahpC/fabG1/ethA/msh* (~40)**, **16S/23S rRNA (~22)**.
    - **565 with no gene symbol** — per-record triage, genuinely not a family PR.
 
