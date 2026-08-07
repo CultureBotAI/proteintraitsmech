@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   990.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   913.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -69,15 +69,18 @@ cleared._
 
    **The mechanism kinds now in the corpus:** inactivation · target alteration · precursor
    depletion · precursor substitution · regulation · prodrug-activation loss ·
-   target overexpression · **target protection** (31) · **electrostatic repulsion** (32).
+   target overexpression · **target protection** (31) · **electrostatic repulsion** (32) ·
+   **efflux** (33).
 
    **Family-shaped work still available**, measured by ancestry over the remaining drafts:
    two-component modulators (87), permeability (41), target-modifying enzymes (30),
    macrolide inactivation (30), the other three cell-wall-charge chemistries (ArnT/PmrF,
    the ICR transferases, PhoP), and target protection's rifamycin (6) and fusidane (5)
-   arms. **Efflux (137) is filed as #223**: ARO offers no pump-class hierarchy to select
-   on, and each record's own ARO definition carries its pump-specific mechanism — so it is
-   per-record work unless the seeder can recover CARD's AMR Gene Family.
+   arms. ~~**Efflux (137) is filed as #223**~~ **— #223 was wrong and round 33 corrected it.** The
+   SUBUNITS have no pump-class ancestry, but each is `part_of` a complex and the COMPLEX is
+   `is_a` RND/MFS/ABC/…, so the class is two hops away and derivable. RND (77) is done; the
+   62 refused are MFS, ABC, SMR and MATE, each a smaller round needing only its class id
+   and a paper.
 
    **"No shared family config fits" — this item's own claim — is wrong for the
    target-alteration genes, and round 18 measured it.** 25 of the 30 gyrA drafts are
