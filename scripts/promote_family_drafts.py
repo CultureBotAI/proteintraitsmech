@@ -3286,6 +3286,37 @@ def record_identifiers(root: Path) -> set[str]:
     return found
 
 
+def skip_reason_contradicted(reason: str, text: str) -> str:
+    """Is a skip reason's claim about the record's own definition actually true? (#253)
+
+    Preconditions return prose that is printed as a record's justification, and until now
+    NOTHING checked it. Round 52 skipped 17 records saying "definition describes a
+    repressor" when none did -- the word came from inherited drug-class boilerplate. The
+    outcome was accidentally right, so no gate failed and the log read as verification.
+
+    Only the two claim shapes actually in use are checked, and only against the record's
+    OWN definition:
+
+      "... describes a X"      -> X must appear in it
+      "... does not name a X"  -> X must NOT appear in it
+
+    LIMITATION, stated because it matters: this catches round 52's bug and NOT round 53's.
+    There the reason said "does not name a penicillin-binding protein" about a definition
+    reading "PBP transpeptidases" -- true as literal text, wrong because PBP is a synonym.
+    A synonym-aware version would need a lexicon this repo does not have.
+    """
+    own = _own_definition(text).lower()
+    if not own:
+        return ""
+    m = re.search(r"describes an? ([a-z][a-z -]{2,40}?)(?:,|\.|$| not )", reason)
+    if m and m.group(1).strip() not in own:
+        return f'claims the definition describes "{m.group(1).strip()}", which it does not'
+    m = re.search(r"does not name an? ([a-z][a-z -]{2,40}?)(?:,|\.|$| so )", reason)
+    if m and m.group(1).strip() in own:
+        return f'claims the definition does not name "{m.group(1).strip()}", but it does'
+    return ""
+
+
 def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
     """Report what a config claims that its records do not support.
 
@@ -3339,6 +3370,21 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
                       f"has no snippet in this config")
     if uncovered_records > 3:
         print(f"  uncovered mechanism  ... and {uncovered_records - 3:,} more in {family}")
+
+    # #253: a skip reason is prose nobody verified. A guard that reaches the right answer
+    # for a false stated reason reads as verification in the log, which is worse than one
+    # that fails. Counted as a PROBLEM -- unlike a precondition skip, a reason that
+    # contradicts the record is always a defect.
+    pre = cfg.get("precondition")
+    if pre is not None:
+        for ident, label, text in candidates:
+            reason = pre(ident, label, text)
+            if not reason:
+                continue
+            bad = skip_reason_contradicted(reason, text)
+            if bad:
+                problems += 1
+                print(f"  FALSE SKIP REASON    {ident} ({label}): {bad}")
     # A part-of edge asserts "this determinant HAS this domain", and its evidence is the
     # 4-tuple's snippet. Nothing checks that the snippet supports a MEMBERSHIP claim: 27 of
     # 33 families cite a bare source entry TITLE ("Beta-lactamase class-A active site"),
