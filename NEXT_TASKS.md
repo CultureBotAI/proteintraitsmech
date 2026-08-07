@@ -122,8 +122,14 @@ cleared._
    - **fabG1 (7)** — the promoter half of that operon. Round 28's overexpression edge
      *predicts* it, but the paper demonstrating chromosomal promoter alleles in
      M. tuberculosis was not found; stretching the multicopy-plasmid result to cover them
-     is the over-reach #201 exists to stop. Round 30 retried by identifier too —
-     PMID:12406222 returns a *Lactococcus* nisA paper, so that citation is simply wrong.
+     is the over-reach #201 exists to stop. **Filed as #219**, and the blocker is now
+     precise: the quantitative half was found (PMID:12406221, the correct id — 20-fold INH,
+     10-fold ETH, with inhA mRNA correlating and kasA mRNA not) and **added to the inhA
+     record**, but nothing — not even CARD's own definitions — states that a fabG1 promoter
+     substitution raises inhA expression, which is the step that makes fabG1 a determinant.
+   - **kasA (#220)** — PMID:12406221 specifically found kasA overexpression confers NO
+     isoniazid resistance, contradicting a draft record. The corpus has no way to represent
+     a contested claim, which may be a schema question.
    - **the other ~40 isoniazid-related genes** are 1–2 record chains (ndh, nudC, mshA/B/C,
      nat, furA, sigI, iniA, mymA, Rv0565c, inbR, kasA, mmaA3, Rv1258c). Several have thin
      or contested evidence; for some the honest outcome is staying drafts.

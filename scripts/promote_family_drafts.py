@@ -530,8 +530,14 @@ FAMILY_SNIPPETS = {
              "predicate": "positively regulates (overexpression titrates the drug)",
              "predicate_id": "RO:0002213",
              "description": "Route 2, and it needs no change to the protein at all: more copies of the wild-type target than the activated drug can modify.",
-             "evidence": [{"reference": "PMID:8284673", "snippet": "The wild-type inhA gene also conferred INH and ETH resistance when transferred on a multicopy plasmid vector to M. smegmatis and M. bovis BCG.",
-                           "notes": "Banerjee et al. 1994, multicopy plasmid in two hosts. This is why promoter substitutions upstream of inhA (the fabG1-inhA operon) are resistance alleles without touching the coding sequence."}]},
+             "evidence": [
+                 {"reference": "PMID:8284673", "snippet": "The wild-type inhA gene also conferred INH and ETH resistance when transferred on a multicopy plasmid vector to M. smegmatis and M. bovis BCG.",
+                  "notes": "Banerjee et al. 1994, multicopy plasmid in two hosts. This is why promoter substitutions upstream of inhA (the fabG1-inhA operon) are resistance alleles without touching the coding sequence."},
+                 {"reference": "PMID:12406221", "snippet": "Mycobacteria containing inhA plasmids uniformly exhibited 20-fold or greater increased resistance to INH and 10-fold or greater increased resistance to ETH.",
+                  "notes": "Larsen et al. 2002 quantified it across five strains and settled a disputed question: 20-fold or greater for isoniazid, 10-fold or greater for ethionamide."},
+                 {"reference": "PMID:12406221", "snippet": "Using molecular beacons, quantified inhA and kasA mRNA levels showed that increased inhA mRNA levels correlated with INH resistance, whereas kasA mRNA levels did not.",
+                  "notes": "And tied the resistance to the EXPRESSION LEVEL rather than to the plasmid: inhA mRNA correlated with resistance, kasA mRNA did not. That is the measured link a chromosomal promoter allele would act through."},
+             ]},
         ],
     },
     # ---------------------------------------------------------------------------------
