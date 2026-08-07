@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000333
 trait_relations:
@@ -31,11 +31,12 @@ evidence:
 - reference: DOI:10.1111/j.1574-6968.2007.00643.x
   notes: PMID:17302923 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] mphC → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: mphC → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:28416110). Drug inactivation by phosphorylation, distinct from the esterases' ring hydrolysis
+    under the same family term.
   nodes:
   - node_id: determinant
     label: mphC
@@ -53,6 +54,18 @@ causal_graphs:
     label: macrolide antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000000
+  - node_id: kinase
+    label: macrolide phosphotransferase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: GO has kinase terms but none specific to macrolide 2''-OH phosphorylation.'
+  - node_id: pocket
+    label: expanded hydrophobic antibiotic binding pocket
+    node_type: STATE
+    description: What lets one enzyme handle six chemically different macrolides. Ungrounded.
+  - node_id: phospho_drug
+    label: phosphorylated (inactive) macrolide
+    node_type: CHEMICAL
+    description: 'Ungrounded: the product differs per drug.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -66,68 +79,107 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1038/s41467-017-02680-0
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
-    - reference: ARO:3000319
-      snippet: The mphC gene was identified from Staphylococcus aureus.  This gene shows similarity to
-        mphB gene from Escherchia coli.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:28416110
+      snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
+        ring that can be inactivated by macrolide phosphotransferase enzymes.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41467-017-02680-0
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: PMID:28416110
+      snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
+        ring that can be inactivated by macrolide phosphotransferase enzymes.
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1038/s41467-017-02680-0
-      notes: 'Auto-drafted: mechanism class ARO:3000105 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000105); verbatim snippet pending curation.'
-    - reference: ARO:3000319
-      snippet: The mphC gene was identified from Staphylococcus aureus.  This gene shows similarity to
-        mphB gene from Escherchia coli.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000105 (phosphorylation of antibiotic
-        conferring resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: PMID:28416110
+      snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
+        ring that can be inactivated by macrolide phosphotransferase enzymes.
+      notes: Family mechanism ARO:3000105.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41467-017-02680-0
-      notes: 'Auto-drafted: mechanism ARO:3000105 → resistance; snippet pending curation.'
-    - reference: ARO:3000105
-      snippet: Phosphorylation of antibiotic usually by ATP, sometimes GTP.
-      notes: ARO definition of the resistance mechanism class ARO:3000105 (phosphorylation of antibiotic
-        conferring resistance), which states the causal link to resistance.
+    - reference: PMID:28416110
+      snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
+        ring that can be inactivated by macrolide phosphotransferase enzymes.
+      notes: Mechanism ARO:3000105 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41467-017-02680-0
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000319
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000006 ! erythromycin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:28416110
+      snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
+        ring that can be inactivated by macrolide phosphotransferase enzymes.
+      notes: 'Fong et al. 2017. The second of three chemistries under this family term: the ring is PHOSPHORYLATED
+        rather than hydrolysed (round 46).'
+    - reference: PMID:28416110
+      snippet: We present structures for MPH(2')-I and MPH(2')-II in the apo state, and in complex with
+        GTP analogs and six different macrolides.
+      notes: Structures of both main classes, with nucleotide and six different macrolides bound -- which
+        is what establishes the reaction rather than inferring it.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
     evidence:
     - reference: ARO:3000333
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
       notes: Asserted on ARO:3000333 (macrolide phosphotransferase (MPH)), an is_a ancestor of this record's
         ARO:3000319; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
+  - subject: determinant
+    predicate: enables (macrolide phosphorylation)
+    predicate_id: RO:0002327
+    object: kinase
+    evidence:
+    - reference: PMID:28416110
+      snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
+        ring that can be inactivated by macrolide phosphotransferase enzymes.
+      notes: Fong et al. 2017.
+  - subject: pocket
+    predicate: part of (the substrate-binding site)
+    predicate_id: BFO:0000050
+    object: determinant
+    description: An expanded, largely hydrophobic pocket -- the structural reason one enzyme inactivates
+      chemically unrelated macrolides.
+    evidence:
+    - reference: PMID:28416110
+      snippet: The structures show that the enzymes are related to the aminoglycoside phosphotransferases,
+        but are distinguished from them by the presence of a large interdomain linker that contributes
+        to an expanded antibiotic binding pocket.
+      notes: The interdomain linker distinguishing these from the aminoglycoside phosphotransferases they
+        are related to.
+  - subject: kinase
+    predicate: has output
+    predicate_id: RO:0002234
+    object: phospho_drug
+    evidence:
+    - reference: PMID:28416110
+      snippet: We present structures for MPH(2')-I and MPH(2')-II in the apo state, and in complex with
+        GTP analogs and six different macrolides.
+      notes: Nucleotide and macrolide captured together in the structures.
+  - subject: phospho_drug
+    predicate: negatively regulates (the phosphorylated drug is inactive)
+    predicate_id: RO:0002212
+    object: drug0
+    description: 'The causal core: the drug is chemically modified rather than displaced, excluded or
+      pumped out.'
+    evidence:
+    - reference: PMID:28416110
+      snippet: The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone
+        ring that can be inactivated by macrolide phosphotransferase enzymes.
+      notes: '''can be inactivated by macrolide phosphotransferase enzymes''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

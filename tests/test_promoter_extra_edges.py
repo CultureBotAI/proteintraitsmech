@@ -1126,3 +1126,16 @@ def test_the_macrolide_config_takes_only_the_esterases():
     pre = promote.family_configs("ARO:3000201")[0]["precondition"]
     assert pre("ARO:X", "EreA", "EreA is an erythromycin esterase that hydrolyses") is None
     assert pre("ARO:X", "gimA", "A macrolide glycosyltransferase encoded by gimA") is not None
+
+
+def test_the_two_macrolide_configs_do_not_share_a_reaction():
+    """Ring hydrolysis (r46) and phosphorylation (r47) inactivate the same drug class by
+    different chemistry, so neither may borrow the other's sentence."""
+    cfgs = promote.family_configs("ARO:3000201")
+    assert len(cfgs) == 2
+    est = [c for c in cfgs if any(n["node_id"] == "ring" for n in c["extra_nodes"])][0]
+    kin = [c for c in cfgs if any(n["node_id"] == "kinase" for n in c["extra_nodes"])][0]
+    assert "ARO:3000321" in est["mech"]        # hydrolysis of the lactone ring
+    assert "ARO:3000105" in kin["mech"]        # phosphorylation of antibiotic
+    out = _flat(_graph(kin, mech=("ARO:3000105",), drug=("ARO:3000050",)))
+    assert "hydrolysis of the macrolactone ring" not in out
