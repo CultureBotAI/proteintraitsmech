@@ -41,7 +41,7 @@ Round 73's test asserted `len(cfgs) == 2`; this round's third config broke it. A
 and rounds 35, 48 and 68 — **and I nearly wrote a fifth** (`== 3`) in this round's own
 test before catching it. Both now select on node labels.
 
-**Six such assertions remain in the suite.** Filed as **#288** rather than swept at the end
+**Six such assertions remain in the suite.** Filed as **#287** rather than swept at the end
 of a long session.
 
 ## Provenance
@@ -54,7 +54,7 @@ of a long session.
 
 ## Open questions
 
-* **#288** — six remaining config-count assertions, each a latent version of the same break.
+* **#287** — six remaining config-count assertions, each a latent version of the same break.
 * **10 charge-alteration drafts remain**, mostly the arn/Ara4N proteins that the existing
   L-Ara4N config refuses; worth checking whether its precondition is too narrow rather
   than assuming they need a fourth config.
