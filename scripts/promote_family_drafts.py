@@ -348,6 +348,69 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # inhA -- TWO resistance routes on one determinant (ARO:3003417), and one 1994 paper
+    # demonstrated both:
+    #
+    #   * a MISSENSE mutation confers resistance  -> target alteration (rounds 18-19, 26);
+    #   * the WILD-TYPE gene on a multicopy plasmid also confers resistance -> there is
+    #     simply more target than the drug can modify. Titration by overexpression, which
+    #     no earlier round has.
+    #
+    # Both are on the graph, as separate edges with their own evidence, because a record
+    # that showed only one would misdescribe half the clinical alleles.
+    "ARO:3003417": {
+        "curated": "2026-08-06T00:00:00Z",
+        "reference": "PMID:8284673",       # Banerjee et al. 1994, Science
+        "mech": {"ARO:3000212": "A missense mutation within the mycobacterial inhA gene was shown to confer resistance to both INH and ethionamide (ETH) in M. smegmatis and in M. bovis."},
+        "mech_res": "A missense mutation within the mycobacterial inhA gene was shown to confer resistance to both INH and ethionamide (ETH) in M. smegmatis and in M. bovis.",
+        "det_res": [
+            {"reference": "PMID:8284673", "snippet": "A missense mutation within the mycobacterial inhA gene was shown to confer resistance to both INH and ethionamide (ETH) in M. smegmatis and in M. bovis.",
+             "notes": "Banerjee et al. 1994, route 1 -- target alteration, shown in two species."},
+            {"reference": "PMID:8284673", "snippet": "The wild-type inhA gene also conferred INH and ETH resistance when transferred on a multicopy plasmid vector to M. smegmatis and M. bovis BCG.",
+             "notes": "Route 2, from the same paper and the more surprising result: the WILD-TYPE gene confers resistance when overexpressed, so more target is sufficient without any change to the protein."},
+        ],
+        "res_drug": "These results suggest that InhA is likely a primary target of action for INH and ETH.",
+        "note": "The drug's target itself: resistance either by altering InhA or by making more of it.",
+        "extra_nodes": [
+            {"node_id": "inha_activity",
+             "label": "enoyl-[acyl-carrier-protein] reductase (NADH) activity (InhA)",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0004318"},
+            {"node_id": "mycolic", "label": "mycolic acid biosynthetic process",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0071768"},
+            {"node_id": "inh_nad", "label": "isoniazid-NAD adduct in the InhA active site",
+             "node_type": "STATE",
+             "description": "The inhibitory species, formed after katG activates the prodrug (round 27). Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "inha_activity",
+             "predicate": "enables (enoyl-ACP reduction)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:8284673", "snippet": "The InhA protein shows significant sequence conservation with the Escherichia coli enzyme EnvM, and cell-free assays indicate that it may be involved in mycolic acid biosynthesis.",
+                           "notes": "Banerjee et al. 1994: InhA is an EnvM homologue acting in mycolic acid biosynthesis."}]},
+            {"subject": "inha_activity", "object": "mycolic",
+             "predicate": "part of (mycolic acid biosynthesis)", "predicate_id": "BFO:0000050",
+             "description": "Why inhibiting InhA kills: mycolic acids are essential to the mycobacterial envelope.",
+             "evidence": [{"reference": "PMID:8284673", "snippet": "The InhA protein shows significant sequence conservation with the Escherichia coli enzyme EnvM, and cell-free assays indicate that it may be involved in mycolic acid biosynthesis.",
+                           "notes": "The pathway the enzyme belongs to."}]},
+            {"subject": "inh_nad", "object": "inha_activity",
+             "predicate": "negatively regulates (inhibits the target)", "predicate_id": "RO:0002212",
+             "description": "Drug action: the activated drug is covalently attached to the NAD in InhA's own active site.",
+             "evidence": [{"reference": "PMID:9417034", "snippet": "Data from x-ray crystallography and mass spectrometry reveal that the mechanism of isoniazid action against InhA is covalent attachment of the activated form of the drug to the nicotinamide ring of nicotinamide adenine dinucleotide bound within the active site of InhA.",
+                           "notes": "Rozwarski et al. 1998. The species doing this exists only because katG activated the prodrug -- curated on ARO:3004266 in round 27."}]},
+            {"subject": "determinant", "object": "inh_nad",
+             "predicate": "negatively regulates (altered target binds the adduct less well)",
+             "predicate_id": "RO:0002212",
+             "description": "Route 1: a missense substitution in InhA reduces the drug-NAD adduct's grip on it.",
+             "evidence": [{"reference": "PMID:8284673", "snippet": "A missense mutation within the mycobacterial inhA gene was shown to confer resistance to both INH and ethionamide (ETH) in M. smegmatis and in M. bovis.",
+                           "notes": "Banerjee et al. 1994. The paper shows the mutation confers resistance; that it does so by weakening adduct binding is the reading Rozwarski et al. 1998 later supported structurally."}]},
+            {"subject": "determinant", "object": "inha_activity",
+             "predicate": "positively regulates (overexpression titrates the drug)",
+             "predicate_id": "RO:0002213",
+             "description": "Route 2, and it needs no change to the protein at all: more copies of the wild-type target than the activated drug can modify.",
+             "evidence": [{"reference": "PMID:8284673", "snippet": "The wild-type inhA gene also conferred INH and ETH resistance when transferred on a multicopy plasmid vector to M. smegmatis and M. bovis BCG.",
+                           "notes": "Banerjee et al. 1994, multicopy plasmid in two hosts. This is why promoter substitutions upstream of inhA (the fabG1-inhA operon) are resistance alleles without touching the coding sequence."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # katG -- resistance by LOSING a function (ARO:3004266). A fifth kind of mechanism,
     # and the first that is not something the determinant DOES:
     #

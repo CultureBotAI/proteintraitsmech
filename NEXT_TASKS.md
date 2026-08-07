@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   1,080.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   1,075.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -63,11 +63,13 @@ cleared._
    `research/causal-graphs-round21.md`. **Rounds 22–27** then covered vanR/vanS (16 + 12,
    a fourth kind — regulation — and the first graphs citing earlier rounds' records as
    nodes), the D-Ala-D-Ser route (19: ligase, vanT, vanXY), vanY (6), rpoB (11, the
-   rifamycin RRDR — first round outside the van set) and katG (5, a **fifth** kind:
-   resistance by *losing* a function). Reports `research/causal-graphs-round{22..27}.md`.
+   rifamycin RRDR — first round outside the van set), katG (5, a **fifth** kind: resistance
+   by *losing* a function) and inhA (5, a **sixth**: titration by target overexpression).
+   Reports `research/causal-graphs-round{22..28}.md`.
 
    **The mechanism kinds now in the corpus:** inactivation · target alteration · precursor
-   depletion · precursor substitution · regulation · prodrug-activation loss.
+   depletion · precursor substitution · regulation · prodrug-activation loss ·
+   target overexpression.
 
    **"No shared family config fits" — this item's own claim — is wrong for the
    target-alteration genes, and round 18 measured it.** 25 of the 30 gyrA drafts are
@@ -114,8 +116,13 @@ cleared._
    - **ethA (9)** — same kind, deliberately not bundled: its primary characterisation was
      not found in round 27's searches (what surfaced was recent *booster* work on MymA /
      VirS / alpibectir). Needs its own round with the right paper.
-   - **fabG1/inhA (12)** — a different mechanism again: promoter substitutions that
-     *overexpress* the target and titrate the drug. Must not reuse katG's config.
+   - ~~**inhA (5)**~~ **DONE (round 28)** — TWO routes on one determinant, both from
+     PMID:8284673: a missense substitution (target alteration) and the **wild-type** gene
+     on a multicopy plasmid (titration by overexpression — a **sixth** mechanism kind).
+   - **fabG1 (7)** — the promoter half of that operon. Round 28's overexpression edge
+     *predicts* it, but the paper demonstrating chromosomal promoter alleles in
+     M. tuberculosis was not found; stretching the multicopy-plasmid result to cover them
+     is the over-reach #201 exists to stop.
    - **the other ~40 isoniazid-related genes** are 1–2 record chains (ndh, nudC, mshA/B/C,
      nat, furA, sigI, iniA, mymA, Rv0565c, inbR, kasA, mmaA3, Rv1258c). Several have thin
      or contested evidence; for some the honest outcome is staying drafts.
