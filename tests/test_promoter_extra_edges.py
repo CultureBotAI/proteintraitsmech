@@ -1760,10 +1760,13 @@ def test_sequestration_binds_rather_than_modifies_the_drug():
 
 def test_charge_alteration_has_both_lipid_a_routes():
     """L-Ara4N and phosphoethanolamine: same charge outcome, different moiety."""
+    # Select structurally. Round 73 asserted len(cfgs) == 2 and round 74's glycylation
+    # config broke it -- FOURTH config-count assertion this session to fail for a reason
+    # unrelated to what it tested (after #235, rounds 35, 48, 68).
     cfgs = promote.family_configs("ARO:3003580")
-    assert len(cfgs) == 2
-    petn = next(c for c in cfgs if c["reference"] == "ARO:3003588")
-    assert any("phosphoethanolamine" in n["label"] for n in petn["extra_nodes"])
+    petn = next(c for c in cfgs
+                if any("phosphoethanolamine" in n["label"] for n in c.get("extra_nodes", ())))
+    assert petn["reference"] == "ARO:3003588"
 
 
 def test_petn_quotes_the_weak_and_strong_resistance_claims_separately():
@@ -1791,3 +1794,25 @@ def test_near_miss_suppression_does_not_disable_the_detector():
            "term_kind: CLASS\n")
     assert promote.skip_reason_near_miss(
         "own definition does not call it a class D beta-lactamase", rec)
+
+
+def test_alm_operon_record_is_left_for_the_modelling_question():
+    """ARO:3007434 is the operon itself; curating it would pre-empt the open question."""
+    rec = ("identifier: ARO:3007434\n"
+           "definition: >-\n  The almEFG operon is responsible for glycylation of lipid A"
+           " as a mechanism of colistin resistance.\n"
+           "term_kind: CLASS\n"
+           "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3003588\n"
+           "    relation_source: \"ARO participates_in (mechanism) via ARO:0000031\"\n")
+    reason = promote._requires_alm_glycylation("ARO:3007434", "almEFG", rec)
+    assert reason is not None and "open modelling question" in reason
+
+
+def test_charge_alteration_now_has_three_lipid_a_routes():
+    """L-Ara4N, phosphoethanolamine (round 73), glycylation (round 74)."""
+    # Each route named by a node label, not by a count -- I nearly wrote len(cfgs) == 3
+    # here, which is the same assertion that just broke one written a round earlier.
+    labels = " ".join(n["label"] for c in promote.family_configs("ARO:3003580")
+                      for n in c.get("extra_nodes", ()))
+    assert "phosphoethanolamine" in labels, "pEtN route missing"
+    assert "glycyl" in labels, "glycylation route missing"
