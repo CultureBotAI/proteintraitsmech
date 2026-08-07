@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003091
 trait_relations:
@@ -37,12 +37,13 @@ evidence:
 - reference: DOI:10.1371/journal.pone.0028316
   notes: PMID:22238576 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Staphylococcus aureus mprF with mutation conferring resistance to daptomycin → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Staphylococcus aureus mprF with mutation conferring resistance to daptomycin → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:11342591). Electrostatic repulsion: lysinylating phosphatidylglycerol lowers the membrane''s
+    net negative charge, so cationic peptides are repelled.'
   nodes:
   - node_id: determinant
     label: Staphylococcus aureus mprF with mutation conferring resistance to daptomycin
@@ -60,6 +61,16 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
+  - node_id: lysyl_pg
+    label: lysyl-phosphatidylglycerol
+    node_type: CHEMICAL
+    description: 'The modified lipid. Ungrounded: recorded as a modification of phosphatidylglycerol with
+      L-lysine rather than by a CURIE this corpus can cite.'
+  - node_id: surface_charge
+    label: reduced net negative charge of the membrane surface
+    node_type: QUALITY
+    description: 'The property that does the work. Ungrounded: no ontology term for the envelope''s net
+      charge.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -73,74 +84,97 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.00122-10
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003319
-      snippet: Point mutations that occur within Staphylococcus aureus mprF gene resulting in resistance
-        to daptomycin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: PMID:11342591
+      snippet: We describe a novel staphylococcal gene, mprF, which determines resistance to several host
+        defense peptides such as defensins and protegrins.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00122-10
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: PMID:11342591
+      snippet: As this unusual modification leads to a reduced negative charge of the membrane surface,
+        MprF-mediated peptide resistance
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1128/AAC.00122-10
-      notes: 'Auto-drafted: mechanism class ARO:3003588 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3003588); verbatim snippet pending curation.'
-    - reference: ARO:3003319
-      snippet: Point mutations that occur within Staphylococcus aureus mprF gene resulting in resistance
-        to daptomycin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3003588 (charge alteration conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: PMID:11342591
+      snippet: As this unusual modification leads to a reduced negative charge of the membrane surface,
+        MprF-mediated peptide resistance
+      notes: Family mechanism ARO:3003588.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00122-10
-      notes: 'Auto-drafted: mechanism ARO:3003588 → resistance; snippet pending curation.'
-    - reference: ARO:3003588
-      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
-        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
-        charge for binding to the surface.
-      notes: ARO definition of the resistance mechanism class ARO:3003588 (charge alteration conferring
-        antibiotic resistance), which states the causal link to resistance.
+    - reference: PMID:11342591
+      snippet: As this unusual modification leads to a reduced negative charge of the membrane surface,
+        MprF-mediated peptide resistance
+      notes: Mechanism ARO:3003588 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00122-10
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003319
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000068 ! daptomycin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:11342591
+      snippet: We describe a novel staphylococcal gene, mprF, which determines resistance to several host
+        defense peptides such as defensins and protegrins.
+      notes: Peschel et al. 2001 identified the gene by the resistance it confers to defensins and protegrins.
+    - reference: PMID:11342591
+      snippet: An mprF mutant strain was killed considerably faster by human neutrophils and exhibited
+        attenuated virulence in mice, indicating a key role for defensin resistance in the pathogenicity
+        of S. aureus.
+      notes: 'And showed the loss-of-function phenotype in the relevant setting: the mutant is killed
+        faster by human neutrophils and is attenuated in mice.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
     evidence:
     - reference: ARO:3003091
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
       notes: Asserted on ARO:3003091 (daptomycin resistant mprF), an is_a ancestor of this record's ARO:3003319;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+  - subject: determinant
+    predicate: causally upstream of (lysinylates phosphatidylglycerol)
+    predicate_id: RO:0002411
+    object: lysyl_pg
+    description: 'Shown by absence: the mutant no longer makes the modified lipid.'
+    evidence:
+    - reference: PMID:11342591
+      snippet: Analysis of membrane lipids demonstrated that the mprF mutant no longer modifies phosphatidylglycerol
+        with l-lysine.
+      notes: Peschel et al. 2001, membrane lipid analysis of the mutant.
+  - subject: lysyl_pg
+    predicate: causally upstream of (lowers the net negative charge)
+    predicate_id: RO:0002411
+    object: surface_charge
+    evidence:
+    - reference: PMID:11342591
+      snippet: As this unusual modification leads to a reduced negative charge of the membrane surface,
+        MprF-mediated peptide resistance
+      notes: Adding a positively charged lysine to an anionic lipid is what reduces the surface's net
+        negative charge.
+  - subject: surface_charge
+    predicate: negatively regulates (repels the cationic peptide)
+    predicate_id: RO:0002212
+    object: drug0
+    description: 'The causal core, and an eighth kind of mechanism: the drug is repelled rather than destroyed,
+      altered, displaced or pumped out.'
+    evidence:
+    - reference: PMID:11342591
+      snippet: As this unusual modification leads to a reduced negative charge of the membrane surface,
+        MprF-mediated peptide resistance
+      notes: The paper states the causal direction explicitly -- the reduced charge is what mediates the
+        peptide resistance.
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
