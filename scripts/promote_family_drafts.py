@@ -817,6 +817,64 @@ def _rifampin_modification_config(mech_id: str, human: str, snippet: str,
     }
 
 
+def _inactivation_transfer_config(mech_id: str, human: str, snippet: str,
+                                  activity_label: str) -> dict:
+    """One group-transfer chemistry under ARO:3000557, from CARD's mechanism-term text.
+
+    All three of the big ones -- nucleotidylation, phosphorylation, acylation -- HEDGE
+    their donor: "usually AMP", "usually by ATP, sometimes GTP", "often via acetylation by
+    acetylCoA". So none of them gets a donor node, for round 63's reason: naming one would
+    assert a specificity the source explicitly declines to give. That is a property of
+    this whole family's text, not a coincidence of one term.
+
+    Contrast round 64's vat acetyltransferases, whose definition names acetyl-CoA outright
+    and therefore DOES carry the donor node.
+    """
+    return {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech(mech_id, human),
+        "reference": mech_id,
+        "mech": {"ARO:0001004": "Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation includes chemical modification, destruction, etc.", mech_id: snippet},
+        "mech_res": snippet,
+        "det_res": [
+            {"reference": mech_id, "snippet": snippet,
+             "notes": ("CARD's definition of " + human + ". NOTE the hedge -- the donor is "
+                       "given as 'usually'/'often', so it is not modelled as a node.")},
+            {"reference": "ARO:3000557", "snippet": "Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation includes chemical modification, destruction, etc.",
+             "notes": ("And the family claim. SCOPE: ARO:3000557 covers several chemistries; "
+                       "only the " + human + " members are curated by this config.")},
+        ],
+        "res_drug": snippet,
+        "note": ("Inactivation by " + human + ". The group donor is deliberately NOT a node: "
+                 "CARD hedges it, and every big chemistry under ARO:3000557 hedges it the "
+                 "same way."),
+        "extra_nodes": [
+            {"node_id": "transfer", "label": activity_label,
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": ("Ungrounded: not looked up rather than guessed (rounds 56-67).")},
+            {"node_id": "modified", "label": "chemically modified, inactive antibiotic",
+             "node_type": "STATE", "description": "The product state. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "transfer",
+             "predicate": "enables (modifies the drug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": mech_id, "snippet": snippet,
+                           "notes": "The reaction CARD names for this mechanism id."}]},
+            {"subject": "transfer", "object": "drug0",
+             "predicate": "has input (the drug)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": mech_id, "snippet": snippet,
+                           "notes": ("The antibiotic is the acceptor, which is what makes "
+                                     "this inactivation rather than target alteration.")}]},
+            {"subject": "transfer", "object": "modified",
+             "predicate": "causally upstream of (inactivates the drug)",
+             "predicate_id": "RO:0002411",
+             "description": "The causal core.",
+             "evidence": [{"reference": "ARO:3000557", "snippet": "Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation includes chemical modification, destruction, etc.",
+                           "notes": "'catalyzes the inactivation of an antibiotic resulting in resistance'."}]},
+        ],
+    }
+
+
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
     # SMR efflux pumps (ARO:0010003) -- efflux, with the ENERGETICS actually stated.
@@ -4641,6 +4699,24 @@ FAMILY_SNIPPETS["ARO:3000576"] = [
         "ARO:3000208", "glycosylation",
         "Addition of glycosyl moiety to antibiotics thereby inactivating them.",
         "rifampin glycosyltransferase activity"),
+]
+
+
+# ARO:3000557 ("antibiotic inactivation enzyme") holds several chemistries; its three
+# largest are group transfers onto the drug. Each config's precondition selects on the
+# mechanism id the record carries, so they are mutually exclusive.
+FAMILY_SNIPPETS["ARO:3000557"] = [
+    _inactivation_transfer_config(
+        "ARO:3000107", "nucleotidylation", "Modification by NMP, usually AMP.",
+        "antibiotic nucleotidyltransferase activity"),
+    _inactivation_transfer_config(
+        "ARO:3000105", "phosphorylation",
+        "Phosphorylation of antibiotic usually by ATP, sometimes GTP.",
+        "antibiotic phosphotransferase activity"),
+    _inactivation_transfer_config(
+        "ARO:3000106", "acylation",
+        "Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.",
+        "antibiotic acyltransferase activity"),
 ]
 
 def _check_config_order() -> None:

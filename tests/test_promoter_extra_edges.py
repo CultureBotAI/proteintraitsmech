@@ -1636,3 +1636,25 @@ def test_smr_antiport_snippet_is_scoped_to_emre():
     cfg = promote.family_configs("ARO:0010003")[0]
     ev = next(e for e in cfg["det_res"] if e["reference"] == "ARO:3000264")
     assert "SCOPE" in ev["notes"] and "EmrE's sentence" in ev["notes"]
+
+
+def test_inactivation_transfer_configs_never_pin_a_hedged_donor():
+    """All three big ARO:3000557 chemistries hedge their donor -- none may name one.
+
+    "usually AMP", "usually by ATP, sometimes GTP", "often via acetylCoA". Round 63's
+    rule, and here it is a property of the whole family's text rather than one term.
+    """
+    cfgs = promote.family_configs("ARO:3000557")
+    assert len(cfgs) == 3
+    for cfg in cfgs:
+        labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+        for donor in ("atp", "gtp", "amp", "coa", "donor"):
+            assert donor not in labels, f"{cfg['reference']} pins a hedged donor"
+        assert "hedge" in _flat(cfg["det_res"][0]["notes"]).lower()
+
+
+def test_vat_still_names_its_donor_because_card_does():
+    """Round 64's contrast: acetyl-CoA IS named there, so the node stays."""
+    vat = next(c for c in promote.family_configs("ARO:3000233")
+               if "ARO:3000106" in c["mech"])
+    assert any(n["node_id"] == "acetyl_coa" for n in vat["extra_nodes"])
