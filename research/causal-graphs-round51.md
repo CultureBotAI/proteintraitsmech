@@ -97,7 +97,7 @@ did not imply a class of them, and checking cost less than the sweep would have.
 * `just test`: **594 passed** (+2)
 * corpus after: **39,647 records · 40,115 graphs · 349,166 nodes · 371,133 edges ·
   0 errors · 371,133/371,133 edges snippet-cited**
-* `just validate` on all 7 individually: **0 failures** · `just test`: **592 passed**
+* `just validate` on all 7 individually: **0 failures**
 * `--verify`: 3 KB CURIEs checked, 0 precondition skips, 0 uncovered mechanisms, 0 problems
 * drafts remaining: **679 → 672**
 
