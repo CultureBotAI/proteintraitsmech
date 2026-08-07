@@ -936,3 +936,15 @@ def test_the_pump_class_precondition_is_built_once_not_per_class():
     abc = promote._requires_pump_class("ARO:0010001", "ABC")
     assert rnd("ARO:3000216", "acrB", "") is None          # acrB is RND
     assert abc("ARO:3000216", "acrB", "") is not None       # and not ABC
+
+
+def test_every_efflux_config_grounds_its_export_node():
+    """One edit cleared an ungrounded node from 108 records across four configs.
+
+    It was the cheapest warning reduction in the corpus: `export` appeared once per record
+    in all four pump-class configs and had no CURIE, so the same node was label-only 108
+    times over.
+    """
+    for cfg in promote.family_configs("ARO:3000748"):
+        export = [n for n in cfg["extra_nodes"] if n["node_id"] == "export"]
+        assert export and export[0].get("grounding") == "GO:1990961"
