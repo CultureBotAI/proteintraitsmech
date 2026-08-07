@@ -991,8 +991,11 @@ def test_the_repressor_core_edge_runs_backwards_like_katg():
 
 def test_the_activator_config_is_the_mirror_of_the_repressor_one():
     """Same family term, opposite direction: RO:0002213 here, RO:0002212 in round 37."""
+    # selected by CONTENT, not by count: round 39 added a third config to this family
+    # (lipid-A regulators), and asserting the count made a passing test fail on an
+    # unrelated addition. The contract is that the two directions exist, not how many
+    # configs the family has.
     cfgs = promote.family_configs("ARO:3000451")
-    assert len(cfgs) == 2
     act = [c for c in cfgs if any(n["node_id"] == "activation" for n in c["extra_nodes"])][0]
     rep = [c for c in cfgs if any(n["node_id"] == "repression" for n in c["extra_nodes"])][0]
     assert any(e["predicate_id"] == "RO:0002213" for e in act["extra_edges"])
