@@ -8,6 +8,7 @@ regulatory function, which is correct modelling and was the first version's fals
 from __future__ import annotations
 
 import importlib
+import re
 import pathlib
 import sys
 
@@ -51,3 +52,22 @@ def test_vans_is_the_known_benign_hit():
     assert audit.EFFECTOR_PREDICATE.search(gloss), (
         "vanS should still surface; if not, the pattern changed and needs re-reading"
     )
+
+
+def test_pbp_pattern_matches_numbered_pbps():
+    """Round 53's "fix" traded one miss for another; #267's sweep found the 7 stranded.
+
+    `\\bpbp\\b` catches "PBP transpeptidases" and NOT "PBP1" -- and promotion is idempotent,
+    so the records written under the earlier pattern were never re-checked. Both spellings
+    must match.
+    """
+    promote = importlib.import_module("promote_family_drafts")
+    for spelling in ("pbp transpeptidases", "helicobacter pylori pbp1", "mutant pbp3"):
+        assert re.search(r"penicillin-binding protein|\bpbp", spelling), spelling
+    rec = ("identifier: ARO:3007060\n"
+           "definition: >-\n  Point mutations in Helicobacter pylori pbp1 observed to"
+           " confer resistance to amoxicillin.\n"
+           "term_kind: CLASS\n"
+           "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000212\n"
+           "    relation_source: \"ARO participates_in (mechanism) via ARO:0000031\"\n")
+    assert promote._requires_mutant_pbp("ARO:3007060", "H. pylori pbp1", rec) is None
