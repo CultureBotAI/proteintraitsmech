@@ -987,3 +987,24 @@ def test_the_repressor_core_edge_runs_backwards_like_katg():
     assert "mutation lifts the repression" in core["predicate"]
     out = _flat(_graph(cfg, mech=("ARO:0010000",), drug=("ARO:0000045",)))
     assert "AcrR mutations result in high level antibiotic resistance" in out
+
+
+def test_the_activator_config_is_the_mirror_of_the_repressor_one():
+    """Same family term, opposite direction: RO:0002213 here, RO:0002212 in round 37."""
+    cfgs = promote.family_configs("ARO:3000451")
+    assert len(cfgs) == 2
+    act = [c for c in cfgs if any(n["node_id"] == "activation" for n in c["extra_nodes"])][0]
+    rep = [c for c in cfgs if any(n["node_id"] == "repression" for n in c["extra_nodes"])][0]
+    assert any(e["predicate_id"] == "RO:0002213" for e in act["extra_edges"])
+    assert any(e["predicate_id"] == "RO:0002212" for e in rep["extra_edges"])
+    assert promote._EFFLUX_ACTIVATORS.isdisjoint(promote._EFFLUX_REPRESSORS)
+
+
+def test_the_activator_list_is_conservative_and_says_so():
+    """marA IS an activator but its definition does not say so in a recognised form.
+
+    A false exclusion leaves a draft; a false inclusion asserts the wrong direction on a
+    graph whose whole content is that direction. Erring toward the draft is cheaper.
+    """
+    assert "ARO:3000263" not in promote._EFFLUX_ACTIVATORS      # marA
+    assert len(promote._EFFLUX_ACTIVATORS) == 15

@@ -281,6 +281,23 @@ def _requires_rnd_pump(ident: str, label: str, text: str):
 _EFFLUX_REPRESSORS = frozenset(['ARO:3000506', 'ARO:3000518', 'ARO:3000526', 'ARO:3000559', 'ARO:3000656', 'ARO:3000676', 'ARO:3000702', 'ARO:3000718', 'ARO:3000746', 'ARO:3000815', 'ARO:3000817', 'ARO:3000818', 'ARO:3000819', 'ARO:3000820', 'ARO:3000821', 'ARO:3000824', 'ARO:3000834', 'ARO:3003028', 'ARO:3003373', 'ARO:3003374', 'ARO:3003378', 'ARO:3003379', 'ARO:3003380', 'ARO:3003479', 'ARO:3003710', 'ARO:3003807', 'ARO:3003838'])
 
 
+# The 15 efflux ACTIVATORS, verified the same way as the repressors (#231, round 37) and
+# deliberately CONSERVATIVE: the pattern also excluded marA, which is a transcriptional
+# activator, because its definition does not say so in a form the check recognises. A false
+# exclusion leaves a record as a draft; a false inclusion would assert the wrong direction
+# on a graph whose whole content is that direction. Erring toward the draft is the cheaper
+# mistake, and the excluded ones are listed in the round-38 report so they can be revisited.
+_EFFLUX_ACTIVATORS = frozenset(['ARO:3000553', 'ARO:3000813', 'ARO:3000814', 'ARO:3000816', 'ARO:3000823', 'ARO:3000825', 'ARO:3000826', 'ARO:3000827', 'ARO:3000832', 'ARO:3000838', 'ARO:3003841', 'ARO:3003843', 'ARO:3004055', 'ARO:3004108', 'ARO:3004109'])
+
+
+def _requires_efflux_activator(ident: str, label: str, text: str):
+    if ident in _EFFLUX_ACTIVATORS:
+        return None
+    return ("not on the verified efflux-activator list: this config's mechanism is "
+            "over-activity DRIVING pump expression, the opposite direction from the "
+            "repressors curated in round 37")
+
+
 def _requires_efflux_repressor(ident: str, label: str, text: str):
     if ident in _EFFLUX_REPRESSORS:
         return None
@@ -463,7 +480,8 @@ FAMILY_SNIPPETS = {
     # Efflux repressors (ARO:3000451, the 27 verified ones). The regulation shape of rounds
     # 22 and 24 applied to efflux: the determinant confers resistance by FAILING to repress,
     # so more pump is made. Its downstream is the pump records curated in rounds 33-36.
-    "ARO:3000451": {
+    "ARO:3000451": [
+    {
         "curated": "2026-08-07T00:00:00Z",
         "precondition": _requires_efflux_repressor,
         "reference": "ARO:3000702",        # CARD's own AcrR definition, the archetype
@@ -504,6 +522,43 @@ FAMILY_SNIPPETS = {
                            "notes": "The resistance follows from pump over-expression, not from any change to the pump itself."}]},
         ],
     },
+        {
+            "curated": "2026-08-07T00:00:00Z",
+            "precondition": _requires_efflux_activator,
+            "reference": "ARO:3000553",        # CARD's own AdeR definition
+            "mech": {"ARO:0010000": "AdeR is a positive regulator of AdeABC efflux system.", "ARO:3000212": "AdeR is a positive regulator of AdeABC efflux system.",
+                     "ARO:0001002": "AdeR is a positive regulator of AdeABC efflux system.", "ARO:3003588": "AdeR is a positive regulator of AdeABC efflux system.",
+                     "ARO:0010001": "AdeR is a positive regulator of AdeABC efflux system."},
+            "mech_res": "AdeR is a positive regulator of AdeABC efflux system.",
+            "det_res": "AdeR is a positive regulator of AdeABC efflux system.",
+            "res_drug": "AdeR is a positive regulator of AdeABC efflux system.",
+            "note": "The mirror of round 37: a positive regulator whose over-activity drives pump expression, rather than a repressor whose loss lifts it.",
+            "extra_nodes": [
+                {"node_id": "pump", "label": "the efflux pump this determinant activates",
+                 "node_type": "PROTEIN",
+                 "description": "Which pump differs per record and is named in that record's own definition -- AdeABC for AdeR, norA for ArlR, acrAB for Rob. The pump mechanisms are curated records (rounds 33-36)."},
+                {"node_id": "activation", "label": "activation of efflux pump expression",
+                 "node_type": "BIOLOGICAL_PROCESS",
+                 "description": "Ungrounded: positive regulation of transcription exists in GO, but which promoter differs per record."},
+            ],
+            "extra_edges": [
+                {"subject": "determinant", "object": "activation",
+                 "predicate": "enables (activates the pump operon)", "predicate_id": "RO:0002327",
+                 "evidence": [{"reference": "ARO:3000553", "snippet": "AdeR is a positive regulator of AdeABC efflux system.",
+                               "notes": "CARD's definition of AdeR, the archetype. Each record's own definition names the pump IT activates; this config asserts only the shared direction."}]},
+                {"subject": "activation", "object": "pump",
+                 "predicate": "positively regulates (raises pump expression)", "predicate_id": "RO:0002213",
+                 "description": "The direction that distinguishes this config from round 37's: here resistance follows from the regulator DOING something, not from its loss.",
+                 "evidence": [{"reference": "ARO:3000553", "snippet": "AdeR is a positive regulator of AdeABC efflux system.",
+                               "notes": "A positive regulator raises expression of the system it controls."}]},
+                {"subject": "pump", "object": "drug0",
+                 "predicate": "negatively regulates (more pump means more efflux)",
+                 "predicate_id": "RO:0002212",
+                 "evidence": [{"reference": "ARO:3000553", "snippet": "AdeR is a positive regulator of AdeABC efflux system.",
+                               "notes": "The pump's own mechanism is curated on its record; this edge carries only the consequence of making more of it."}]},
+            ],
+        },
+    ],
     # ---------------------------------------------------------------------------------
     # ABC efflux subunits (ARO:3000748, ABC complexes only). Same family term as round 33's
     # RND pumps and a genuinely different machine: RND runs on the proton gradient and
