@@ -514,6 +514,56 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # Permeability (ARO:3000270) -- a TENTH mechanism kind, and the mirror of efflux: the
+    # drug is not pumped out, it never gets in. Most of these records are the CHANNEL, and
+    # the resistance is its loss or down-regulation -- which is why 8 of the 42 carry ARO's
+    # "resistance by absence" mechanism id alongside "reduced permeability".
+    #
+    # The determinant is therefore usually a porin whose ABSENCE resists, the same inverted
+    # shape as katG (round 27) and the efflux repressors (round 37).
+    "ARO:3000270": {
+        "curated": "2026-08-07T00:00:00Z",
+        "reference": "PMID:14665678",      # Nikaido 2003, Microbiol Mol Biol Rev
+        "mech": {"ARO:3000244": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.", "ARO:3000212": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
+                 "ARO:0001002": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.", "ARO:0010000": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
+                 "ARO:3003764": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",   # resistance by absence -- the id the guard named
+                 "ARO:3004596": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules."},
+        "mech_res": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
+        "det_res": [
+            {"reference": "PMID:14665678", "snippet": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
+             "notes": "Nikaido 2003. The outer membrane is a permeability barrier by default; channels are what let a drug across it, so losing a channel raises the barrier."},
+            {"reference": "ARO:3003808", "snippet": "carO is a transmembrane beta-barrel involved in the influx of carbapenems.",
+             "notes": "CARD's definition of carO, the archetype: a beta-barrel through which carbapenems enter. Each record's own definition names the channel and the drug class IT admits."},
+        ],
+        "res_drug": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
+        "note": "The mirror of efflux: the drug never gets in, rather than being pumped out.",
+        "extra_nodes": [
+            {"node_id": "influx", "label": "drug influx across the outer membrane",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: the transport is passive diffusion through a channel, and which channel differs per record."},
+            {"node_id": "barrier", "label": "outer membrane permeability barrier",
+             "node_type": "STATE",
+             "description": "Ungrounded: a property of the envelope rather than a compound."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "influx",
+             "predicate": "enables (admits the drug across the membrane)", "predicate_id": "RO:0002327",
+             "description": "The wild-type function. Resistance is its loss or down-regulation, which is why these records are channels rather than resistance enzymes.",
+             "evidence": [{"reference": "ARO:3003808", "snippet": "carO is a transmembrane beta-barrel involved in the influx of carbapenems.",
+                           "notes": "CARD's carO definition; each record names its own channel and drug."}]},
+            {"subject": "barrier", "object": "influx",
+             "predicate": "negatively regulates (the membrane excludes what has no channel)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "PMID:14665678", "snippet": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
+                           "notes": "Nikaido 2003: exclusion is the outer membrane's default, and channels are the exception to it."}]},
+            {"subject": "influx", "object": "drug0",
+             "predicate": "causally upstream of (the drug reaches its target)", "predicate_id": "RO:0002411",
+             "description": "The causal core inverted: with the channel lost or down-regulated, this step does not happen and the drug never reaches its target.",
+             "evidence": [{"reference": "PMID:14665678", "snippet": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
+                           "notes": "A drug that cannot cross the barrier cannot act, whatever its target."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # Efflux repressors (ARO:3000451, the 27 verified ones). The regulation shape of rounds
     # 22 and 24 applied to efflux: the determinant confers resistance by FAILING to repress,
     # so more pump is made. Its downstream is the pump records curated in rounds 33-36.

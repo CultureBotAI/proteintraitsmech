@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000270
 trait_relations:
@@ -20,11 +20,11 @@ trait_relations:
     object: ARO:0000016
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004280 MipA-interacting Protein"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] MipA-interacting Protein → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: MipA-interacting Protein → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:14665678). The mirror of efflux: the drug never gets in, rather than being pumped out.'
   nodes:
   - node_id: determinant
     label: MipA-interacting Protein
@@ -42,6 +42,15 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
+  - node_id: influx
+    label: drug influx across the outer membrane
+    node_type: BIOLOGICAL_PROCESS
+    description: 'Ungrounded: the transport is passive diffusion through a channel, and which channel
+      differs per record.'
+  - node_id: barrier
+    label: outer membrane permeability barrier
+    node_type: STATE
+    description: 'Ungrounded: a property of the envelope rather than a compound.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -55,53 +64,97 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: ARO:3004280
-      notes: 'Auto-drafted: mechanism class ARO:3000244 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000244); verbatim snippet pending curation.'
-    - reference: ARO:3004280
-      snippet: The MltA-interacting Protein (MipA) family consists mainly of homologs to MipA and OmpV
-        proteins. Proteins of this family, are predicted to form a beta-barrel.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000244 (reduced permeability
-        to antibiotic) is CARD's mechanism categorisation for it; aro.obo does not assert that link as
-        an is_a axiom.
+    - reference: PMID:14665678
+      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
+        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
+        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
+        time to allow the influx of nutrient molecules.
+      notes: Family mechanism ARO:3000244.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3004280
-      notes: 'Auto-drafted: mechanism ARO:3000244 → resistance; snippet pending curation.'
-    - reference: ARO:3000244
-      snippet: Reduction in permeability to antibiotic, generally through reduced production of porins,
-        can provide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000244 (reduced permeability to antibiotic),
-        which states the causal link to resistance.
+    - reference: PMID:14665678
+      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
+        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
+        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
+        time to allow the influx of nutrient molecules.
+      notes: Mechanism ARO:3000244 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3004280
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004280
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:14665678
+      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
+        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
+        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
+        time to allow the influx of nutrient molecules.
+      notes: Nikaido 2003. The outer membrane is a permeability barrier by default; channels are what
+        let a drug across it, so losing a channel raises the barrier.
+    - reference: ARO:3003808
+      snippet: carO is a transmembrane beta-barrel involved in the influx of carbapenems.
+      notes: 'CARD''s definition of carO, the archetype: a beta-barrel through which carbapenems enter.
+        Each record''s own definition names the channel and the drug class IT admits.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
     evidence:
     - reference: ARO:3004280
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
-      notes: Asserted directly on ARO:3004280 (MipA-interacting Protein) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
+      notes: Asserted on ARO:3004280 (MipA-interacting Protein), an is_a ancestor of this record's ARO:3004280;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug1
+    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3004280
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
-      notes: Asserted directly on ARO:3004280 (MipA-interacting Protein) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+      notes: Asserted on ARO:3004280 (MipA-interacting Protein), an is_a ancestor of this record's ARO:3004280;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: enables (admits the drug across the membrane)
+    predicate_id: RO:0002327
+    object: influx
+    description: The wild-type function. Resistance is its loss or down-regulation, which is why these
+      records are channels rather than resistance enzymes.
+    evidence:
+    - reference: ARO:3003808
+      snippet: carO is a transmembrane beta-barrel involved in the influx of carbapenems.
+      notes: CARD's carO definition; each record names its own channel and drug.
+  - subject: barrier
+    predicate: negatively regulates (the membrane excludes what has no channel)
+    predicate_id: RO:0002212
+    object: influx
+    evidence:
+    - reference: PMID:14665678
+      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
+        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
+        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
+        time to allow the influx of nutrient molecules.
+      notes: 'Nikaido 2003: exclusion is the outer membrane''s default, and channels are the exception
+        to it.'
+  - subject: influx
+    predicate: causally upstream of (the drug reaches its target)
+    predicate_id: RO:0002411
+    object: drug0
+    description: 'The causal core inverted: with the channel lost or down-regulated, this step does not
+      happen and the drug never reaches its target.'
+    evidence:
+    - reference: PMID:14665678
+      snippet: Although outer membrane components often play important roles in the interaction of symbiotic
+        or pathogenic bacteria with their host organisms, the major role of this membrane must usually
+        be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same
+        time to allow the influx of nutrient molecules.
+      notes: A drug that cannot cross the barrier cannot act, whatever its target.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

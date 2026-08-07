@@ -1052,3 +1052,26 @@ def test_round_41_corrected_two_earlier_false_exclusions():
     """
     assert "ARO:3004069" in promote._EFFLUX_REPRESSORS      # MvaT
     assert "ARO:3004054" in promote._EFFLUX_ACTIVATORS      # P. aeruginosa CpxR
+
+
+# --- round 43: permeability, the mirror of efflux ----------------------------------
+
+def test_permeability_covers_resistance_by_absence():
+    """8 of the 42 carry ARO:3003764 alongside "reduced permeability".
+
+    I guessed ARO:3000185 for it and the UncoveredMechanism guard named the real id by
+    refusing two records — the fourth time in this session that guessing a mechanism id
+    was the failure and the guard was the fix.
+    """
+    mech = promote.family_configs("ARO:3000270")[0]["mech"]
+    assert "ARO:3003764" in mech and "ARO:3000244" in mech
+
+
+def test_the_permeability_determinant_is_the_channel_not_the_resistance():
+    """These records are porins: the wild-type function ADMITS the drug, and resistance is
+    the loss of it — the inverted shape of katG (r27) and the efflux repressors (r37)."""
+    cfg = promote.family_configs("ARO:3000270")[0]
+    edge = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "influx"][0]
+    assert edge["predicate_id"] == "RO:0002327"          # enables, not negatively regulates
+    assert "Resistance is its loss" in edge["description"]
