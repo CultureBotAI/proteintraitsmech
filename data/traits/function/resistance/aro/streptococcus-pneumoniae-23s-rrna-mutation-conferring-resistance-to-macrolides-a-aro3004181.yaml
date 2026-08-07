@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004125
   - ARO:3004182
@@ -29,17 +29,18 @@ evidence:
 - reference: DOI:10.1128/AAC.45.1.319-323.2001
   notes: PMID:11120988 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Streptococcus pneumoniae 23S rRNA mutation conferring resistance to macrolides and streptogramins
-    antibiotics → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Streptococcus pneumoniae 23S rRNA mutation conferring resistance to macrolides and streptogramins
+    antibiotics → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:7689111). Target alteration in 23S rRNA: substitutions in the peptidyl transferase loop reduce
+    macrolide affinity by up to four orders of magnitude.'
   nodes:
   - node_id: determinant
     label: Streptococcus pneumoniae 23S rRNA mutation conferring resistance to macrolides and streptogramins
       antibiotics
-    node_type: PROTEIN
+    node_type: NUCLEIC_ACID
     grounding: ARO:3004181
   - node_id: mech0
     label: mutation conferring antibiotic resistance
@@ -53,6 +54,16 @@ causal_graphs:
     label: streptogramin antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000026
+  - node_id: pt_loop
+    label: peptidyl transferase loop of 23S rRNA, around bases 2057, 2058 and 2059
+    node_type: NUCLEIC_ACID
+    description: The macrolide binding site. Positions are in the E. coli frame and differ per organism
+      (2143 in H. pylori), so no per-record residue node is asserted -- the same caveat as the QRDR and
+      the 16S decoding site.
+  - node_id: conformation
+    label: open conformation of the peptidyl transferase loop
+    node_type: STATE
+    description: What the substitutions induce, and the reason binding falls. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -66,59 +77,114 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.45.1.319-323.2001
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004181
-      snippet: Point mutation in the 23S rRNA of Streptococcus pneumoniae shown to confer resistance to
-        macrolides and streptogramins types of antibiotics.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: PMID:7689111
+      snippet: Erythromycin still protects against chemical modification in the mutant peptidyl transferase
+        loops, but the affinity of the drug interaction is reduced 20-fold in the 2057A mutant, 10(3)-fold
+        in the 2058U mutant and 10(4)-fold in the 2058G mutant.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.45.1.319-323.2001
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: PMID:7689111
+      snippet: Erythromycin still protects against chemical modification in the mutant peptidyl transferase
+        loops, but the affinity of the drug interaction is reduced 20-fold in the 2057A mutant, 10(3)-fold
+        in the 2058U mutant and 10(4)-fold in the 2058G mutant.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.45.1.319-323.2001
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004181
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000145 ! tylosin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:7689111
+      snippet: Erythromycin still protects against chemical modification in the mutant peptidyl transferase
+        loops, but the affinity of the drug interaction is reduced 20-fold in the 2057A mutant, 10(3)-fold
+        in the 2058U mutant and 10(4)-fold in the 2058G mutant.
+      notes: 'Douthwaite & Aagaard 1993. The affinity loss is MEASURED and graded: 20-fold at 2057A, 1000-fold
+        at 2058U, 10000-fold at 2058G. Three substitutions, three magnitudes.'
+    - reference: PMID:7689111
+      snippet: We used a chemical modification approach to analyse conformational changes that are induced
+        by mutations in the peptidyl transferase loop, and to determine how these changes affect drug
+        interaction.
+      notes: 'And the method: chemical modification, which reads the rRNA conformation directly rather
+        than inferring it from an MIC.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
     evidence:
     - reference: ARO:3004125
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
       notes: Asserted on ARO:3004125 (23S rRNA with mutation conferring resistance to macrolide antibiotics),
         an is_a ancestor of this record's ARO:3004181; inherited by this variant. CARD/ARO release in
         data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug1
+    description: CARD asserts that this determinant confers resistance to streptogramin antibiotic.
     evidence:
     - reference: ARO:3004182
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000026 ! streptogramin antibiotic'
       notes: Asserted on ARO:3004182 (23S rRNA with mutation conferring resistance to streptogramins antibiotics),
         an is_a ancestor of this record's ARO:3004181; inherited by this variant. CARD/ARO release in
         data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to streptogramin antibiotic.
+  - subject: pt_loop
+    predicate: part of (the loop that binds the drug)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: PMID:7689111
+      snippet: The antibiotic erythromycin inhibits protein synthesis by binding to the 50 S ribosomal
+        subunit, where the drug interacts with the unpaired bases 2058A and 2059A in the peptidyl transferase
+        loop of 23 S rRNA.
+      notes: The drug interacts with unpaired 2058A and 2059A in this loop.
+  - subject: drug0
+    predicate: molecularly interacts with (binds the unpaired bases)
+    predicate_id: RO:0002436
+    object: pt_loop
+    evidence:
+    - reference: PMID:7689111
+      snippet: The antibiotic erythromycin inhibits protein synthesis by binding to the 50 S ribosomal
+        subunit, where the drug interacts with the unpaired bases 2058A and 2059A in the peptidyl transferase
+        loop of 23 S rRNA.
+      notes: 'Drug action: erythromycin inhibits protein synthesis from this site.'
+  - subject: determinant
+    predicate: causally upstream of (opens the loop)
+    predicate_id: RO:0002411
+    object: conformation
+    description: The substitutions do not remove a contact; they change the loop's shape.
+    evidence:
+    - reference: PMID:7689111
+      snippet: We used a chemical modification approach to analyse conformational changes that are induced
+        by mutations in the peptidyl transferase loop, and to determine how these changes affect drug
+        interaction.
+      notes: Conformational change read by chemical modification, and the paper's framing of what the
+        mutations do.
+  - subject: conformation
+    predicate: negatively regulates (the open loop binds the drug up to 10,000-fold worse)
+    predicate_id: RO:0002212
+    object: pt_loop
+    description: 'The causal core, graded rather than binary -- and the control matters: substitutions
+      at 2032 in the adjacent hairpin alter drug tolerance yet change neither the loop''s structure nor
+      erythromycin binding, so the effect is specific to this loop.'
+    evidence:
+    - reference: PMID:7689111
+      snippet: Erythromycin still protects against chemical modification in the mutant peptidyl transferase
+        loops, but the affinity of the drug interaction is reduced 20-fold in the 2057A mutant, 10(3)-fold
+        in the 2058U mutant and 10(4)-fold in the 2058G mutant.
+      notes: 20-fold, 1,000-fold and 10,000-fold for 2057A, 2058U and 2058G.
+    - reference: PMID:7689111
+      snippet: Single mutations at position 2032 in the adjacent hairpin loop, which have previously been
+        shown to alter drug tolerances, gave no detectable effects on the structure of the peptidyl transferase
+        loop or on erythromycin binding.
+      notes: 'The negative control in the same paper: a nearby position that affects tolerance but NOT
+        this loop or this binding. It is what makes the causal claim specific rather than positional.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

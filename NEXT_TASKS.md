@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   706.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   679.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -150,9 +150,8 @@ cleared._
      or contested evidence; for some the honest outcome is staying drafts.
    - **rRNA target alteration — 105 drafts, not ~22.** ~~16S/aminoglycoside (45)~~
      **DONE (round 29)**; 23S/macrolide (26) is next by size, then linezolid,
-     pleuromutilin, oxazolidinone and tetracycline families. **23S is filed as #217**: no
-     source found that *constructs* a substitution and measures the affinity loss, which
-     is the tier round 29 had.
+     pleuromutilin, oxazolidinone and tetracycline families. ~~**23S is filed as #217**~~ **DONE (round 50)** — the paper was found by searching for a
+     BINDING-measurement rather than a substitution-construction: PMID:7689111.
      **Settle #215 first:** these determinants are RNA, the KB is of protein traits, and
      their graphs cannot route through any protein-trait record because the corpus holds
      no rRNA trait records. Round 29 curated them as they are and said so.
