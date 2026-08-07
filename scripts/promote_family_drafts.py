@@ -664,7 +664,118 @@ def _requires_ndh(ident: str, label: str, text: str):
     return None
 
 
+def _requires_upp_recycler(ident: str, label: str, text: str):
+    """Determinant must handle undecaprenyl pyrophosphate, per its OWN definition."""
+    if "ARO:3000213" not in D.parse_relations(text)[0]:
+        return "record carries no cell-wall-restructuring mechanism (ARO:3000213)"
+    if "undecaprenyl pyrophosphate" not in _own_definition(text).lower():
+        return "own definition does not name undecaprenyl pyrophosphate"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # bacA / bcrC -- undecaprenyl pyrophosphate recycling, bacitracin resistance.
+    #
+    # Two families, ONE config, because CARD describes one step two ways: BacA "recycles"
+    # the carrier, BcrC is a "phosphatase" for it. First time in this thread two family
+    # ids share a config dict outright.
+    #
+    # ARO:3000012 (molecular bypass) as a whole is NOT curatable with one config -- it
+    # mixes UPP recycling, lipid A biosynthesis, non-functional ddl ligases and the van
+    # clusters. Asserting one mechanism across it would be round 22's error again.
+    "ARO:3002986": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_upp_recycler,
+        "reference": "ARO:3002986",
+        "mech": {"ARO:3000213": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin."},
+        "mech_res": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+        "det_res": [
+            {"reference": "ARO:3002986", "snippet": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+             "notes": "BacA: recycling undecaprenyl pyrophosphate confers bacitracin resistance."},
+            {"reference": "ARO:3003250", "snippet": "The bcrC gene product (BcrC) is an undecaprenyl pyrophosphate phosphatase originally isolated from Bacillus subtilis. When overexpressed it can confer resistance to bacitracin.",
+             "notes": "BcrC: the same carrier, as a phosphatase, and resistance on OVEREXPRESSION -- more recycling capacity, not a different activity."},
+        ],
+        "res_drug": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+        "note": ("Undecaprenyl pyrophosphate recycling. NOT asserted: that bacitracin binds "
+                 "or sequesters undecaprenyl pyrophosphate. That is the textbook mode of "
+                 "action and neither CARD definition states it, so the drug->carrier edge "
+                 "is deliberately absent (round 51's lesson). Adding it needs its own "
+                 "evidence."),
+        "extra_nodes": [
+            {"node_id": "upp", "label": "undecaprenyl pyrophosphate (the lipid carrier)",
+             "node_type": "CHEMICAL",
+             "description": "Ungrounded: no CHEBI id verified this round, and rounds 56-57 established not guessing one."},
+            {"node_id": "recycling", "label": "undecaprenyl pyrophosphate recycling / dephosphorylation",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: BacA's recycling and BcrC's phosphatase activity are the same step described two ways."},
+            {"node_id": "wall", "label": "peptidoglycan biosynthetic process",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0009252"},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "recycling",
+             "predicate": "enables (recycles the lipid carrier)", "predicate_id": "RO:0002327",
+             "evidence": [
+                 {"reference": "ARO:3002986", "snippet": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+                  "notes": "BacA 'recycles undecaprenyl pyrophosphate'."},
+                 {"reference": "ARO:3003250", "snippet": "The bcrC gene product (BcrC) is an undecaprenyl pyrophosphate phosphatase originally isolated from Bacillus subtilis. When overexpressed it can confer resistance to bacitracin.",
+                  "notes": "BcrC is 'an undecaprenyl pyrophosphate phosphatase' -- the same step."}]},
+            {"subject": "recycling", "object": "upp",
+             "predicate": "has input (the lipid carrier)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3002986", "snippet": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+                           "notes": "The substrate CARD names."}]},
+            {"subject": "recycling", "object": "wall",
+             "predicate": "part of (cell wall biosynthesis)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3002986", "snippet": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+                           "notes": "'during cell wall biosynthesis'."}]},
+        ],
+    },
+    "ARO:3003250": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_upp_recycler,
+        "reference": "ARO:3002986",
+        "mech": {"ARO:3000213": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin."},
+        "mech_res": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+        "det_res": [
+            {"reference": "ARO:3002986", "snippet": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+             "notes": "BacA: recycling undecaprenyl pyrophosphate confers bacitracin resistance."},
+            {"reference": "ARO:3003250", "snippet": "The bcrC gene product (BcrC) is an undecaprenyl pyrophosphate phosphatase originally isolated from Bacillus subtilis. When overexpressed it can confer resistance to bacitracin.",
+             "notes": "BcrC: the same carrier, as a phosphatase, and resistance on OVEREXPRESSION -- more recycling capacity, not a different activity."},
+        ],
+        "res_drug": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+        "note": ("Undecaprenyl pyrophosphate recycling. NOT asserted: that bacitracin binds "
+                 "or sequesters undecaprenyl pyrophosphate. That is the textbook mode of "
+                 "action and neither CARD definition states it, so the drug->carrier edge "
+                 "is deliberately absent (round 51's lesson). Adding it needs its own "
+                 "evidence."),
+        "extra_nodes": [
+            {"node_id": "upp", "label": "undecaprenyl pyrophosphate (the lipid carrier)",
+             "node_type": "CHEMICAL",
+             "description": "Ungrounded: no CHEBI id verified this round, and rounds 56-57 established not guessing one."},
+            {"node_id": "recycling", "label": "undecaprenyl pyrophosphate recycling / dephosphorylation",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: BacA's recycling and BcrC's phosphatase activity are the same step described two ways."},
+            {"node_id": "wall", "label": "peptidoglycan biosynthetic process",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0009252"},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "recycling",
+             "predicate": "enables (recycles the lipid carrier)", "predicate_id": "RO:0002327",
+             "evidence": [
+                 {"reference": "ARO:3002986", "snippet": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+                  "notes": "BacA 'recycles undecaprenyl pyrophosphate'."},
+                 {"reference": "ARO:3003250", "snippet": "The bcrC gene product (BcrC) is an undecaprenyl pyrophosphate phosphatase originally isolated from Bacillus subtilis. When overexpressed it can confer resistance to bacitracin.",
+                  "notes": "BcrC is 'an undecaprenyl pyrophosphate phosphatase' -- the same step."}]},
+            {"subject": "recycling", "object": "upp",
+             "predicate": "has input (the lipid carrier)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3002986", "snippet": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+                           "notes": "The substrate CARD names."}]},
+            {"subject": "recycling", "object": "wall",
+             "predicate": "part of (cell wall biosynthesis)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3002986", "snippet": "The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis which confers resistance to bacitracin.",
+                           "notes": "'during cell wall biosynthesis'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # ndh (ARO:3003460) -- prodrug-activation loss by an INDIRECT route.
     #

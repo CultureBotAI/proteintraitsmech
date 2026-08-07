@@ -1433,3 +1433,19 @@ def test_ndh_oxidase_node_is_ungrounded_on_purpose():
     node = next(n for n in cfg["extra_nodes"] if n["node_id"] == "nadh_ox")
     assert "grounding" not in node
     assert "do not guess" in _flat(node["description"]).lower()
+
+
+def test_baca_bcrc_share_one_config_and_omit_the_drug_target_edge():
+    """CARD never says bacitracin binds undecaprenyl pyrophosphate (round 51's lesson).
+
+    That IS the textbook mode of action, which is exactly why its absence needs pinning:
+    it is the claim most likely to be added later from memory rather than from a source.
+    """
+    a = promote.family_configs("ARO:3002986")[0]
+    b = promote.family_configs("ARO:3003250")[0]
+    assert a["reference"] == b["reference"] == "ARO:3002986"
+    for cfg in (a, b):
+        assert not any(e["subject"] == "drug0" for e in cfg["extra_edges"]), (
+            "drug->carrier edge added without evidence"
+        )
+        assert "NOT asserted" in cfg["note"]
