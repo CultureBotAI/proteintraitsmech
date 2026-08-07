@@ -559,7 +559,100 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 
 
+def _own_definition(text: str) -> str:
+    """Just the record's OWN `definition:` block.
+
+    Scanning the whole YAML is a false-positive machine: an ARO record inherits
+    drug-class boilerplate that names other mechanisms entirely. A keyword predicate
+    run over the full text excluded 17 legitimate PBP3 mutants with the reason
+    "definition describes a repressor" because the phrase "deactivation of repressors"
+    appears in inherited drug-class prose. Read the record's own claim, nothing else.
+    """
+    m = re.search(r"^definition:\s*(.*?)(?=\n\w)", text, re.M | re.S)
+    return " ".join(m.group(1).split()) if m else ""
+
+
+def _requires_replacement_pbp(ident: str, label: str, text: str):
+    """This config says "an ACQUIRED low-affinity PBP does the wall synthesis instead".
+
+    Discriminates STRUCTURALLY, on the mechanism the record itself carries, not on
+    keywords: ARO:3003040 mixes target replacement (ARO:0001002) with target alteration
+    by mutation (ARO:3000212), and only the former is this config's story. A PBP3 point
+    mutant is a real resistance determinant -- it just belongs to the round 18-19 shape,
+    and must be left as a draft rather than given a replacement graph.
+
+    Then one reading check on the record's OWN definition: ARO:3005046 is MecI, the
+    *repressor* of mec transcription, which carries the replacement mechanism id despite
+    regulating rather than replacing anything. Same trap as ArmR in the efflux rounds.
+    Filed as #251.
+    """
+    mechs = D.parse_relations(text)[0]
+    if "ARO:0001002" not in mechs:
+        return ("record carries no target-replacement mechanism (ARO:0001002); it is "
+                "target alteration by mutation and needs the round 18-19 shape")
+    if "repressor" in _own_definition(text).lower():
+        return ("own definition describes a repressor, not a replacement PBP -- its "
+                "mechanism is regulation of the mec operon (#251)")
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Beta-lactam resistant PBPs (ARO:3003040) -- TARGET REPLACEMENT, an 11th mechanism kind.
+    #
+    # Distinct from target ALTERATION (rounds 18-19, 51): nothing about the native target
+    # changes. The cell ACQUIRES a foreign PBP whose affinity for the drug is so low that
+    # wall synthesis simply continues while the native PBPs stay inhibited.
+    #
+    # Round 51's lesson applied first: CARD's own definitions state this mechanism verbatim
+    # ("A foreign PBP2a acquired by lateral gene transfer that is able to perform
+    # peptidoglycan synthesis in the presence of beta-lactams"), so no search was needed to
+    # know WHAT to curate -- only to evidence the affinity claim.
+    "ARO:3003040": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_replacement_pbp,
+        "reference": "ARO:3000617",
+        "mech": {"ARO:0001002": "A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan synthesis in the presence of beta-lactams."},
+        "mech_res": "A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan synthesis in the presence of beta-lactams.",
+        "det_res": [
+            {"reference": "ARO:3000617", "snippet": "A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan synthesis in the presence of beta-lactams.",
+             "notes": "CARD states the mechanism in full: foreign, acquired, and functional under drug."},
+            {"reference": "PMID:3499861", "snippet": "All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated with methicillin resistance and which has very low affinity for beta-lactam antibiotics.",
+             "notes": "The affinity measurement that makes it work -- 'very low affinity for beta-lactam antibiotics'."},
+        ],
+        "res_drug": "All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated with methicillin resistance and which has very low affinity for beta-lactam antibiotics.",
+        "note": "Target replacement. The native PBPs remain fully inhibited; a bypass enzyme carries the load.",
+        "extra_nodes": [
+            {"node_id": "pbp2a_activity", "label": "peptidoglycan cross-linking by the acquired PBP",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0008658",
+             "description": "Grounded to penicillin binding -- the activity assayed by the PBP gels these papers report."},
+            {"node_id": "low_affinity", "label": "low affinity of the acquired PBP for beta-lactams",
+             "node_type": "STATE",
+             "description": "The causal core. Ungrounded: an affinity property has no ontology term here."},
+            {"node_id": "pg_synth", "label": "peptidoglycan biosynthetic process",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0009252"},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "pbp2a_activity",
+             "predicate": "enables (wall synthesis under drug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3000617", "snippet": "A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan synthesis in the presence of beta-lactams.",
+                           "notes": "'able to perform peptidoglycan synthesis in the presence of beta-lactams'."}]},
+            {"subject": "low_affinity", "object": "pbp2a_activity",
+             "predicate": "causally upstream of (leaves the enzyme uninhibited)",
+             "predicate_id": "RO:0002411",
+             "description": "Why the acquired enzyme keeps working: the drug binds it poorly.",
+             "evidence": [{"reference": "PMID:3499861", "snippet": "All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated with methicillin resistance and which has very low affinity for beta-lactam antibiotics.",
+                           "notes": "Ueda et al. 1987, across 137 clinical strains."}]},
+            {"subject": "determinant", "object": "low_affinity",
+             "predicate": "has quality (very low beta-lactam affinity)", "predicate_id": "RO:0000086",
+             "evidence": [{"reference": "PMID:6563036", "snippet": "We detected a high-molecular-weight PBP (PBP-2a; approximate size, 78,000 daltons) that was only present in the resistant bacteria but not in the isogenic susceptible strains.",
+                           "notes": "Hartman & Tomasz 1984 -- present in the resistant strains and NOT in the isogenic susceptible ones, which is what makes the association causal rather than incidental."}]},
+            {"subject": "pbp2a_activity", "object": "pg_synth",
+             "predicate": "part of (peptidoglycan biosynthesis)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3000617", "snippet": "A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan synthesis in the presence of beta-lactams.",
+                           "notes": "The process the acquired PBP sustains."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # fabG1 (ARO:3004887) -- unblocks #219, by dropping a claim CARD never made.
     #
