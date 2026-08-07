@@ -1279,8 +1279,41 @@ def test_replacement_pbp_predicate_discriminates_on_mechanism_not_keywords():
     mutant = (
         "identifier: ARO:3007423\n"
         "definition: >-\n  Mutant PBP3 conferring resistance to beta-lactams.\n"
-        "relationship: confers_resistance_to_antibiotic ARO:3000212 ! mutation\n"
+        "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000212\n"
+           "    relation_source: \"ARO participates_in (mechanism) via "
+           "ARO:0000031 antibiotic resistant gene variant or mutant\"\n"
     )
     reason = promote._requires_replacement_pbp("ARO:3007423", "PBP3 mutants", mutant)
     assert reason is not None and "target-replacement" in reason
     assert "repressor" not in reason, "must not blame the wrong thing"
+
+
+def test_pbp_family_carries_both_mechanisms_as_a_list():
+    """ARO:3003040 spans target replacement AND target alteration (rounds 52-53)."""
+    cfgs = promote.family_configs("ARO:3003040")
+    assert len(cfgs) == 2, "expected the list form, not a single config"
+    mechs = {m for c in cfgs for m in c["mech"]}
+    assert mechs == {"ARO:0001002", "ARO:3000212"}
+
+
+def test_mutant_pbp_pattern_matches_pbp_without_a_number():
+    """ARO:3003938 says "PBP transpeptidases" -- requiring a digit wrongly skipped it."""
+    rec = ("identifier: ARO:3003938\n"
+           "definition: >-\n  Mutations in PBP transpeptidases that change the affinity"
+           " for penicillin.\n"
+           "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000212\n"
+           "    relation_source: \"ARO participates_in (mechanism) via "
+           "ARO:0000031 antibiotic resistant gene variant or mutant\"\n")
+    assert promote._requires_mutant_pbp("ARO:3003938", "PBP mutations", rec) is None
+
+
+def test_pilq_is_excluded_from_the_pbp_affinity_mechanism():
+    """ARO:3004835 is an outer-membrane secretin filed under the PBP family (#254)."""
+    rec = ("identifier: ARO:3004835\n"
+           "definition: >-\n  PilQ is an important gonococcal outer membrane component,"
+           " member of the secretin protein family.\n"
+           "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000212\n"
+           "    relation_source: \"ARO participates_in (mechanism) via "
+           "ARO:0000031 antibiotic resistant gene variant or mutant\"\n")
+    reason = promote._requires_mutant_pbp("ARO:3004835", "pilQ", rec)
+    assert reason is not None and "penicillin-binding protein" in reason

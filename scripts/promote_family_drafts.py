@@ -596,7 +596,86 @@ def _requires_replacement_pbp(ident: str, label: str, text: str):
     return None
 
 
+def _requires_mutant_pbp(ident: str, label: str, text: str):
+    """Target ALTERATION of a PBP -- the mutation lowers the drug's affinity for it.
+
+    Two exclusions, both structural-then-reading, in the order round 52 established:
+
+    1. the record must carry ARO:3000212 (mutation), not ARO:0001002 -- an ACQUIRED
+       low-affinity PBP is target replacement and has its own config (round 52);
+    2. its own definition must actually name a penicillin-binding protein. ARO:3004835
+       is *pilQ*, an outer-membrane secretin of the Type IV pilus, filed under the PBP
+       family; its resistance route is permeability, not target affinity (#254).
+
+    Reading the record's OWN definition, never the full YAML -- the round 52 bug.
+    """
+    mechs = D.parse_relations(text)[0]
+    if "ARO:3000212" not in mechs:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    own = _own_definition(text).lower()
+    # \bpbp\b, NOT \bpbp\s?\d -- ARO:3003938's definition says "PBP transpeptidases"
+    # with no number, and the narrower pattern wrongly skipped it. Caught by reading the
+    # skip log, which is the only reason round 52's lesson generalised at all.
+    if not re.search(r"penicillin-binding protein|\bpbp\b", own):
+        return ("own definition does not name a penicillin-binding protein, so a "
+                "PBP-affinity mechanism cannot be asserted for it (#254)")
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Mutant PBPs (ARO:3003040 / ARO:3003938) -- TARGET ALTERATION, the round 18-19 shape.
+    #
+    # The counterpart to round 52's target REPLACEMENT config on the same family term.
+    # There the cell acquires a foreign low-affinity PBP; here the native PBP is mutated
+    # until the drug binds it poorly. Round 52's precondition sends each record to the
+    # right one, on the mechanism id the record itself carries.
+    #
+    # CARD states the mechanism verbatim again (round 51's lesson), so the literature is
+    # needed only to show mutations actually produce the low-affinity protein.
+    "ARO:3003040-mutation": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mutant_pbp,
+        "reference": "ARO:3003938",
+        "mech": {"ARO:3000212": "Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring resistance to penicillin antibiotics."},
+        "mech_res": "Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring resistance to penicillin antibiotics.",
+        "det_res": [
+            {"reference": "ARO:3003938", "snippet": "Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring resistance to penicillin antibiotics.",
+             "notes": "CARD's parent term states the whole mechanism: mutation -> changed affinity -> resistance."},
+            {"reference": "ARO:3004833", "snippet": "Point mutation in Neisseria gonorrhoea PBP1 (ponA) decreases affinity between beta-lactam antibiotic molecule and PBP1, thereby conferring resistance to beta-lactam antibiotics.",
+             "notes": "And the DIRECTION, which the parent term leaves as 'change': the affinity DECREASES."},
+        ],
+        "res_drug": "Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring resistance to penicillin antibiotics.",
+        "note": "Target alteration of a native PBP. Contrast round 52: no foreign protein is involved.",
+        "extra_nodes": [
+            {"node_id": "tp_activity", "label": "transpeptidase activity of the mutant PBP",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0008658"},
+            {"node_id": "low_affinity", "label": "decreased affinity of the mutant PBP for beta-lactams",
+             "node_type": "STATE",
+             "description": "The causal core. Ungrounded: an affinity property has no ontology term here."},
+            {"node_id": "pg_synth", "label": "peptidoglycan biosynthetic process",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0009252"},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "low_affinity",
+             "predicate": "has quality (decreased beta-lactam affinity)", "predicate_id": "RO:0000086",
+             "description": "The mutation's effect on the target, stated by CARD with its direction.",
+             "evidence": [
+                 {"reference": "ARO:3004833", "snippet": "Point mutation in Neisseria gonorrhoea PBP1 (ponA) decreases affinity between beta-lactam antibiotic molecule and PBP1, thereby conferring resistance to beta-lactam antibiotics.",
+                  "notes": "CARD gives the direction explicitly for the ponA case."},
+                 {"reference": "PMID:1938899", "snippet": "Three PBP 2x regions were mutated in from two to all four mutants carrying a low-affinity PBP 2x.",
+                  "notes": "Laible & Hakenbeck 1991 -- mutations in defined PBP2x regions actually produce the low-affinity protein. Studied S. pneumoniae PBP2x; the other species' PBPs are covered by CARD's family-level claim, not by this paper."}]},
+            {"subject": "low_affinity", "object": "tp_activity",
+             "predicate": "causally upstream of (leaves the transpeptidase uninhibited)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3003938", "snippet": "Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring resistance to penicillin antibiotics.",
+                           "notes": "Why the changed affinity confers resistance: the enzyme keeps working."}]},
+            {"subject": "tp_activity", "object": "pg_synth",
+             "predicate": "part of (peptidoglycan biosynthesis)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3003938", "snippet": "Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring resistance to penicillin antibiotics.",
+                           "notes": "PBP transpeptidases cross-link the wall; this is the process the drug targets."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Beta-lactam resistant PBPs (ARO:3003040) -- TARGET REPLACEMENT, an 11th mechanism kind.
     #
@@ -3400,6 +3479,16 @@ def config_for(family: str, ident: str, label: str, text: str):
             return cfg
     return None
 
+
+
+# ARO:3003040 spans BOTH beta-lactam PBP mechanisms, so it takes the list form: target
+# replacement (round 52, an acquired foreign PBP) and target alteration (round 53, the
+# native PBP mutated). Each config's precondition selects on the mechanism id the record
+# itself carries, so the two are mutually exclusive and the order is not load-bearing.
+FAMILY_SNIPPETS["ARO:3003040"] = [
+    FAMILY_SNIPPETS["ARO:3003040"],
+    FAMILY_SNIPPETS.pop("ARO:3003040-mutation"),
+]
 
 def _check_config_order() -> None:
     for fam in FAMILY_SNIPPETS:
