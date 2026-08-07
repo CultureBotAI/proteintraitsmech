@@ -1777,3 +1777,17 @@ def test_petn_quotes_the_weak_and_strong_resistance_claims_separately():
     hedged = next(e for e in petn["det_res"] if e["reference"] == "ARO:3004112")
     assert "hedge" in _flat(hedged["notes"]).lower()
     assert "quoted for the reaction" in _flat(hedged["notes"])
+
+
+def test_near_miss_suppression_does_not_disable_the_detector():
+    """Suppression is per-record, not global -- the function itself must still fire.
+
+    After suppressing sibling-accepted records the corpus reports 0 near-misses. That is
+    the correct steady state, but a detector at 0 is indistinguishable from a broken one
+    unless its firing case is pinned. Round 68's `hydrolyz\\b` bug reported 0 while broken.
+    """
+    rec = ("identifier: ARO:3007483\n"
+           "definition: >-\n  RAD-1 is a class D RAD beta-lactamase.\n"
+           "term_kind: CLASS\n")
+    assert promote.skip_reason_near_miss(
+        "own definition does not call it a class D beta-lactamase", rec)
