@@ -882,3 +882,7 @@ analyze-merges *args:
 # Shortlist records whose own definition names a role their curated graph contradicts
 audit-roles:
     uv run python scripts/audit_role_mismatch.py
+
+# Which already-curated records would no config accept today (#267)
+audit-fit:
+    uv run python scripts/audit_config_fit.py

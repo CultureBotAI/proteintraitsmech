@@ -616,7 +616,12 @@ def _requires_mutant_pbp(ident: str, label: str, text: str):
     # \bpbp\b, NOT \bpbp\s?\d -- ARO:3003938's definition says "PBP transpeptidases"
     # with no number, and the narrower pattern wrongly skipped it. Caught by reading the
     # skip log, which is the only reason round 52's lesson generalised at all.
-    if not re.search(r"penicillin-binding protein|\bpbp\b", own):
+    # \bpbp (prefix, NO trailing boundary). Round 53 went from `\bpbp\s?\d` to `\bpbp\b`
+    # to catch "PBP transpeptidases" -- and thereby stopped matching "PBP1"/"pbp3", which
+    # the first pattern DID catch. A fix that traded one miss for another, invisible
+    # because promotion is idempotent and never re-checks what it already wrote. #267's
+    # cross-family sweep found the 7 stranded records; nothing else would have.
+    if not re.search(r"penicillin-binding protein|\bpbp", own):
         return ("own definition does not name a penicillin-binding protein, so a "
                 "PBP-affinity mechanism cannot be asserted for it (#254)")
     return None
