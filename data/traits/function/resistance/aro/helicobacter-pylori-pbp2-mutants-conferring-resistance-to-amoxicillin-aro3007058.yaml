@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003938
 trait_relations:
@@ -31,12 +31,12 @@ evidence:
 - reference: DOI:10.1128/JCM.01591-19
   notes: PMID:31801839 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Helicobacter pylori pbp2 mutants conferring resistance to amoxicillin → mechanism →
-    resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Helicobacter pylori pbp2 mutants conferring resistance to amoxicillin → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3003938). Target alteration of a native PBP. Contrast round 52: no foreign protein is involved.'
   nodes:
   - node_id: determinant
     label: Helicobacter pylori pbp2 mutants conferring resistance to amoxicillin
@@ -54,6 +54,18 @@ causal_graphs:
     label: penicillin beta-lactam
     node_type: CHEMICAL
     grounding: ARO:3000008
+  - node_id: tp_activity
+    label: transpeptidase activity of the mutant PBP
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008658
+  - node_id: low_affinity
+    label: decreased affinity of the mutant PBP for beta-lactams
+    node_type: STATE
+    description: 'The causal core. Ungrounded: an affinity property has no ontology term here.'
+  - node_id: pg_synth
+    label: peptidoglycan biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0009252
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -67,58 +79,91 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1093/jac/dkn051
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3007058
-      snippet: Point mutations in Helicobacter pylori pbp2 observed to confer resistance to amoxicillin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1093/jac/dkn051
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1093/jac/dkn051
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3007058
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000064 ! amoxicillin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: 'CARD''s parent term states the whole mechanism: mutation -> changed affinity -> resistance.'
+    - reference: ARO:3004833
+      snippet: Point mutation in Neisseria gonorrhoea PBP1 (ponA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP1, thereby conferring resistance to beta-lactam antibiotics.
+      notes: 'And the DIRECTION, which the parent term leaves as ''change'': the affinity DECREASES.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to cephalosporin.
     evidence:
     - reference: ARO:3003938
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000032 ! cephalosporin'
       notes: Asserted on ARO:3003938 (Penicillin-binding protein mutations conferring resistance to beta-lactam
         antibiotics), an is_a ancestor of this record's ARO:3007058; inherited by this variant. CARD/ARO
         release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to cephalosporin.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug1
+    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
     evidence:
     - reference: ARO:3003938
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000008 ! penicillin beta-lactam'
       notes: Asserted on ARO:3003938 (Penicillin-binding protein mutations conferring resistance to beta-lactam
         antibiotics), an is_a ancestor of this record's ARO:3007058; inherited by this variant. CARD/ARO
         release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
+  - subject: determinant
+    predicate: has quality (decreased beta-lactam affinity)
+    predicate_id: RO:0000086
+    object: low_affinity
+    description: The mutation's effect on the target, stated by CARD with its direction.
+    evidence:
+    - reference: ARO:3004833
+      snippet: Point mutation in Neisseria gonorrhoea PBP1 (ponA) decreases affinity between beta-lactam
+        antibiotic molecule and PBP1, thereby conferring resistance to beta-lactam antibiotics.
+      notes: CARD gives the direction explicitly for the ponA case.
+    - reference: PMID:1938899
+      snippet: Three PBP 2x regions were mutated in from two to all four mutants carrying a low-affinity
+        PBP 2x.
+      notes: Laible & Hakenbeck 1991 -- mutations in defined PBP2x regions actually produce the low-affinity
+        protein. Studied S. pneumoniae PBP2x; the other species' PBPs are covered by CARD's family-level
+        claim, not by this paper.
+  - subject: low_affinity
+    predicate: causally upstream of (leaves the transpeptidase uninhibited)
+    predicate_id: RO:0002411
+    object: tp_activity
+    evidence:
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: 'Why the changed affinity confers resistance: the enzyme keeps working.'
+  - subject: tp_activity
+    predicate: part of (peptidoglycan biosynthesis)
+    predicate_id: BFO:0000050
+    object: pg_synth
+    evidence:
+    - reference: ARO:3003938
+      snippet: Mutations in PBP transpeptidases that change the affinity for penicillin thereby conferring
+        resistance to penicillin antibiotics.
+      notes: PBP transpeptidases cross-link the wall; this is the process the drug targets.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
