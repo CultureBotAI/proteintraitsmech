@@ -358,6 +358,14 @@ def _requires_mprf(ident: str, label: str, text: str):
             "PhoP regulator")
 
 
+def _requires_rifamycin_protection(ident: str, label: str, text: str):
+    """RNAP protection, not TetM's ribosomal protection or FusB's EF-G rescue."""
+    if re.search(r"grounding: ARO:3000157\b", text):
+        return None
+    return ("this determinant's drug is not a rifamycin, and the RNAP-displacement evidence "
+            "describes neither ribosomal protection nor EF-G rescue")
+
+
 def _requires_fusidane(ident: str, label: str, text: str):
     """FusB-type protection of EF-G, not TetM's ribosomal protection (round 31)."""
     if re.search(r"grounding: ARO:3007153\b", text):
@@ -1022,6 +1030,46 @@ FAMILY_SNIPPETS = {
                  "predicate": "molecularly interacts with (binds the target)", "predicate_id": "RO:0002436",
                  "evidence": [{"reference": "PMID:22308410", "snippet": "These proteins bind to elongation factor G (EF-G), the target of FA, and rescue translation from FA-mediated inhibition by an unknown mechanism.",
                                "notes": "The protection is by binding the TARGET, not the drug."}]},
+            ],
+        },
+        {
+            "curated": "2026-08-07T00:00:00Z",
+            "precondition": _requires_rifamycin_protection,
+            "reference": "PMID:35907401",      # Surette et al. 2022, Mol Cell
+            "mech": {"ARO:0001003": "HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins from RNAP, thereby providing resistance by target protection.", "ARO:3000212": "HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins from RNAP, thereby providing resistance by target protection."},
+            "mech_res": "HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins from RNAP, thereby providing resistance by target protection.",
+            "det_res": [
+                {"reference": "PMID:35907401", "snippet": "HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins from RNAP, thereby providing resistance by target protection.",
+                 "notes": "Surette et al. 2022. The paper names the mechanism class outright -- 'resistance by target protection' -- and the mode is DISPLACEMENT, as TetM's is (round 31), not FusB's rescue of a stalled complex (round 44)."},
+                {"reference": "PMID:35907401", "snippet": "Rifamycin antibiotics such as rifampin are potent inhibitors of prokaryotic RNA polymerase (RNAP) used to treat tuberculosis and other bacterial infections.",
+                 "notes": "And what is being protected: RNAP, the target rounds 26's rpoB records alter instead."},
+            ],
+            "res_drug": "HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins from RNAP, thereby providing resistance by target protection.",
+            "note": "Target protection of RNA polymerase by displacing the drug -- the same mode as TetM, on a different target.",
+            "extra_nodes": [
+                {"node_id": "rnap", "label": "bacterial RNA polymerase, the drug's target",
+                 "node_type": "PROTEIN",
+                 "description": "The same target rpoB records alter (round 26). Ungrounded: the corpus holds no RNAP complex trait record."},
+                {"node_id": "inhibited", "label": "rifamycin-inhibited RNA polymerase", "node_type": "STATE",
+                 "description": "Transcription blocked by bound drug. Ungrounded."},
+            ],
+            "extra_edges": [
+                {"subject": "drug0", "object": "inhibited",
+                 "predicate": "causally upstream of (inhibits transcription)", "predicate_id": "RO:0002411",
+                 "requires": {"drug0": "ARO:3000157"},
+                 "evidence": [{"reference": "PMID:35907401", "snippet": "Rifamycin antibiotics such as rifampin are potent inhibitors of prokaryotic RNA polymerase (RNAP) used to treat tuberculosis and other bacterial infections.",
+                               "notes": "Drug action: rifamycins are potent RNAP inhibitors."}]},
+                {"subject": "determinant", "object": "rnap",
+                 "predicate": "molecularly interacts with (forms a complex with RNAP)",
+                 "predicate_id": "RO:0002436",
+                 "evidence": [{"reference": "PMID:35907401", "snippet": "HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins from RNAP, thereby providing resistance by target protection.",
+                               "notes": "Protection works by binding the TARGET, as FusB does with EF-G."}]},
+                {"subject": "determinant", "object": "inhibited",
+                 "predicate": "negatively regulates (displaces the drug from RNAP)",
+                 "predicate_id": "RO:0002212",
+                 "description": "The causal core. TetM's mode -- the drug is removed from the target -- applied to RNA polymerase rather than the ribosome.",
+                 "evidence": [{"reference": "PMID:35907401", "snippet": "HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins from RNAP, thereby providing resistance by target protection.",
+                               "notes": "Surette et al. 2022."}]},
             ],
         },
     ],
