@@ -780,3 +780,32 @@ def test_inha_records_that_its_inhibitor_depends_on_katg():
     edge = [e for e in cfg["extra_edges"] if e["object"] == "inha_activity"
             and e["subject"] == "inh_nad"][0]
     assert "ARO:3004266" in edge["evidence"][0]["notes"]
+
+
+# --- round 29: a determinant that is not a protein ---------------------------------
+
+def test_an_rrna_determinant_is_not_called_a_protein():
+    """105 draft records have an rRNA determinant; the node type was hardcoded (#215)."""
+    cfg = promote.family_configs("ARO:3003666")[0]
+    assert cfg["determinant_node_type"] == "NUCLEIC_ACID"
+    out = _graph(cfg, mech=("ARO:3000212",), drug=("ARO:3000104",))
+    block = out.split("- node_id: determinant", 1)[1].split("- node_id:", 1)[0]
+    assert "node_type: NUCLEIC_ACID" in block
+
+
+def test_the_default_determinant_node_type_is_unchanged():
+    """Every earlier family must keep emitting PROTEIN."""
+    out = _graph(_cfg())
+    block = out.split("- node_id: determinant", 1)[1].split("- node_id:", 1)[0]
+    assert "node_type: PROTEIN" in block
+
+
+def test_the_16s_graph_keeps_the_eukaryotic_parallel():
+    """The resistance substitution makes the bacterial site look eukaryotic.
+
+    The same fact explains why aminoglycosides are selective AND how bacteria escape them;
+    a graph recording only "substitution lowers affinity" would lose it.
+    """
+    out = _flat(_graph(promote.family_configs("ARO:3003666")[0],
+                       mech=("ARO:3000212",), drug=("ARO:3000104",)))
+    assert "an adenosine in prokaryotic ribosomes and a guanosine in eukaryotic ribosomes" in out
