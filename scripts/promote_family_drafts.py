@@ -883,6 +883,66 @@ def _inactivation_transfer_config(mech_id: str, human: str, snippet: str,
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # Resistance by ABSENCE (ARO:3003764) -- a 13th mechanism kind, keyed on the mechanism
+    # id rather than a family term because its members sit under unrelated families.
+    #
+    # Round 56's pncA was resistance by losing an ACTIVITY. This is broader and stranger:
+    # resistance by the gene not being there at all. The determinant is a deletion.
+    #
+    # TWO things are deliberately not asserted:
+    #
+    # 1. That the deleted gene is a porin. CARD says "USUALLY a porin" -- round 63's donor
+    #    hedge in another costume -- and these 9 records include a stress-activated kinase
+    #    (Hog1), a UDP-glucuronic acid decarboxylase (UXS1) and a PhoPQ regulator (mgrB).
+    # 2. The downstream consequence. It differs per record -- increased exposed chitin,
+    #    metabolite accumulation, blocked drug entry -- and no sentence covers all of them.
+    #    Each would be a good per-record addition; none is a family claim.
+    # Keyed on the ROOT term, not on ARO:3003764. "Resistance by absence" is a MECHANISM
+    # id, and its 9 records sit under unrelated families (a stress kinase, a decarboxylase,
+    # a PhoPQ regulator, porins) with no common ancestor but the root. The promoter walks
+    # is_a ancestry, so a mechanism id cannot be a family key -- the precondition does the
+    # selection instead, and it selects exactly, on the mechanism the record carries.
+    #
+    # This makes the candidate set the whole corpus, which is safe for --apply (drafts
+    # only, precondition-filtered) and is exactly the case #280's blast-radius guard was
+    # built for on the --repromote path.
+    "ARO:3000000": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:3003764", "resistance by absence"),
+        "reference": "ARO:3003764",
+        "mech": {"ARO:3003764": "Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin)."},
+        "mech_res": "Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).",
+        "det_res": [
+            {"reference": "ARO:3003764", "snippet": "Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).",
+             "notes": "The mechanism, with its hedge intact: 'usually a porin' -- so porin-ness is NOT asserted for these records, which include a kinase, a decarboxylase and a regulator."},
+            {"reference": "ARO:3003768", "snippet": "Deletion of gene or gene product results in resistance. For example, deletion of a porin gene blocks drug from entering the cell.",
+             "notes": "The general statement. Its porin example is quoted as an EXAMPLE, which is what CARD calls it, not as this family's route."},
+        ],
+        "res_drug": "Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).",
+        "note": ("Resistance by absence. Neither the identity of the deleted gene nor the "
+                 "downstream consequence is asserted: CARD hedges the first and the second "
+                 "differs per record (chitin exposure, metabolite accumulation, blocked "
+                 "entry). Both are good per-record additions and neither is a family claim."),
+        "extra_nodes": [
+            {"node_id": "absence", "label": "absence of the gene product",
+             "node_type": "STATE",
+             "description": "The determinant state, and the whole mechanism. Ungrounded: an absence is not an entity."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "absence",
+             "predicate": "has quality (deleted or inactivated)", "predicate_id": "RO:0000086",
+             "description": "The determinant here IS a loss -- what the record names is a gene whose deletion confers resistance, not a gene product that acts.",
+             "evidence": [{"reference": "ARO:3003768", "snippet": "Deletion of gene or gene product results in resistance. For example, deletion of a porin gene blocks drug from entering the cell.",
+                           "notes": "'Deletion of gene or gene product results in resistance'."}]},
+            {"subject": "absence", "object": "resistance",
+             "predicate": "causally upstream of (confers resistance)",
+             "predicate_id": "RO:0002411",
+             "description": "The causal core, and deliberately the ONLY downstream edge -- what the absence leads to differs across these records and no source covers all of them.",
+             "evidence": [{"reference": "ARO:3003764", "snippet": "Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).",
+                           "notes": "'antibiotic resistance conferred by deletion of gene'."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # MATE efflux transporters (ARO:3000112) -- efflux with energetics, hedged.
     #
     # Round 67 curated SMR, whose text names the coupling ion outright: EmrE couples

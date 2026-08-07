@@ -1720,3 +1720,17 @@ def test_repromote_blast_radius_threshold():
     assert refuses(26, 0)
     assert not refuses(50, 10), "5x the drafts is a plausible config change"
     assert refuses(51, 10)
+
+
+def test_resistance_by_absence_asserts_only_the_absence():
+    """Neither the deleted gene's identity nor the downstream is a family claim.
+
+    CARD hedges the first ("usually a porin") and the second differs per record --
+    Hog1 raises exposed chitin, UXS1 accumulates UDP-glucuronic acid, mgrB derepresses
+    PhoPQ. No sentence covers all of them, so only the absence edge is written.
+    """
+    cfg = promote.family_configs("ARO:3000000")[0]
+    downstream = [e for e in cfg["extra_edges"] if e["subject"] == "absence"]
+    assert len(downstream) == 1 and downstream[0]["object"] == "resistance"
+    blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    assert "porin" not in blob, "CARD says 'usually a porin'; porin-ness is not asserted"
