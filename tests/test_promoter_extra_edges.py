@@ -960,3 +960,30 @@ def test_the_pump_class_lookup_walks_is_a_ancestors_for_part_of():
     rnd = promote._requires_pump_class("ARO:0010004", "RND")
     assert rnd("ARO:3004043", "Escherichia coli acrA", "") is None      # inherits via acrA
     assert rnd("ARO:3009144", "MexAB", "") is not None                  # genuinely unlinked
+
+
+# --- round 37: efflux repressors, verified by reading ------------------------------
+
+def test_the_repressor_list_excludes_the_antirepressor():
+    """A keyword match on "repress" returned 31 and was wrong on four.
+
+    ArmR is an ANTIrepressor — opposite direction — and CpxR, MvaT and P. aeruginosa CpxR
+    merely mention repression without being the repressor. The direction lives in prose,
+    not in the ontology structure, so this is a checked list and the check is recorded.
+    """
+    reps = promote._EFFLUX_REPRESSORS
+    assert len(reps) == 27
+    assert "ARO:3004056" not in reps          # ArmR, antirepressor
+    assert "ARO:3000831" not in reps          # CpxR, mentions repression
+    assert "ARO:3000702" in reps              # AcrR, the archetype
+
+
+def test_the_repressor_core_edge_runs_backwards_like_katg():
+    """Resistance is the ABSENCE of a function: a mutated repressor stops holding the
+    pump down, so more pump is made."""
+    cfg = promote.family_configs("ARO:3000451")[0]
+    core = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["predicate_id"] == "RO:0002212"][0]
+    assert "mutation lifts the repression" in core["predicate"]
+    out = _flat(_graph(cfg, mech=("ARO:0010000",), drug=("ARO:0000045",)))
+    assert "AcrR mutations result in high level antibiotic resistance" in out
