@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   1,096.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   1,085.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -98,7 +98,12 @@ cleared._
      no vanX), the **D-Ala-D-Ser ligases** (6), **vanT** (7, the serine racemase) and
      **vanXY** (6). They share clusters and a downstream, so one round covers them.
      Then **vanY** (7).
-   - **rpoB/rpoC (20)**, **katG/ahpC/fabG1/ethA/msh* (~40)**, **16S/23S rRNA (~22)**.
+   - ~~**rpoB (11)**~~ **DONE (round 26)** — rifamycin RRDR, the gyrA shape on a different
+     target. The remaining rpo* records are **different drugs** (daptomycin, vancomycin)
+     under different parents, plus rpoA/rpoC compensatory substitutions; each needs its
+     own evidence.
+   - **katG/ahpC/fabG1/ethA/msh* (~40)** — prodrug activation, not target alteration.
+   - **16S/23S rRNA (~22)**.
    - **565 with no gene symbol** — per-record triage, genuinely not a family PR.
 
    Tracker: `grep -rl "graph_id: resistance-draft" data/traits/function/resistance/aro/`.
