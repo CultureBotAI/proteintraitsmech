@@ -896,7 +896,82 @@ def _requires_petn_transferase(ident: str, label: str, text: str):
     return None
 
 
+def _requires_alm_glycylation(ident: str, label: str, text: str):
+    """Glycylation of lipid A -- a THIRD charge-alteration chemistry on ARO:3003580.
+
+    L-Ara4N addition and phosphoethanolamine addition (round 73) already have configs.
+    This is glycyl transfer, in Vibrio cholerae's almEFG system.
+
+    ARO:3007434 (the almEFG OPERON itself) is refused: whether a gene cluster should
+    carry a protein-trait causal graph is the open modelling question behind the van
+    set, and curating an operon here would pre-empt it. Its definition is still the best
+    mechanism source for the PROTEIN records, and is cited by them.
+    """
+    if "ARO:3003588" not in D.parse_relations(text)[0]:
+        return "record carries no charge-alteration mechanism (ARO:3003588)"
+    own = _own_definition(text).lower()
+    if "operon is responsible" in own:
+        return ("record is the operon itself, not a protein; whether a gene cluster "
+                "carries a protein-trait causal graph is still an open modelling question")
+    if not re.search(r"glycyl|glycine", own):
+        return "own definition does not name glycyl transfer"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # alm glycylation (under ARO:3003580) -- the THIRD lipid A charge-alteration route.
+    #
+    # L-Ara4N addition and phosphoethanolamine addition (round 73) are the other two. All
+    # three neutralise the same negative charge by attaching a different group, and all
+    # three share ARO:3003588's causal sentence.
+    "ARO:3003580-alm": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_alm_glycylation,
+        "reference": "ARO:3003588",
+        "mech": {"ARO:3003588": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface."},
+        "mech_res": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+        "det_res": [
+            {"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+             "notes": "The shared causal sentence: cationic antimicrobials depend on the negative charge, so neutralising it is the resistance. Same for all three lipid A routes."},
+            {"reference": "ARO:3007434", "snippet": "The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin resistance in Vibrio cholerae.",
+             "notes": "The route, named for colistin in Vibrio cholerae. Cited FROM the operon record, which is itself left as a draft -- it is the best mechanism source here and curating it would pre-empt the open gene-cluster modelling question."},
+        ],
+        "res_drug": "The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin resistance in Vibrio cholerae.",
+        "note": "Charge alteration by glycylation of lipid A; L-Ara4N and phosphoethanolamine routes have their own configs on this family.",
+        "extra_nodes": [
+            {"node_id": "glycyl_transfer", "label": "glycyl transfer to the carrier protein AlmF",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-73)."},
+            {"node_id": "lipid_a", "label": "lipid A of the outer membrane",
+             "node_type": "CHEMICAL",
+             "description": "The modified surface. Ungrounded: no CHEBI id verified this round."},
+            {"node_id": "charge", "label": "reduced net negative surface charge",
+             "node_type": "STATE",
+             "description": "The causal core, shared with the L-Ara4N and pEtN routes."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "glycyl_transfer",
+             "predicate": "participates in (the glycyl relay)", "predicate_id": "RO:0000056",
+             "description": "A RELAY, not a single enzyme: almE charges the carrier almF, and almG then glycylates lipid A. The predicate is 'participates in' because these records are different steps of one route and no single one performs it.",
+             "evidence": [{"reference": "ARO:3007434", "snippet": "Its mechanism involves transfer of a glycyl molecule to the carrier protein almF by almE followed by glycylation of lipid A by almG.",
+                           "notes": "CARD names all three roles and their order."}]},
+            {"subject": "glycyl_transfer", "object": "lipid_a",
+             "predicate": "causally upstream of (glycylates lipid A)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3007434", "snippet": "Its mechanism involves transfer of a glycyl molecule to the carrier protein almF by almE followed by glycylation of lipid A by almG.",
+                           "notes": "'followed by glycylation of lipid A by almG'."}]},
+            {"subject": "lipid_a", "object": "charge",
+             "predicate": "causally upstream of (reduces surface negative charge)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+                           "notes": "'loss or reduction of the net negative charge within the cell wall'."}]},
+            {"subject": "charge", "object": "drug0",
+             "predicate": "negatively regulates (impedes drug binding)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+                           "notes": "'cationic antimicrobials that depend on the negative charge for binding'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Phosphoethanolamine transferases (under ARO:3003580) -- charge alteration, pEtN route.
     #
@@ -4969,6 +5044,7 @@ FAMILY_SNIPPETS["ARO:3000557"] = FAMILY_SNIPPETS["ARO:3000557"] + [
 FAMILY_SNIPPETS["ARO:3003580"] = [
     FAMILY_SNIPPETS["ARO:3003580"],
     FAMILY_SNIPPETS.pop("ARO:3003580-petn"),
+    FAMILY_SNIPPETS.pop("ARO:3003580-alm"),
 ]
 
 def _check_config_order() -> None:
