@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000748
 trait_relations:
@@ -19,11 +19,12 @@ evidence:
 - reference: DOI:10.1111/j.1348-0421.2005.tb03696.x
   notes: PMID:16301811 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] opmE → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: opmE → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:16915237). Efflux: the drug is captured and exported, so it never reaches its target at a useful
+    concentration.'
   nodes:
   - node_id: determinant
     label: opmE
@@ -33,6 +34,19 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: pump_complex
+    label: tripartite RND efflux complex
+    node_type: STATE
+    description: 'Transporter + membrane-fusion protein + outer-membrane channel. Ungrounded here: the
+      specific complex differs per record and is named in that record''s own ARO relations.'
+  - node_id: binding_pocket
+    label: periplasmic multi-site drug binding pocket
+    node_type: STATE
+    description: 'Where the substrate is captured. Ungrounded: no ontology term denotes it.'
+  - node_id: export
+    label: drug export out of the cell
+    node_type: BIOLOGICAL_PROCESS
+    description: 'Ungrounded: recorded as the transport step the structures describe.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -46,32 +60,56 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1111/j.1348-0421.2005.tb03696.x
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
-    - reference: ARO:3003700
-      snippet: opmE is an outer membrane factor protein that is part of the multidrug efflux pump MexPQ-OpmE.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1111/j.1348-0421.2005.tb03696.x
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1111/j.1348-0421.2005.tb03696.x
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003700
-      snippet: opmE is an outer membrane factor protein that is part of the multidrug efflux pump MexPQ-OpmE.
-      notes: ARO definition of this determinant (opmE).
+    - reference: PMID:16915237
+      snippet: AcrB is a principal multidrug efflux transporter in Escherichia coli that cooperates with
+        an outer-membrane channel, TolC, and a membrane-fusion protein, AcrA.
+      notes: 'Murakami et al. 2006. RND resistance is a property of a THREE-part machine: the transporter,
+        a membrane-fusion protein and an outer-membrane channel. A subunit record is a component of that,
+        which is why the graph says `part of` a complex rather than making the subunit the whole pump.'
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: And the mechanism, from crystal structures of all three conformational states.
+  - subject: determinant
+    predicate: part of (a subunit of the tripartite pump)
+    predicate_id: BFO:0000050
+    object: pump_complex
+    evidence:
+    - reference: PMID:16915237
+      snippet: AcrB is a principal multidrug efflux transporter in Escherichia coli that cooperates with
+        an outer-membrane channel, TolC, and a membrane-fusion protein, AcrA.
+      notes: The three parts named. Which complex this particular subunit belongs to is on the record's
+        own ARO part_of relation.
+  - subject: pump_complex
+    predicate: causally upstream of (exports the drug)
+    predicate_id: RO:0002411
+    object: export
+    evidence:
+    - reference: PMID:16915237
+      snippet: The structures indicate that drugs are exported by a three-step functionally rotating mechanism
+        in which substrates undergo ordered binding change.
+      notes: Three protomers, three functional states, one ordered cycle.
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

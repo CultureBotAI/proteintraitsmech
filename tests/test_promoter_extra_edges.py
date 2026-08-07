@@ -878,3 +878,27 @@ def test_mprf_core_edge_is_repulsion_not_destruction():
                        mech=("ARO:3003588",), drug=("ARO:3000053",)))
     assert "reduced negative charge of the membrane surface" in out
     assert "no longer modifies phosphatidylglycerol with l-lysine" in out
+
+
+# --- round 33: efflux, and a class that is two hops away --------------------------
+
+def test_rnd_precondition_reads_the_complex_not_the_subunit():
+    """Efflux subunits carry no pump-class ancestry; their COMPLEXES do (#223 corrected).
+
+    subunit --part_of--> complex --is_a--> RND. Two hops, fully derivable from the release,
+    which is why this is a precondition and not a hand-maintained name list.
+    """
+    pre = promote.family_configs("ARO:3000748")[0]["precondition"]
+    assert pre("ARO:3000216", "acrB", "") is None            # part_of AcrAB-TolC, is_a RND
+    assert pre("ARO:9999999", "not a pump subunit", "") is not None
+
+
+def test_the_rnd_graph_says_a_subunit_is_part_of_the_pump():
+    """RND resistance is a property of a three-part machine; a subunit is not the pump."""
+    cfg = promote.family_configs("ARO:3000748")[0]
+    edge = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "pump_complex"][0]
+    assert edge["predicate_id"] == "BFO:0000050"
+    out = _flat(_graph(cfg, mech=("ARO:0010000",), drug=("ARO:0000045",)))
+    assert "cooperates with an outer-membrane channel, TolC" in out
+    assert "allows multi-site binding" in out                # why it is a MULTIdrug pump

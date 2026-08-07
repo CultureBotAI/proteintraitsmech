@@ -209,6 +209,45 @@ def _vanrs_ser_downstream() -> tuple[list, list]:
     return nodes, edges
 
 
+_RND_PUMP = "ARO:0010004"      # resistance-nodulation-cell division (RND) antibiotic efflux pump
+_PART_OF_INDEX = None
+
+
+def _aro_part_of() -> dict:
+    """ARO id -> the complexes it is `part_of`, read from the obo release.
+
+    Efflux SUBUNITS carry no pump-class ancestry of their own (#223) -- 137 drafts sit flat
+    under ARO:3000748. But each is `part_of` a complex, and the COMPLEX is classified: every
+    AcrAB-TolC, MexAB-OprM, AdeABC and so on is `is_a` RND. So the class is two hops away and
+    fully derivable, which is what makes a precondition possible here instead of the
+    hand-maintained name list #223 warned against.
+    """
+    global _PART_OF_INDEX
+    if _PART_OF_INDEX is None:
+        idx = {}
+        text = D.OBO.read_text(encoding="utf-8")
+        for stanza in text.split("\n[Term]"):
+            m = re.search(r"^id: (ARO:\d+)", stanza, re.M)
+            if not m:
+                continue
+            parents = re.findall(r"^relationship: part_of (ARO:\d+)", stanza, re.M)
+            if parents:
+                idx[m.group(1)] = parents
+        _PART_OF_INDEX = idx
+    return _PART_OF_INDEX
+
+
+def _requires_rnd_pump(ident: str, label: str, text: str):
+    """The record must be a subunit of a complex ARO classifies as RND."""
+    terms = E.parse_obo(E.OBO)
+    for complex_id in _aro_part_of().get(ident, []):
+        if _RND_PUMP in E.ancestry(terms, complex_id):
+            return None
+    return ("this determinant is not part of a complex ARO classifies as an RND pump, so "
+            "the tripartite proton-antiport evidence does not describe it (MFS, ABC, SMR "
+            "and MATE pumps have different subunit counts and energetics)")
+
+
 def _requires_mprf(ident: str, label: str, text: str):
     """This config is MprF's lysinylation, not every way of altering envelope charge.
 
@@ -379,6 +418,63 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # RND efflux subunits (ARO:3000748, RND complexes only) -- a NINTH mechanism kind:
+    # the drug is neither destroyed, altered, displaced, repelled nor left unactivated. It
+    # is captured and pumped back out, so it never reaches its target at a useful
+    # concentration.
+    #
+    # #223 said a family config here would span RND, MFS, ABC, SMR and MATE at once,
+    # because the 137 subunit drafts sit flat under ARO:3000748 with no pump-class
+    # ancestry. That was true of the SUBUNITS and not of their complexes: each subunit is
+    # `part_of` a complex, and the complex is `is_a` RND. The precondition does that two-hop
+    # lookup, so the selection is derived from the release rather than hand-listed.
+    "ARO:3000748": {
+        "curated": "2026-08-06T00:00:00Z",
+        "precondition": _requires_rnd_pump,
+        "reference": "PMID:16915237",      # Murakami et al. 2006, Nature
+        "mech": {"ARO:0010000": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.", "ARO:3000212": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.", "ARO:0001002": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change."},
+        "mech_res": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.",
+        "det_res": [
+            {"reference": "PMID:16915237", "snippet": "AcrB is a principal multidrug efflux transporter in Escherichia coli that cooperates with an outer-membrane channel, TolC, and a membrane-fusion protein, AcrA.",
+             "notes": "Murakami et al. 2006. RND resistance is a property of a THREE-part machine: the transporter, a membrane-fusion protein and an outer-membrane channel. A subunit record is a component of that, which is why the graph says `part of` a complex rather than making the subunit the whole pump."},
+            {"reference": "PMID:16915237", "snippet": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.",
+             "notes": "And the mechanism, from crystal structures of all three conformational states."},
+        ],
+        "res_drug": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.",
+        "note": "Efflux: the drug is captured and exported, so it never reaches its target at a useful concentration.",
+        "extra_nodes": [
+            {"node_id": "pump_complex", "label": "tripartite RND efflux complex", "node_type": "STATE",
+             "description": "Transporter + membrane-fusion protein + outer-membrane channel. Ungrounded here: the specific complex differs per record and is named in that record's own ARO relations."},
+            {"node_id": "binding_pocket", "label": "periplasmic multi-site drug binding pocket",
+             "node_type": "STATE",
+             "description": "Where the substrate is captured. Ungrounded: no ontology term denotes it."},
+            {"node_id": "export", "label": "drug export out of the cell", "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: recorded as the transport step the structures describe."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "pump_complex",
+             "predicate": "part of (a subunit of the tripartite pump)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "PMID:16915237", "snippet": "AcrB is a principal multidrug efflux transporter in Escherichia coli that cooperates with an outer-membrane channel, TolC, and a membrane-fusion protein, AcrA.",
+                           "notes": "The three parts named. Which complex this particular subunit belongs to is on the record's own ARO part_of relation."}]},
+            {"subject": "drug0", "object": "binding_pocket",
+             "predicate": "molecularly interacts with (is captured in the pocket)",
+             "predicate_id": "RO:0002436",
+             "description": "Multi-site binding in an aromatic pocket is what lets one pump handle chemically unrelated drugs.",
+             "evidence": [{"reference": "PMID:16915237", "snippet": "Bound substrate was found in the periplasmic domain of one of the three protomers. The voluminous binding pocket is aromatic and allows multi-site binding.",
+                           "notes": "Substrate seen bound in the periplasmic domain of one protomer."}]},
+            {"subject": "pump_complex", "object": "export",
+             "predicate": "causally upstream of (exports the drug)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:16915237", "snippet": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.",
+                           "notes": "Three protomers, three functional states, one ordered cycle."}]},
+            {"subject": "export", "object": "drug0",
+             "predicate": "negatively regulates (lowers the intracellular drug concentration)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core: the drug is removed before it reaches its target, so nothing about the target need change.",
+             "evidence": [{"reference": "PMID:16915237", "snippet": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.",
+                           "notes": "The transport cycle is what the resistance consists of."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # mprF -- ELECTROSTATIC REPULSION (ARO:3003580, mprF records only). An eighth kind of
     # mechanism: the drug is neither destroyed, altered, displaced nor pumped out. It is
