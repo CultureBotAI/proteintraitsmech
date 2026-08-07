@@ -76,9 +76,25 @@ is drug-agnostic and has no drug node, so #201's endpoint guard dropped that edg
 rather than writing a dangling reference. That is the guard doing its job on a
 record I would not have singled out by hand.
 
+## What the review caught
+
+The `drug0 --> inhibition` edge originally cited ARO:3004887 — a sentence about the
+**mutation** — to support the claim that the drug **normally** inhibits the pathway. The
+claim follows from the snippet, but the snippet does not state it, and the `notes` said
+"Implied by what the mutation prevents". Filed as **#250** and fixed here: it now cites
+**PMID:1656850** (*Isoniazid inhibition of mycolic acid synthesis by cell extracts*),
+which states it directly.
+
+Then the corpus-wide version of the question, measured instead of assumed: 2,878 `notes`
+match hedge phrases, but **2,871 are M-CSA notes describing M-CSA's own role-typing**, not
+our citation strength. The only two genuine matches are this fix's own note and one
+statement about efflux biology. **The pattern was unique to this edge** — one found defect
+did not imply a class of them, and checking cost less than the sweep would have.
+
 ## Provenance
 
 * records touched: **7** · SEEDED → REVIEWED · evidence items: **67**
+* `just test`: **594 passed** (+2)
 * corpus after: **39,647 records · 40,115 graphs · 349,166 nodes · 371,133 edges ·
   0 errors · 371,133/371,133 edges snippet-cited**
 * `just validate` on all 7 individually: **0 failures** · `just test`: **592 passed**
