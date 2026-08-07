@@ -819,6 +819,59 @@ def _rifampin_modification_config(mech_id: str, human: str, snippet: str,
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # Antibiotic resistant EF-Tu (ARO:3003356) -- the mechanism is NOT asserted.
+    #
+    # CARD says only that "sequence variants of elongation factor Tu confer resistance".
+    # It never says HOW. Its generic mutation term (ARO:3000212) hedges across two
+    # incompatible routes -- "modified antibiotic targets with lower binding affinities"
+    # AND "deactivation of repressors that result in increased expression" -- so it cannot
+    # be used to pin this family's route either.
+    #
+    # The well-known answer is that elfamycins bind EF-Tu and the variants stop them. This
+    # config does NOT say that. Round 51 was exactly this failure: three rounds spent
+    # sourcing a mechanism I knew and the records never claimed. What IS asserted is what
+    # CARD states plus what the determinant's own NAME states -- that it is an elongation
+    # factor -- and the drug-binding arm is left for whoever can cite it.
+    "ARO:3003356": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3003356",
+        "mech": {"ARO:3000212": "Sequence variants of elongation factor Tu that confer resistance to different classes of antibiotics."},
+        "mech_res": "Sequence variants of elongation factor Tu that confer resistance to different classes of antibiotics.",
+        "det_res": [
+            {"reference": "ARO:3003356", "snippet": "Sequence variants of elongation factor Tu that confer resistance to different classes of antibiotics.",
+             "notes": "CARD's whole claim for this family: variants confer resistance. Stated causally -- 'confer', unlike the nim family's 'associated with' (round 65)."},
+            {"reference": "ARO:3001312", "snippet": "Sequence variants of elongation factor Tu that confer resistance to elfamycin antibiotics.",
+             "notes": "And the drug class for most members. Neither sentence says HOW the variant resists."},
+            {"reference": "ARO:3000212", "snippet": "Point mutations in the DNA may lead to an altered gene product that may result in antibiotic resistance.",
+             "notes": "CARD's generic mutation mechanism, quoted only as far as it goes. Its examples cover BOTH lower target affinity and repressor deactivation, so it cannot pin this family's route -- which is why no mechanism edge is written below."},
+        ],
+        "res_drug": "Sequence variants of elongation factor Tu that confer resistance to elfamycin antibiotics.",
+        "note": ("Mechanism deliberately NOT asserted. CARD states that EF-Tu variants "
+                 "confer resistance and never states how; the elfamycin-binding story is "
+                 "well known and uncited here. The graph carries the determinant's "
+                 "function and its resistance, and stops."),
+        "extra_nodes": [
+            {"node_id": "ef_activity", "label": "translation elongation factor activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0003746",
+             "description": "Checked non-obsolete against OLS (#157)."},
+            {"node_id": "elongation", "label": "translational elongation",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0006414",
+             "description": "Checked non-obsolete against OLS (#157)."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "ef_activity",
+             "predicate": "enables (elongation factor activity)", "predicate_id": "RO:0002327",
+             "description": "What the determinant IS, which is the one mechanistic fact CARD's own naming supplies.",
+             "evidence": [{"reference": "ARO:3003356", "snippet": "Sequence variants of elongation factor Tu that confer resistance to different classes of antibiotics.",
+                           "notes": "'elongation factor Tu' -- a functional name, and the only functional claim CARD makes about these records."}]},
+            {"subject": "ef_activity", "object": "elongation",
+             "predicate": "part of (translational elongation)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3003356", "snippet": "Sequence variants of elongation factor Tu that confer resistance to different classes of antibiotics.",
+                           "notes": "The process the factor serves. NOT asserted: that the drug inhibits it, or that the variant prevents drug binding -- CARD states neither."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # Nitroimidazole reductases (nim, ARO:3007103) -- inactivation by REDUCTION.
     #
     # A distinct chemistry from the transfer reactions (rounds 62-64) and the hydrolyses:
