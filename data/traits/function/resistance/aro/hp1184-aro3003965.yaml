@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000112
 trait_relations:
@@ -22,11 +22,13 @@ evidence:
 - reference: DOI:10.5812/jjm.30726
   notes: PMID:27303615 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] hp1184 → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: hp1184 → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3000112). Efflux driven by a cationic gradient. The coupling ion is deliberately NOT specified:
+    CARD says ''cationic'', and unlike SMR (round 67, protons) MATE really does split between Na+ and
+    H+.'
   nodes:
   - node_id: determinant
     label: hp1184
@@ -36,6 +38,18 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: extrusion
+    label: multidrug efflux transporter activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-68).'
+  - node_id: cation_gradient
+    label: transmembrane cationic gradient (ion unspecified)
+    node_type: STATE
+    description: The energy source. Deliberately generic -- see the config note.
+  - node_id: extruded
+    label: drug outside the cell
+    node_type: STATE
+    description: The outcome. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -49,33 +63,65 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.49.4.1477-1482.2005
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
-    - reference: ARO:3003965
-      snippet: hp1184 is a translocase that belongs to the MATE efflux pump family. It is found in H.
-        pylori and is involved in the active efflux of antibiotics.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3000112
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.49.4.1477-1482.2005
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: ARO:3000112
+      snippet: Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient
+        across the membrane as an energy source.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.49.4.1477-1482.2005
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003965
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000006 ! erythromycin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3000112
+      snippet: Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient
+        across the membrane as an energy source.
+      notes: 'The energetics, stated but NOT resolved to an ion: ''cationic gradient''. MATE transporters
+        are genuinely split between Na+ and H+ coupling, so this is the source being accurate.'
+    - reference: ARO:3000112
+      snippet: Although there is a diverse substrate specificity, almost all MATE transporters recognize
+        fluoroquinolones.
+      notes: And the substrate range, hedged in its own way -- 'almost all', so the fluoroquinolone claim
+        is not universal within the family.
+  - subject: determinant
+    predicate: enables (extrudes the drug)
+    predicate_id: RO:0002327
+    object: extrusion
+    evidence:
+    - reference: ARO:3000112
+      snippet: Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient
+        across the membrane as an energy source.
+      notes: MATE = multidrug and toxic compound extrusion.
+  - subject: cation_gradient
+    predicate: causally upstream of (drives the transport)
+    predicate_id: RO:0002411
+    object: extrusion
+    description: What powers the pump, as with SMR (round 67) -- but the ion is left open here because
+      CARD leaves it open.
+    evidence:
+    - reference: ARO:3000112
+      snippet: Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient
+        across the membrane as an energy source.
+      notes: '''utilize the cationic gradient across the membrane as an energy source''.'
+  - subject: extrusion
+    predicate: causally upstream of (removes the drug from the cell)
+    predicate_id: RO:0002411
+    object: extruded
+    description: The causal core.
+    evidence:
+    - reference: ARO:3000112
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: '''via the transport of antibiotics out of the cell''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

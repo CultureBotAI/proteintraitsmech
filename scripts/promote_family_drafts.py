@@ -877,6 +877,66 @@ def _inactivation_transfer_config(mech_id: str, human: str, snippet: str,
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # MATE efflux transporters (ARO:3000112) -- efflux with energetics, hedged.
+    #
+    # Round 67 curated SMR, whose text names the coupling ion outright: EmrE couples
+    # efflux "with the import of PROTONS". MATE's text does not. It says only "utilize the
+    # CATIONIC gradient" -- and MATE transporters really are split between Na+ and H+
+    # coupling, so the vagueness is the source being correct, not sloppy.
+    #
+    # So the gradient node here is generic. Copying round 67's proton node across would
+    # have been the easy mistake, and exactly the one round 67's own report warned about
+    # for RND/MFS/ABC. Round 68's donor-hedge rule, applied to a coupling ion.
+    "ARO:3000112": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:0010000", "antibiotic efflux"),
+        "reference": "ARO:3000112",
+        "mech": {"ARO:0010000": "Antibiotic resistance via the transport of antibiotics out of the cell."},
+        "mech_res": "Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient across the membrane as an energy source.",
+        "det_res": [
+            {"reference": "ARO:3000112", "snippet": "Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient across the membrane as an energy source.",
+             "notes": "The energetics, stated but NOT resolved to an ion: 'cationic gradient'. MATE transporters are genuinely split between Na+ and H+ coupling, so this is the source being accurate."},
+            {"reference": "ARO:3000112", "snippet": "Although there is a diverse substrate specificity, almost all MATE transporters recognize fluoroquinolones.",
+             "notes": "And the substrate range, hedged in its own way -- 'almost all', so the fluoroquinolone claim is not universal within the family."},
+        ],
+        "res_drug": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "note": ("Efflux driven by a cationic gradient. The coupling ion is deliberately "
+                 "NOT specified: CARD says 'cationic', and unlike SMR (round 67, protons) "
+                 "MATE really does split between Na+ and H+."),
+        "extra_nodes": [
+            {"node_id": "extrusion", "label": "multidrug efflux transporter activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-68)."},
+            {"node_id": "cation_gradient", "label": "transmembrane cationic gradient (ion unspecified)",
+             "node_type": "STATE",
+             "description": "The energy source. Deliberately generic -- see the config note."},
+            {"node_id": "extruded", "label": "drug outside the cell",
+             "node_type": "STATE", "description": "The outcome. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "extrusion",
+             "predicate": "enables (extrudes the drug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3000112", "snippet": "Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient across the membrane as an energy source.",
+                           "notes": "MATE = multidrug and toxic compound extrusion."}]},
+            {"subject": "cation_gradient", "object": "extrusion",
+             "predicate": "causally upstream of (drives the transport)",
+             "predicate_id": "RO:0002411",
+             "description": "What powers the pump, as with SMR (round 67) -- but the ion is left open here because CARD leaves it open.",
+             "evidence": [{"reference": "ARO:3000112", "snippet": "Multidrug and toxic compound extrusion (MATE) transporters utilize the cationic gradient across the membrane as an energy source.",
+                           "notes": "'utilize the cationic gradient across the membrane as an energy source'."}]},
+            {"subject": "extrusion", "object": "drug0",
+             "predicate": "has input (the drug)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3000112", "snippet": "Although there is a diverse substrate specificity, almost all MATE transporters recognize fluoroquinolones.",
+                           "notes": "'almost all MATE transporters recognize fluoroquinolones' -- the recognition claim, with its own hedge intact."}]},
+            {"subject": "extrusion", "object": "extruded",
+             "predicate": "causally upstream of (removes the drug from the cell)",
+             "predicate_id": "RO:0002411",
+             "description": "The causal core.",
+             "evidence": [{"reference": "ARO:3000112", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+                           "notes": "'via the transport of antibiotics out of the cell'."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # SMR efflux pumps (ARO:0010003) -- efflux, with the ENERGETICS actually stated.
     #
     # Most efflux records in this corpus say only "pumps the drug out". SMR is the first
