@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000320
 trait_relations:
@@ -28,11 +28,12 @@ evidence:
 - reference: DOI:10.1093/jac/dkg169
   notes: PMID:12654734 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] EreA2 → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: EreA2 → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:22303981). Drug inactivation by hydrolysing the macrolactone ring -- the macrolide's defining
+    chemical feature.
   nodes:
   - node_id: determinant
     label: EreA2
@@ -50,6 +51,14 @@ causal_graphs:
     label: macrolide antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000000
+  - node_id: esterase
+    label: erythromycin esterase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: GO has esterase terms but none specific to the macrolactone ring.'
+  - node_id: ring
+    label: intact macrolactone ring
+    node_type: STATE
+    description: The macrolide's defining feature, and what the enzyme opens. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -63,68 +72,88 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1093/jac/dkg169
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
-    - reference: ARO:3002826
-      snippet: EreA2 is an integron-encoded erythromycin esterase that hydrolyses the drug's lactone ring.
-        EreA2 is found in Providencia stuartii.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:22303981
+      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
+        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1093/jac/dkg169
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: PMID:22303981
+      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
+        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1093/jac/dkg169
-      notes: 'Auto-drafted: mechanism class ARO:3000321 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000321); verbatim snippet pending curation.'
-    - reference: ARO:3002826
-      snippet: EreA2 is an integron-encoded erythromycin esterase that hydrolyses the drug's lactone ring.
-        EreA2 is found in Providencia stuartii.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000321 (hydrolysis of macrolide
-        macrocycle lactone ring) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: PMID:22303981
+      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
+        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
+      notes: Family mechanism ARO:3000321.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1093/jac/dkg169
-      notes: 'Auto-drafted: mechanism ARO:3000321 → resistance; snippet pending curation.'
-    - reference: ARO:3000321
-      snippet: Hydrolysis of the the macrocycle lactone ring of macrolide antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000321 (hydrolysis of macrolide macrocycle
-        lactone ring), which states the causal link to resistance.
+    - reference: PMID:22303981
+      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
+        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
+      notes: Mechanism ARO:3000321 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1093/jac/dkg169
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3002826
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000006 ! erythromycin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:22303981
+      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
+        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
+      notes: Determinant → resistance phenotype.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
     evidence:
     - reference: ARO:3000320
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000000 ! macrolide antibiotic'
       notes: Asserted on ARO:3000320 (macrolide esterase), an is_a ancestor of this record's ARO:3002826;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to macrolide antibiotic.
+  - subject: determinant
+    predicate: enables (macrolactone ring hydrolysis)
+    predicate_id: RO:0002327
+    object: esterase
+    evidence:
+    - reference: PMID:22303981
+      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
+        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
+      notes: Morar et al. 2012 name the reaction and the enzymes that catalyse it.
+  - subject: esterase
+    predicate: negatively regulates (hydrolyses the ring)
+    predicate_id: RO:0002212
+    object: ring
+    description: 'The causal core: opening the macrolactone destroys the scaffold the drug needs to bind
+      the ribosome.'
+    evidence:
+    - reference: PMID:22303981
+      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
+        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
+      notes: Hydrolysis of the ring IS the inactivation.
+  - subject: ring
+    predicate: part of (the intact drug)
+    predicate_id: BFO:0000050
+    object: drug0
+    evidence:
+    - reference: PMID:22303981
+      snippet: 'One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of
+        the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.'
+      notes: The macrolactone is what makes a macrolide one; without it there is no drug to bind a target.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

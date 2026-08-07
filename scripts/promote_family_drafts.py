@@ -358,6 +358,21 @@ def _requires_mprf(ident: str, label: str, text: str):
             "PhoP regulator")
 
 
+def _requires_macrolide_esterase(ident: str, label: str, text: str):
+    """Ring hydrolysis, not the phosphotransferases or glycosyltransferases.
+
+    ARO:3000201 holds three chemistries: Ere esterases hydrolyse the macrolactone ring,
+    Mph enzymes phosphorylate the drug, and gimA-family enzymes glycosylate it. All three
+    inactivate a macrolide and none of them share a reaction, so each needs its own paper
+    -- the same call as target protection (rounds 31, 44, 45).
+    """
+    if re.search(r"esterase", text, re.I):
+        return None
+    return ("this determinant is not a macrolide esterase: ring hydrolysis is not "
+            "phosphorylation or glycosylation, which the other two chemistries under this "
+            "family term perform")
+
+
 def _requires_rifamycin_protection(ident: str, label: str, text: str):
     """RNAP protection, not TetM's ribosomal protection or FusB's EF-G rescue."""
     if re.search(r"grounding: ARO:3000157\b", text):
@@ -529,6 +544,47 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Macrolide ESTERASES (ARO:3000201, the Ere/Est records). Drug inactivation -- rounds
+    # 12-16's kind -- but the family term holds three unrelated reactions, so the config is
+    # for ring hydrolysis only and a precondition keeps the phosphotransferases and
+    # glycosyltransferases out until they have their own papers.
+    "ARO:3000201": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_macrolide_esterase,
+        "reference": "PMID:22303981",      # Morar et al. 2012, Biochemistry
+        "mech": {"ARO:0001004": "One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.", "ARO:3000212": "One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.",
+                 # ARO:3000321 "hydrolysis of macrolide macrocycle lactone ring" -- I guessed
+                 # ARO:3000004, which is a beta-lactamase class. Fifth time this session the
+                 # UncoveredMechanism guard has named the id for me (r31, r32, r42, r43, r46).
+                 "ARO:3000321": "One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB."},
+        "mech_res": "One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.",
+        "det_res": "One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.",
+        "res_drug": "One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.",
+        "note": "Drug inactivation by hydrolysing the macrolactone ring -- the macrolide's defining chemical feature.",
+        "extra_nodes": [
+            {"node_id": "esterase", "label": "erythromycin esterase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: GO has esterase terms but none specific to the macrolactone ring."},
+            {"node_id": "ring", "label": "intact macrolactone ring", "node_type": "STATE",
+             "description": "The macrolide's defining feature, and what the enzyme opens. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "esterase",
+             "predicate": "enables (macrolactone ring hydrolysis)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:22303981", "snippet": "One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.",
+                           "notes": "Morar et al. 2012 name the reaction and the enzymes that catalyse it."}]},
+            {"subject": "esterase", "object": "ring",
+             "predicate": "negatively regulates (hydrolyses the ring)", "predicate_id": "RO:0002212",
+             "description": "The causal core: opening the macrolactone destroys the scaffold the drug needs to bind the ribosome.",
+             "evidence": [{"reference": "PMID:22303981", "snippet": "One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.",
+                           "notes": "Hydrolysis of the ring IS the inactivation."}]},
+            {"subject": "ring", "object": "drug0",
+             "predicate": "part of (the intact drug)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "PMID:22303981", "snippet": "One mechanism of macrolide resistance is via drug inactivation: enzymatic hydrolysis of the macrolactone ring catalyzed by erythromycin esterases, EreA and EreB.",
+                           "notes": "The macrolactone is what makes a macrolide one; without it there is no drug to bind a target."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Permeability (ARO:3000270) -- a TENTH mechanism kind, and the mirror of efflux: the
     # drug is not pumped out, it never gets in. Most of these records are the CHANNEL, and
