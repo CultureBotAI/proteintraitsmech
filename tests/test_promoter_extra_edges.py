@@ -1008,3 +1008,16 @@ def test_the_activator_list_is_conservative_and_says_so():
     """
     assert "ARO:3000263" not in promote._EFFLUX_ACTIVATORS      # marA
     assert len(promote._EFFLUX_ACTIVATORS) == 15
+
+
+def test_the_lps_regulator_config_is_not_an_efflux_one():
+    """Despite sitting under the efflux-modulator family term, basR/basS induce lipid A
+    modification — round 32's electrostatic repulsion reached by a regulatory route."""
+    cfgs = promote.family_configs("ARO:3000451")
+    lps = [c for c in cfgs if any(n["node_id"] == "lipid_a_mod" for n in c["extra_nodes"])]
+    assert len(lps) == 1
+    assert len(promote._LPS_REGULATORS) == 2
+    core = [e for e in lps[0]["extra_edges"] if e["object"] == "drug0"][0]
+    # the charge-to-resistance sentence is mprF's; the notes must say the transfer
+    assert core["evidence"][0]["reference"] == "PMID:11342591"
+    assert "transfer" in core["evidence"][0]["notes"]
