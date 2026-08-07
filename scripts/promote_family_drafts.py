@@ -819,6 +819,101 @@ def _rifampin_modification_config(mech_id: str, human: str, snippet: str,
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # Streptogramin inactivation (ARO:3000233) -- TWO chemistries on TWO drug subtypes.
+    #
+    # CARD's parent term says so itself: "There are two known mechanisms of streptogramin
+    # inactivation". vat acetylates streptogramin A; vgb linearizes type B. Different
+    # reaction AND different substrate, so a single config would be wrong twice over.
+    # Same measure-before-writing habit as rounds 58, 62 and 63.
+    "ARO:3000233": [
+        {
+            "curated": "2026-08-07T00:00:00Z",
+            "precondition": _requires_mech("ARO:3000106", "acylation"),
+            "reference": "ARO:3000453",
+            "mech": {"ARO:0001004": "vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like antibiotics and conferring resistance to these compounds.", "ARO:3000106": "vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like antibiotics and conferring resistance to these compounds."},
+            "mech_res": "vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like antibiotics and conferring resistance to these compounds.",
+            "det_res": [
+                {"reference": "ARO:3000453", "snippet": "vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like antibiotics and conferring resistance to these compounds.",
+                 "notes": "The full chain in one sentence: donor, acceptor, the exact position acylated, and the resistance."},
+            ],
+            "res_drug": "vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like antibiotics and conferring resistance to these compounds.",
+            "note": "Acetylation of streptogramin A. The vgb lyases in this family act on type B by a different reaction.",
+            "extra_nodes": [
+                {"node_id": "acetylation", "label": "streptogramin A acetyltransferase activity",
+                 "node_type": "MOLECULAR_FUNCTION",
+                 "description": "Ungrounded: not looked up rather than guessed (rounds 56-63)."},
+                {"node_id": "acetyl_coa", "label": "acetyl-CoA (the acetyl donor)",
+                 "node_type": "CHEMICAL", "grounding": "CHEBI:15351"},
+                {"node_id": "modified", "label": "acetylated, inactive streptogramin A",
+                 "node_type": "STATE", "description": "The product state. Ungrounded."},
+            ],
+            "extra_edges": [
+                {"subject": "determinant", "object": "acetylation",
+                 "predicate": "enables (acetylates the drug)", "predicate_id": "RO:0002327",
+                 "evidence": [{"reference": "ARO:3000453", "snippet": "vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like antibiotics and conferring resistance to these compounds.",
+                               "notes": "'catalyze the transfer of an acetyl group'."}]},
+                {"subject": "acetylation", "object": "acetyl_coa",
+                 "predicate": "has input (the acetyl donor)", "predicate_id": "RO:0002233",
+                 "evidence": [{"reference": "ARO:3000453", "snippet": "vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like antibiotics and conferring resistance to these compounds.",
+                               "notes": "'from acetyl-CoA' -- named outright, unlike the rifampin phosphotransferases whose donor CARD hedges (round 63)."}]},
+                {"subject": "acetylation", "object": "drug0",
+                 "predicate": "has input (the drug)", "predicate_id": "RO:0002233",
+                 "evidence": [{"reference": "ARO:3000453", "snippet": "vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like antibiotics and conferring resistance to these compounds.",
+                               "notes": "'to the secondary alcohol of streptogramin A compounds' -- CARD gives the position, which is more than most families state."}]},
+                {"subject": "acetylation", "object": "modified",
+                 "predicate": "causally upstream of (inactivates the drug)",
+                 "predicate_id": "RO:0002411",
+                 "evidence": [{"reference": "ARO:3000453", "snippet": "vat (Virginiamycin acetyltransferases) enzymes catalyze the transfer of an acetyl group from acetyl-CoA to the secondary alcohol of streptogramin A compounds, thus inactivating virginiamycin-like antibiotics and conferring resistance to these compounds.",
+                               "notes": "'thus inactivating virginiamycin-like antibiotics'."}]},
+            ],
+        },
+        {
+            "curated": "2026-08-07T00:00:00Z",
+            "precondition": _requires_mech("ARO:3000338", "linearization"),
+            "reference": "ARO:3000376",
+            "mech": {"ARO:0001004": "vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring resistance to these compounds.", "ARO:3000338": "vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring resistance to these compounds."},
+            "mech_res": "vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring resistance to these compounds.",
+            "det_res": [
+                {"reference": "ARO:3000376", "snippet": "vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring resistance to these compounds.",
+                 "notes": "Reaction, bond, and mechanism type all named: the lactone ring is opened at the ester linkage by elimination."},
+                {"reference": "ARO:3000233", "snippet": "There are two known mechanisms of streptogramin inactivation shown clinically to confer resistance",
+                 "notes": "CARD's parent term stating that this family holds two distinct mechanisms -- the reason it takes two configs."},
+            ],
+            "res_drug": "vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring resistance to these compounds.",
+            "note": "Ring-opening of type B streptogramin. Not a transfer reaction: nothing is added to the drug.",
+            "extra_nodes": [
+                {"node_id": "lyase", "label": "streptogramin B lyase activity",
+                 "node_type": "MOLECULAR_FUNCTION",
+                 "description": "Ungrounded: not looked up rather than guessed."},
+                {"node_id": "lactone", "label": "streptogramin lactone ring (ester linkage)",
+                 "node_type": "CHEMICAL",
+                 "description": "The bond broken. Ungrounded: a substructure, not a compound."},
+                {"node_id": "linearized", "label": "linearized, inactive streptogramin B",
+                 "node_type": "STATE", "description": "The product state. Ungrounded."},
+            ],
+            "extra_edges": [
+                {"subject": "determinant", "object": "lyase",
+                 "predicate": "enables (linearizes the drug)", "predicate_id": "RO:0002327",
+                 "evidence": [{"reference": "ARO:3000376", "snippet": "vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring resistance to these compounds.",
+                               "notes": "'vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics'."}]},
+                {"subject": "lactone", "object": "drug0",
+                 "predicate": "part of (the intact drug)", "predicate_id": "BFO:0000050",
+                 "description": "Why breaking this bond destroys the antibiotic: the ring IS the drug's structure.",
+                 "evidence": [{"reference": "ARO:3000376", "snippet": "vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring resistance to these compounds.",
+                               "notes": "'the streptogramin lactone ring at the ester linkage'."}]},
+                {"subject": "lyase", "object": "lactone",
+                 "predicate": "has input (the ester linkage)", "predicate_id": "RO:0002233",
+                 "evidence": [{"reference": "ARO:3000376", "snippet": "vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring resistance to these compounds.",
+                               "notes": "'through an elimination mechanism' -- CARD names the reaction type, not just the outcome."}]},
+                {"subject": "lyase", "object": "linearized",
+                 "predicate": "causally upstream of (inactivates the drug)",
+                 "predicate_id": "RO:0002411",
+                 "evidence": [{"reference": "ARO:3000376", "snippet": "vgb (Virginiamycin B) lyase inactivates type B streptogramin antibiotics by linearizing the streptogramin lactone ring at the ester linkage through an elimination mechanism, thus conferring resistance to these compounds.",
+                               "notes": "'thus conferring resistance to these compounds'."}]},
+            ],
+        },
+    ],
+    # ---------------------------------------------------------------------------------
     # Rifampin ADP-ribosyltransferases (arr) -- inactivation by chemical modification.
     #
     # Keyed on ARO:3000576 but covering ONLY its ADP-ribosylating members; the family
