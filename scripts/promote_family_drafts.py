@@ -278,7 +278,13 @@ def _requires_rnd_pump(ident: str, label: str, text: str):
 # repression without being the repressor. The direction lives in prose, not in the ontology
 # structure, so this is a checked list rather than a derivation -- and the check is recorded
 # here and in the round report so it can be re-run rather than trusted.
-_EFFLUX_REPRESSORS = frozenset(['ARO:3000506', 'ARO:3000518', 'ARO:3000526', 'ARO:3000559', 'ARO:3000656', 'ARO:3000676', 'ARO:3000702', 'ARO:3000718', 'ARO:3000746', 'ARO:3000815', 'ARO:3000817', 'ARO:3000818', 'ARO:3000819', 'ARO:3000820', 'ARO:3000821', 'ARO:3000824', 'ARO:3000834', 'ARO:3003028', 'ARO:3003373', 'ARO:3003374', 'ARO:3003378', 'ARO:3003379', 'ARO:3003380', 'ARO:3003479', 'ARO:3003710', 'ARO:3003807', 'ARO:3003838'])
+# Round 41 added 5 more by reading the 35 that stated no direction in a recognised form:
+# emrR ('negative regulator ... Mutations lead to EmrAB overexpression'), MexZ
+# ('downregulates the mexXY operon'), MvaT and rsmA (both negative regulators of an efflux
+# operon) and adeL ('AdeL mutations are associated with AdeFGH overexpression'). MvaT was
+# EXCLUDED in round 37 as 'mentions repression without being the repressor' -- reading the
+# whole definition rather than the matched clause shows it is one.
+_EFFLUX_REPRESSORS = frozenset(['ARO:3000506', 'ARO:3000516', 'ARO:3000518', 'ARO:3000526', 'ARO:3000559', 'ARO:3000620', 'ARO:3000656', 'ARO:3000676', 'ARO:3000702', 'ARO:3000718', 'ARO:3000746', 'ARO:3000815', 'ARO:3000817', 'ARO:3000818', 'ARO:3000819', 'ARO:3000820', 'ARO:3000821', 'ARO:3000824', 'ARO:3000834', 'ARO:3003028', 'ARO:3003373', 'ARO:3003374', 'ARO:3003378', 'ARO:3003379', 'ARO:3003380', 'ARO:3003479', 'ARO:3003709', 'ARO:3003710', 'ARO:3003807', 'ARO:3003838', 'ARO:3004069', 'ARO:3005069'])
 
 
 # The 15 efflux ACTIVATORS, verified the same way as the repressors (#231, round 37) and
@@ -287,11 +293,14 @@ _EFFLUX_REPRESSORS = frozenset(['ARO:3000506', 'ARO:3000518', 'ARO:3000526', 'AR
 # exclusion leaves a record as a draft; a false inclusion would assert the wrong direction
 # on a graph whose whole content is that direction. Erring toward the draft is the cheaper
 # mistake, and the excluded ones are listed in the round-38 report so they can be revisited.
+# Round 41 added 3 more by reading: adeS ('essential for AdeABC expression'), P. aeruginosa
+# CpxR ('directly involved in activation of expression of RND efflux pump MexAB-OprM' --
+# also a round-37 false exclusion) and baeS ('phosphorylates BaeR to increase its activity').
 # Round 40 added 9 more after a second reading pass. ArmR was excluded for the THIRD time:
 # its definition says it raises pump levels, but it does so by inhibiting MexR -- it acts on
 # a REPRESSOR, not on the pump, so an activator edge would assert the wrong target. Three
 # different patterns have now matched it; only reading has ever rejected it.
-_EFFLUX_ACTIVATORS = frozenset(['ARO:3000504', 'ARO:3000508', 'ARO:3000524', 'ARO:3000547', 'ARO:3000553', 'ARO:3000813', 'ARO:3000814', 'ARO:3000816', 'ARO:3000823', 'ARO:3000825', 'ARO:3000826', 'ARO:3000827', 'ARO:3000828', 'ARO:3000830', 'ARO:3000831', 'ARO:3000832', 'ARO:3000838', 'ARO:3003841', 'ARO:3003843', 'ARO:3004055', 'ARO:3004108', 'ARO:3004109', 'ARO:3005063', 'ARO:3005064'])
+_EFFLUX_ACTIVATORS = frozenset(['ARO:3000504', 'ARO:3000508', 'ARO:3000524', 'ARO:3000547', 'ARO:3000549', 'ARO:3000553', 'ARO:3000813', 'ARO:3000814', 'ARO:3000816', 'ARO:3000823', 'ARO:3000825', 'ARO:3000826', 'ARO:3000827', 'ARO:3000828', 'ARO:3000829', 'ARO:3000830', 'ARO:3000831', 'ARO:3000832', 'ARO:3000838', 'ARO:3003841', 'ARO:3003843', 'ARO:3004054', 'ARO:3004055', 'ARO:3004108', 'ARO:3004109', 'ARO:3005063', 'ARO:3005064'])
 
 
 # Two-component regulators of LIPID A modification, read out of the same 46 that produced

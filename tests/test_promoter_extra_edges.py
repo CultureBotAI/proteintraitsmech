@@ -972,7 +972,7 @@ def test_the_repressor_list_excludes_the_antirepressor():
     not in the ontology structure, so this is a checked list and the check is recorded.
     """
     reps = promote._EFFLUX_REPRESSORS
-    assert len(reps) == 27
+    assert len(reps) == 32          # 27 (r37) + 5 read-verified in r41
     assert "ARO:3004056" not in reps          # ArmR, antirepressor
     assert "ARO:3000831" not in reps          # CpxR, mentions repression
     assert "ARO:3000702" in reps              # AcrR, the archetype
@@ -1010,7 +1010,7 @@ def test_the_activator_list_is_conservative_and_says_so():
     graph whose whole content is that direction. Erring toward the draft is cheaper.
     """
     assert "ARO:3000263" not in promote._EFFLUX_ACTIVATORS      # marA
-    assert len(promote._EFFLUX_ACTIVATORS) == 24      # 15 in round 38, +9 in round 40
+    assert len(promote._EFFLUX_ACTIVATORS) == 27      # 15 (r38) + 9 (r40) + 3 (r41)
 
 
 def test_the_lps_regulator_config_is_not_an_efflux_one():
@@ -1037,3 +1037,16 @@ def test_armr_is_excluded_from_every_regulator_list():
     assert armr not in promote._EFFLUX_REPRESSORS
     assert armr not in promote._EFFLUX_ACTIVATORS
     assert armr not in promote._LPS_REGULATORS
+
+
+def test_round_41_corrected_two_earlier_false_exclusions():
+    """MvaT and P. aeruginosa CpxR were excluded in round 37 as "mentions repression /
+    activation without being the regulator".
+
+    Reading the WHOLE definition rather than the matched clause shows both are: MvaT
+    "has also shown to be able to repress the efflux" operon, and CpxR is "directly
+    involved in activation of expression of RND efflux pump MexAB-OprM". A clause-level
+    match answered a question the sentence answers differently.
+    """
+    assert "ARO:3004069" in promote._EFFLUX_REPRESSORS      # MvaT
+    assert "ARO:3004054" in promote._EFFLUX_ACTIVATORS      # P. aeruginosa CpxR
