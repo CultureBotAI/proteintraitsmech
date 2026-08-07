@@ -1355,3 +1355,19 @@ def test_probe_does_not_catch_the_round_53_synonym_case():
            "definition: >-\n  Mutations in PBP transpeptidases that change affinity.\n")
     assert not promote.skip_reason_contradicted(
         "own definition does not name a penicillin-binding protein", rec)
+
+
+def test_16s_determinant_is_nucleic_acid_not_protein():
+    """rRNA is not a protein. Calling it one in a protein-traits KB is false (#215)."""
+    cfg = promote.family_configs("ARO:3003211")[0]
+    assert cfg["determinant_node_type"] == "NUCLEIC_ACID"
+
+
+def test_16s_tetracycline_snippet_is_flagged_as_one_drug_of_several():
+    """The family spans pactamycin, edeine and viomycin, which helix 34 does not cover."""
+    cfg = promote.family_configs("ARO:3003211")[0]
+    edge = next(e for e in cfg["extra_edges"] if e["object"] == "binding_site")
+    notes = _flat(edge["evidence"][0]["notes"]).lower()
+    assert "does not cover" in notes or "other drugs" in notes, (
+        "a single-drug snippet used family-wide must say so"
+    )
