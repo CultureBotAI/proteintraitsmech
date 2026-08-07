@@ -948,3 +948,15 @@ def test_every_efflux_config_grounds_its_export_node():
     for cfg in promote.family_configs("ARO:3000748"):
         export = [n for n in cfg["extra_nodes"] if n["node_id"] == "export"]
         assert export and export[0].get("grounding") == "GO:1990961"
+
+
+def test_the_pump_class_lookup_walks_is_a_ancestors_for_part_of():
+    """A species-specific record inherits its complex through its generic term.
+
+    "Escherichia coli acrA" is `is_a acrA`, and it is the generic `acrA` that carries
+    `part_of AcrAB-TolC`. Checking only the record's own `part_of` left four such variants
+    unclassified and therefore uncurable (round 36).
+    """
+    rnd = promote._requires_pump_class("ARO:0010004", "RND")
+    assert rnd("ARO:3004043", "Escherichia coli acrA", "") is None      # inherits via acrA
+    assert rnd("ARO:3009144", "MexAB", "") is not None                  # genuinely unlinked
