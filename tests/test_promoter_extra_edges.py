@@ -1168,3 +1168,14 @@ def test_target_modification_reaches_round_29s_endpoint_by_a_different_route():
     assert "decoding_site" in ids and "methyltransferase" in ids
     # mechanism ids were read from the records, not guessed — five rounds lost time to that
     assert {"ARO:0001001", "ARO:3000211", "ARO:3000212"} <= set(cfg["mech"])
+
+
+def test_the_permeability_influx_node_is_grounded():
+    """The mirror of #228, which grounded `export` across the four efflux configs.
+
+    `influx` was label-only in all 42 permeability records — one node, one edit, 42
+    records. Flagged in the round-33, round-35 and round-43 reports before being done.
+    """
+    cfg = promote.family_configs("ARO:3000270")[0]
+    influx = [n for n in cfg["extra_nodes"] if n["node_id"] == "influx"][0]
+    assert influx.get("grounding") == "GO:0042908"      # xenobiotic transport (BP)

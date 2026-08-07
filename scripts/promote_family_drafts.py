@@ -778,9 +778,9 @@ FAMILY_SNIPPETS = {
         "res_drug": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
         "note": "The mirror of efflux: the drug never gets in, rather than being pumped out.",
         "extra_nodes": [
-            {"node_id": "influx", "label": "drug influx across the outer membrane",
-             "node_type": "BIOLOGICAL_PROCESS",
-             "description": "Ungrounded: the transport is passive diffusion through a channel, and which channel differs per record."},
+            {"node_id": "influx", "label": "xenobiotic transport (drug influx across the outer membrane)",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0042908",
+             "description": "GO:0042908 is the transport process; which channel carries it differs per record and is named in that record's own definition."},
             {"node_id": "barrier", "label": "outer membrane permeability barrier",
              "node_type": "STATE",
              "description": "Ungrounded: a property of the envelope rather than a compound."},
