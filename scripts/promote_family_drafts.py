@@ -287,7 +287,11 @@ _EFFLUX_REPRESSORS = frozenset(['ARO:3000506', 'ARO:3000518', 'ARO:3000526', 'AR
 # exclusion leaves a record as a draft; a false inclusion would assert the wrong direction
 # on a graph whose whole content is that direction. Erring toward the draft is the cheaper
 # mistake, and the excluded ones are listed in the round-38 report so they can be revisited.
-_EFFLUX_ACTIVATORS = frozenset(['ARO:3000553', 'ARO:3000813', 'ARO:3000814', 'ARO:3000816', 'ARO:3000823', 'ARO:3000825', 'ARO:3000826', 'ARO:3000827', 'ARO:3000832', 'ARO:3000838', 'ARO:3003841', 'ARO:3003843', 'ARO:3004055', 'ARO:3004108', 'ARO:3004109'])
+# Round 40 added 9 more after a second reading pass. ArmR was excluded for the THIRD time:
+# its definition says it raises pump levels, but it does so by inhibiting MexR -- it acts on
+# a REPRESSOR, not on the pump, so an activator edge would assert the wrong target. Three
+# different patterns have now matched it; only reading has ever rejected it.
+_EFFLUX_ACTIVATORS = frozenset(['ARO:3000504', 'ARO:3000508', 'ARO:3000524', 'ARO:3000547', 'ARO:3000553', 'ARO:3000813', 'ARO:3000814', 'ARO:3000816', 'ARO:3000823', 'ARO:3000825', 'ARO:3000826', 'ARO:3000827', 'ARO:3000828', 'ARO:3000830', 'ARO:3000831', 'ARO:3000832', 'ARO:3000838', 'ARO:3003841', 'ARO:3003843', 'ARO:3004055', 'ARO:3004108', 'ARO:3004109', 'ARO:3005063', 'ARO:3005064'])
 
 
 # Two-component regulators of LIPID A modification, read out of the same 46 that produced

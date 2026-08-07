@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000451
 trait_relations:
@@ -22,11 +22,12 @@ evidence:
 - reference: DOI:10.1371/journal.pone.0033777
   notes: PMID:22496764 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] cpxAR → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: cpxAR → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3000553). The mirror of round 37: a positive regulator whose over-activity drives pump expression,
+    rather than a repressor whose loss lifts it.'
   nodes:
   - node_id: determinant
     label: cpxAR
@@ -36,6 +37,16 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: pump
+    label: the efflux pump this determinant activates
+    node_type: PROTEIN
+    description: Which pump differs per record and is named in that record's own definition -- AdeABC
+      for AdeR, norA for ArlR, acrAB for Rob. The pump mechanisms are curated records (rounds 33-36).
+  - node_id: activation
+    label: activation of efflux pump expression
+    node_type: BIOLOGICAL_PROCESS
+    description: 'Ungrounded: positive regulation of transcription exists in GO, but which promoter differs
+      per record.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -49,36 +60,47 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/JB.185.6.1851-1856.2003
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
-    - reference: ARO:3000524
-      snippet: CpxAR is a two-component regulatory system that involves a sensor kinase, CpxA, and the
-        regulator CpxR. When the membrane envelope is stressed, CpxAR promotes acrD and mdtABC expression
-        to confer multidrug resistance through efflux.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3000553
+      snippet: AdeR is a positive regulator of AdeABC efflux system.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/JB.185.6.1851-1856.2003
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: ARO:3000553
+      snippet: AdeR is a positive regulator of AdeABC efflux system.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/JB.185.6.1851-1856.2003
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000524
-      snippet: CpxAR is a two-component regulatory system that involves a sensor kinase, CpxA, and the
-        regulator CpxR. When the membrane envelope is stressed, CpxAR promotes acrD and mdtABC expression
-        to confer multidrug resistance through efflux.
-      notes: ARO definition of this determinant (cpxAR).
+    - reference: ARO:3000553
+      snippet: AdeR is a positive regulator of AdeABC efflux system.
+      notes: Determinant → resistance phenotype.
+  - subject: determinant
+    predicate: enables (activates the pump operon)
+    predicate_id: RO:0002327
+    object: activation
+    evidence:
+    - reference: ARO:3000553
+      snippet: AdeR is a positive regulator of AdeABC efflux system.
+      notes: CARD's definition of AdeR, the archetype. Each record's own definition names the pump IT
+        activates; this config asserts only the shared direction.
+  - subject: activation
+    predicate: positively regulates (raises pump expression)
+    predicate_id: RO:0002213
+    object: pump
+    description: 'The direction that distinguishes this config from round 37''s: here resistance follows
+      from the regulator DOING something, not from its loss.'
+    evidence:
+    - reference: ARO:3000553
+      snippet: AdeR is a positive regulator of AdeABC efflux system.
+      notes: A positive regulator raises expression of the system it controls.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
