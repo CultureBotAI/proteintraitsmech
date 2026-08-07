@@ -561,6 +561,65 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # fabG1 (ARO:3004887) -- unblocks #219, by dropping a claim CARD never made.
+    #
+    # #219 was blocked on proving that a fabG1 PROMOTER substitution raises inhA expression.
+    # That mechanism is real and well known, and CARD does not assert it: its definitions
+    # say "Mutations that occur in the fabg1 gene resulting in the inability for the
+    # antibiotic to inhibit mycolic acid biosynthesis" and place fabG1 "in the fatty acid
+    # synthesis pathway, acting in the first reduction step for mycolic acid".
+    #
+    # That is TARGET ALTERATION of a FAS-II enzyme, not promoter-driven overexpression. I
+    # spent three attempts trying to evidence a mechanism the source does not claim, when
+    # the source's own claim was curatable all along.
+    "ARO:3004887": {
+        "curated": "2026-08-07T00:00:00Z",
+        "reference": "ARO:3004887",
+        "mech": {"ARO:3000212": "Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to inhibit mycolic acid biosynthesis."},
+        "mech_res": "Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to inhibit mycolic acid biosynthesis.",
+        "det_res": [
+            {"reference": "ARO:3004887", "snippet": "Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to inhibit mycolic acid biosynthesis.",
+             "notes": "CARD's own claim, and the only one it makes: the mutation stops the drug inhibiting mycolic acid synthesis."},
+            {"reference": "ARO:3004895", "snippet": "fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step for mycolic acid. It is associated with isoniazid resistance.",
+             "notes": "And where in the pathway: the first reduction step for mycolic acid. NOTE what is deliberately NOT asserted -- the fabG1-inhA operon promoter mechanism, which is real, well documented elsewhere, and not something CARD states for these records (#219)."},
+        ],
+        "res_drug": "Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to inhibit mycolic acid biosynthesis.",
+        "note": "Target alteration in FAS-II. Deliberately NOT the promoter-overexpression story, which CARD does not assert for these records.",
+        "extra_nodes": [
+            {"node_id": "fas_step", "label": "first reduction step of mycolic acid synthesis (FabG1/MabA)",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: the specific ketoacyl-reductase step has no distinct term in use here."},
+            {"node_id": "mycolic", "label": "mycolic acid biosynthetic process",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0071768"},
+            {"node_id": "inhibition", "label": "drug inhibition of mycolic acid synthesis",
+             "node_type": "STATE",
+             "description": "What the mutation prevents. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "fas_step",
+             "predicate": "enables (the first reduction step)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004895", "snippet": "fabG1 is involved in the fatty acid synthesis pathway, acting in the first reduction step for mycolic acid. It is associated with isoniazid resistance.",
+                           "notes": "CARD places fabG1 in the fatty acid synthesis pathway."}]},
+            {"subject": "fas_step", "object": "mycolic",
+             "predicate": "part of (mycolic acid biosynthesis)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "PMID:8284673", "snippet": "The InhA protein shows significant sequence conservation with the Escherichia coli enzyme EnvM, and cell-free assays indicate that it may be involved in mycolic acid biosynthesis.",
+                           "notes": "Banerjee et al. 1994, borrowed from round 28 for the pathway context -- it studied InhA, the NEXT step, and the notes say so rather than implying it covered FabG1."}]},
+            {"subject": "drug0", "object": "inhibition",
+             "predicate": "causally upstream of (inhibits mycolic acid synthesis)",
+             "predicate_id": "RO:0002411",
+             "description": "Drug action: activated isoniazid blocks FAS-II, which is what makes the pathway a target at all (rounds 27-28).",
+             "evidence": [{"reference": "PMID:1656850",
+                           "snippet": "Isonicotinic acid hydrazide (isoniazid; INH) inhibition of mycolic acid synthesis was studied by using cell extracts from both INH-sensitive and -resistant strains of Mycobacterium aurum.",
+                           "notes": "Direct evidence for the drug's action (#250). The first version of this edge cited ARO:3004887, which only IMPLIES the inhibition by describing what the mutation prevents -- weaker than the rule that a snippet must state its claim."}]},
+            {"subject": "determinant", "object": "inhibition",
+             "predicate": "negatively regulates (the mutated enzyme is no longer inhibited)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, in CARD's own words: the mutation results in the antibiotic being unable to inhibit the pathway.",
+             "evidence": [{"reference": "ARO:3004887", "snippet": "Mutations that occur in the fabg1 gene resulting in the inability for the antibiotic to inhibit mycolic acid biosynthesis.",
+                           "notes": "This is the whole of what the source asserts. A stronger claim would need the promoter evidence #219 could not find."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # 23S rRNA / macrolide (ARO:3004125) -- unblocks #217. That issue said no source
     # CONSTRUCTS a 23S substitution and MEASURES the affinity loss, which is the tier round
     # 29's 16S family had. Douthwaite & Aagaard 1993 does exactly that, and was found by
