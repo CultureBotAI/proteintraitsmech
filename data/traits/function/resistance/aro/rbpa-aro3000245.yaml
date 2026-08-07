@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004243
 trait_relations:
@@ -25,11 +25,12 @@ evidence:
 - reference: DOI:10.1111/j.1365-2958.2006.05116.x
   notes: PMID:16629670 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] RbpA → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: RbpA → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:35907401). Target protection of RNA polymerase by displacing the drug -- the same mode as TetM,
+    on a different target.
   nodes:
   - node_id: determinant
     label: RbpA
@@ -43,6 +44,15 @@ causal_graphs:
     label: rifamycin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000157
+  - node_id: rnap
+    label: bacterial RNA polymerase, the drug's target
+    node_type: PROTEIN
+    description: 'The same target rpoB records alter (round 26). Ungrounded: the corpus holds no RNAP
+      complex trait record.'
+  - node_id: inhibited
+    label: rifamycin-inhibited RNA polymerase
+    node_type: STATE
+    description: Transcription blocked by bound drug. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -56,43 +66,76 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1099/mic.0.047480-0
-      notes: 'Auto-drafted: mechanism class ARO:0001003 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001003); verbatim snippet pending curation.'
-    - reference: ARO:3000245
-      snippet: RNA-polymerase binding protein which confers resistance to rifampin.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001003 (antibiotic target protection)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:35907401
+      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
+        from RNAP, thereby providing resistance by target protection.
+      notes: Family mechanism ARO:0001003.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1099/mic.0.047480-0
-      notes: 'Auto-drafted: mechanism ARO:0001003 → resistance; snippet pending curation.'
-    - reference: ARO:0001003
-      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
-        in antibiotic resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001003 (antibiotic target protection),
-        which states the causal link to resistance.
+    - reference: PMID:35907401
+      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
+        from RNAP, thereby providing resistance by target protection.
+      notes: Mechanism ARO:0001003 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1099/mic.0.047480-0
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000245
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000169 ! rifampin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:35907401
+      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
+        from RNAP, thereby providing resistance by target protection.
+      notes: Surette et al. 2022. The paper names the mechanism class outright -- 'resistance by target
+        protection' -- and the mode is DISPLACEMENT, as TetM's is (round 31), not FusB's rescue of a stalled
+        complex (round 44).
+    - reference: PMID:35907401
+      snippet: Rifamycin antibiotics such as rifampin are potent inhibitors of prokaryotic RNA polymerase
+        (RNAP) used to treat tuberculosis and other bacterial infections.
+      notes: 'And what is being protected: RNAP, the target rounds 26''s rpoB records alter instead.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
     evidence:
     - reference: ARO:3004243
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
       notes: Asserted on ARO:3004243 (RbpA bacterial RNA polymerase-binding protein), an is_a ancestor
         of this record's ARO:3000245; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
+  - subject: drug0
+    predicate: causally upstream of (inhibits transcription)
+    predicate_id: RO:0002411
+    object: inhibited
+    evidence:
+    - reference: PMID:35907401
+      snippet: Rifamycin antibiotics such as rifampin are potent inhibitors of prokaryotic RNA polymerase
+        (RNAP) used to treat tuberculosis and other bacterial infections.
+      notes: 'Drug action: rifamycins are potent RNAP inhibitors.'
+  - subject: determinant
+    predicate: molecularly interacts with (forms a complex with RNAP)
+    predicate_id: RO:0002436
+    object: rnap
+    evidence:
+    - reference: PMID:35907401
+      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
+        from RNAP, thereby providing resistance by target protection.
+      notes: Protection works by binding the TARGET, as FusB does with EF-G.
+  - subject: determinant
+    predicate: negatively regulates (displaces the drug from RNAP)
+    predicate_id: RO:0002212
+    object: inhibited
+    description: The causal core. TetM's mode -- the drug is removed from the target -- applied to RNA
+      polymerase rather than the ribosome.
+    evidence:
+    - reference: PMID:35907401
+      snippet: HelR forms a complex with RNAP and rescues transcription inhibition by displacing rifamycins
+        from RNAP, thereby providing resistance by target protection.
+      notes: Surette et al. 2022.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

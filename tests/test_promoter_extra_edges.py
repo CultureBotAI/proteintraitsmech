@@ -1092,3 +1092,19 @@ def test_fusb_protects_by_rescue_not_by_displacement():
     out = _flat(_graph(fus, mech=("ARO:0001003",), drug=("ARO:3007153",)))
     assert "promote the dissociation of stalled" in out
     assert "chasing the drug from its binding site" not in out
+
+
+def test_target_protection_now_has_three_configs_with_three_modes():
+    """One ARO family term, three mechanisms — and two of them are NOT the same mode.
+
+        TetM (r31)  displaces the drug from the ribosome
+        FusB (r44)  does NOT displace; it dissociates the stalled complex the drug makes
+        HelR (r45)  displaces the drug from RNA polymerase
+
+    TetM and HelR share a mode on different targets; FusB shares a target class with
+    neither. Three configs, three papers, no borrowed sentences.
+    """
+    cfgs = promote.family_configs("ARO:3000185")
+    assert len(cfgs) == 3
+    marks = {n["node_id"] for c in cfgs for n in c["extra_nodes"]}
+    assert {"tet_site", "stalled", "inhibited"} <= marks
