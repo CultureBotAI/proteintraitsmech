@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3005086
 trait_relations:
@@ -22,11 +22,11 @@ evidence:
 - reference: DOI:10.1128/AAC.01542-06
   notes: PMID:17325218 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] fusD → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: fusD → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:22308410). Target protection by rescuing a stalled complex rather than by displacing the drug.
   nodes:
   - node_id: determinant
     label: fusD
@@ -40,6 +40,20 @@ causal_graphs:
     label: fusidane antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007153
+  - node_id: efg
+    label: elongation factor G (EF-G), the drug's target
+    node_type: PROTEIN
+    description: 'Ungrounded: the specific EF-G differs per organism and the corpus holds no EF-G trait
+      record.'
+  - node_id: stalled
+    label: stalled ribosome-EF-G-GDP complex
+    node_type: STATE
+    description: What fusidic acid produces, and what FusB dissociates. Ungrounded.
+  - node_id: zinc_finger
+    label: four-cysteine zinc finger domain of FusB-type proteins
+    node_type: DOMAIN
+    description: 'The high-affinity EF-G interaction module. Ungrounded: a unique fold with no KB trait
+      record.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,46 +67,91 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.01542-06
-      notes: 'Auto-drafted: mechanism class ARO:0001003 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001003); verbatim snippet pending curation.'
-    - reference: ARO:3003731
-      snippet: A specific fusidic acid resistance gene conferring intrinsic resistance in the bacteria
-        Staphylococcus saprophyticus. FusD behaves by causing dissociation of EF-G from the ribosome thus
-        counteracting the action of Fusidic acid. It is considered a FusB-type protein.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001003 (antibiotic target protection)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:22308410
+      snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
+        ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
+        resume translation.
+      notes: Family mechanism ARO:0001003.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01542-06
-      notes: 'Auto-drafted: mechanism ARO:0001003 → resistance; snippet pending curation.'
-    - reference: ARO:0001003
-      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
-        in antibiotic resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001003 (antibiotic target protection),
-        which states the causal link to resistance.
+    - reference: PMID:22308410
+      snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
+        ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
+        resume translation.
+      notes: Mechanism ARO:0001003 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01542-06
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003731
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000759 ! fusidic acid'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:22308410
+      snippet: These proteins bind to elongation factor G (EF-G), the target of FA, and rescue translation
+        from FA-mediated inhibition by an unknown mechanism.
+      notes: Cox et al. 2012. FusB-type proteins bind EF-G, which is fusidic acid's target.
+    - reference: PMID:22308410
+      snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
+        ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
+        resume translation.
+      notes: 'And the mechanism, which is NOT TetM''s: the drug is not dislodged. The stalled complex
+        the drug creates is dissociated, and translation resumes.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to fusidane antibiotic.
     evidence:
     - reference: ARO:3005086
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007153 ! fusidane antibiotic'
       notes: Asserted on ARO:3005086 (Target protecting FusB-type protein conferring resistance to Fusidic
         acid), an is_a ancestor of this record's ARO:3003731; inherited by this variant. CARD/ARO release
         in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to fusidane antibiotic.
+  - subject: zinc_finger
+    predicate: part of (the EF-G-binding domain)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: PMID:22308410
+      snippet: Here we show that the FusB family are two-domain metalloproteins, the C-terminal domain
+        of which contains a four-cysteine zinc finger with a unique structural fold.
+      notes: Cox et al. 2012; this C-terminal domain mediates the high-affinity interaction with EF-G.
+  - subject: drug0
+    predicate: causally upstream of (stalls the ribosome)
+    predicate_id: RO:0002411
+    object: stalled
+    description: 'Drug action: fusidic acid traps EF-G on the ribosome after GTP hydrolysis.'
+    evidence:
+    - reference: PMID:22308410
+      snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
+        ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
+        resume translation.
+      notes: The complexes 'form in the presence of FA'.
+  - subject: determinant
+    predicate: negatively regulates (dissociates the stalled complex)
+    predicate_id: RO:0002212
+    object: stalled
+    description: 'The causal core, and it differs from TetM (round 31): the drug is not displaced. The
+      complex it creates is taken apart, so translation resumes with the drug still present.'
+    evidence:
+    - reference: PMID:22308410
+      snippet: By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled
+        ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to
+        resume translation.
+      notes: Cox et al. 2012.
+  - subject: determinant
+    predicate: molecularly interacts with (binds the target)
+    predicate_id: RO:0002436
+    object: efg
+    evidence:
+    - reference: PMID:22308410
+      snippet: These proteins bind to elongation factor G (EF-G), the target of FA, and rescue translation
+        from FA-mediated inhibition by an unknown mechanism.
+      notes: The protection is by binding the TARGET, not the drug.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

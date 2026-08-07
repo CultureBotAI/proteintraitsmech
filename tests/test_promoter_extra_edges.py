@@ -1075,3 +1075,20 @@ def test_the_permeability_determinant_is_the_channel_not_the_resistance():
             if e["subject"] == "determinant" and e["object"] == "influx"][0]
     assert edge["predicate_id"] == "RO:0002327"          # enables, not negatively regulates
     assert "Resistance is its loss" in edge["description"]
+
+
+def test_fusb_protects_by_rescue_not_by_displacement():
+    """Two target-protection configs, two different mechanisms.
+
+    TetM (round 31) chases the drug off its binding site. FusB does NOT displace fusidic
+    acid — it dissociates the stalled ribosome-EF-G-GDP complex the drug creates, so
+    translation resumes with the drug still present. Reusing round 31's evidence here
+    would assert displacement that the paper explicitly does not claim.
+    """
+    cfgs = promote.family_configs("ARO:3000185")
+    fus = [c for c in cfgs if any(n["node_id"] == "stalled" for n in c["extra_nodes"])][0]
+    tet = [c for c in cfgs if any(n["node_id"] == "tet_site" for n in c["extra_nodes"])][0]
+    assert fus is not tet
+    out = _flat(_graph(fus, mech=("ARO:0001003",), drug=("ARO:3007153",)))
+    assert "promote the dissociation of stalled" in out
+    assert "chasing the drug from its binding site" not in out
