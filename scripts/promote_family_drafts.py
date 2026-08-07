@@ -4721,6 +4721,18 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
                 problems += 1
                 print(f"  FALSE SKIP REASON    {ident} ({label}): {bad}")
                 continue
+            # Suppress when ANOTHER config of this family accepts the record. On a
+            # list-form family every config sees every candidate, so one config's refusal
+            # stays visible even when a sibling owns the record -- and a near-miss that
+            # is really "a different config handles this" is noise.
+            #
+            # This is not cosmetic. In round 69 the detector correctly flagged
+            # ARO:3004269 against the L-Ara4N config; I read it as a false positive and
+            # moved on. It was pointing at a whole second chemistry with no config, which
+            # round 73 then curated -- four rounds late. Suppressing the sibling-accepted
+            # case leaves only the near-misses that mean something.
+            if config_for(family, ident, label, text) is not None:
+                continue
             near = skip_reason_near_miss(reason, text)
             if near:
                 # Deliberately NOT counted as a problem. A contradicted reason (#256) is
