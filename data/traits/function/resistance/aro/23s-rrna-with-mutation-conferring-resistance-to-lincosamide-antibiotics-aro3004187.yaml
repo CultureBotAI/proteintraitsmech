@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000336
 trait_relations:
@@ -17,16 +17,16 @@ trait_relations:
     object: ARO:0000017
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004187 23S rRNA with mutation conferring resistance to lincosamide antibiotics"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] 23S rRNA with mutation conferring resistance to lincosamide antibiotics → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: 23S rRNA with mutation conferring resistance to lincosamide antibiotics → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3000336). Target alteration of an RNA target; the counterpart to round 54's 16S config.
   nodes:
   - node_id: determinant
     label: 23S rRNA with mutation conferring resistance to lincosamide antibiotics
-    node_type: PROTEIN
+    node_type: NUCLEIC_ACID
     grounding: ARO:3004187
   - node_id: mech0
     label: mutation conferring antibiotic resistance
@@ -36,6 +36,24 @@ causal_graphs:
     label: lincosamide antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000017
+  - node_id: binding_site
+    label: antibiotic-binding site within the 23S rRNA
+    node_type: NUCLEIC_ACID
+    description: 'Ungrounded: the per-drug site (domain V, the peptidyl transferase centre) has no single
+      term.'
+  - node_id: low_affinity
+    label: reduced antibiotic binding affinity at the mutated site
+    node_type: STATE
+    description: 'The causal core, in CARD''s own words. Ungrounded: an affinity property has no term
+      here.'
+  - node_id: subunit
+    label: large ribosomal subunit (50S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015934
+  - node_id: pt_activity
+    label: peptidyl transferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0000048
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -49,47 +67,100 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: ARO:3004187
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004187
-      snippet: Point mutations in the 23S rRNA subunit may confer resistance to lincosamide antibiotics
-        by reducing antibiotic binding-site affinity.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3000336
+      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
+        conferring resistance.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3004187
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3000336
+      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
+        conferring resistance.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3004187
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004187
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000017 ! lincosamide antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3000336
+      snippet: Point mutations in bacterial 23S rRNA from the large ribosomal subunit that confer resistance
+        to antibiotics.
+      notes: CARD's parent term, stating the resistance claim for the family.
+    - reference: ARO:3000336
+      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
+        conferring resistance.
+      notes: 'And the mechanism, with its direction: binding affinity is REDUCED, at specific sites.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to lincosamide antibiotic.
     evidence:
     - reference: ARO:3004187
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000017 ! lincosamide antibiotic'
-      notes: Asserted directly on ARO:3004187 (23S rRNA with mutation conferring resistance to lincosamide
-        antibiotics) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to lincosamide antibiotic.
+      notes: Asserted on ARO:3004187 (23S rRNA with mutation conferring resistance to lincosamide antibiotics),
+        an is_a ancestor of this record's ARO:3004187; inherited by this variant. CARD/ARO release in
+        data/raw/aro/aro.obo.
+  - subject: binding_site
+    predicate: part of (the 23S rRNA)
+    predicate_id: BFO:0000050
+    object: determinant
+    description: Why a mutation in the rRNA IS a mutation in the drug's target -- the same shape as round
+      54's 16S config.
+    evidence:
+    - reference: ARO:3000336
+      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
+        conferring resistance.
+      notes: '''at specific sites'' -- the sites are in the rRNA itself.'
+  - subject: determinant
+    predicate: part of (the 50S subunit)
+    predicate_id: BFO:0000050
+    object: subunit
+    evidence:
+    - reference: ARO:3000336
+      snippet: Point mutations in bacterial 23S rRNA from the large ribosomal subunit that confer resistance
+        to antibiotics.
+      notes: CARD places the 23S rRNA in the large ribosomal subunit.
+  - subject: determinant
+    predicate: has quality (reduced antibiotic binding affinity)
+    predicate_id: RO:0000086
+    object: low_affinity
+    evidence:
+    - reference: ARO:3000336
+      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
+        conferring resistance.
+      notes: The family-level claim.
+    - reference: ARO:3004187
+      snippet: Point mutations in the 23S rRNA subunit may confer resistance to lincosamide antibiotics
+        by reducing antibiotic binding-site affinity.
+      notes: Restated for lincosamides -- 'by reducing antibiotic binding-site affinity' -- which shows
+        the family claim is not linezolid-only.
+  - subject: low_affinity
+    predicate: negatively regulates (drug occupancy of the site)
+    predicate_id: RO:0002212
+    object: binding_site
+    evidence:
+    - reference: ARO:3000336
+      snippet: Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites,
+        conferring resistance.
+      notes: Reduced affinity means the drug occupies its site less.
+  - subject: drug0
+    predicate: negatively regulates (blocks peptide synthesis)
+    predicate_id: RO:0002212
+    object: pt_activity
+    description: What the drug does when it IS bound, and therefore what resistance restores.
+    evidence:
+    - reference: ARO:3000336
+      snippet: Antibiotics such as linezolid block peptide synthesis through peptidyl transferase activity.
+      notes: 'Stated for linezolid. SCOPE: this family also spans lincosamides, phenicols, pleuromutilins,
+        streptogramins, aminoglycosides and capreomycin, which act at the same centre but are not named
+        by this sentence.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
