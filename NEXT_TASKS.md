@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   882.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   878.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -79,9 +79,12 @@ cleared._
    arms. ~~**Efflux (137) is filed as #223**~~ **— #223 was wrong and round 33 corrected it.** The
    SUBUNITS have no pump-class ancestry, but each is `part_of` a complex and the COMPLEX is
    `is_a` RND/MFS/ABC/…, so the class is two hops away and derivable. RND (77, round 33) and **ABC (14, round 34)** are done. ~~**MFS (13)** and **SMR (4)**~~ **DONE (round 35)** — four configs now sit under one
-   family term, one per pump class. **~31 efflux drafts have no `part_of` complex at
-   all** and are invisible to every class precondition; they need individual checking, and
-   some may be complexes rather than subunits.
+   family term, one per pump class. Round 36 closed 4 more by walking `is_a`
+   ancestors for `part_of` (a species-specific *E. coli acrA* inherits its complex through
+   the generic `acrA`). The **21 left are filed as #229** and are three different problems,
+   none of them curation: 8 Mex transporter+adaptor pairs that are probably complexes
+   miscategorised as subunits, the 10-record ini operon whose efflux role is proposed
+   rather than established, and YajC carrying a complex id where a mechanism id belongs.
 
    **"No shared family config fits" — this item's own claim — is wrong for the
    target-alteration genes, and round 18 measured it.** 25 of the 30 gyrA drafts are

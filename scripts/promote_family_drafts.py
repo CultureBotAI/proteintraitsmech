@@ -246,7 +246,14 @@ def _requires_pump_class(class_id: str, human: str):
     """
     def _check(ident: str, label: str, text: str):
         terms = E.parse_obo(E.OBO)
-        for complex_id in _aro_part_of().get(ident, []):
+        # the record's OWN part_of, and its is_a ancestors' -- a species-specific record
+        # such as "Escherichia coli acrA" is `is_a acrA`, and it is the generic `acrA`
+        # that carries `part_of AcrAB-TolC`. Checking only the record's own link left 4
+        # such variants unclassified and therefore uncurable (round 36).
+        parts = list(_aro_part_of().get(ident, []))
+        for anc in E.ancestry(terms, ident):
+            parts.extend(_aro_part_of().get(anc, []))
+        for complex_id in parts:
             if class_id in E.ancestry(terms, complex_id):
                 return None
         return (f"this determinant is not part of a complex ARO classifies as {human}, "
