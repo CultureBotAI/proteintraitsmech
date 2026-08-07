@@ -1010,7 +1010,7 @@ def test_the_activator_list_is_conservative_and_says_so():
     graph whose whole content is that direction. Erring toward the draft is cheaper.
     """
     assert "ARO:3000263" not in promote._EFFLUX_ACTIVATORS      # marA
-    assert len(promote._EFFLUX_ACTIVATORS) == 15
+    assert len(promote._EFFLUX_ACTIVATORS) == 24      # 15 in round 38, +9 in round 40
 
 
 def test_the_lps_regulator_config_is_not_an_efflux_one():
@@ -1024,3 +1024,16 @@ def test_the_lps_regulator_config_is_not_an_efflux_one():
     # the charge-to-resistance sentence is mprF's; the notes must say the transfer
     assert core["evidence"][0]["reference"] == "PMID:11342591"
     assert "transfer" in core["evidence"][0]["notes"]
+
+
+def test_armr_is_excluded_from_every_regulator_list():
+    """ArmR has now defeated three different patterns and been rejected only by reading.
+
+    It is an ANTIrepressor: its definition says it raises pump levels, and it does — by
+    inhibiting MexR. It acts on a REPRESSOR, not on the pump, so a repressor edge has the
+    wrong sign and an activator edge has the wrong target. It belongs in neither list.
+    """
+    armr = "ARO:3004056"
+    assert armr not in promote._EFFLUX_REPRESSORS
+    assert armr not in promote._EFFLUX_ACTIVATORS
+    assert armr not in promote._LPS_REGULATORS
