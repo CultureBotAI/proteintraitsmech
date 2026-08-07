@@ -1179,3 +1179,19 @@ def test_the_permeability_influx_node_is_grounded():
     cfg = promote.family_configs("ARO:3000270")[0]
     influx = [n for n in cfg["extra_nodes"] if n["node_id"] == "influx"][0]
     assert influx.get("grounding") == "GO:0042908"      # xenobiotic transport (BP)
+
+
+def test_the_23s_config_carries_the_graded_affinity_and_its_control():
+    """#217 said no source constructs a 23S substitution and measures the affinity loss.
+
+    Douthwaite & Aagaard 1993 does: 20-fold at 2057A, 1,000-fold at 2058U, 10,000-fold at
+    2058G. The same paper's negative control — position 2032 alters drug tolerance but
+    changes neither the loop nor erythromycin binding — is on the core edge too, because
+    it is what makes the claim specific to this loop rather than merely positional.
+    """
+    cfg = promote.family_configs("ARO:3004125")[0]
+    assert cfg["determinant_node_type"] == "NUCLEIC_ACID"
+    core = [e for e in cfg["extra_edges"]
+            if e["subject"] == "conformation" and e["object"] == "pt_loop"][0]
+    assert len(core["evidence"]) == 2
+    assert "gave no detectable effects" in core["evidence"][1]["snippet"]

@@ -561,6 +561,63 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # 23S rRNA / macrolide (ARO:3004125) -- unblocks #217. That issue said no source
+    # CONSTRUCTS a 23S substitution and MEASURES the affinity loss, which is the tier round
+    # 29's 16S family had. Douthwaite & Aagaard 1993 does exactly that, and was found by
+    # searching for a BINDING-measurement paper rather than a substitution-construction one.
+    #
+    # Same NUCLEIC_ACID determinant shape as round 29, and the same #215 caveat: the
+    # determinant is rRNA, so the graph routes through no protein-trait record.
+    "ARO:3004125": {
+        "curated": "2026-08-07T00:00:00Z",
+        "determinant_node_type": "NUCLEIC_ACID",
+        "reference": "PMID:7689111",      # Douthwaite & Aagaard 1993, J Mol Biol
+        "mech": {"ARO:3000212": "Erythromycin still protects against chemical modification in the mutant peptidyl transferase loops, but the affinity of the drug interaction is reduced 20-fold in the 2057A mutant, 10(3)-fold in the 2058U mutant and 10(4)-fold in the 2058G mutant."},
+        "mech_res": "Erythromycin still protects against chemical modification in the mutant peptidyl transferase loops, but the affinity of the drug interaction is reduced 20-fold in the 2057A mutant, 10(3)-fold in the 2058U mutant and 10(4)-fold in the 2058G mutant.",
+        "det_res": [
+            {"reference": "PMID:7689111", "snippet": "Erythromycin still protects against chemical modification in the mutant peptidyl transferase loops, but the affinity of the drug interaction is reduced 20-fold in the 2057A mutant, 10(3)-fold in the 2058U mutant and 10(4)-fold in the 2058G mutant.",
+             "notes": "Douthwaite & Aagaard 1993. The affinity loss is MEASURED and graded: 20-fold at 2057A, 1000-fold at 2058U, 10000-fold at 2058G. Three substitutions, three magnitudes."},
+            {"reference": "PMID:7689111", "snippet": "We used a chemical modification approach to analyse conformational changes that are induced by mutations in the peptidyl transferase loop, and to determine how these changes affect drug interaction.",
+             "notes": "And the method: chemical modification, which reads the rRNA conformation directly rather than inferring it from an MIC."},
+        ],
+        "res_drug": "The antibiotic erythromycin inhibits protein synthesis by binding to the 50 S ribosomal subunit, where the drug interacts with the unpaired bases 2058A and 2059A in the peptidyl transferase loop of 23 S rRNA.",
+        "note": "Target alteration in 23S rRNA: substitutions in the peptidyl transferase loop reduce macrolide affinity by up to four orders of magnitude.",
+        "extra_nodes": [
+            {"node_id": "pt_loop", "label": "peptidyl transferase loop of 23S rRNA, around bases 2057, 2058 and 2059",
+             "node_type": "NUCLEIC_ACID",
+             "description": "The macrolide binding site. Positions are in the E. coli frame and differ per organism (2143 in H. pylori), so no per-record residue node is asserted -- the same caveat as the QRDR and the 16S decoding site."},
+            {"node_id": "conformation", "label": "open conformation of the peptidyl transferase loop",
+             "node_type": "STATE",
+             "description": "What the substitutions induce, and the reason binding falls. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "pt_loop", "object": "determinant",
+             "predicate": "part of (the loop that binds the drug)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "PMID:7689111", "snippet": "The antibiotic erythromycin inhibits protein synthesis by binding to the 50 S ribosomal subunit, where the drug interacts with the unpaired bases 2058A and 2059A in the peptidyl transferase loop of 23 S rRNA.",
+                           "notes": "The drug interacts with unpaired 2058A and 2059A in this loop."}]},
+            {"subject": "drug0", "object": "pt_loop",
+             "predicate": "molecularly interacts with (binds the unpaired bases)",
+             "predicate_id": "RO:0002436",
+             "evidence": [{"reference": "PMID:7689111", "snippet": "The antibiotic erythromycin inhibits protein synthesis by binding to the 50 S ribosomal subunit, where the drug interacts with the unpaired bases 2058A and 2059A in the peptidyl transferase loop of 23 S rRNA.",
+                           "notes": "Drug action: erythromycin inhibits protein synthesis from this site."}]},
+            {"subject": "determinant", "object": "conformation",
+             "predicate": "causally upstream of (opens the loop)", "predicate_id": "RO:0002411",
+             "description": "The substitutions do not remove a contact; they change the loop's shape.",
+             "evidence": [{"reference": "PMID:7689111", "snippet": "We used a chemical modification approach to analyse conformational changes that are induced by mutations in the peptidyl transferase loop, and to determine how these changes affect drug interaction.",
+                           "notes": "Conformational change read by chemical modification, and the paper's framing of what the mutations do."}]},
+            {"subject": "conformation", "object": "pt_loop",
+             "predicate": "negatively regulates (the open loop binds the drug up to 10,000-fold worse)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, graded rather than binary -- and the control matters: substitutions at 2032 in the adjacent hairpin alter drug tolerance yet change neither the loop's structure nor erythromycin binding, so the effect is specific to this loop.",
+             "evidence": [
+                 {"reference": "PMID:7689111", "snippet": "Erythromycin still protects against chemical modification in the mutant peptidyl transferase loops, but the affinity of the drug interaction is reduced 20-fold in the 2057A mutant, 10(3)-fold in the 2058U mutant and 10(4)-fold in the 2058G mutant.",
+                  "notes": "20-fold, 1,000-fold and 10,000-fold for 2057A, 2058U and 2058G."},
+                 {"reference": "PMID:7689111", "snippet": "Single mutations at position 2032 in the adjacent hairpin loop, which have previously been shown to alter drug tolerances, gave no detectable effects on the structure of the peptidyl transferase loop or on erythromycin binding.",
+                  "notes": "The negative control in the same paper: a nearby position that affects tolerance but NOT this loop or this binding. It is what makes the causal claim specific rather than positional."},
+             ]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # Target-modifying enzymes (ARO:3000519) -- 16S rRNA methyltransferases, and the
     # counterpart of round 29. Those records are MUTATIONS in the decoding site that lower
     # aminoglycoside affinity; these are ENZYMES that methylate the same site to the same
