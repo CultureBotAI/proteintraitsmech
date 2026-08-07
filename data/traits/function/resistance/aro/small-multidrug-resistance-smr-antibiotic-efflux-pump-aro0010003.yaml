@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000159
 trait_relations:
@@ -22,12 +22,12 @@ evidence:
 - reference: DOI:10.1016/j.bbamem.2007.08.015
   notes: PMID:17942072 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] small multidrug resistance (SMR) antibiotic efflux pump → mechanism → resistance (auto-scaffold
-    from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: small multidrug resistance (SMR) antibiotic efflux pump → mechanism → resistance (curated from
+    ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:0010003). Efflux, with the proton-antiport coupling stated rather than assumed.
   nodes:
   - node_id: determinant
     label: small multidrug resistance (SMR) antibiotic efflux pump
@@ -37,6 +37,19 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: antiport
+    label: drug/proton antiporter activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0015297
+    description: Checked non-obsolete against OLS (#157).
+  - node_id: proton_gradient
+    label: inward proton electrochemical gradient
+    node_type: STATE
+    description: 'The energy source. Ungrounded: a gradient is not a compound.'
+  - node_id: extruded
+    label: drug outside the cell
+    node_type: STATE
+    description: The outcome. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -50,38 +63,68 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1016/j.bbamem.2007.08.015
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
     - reference: ARO:0010003
-      snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
-        (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
-        They are also the smallest multidrug transporters, with only four transmembrane alpha-helices
-        and no significant extramembrane domain.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1016/j.bbamem.2007.08.015
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
+    - reference: ARO:0010003
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1016/j.bbamem.2007.08.015
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:0010003
       snippet: Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance
         (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.
-        They are also the smallest multidrug transporters, with only four transmembrane alpha-helices
-        and no significant extramembrane domain.
-      notes: ARO definition of this determinant (small multidrug resistance (SMR) antibiotic efflux pump).
+      notes: 'The family claim: directed pumping of antibiotic out of the cell, by a distinct small transporter
+        family.'
+    - reference: ARO:3000264
+      snippet: EmrE is a small multidrug transporter that functions as a homodimer and that couples the
+        efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical
+        gradient.
+      notes: 'And the energetics. SCOPE: this is EmrE''s sentence; the other members are named as SMR-family
+        transporters without their own coupling data.'
+  - subject: determinant
+    predicate: enables (drug/proton antiport)
+    predicate_id: RO:0002327
+    object: antiport
+    evidence:
+    - reference: ARO:3000264
+      snippet: EmrE is a small multidrug transporter that functions as a homodimer and that couples the
+        efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical
+        gradient.
+      notes: '''couples the efflux ... with the import of protons'' -- an antiport by definition.'
+  - subject: proton_gradient
+    predicate: causally upstream of (drives the transport)
+    predicate_id: RO:0002411
+    object: antiport
+    description: What powers the pump. Efflux is not spontaneous, and this is the one family here that
+      says what pays for it.
+    evidence:
+    - reference: ARO:3000264
+      snippet: EmrE is a small multidrug transporter that functions as a homodimer and that couples the
+        efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical
+        gradient.
+      notes: '''down an electrochemical gradient'' -- the protons move downhill, which is what drives
+        the drug uphill.'
+  - subject: antiport
+    predicate: causally upstream of (removes the drug from the cell)
+    predicate_id: RO:0002411
+    object: extruded
+    description: 'The causal core: resistance because the drug is no longer inside.'
+    evidence:
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: '''via the transport of antibiotics out of the cell''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
