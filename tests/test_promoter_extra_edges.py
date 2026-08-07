@@ -1604,3 +1604,20 @@ def test_nim_keeps_the_familys_own_negative_result():
     assert any("not sufficient" in e["snippet"] for e in cfg["det_res"]), (
         "the negative result must not be dropped for a tidier story"
     )
+
+
+def test_ef_tu_does_not_assert_a_drug_binding_mechanism():
+    """CARD says EF-Tu variants confer resistance and never says how (#276).
+
+    The elfamycin-binding story is well known and uncited here. This is round 51's
+    failure mode -- sourcing a mechanism I know rather than the one the records make --
+    so the absence is pinned rather than left to a future reader's memory.
+    """
+    cfg = promote.family_configs("ARO:3003356")[0]
+    asserted = " ".join(
+        [e["predicate"] for e in cfg["extra_edges"]]
+        + [e["evidence"][0]["snippet"] for e in cfg["extra_edges"]]
+    ).lower()
+    for banned in ("binding affinit", "prevents drug", "elfamycin bind", "inhibit"):
+        assert banned not in asserted, f"EF-Tu config asserts {banned!r} uncited"
+    assert "NOT asserted" in cfg["note"]
