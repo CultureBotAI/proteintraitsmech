@@ -881,7 +881,84 @@ def _inactivation_transfer_config(mech_id: str, human: str, snippet: str,
     }
 
 
+def _requires_petn_transferase(ident: str, label: str, text: str):
+    """Phosphoethanolamine addition, the OTHER way to neutralise lipid A.
+
+    ARO:3003580's existing config describes L-Ara4N addition. These records add
+    phosphoethanolamine instead -- same charge outcome, different moiety -- and round 69's
+    #264 near-miss detector is what surfaced them, flagging eptA and the pmr family as
+    refused-for-lacking-"L-Ara4N addition" while every token of it was present.
+    """
+    if "ARO:3003588" not in D.parse_relations(text)[0]:
+        return "record carries no charge-alteration mechanism (ARO:3003588)"
+    if "phosphoethanolamine" not in _own_definition(text).lower():
+        return "own definition does not name phosphoethanolamine"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Phosphoethanolamine transferases (under ARO:3003580) -- charge alteration, pEtN route.
+    #
+    # The family already carries an L-Ara4N config. These records neutralise lipid A with
+    # phosphoethanolamine instead. Same outcome, different moiety, and the causal sentence
+    # is the same: less negative charge, so the cationic drug binds less.
+    #
+    # Found by #264's near-miss detector in round 69, which flagged eptA and the pmr family
+    # as refused for lacking "L-Ara4N addition" when every token of that phrase was in
+    # their definitions. That is the detector doing exactly what it was built for.
+    "ARO:3003580-petn": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_petn_transferase,
+        "reference": "ARO:3003588",
+        "mech": {"ARO:3003588": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface."},
+        "mech_res": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+        "det_res": [
+            {"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+             "notes": "The mechanism, stated causally: cationic antimicrobials DEPEND on the negative charge for binding, so reducing it is the resistance."},
+            {"reference": "ARO:3004269", "snippet": "This family of phosphoethanolamine transferase catalyze the addition of 4-amino-4-deoxy-L-arabinose (L-Ara4N) and phosphoethanolamine to lipid A, which impedes the binding of colistin to the cell membrane.",
+             "notes": "And the consequence, named for colistin: 'impedes the binding of colistin to the cell membrane'."},
+            {"reference": "ARO:3004112", "snippet": "This group of enzymes catalyzes the addition of a phosphoethanolamine group to another molecule. The addition of this moiety to lipid A in bacterial species is often associated with polymyxin (otherwise known as colistin) resistance.",
+             "notes": "The chemistry. NOTE its hedge -- 'often ASSOCIATED WITH polymyxin resistance' -- weaker than ARO:3003588's causal statement, and quoted for the reaction rather than for the resistance link."},
+        ],
+        "res_drug": "This family of phosphoethanolamine transferase catalyze the addition of 4-amino-4-deoxy-L-arabinose (L-Ara4N) and phosphoethanolamine to lipid A, which impedes the binding of colistin to the cell membrane.",
+        "note": "Charge alteration by phosphoethanolamine addition; the L-Ara4N route has its own config on this family.",
+        "extra_nodes": [
+            {"node_id": "petn_transfer", "label": "phosphoethanolamine transferase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-72)."},
+            {"node_id": "lipid_a", "label": "lipid A of the outer membrane",
+             "node_type": "CHEMICAL",
+             "description": "The modified target surface. Ungrounded: no CHEBI id verified this round."},
+            {"node_id": "charge", "label": "reduced net negative surface charge",
+             "node_type": "STATE",
+             "description": "The causal core. Ungrounded: a charge state is not an entity."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "petn_transfer",
+             "predicate": "enables (adds phosphoethanolamine)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004112", "snippet": "This group of enzymes catalyzes the addition of a phosphoethanolamine group to another molecule. The addition of this moiety to lipid A in bacterial species is often associated with polymyxin (otherwise known as colistin) resistance.",
+                           "notes": "'catalyzes the addition of a phosphoethanolamine group'."}]},
+            {"subject": "petn_transfer", "object": "lipid_a",
+             "predicate": "has input (lipid A)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3004269", "snippet": "This family of phosphoethanolamine transferase catalyze the addition of 4-amino-4-deoxy-L-arabinose (L-Ara4N) and phosphoethanolamine to lipid A, which impedes the binding of colistin to the cell membrane.",
+                           "notes": "'addition of ... phosphoethanolamine to lipid A'."}]},
+            {"subject": "lipid_a", "object": "charge",
+             "predicate": "causally upstream of (reduces surface negative charge)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+                           "notes": "'loss or reduction of the net negative charge within the cell wall'."}]},
+            {"subject": "charge", "object": "drug0",
+             "predicate": "negatively regulates (impedes drug binding)",
+             "predicate_id": "RO:0002212",
+             "description": "Why less charge is resistance: the drug is cationic and binds BECAUSE of the negative surface.",
+             "evidence": [
+                 {"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+                  "notes": "'cationic antimicrobials that depend on the negative charge for binding'."},
+                 {"reference": "ARO:3004269", "snippet": "This family of phosphoethanolamine transferase catalyze the addition of 4-amino-4-deoxy-L-arabinose (L-Ara4N) and phosphoethanolamine to lipid A, which impedes the binding of colistin to the cell membrane.",
+                  "notes": "'impedes the binding of colistin to the cell membrane'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Resistance by ABSENCE (ARO:3003764) -- a 13th mechanism kind, keyed on the mechanism
     # id rather than a family term because its members sit under unrelated families.
@@ -4872,6 +4949,15 @@ FAMILY_SNIPPETS["ARO:3000557"] = FAMILY_SNIPPETS["ARO:3000557"] + [
         "antibiotic hydroxylase activity", hedged_donor=False),
 ]
 
+
+
+# ARO:3003580 carries BOTH lipid A neutralisation routes: L-Ara4N addition (existing) and
+# phosphoethanolamine addition (round 73). Same charge outcome, different moiety; each
+# precondition selects on the record's own definition.
+FAMILY_SNIPPETS["ARO:3003580"] = [
+    FAMILY_SNIPPETS["ARO:3003580"],
+    FAMILY_SNIPPETS.pop("ARO:3003580-petn"),
+]
 
 def _check_config_order() -> None:
     for fam in FAMILY_SNIPPETS:
