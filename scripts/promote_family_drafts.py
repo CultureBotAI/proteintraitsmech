@@ -693,7 +693,71 @@ def _requires_class_d(ident: str, label: str, text: str):
     return None
 
 
+def _requires_tet_hydroxylase(ident: str, label: str, text: str):
+    """This config says the determinant HYDROXYLATES the drug.
+
+    tet(34) (ARO:3002870) carries the hydroxylation mechanism id and its own definition
+    describes something else entirely: "causes the activation of Mg2+-dependent purine
+    nucleotide synthesis, which protects the protein synthesis pathway". That is target
+    protection, not inactivation. Fifth record this session filed under a family whose
+    mechanism its own definition contradicts, after MecI (#251), pilQ (#254), ahpC (#260)
+    and the class D thin-definition set. Filed as #267.
+    """
+    if "ARO:3000450" not in D.parse_relations(text)[0]:
+        return "record carries no hydroxylation mechanism (ARO:3000450)"
+    own = _own_definition(text).lower()
+    if re.search(r"purine nucleotide|protects the protein synthesis", own):
+        return ("own definition describes protection of protein synthesis, not "
+                "hydroxylation of the drug (#267)")
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Tetracycline inactivation by hydroxylation (ARO:3000036).
+    #
+    # CARD's parent term states the mechanism AND why it confers resistance, in two
+    # sentences -- round 51's lesson, so no search was needed.
+    "ARO:3000036": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_tet_hydroxylase,
+        "reference": "ARO:3000036",
+        "mech": {
+            "ARO:0001004": "Enzymes or other gene products which hydroxylate tetracycline and other tetracycline derivatives. Hydroxylation inactivates tetracycline-like antibiotics, thus conferring resistance to these compounds.",
+            "ARO:3000450": "Enzymes or other gene products which hydroxylate tetracycline and other tetracycline derivatives. Hydroxylation inactivates tetracycline-like antibiotics, thus conferring resistance to these compounds.",
+        },
+        "mech_res": "Enzymes or other gene products which hydroxylate tetracycline and other tetracycline derivatives. Hydroxylation inactivates tetracycline-like antibiotics, thus conferring resistance to these compounds.",
+        "det_res": [
+            {"reference": "ARO:3000036", "snippet": "Enzymes or other gene products which hydroxylate tetracycline and other tetracycline derivatives. Hydroxylation inactivates tetracycline-like antibiotics, thus conferring resistance to these compounds.",
+             "notes": "CARD states both halves: what the enzyme does, and that doing it inactivates the drug."},
+        ],
+        "res_drug": "Enzymes or other gene products which hydroxylate tetracycline and other tetracycline derivatives. Hydroxylation inactivates tetracycline-like antibiotics, thus conferring resistance to these compounds.",
+        "note": "Inactivation by chemical modification -- the drug is destroyed, not evaded.",
+        "extra_nodes": [
+            {"node_id": "hydroxylation", "label": "hydroxylation of tetracycline",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: a tetracycline-specific monooxygenase activity, not looked up this round rather than guessed (rounds 56-59)."},
+            {"node_id": "inactivated", "label": "hydroxylated, inactive tetracycline",
+             "node_type": "STATE",
+             "description": "The product state. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "hydroxylation",
+             "predicate": "enables (hydroxylates the drug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3000036", "snippet": "Enzymes or other gene products which hydroxylate tetracycline and other tetracycline derivatives. Hydroxylation inactivates tetracycline-like antibiotics, thus conferring resistance to these compounds.",
+                           "notes": "'Enzymes or other gene products which hydroxylate tetracycline'."}]},
+            {"subject": "hydroxylation", "object": "drug0",
+             "predicate": "has input (the drug)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3000036", "snippet": "Enzymes or other gene products which hydroxylate tetracycline and other tetracycline derivatives. Hydroxylation inactivates tetracycline-like antibiotics, thus conferring resistance to these compounds.",
+                           "notes": "The substrate is the antibiotic itself, which is what makes this inactivation rather than target alteration."}]},
+            {"subject": "hydroxylation", "object": "inactivated",
+             "predicate": "causally upstream of (inactivates the drug)",
+             "predicate_id": "RO:0002411",
+             "description": "The causal core, in CARD's own words.",
+             "evidence": [{"reference": "ARO:3000036", "snippet": "Enzymes or other gene products which hydroxylate tetracycline and other tetracycline derivatives. Hydroxylation inactivates tetracycline-like antibiotics, thus conferring resistance to these compounds.",
+                           "notes": "'Hydroxylation inactivates tetracycline-like antibiotics, thus conferring resistance'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Class D beta-lactamases (ARO:3000075) -- inactivation by serine hydrolysis.
     #
