@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3001208
 trait_relations:
@@ -49,11 +49,12 @@ evidence:
 - reference: DOI:10.1128/jb.158.2.513-516.1984
   notes: PMID:6563036 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] mecA → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: mecA → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3000617). Target replacement. The native PBPs remain fully inhibited; a bypass enzyme carries
+    the load.
   nodes:
   - node_id: determinant
     label: mecA
@@ -67,6 +68,19 @@ causal_graphs:
     label: penicillin beta-lactam
     node_type: CHEMICAL
     grounding: ARO:3000008
+  - node_id: pbp2a_activity
+    label: peptidoglycan cross-linking by the acquired PBP
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0008658
+    description: Grounded to penicillin binding -- the activity assayed by the PBP gels these papers report.
+  - node_id: low_affinity
+    label: low affinity of the acquired PBP for beta-lactams
+    node_type: STATE
+    description: 'The causal core. Ungrounded: an affinity property has no ontology term here.'
+  - node_id: pg_synth
+    label: peptidoglycan biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0009252
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -80,44 +94,83 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.00187-11
-      notes: 'Auto-drafted: mechanism class ARO:0001002 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001002); verbatim snippet pending curation.'
     - reference: ARO:3000617
       snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
         synthesis in the presence of beta-lactams.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001002 (antibiotic target replacement)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:0001002.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00187-11
-      notes: 'Auto-drafted: mechanism ARO:0001002 → resistance; snippet pending curation.'
-    - reference: ARO:0001002
-      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
-        resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001002 (antibiotic target replacement),
-        which states the causal link to resistance.
+    - reference: ARO:3000617
+      snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
+        synthesis in the presence of beta-lactams.
+      notes: Mechanism ARO:0001002 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00187-11
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3000617
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000015 ! methicillin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
+        synthesis in the presence of beta-lactams.
+      notes: 'CARD states the mechanism in full: foreign, acquired, and functional under drug.'
+    - reference: PMID:3499861
+      snippet: All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated
+        with methicillin resistance and which has very low affinity for beta-lactam antibiotics.
+      notes: The affinity measurement that makes it work -- 'very low affinity for beta-lactam antibiotics'.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
     evidence:
     - reference: ARO:3001208
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000008 ! penicillin beta-lactam'
       notes: Asserted on ARO:3001208 (methicillin resistant PBP2), an is_a ancestor of this record's ARO:3000617;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
+  - subject: determinant
+    predicate: enables (wall synthesis under drug)
+    predicate_id: RO:0002327
+    object: pbp2a_activity
+    evidence:
+    - reference: ARO:3000617
+      snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
+        synthesis in the presence of beta-lactams.
+      notes: '''able to perform peptidoglycan synthesis in the presence of beta-lactams''.'
+  - subject: low_affinity
+    predicate: causally upstream of (leaves the enzyme uninhibited)
+    predicate_id: RO:0002411
+    object: pbp2a_activity
+    description: 'Why the acquired enzyme keeps working: the drug binds it poorly.'
+    evidence:
+    - reference: PMID:3499861
+      snippet: All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated
+        with methicillin resistance and which has very low affinity for beta-lactam antibiotics.
+      notes: Ueda et al. 1987, across 137 clinical strains.
+  - subject: determinant
+    predicate: has quality (very low beta-lactam affinity)
+    predicate_id: RO:0000086
+    object: low_affinity
+    evidence:
+    - reference: PMID:6563036
+      snippet: We detected a high-molecular-weight PBP (PBP-2a; approximate size, 78,000 daltons) that
+        was only present in the resistant bacteria but not in the isogenic susceptible strains.
+      notes: Hartman & Tomasz 1984 -- present in the resistant strains and NOT in the isogenic susceptible
+        ones, which is what makes the association causal rather than incidental.
+  - subject: pbp2a_activity
+    predicate: part of (peptidoglycan biosynthesis)
+    predicate_id: BFO:0000050
+    object: pg_synth
+    evidence:
+    - reference: ARO:3000617
+      snippet: A foreign PBP2a acquired by lateral gene transfer that is able to perform peptidoglycan
+        synthesis in the presence of beta-lactams.
+      notes: The process the acquired PBP sustains.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -1254,3 +1254,33 @@ def test_fabg1_pathway_edge_flags_its_borrowed_citation():
     assert "inha" in _flat(ev["notes"]).lower(), (
         "the borrowed citation must name what it actually studied"
     )
+
+
+def test_own_definition_ignores_inherited_drug_class_prose():
+    """The bug that nearly shipped 17 records excluded for a false reason.
+
+    ARO records carry drug-class boilerplate naming other mechanisms. A keyword scan
+    over the whole YAML matched "deactivation of repressors" in that prose and reported
+    a PBP3 point mutant as "describes a repressor".
+    """
+    text = (
+        "identifier: ARO:3007423\n"
+        "definition: >-\n"
+        "  Mutant PBP3 in E. coli conferring resistance to beta-lactams.\n"
+        "drug_class_note: lower binding affinities and the deactivation of repressors\n"
+    )
+    own = promote._own_definition(text)
+    assert "repressor" not in own.lower()
+    assert "Mutant PBP3" in own
+
+
+def test_replacement_pbp_predicate_discriminates_on_mechanism_not_keywords():
+    """A PBP3 mutant is a real determinant of the WRONG shape -- skip, don't curate."""
+    mutant = (
+        "identifier: ARO:3007423\n"
+        "definition: >-\n  Mutant PBP3 conferring resistance to beta-lactams.\n"
+        "relationship: confers_resistance_to_antibiotic ARO:3000212 ! mutation\n"
+    )
+    reason = promote._requires_replacement_pbp("ARO:3007423", "PBP3 mutants", mutant)
+    assert reason is not None and "target-replacement" in reason
+    assert "repressor" not in reason, "must not blame the wrong thing"
