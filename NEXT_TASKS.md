@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   1,075.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   1,030.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -64,8 +64,8 @@ cleared._
    a fourth kind — regulation — and the first graphs citing earlier rounds' records as
    nodes), the D-Ala-D-Ser route (19: ligase, vanT, vanXY), vanY (6), rpoB (11, the
    rifamycin RRDR — first round outside the van set), katG (5, a **fifth** kind: resistance
-   by *losing* a function) and inhA (5, a **sixth**: titration by target overexpression).
-   Reports `research/causal-graphs-round{22..28}.md`.
+   by *losing* a function) inhA (5, a **sixth**: titration by target overexpression) and 16S rRNA (45, the first
+   determinant that is not a protein). Reports `research/causal-graphs-round{22..29}.md`.
 
    **The mechanism kinds now in the corpus:** inactivation · target alteration · precursor
    depletion · precursor substitution · regulation · prodrug-activation loss ·
@@ -126,7 +126,12 @@ cleared._
    - **the other ~40 isoniazid-related genes** are 1–2 record chains (ndh, nudC, mshA/B/C,
      nat, furA, sigI, iniA, mymA, Rv0565c, inbR, kasA, mmaA3, Rv1258c). Several have thin
      or contested evidence; for some the honest outcome is staying drafts.
-   - **16S/23S rRNA (~22)**.
+   - **rRNA target alteration — 105 drafts, not ~22.** ~~16S/aminoglycoside (45)~~
+     **DONE (round 29)**; 23S/macrolide (26) is next by size, then linezolid,
+     pleuromutilin, oxazolidinone and tetracycline families.
+     **Settle #215 first:** these determinants are RNA, the KB is of protein traits, and
+     their graphs cannot route through any protein-trait record because the corpus holds
+     no rRNA trait records. Round 29 curated them as they are and said so.
    - **565 with no gene symbol** — per-record triage, genuinely not a family PR.
 
    Tracker: `grep -rl "graph_id: resistance-draft" data/traits/function/resistance/aro/`.

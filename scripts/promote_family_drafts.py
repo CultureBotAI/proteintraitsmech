@@ -348,6 +348,66 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # 16S rRNA / aminoglycoside (ARO:3003666) -- the first family whose determinant is NOT
+    # A PROTEIN. 45 records, and `determinant_node_type` exists for them (#215).
+    #
+    # It is also structurally unlike every earlier family: there is no `part of` edge to a
+    # Pfam domain and no `member of` a family, because the corpus holds no rRNA trait
+    # records to point at. That is a real gap and is recorded in #215 rather than papered
+    # over by routing through a ribosomal protein no cited paper implicates.
+    "ARO:3003666": {
+        "curated": "2026-08-06T00:00:00Z",
+        "determinant_node_type": "NUCLEIC_ACID",
+        "reference": "PMID:10357824",      # Recht, Douthwaite & Puglisi 1999, EMBO J
+        "mech": {"ARO:3000212": "Expression in E.coli of plasmid-encoded 16S rRNA containing an A1408 to G substitution confers resistance to a subclass of the aminoglycoside antibiotics that contain a 6' amino group on ring I."},
+        "mech_res": "Chemical footprinting experiments indicate that resistance arises from the lower affinity of the drug for the eukaryotic rRNA sequence.",
+        "det_res": [
+            {"reference": "PMID:10357824", "snippet": "Expression in E.coli of plasmid-encoded 16S rRNA containing an A1408 to G substitution confers resistance to a subclass of the aminoglycoside antibiotics that contain a 6' amino group on ring I.",
+             "notes": "Recht et al. 1999 built the substitution into plasmid-encoded 16S rRNA and measured resistance -- construction, not association. Note the scope: a SUBCLASS of aminoglycosides, those with a 6' amino group on ring I."},
+            {"reference": "PMID:10357824", "snippet": "Chemical footprinting experiments indicate that resistance arises from the lower affinity of the drug for the eukaryotic rRNA sequence.",
+             "notes": "And the mechanism, by chemical footprinting: lower affinity of the drug for the substituted sequence."},
+        ],
+        "res_drug": "We also describe the crystal structure of the 30S subunit complexed with the antibiotics paromomycin, streptomycin and spectinomycin, which interfere with decoding and translocation.",
+        "note": "Target alteration in RNA: a substitution in the 16S decoding site lowers aminoglycoside affinity. The same position is what makes these drugs prokaryote-selective.",
+        "extra_nodes": [
+            {"node_id": "decoding_site",
+             "label": "16S rRNA decoding site (A site), around residues A1408, A1492 and A1493",
+             "node_type": "NUCLEIC_ACID",
+             "description": "The aminoglycoside binding site. Ungrounded: no ontology term denotes this site, the same gap as the QRDR and RRDR in earlier rounds."},
+            {"node_id": "decoding", "label": "translation", "node_type": "BIOLOGICAL_PROCESS",
+             "grounding": "GO:0006412",
+             "description": "Decoding and translocation are the steps these drugs interfere with."},
+        ],
+        "extra_edges": [
+            {"subject": "decoding_site", "object": "determinant",
+             "predicate": "part of (the decoding site of this rRNA)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "PMID:11014183", "snippet": "This work reveals the structural basis for the action of these antibiotics, and leads to a model for the role of the universally conserved 16S RNA residues A1492 and A1493 in the decoding process.",
+                           "notes": "Carter et al. 2000 place A1492 and A1493 in the decoding process; Recht et al. 1999 place 1408 in the same drug-binding site."}]},
+            {"subject": "decoding_site", "object": "decoding",
+             "predicate": "causally upstream of (decoding and translocation)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:11014183", "snippet": "This work reveals the structural basis for the action of these antibiotics, and leads to a model for the role of the universally conserved 16S RNA residues A1492 and A1493 in the decoding process.",
+                           "notes": "The universally conserved residues of this site are what read the codon-anticodon match."}]},
+            {"subject": "drug0", "object": "decoding_site",
+             "predicate": "molecularly interacts with (binds the decoding site)",
+             "predicate_id": "RO:0002436",
+             "description": "Drug action, from the 30S crystal structures with paromomycin, streptomycin and spectinomycin.",
+             "evidence": [{"reference": "PMID:11014183", "snippet": "We also describe the crystal structure of the 30S subunit complexed with the antibiotics paromomycin, streptomycin and spectinomycin, which interfere with decoding and translocation.",
+                           "notes": "Carter et al. 2000. The drugs interfere with decoding and translocation, which is why they are bactericidal."}]},
+            {"subject": "determinant", "object": "drug0",
+             "predicate": "negatively regulates (substitution lowers drug affinity)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, measured rather than inferred: chemical footprinting shows the drug binds the substituted sequence less well.",
+             "evidence": [{"reference": "PMID:10357824", "snippet": "Chemical footprinting experiments indicate that resistance arises from the lower affinity of the drug for the eukaryotic rRNA sequence.",
+                           "notes": "Recht et al. 1999."}]},
+            {"subject": "decoding_site", "object": "drug0",
+             "predicate": "molecularly interacts with (its identity at 1408 sets drug selectivity)",
+             "predicate_id": "RO:0002436",
+             "description": "Why these drugs are prokaryote-selective at all -- and why the resistant ribosome is the eukaryotic sequence.",
+             "evidence": [{"reference": "PMID:10357824", "snippet": "A major difference in the binding site for these antibiotics between prokaryotic and eukaryotic ribosomes is the identity of the nucleotide at position 1408 (Escherichia coli numbering), which is an adenosine in prokaryotic ribosomes and a guanosine in eukaryotic ribosomes.",
+                           "notes": "Recht et al. 1999. The resistance substitution makes the bacterial site look eukaryotic, which is the same fact that makes aminoglycosides selective in the first place."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # inhA -- TWO resistance routes on one determinant (ARO:3003417), and one 1994 paper
     # demonstrated both:
     #
@@ -1679,7 +1739,11 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
     """
     ref = cfg["reference"]
     note = cfg.get("note", "")
-    nodes = [{"node_id": "determinant", "label": label, "node_type": "PROTEIN",
+    # PROTEIN for every family until round 29, but 105 draft records are ribosomal RNA and
+    # calling those a protein would be simply false (#215). Optional, defaulting to the
+    # old value so no existing family changes.
+    nodes = [{"node_id": "determinant", "label": label,
+              "node_type": cfg.get("determinant_node_type", "PROTEIN"),
               "grounding": ident}]
     for i, mid in enumerate(mech):
         nodes.append({"node_id": f"mech{i}", "label": names.get(mid, mid),
