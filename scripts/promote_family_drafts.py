@@ -470,9 +470,8 @@ FAMILY_SNIPPETS = {
             "extra_nodes": [
                 {"node_id": "transporter", "label": "MFS transporter with an internal cavity and inner-leaflet loops", "node_type": "STATE",
                  "description": "Ungrounded: the specific transporter differs per record and is on that record's own ARO relations."},
-                {"node_id": "export", "label": "drug export out of the cell",
-                 "node_type": "BIOLOGICAL_PROCESS",
-                 "description": "Ungrounded, as in rounds 33-34."},
+                {"node_id": "export", "label": "xenobiotic detoxification by transmembrane export across the plasma membrane",
+                 "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:1990961"},
             ],
             "extra_edges": [
                 {"subject": "determinant", "object": "transporter",
@@ -507,9 +506,8 @@ FAMILY_SNIPPETS = {
             "extra_nodes": [
                 {"node_id": "transporter", "label": "antiparallel EmrE-type homodimer", "node_type": "STATE",
                  "description": "Ungrounded: a dimer state rather than a compound."},
-                {"node_id": "export", "label": "drug export out of the cell",
-                 "node_type": "BIOLOGICAL_PROCESS",
-                 "description": "Ungrounded, as in rounds 33-34."},
+                {"node_id": "export", "label": "xenobiotic detoxification by transmembrane export across the plasma membrane",
+                 "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:1990961"},
             ],
             "extra_edges": [
                 {"subject": "determinant", "object": "transporter",
@@ -547,8 +545,8 @@ FAMILY_SNIPPETS = {
             {"node_id": "binding_pocket", "label": "periplasmic multi-site drug binding pocket",
              "node_type": "STATE",
              "description": "Where the substrate is captured. Ungrounded: no ontology term denotes it."},
-            {"node_id": "export", "label": "drug export out of the cell", "node_type": "BIOLOGICAL_PROCESS",
-             "description": "Ungrounded: recorded as the transport step the structures describe."},
+            {"node_id": "export", "label": "xenobiotic detoxification by transmembrane export across the plasma membrane",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:1990961"},
         ],
         "extra_edges": [
             {"subject": "determinant", "object": "pump_complex",
@@ -593,9 +591,8 @@ FAMILY_SNIPPETS = {
             {"node_id": "atp_cycle", "label": "ATP-driven nucleotide-binding-domain dimerisation",
              "node_type": "STATE",
              "description": "The energising step. Ungrounded: recorded as the conformational cycle the structures describe."},
-            {"node_id": "export", "label": "drug export out of the cell",
-             "node_type": "BIOLOGICAL_PROCESS",
-             "description": "Ungrounded, as in round 33."},
+            {"node_id": "export", "label": "xenobiotic detoxification by transmembrane export across the plasma membrane",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:1990961"},
         ],
         "extra_edges": [
             {"subject": "determinant", "object": "pump_complex",
