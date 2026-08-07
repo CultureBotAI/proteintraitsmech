@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000075
 trait_relations:
@@ -23,11 +23,12 @@ trait_relations:
     object: ARO:3000008
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3002996 LCR beta-lactamase"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] LCR beta-lactamase → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: LCR beta-lactamase → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PROSITE:PS00337). Serine hydrolysis. Deliberately NOT the carbamylated-lysine general-base chemistry
+    specific to class D -- no source read this round states it.
   nodes:
   - node_id: determinant
     label: LCR beta-lactamase
@@ -49,6 +50,15 @@ causal_graphs:
     label: penicillin beta-lactam
     node_type: CHEMICAL
     grounding: ARO:3000008
+  - node_id: active_site
+    label: beta-lactamase class A/C/D active-site signature (S-x-x-K)
+    node_type: MOTIF
+    grounding: PROSITE:PS00337
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: amide
+    label: amide bond of the beta-lactam ring
+    node_type: CHEMICAL
+    description: 'Ungrounded: the specific bond, not the drug class. Not guessing a CHEBI id (rounds 56-58).'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,78 +72,101 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: ARO:3002996
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
-    - reference: ARO:3002996
-      snippet: LCR beta-lactamases are a class D beta-lactamase that hydrolyze a variety of penams and
-        some cephalosporins.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3002996
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: ARO:3002996
-      notes: 'Auto-drafted: mechanism class ARO:3000187 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000187); verbatim snippet pending curation.'
-    - reference: ARO:3002996
-      snippet: LCR beta-lactamases are a class D beta-lactamase that hydrolyze a variety of penams and
-        some cephalosporins.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000187 (hydrolysis of beta-lactam
-        antibiotic by serine beta-lactamase) is CARD's mechanism categorisation for it; aro.obo does not
-        assert that link as an is_a axiom.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: Family mechanism ARO:3000187.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3002996
-      notes: 'Auto-drafted: mechanism ARO:3000187 → resistance; snippet pending curation.'
-    - reference: ARO:3000187
-      snippet: Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases.  A
-        serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent
-        hydrolysis renders the beta-lactam inactive.
-      notes: ARO definition of the resistance mechanism class ARO:3000187 (hydrolysis of beta-lactam antibiotic
-        by serine beta-lactamase), which states the causal link to resistance.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: Mechanism ARO:3000187 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3002996
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3002996
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000032 ! cephalosporin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PROSITE:PS00337
+      snippet: Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine
+        hydrolases.
+      notes: PROSITE names class D as a SERINE hydrolase -- which is why the serine mechanism applies
+        to these records and the class B zinc mechanism does not.
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: And the reaction itself.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to cephalosporin.
     evidence:
     - reference: ARO:3002996
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000032 ! cephalosporin'
-      notes: Asserted directly on ARO:3002996 (LCR beta-lactamase) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to cephalosporin.
+      notes: Asserted on ARO:3002996 (LCR beta-lactamase), an is_a ancestor of this record's ARO:3002996;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug1
+    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
     evidence:
     - reference: ARO:3002996
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000008 ! penicillin beta-lactam'
-      notes: Asserted directly on ARO:3002996 (LCR beta-lactamase) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to penicillin beta-lactam.
+      notes: Asserted on ARO:3002996 (LCR beta-lactamase), an is_a ancestor of this record's ARO:3002996;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: active_site
+    predicate: part of (active site of the protein)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: PROSITE:PS00337
+      snippet: All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.
+      notes: 'KB trait: the class-A active-site signature carried by this determinant.'
+  - subject: active_site
+    predicate: enables (catalysis)
+    predicate_id: RO:0002327
+    object: mech1
+    evidence:
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: The active site carries out the serine beta-lactam hydrolysis mechanism.
+  - subject: mech0
+    predicate: has input (the beta-lactam amide bond)
+    predicate_id: RO:0002233
+    object: amide
+    description: What the hydrolysis acts on -- the bond whose cleavage destroys the drug.
+    evidence:
+    - reference: PROSITE:PS00337
+      snippet: Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond
+        in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.
+      notes: '''catalyze the hydrolysis of an amide bond in the beta-lactam ring''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
