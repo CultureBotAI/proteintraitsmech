@@ -358,6 +358,14 @@ def _requires_mprf(ident: str, label: str, text: str):
             "PhoP regulator")
 
 
+def _requires_fusidane(ident: str, label: str, text: str):
+    """FusB-type protection of EF-G, not TetM's ribosomal protection (round 31)."""
+    if re.search(r"grounding: ARO:3007153\b", text):
+        return None
+    return ("this determinant's drug is not a fusidane, and the EF-G rescue evidence does "
+            "not describe tetracycline or rifamycin target protection")
+
+
 def _requires_tetracycline(ident: str, label: str, text: str):
     """This config is the RIBOSOME-protection mechanism, so refuse the other two.
 
@@ -924,7 +932,8 @@ FAMILY_SNIPPETS = {
     # Ribosomal protection of tetracycline (ARO:3000185, tetracycline records only) -- a
     # SEVENTH mechanism kind. The determinant neither modifies the drug nor the target: it
     # removes the drug FROM the target. Nothing curated so far has that shape.
-    "ARO:3000185": {
+    "ARO:3000185": [
+    {
         "curated": "2026-08-06T00:00:00Z",
         "precondition": _requires_tetracycline,
         "reference": "PMID:23027944",      # Donhofer et al. 2012, PNAS
@@ -968,6 +977,54 @@ FAMILY_SNIPPETS = {
              ]},
         ],
     },
+        {
+            "curated": "2026-08-07T00:00:00Z",
+            "precondition": _requires_fusidane,
+            "reference": "PMID:22308410",      # Cox et al. 2012, PNAS
+            "mech": {"ARO:0001003": "By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to resume translation.", "ARO:3000212": "By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to resume translation."},
+            "mech_res": "By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to resume translation.",
+            "det_res": [
+                {"reference": "PMID:22308410", "snippet": "These proteins bind to elongation factor G (EF-G), the target of FA, and rescue translation from FA-mediated inhibition by an unknown mechanism.",
+                 "notes": "Cox et al. 2012. FusB-type proteins bind EF-G, which is fusidic acid's target."},
+                {"reference": "PMID:22308410", "snippet": "By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to resume translation.",
+                 "notes": "And the mechanism, which is NOT TetM's: the drug is not dislodged. The stalled complex the drug creates is dissociated, and translation resumes."},
+            ],
+            "res_drug": "By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to resume translation.",
+            "note": "Target protection by rescuing a stalled complex rather than by displacing the drug.",
+            "extra_nodes": [
+                {"node_id": "efg", "label": "elongation factor G (EF-G), the drug's target",
+                 "node_type": "PROTEIN",
+                 "description": "Ungrounded: the specific EF-G differs per organism and the corpus holds no EF-G trait record."},
+                {"node_id": "stalled", "label": "stalled ribosome-EF-G-GDP complex", "node_type": "STATE",
+                 "description": "What fusidic acid produces, and what FusB dissociates. Ungrounded."},
+                {"node_id": "zinc_finger", "label": "four-cysteine zinc finger domain of FusB-type proteins",
+                 "node_type": "DOMAIN",
+                 "description": "The high-affinity EF-G interaction module. Ungrounded: a unique fold with no KB trait record."},
+            ],
+            "extra_edges": [
+                {"subject": "zinc_finger", "object": "determinant",
+                 "predicate": "part of (the EF-G-binding domain)", "predicate_id": "BFO:0000050",
+                 "evidence": [{"reference": "PMID:22308410", "snippet": "Here we show that the FusB family are two-domain metalloproteins, the C-terminal domain of which contains a four-cysteine zinc finger with a unique structural fold.",
+                               "notes": "Cox et al. 2012; this C-terminal domain mediates the high-affinity interaction with EF-G."}]},
+                {"subject": "drug0", "object": "stalled",
+                 "predicate": "causally upstream of (stalls the ribosome)", "predicate_id": "RO:0002411",
+                 "requires": {"drug0": "ARO:3007153"},
+                 "description": "Drug action: fusidic acid traps EF-G on the ribosome after GTP hydrolysis.",
+                 "evidence": [{"reference": "PMID:22308410", "snippet": "By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to resume translation.",
+                               "notes": "The complexes 'form in the presence of FA'."}]},
+                {"subject": "determinant", "object": "stalled",
+                 "predicate": "negatively regulates (dissociates the stalled complex)",
+                 "predicate_id": "RO:0002212",
+                 "description": "The causal core, and it differs from TetM (round 31): the drug is not displaced. The complex it creates is taken apart, so translation resumes with the drug still present.",
+                 "evidence": [{"reference": "PMID:22308410", "snippet": "By binding to EF-G on the ribosome, FusB-type proteins promote the dissociation of stalled ribosome-EF-G-GDP complexes that form in the presence of FA, thereby allowing the ribosomes to resume translation.",
+                               "notes": "Cox et al. 2012."}]},
+                {"subject": "determinant", "object": "efg",
+                 "predicate": "molecularly interacts with (binds the target)", "predicate_id": "RO:0002436",
+                 "evidence": [{"reference": "PMID:22308410", "snippet": "These proteins bind to elongation factor G (EF-G), the target of FA, and rescue translation from FA-mediated inhibition by an unknown mechanism.",
+                               "notes": "The protection is by binding the TARGET, not the drug."}]},
+            ],
+        },
+    ],
     # ---------------------------------------------------------------------------------
     # ethA / EtaA -- the ethionamide half of round 27's mechanism kind (ARO:3003456).
     # Ethionamide is a prodrug like isoniazid, and EthA is its activator, so a defective
