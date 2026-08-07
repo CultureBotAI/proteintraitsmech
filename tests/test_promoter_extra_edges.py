@@ -1195,3 +1195,62 @@ def test_the_23s_config_carries_the_graded_affinity_and_its_control():
             if e["subject"] == "conformation" and e["object"] == "pt_loop"][0]
     assert len(core["evidence"]) == 2
     assert "gave no detectable effects" in core["evidence"][1]["snippet"]
+
+
+def _fabg1():
+    """The fabG1 config -- selected structurally, by its mycolic-acid node (#219)."""
+    for cfg in promote.family_configs("ARO:3004887"):
+        if any(n["node_id"] == "mycolic" for n in cfg.get("extra_nodes", ())):
+            return cfg
+    raise AssertionError("no fabG1 config with a mycolic-acid node")
+
+
+def test_fabg1_asserts_target_alteration_not_promoter_overexpression():
+    """#219 was blocked sourcing a mechanism CARD never claims.
+
+    CARD says the mutation stops the drug inhibiting mycolic acid synthesis --
+    target alteration. It says nothing about the fabG1 promoter raising inhA
+    expression. If someone adds that arm it needs its OWN evidence, so this test
+    fails loudly rather than letting the well-known story drift in uncited.
+    """
+    cfg = _fabg1()
+    core = [e for e in cfg["extra_edges"] if e["object"] == "inhibition"
+            and e["subject"] == "determinant"]
+    assert len(core) == 1, "expected exactly one causal-core edge"
+    assert core[0]["predicate_id"] == "RO:0002212"
+
+    # Scan only ASSERTED content -- snippets, predicates, descriptions, labels.
+    # `notes`/`note` are excluded on purpose: they exist to say the promoter arm is
+    # deliberately absent, so scanning them would fail on the documentation of the
+    # very property under test.
+    asserted = []
+
+    def _walk(o, key=None):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                _walk(v, k)
+        elif isinstance(o, list):
+            for v in o:
+                _walk(v, key)
+        elif isinstance(o, str) and key not in ("notes", "note"):
+            asserted.append(o)
+
+    _walk(cfg)
+    blob = _flat(" ".join(asserted)).lower()
+    for banned in ("promoter", "overexpress", "upregulat", "increased expression",
+                   "c-15t", "inha expression"):
+        assert banned not in blob, (
+            f"fabG1 config asserts {banned!r}; CARD does not claim it (#219). "
+            "Adding that arm requires its own evidence."
+        )
+
+
+def test_fabg1_pathway_edge_flags_its_borrowed_citation():
+    """PMID:8284673 studied InhA, the NEXT step -- the notes must say so."""
+    cfg = _fabg1()
+    edge = next(e for e in cfg["extra_edges"] if e["object"] == "mycolic")
+    ev = edge["evidence"][0]
+    assert ev["reference"] == "PMID:8284673"
+    assert "inha" in _flat(ev["notes"]).lower(), (
+        "the borrowed citation must name what it actually studied"
+    )
