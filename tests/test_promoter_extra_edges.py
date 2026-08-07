@@ -1658,3 +1658,26 @@ def test_vat_still_names_its_donor_because_card_does():
     vat = next(c for c in promote.family_configs("ARO:3000233")
                if "ARO:3000106" in c["mech"])
     assert any(n["node_id"] == "acetyl_coa" for n in vat["extra_nodes"])
+
+
+def test_mate_does_not_pin_the_coupling_ion_but_smr_does():
+    """CARD says "cationic" for MATE and "protons" for SMR. Both are followed.
+
+    MATE transporters genuinely split between Na+ and H+ coupling, so the vagueness is
+    the source being accurate. Copying round 67's proton node here would be wrong, and
+    this pins both sides so neither gets harmonised into the other.
+    """
+    mate = promote.family_configs("ARO:3000112")[0]
+    labels = " ".join(n["label"] for n in mate["extra_nodes"]).lower()
+    assert "cationic" in labels and "proton" not in labels
+
+    smr = promote.family_configs("ARO:0010003")[0]
+    smr_labels = " ".join(n["label"] for n in smr["extra_nodes"]).lower()
+    assert "proton" in smr_labels
+
+
+def test_mate_keeps_the_almost_all_hedge_on_substrate_recognition():
+    """"almost all MATE transporters recognize fluoroquinolones" -- not universal."""
+    cfg = promote.family_configs("ARO:3000112")[0]
+    edge = next(e for e in cfg["extra_edges"] if e["object"] == "drug0")
+    assert "almost all" in edge["evidence"][0]["snippet"]
