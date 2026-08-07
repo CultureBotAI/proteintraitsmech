@@ -888,14 +888,22 @@ def test_rnd_precondition_reads_the_complex_not_the_subunit():
     subunit --part_of--> complex --is_a--> RND. Two hops, fully derivable from the release,
     which is why this is a precondition and not a hand-maintained name list.
     """
-    pre = promote.family_configs("ARO:3000748")[0]["precondition"]
+    # selected by CONTENT, not position: the family now carries four pump-class configs
+    # and their order is not part of the contract.
+    # by a STRUCTURAL marker, not by prose: the MFS config's note MENTIONS RND (to say it
+    # is distinct from it), so matching on the word picked the wrong config.
+    rnd = [c for c in promote.family_configs("ARO:3000748")
+           if any(n["node_id"] == "binding_pocket" for n in c["extra_nodes"])][0]
+    pre = rnd["precondition"]
     assert pre("ARO:3000216", "acrB", "") is None            # part_of AcrAB-TolC, is_a RND
     assert pre("ARO:9999999", "not a pump subunit", "") is not None
 
 
 def test_the_rnd_graph_says_a_subunit_is_part_of_the_pump():
     """RND resistance is a property of a three-part machine; a subunit is not the pump."""
-    cfg = promote.family_configs("ARO:3000748")[0]
+    cfg = [c for c in promote.family_configs("ARO:3000748")
+           if any(n["node_id"] == "pump_complex" for n in c["extra_nodes"])
+           and not any(n["node_id"] == "atp_cycle" for n in c["extra_nodes"])][0]
     edge = [e for e in cfg["extra_edges"]
             if e["subject"] == "determinant" and e["object"] == "pump_complex"][0]
     assert edge["predicate_id"] == "BFO:0000050"
@@ -914,7 +922,7 @@ def test_the_efflux_family_carries_a_config_per_pump_class():
     energetics AND the wrong route for the substrate.
     """
     cfgs = promote.family_configs("ARO:3000748")
-    assert len(cfgs) == 2
+    assert len(cfgs) == 4          # RND, ABC, MFS, SMR — one per pump class
     abc = [c for c in cfgs if any(n["node_id"] == "atp_cycle" for n in c["extra_nodes"])]
     assert len(abc) == 1
     out = _flat(_graph(abc[0], mech=("ARO:0010000",), drug=("ARO:0000045",)))
