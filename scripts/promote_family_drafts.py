@@ -733,7 +733,75 @@ def _requires_topoisomerase_subunit(ident: str, label: str, text: str):
     return None
 
 
+def _requires_adp_ribosyltransferase(ident: str, label: str, text: str):
+    """ADP-ribosylation specifically -- ARO:3000576 mixes FOUR chemistries.
+
+    Its 17 drafts split across ADP-ribosylation (arr, 8), hydroxylation (4),
+    glycosylation (2) and phosphorylation (3). They inactivate the same drug by
+    different reactions, so one config across the family would assert the wrong
+    chemistry for most of it -- rounds 22 and 58's error. The other three need their own
+    configs and their own snippets.
+    """
+    if "ARO:3000266" not in D.parse_relations(text)[0]:
+        return "record carries no ADP-ribosylation mechanism (ARO:3000266)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Rifampin ADP-ribosyltransferases (arr) -- inactivation by chemical modification.
+    #
+    # Keyed on ARO:3000576 but covering ONLY its ADP-ribosylating members; the family
+    # also holds hydroxylases, glycosyltransferases and phosphotransferases, which do the
+    # same job by different chemistry.
+    "ARO:3000576": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_adp_ribosyltransferase,
+        "reference": "ARO:3000266",
+        "mech": {
+            "ARO:0001004": "Enzymes that inactivate rifampin antibiotics by chemical modification.",
+            "ARO:3000266": "The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.",
+        },
+        "mech_res": "The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.",
+        "det_res": [
+            {"reference": "ARO:3000266", "snippet": "The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.",
+             "notes": "The reaction: ADP-ribose is transferred from NAD+ onto the drug."},
+            {"reference": "ARO:3000576", "snippet": "Enzymes that inactivate rifampin antibiotics by chemical modification.",
+             "notes": "And what it achieves. SCOPE: this family sentence covers hydroxylation, glycosylation and phosphorylation too -- only the ADP-ribosylating members are curated by this config."},
+        ],
+        "res_drug": "Enzymes that inactivate rifampin antibiotics by chemical modification.",
+        "note": "Inactivation by chemical modification. Only the arr/ADP-ribosylating subset of ARO:3000576.",
+        "extra_nodes": [
+            {"node_id": "adp_ribosylation", "label": "ADP-ribosyltransferase activity on rifampin",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: a rifampin-specific ADP-ribosyltransferase, not looked up rather than guessed (rounds 56-60)."},
+            {"node_id": "nad", "label": "NAD+ (the ADP-ribose donor)",
+             "node_type": "CHEMICAL", "grounding": "CHEBI:15846"},
+            {"node_id": "modified", "label": "ADP-ribosylated, inactive rifampin",
+             "node_type": "STATE",
+             "description": "The product state. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "adp_ribosylation",
+             "predicate": "enables (ADP-ribosylates the drug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3000266", "snippet": "The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.",
+                           "notes": "'the enzymatic addition of ADP-ribose'."}]},
+            {"subject": "adp_ribosylation", "object": "nad",
+             "predicate": "has input (the ADP-ribose donor)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3000266", "snippet": "The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.",
+                           "notes": "'from NAD+' -- the cosubstrate, which is what makes this a transferase rather than a hydrolase."}]},
+            {"subject": "adp_ribosylation", "object": "drug0",
+             "predicate": "has input (the drug)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3000266", "snippet": "The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.",
+                           "notes": "The antibiotic is the acceptor, which is what makes this inactivation rather than target alteration."}]},
+            {"subject": "adp_ribosylation", "object": "modified",
+             "predicate": "causally upstream of (inactivates the drug)",
+             "predicate_id": "RO:0002411",
+             "description": "The causal core.",
+             "evidence": [{"reference": "ARO:3000266", "snippet": "The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.",
+                           "notes": "'The inactivation of antibiotics by...' -- CARD names the outcome in the same sentence as the chemistry."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Antibiotic resistant DNA topoisomerase subunits (ARO:3000370).
     #

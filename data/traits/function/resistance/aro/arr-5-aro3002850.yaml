@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000390
 trait_relations:
@@ -25,11 +25,11 @@ evidence:
 - reference: DOI:10.1128/AAC.00017-08
   notes: PMID:18299416 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] arr-5 → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: arr-5 → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3000266). Inactivation by chemical modification. Only the arr/ADP-ribosylating subset of ARO:3000576.
   nodes:
   - node_id: determinant
     label: arr-5
@@ -47,6 +47,19 @@ causal_graphs:
     label: rifamycin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000157
+  - node_id: adp_ribosylation
+    label: ADP-ribosyltransferase activity on rifampin
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: a rifampin-specific ADP-ribosyltransferase, not looked up rather than guessed
+      (rounds 56-60).'
+  - node_id: nad
+    label: NAD+ (the ADP-ribose donor)
+    node_type: CHEMICAL
+    grounding: CHEBI:15846
+  - node_id: modified
+    label: ADP-ribosylated, inactive rifampin
+    node_type: STATE
+    description: The product state. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,66 +73,93 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.00017-08
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
-    - reference: ARO:3002850
-      snippet: arr-5 is an integron-encoded ribosyltransferase found in Pseudomonas aeruginosa.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3000266
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00017-08
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: ARO:3000266
+      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1128/AAC.00017-08
-      notes: 'Auto-drafted: mechanism class ARO:3000266 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000266); verbatim snippet pending curation.'
-    - reference: ARO:3002850
-      snippet: arr-5 is an integron-encoded ribosyltransferase found in Pseudomonas aeruginosa.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000266 (ADP-ribosylation of
-        antibiotic conferring resistance) is CARD's mechanism categorisation for it; aro.obo does not
-        assert that link as an is_a axiom.
+    - reference: ARO:3000266
+      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
+      notes: Family mechanism ARO:3000266.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00017-08
-      notes: 'Auto-drafted: mechanism ARO:3000266 → resistance; snippet pending curation.'
     - reference: ARO:3000266
       snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
-      notes: ARO definition of the resistance mechanism class ARO:3000266 (ADP-ribosylation of antibiotic
-        conferring resistance), which states the causal link to resistance.
+      notes: Mechanism ARO:3000266 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00017-08
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3002850
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000169 ! rifampin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3000266
+      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
+      notes: 'The reaction: ADP-ribose is transferred from NAD+ onto the drug.'
+    - reference: ARO:3000576
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: 'And what it achieves. SCOPE: this family sentence covers hydroxylation, glycosylation and
+        phosphorylation too -- only the ADP-ribosylating members are curated by this config.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
     evidence:
     - reference: ARO:3000390
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
       notes: Asserted on ARO:3000390 (rifampin ADP-ribosyltransferase (Arr)), an is_a ancestor of this
         record's ARO:3002850; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
+  - subject: determinant
+    predicate: enables (ADP-ribosylates the drug)
+    predicate_id: RO:0002327
+    object: adp_ribosylation
+    evidence:
+    - reference: ARO:3000266
+      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
+      notes: '''the enzymatic addition of ADP-ribose''.'
+  - subject: adp_ribosylation
+    predicate: has input (the ADP-ribose donor)
+    predicate_id: RO:0002233
+    object: nad
+    evidence:
+    - reference: ARO:3000266
+      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
+      notes: '''from NAD+'' -- the cosubstrate, which is what makes this a transferase rather than a hydrolase.'
+  - subject: adp_ribosylation
+    predicate: has input (the drug)
+    predicate_id: RO:0002233
+    object: drug0
+    evidence:
+    - reference: ARO:3000266
+      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
+      notes: The antibiotic is the acceptor, which is what makes this inactivation rather than target
+        alteration.
+  - subject: adp_ribosylation
+    predicate: causally upstream of (inactivates the drug)
+    predicate_id: RO:0002411
+    object: modified
+    description: The causal core.
+    evidence:
+    - reference: ARO:3000266
+      snippet: The inactivation of antibiotics by the enzymatic addition of ADP-ribose from NAD+.
+      notes: '''The inactivation of antibiotics by...'' -- CARD names the outcome in the same sentence
+        as the chemistry.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

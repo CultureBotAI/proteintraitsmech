@@ -1544,3 +1544,14 @@ def test_topoisomerase_is_binding_loss_not_cleavage_complex_trapping():
     assert any(e["object"] == "binding_loss" for e in cfg["extra_edges"])
     assert "cleavage complex" not in " ".join(
         e["evidence"][0]["snippet"] for e in cfg["extra_edges"]).lower()
+
+
+def test_rifampin_config_covers_only_the_adp_ribosylating_subset():
+    """ARO:3000576 mixes four chemistries; asserting one across it would be wrong."""
+    cfg = promote.family_configs("ARO:3000576")[0]
+    assert "ARO:3000266" in cfg["mech"]
+    for other in ("ARO:3000450", "ARO:3000208", "ARO:3000105"):
+        assert other not in cfg["mech"], (
+            f"{other} is a different chemistry and needs its own snippets"
+        )
+    assert "SCOPE" in cfg["det_res"][1]["notes"]
