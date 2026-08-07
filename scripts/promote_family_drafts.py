@@ -818,7 +818,7 @@ def _rifampin_modification_config(mech_id: str, human: str, snippet: str,
 
 
 def _inactivation_transfer_config(mech_id: str, human: str, snippet: str,
-                                  activity_label: str) -> dict:
+                                  activity_label: str, hedged_donor: bool = True) -> dict:
     """One group-transfer chemistry under ARO:3000557, from CARD's mechanism-term text.
 
     All three of the big ones -- nucleotidylation, phosphorylation, acylation -- HEDGE
@@ -838,16 +838,22 @@ def _inactivation_transfer_config(mech_id: str, human: str, snippet: str,
         "mech_res": snippet,
         "det_res": [
             {"reference": mech_id, "snippet": snippet,
-             "notes": ("CARD's definition of " + human + ". NOTE the hedge -- the donor is "
-                       "given as 'usually'/'often', so it is not modelled as a node.")},
+             "notes": ("CARD's definition of " + human + "."
+                       + (" NOTE the hedge -- the donor is given as 'usually'/'often', so "
+                          "it is not modelled as a node." if hedged_donor else
+                          " No group donor is involved: this reaction cleaves or adds to "
+                          "the drug rather than transferring a group onto it."))},
             {"reference": "ARO:3000557", "snippet": "Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation includes chemical modification, destruction, etc.",
              "notes": ("And the family claim. SCOPE: ARO:3000557 covers several chemistries; "
                        "only the " + human + " members are curated by this config.")},
         ],
         "res_drug": snippet,
-        "note": ("Inactivation by " + human + ". The group donor is deliberately NOT a node: "
-                 "CARD hedges it, and every big chemistry under ARO:3000557 hedges it the "
-                 "same way."),
+        "note": ("Inactivation by " + human + "."
+                 + (" The group donor is deliberately NOT a node: CARD hedges it, and every "
+                    "group-transfer chemistry under ARO:3000557 hedges it the same way."
+                    if hedged_donor else
+                    " No donor node, because no group is donated -- the reaction cleaves "
+                    "the drug or adds to it directly.")),
         "extra_nodes": [
             {"node_id": "transfer", "label": activity_label,
              "node_type": "MOLECULAR_FUNCTION",
@@ -4778,6 +4784,34 @@ FAMILY_SNIPPETS["ARO:3000557"] = [
         "Addition of an acyl group to an antibiotic, often via acetylation by acetylCoA.",
         "antibiotic acyltransferase activity"),
 ]
+
+# The four remaining chemistries under ARO:3000557 that carry a specific mechanism id.
+# Unlike the three group transfers above, these CLEAVE or ADD-TO the drug rather than
+# transferring a group onto it, and each of their mechanism-term definitions is specific
+# with no donor hedge -- so each gets its own snippet and none needs a donor node at all.
+FAMILY_SNIPPETS["ARO:3000557"] = FAMILY_SNIPPETS["ARO:3000557"] + [
+    _inactivation_transfer_config(
+        "ARO:3000187", "beta-lactam hydrolysis",
+        "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an "
+        "amide bond in the beta-lactam ring of antibiotics belonging to the "
+        "penicillin/cephalosporin family.",
+        "beta-lactam hydrolase activity", hedged_donor=False),
+    _inactivation_transfer_config(
+        "ARO:3004140", "fusidic acid lactonisation",
+        "Enzymes shown to inactivate fusidic acid by hydrolytic cleavage from the 16 "
+        "beta-position of fusidic acid and its derivatives.",
+        "fusidic acid hydrolase activity", hedged_donor=False),
+    _inactivation_transfer_config(
+        "ARO:3003985", "bacitracin amidohydrolysis",
+        "Hydrolysis of amido side-chain of asparagine-12 forming hydrogen bond with "
+        "undecaprenyl pyrophosphate in bacitracin leading to antibiotic inactivation.",
+        "bacitracin amidohydrolase activity", hedged_donor=False),
+    _inactivation_transfer_config(
+        "ARO:3000450", "hydroxylation",
+        "Inactivation of an antibiotic via introduction a hydroxyl group (-OH).",
+        "antibiotic hydroxylase activity", hedged_donor=False),
+]
+
 
 def _check_config_order() -> None:
     for fam in FAMILY_SNIPPETS:
