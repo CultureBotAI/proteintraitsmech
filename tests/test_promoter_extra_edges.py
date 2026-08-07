@@ -1756,3 +1756,24 @@ def test_sequestration_binds_rather_than_modifies_the_drug():
     assert "binds the drug" in preds
     for chem in ("hydrolys", "acetylat", "phosphorylat", "reduc"):
         assert chem not in preds
+
+
+def test_charge_alteration_has_both_lipid_a_routes():
+    """L-Ara4N and phosphoethanolamine: same charge outcome, different moiety."""
+    cfgs = promote.family_configs("ARO:3003580")
+    assert len(cfgs) == 2
+    petn = next(c for c in cfgs if c["reference"] == "ARO:3003588")
+    assert any("phosphoethanolamine" in n["label"] for n in petn["extra_nodes"])
+
+
+def test_petn_quotes_the_weak_and_strong_resistance_claims_separately():
+    """ARO:3004112 hedges ("often associated with"); ARO:3003588 does not.
+
+    The hedged one is cited for the CHEMISTRY, the causal one for the resistance. Mixing
+    them up would let the graph inherit a strength its snippet does not carry.
+    """
+    petn = next(c for c in promote.family_configs("ARO:3003580")
+                if c["reference"] == "ARO:3003588")
+    hedged = next(e for e in petn["det_res"] if e["reference"] == "ARO:3004112")
+    assert "hedge" in _flat(hedged["notes"]).lower()
+    assert "quoted for the reaction" in _flat(hedged["notes"])
