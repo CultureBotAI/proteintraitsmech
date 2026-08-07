@@ -1589,3 +1589,18 @@ def test_streptogramin_lyase_is_not_modelled_as_a_transfer():
     assert "donor" not in labels and "coa" not in labels
     assert any(e["subject"] == "lactone" and e["object"] == "drug0"
                for e in cfg["extra_edges"]), "the ring must be part-of the drug"
+
+
+def test_nim_records_association_not_causation():
+    """CARD says these enzymes are "associated with" resistance, not that they confer it."""
+    cfg = promote.family_configs("ARO:3007103")[0]
+    weak = next(e for e in cfg["det_res"] if "associated with" in e["snippet"])
+    assert "not 'confers'" in _flat(weak["notes"])
+
+
+def test_nim_keeps_the_familys_own_negative_result():
+    """ARO:3007671 says expression alone is insufficient -- that bounds the whole claim."""
+    cfg = promote.family_configs("ARO:3007103")[0]
+    assert any("not sufficient" in e["snippet"] for e in cfg["det_res"]), (
+        "the negative result must not be dropped for a tidier story"
+    )

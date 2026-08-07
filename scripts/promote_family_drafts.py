@@ -819,6 +819,72 @@ def _rifampin_modification_config(mech_id: str, human: str, snippet: str,
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # Nitroimidazole reductases (nim, ARO:3007103) -- inactivation by REDUCTION.
+    #
+    # A distinct chemistry from the transfer reactions (rounds 62-64) and the hydrolyses:
+    # nothing is added and no bond is cleaved, the drug's nitro group is reduced to an
+    # amine and the molecule simply stops being an antibiotic.
+    #
+    # TWO honesty problems in this family's own text, both handled rather than smoothed:
+    #
+    # 1. CARD says these enzymes are "ASSOCIATED WITH resistance", not that they confer
+    #    it. The chemistry sentence is causal; the resistance sentence is not. The
+    #    determinant->resistance edge therefore carries BOTH, with notes saying which is
+    #    which, instead of quoting only the strong one.
+    # 2. ARO:3007671 states outright that "NimB expression alone is not sufficient for
+    #    nitroimidazole resistance" -- a negative result INSIDE the family. It is quoted
+    #    on the edge rather than dropped, the way rounds 20 and 23 used negative results.
+    "ARO:3007103": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:0001004", "antibiotic inactivation"),
+        "reference": "ARO:3007103",
+        "mech": {"ARO:0001004": "Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics by reducing their nitro functional group to an amino group."},
+        "mech_res": "Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics by reducing their nitro functional group to an amino group.",
+        "det_res": [
+            {"reference": "ARO:3007103", "snippet": "Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics by reducing their nitro functional group to an amino group.",
+             "notes": "The chemistry, stated causally: reduction of the nitro group to an amine deactivates the drug."},
+            {"reference": "ARO:3007103", "snippet": "These enzymes are associated with resistance to nitroimidazole derivatives in Bacteroides fragilis but have also been reported in a variety of anaerobic Gram-negative and Gram-positive genera.",
+             "notes": "The resistance claim, stated WEAKLY. CARD says 'associated with', not 'confers' -- recorded as association rather than upgraded to causation."},
+            {"reference": "ARO:3007671", "snippet": "NimB expression alone is not sufficient for nitroimidazole resistance.",
+             "notes": "And the family's own negative result: for C. difficile nimB, the enzyme is necessary but NOT sufficient -- constitutive transcription from a promoter mutation is also required. Quoted because it bounds the claim the other two snippets make."},
+        ],
+        "res_drug": "Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics by reducing their nitro functional group to an amino group.",
+        "note": ("Inactivation by reduction. The determinant->resistance evidence is "
+                 "deliberately mixed-strength: CARD states the chemistry causally and the "
+                 "resistance only as an association, and one member says expression alone "
+                 "is insufficient."),
+        "extra_nodes": [
+            {"node_id": "reduction", "label": "nitroimidazole reductase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-64)."},
+            {"node_id": "nitro", "label": "nitro functional group of the drug",
+             "node_type": "CHEMICAL",
+             "description": "The group reduced. Ungrounded: a substructure, not a compound."},
+            {"node_id": "amine", "label": "amino group -- the reduced, inactive drug",
+             "node_type": "STATE", "description": "The product state. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "reduction",
+             "predicate": "enables (reduces the drug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3007103", "snippet": "Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics by reducing their nitro functional group to an amino group.",
+                           "notes": "'a group of enzymes that deactivate nitroimidazole antibiotics by reducing...'."}]},
+            {"subject": "nitro", "object": "drug0",
+             "predicate": "part of (the intact drug)", "predicate_id": "BFO:0000050",
+             "description": "Why reducing this group destroys the antibiotic: the nitro group is what makes a nitroimidazole one.",
+             "evidence": [{"reference": "ARO:3007103", "snippet": "Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics by reducing their nitro functional group to an amino group.",
+                           "notes": "'their nitro functional group' -- the drug's own substructure, as with the streptogramin lactone ring in round 64."}]},
+            {"subject": "reduction", "object": "nitro",
+             "predicate": "has input (the nitro group)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3007103", "snippet": "Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics by reducing their nitro functional group to an amino group.",
+                           "notes": "The substrate is a group on the drug, not the whole molecule."}]},
+            {"subject": "reduction", "object": "amine",
+             "predicate": "has output (the reduced amine)", "predicate_id": "RO:0002234",
+             "description": "The causal core: reduction to the amine is the deactivation.",
+             "evidence": [{"reference": "ARO:3007103", "snippet": "Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics by reducing their nitro functional group to an amino group.",
+                           "notes": "'reducing their nitro functional group to an amino group'."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # Streptogramin inactivation (ARO:3000233) -- TWO chemistries on TWO drug subtypes.
     #
     # CARD's parent term says so itself: "There are two known mechanisms of streptogramin
