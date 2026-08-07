@@ -5092,6 +5092,95 @@ def main() -> int:
     return 0
 
 
+
+# Two more MECHANISM-keyed pockets, same root-keyed treatment as resistance-by-absence
+# (round 71): the mechanism id is not an is_a ancestor of its own records, so the
+# precondition does the selection and ARO:3000000 is only a scan root.
+FAMILY_SNIPPETS["ARO:3000000"] = [
+    FAMILY_SNIPPETS["ARO:3000000"],
+    {
+        # 14th mechanism kind: the cell stops needing the pathway the drug blocks, by
+        # importing the product from the host instead. Nothing resists and nothing is
+        # modified -- the target simply stops mattering.
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:3007424", "host-nutrient bypass"),
+        "reference": "ARO:3007424",
+        "mech": {"ARO:3007424": "Resistance via uptake of host nutrients to bypass antibiotic mechanism."},
+        "mech_res": "Resistance via uptake of host nutrients to bypass antibiotic mechanism.",
+        "det_res": [
+            {"reference": "ARO:3007424", "snippet": "Resistance via uptake of host nutrients to bypass antibiotic mechanism.",
+             "notes": "The mechanism: uptake of a HOST nutrient bypasses the step the drug blocks."},
+            {"reference": "ARO:3007427", "snippet": "ThfT is an ECF transporter S component that expands the substrate profile of endogenous ECF transporters to include folate.",
+             "notes": "The worked case. SCOPE: ThfT and folate specifically -- the mechanism term does not name a nutrient, and the other two records are the generic family and the transporter component."},
+        ],
+        "res_drug": "Resistance via uptake of host nutrients to bypass antibiotic mechanism.",
+        "note": "Bypass by host-nutrient uptake. The drug's target is untouched; it stops being required.",
+        "extra_nodes": [
+            {"node_id": "uptake", "label": "host-nutrient uptake activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-71)."},
+            {"node_id": "bypassed", "label": "the drug-blocked step is no longer required",
+             "node_type": "STATE",
+             "description": "The causal core. Ungrounded: a requirement's absence is not an entity."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "uptake",
+             "predicate": "enables (imports the host nutrient)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3007424", "snippet": "Resistance via uptake of host nutrients to bypass antibiotic mechanism.",
+                           "notes": "'uptake of host nutrients'."}]},
+            {"subject": "uptake", "object": "bypassed",
+             "predicate": "causally upstream of (makes the blocked step dispensable)",
+             "predicate_id": "RO:0002411",
+             "description": "Why this is resistance without touching the drug or its target.",
+             "evidence": [{"reference": "ARO:3007424", "snippet": "Resistance via uptake of host nutrients to bypass antibiotic mechanism.",
+                           "notes": "'to bypass antibiotic mechanism' -- the target is not altered, it is made irrelevant."}]},
+        ],
+    },
+    {
+        # 15th mechanism kind: sequestration. The drug is neither destroyed nor expelled --
+        # it is bound up so it never reaches its target. Distinct from the inactivation
+        # chemistries (rounds 62-70), where the drug molecule is chemically changed.
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:3001206", "inactivation by sequestration"),
+        "reference": "ARO:3001206",
+        # BOTH ids, because BRP(MBL) carries the generic ARO:0001004 as well and
+        # UncoveredMechanism correctly refused it otherwise. The same sentence serves
+        # both: CARD's sequestration definition opens with "Inactivation of an
+        # antibiotic", so it IS the inactivation claim, not a substitute for one.
+        "mech": {"ARO:0001004": "Inactivation of an antibiotic by formation of a complex, preventing interaction of the antibiotic with its target.",
+                 "ARO:3001206": "Inactivation of an antibiotic by formation of a complex, preventing interaction of the antibiotic with its target."},
+        "mech_res": "Inactivation of an antibiotic by formation of a complex, preventing interaction of the antibiotic with its target.",
+        "det_res": [
+            {"reference": "ARO:3001206", "snippet": "Inactivation of an antibiotic by formation of a complex, preventing interaction of the antibiotic with its target.",
+             "notes": "The whole mechanism, and the distinction that matters: a COMPLEX is formed, so the drug is intact but unavailable."},
+        ],
+        "res_drug": "Inactivation of an antibiotic by formation of a complex, preventing interaction of the antibiotic with its target.",
+        "note": "Sequestration. The drug is bound, not chemically changed -- unlike every inactivation chemistry in rounds 62-70.",
+        "extra_nodes": [
+            {"node_id": "complex", "label": "determinant-antibiotic complex",
+             "node_type": "STATE",
+             "description": "The bound drug. Ungrounded: a specific protein-drug complex has no term here."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "drug0",
+             "predicate": "molecularly interacts with (binds the drug)",
+             "predicate_id": "RO:0002436",
+             "evidence": [{"reference": "ARO:3001206", "snippet": "Inactivation of an antibiotic by formation of a complex, preventing interaction of the antibiotic with its target.",
+                           "notes": "'formation of a complex' -- a binding event, not a reaction."}]},
+            {"subject": "complex", "object": "drug0",
+             "predicate": "has part (the sequestered antibiotic)", "predicate_id": "BFO:0000051",
+             "description": "The drug is a CONSTITUENT of the complex, which is what makes it unavailable -- round 21's correction, where a drug-interacts-with-complex edge was circular.",
+             "evidence": [{"reference": "ARO:3001206", "snippet": "Inactivation of an antibiotic by formation of a complex, preventing interaction of the antibiotic with its target.",
+                           "notes": "The complex is what the drug ends up inside."}]},
+            {"subject": "complex", "object": "resistance",
+             "predicate": "causally upstream of (drug never reaches its target)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3001206", "snippet": "Inactivation of an antibiotic by formation of a complex, preventing interaction of the antibiotic with its target.",
+                           "notes": "'preventing interaction of the antibiotic with its target'."}]},
+        ],
+    },
+]
+
 _check_config_order()
 
 
