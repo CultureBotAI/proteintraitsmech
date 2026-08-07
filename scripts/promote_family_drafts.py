@@ -358,6 +358,14 @@ def _requires_mprf(ident: str, label: str, text: str):
             "PhoP regulator")
 
 
+def _requires_macrolide_glycosyltransferase(ident: str, label: str, text: str):
+    """Glycosylation -- the third chemistry, after hydrolysis (r46) and phosphorylation (r47)."""
+    if re.search(r"glycosyltransferase|glycosylat", text, re.I):
+        return None
+    return ("this determinant is not a macrolide glycosyltransferase: adding a sugar is "
+            "neither opening the lactone ring nor phosphorylating it")
+
+
 def _requires_macrolide_kinase(ident: str, label: str, text: str):
     """Phosphorylation, not ring hydrolysis (round 46) or glycosylation."""
     if re.search(r"phosphotransferase|\bmph\b|phosphorylat", text, re.I):
@@ -640,6 +648,52 @@ FAMILY_SNIPPETS = {
                  "description": "The causal core: the drug is chemically modified rather than displaced, excluded or pumped out.",
                  "evidence": [{"reference": "PMID:28416110", "snippet": "The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone ring that can be inactivated by macrolide phosphotransferase enzymes.",
                                "notes": "'can be inactivated by macrolide phosphotransferase enzymes'."}]},
+            ],
+        },
+        {
+            "curated": "2026-08-07T00:00:00Z",
+            "precondition": _requires_macrolide_glycosyltransferase,
+            "reference": "PMID:17376874",      # Bolam et al. 2007, PNAS
+            "mech": {"ARO:0001004": "The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate oleandomycin and diverse macrolides including erythromycin, respectively.", "ARO:3000212": "The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate oleandomycin and diverse macrolides including erythromycin, respectively.",
+                     "ARO:3000208": "The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate oleandomycin and diverse macrolides including erythromycin, respectively."},
+            "mech_res": "The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate oleandomycin and diverse macrolides including erythromycin, respectively.",
+            "det_res": [
+                {"reference": "PMID:17376874", "snippet": "The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate oleandomycin and diverse macrolides including erythromycin, respectively.",
+                 "notes": "Bolam et al. 2007. The third chemistry under this family term: a sugar is ADDED, rather than the ring being opened (r46) or phosphorylated (r47)."},
+                {"reference": "PMID:17376874", "snippet": "Glycosylation of macrolide antibiotics confers host cell immunity from endogenous and exogenous agents.",
+                 "notes": "And its origin, which the other two chemistries do not share: these enzymes are the PRODUCER's self-protection. Resistance in a pathogen is that immunity system turning up elsewhere."},
+            ],
+            "res_drug": "The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate oleandomycin and diverse macrolides including erythromycin, respectively.",
+            "note": "Drug inactivation by glycosylation -- originally a macrolide producer's own immunity mechanism.",
+            "extra_nodes": [
+                {"node_id": "glycosyl", "label": "macrolide glycosyltransferase activity",
+                 "node_type": "MOLECULAR_FUNCTION",
+                 "description": "Ungrounded: GO has glycosyltransferase terms but none specific to macrolide inactivation."},
+                {"node_id": "glyco_drug", "label": "glycosylated (inactive) macrolide",
+                 "node_type": "CHEMICAL", "description": "Ungrounded: the product differs per drug."},
+                {"node_id": "ribosome_site", "label": "23S rRNA macrolide binding site",
+                 "node_type": "NUCLEIC_ACID",
+                 "description": "The target the drug can no longer occupy. Same site round 29's 16S work neighbours, and ungrounded for the same reason."},
+            ],
+            "extra_edges": [
+                {"subject": "determinant", "object": "glycosyl",
+                 "predicate": "enables (macrolide glycosylation)", "predicate_id": "RO:0002327",
+                 "evidence": [{"reference": "PMID:17376874", "snippet": "The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate oleandomycin and diverse macrolides including erythromycin, respectively.",
+                               "notes": "OleI and OleD glycosylate and inactivate."}]},
+                {"subject": "glycosyl", "object": "glyco_drug",
+                 "predicate": "has output", "predicate_id": "RO:0002234",
+                 "evidence": [{"reference": "PMID:17376874", "snippet": "The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate oleandomycin and diverse macrolides including erythromycin, respectively.",
+                               "notes": "OleD acts on diverse macrolides including erythromycin, which is why one enzyme covers a class."}]},
+                {"subject": "glyco_drug", "object": "ribosome_site",
+                 "predicate": "negatively regulates (the glycosylated drug cannot occupy the site)",
+                 "predicate_id": "RO:0002212",
+                 "description": "The causal core, and the structures explain WHY: erythromycin binds OleD in the same conformation it adopts on the 23S RNA, so the sugar is added exactly where the ribosome would bind.",
+                 "evidence": [{"reference": "PMID:17376874", "snippet": "Erythromycin binds to OleD and the 23S RNA of its target ribosome in the same conformation",
+                               "notes": "Bolam et al. 2007 -- the enzyme recognises the drug in its target-bound conformation."}]},
+                {"subject": "drug0", "object": "ribosome_site",
+                 "predicate": "molecularly interacts with (binds the 23S site)", "predicate_id": "RO:0002436",
+                 "evidence": [{"reference": "PMID:17376874", "snippet": "Erythromycin binds to OleD and the 23S RNA of its target ribosome in the same conformation",
+                               "notes": "Drug action: the site glycosylation denies it."}]},
             ],
         },
     ],

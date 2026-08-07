@@ -1131,11 +1131,27 @@ def test_the_macrolide_config_takes_only_the_esterases():
 def test_the_two_macrolide_configs_do_not_share_a_reaction():
     """Ring hydrolysis (r46) and phosphorylation (r47) inactivate the same drug class by
     different chemistry, so neither may borrow the other's sentence."""
+    # by CONTENT, not count — round 48 added a third chemistry (glycosylation) and a count
+    # assertion would fail on it. Third time this session a count broke on an addition
+    # (#235, round 35, here); the contract is that the reactions are distinct.
     cfgs = promote.family_configs("ARO:3000201")
-    assert len(cfgs) == 2
     est = [c for c in cfgs if any(n["node_id"] == "ring" for n in c["extra_nodes"])][0]
     kin = [c for c in cfgs if any(n["node_id"] == "kinase" for n in c["extra_nodes"])][0]
     assert "ARO:3000321" in est["mech"]        # hydrolysis of the lactone ring
     assert "ARO:3000105" in kin["mech"]        # phosphorylation of antibiotic
     out = _flat(_graph(kin, mech=("ARO:3000105",), drug=("ARO:3000050",)))
     assert "hydrolysis of the macrolactone ring" not in out
+
+
+def test_all_three_macrolide_chemistries_are_distinct():
+    """One family term, three reactions, three papers, three mechanism ids.
+
+        esterase (r46)          ARO:3000321  opens the macrolactone ring
+        phosphotransferase (r47) ARO:3000105  phosphorylates it
+        glycosyltransferase (r48) ARO:3000208  adds a sugar
+
+    All inactivate a macrolide; none shares a reaction. This is why one "macrolide
+    inactivation" config would have been wrong.
+    """
+    ids = {mid for c in promote.family_configs("ARO:3000201") for mid in c["mech"]}
+    assert {"ARO:3000321", "ARO:3000105", "ARO:3000208"} <= ids

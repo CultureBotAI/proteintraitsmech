@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   738.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   730.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -74,7 +74,7 @@ cleared._
 
    **Family-shaped work still available**, measured by ancestry over the remaining drafts:
    two-component modulators (87), permeability (41), target-modifying enzymes (30),
-   macrolide inactivation — ~~esterases (6, round 46)~~; ~~phosphotransferases (16, round 47)~~; the **glycosyltransferases (8)** are the third chemistry under the same term, the other three cell-wall-charge chemistries (ArnT/PmrF,
+   macrolide inactivation — ~~esterases (6, round 46)~~; ~~phosphotransferases (16, r47)~~ ~~glycosyltransferases (8, r48)~~ — **all three chemistries done**, the other three cell-wall-charge chemistries (ArnT/PmrF,
    the ICR transferases, PhoP), and target protection's rifamycin (6) and fusidane (5)
    arms. ~~**Efflux (137) is filed as #223**~~ **— #223 was wrong and round 33 corrected it.** The
    SUBUNITS have no pump-class ancestry, but each is `part_of` a complex and the COMPLEX is
