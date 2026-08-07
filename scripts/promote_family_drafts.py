@@ -655,7 +655,78 @@ def _requires_pnca(ident: str, label: str, text: str):
     return None
 
 
+def _requires_ndh(ident: str, label: str, text: str):
+    """Determinant must be ndh, checked on its OWN definition (#253, #254)."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    if "ndh" not in _own_definition(text).lower() and "ndh" not in label.lower():
+        return "own definition does not name ndh"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # ndh (ARO:3003460) -- prodrug-activation loss by an INDIRECT route.
+    #
+    # Round 56's pncA loses the activating enzyme itself. ndh loses nothing of the sort:
+    # it is a NADH oxidase, and its mutation shifts the NADH/NAD+ RATIO, which then blocks
+    # isoniazid activation two steps downstream. Same family of mechanism, different
+    # causal distance -- which is why it gets its own config rather than reusing pncA's.
+    #
+    # CARD carries the entire chain, including BOTH arms, in one sentence.
+    "ARO:3003460": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_ndh,
+        "reference": "ARO:3003460",
+        "mech": {"ARO:3000212": "ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH, as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site."},
+        "mech_res": "Point mutations in the Mycobacterium tuberculosis ndh gene shown clinically to confer resistance to isoniazid.",
+        "det_res": [
+            {"reference": "ARO:3003461", "snippet": "Point mutations in the Mycobacterium tuberculosis ndh gene shown clinically to confer resistance to isoniazid.",
+             "notes": "The clinical resistance claim."},
+            {"reference": "ARO:3003460", "snippet": "ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH, as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.",
+             "notes": "And the full mechanism, which CARD states in a single sentence: diminished NADH oxidation -> altered NADH/NAD+ ratio -> two separate blocks on isoniazid."},
+        ],
+        "res_drug": "Point mutations in the Mycobacterium tuberculosis ndh gene shown clinically to confer resistance to isoniazid.",
+        "note": "Prodrug-activation loss at a distance: the ratio changes, and INH activation fails downstream.",
+        "extra_nodes": [
+            {"node_id": "nadh_ox", "label": "NADH oxidase activity of ndh",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded on purpose: CARD says 'NADH oxidase', and the nearest GO terms are NADH dehydrogenase activities. Round 56's rule -- do not guess a CURIE that was not verified."},
+            {"node_id": "ratio", "label": "raised NADH / depleted NAD+ ratio",
+             "node_type": "STATE",
+             "description": "The causal hinge. Both downstream arms hang off this one state."},
+            {"node_id": "peroxidation", "label": "peroxidation reactions required for isoniazid activation",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: the KatG-mediated activation chemistry has no single term in use here."},
+            {"node_id": "displacement", "label": "displacement of the NADH-isonicotinic acyl complex from the InhA binding site",
+             "node_type": "STATE",
+             "description": "The second, independent arm."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "nadh_ox",
+             "predicate": "negatively regulates (diminishes NADH oxidation)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3003460", "snippet": "ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH, as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.",
+                           "notes": "'participates in antibiotic resistance by diminishing NADH oxidation'."}]},
+            {"subject": "nadh_ox", "object": "ratio",
+             "predicate": "causally upstream of (raises NADH, depletes NAD+)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3003460", "snippet": "ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH, as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.",
+                           "notes": "'consequently causes an increase in NADH concentration and depletion of NAD+'."}]},
+            {"subject": "ratio", "object": "peroxidation",
+             "predicate": "negatively regulates (prevents the activating chemistry)",
+             "predicate_id": "RO:0002212",
+             "description": "First arm: isoniazid is never activated.",
+             "evidence": [{"reference": "ARO:3003460", "snippet": "ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH, as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.",
+                           "notes": "'prevents the peroxidation reactions required for the activation of INH'."}]},
+            {"subject": "ratio", "object": "displacement",
+             "predicate": "negatively regulates (prevents the displacement)",
+             "predicate_id": "RO:0002212",
+             "description": "Second arm, independent of the first. CARD's 'as well as' is doing real work -- these are two mechanisms, not one restated, and splitting them is why this config has four extra edges rather than three.",
+             "evidence": [{"reference": "ARO:3003460", "snippet": "ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH, as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.",
+                           "notes": "'as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # pncA (ARO:3004267) -- PRODRUG-ACTIVATION LOSS. Resistance by LOSING a function.
     #
