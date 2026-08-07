@@ -1621,3 +1621,18 @@ def test_ef_tu_does_not_assert_a_drug_binding_mechanism():
     for banned in ("binding affinit", "prevents drug", "elfamycin bind", "inhibit"):
         assert banned not in asserted, f"EF-Tu config asserts {banned!r} uncited"
     assert "NOT asserted" in cfg["note"]
+
+
+def test_smr_states_the_energetics_not_just_the_pumping():
+    """Efflux without its driving force restates the phenotype; SMR gives the coupling."""
+    cfg = promote.family_configs("ARO:0010003")[0]
+    edge = next(e for e in cfg["extra_edges"] if e["subject"] == "proton_gradient")
+    assert edge["object"] == "antiport"
+    assert "electrochemical gradient" in edge["evidence"][0]["snippet"]
+
+
+def test_smr_antiport_snippet_is_scoped_to_emre():
+    """The coupling sentence is EmrE's; other members have no energetics of their own."""
+    cfg = promote.family_configs("ARO:0010003")[0]
+    ev = next(e for e in cfg["det_res"] if e["reference"] == "ARO:3000264")
+    assert "SCOPE" in ev["notes"] and "EmrE's sentence" in ev["notes"]

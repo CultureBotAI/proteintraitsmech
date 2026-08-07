@@ -819,6 +819,66 @@ def _rifampin_modification_config(mech_id: str, human: str, snippet: str,
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # SMR efflux pumps (ARO:0010003) -- efflux, with the ENERGETICS actually stated.
+    #
+    # Most efflux records in this corpus say only "pumps the drug out". SMR is the first
+    # family whose own text gives the coupling: EmrE "couples the efflux of small
+    # polyaromatic cations from the cell WITH THE IMPORT OF PROTONS down an
+    # electrochemical gradient". That is a proton antiport, and it is what makes efflux a
+    # mechanism rather than a restatement of the phenotype -- the drug does not leave
+    # because the pump wants it to, it leaves because protons are coming in.
+    #
+    # SCOPE: the antiport sentence is EmrE's. Other members here (abeS and the rest) are
+    # named as SMR-family transporters without their own energetics, so the coupling edge
+    # cites EmrE and its notes say so.
+    "ARO:0010003": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:0010000", "antibiotic efflux"),
+        "reference": "ARO:0010003",
+        "mech": {"ARO:0010000": "Antibiotic resistance via the transport of antibiotics out of the cell."},
+        "mech_res": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "det_res": [
+            {"reference": "ARO:0010003", "snippet": "Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.",
+             "notes": "The family claim: directed pumping of antibiotic out of the cell, by a distinct small transporter family."},
+            {"reference": "ARO:3000264", "snippet": "EmrE is a small multidrug transporter that functions as a homodimer and that couples the efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical gradient.",
+             "notes": "And the energetics. SCOPE: this is EmrE's sentence; the other members are named as SMR-family transporters without their own coupling data."},
+        ],
+        "res_drug": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "note": "Efflux, with the proton-antiport coupling stated rather than assumed.",
+        "extra_nodes": [
+            {"node_id": "antiport", "label": "drug/proton antiporter activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0015297",
+             "description": "Checked non-obsolete against OLS (#157)."},
+            {"node_id": "proton_gradient", "label": "inward proton electrochemical gradient",
+             "node_type": "STATE",
+             "description": "The energy source. Ungrounded: a gradient is not a compound."},
+            {"node_id": "extruded", "label": "drug outside the cell",
+             "node_type": "STATE", "description": "The outcome. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "antiport",
+             "predicate": "enables (drug/proton antiport)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3000264", "snippet": "EmrE is a small multidrug transporter that functions as a homodimer and that couples the efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical gradient.",
+                           "notes": "'couples the efflux ... with the import of protons' -- an antiport by definition."}]},
+            {"subject": "proton_gradient", "object": "antiport",
+             "predicate": "causally upstream of (drives the transport)",
+             "predicate_id": "RO:0002411",
+             "description": "What powers the pump. Efflux is not spontaneous, and this is the one family here that says what pays for it.",
+             "evidence": [{"reference": "ARO:3000264", "snippet": "EmrE is a small multidrug transporter that functions as a homodimer and that couples the efflux of small polyaromatic cations from the cell with the import of protons down an electrochemical gradient.",
+                           "notes": "'down an electrochemical gradient' -- the protons move downhill, which is what drives the drug uphill."}]},
+            {"subject": "antiport", "object": "drug0",
+             "predicate": "has input (the drug)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:0010003", "snippet": "Directed pumping of antibiotic out of a cell to confer resistance. Small multidrug resistance (SMR) proteins are a relatively small family of transporters, restricted to prokaryotic cells.",
+                           "notes": "The antibiotic is the transported substrate."}]},
+            {"subject": "antiport", "object": "extruded",
+             "predicate": "causally upstream of (removes the drug from the cell)",
+             "predicate_id": "RO:0002411",
+             "description": "The causal core: resistance because the drug is no longer inside.",
+             "evidence": [{"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+                           "notes": "'via the transport of antibiotics out of the cell'."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # Antibiotic resistant EF-Tu (ARO:3003356) -- the mechanism is NOT asserted.
     #
     # CARD says only that "sequence variants of elongation factor Tu confer resistance".
