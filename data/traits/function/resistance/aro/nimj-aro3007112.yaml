@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3007103
 trait_relations:
@@ -22,11 +22,13 @@ evidence:
 - reference: DOI:10.1128/AAC.00386-13
   notes: PMID:23716049 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] nimJ → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: nimJ → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3007103). Inactivation by reduction. The determinant->resistance evidence is deliberately mixed-strength:
+    CARD states the chemistry causally and the resistance only as an association, and one member says
+    expression alone is insufficient.'
   nodes:
   - node_id: determinant
     label: nimJ
@@ -40,6 +42,18 @@ causal_graphs:
     label: nitroimidazole antibiotic
     node_type: CHEMICAL
     grounding: ARO:3004115
+  - node_id: reduction
+    label: nitroimidazole reductase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-64).'
+  - node_id: nitro
+    label: nitro functional group of the drug
+    node_type: CHEMICAL
+    description: 'The group reduced. Ungrounded: a substructure, not a compound.'
+  - node_id: amine
+    label: amino group -- the reduced, inactive drug
+    node_type: STATE
+    description: The product state. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,45 +67,93 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.00386-13
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
-    - reference: ARO:3007112
-      snippet: nimJ is a nitroimidazole reductase mainly found in Bacteroides fragilis that is associated
-        with the deactivation of nitroimidazole antibiotics such as metronidazole. Minimum inhibitory
-        concentrations observed in isolates vary greatly depending on species, strain, and nitroimidazole
-        treatment.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3007103
+      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
+        by reducing their nitro functional group to an amino group.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00386-13
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: ARO:3007103
+      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
+        by reducing their nitro functional group to an amino group.
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00386-13
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3007112
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000689 ! metronidazole'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3007103
+      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
+        by reducing their nitro functional group to an amino group.
+      notes: 'The chemistry, stated causally: reduction of the nitro group to an amine deactivates the
+        drug.'
+    - reference: ARO:3007103
+      snippet: These enzymes are associated with resistance to nitroimidazole derivatives in Bacteroides
+        fragilis but have also been reported in a variety of anaerobic Gram-negative and Gram-positive
+        genera.
+      notes: The resistance claim, stated WEAKLY. CARD says 'associated with', not 'confers' -- recorded
+        as association rather than upgraded to causation.
+    - reference: ARO:3007671
+      snippet: NimB expression alone is not sufficient for nitroimidazole resistance.
+      notes: 'And the family''s own negative result: for C. difficile nimB, the enzyme is necessary but
+        NOT sufficient -- constitutive transcription from a promoter mutation is also required. Quoted
+        because it bounds the claim the other two snippets make.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to nitroimidazole antibiotic.
     evidence:
     - reference: ARO:3007103
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3004115 ! nitroimidazole antibiotic'
       notes: Asserted on ARO:3007103 (nitroimidazole reductase), an is_a ancestor of this record's ARO:3007112;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to nitroimidazole antibiotic.
+  - subject: determinant
+    predicate: enables (reduces the drug)
+    predicate_id: RO:0002327
+    object: reduction
+    evidence:
+    - reference: ARO:3007103
+      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
+        by reducing their nitro functional group to an amino group.
+      notes: '''a group of enzymes that deactivate nitroimidazole antibiotics by reducing...''.'
+  - subject: nitro
+    predicate: part of (the intact drug)
+    predicate_id: BFO:0000050
+    object: drug0
+    description: 'Why reducing this group destroys the antibiotic: the nitro group is what makes a nitroimidazole
+      one.'
+    evidence:
+    - reference: ARO:3007103
+      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
+        by reducing their nitro functional group to an amino group.
+      notes: '''their nitro functional group'' -- the drug''s own substructure, as with the streptogramin
+        lactone ring in round 64.'
+  - subject: reduction
+    predicate: has input (the nitro group)
+    predicate_id: RO:0002233
+    object: nitro
+    evidence:
+    - reference: ARO:3007103
+      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
+        by reducing their nitro functional group to an amino group.
+      notes: The substrate is a group on the drug, not the whole molecule.
+  - subject: reduction
+    predicate: has output (the reduced amine)
+    predicate_id: RO:0002234
+    object: amine
+    description: 'The causal core: reduction to the amine is the deactivation.'
+    evidence:
+    - reference: ARO:3007103
+      snippet: Nitroimidazole reductases are a group of enzymes that deactivate nitroimidazole antibiotics
+        by reducing their nitro functional group to an amino group.
+      notes: '''reducing their nitro functional group to an amino group''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
