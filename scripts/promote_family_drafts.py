@@ -290,6 +290,20 @@ _EFFLUX_REPRESSORS = frozenset(['ARO:3000506', 'ARO:3000518', 'ARO:3000526', 'AR
 _EFFLUX_ACTIVATORS = frozenset(['ARO:3000553', 'ARO:3000813', 'ARO:3000814', 'ARO:3000816', 'ARO:3000823', 'ARO:3000825', 'ARO:3000826', 'ARO:3000827', 'ARO:3000832', 'ARO:3000838', 'ARO:3003841', 'ARO:3003843', 'ARO:3004055', 'ARO:3004108', 'ARO:3004109'])
 
 
+# Two-component regulators of LIPID A modification, read out of the same 46 that produced
+# rounds 37-38. Their mechanism is not efflux at all despite the family term: they induce
+# the genes that add positive charge to the envelope, so this is round 32's electrostatic
+# repulsion reached by a regulatory route.
+_LPS_REGULATORS = frozenset(['ARO:3003582', 'ARO:3003583'])
+
+
+def _requires_lps_regulator(ident: str, label: str, text: str):
+    if ident in _LPS_REGULATORS:
+        return None
+    return ("not on the verified lipid-A-regulator list: this config's mechanism is "
+            "induction of envelope charge modification, not efflux")
+
+
 def _requires_efflux_activator(ident: str, label: str, text: str):
     if ident in _EFFLUX_ACTIVATORS:
         return None
@@ -556,6 +570,44 @@ FAMILY_SNIPPETS = {
                  "predicate_id": "RO:0002212",
                  "evidence": [{"reference": "ARO:3000553", "snippet": "AdeR is a positive regulator of AdeABC efflux system.",
                                "notes": "The pump's own mechanism is curated on its record; this edge carries only the consequence of making more of it."}]},
+            ],
+        },
+        {
+            "curated": "2026-08-07T00:00:00Z",
+            "precondition": _requires_lps_regulator,
+            "reference": "ARO:3003582",
+            "mech": {"ARO:0010000": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.", "ARO:3000212": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+                     "ARO:0001002": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.", "ARO:3003588": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+                     "ARO:0010001": "Response regulator for Lipid A modification genes; two-component regulatory system with basS."},
+            "mech_res": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+            "det_res": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+            "res_drug": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+            "note": "Not efflux despite the family term: these induce lipid A modification, reaching round 32's electrostatic repulsion by a regulatory route.",
+            "extra_nodes": [
+                {"node_id": "lipid_a_mod", "label": "lipid A modification gene expression",
+                 "node_type": "BIOLOGICAL_PROCESS",
+                 "description": "The pmrHFIJKLM / arn operon and relatives. Ungrounded: which operon differs per organism."},
+                {"node_id": "surface_charge", "label": "reduced net negative charge of the envelope",
+                 "node_type": "QUALITY",
+                 "description": "The same property mprF produces by lysinylating phosphatidylglycerol (round 32). Ungrounded: no ontology term for envelope net charge."},
+            ],
+            "extra_edges": [
+                {"subject": "determinant", "object": "lipid_a_mod",
+                 "predicate": "positively regulates (induces the modification genes)",
+                 "predicate_id": "RO:0002213",
+                 "evidence": [{"reference": "ARO:3003582", "snippet": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+                               "notes": "CARD's definition of BasR, the archetype. Each record's own definition names the operon IT induces."}]},
+                {"subject": "lipid_a_mod", "object": "surface_charge",
+                 "predicate": "causally upstream of (adds positive charge to the envelope)",
+                 "predicate_id": "RO:0002411",
+                 "evidence": [{"reference": "ARO:3003582", "snippet": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+                               "notes": "Lipid A modification is what the induced genes do."}]},
+                {"subject": "surface_charge", "object": "drug0",
+                 "predicate": "negatively regulates (repels the cationic peptide)",
+                 "predicate_id": "RO:0002212",
+                 "description": "The causal core, shared with mprF (round 32) and reached here by induction rather than by the determinant doing the chemistry itself.",
+                 "evidence": [{"reference": "PMID:11342591", "snippet": "As this unusual modification leads to a reduced negative charge of the membrane surface, MprF-mediated peptide resistance",
+                               "notes": "Peschel et al. 2001 state the charge-to-resistance direction. They studied mprF's lysinylation; the charge logic is the same for lipid A modification, and the notes say the transfer rather than implying the paper covered it."}]},
             ],
         },
     ],
