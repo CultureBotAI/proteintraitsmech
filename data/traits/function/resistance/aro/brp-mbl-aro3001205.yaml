@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004256
 trait_relations:
@@ -37,11 +37,12 @@ evidence:
 - reference: DOI:10.1128/AAC.05583-11
   notes: PMID:22290943 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] BRP(MBL) → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: BRP(MBL) → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3001206). Sequestration. The drug is bound, not chemically changed -- unlike every inactivation
+    chemistry in rounds 62-70.
   nodes:
   - node_id: determinant
     label: BRP(MBL)
@@ -59,6 +60,10 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: complex
+    label: determinant-antibiotic complex
+    node_type: STATE
+    description: 'The bound drug. Ungrounded: a specific protein-drug complex has no term here.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -72,72 +77,89 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AEM.00873-08
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
-    - reference: ARO:3001205
-      snippet: A novel bleomycin resistance protein encoded by a metallo-beta-lactamase-associated ble
-        gene. Expression of BRP(MBL) confers resistance to bleomycin and bleomycin-like antibiotics in
-        Enterobacteriaceae and Acinetobacter, where it is co-expressed with an MBL and controlled by the
-        same promoter region.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
+        antibiotic with its target.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AEM.00873-08
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
+        antibiotic with its target.
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1128/AEM.00873-08
-      notes: Auto-drafted from ARO participates_in ARO:3001206; verbatim snippet pending curation.
-    - reference: ARO:3001205
-      snippet: A novel bleomycin resistance protein encoded by a metallo-beta-lactamase-associated ble
-        gene. Expression of BRP(MBL) confers resistance to bleomycin and bleomycin-like antibiotics in
-        Enterobacteriaceae and Acinetobacter, where it is co-expressed with an MBL and controlled by the
-        same promoter region.
-      notes: ARO definition of this determinant. The mechanism class ARO:3001206 (antibiotic inactivation
-        by sequestration) is CARD's mechanism categorisation for it; aro.obo does not assert that link
-        as an is_a axiom.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
+        antibiotic with its target.
+      notes: Family mechanism ARO:3001206.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AEM.00873-08
-      notes: 'Auto-drafted: mechanism ARO:3001206 → resistance; snippet pending curation.'
     - reference: ARO:3001206
       snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
         antibiotic with its target.
-      notes: ARO definition of the resistance mechanism class ARO:3001206 (antibiotic inactivation by
-        sequestration), which states the causal link to resistance.
+      notes: Mechanism ARO:3001206 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AEM.00873-08
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3001205
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000690 ! bleomycinic acid'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
+        antibiotic with its target.
+      notes: 'The whole mechanism, and the distinction that matters: a COMPLEX is formed, so the drug
+        is intact but unavailable.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3004256
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
       notes: Asserted on ARO:3004256 (Bleomycin resistant protein), an is_a ancestor of this record's
         ARO:3001205; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+  - subject: determinant
+    predicate: molecularly interacts with (binds the drug)
+    predicate_id: RO:0002436
+    object: drug0
+    evidence:
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
+        antibiotic with its target.
+      notes: '''formation of a complex'' -- a binding event, not a reaction.'
+  - subject: complex
+    predicate: has part (the sequestered antibiotic)
+    predicate_id: BFO:0000051
+    object: drug0
+    description: The drug is a CONSTITUENT of the complex, which is what makes it unavailable -- round
+      21's correction, where a drug-interacts-with-complex edge was circular.
+    evidence:
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
+        antibiotic with its target.
+      notes: The complex is what the drug ends up inside.
+  - subject: complex
+    predicate: causally upstream of (drug never reaches its target)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: ARO:3001206
+      snippet: Inactivation of an antibiotic by formation of a complex, preventing interaction of the
+        antibiotic with its target.
+      notes: '''preventing interaction of the antibiotic with its target''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

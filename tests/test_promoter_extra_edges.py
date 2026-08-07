@@ -1734,3 +1734,25 @@ def test_resistance_by_absence_asserts_only_the_absence():
     assert len(downstream) == 1 and downstream[0]["object"] == "resistance"
     blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
     assert "porin" not in blob, "CARD says 'usually a porin'; porin-ness is not asserted"
+
+
+def test_sequestration_covers_the_generic_inactivation_id_too():
+    """BRP(MBL) carries ARO:0001004 as well; UncoveredMechanism refused it otherwise.
+
+    CARD's sequestration definition opens with "Inactivation of an antibiotic", so the
+    same sentence genuinely supports both ids -- it is not a substitute snippet.
+    """
+    cfg = next(c for c in promote.family_configs("ARO:3000000")
+               if "ARO:3001206" in c["mech"])
+    assert cfg["mech"]["ARO:0001004"] == cfg["mech"]["ARO:3001206"]
+    assert cfg["mech"]["ARO:0001004"].startswith("Inactivation of an antibiotic")
+
+
+def test_sequestration_binds_rather_than_modifies_the_drug():
+    """Distinct from rounds 62-70: the drug is intact, just unavailable."""
+    cfg = next(c for c in promote.family_configs("ARO:3000000")
+               if "ARO:3001206" in c["mech"])
+    preds = " ".join(e["predicate"] for e in cfg["extra_edges"]).lower()
+    assert "binds the drug" in preds
+    for chem in ("hydrolys", "acetylat", "phosphorylat", "reduc"):
+        assert chem not in preds

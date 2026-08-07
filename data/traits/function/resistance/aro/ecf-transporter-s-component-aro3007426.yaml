@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3007425
 trait_relations:
@@ -22,11 +22,11 @@ evidence:
 - reference: DOI:10.1038/s41467-022-34243-3
   notes: PMID:36450721 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] ECF transporter S component → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: ECF transporter S component → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3007424). Bypass by host-nutrient uptake. The drug's target is untouched; it stops being required.
   nodes:
   - node_id: determinant
     label: ECF transporter S component
@@ -40,6 +40,14 @@ causal_graphs:
     label: sulfonamide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000282
+  - node_id: uptake
+    label: host-nutrient uptake activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-71).'
+  - node_id: bypassed
+    label: the drug-blocked step is no longer required
+    node_type: STATE
+    description: 'The causal core. Ungrounded: a requirement''s absence is not an entity.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,43 +61,60 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1038/s41467-022-34243-3
-      notes: 'Auto-drafted: mechanism class ARO:3007424 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3007424); verbatim snippet pending curation.'
-    - reference: ARO:3007426
-      snippet: ECF transporter S component genes involved in host nutrient uptake.
-      notes: ARO definition of this determinant. The mechanism class ARO:3007424 (resistance by host-dependent
-        nutrient acquisition) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3007424
+      snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
+      notes: Family mechanism ARO:3007424.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41467-022-34243-3
-      notes: 'Auto-drafted: mechanism ARO:3007424 → resistance; snippet pending curation.'
     - reference: ARO:3007424
       snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
-      notes: ARO definition of the resistance mechanism class ARO:3007424 (resistance by host-dependent
-        nutrient acquisition), which states the causal link to resistance.
+      notes: Mechanism ARO:3007424 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41467-022-34243-3
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3007426
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000282 ! sulfonamide antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3007424
+      snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
+      notes: 'The mechanism: uptake of a HOST nutrient bypasses the step the drug blocks.'
+    - reference: ARO:3007427
+      snippet: ThfT is an ECF transporter S component that expands the substrate profile of endogenous
+        ECF transporters to include folate.
+      notes: 'The worked case. SCOPE: ThfT and folate specifically -- the mechanism term does not name
+        a nutrient, and the other two records are the generic family and the transporter component.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to sulfonamide antibiotic.
     evidence:
     - reference: ARO:3007426
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000282 ! sulfonamide antibiotic'
-      notes: Asserted directly on ARO:3007426 (ECF transporter S component) in the CARD/ARO release in
-        data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to sulfonamide antibiotic.
+      notes: Asserted on ARO:3007426 (ECF transporter S component), an is_a ancestor of this record's
+        ARO:3007426; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: enables (imports the host nutrient)
+    predicate_id: RO:0002327
+    object: uptake
+    evidence:
+    - reference: ARO:3007424
+      snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
+      notes: '''uptake of host nutrients''.'
+  - subject: uptake
+    predicate: causally upstream of (makes the blocked step dispensable)
+    predicate_id: RO:0002411
+    object: bypassed
+    description: Why this is resistance without touching the drug or its target.
+    evidence:
+    - reference: ARO:3007424
+      snippet: Resistance via uptake of host nutrients to bypass antibiotic mechanism.
+      notes: '''to bypass antibiotic mechanism'' -- the target is not altered, it is made irrelevant.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
