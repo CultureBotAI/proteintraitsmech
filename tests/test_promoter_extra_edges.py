@@ -856,3 +856,25 @@ def test_target_protection_uses_the_mechanism_id_the_records_carry():
     """The first draft guessed ARO:0000002; --verify reported all 193 candidates as
     uncovered, because the real id is ARO:0001003 (#203 doing its job on new work)."""
     assert "ARO:0001003" in promote.family_configs("ARO:3000185")[0]["mech"]
+
+
+# --- round 32: mprF, electrostatic repulsion ---------------------------------------
+
+def test_mprf_config_takes_only_mprf_records():
+    """ArnT/PmrF, the ICR transferases and PhoP share the principle, not the chemistry."""
+    pre = promote.family_configs("ARO:3003580")[0]["precondition"]
+    assert pre("ARO:X", "Staphylococcus aureus mprF", "") is None
+    assert pre("ARO:X", "ArnT", "") is not None
+
+
+def test_mprf_uses_the_mechanism_ids_the_records_carry():
+    """My first four were guesses; the guard refused all 10 records and wrote nothing."""
+    mech = promote.family_configs("ARO:3003580")[0]["mech"]
+    assert {"ARO:3003588", "ARO:0001001"} <= set(mech)
+
+
+def test_mprf_core_edge_is_repulsion_not_destruction():
+    out = _flat(_graph(promote.family_configs("ARO:3003580")[0],
+                       mech=("ARO:3003588",), drug=("ARO:3000053",)))
+    assert "reduced negative charge of the membrane surface" in out
+    assert "no longer modifies phosphatidylglycerol with l-lysine" in out

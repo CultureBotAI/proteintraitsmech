@@ -209,6 +209,21 @@ def _vanrs_ser_downstream() -> tuple[list, list]:
     return nodes, edges
 
 
+def _requires_mprf(ident: str, label: str, text: str):
+    """This config is MprF's lysinylation, not every way of altering envelope charge.
+
+    ARO:3003580 (gene altering cell wall charge) also holds ArnT and PmrF (L-Ara4N on
+    lipid A), the ICR phosphoethanolamine transferases, and PhoP (a regulator). They share
+    the PRINCIPLE -- add positive charge, repel cationic peptides -- and not the chemistry,
+    so each needs its own evidence. Same call as target protection in round 31.
+    """
+    if re.search(r"\bmprF\b", label):
+        return None
+    return ("this determinant is not mprF, and the lysyl-phosphatidylglycerol evidence "
+            "does not describe L-Ara4N addition, phosphoethanolamine transfer or the "
+            "PhoP regulator")
+
+
 def _requires_tetracycline(ident: str, label: str, text: str):
     """This config is the RIBOSOME-protection mechanism, so refuse the other two.
 
@@ -364,6 +379,59 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # mprF -- ELECTROSTATIC REPULSION (ARO:3003580, mprF records only). An eighth kind of
+    # mechanism: the drug is neither destroyed, altered, displaced nor pumped out. It is
+    # repelled, because the determinant changes the SURFACE CHARGE of the envelope so a
+    # cationic peptide no longer reaches it.
+    "ARO:3003580": {
+        "curated": "2026-08-06T00:00:00Z",
+        "precondition": _requires_mprf,
+        "reference": "PMID:11342591",      # Peschel et al. 2001, J Exp Med
+        # The ids the records actually carry. My first four were guesses and the
+        # UncoveredMechanism guard (#203) refused all 10 records rather than substituting
+        # -- 0 written, which is exactly what it is for.
+        "mech": {
+            "ARO:3003588": "As this unusual modification leads to a reduced negative charge of the membrane surface, MprF-mediated peptide resistance",   # antibiotic resistance by charge alteration
+            "ARO:0001001": "As this unusual modification leads to a reduced negative charge of the membrane surface, MprF-mediated peptide resistance",   # antibiotic target alteration
+            "ARO:3000212": "We describe a novel staphylococcal gene, mprF, which determines resistance to several host defense peptides such as defensins and protegrins.",
+        },
+        "mech_res": "As this unusual modification leads to a reduced negative charge of the membrane surface, MprF-mediated peptide resistance",
+        "det_res": [
+            {"reference": "PMID:11342591", "snippet": "We describe a novel staphylococcal gene, mprF, which determines resistance to several host defense peptides such as defensins and protegrins.",
+             "notes": "Peschel et al. 2001 identified the gene by the resistance it confers to defensins and protegrins."},
+            {"reference": "PMID:11342591", "snippet": "An mprF mutant strain was killed considerably faster by human neutrophils and exhibited attenuated virulence in mice, indicating a key role for defensin resistance in the pathogenicity of S. aureus.",
+             "notes": "And showed the loss-of-function phenotype in the relevant setting: the mutant is killed faster by human neutrophils and is attenuated in mice."},
+        ],
+        "res_drug": "We describe a novel staphylococcal gene, mprF, which determines resistance to several host defense peptides such as defensins and protegrins.",
+        "note": "Electrostatic repulsion: lysinylating phosphatidylglycerol lowers the membrane's net negative charge, so cationic peptides are repelled.",
+        "extra_nodes": [
+            {"node_id": "lysyl_pg", "label": "lysyl-phosphatidylglycerol", "node_type": "CHEMICAL",
+             "description": "The modified lipid. Ungrounded: recorded as a modification of phosphatidylglycerol with L-lysine rather than by a CURIE this corpus can cite."},
+            {"node_id": "surface_charge", "label": "reduced net negative charge of the membrane surface",
+             "node_type": "QUALITY",
+             "description": "The property that does the work. Ungrounded: no ontology term for the envelope's net charge."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "lysyl_pg",
+             "predicate": "causally upstream of (lysinylates phosphatidylglycerol)",
+             "predicate_id": "RO:0002411",
+             "description": "Shown by absence: the mutant no longer makes the modified lipid.",
+             "evidence": [{"reference": "PMID:11342591", "snippet": "Analysis of membrane lipids demonstrated that the mprF mutant no longer modifies phosphatidylglycerol with l-lysine.",
+                           "notes": "Peschel et al. 2001, membrane lipid analysis of the mutant."}]},
+            {"subject": "lysyl_pg", "object": "surface_charge",
+             "predicate": "causally upstream of (lowers the net negative charge)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:11342591", "snippet": "As this unusual modification leads to a reduced negative charge of the membrane surface, MprF-mediated peptide resistance",
+                           "notes": "Adding a positively charged lysine to an anionic lipid is what reduces the surface's net negative charge."}]},
+            {"subject": "surface_charge", "object": "drug0",
+             "predicate": "negatively regulates (repels the cationic peptide)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, and an eighth kind of mechanism: the drug is repelled rather than destroyed, altered, displaced or pumped out.",
+             "evidence": [{"reference": "PMID:11342591", "snippet": "As this unusual modification leads to a reduced negative charge of the membrane surface, MprF-mediated peptide resistance",
+                           "notes": "The paper states the causal direction explicitly -- the reduced charge is what mediates the peptide resistance."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Ribosomal protection of tetracycline (ARO:3000185, tetracycline records only) -- a
     # SEVENTH mechanism kind. The determinant neither modifies the drug nor the target: it
