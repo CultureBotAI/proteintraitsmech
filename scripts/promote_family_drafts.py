@@ -358,6 +358,14 @@ def _requires_mprf(ident: str, label: str, text: str):
             "PhoP regulator")
 
 
+def _requires_macrolide_kinase(ident: str, label: str, text: str):
+    """Phosphorylation, not ring hydrolysis (round 46) or glycosylation."""
+    if re.search(r"phosphotransferase|\bmph\b|phosphorylat", text, re.I):
+        return None
+    return ("this determinant is not a macrolide phosphotransferase: adding a phosphate is "
+            "not opening the lactone ring, which the Ere esterases do")
+
+
 def _requires_macrolide_esterase(ident: str, label: str, text: str):
     """Ring hydrolysis, not the phosphotransferases or glycosyltransferases.
 
@@ -549,7 +557,8 @@ FAMILY_SNIPPETS = {
     # 12-16's kind -- but the family term holds three unrelated reactions, so the config is
     # for ring hydrolysis only and a precondition keeps the phosphotransferases and
     # glycosyltransferases out until they have their own papers.
-    "ARO:3000201": {
+    "ARO:3000201": [
+    {
         "curated": "2026-08-07T00:00:00Z",
         "precondition": _requires_macrolide_esterase,
         "reference": "PMID:22303981",      # Morar et al. 2012, Biochemistry
@@ -585,6 +594,55 @@ FAMILY_SNIPPETS = {
                            "notes": "The macrolactone is what makes a macrolide one; without it there is no drug to bind a target."}]},
         ],
     },
+        {
+            "curated": "2026-08-07T00:00:00Z",
+            "precondition": _requires_macrolide_kinase,
+            "reference": "PMID:28416110",      # Fong et al. 2017, Structure
+            "mech": {"ARO:0001004": "The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone ring that can be inactivated by macrolide phosphotransferase enzymes.", "ARO:3000212": "The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone ring that can be inactivated by macrolide phosphotransferase enzymes.",
+                     "ARO:3000105": "The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone ring that can be inactivated by macrolide phosphotransferase enzymes."},
+            "mech_res": "The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone ring that can be inactivated by macrolide phosphotransferase enzymes.",
+            "det_res": [
+                {"reference": "PMID:28416110", "snippet": "The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone ring that can be inactivated by macrolide phosphotransferase enzymes.",
+                 "notes": "Fong et al. 2017. The second of three chemistries under this family term: the ring is PHOSPHORYLATED rather than hydrolysed (round 46)."},
+                {"reference": "PMID:28416110", "snippet": "We present structures for MPH(2')-I and MPH(2')-II in the apo state, and in complex with GTP analogs and six different macrolides.",
+                 "notes": "Structures of both main classes, with nucleotide and six different macrolides bound -- which is what establishes the reaction rather than inferring it."},
+            ],
+            "res_drug": "The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone ring that can be inactivated by macrolide phosphotransferase enzymes.",
+            "note": "Drug inactivation by phosphorylation, distinct from the esterases' ring hydrolysis under the same family term.",
+            "extra_nodes": [
+                {"node_id": "kinase", "label": "macrolide phosphotransferase activity",
+                 "node_type": "MOLECULAR_FUNCTION",
+                 "description": "Ungrounded: GO has kinase terms but none specific to macrolide 2'-OH phosphorylation."},
+                {"node_id": "pocket", "label": "expanded hydrophobic antibiotic binding pocket",
+                 "node_type": "STATE",
+                 "description": "What lets one enzyme handle six chemically different macrolides. Ungrounded."},
+                {"node_id": "phospho_drug", "label": "phosphorylated (inactive) macrolide",
+                 "node_type": "CHEMICAL",
+                 "description": "Ungrounded: the product differs per drug."},
+            ],
+            "extra_edges": [
+                {"subject": "determinant", "object": "kinase",
+                 "predicate": "enables (macrolide phosphorylation)", "predicate_id": "RO:0002327",
+                 "evidence": [{"reference": "PMID:28416110", "snippet": "The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone ring that can be inactivated by macrolide phosphotransferase enzymes.",
+                               "notes": "Fong et al. 2017."}]},
+                {"subject": "pocket", "object": "determinant",
+                 "predicate": "part of (the substrate-binding site)", "predicate_id": "BFO:0000050",
+                 "description": "An expanded, largely hydrophobic pocket -- the structural reason one enzyme inactivates chemically unrelated macrolides.",
+                 "evidence": [{"reference": "PMID:28416110", "snippet": "The structures show that the enzymes are related to the aminoglycoside phosphotransferases, but are distinguished from them by the presence of a large interdomain linker that contributes to an expanded antibiotic binding pocket.",
+                               "notes": "The interdomain linker distinguishing these from the aminoglycoside phosphotransferases they are related to."}]},
+                {"subject": "kinase", "object": "phospho_drug",
+                 "predicate": "has output", "predicate_id": "RO:0002234",
+                 "evidence": [{"reference": "PMID:28416110", "snippet": "We present structures for MPH(2')-I and MPH(2')-II in the apo state, and in complex with GTP analogs and six different macrolides.",
+                               "notes": "Nucleotide and macrolide captured together in the structures."}]},
+                {"subject": "phospho_drug", "object": "drug0",
+                 "predicate": "negatively regulates (the phosphorylated drug is inactive)",
+                 "predicate_id": "RO:0002212",
+                 "description": "The causal core: the drug is chemically modified rather than displaced, excluded or pumped out.",
+                 "evidence": [{"reference": "PMID:28416110", "snippet": "The macrolides are a class of antibiotic, characterized by a large macrocyclic lactone ring that can be inactivated by macrolide phosphotransferase enzymes.",
+                               "notes": "'can be inactivated by macrolide phosphotransferase enzymes'."}]},
+            ],
+        },
+    ],
     # ---------------------------------------------------------------------------------
     # Permeability (ARO:3000270) -- a TENTH mechanism kind, and the mirror of efflux: the
     # drug is not pumped out, it never gets in. Most of these records are the CHANNEL, and
