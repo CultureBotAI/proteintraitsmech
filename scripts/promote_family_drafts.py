@@ -646,7 +646,77 @@ def _requires_23s_rrna(ident: str, label: str, text: str):
     return None
 
 
+def _requires_pnca(ident: str, label: str, text: str):
+    """Determinant must be pncA, checked on its OWN definition (#253, #254)."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    if "pnca" not in _own_definition(text).lower() and "pnca" not in label.lower():
+        return "own definition does not name pncA"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # pncA (ARO:3004267) -- PRODRUG-ACTIVATION LOSS. Resistance by LOSING a function.
+    #
+    # Every other mechanism curated in this thread works by the determinant DOING
+    # something: destroying the drug, rebuilding a precursor, pumping, replacing a target.
+    # Here resistance is the absence of an activity the susceptible cell has. Pyrazinamide
+    # is a prodrug; without pyrazinamidase it is never converted to pyrazinoic acid, so the
+    # drug is inert rather than defeated.
+    #
+    # That inverts the usual edge direction, and it is why the core edge below points from
+    # the LOSS to the activity rather than from the determinant to the drug.
+    #
+    # CARD states the whole chain again (round 51's lesson, fourth round running).
+    "ARO:3004267": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_pnca,
+        "reference": "ARO:3004267",
+        "mech": {"ARO:3000212": "Point mutations in pncA prevent the enzyme from activating antibiotics, such as pyrazinamide."},
+        "mech_res": "Point mutations in pncA prevent the enzyme from activating antibiotics, such as pyrazinamide.",
+        "det_res": [
+            {"reference": "ARO:3004267", "snippet": "Point mutations in pncA prevent the enzyme from activating antibiotics, such as pyrazinamide.",
+             "notes": "The mechanism in one sentence: the mutation PREVENTS activation."},
+            {"reference": "ARO:3003418", "snippet": "pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity is the major mechanism of antibiotic resistance.",
+             "notes": "And the chemistry it prevents -- pyrazinamide to pyrazinoic acid -- plus CARD calling loss of pyrazinamidase activity 'the major mechanism'."},
+        ],
+        "res_drug": "Point mutations in pncA prevent the enzyme from activating antibiotics, such as pyrazinamide.",
+        "note": "Prodrug-activation loss. Resistance is the ABSENCE of an activity, not the presence of one.",
+        "extra_nodes": [
+            {"node_id": "pzase", "label": "pyrazinamidase / nicotinamidase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0008936",
+             "description": "Grounded to nicotinamidase activity, the EC 3.5.1.19 function CARD names for pncA; checked non-obsolete against OLS."},
+            {"node_id": "loss", "label": "loss of pyrazinamidase activity",
+             "node_type": "STATE",
+             "description": "The causal core, and the reason this graph runs backwards relative to the other mechanisms here. Ungrounded."},
+            {"node_id": "poa", "label": "pyrazinoic acid (the active drug)",
+             "node_type": "CHEMICAL",
+             "description": "Ungrounded deliberately: the active metabolite is not the drug class node, and guessing a CHEBI id for it would be a grounding this round did not verify."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "loss",
+             "predicate": "has quality (loss of pyrazinamidase activity)",
+             "predicate_id": "RO:0000086",
+             "evidence": [{"reference": "ARO:3003394", "snippet": "Some mutation within pncA are associated with loss of enzyme activity, resulting in pyrazinamide resistance.",
+                           "notes": "CARD ties the mutation to loss of enzyme activity explicitly."}]},
+            {"subject": "loss", "object": "pzase",
+             "predicate": "negatively regulates (abolishes the activating activity)",
+             "predicate_id": "RO:0002212",
+             "description": "The inverted core: resistance follows from the activity being ABSENT.",
+             "evidence": [{"reference": "ARO:3003418", "snippet": "pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity is the major mechanism of antibiotic resistance.",
+                           "notes": "'loss of pyrazinamidase activity is the major mechanism of antibiotic resistance'."}]},
+            {"subject": "pzase", "object": "drug0",
+             "predicate": "has input (the prodrug)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3003418", "snippet": "pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity is the major mechanism of antibiotic resistance.",
+                           "notes": "'It catalyzes the activation of pyrazinamide'. NOTE the drug0 node is the drug CLASS; the substrate is pyrazinamide specifically."}]},
+            {"subject": "pzase", "object": "poa",
+             "predicate": "has output (the active form)", "predicate_id": "RO:0002234",
+             "description": "What resistance prevents from ever being made.",
+             "evidence": [{"reference": "ARO:3003418", "snippet": "pncA is a pyrazinamidase/nicotinamidase. It catalyzes the activation of pyrazinamide to pyrazinoic acid. Mutations arise within the pncA gene that caused the loss of pyrazinamidase activity is the major mechanism of antibiotic resistance.",
+                           "notes": "'the activation of pyrazinamide to pyrazinoic acid'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # 23S rRNA mutations (ARO:3000336) -- the non-macrolide remainder, after round 50.
     #

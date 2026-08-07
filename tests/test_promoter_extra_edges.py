@@ -1393,3 +1393,24 @@ def test_23s_and_16s_share_the_binding_site_partonomy():
                    and e["predicate_id"] == "BFO:0000050"
                    for e in cfg["extra_edges"]), f"{fam} lost the partonomy edge"
         assert cfg["determinant_node_type"] == "NUCLEIC_ACID"
+
+
+def test_pnca_core_edge_runs_from_the_loss_not_the_determinant():
+    """Prodrug-activation loss inverts the usual direction.
+
+    Every other mechanism here works by the determinant DOING something. pncA resistance
+    is the ABSENCE of an activity, so the core edge points from the loss to the activity.
+    If someone "fixes" this to determinant --> drug, the mechanism becomes wrong.
+    """
+    cfg = promote.family_configs("ARO:3004267")[0]
+    core = next(e for e in cfg["extra_edges"] if e["object"] == "pzase")
+    assert core["subject"] == "loss"
+    assert core["predicate_id"] == "RO:0002212"
+
+
+def test_pnca_active_metabolite_is_left_ungrounded_on_purpose():
+    """A guessed CHEBI id would be an unverified grounding (rounds 51-55 discipline)."""
+    cfg = promote.family_configs("ARO:3004267")[0]
+    poa = next(n for n in cfg["extra_nodes"] if n["node_id"] == "poa")
+    assert "grounding" not in poa
+    assert "guessing" in _flat(poa["description"]).lower()
