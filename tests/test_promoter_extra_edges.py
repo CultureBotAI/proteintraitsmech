@@ -1108,3 +1108,21 @@ def test_target_protection_now_has_three_configs_with_three_modes():
     assert len(cfgs) == 3
     marks = {n["node_id"] for c in cfgs for n in c["extra_nodes"]}
     assert {"tet_site", "stalled", "inhibited"} <= marks
+
+
+def test_macrolide_esterases_use_the_ring_hydrolysis_mechanism_id():
+    """ARO:3000321, "hydrolysis of macrolide macrocycle lactone ring".
+
+    I guessed ARO:3000004 — a beta-lactamase class — and the UncoveredMechanism guard
+    refused all six records and named the real id. Fifth time in this session (r31, r32,
+    r42, r43, r46) that guessing a mechanism id was the failure and the guard was the fix.
+    """
+    mech = promote.family_configs("ARO:3000201")[0]["mech"]
+    assert "ARO:3000321" in mech and "ARO:3000004" not in mech
+
+
+def test_the_macrolide_config_takes_only_the_esterases():
+    """One family term, three unrelated reactions: hydrolysis, phosphorylation, glycosylation."""
+    pre = promote.family_configs("ARO:3000201")[0]["precondition"]
+    assert pre("ARO:X", "EreA", "EreA is an erythromycin esterase that hydrolyses") is None
+    assert pre("ARO:X", "gimA", "A macrolide glycosyltransferase encoded by gimA") is not None
