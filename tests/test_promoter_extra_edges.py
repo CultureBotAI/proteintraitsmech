@@ -1004,13 +1004,15 @@ def test_the_activator_config_is_the_mirror_of_the_repressor_one():
 
 
 def test_the_activator_list_is_conservative_and_says_so():
-    """marA IS an activator but its definition does not say so in a recognised form.
+    """marA IS an activator, and still does not belong in this config.
 
-    A false exclusion leaves a draft; a false inclusion asserts the wrong direction on a
-    graph whose whole content is that direction. Erring toward the draft is cheaper.
+    Round 38's check missed its phrasing; round 42 tried to admit it by reading and the
+    UncoveredMechanism guard refused it for a better reason: marA also carries
+    ARO:3000244 (reduced permeability), because MarA down-regulates porins as well as
+    raising efflux. A graph from this config would describe half of what CARD asserts (#238).
     """
-    assert "ARO:3000263" not in promote._EFFLUX_ACTIVATORS      # marA
-    assert len(promote._EFFLUX_ACTIVATORS) == 27      # 15 (r38) + 9 (r40) + 3 (r41)
+    assert "ARO:3000263" not in promote._EFFLUX_ACTIVATORS      # marA — see #238
+    assert len(promote._EFFLUX_ACTIVATORS) == 27
 
 
 def test_the_lps_regulator_config_is_not_an_efflux_one():
@@ -1019,7 +1021,7 @@ def test_the_lps_regulator_config_is_not_an_efflux_one():
     cfgs = promote.family_configs("ARO:3000451")
     lps = [c for c in cfgs if any(n["node_id"] == "lipid_a_mod" for n in c["extra_nodes"])]
     assert len(lps) == 1
-    assert len(promote._LPS_REGULATORS) == 2
+    assert len(promote._LPS_REGULATORS) == 6      # basR/basS + 4 PhoP/PhoQ in r42
     core = [e for e in lps[0]["extra_edges"] if e["object"] == "drug0"][0]
     # the charge-to-resistance sentence is mprF's; the notes must say the transfer
     assert core["evidence"][0]["reference"] == "PMID:11342591"

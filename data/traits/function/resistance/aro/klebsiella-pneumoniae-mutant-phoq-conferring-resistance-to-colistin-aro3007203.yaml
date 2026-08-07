@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000835
 trait_relations:
@@ -22,12 +22,13 @@ evidence:
 - reference: PMID:35920875
   notes: aro citation
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Klebsiella pneumoniae mutant PhoQ conferring resistance to colistin → mechanism → resistance
-    (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Klebsiella pneumoniae mutant PhoQ conferring resistance to colistin → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3003582). Not efflux despite the family term: these induce lipid A modification, reaching round
+    32''s electrostatic repulsion by a regulatory route.'
   nodes:
   - node_id: determinant
     label: Klebsiella pneumoniae mutant PhoQ conferring resistance to colistin
@@ -37,6 +38,15 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: lipid_a_mod
+    label: lipid A modification gene expression
+    node_type: BIOLOGICAL_PROCESS
+    description: 'The pmrHFIJKLM / arn operon and relatives. Ungrounded: which operon differs per organism.'
+  - node_id: surface_charge
+    label: reduced net negative charge of the envelope
+    node_type: QUALITY
+    description: 'The same property mprF produces by lysinylating phosphatidylglycerol (round 32). Ungrounded:
+      no ontology term for envelope net charge.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -50,33 +60,50 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: PMID:35920875
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
-    - reference: ARO:3007203
-      snippet: Mutations in Klebsiella pneumoniae PhoQ of the two-component PhoPQ regulatory system conferring
-        resistance to colistin.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3003582
+      snippet: Response regulator for Lipid A modification genes; two-component regulatory system with
+        basS.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: PMID:35920875
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: ARO:3003582
+      snippet: Response regulator for Lipid A modification genes; two-component regulatory system with
+        basS.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: PMID:35920875
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3007203
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000622 ! colistin A'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3003582
+      snippet: Response regulator for Lipid A modification genes; two-component regulatory system with
+        basS.
+      notes: Determinant → resistance phenotype.
+  - subject: determinant
+    predicate: positively regulates (induces the modification genes)
+    predicate_id: RO:0002213
+    object: lipid_a_mod
+    evidence:
+    - reference: ARO:3003582
+      snippet: Response regulator for Lipid A modification genes; two-component regulatory system with
+        basS.
+      notes: CARD's definition of BasR, the archetype. Each record's own definition names the operon IT
+        induces.
+  - subject: lipid_a_mod
+    predicate: causally upstream of (adds positive charge to the envelope)
+    predicate_id: RO:0002411
+    object: surface_charge
+    evidence:
+    - reference: ARO:3003582
+      snippet: Response regulator for Lipid A modification genes; two-component regulatory system with
+        basS.
+      notes: Lipid A modification is what the induced genes do.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

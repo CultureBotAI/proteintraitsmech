@@ -307,7 +307,17 @@ _EFFLUX_ACTIVATORS = frozenset(['ARO:3000504', 'ARO:3000508', 'ARO:3000524', 'AR
 # rounds 37-38. Their mechanism is not efflux at all despite the family term: they induce
 # the genes that add positive charge to the envelope, so this is round 32's electrostatic
 # repulsion reached by a regulatory route.
-_LPS_REGULATORS = frozenset(['ARO:3003582', 'ARO:3003583'])
+# marA is NOT here despite being a genuine activator: it also carries ARO:3000244 (reduced
+# permeability to antibiotic), because MarA down-regulates porins as well as raising efflux.
+# The UncoveredMechanism guard refused it, correctly -- this config describes efflux
+# activation only, and a marA graph that said nothing about permeability would describe
+# half of what CARD asserts. It needs a config covering both arms (#238).
+# Round 42 added the four PhoP/PhoQ records, named as a known false exclusion in round 39.
+# They describe the SAME mechanism without the words the round-39 pattern required -- e.g.
+# 'A mutant phoP activates pmrHFIJKLM expression responsible for L-aminoarabinose synthesis
+# and polymyxin resistance'. L-aminoarabinose IS the lipid A modification; the pattern
+# wanted the phrase 'lipid A' and the definition names the sugar instead.
+_LPS_REGULATORS = frozenset(['ARO:3003582', 'ARO:3003583', 'ARO:3003585', 'ARO:3003895', 'ARO:3003896', 'ARO:3007203'])
 
 
 def _requires_lps_regulator(ident: str, label: str, text: str):
