@@ -1571,3 +1571,21 @@ def test_rifampin_phosphorylation_does_not_pin_the_donor():
     assert "declines to give" in _flat(cfg["note"])
     labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
     assert "atp" not in labels and "gtp" not in labels
+
+
+def test_streptogramin_has_one_config_per_chemistry_and_subtype():
+    """vat acetylates type A; vgb linearizes type B. One config would be wrong twice."""
+    cfgs = promote.family_configs("ARO:3000233")
+    assert len(cfgs) == 2
+    mechs = {m for c in cfgs for m in c["mech"]} - {"ARO:0001004"}
+    assert mechs == {"ARO:3000106", "ARO:3000338"}
+
+
+def test_streptogramin_lyase_is_not_modelled_as_a_transfer():
+    """Nothing is ADDED to the drug -- the ring is opened. No donor node may appear."""
+    cfg = next(c for c in promote.family_configs("ARO:3000233")
+               if "ARO:3000338" in c["mech"])
+    labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    assert "donor" not in labels and "coa" not in labels
+    assert any(e["subject"] == "lactone" and e["object"] == "drug0"
+               for e in cfg["extra_edges"]), "the ring must be part-of the drug"
