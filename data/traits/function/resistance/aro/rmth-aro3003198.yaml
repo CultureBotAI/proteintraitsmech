@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004271
 trait_relations:
@@ -25,11 +25,12 @@ evidence:
 - reference: DOI:10.1128/AAC.00266-13
   notes: PMID:23478957 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] rmtH → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: rmtH → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:40643688). Target modification by methylation: the enzyme counterpart of round 29''s decoding-site
+    mutations.'
   nodes:
   - node_id: determinant
     label: rmtH
@@ -47,6 +48,20 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
+  - node_id: methyltransferase
+    label: 16S rRNA methyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: GO has rRNA methyltransferase terms but the resistance-associated positions
+      differ per enzyme (G1405, A1408).'
+  - node_id: decoding_site
+    label: 16S rRNA decoding site (aminoglycoside binding site)
+    node_type: NUCLEIC_ACID
+    description: 'The SAME site round 29''s records mutate. Ungrounded there and here, for the same reason:
+      no ontology term denotes it.'
+  - node_id: methylated
+    label: methylated decoding site
+    node_type: STATE
+    description: 'Ungrounded: a modified nucleotide state rather than a compound.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,72 +75,113 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.00266-13
-      notes: 'Auto-drafted: mechanism class ARO:0001001 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001001); verbatim snippet pending curation.'
-    - reference: ARO:3003198
-      snippet: rmtH is a 16s ribosomal RNA methyltransferase found in Klebsiella pneumoniae strain MRSN2404
-        that was isolated from the chronic wound of a soldier wounded in Iraq in 2006. It confers high
-        resistance to aminoglycosides.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001001 (antibiotic target alteration)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:40643688
+      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
+        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
+        resistance and poses a major threat to their future clinical utility.
+      notes: Family mechanism ARO:0001001.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00266-13
-      notes: 'Auto-drafted: mechanism ARO:0001001 → resistance; snippet pending curation.'
-    - reference: ARO:0001001
-      snippet: Mutational alteration or enzymatic modification of antibiotic target which results in antibiotic
-        resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001001 (antibiotic target alteration),
-        which states the causal link to resistance.
+    - reference: PMID:40643688
+      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
+        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
+        resistance and poses a major threat to their future clinical utility.
+      notes: Mechanism ARO:0001001 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1128/AAC.00266-13
-      notes: 'Auto-drafted: mechanism class ARO:3000211 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000211); verbatim snippet pending curation.'
-    - reference: ARO:3003198
-      snippet: rmtH is a 16s ribosomal RNA methyltransferase found in Klebsiella pneumoniae strain MRSN2404
-        that was isolated from the chronic wound of a soldier wounded in Iraq in 2006. It confers high
-        resistance to aminoglycosides.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000211 (ribosomal alteration
-        conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not
-        assert that link as an is_a axiom.
+    - reference: PMID:40643688
+      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
+        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
+        resistance and poses a major threat to their future clinical utility.
+      notes: Family mechanism ARO:3000211.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00266-13
-      notes: 'Auto-drafted: mechanism ARO:3000211 → resistance; snippet pending curation.'
-    - reference: ARO:3000211
-      snippet: Chemical alteration of the ribosome results in modification of an antibiotic's target leading
-        to resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000211 (ribosomal alteration conferring
-        antibiotic resistance), which states the causal link to resistance.
+    - reference: PMID:40643688
+      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
+        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
+        resistance and poses a major threat to their future clinical utility.
+      notes: Mechanism ARO:3000211 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00266-13
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003198
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000013 ! amikacin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:40643688
+      snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
+        form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
+        binding sites.
+      notes: 'The mechanism class: modify the drug''s binding site on the rRNA rather than the drug or
+        the protein.'
+    - reference: PMID:40643688
+      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
+        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
+        resistance and poses a major threat to their future clinical utility.
+      notes: And its clinical weight -- 'exceptionally high-level' resistance, because a methylated site
+        resists the whole aminoglycoside class at once.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3004271
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted on ARO:3004271 (16S rRNA methyltransferase (G1405)), an is_a ancestor of this record's
         ARO:3003198; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+  - subject: determinant
+    predicate: enables (16S rRNA methylation)
+    predicate_id: RO:0002327
+    object: methyltransferase
+    evidence:
+    - reference: PMID:40643688
+      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
+        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
+        resistance and poses a major threat to their future clinical utility.
+      notes: The acquired enzymes modify 16S rRNA nucleotides in the decoding centre.
+  - subject: methyltransferase
+    predicate: causally upstream of (methylates the site)
+    predicate_id: RO:0002411
+    object: methylated
+    evidence:
+    - reference: PMID:40643688
+      snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
+        form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
+        binding sites.
+      notes: Methylation of the drug's rRNA binding site is the mechanism class.
+  - subject: methylated
+    predicate: negatively regulates (the modified site no longer binds the drug)
+    predicate_id: RO:0002212
+    object: decoding_site
+    description: 'The causal core, and the same endpoint round 29 reaches by substitution instead: the
+      decoding site stops binding aminoglycosides.'
+    evidence:
+    - reference: PMID:40643688
+      snippet: The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides
+        in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside
+        resistance and poses a major threat to their future clinical utility.
+      notes: '''exceptionally high-level aminoglycoside resistance'' -- one modification covers the class.'
+  - subject: drug0
+    predicate: molecularly interacts with (binds the decoding site)
+    predicate_id: RO:0002436
+    object: decoding_site
+    evidence:
+    - reference: PMID:40643688
+      snippet: Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant
+        form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA)
+        binding sites.
+      notes: 'Drug action: the rRNA binding site methylation denies it.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
