@@ -754,3 +754,29 @@ def test_katg_records_that_its_core_evidence_is_a_deletion():
     core = [e for e in cfg["extra_edges"]
             if e["subject"] == "determinant" and e["object"] == "peroxidase"][0]
     assert "point substitutions" in core["evidence"][0]["notes"]
+
+
+# --- round 28: inhA, two routes on one determinant ---------------------------------
+
+def test_inha_carries_both_resistance_routes_as_separate_edges():
+    """Target alteration AND titration by overexpression, from one 1994 paper.
+
+    A record showing only one would misdescribe half the clinical alleles.
+    """
+    cfg = promote.family_configs("ARO:3003417")[0]
+    alter = [e for e in cfg["extra_edges"]
+             if e["subject"] == "determinant" and e["predicate_id"] == "RO:0002212"]
+    over = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["predicate_id"] == "RO:0002213"]
+    assert len(alter) == 1 and len(over) == 1
+    out = _flat(_graph(cfg, mech=("ARO:3000212",), drug=("ARO:3007152",)))
+    assert "A missense mutation within the mycobacterial inhA gene" in out
+    assert "transferred on a multicopy plasmid vector" in out
+
+
+def test_inha_records_that_its_inhibitor_depends_on_katg():
+    """The adduct exists only because katG activated the prodrug — round 27's record."""
+    cfg = promote.family_configs("ARO:3003417")[0]
+    edge = [e for e in cfg["extra_edges"] if e["object"] == "inha_activity"
+            and e["subject"] == "inh_nad"][0]
+    assert "ARO:3004266" in edge["evidence"][0]["notes"]
