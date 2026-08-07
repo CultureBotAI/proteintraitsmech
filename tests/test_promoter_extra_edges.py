@@ -1155,3 +1155,16 @@ def test_all_three_macrolide_chemistries_are_distinct():
     """
     ids = {mid for c in promote.family_configs("ARO:3000201") for mid in c["mech"]}
     assert {"ARO:3000321", "ARO:3000105", "ARO:3000208"} <= ids
+
+
+def test_target_modification_reaches_round_29s_endpoint_by_a_different_route():
+    """Round 29's records MUTATE the 16S decoding site; these ENZYMES methylate it.
+
+    Same target, same consequence, different determinant type — an rRNA there, a protein
+    here — which is why the two could not share a config despite sharing an endpoint.
+    """
+    cfg = promote.family_configs("ARO:3000519")[0]
+    ids = {n["node_id"] for n in cfg["extra_nodes"]}
+    assert "decoding_site" in ids and "methyltransferase" in ids
+    # mechanism ids were read from the records, not guessed — five rounds lost time to that
+    assert {"ARO:0001001", "ARO:3000211", "ARO:3000212"} <= set(cfg["mech"])

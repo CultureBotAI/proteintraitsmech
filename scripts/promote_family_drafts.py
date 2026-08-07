@@ -561,6 +561,62 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # Target-modifying enzymes (ARO:3000519) -- 16S rRNA methyltransferases, and the
+    # counterpart of round 29. Those records are MUTATIONS in the decoding site that lower
+    # aminoglycoside affinity; these are ENZYMES that methylate the same site to the same
+    # end. Same target, same consequence, and the determinant is a protein here rather than
+    # the rRNA itself -- which is why the two could not share a config.
+    #
+    # Mechanism ids taken from the records rather than guessed: ARO:0001001, ARO:3000211
+    # and ARO:3000212. Five rounds this session lost time to guessing them (r31, r32, r42,
+    # r43, r46), so this one asked the corpus first.
+    "ARO:3000519": {
+        "curated": "2026-08-07T00:00:00Z",
+        "reference": "PMID:40643688",
+        "mech": {"ARO:0001001": "The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside resistance and poses a major threat to their future clinical utility.", "ARO:3000211": "The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside resistance and poses a major threat to their future clinical utility.",
+                 "ARO:3000212": "The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside resistance and poses a major threat to their future clinical utility."},
+        "mech_res": "The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside resistance and poses a major threat to their future clinical utility.",
+        "det_res": [
+            {"reference": "PMID:40643688", "snippet": "Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA) binding sites.",
+             "notes": "The mechanism class: modify the drug's binding site on the rRNA rather than the drug or the protein."},
+            {"reference": "PMID:40643688", "snippet": "The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside resistance and poses a major threat to their future clinical utility.",
+             "notes": "And its clinical weight -- 'exceptionally high-level' resistance, because a methylated site resists the whole aminoglycoside class at once."},
+        ],
+        "res_drug": "The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside resistance and poses a major threat to their future clinical utility.",
+        "note": "Target modification by methylation: the enzyme counterpart of round 29's decoding-site mutations.",
+        "extra_nodes": [
+            {"node_id": "methyltransferase", "label": "16S rRNA methyltransferase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: GO has rRNA methyltransferase terms but the resistance-associated positions differ per enzyme (G1405, A1408)."},
+            {"node_id": "decoding_site", "label": "16S rRNA decoding site (aminoglycoside binding site)",
+             "node_type": "NUCLEIC_ACID",
+             "description": "The SAME site round 29's records mutate. Ungrounded there and here, for the same reason: no ontology term denotes it."},
+            {"node_id": "methylated", "label": "methylated decoding site", "node_type": "STATE",
+             "description": "Ungrounded: a modified nucleotide state rather than a compound."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "methyltransferase",
+             "predicate": "enables (16S rRNA methylation)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:40643688", "snippet": "The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside resistance and poses a major threat to their future clinical utility.",
+                           "notes": "The acquired enzymes modify 16S rRNA nucleotides in the decoding centre."}]},
+            {"subject": "methyltransferase", "object": "methylated",
+             "predicate": "causally upstream of (methylates the site)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:40643688", "snippet": "Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA) binding sites.",
+                           "notes": "Methylation of the drug's rRNA binding site is the mechanism class."}]},
+            {"subject": "methylated", "object": "decoding_site",
+             "predicate": "negatively regulates (the modified site no longer binds the drug)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, and the same endpoint round 29 reaches by substitution instead: the decoding site stops binding aminoglycosides.",
+             "evidence": [{"reference": "PMID:40643688", "snippet": "The acquisition of aminoglycoside-resistance methyltransferases that modify 16S rRNA nucleotides in the ribosome decoding center, for example, results in exceptionally high-level aminoglycoside resistance and poses a major threat to their future clinical utility.",
+                           "notes": "'exceptionally high-level aminoglycoside resistance' -- one modification covers the class."}]},
+            {"subject": "drug0", "object": "decoding_site",
+             "predicate": "molecularly interacts with (binds the decoding site)",
+             "predicate_id": "RO:0002436",
+             "evidence": [{"reference": "PMID:40643688", "snippet": "Among several distinct mechanisms used by bacteria to circumvent antibiotic stress, a predominant form of resistance to ribosome-targeting compounds is the methylation of their ribosomal RNA (rRNA) binding sites.",
+                           "notes": "Drug action: the rRNA binding site methylation denies it."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # Macrolide ESTERASES (ARO:3000201, the Ere/Est records). Drug inactivation -- rounds
     # 12-16's kind -- but the family term holds three unrelated reactions, so the config is
     # for ring hydrolysis only and a precondition keeps the phosphotransferases and
