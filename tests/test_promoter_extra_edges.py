@@ -809,3 +809,25 @@ def test_the_16s_graph_keeps_the_eukaryotic_parallel():
     out = _flat(_graph(promote.family_configs("ARO:3003666")[0],
                        mech=("ARO:3000212",), drug=("ARO:3000104",)))
     assert "an adenosine in prokaryotic ribosomes and a guanosine in eukaryotic ribosomes" in out
+
+
+# --- round 30: ethA, and the isoniazid/ethionamide triangle ------------------------
+
+def test_etha_points_at_the_shared_target_record():
+    """Ethionamide and isoniazid converge on InhA, curated in round 28."""
+    cfg = promote.family_configs("ARO:3003456")[0]
+    out = _graph(cfg, mech=("ARO:3000212",), drug=("ARO:3007156",))
+    assert "grounding: ARO:3003417" in out
+    edge = [e for e in cfg["extra_edges"] if e["object"] == "inha_gene"][0]
+    assert "PMID:8284673" in edge["evidence"][0]["notes"]      # where the target ID comes from
+
+
+def test_etha_core_edge_records_that_the_evidence_is_the_converse():
+    """Overproduction gives HYPERsensitivity; loss giving resistance is the inference.
+
+    Not the same sentence, and a reader should see which direction was measured.
+    """
+    cfg = promote.family_configs("ARO:3003456")[0]
+    core = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["predicate_id"] == "RO:0002212"][0]
+    assert "converse" in core["evidence"][0]["notes"]
