@@ -831,3 +831,28 @@ def test_etha_core_edge_records_that_the_evidence_is_the_converse():
     core = [e for e in cfg["extra_edges"]
             if e["subject"] == "determinant" and e["predicate_id"] == "RO:0002212"][0]
     assert "converse" in core["evidence"][0]["notes"]
+
+
+# --- round 31: target protection, and one family term with three mechanisms --------
+
+def test_target_protection_config_takes_only_the_tetracycline_records():
+    """ARO:3000185 covers ribosomal (tetracycline), RNA-polymerase (rifamycin) and EF-G
+    (fusidane) protection. One config cannot describe all three."""
+    pre = promote.family_configs("ARO:3000185")[0]["precondition"]
+    assert pre("ARO:X", "TetM", "  grounding: ARO:3000050\n") is None
+    assert pre("ARO:X", "FusB", "  grounding: ARO:3000034\n") is not None
+
+
+def test_target_protection_records_the_superseded_model_too():
+    """The paper's framing is a correction; citing only the new reading would hide that
+    this was a live question and that the evidence is a 7.2 A structure."""
+    out = _flat(_graph(promote.family_configs("ARO:3000185")[0],
+                       mech=("ARO:0001003",), drug=("ARO:3000050",)))
+    assert "chasing the drug from its binding site" in out
+    assert "drug release is indirect" in out
+
+
+def test_target_protection_uses_the_mechanism_id_the_records_carry():
+    """The first draft guessed ARO:0000002; --verify reported all 193 candidates as
+    uncovered, because the real id is ARO:0001003 (#203 doing its job on new work)."""
+    assert "ARO:0001003" in promote.family_configs("ARO:3000185")[0]["mech"]

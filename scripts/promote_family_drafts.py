@@ -209,6 +209,23 @@ def _vanrs_ser_downstream() -> tuple[list, list]:
     return nodes, edges
 
 
+def _requires_tetracycline(ident: str, label: str, text: str):
+    """This config is the RIBOSOME-protection mechanism, so refuse the other two.
+
+    `ARO:3000185` (antibiotic target protection) covers three different mechanisms:
+    ribosomal protection of tetracycline (TetM/TetO/OtrA), RNA-polymerase binding against
+    rifamycins (RbpA, HelR), and EF-G binding against fusidic acid (FusB/FusC/FusD). One
+    config cannot describe all three -- the round-19 and round-22 lesson -- so this one
+    takes the records whose drug is tetracycline and the other two wait for their own
+    evidence.
+    """
+    if re.search(r"grounding: ARO:3000050\b", text):
+        return None
+    return ("this determinant's drug is not tetracycline, so the ribosome-protection "
+            "evidence does not describe it (rifamycin and fusidane target protection are "
+            "different mechanisms with different partners)")
+
+
 def _requires_lac_cluster(ident: str, label: str, text: str):
     """VanY's characterisation is VanA-type (Tn1546), so refuse a D-Ala-D-Ser cluster.
 
@@ -347,6 +364,54 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Ribosomal protection of tetracycline (ARO:3000185, tetracycline records only) -- a
+    # SEVENTH mechanism kind. The determinant neither modifies the drug nor the target: it
+    # removes the drug FROM the target. Nothing curated so far has that shape.
+    "ARO:3000185": {
+        "curated": "2026-08-06T00:00:00Z",
+        "precondition": _requires_tetracycline,
+        "reference": "PMID:23027944",      # Donhofer et al. 2012, PNAS
+        "mech": {"ARO:0001003": "Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome and chasing the drug from its binding site."},
+        "mech_res": "Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome and chasing the drug from its binding site.",
+        "det_res": [
+            {"reference": "PMID:23027944", "snippet": "Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome and chasing the drug from its binding site.",
+             "notes": "Donhofer et al. 2012. The mechanism in one sentence: bind the ribosome, chase the drug off it."},
+            {"reference": "PMID:23027944", "snippet": "Moreover, we observe direct interaction between domain IV of TetM and the tetracycline binding site and identify residues critical for conferring tetracycline resistance.",
+             "notes": "And the cryo-EM structure that made it direct rather than inferred, plus the residues that matter."},
+        ],
+        "res_drug": "Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome and chasing the drug from its binding site.",
+        "note": "Target protection: the drug is displaced from a target that is not itself altered.",
+        "extra_nodes": [
+            {"node_id": "ribosome_binding", "label": "ribosome binding",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0043022"},
+            {"node_id": "tet_site", "label": "tetracycline binding site on the ribosome",
+             "node_type": "STATE",
+             "description": "The site the drug occupies and the RPP clears. Ungrounded: no ontology term denotes it."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "ribosome_binding",
+             "predicate": "enables (binds the ribosome)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:23027944", "snippet": "Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome and chasing the drug from its binding site.",
+                           "notes": "Binding the ribosome is the first half of the mechanism."}]},
+            {"subject": "drug0", "object": "tet_site",
+             "predicate": "molecularly interacts with (occupies its binding site)",
+             "predicate_id": "RO:0002436",
+             "requires": {"drug0": "ARO:3000050"},
+             "evidence": [{"reference": "PMID:23027944", "snippet": "Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome and chasing the drug from its binding site.",
+                           "notes": "Drug action: the site the RPP exists to clear."}]},
+            {"subject": "ribosome_binding", "object": "tet_site",
+             "predicate": "negatively regulates (chases the drug from the site)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, and the seventh kind of mechanism in this corpus: the drug is displaced from a target that is not itself altered.",
+             "evidence": [
+                 {"reference": "PMID:23027944", "snippet": "Moreover, we observe direct interaction between domain IV of TetM and the tetracycline binding site and identify residues critical for conferring tetracycline resistance.",
+                  "notes": "Domain IV of TetM contacts the tetracycline binding site directly, seen by cryo-EM at 7.2 A."},
+                 {"reference": "PMID:23027944", "snippet": "The current model for the mechanism of action of RPPs proposes that drug release is indirect and achieved via conformational changes within the drug-binding site induced upon binding of the RPP to the ribosome.",
+                  "notes": "The prior model had release happening INDIRECTLY via conformational change. The paper's own framing is that its structure supports direct dislodgement instead, so both readings are recorded rather than only the newer one."},
+             ]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # ethA / EtaA -- the ethionamide half of round 27's mechanism kind (ARO:3003456).
     # Ethionamide is a prodrug like isoniazid, and EthA is its activator, so a defective

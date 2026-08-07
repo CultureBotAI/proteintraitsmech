@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000002
 trait_relations:
@@ -22,11 +22,11 @@ evidence:
 - reference: DOI:10.1128/AAC.46.5.1281-1287.2002
   notes: PMID:11959557 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] tet(W/32/O) → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: tet(W/32/O) → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:23027944). Target protection: the drug is displaced from a target that is not itself altered.'
   nodes:
   - node_id: determinant
     label: tet(W/32/O)
@@ -40,6 +40,15 @@ causal_graphs:
     label: tetracycline antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000050
+  - node_id: ribosome_binding
+    label: ribosome binding
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0043022
+  - node_id: tet_site
+    label: tetracycline binding site on the ribosome
+    node_type: STATE
+    description: 'The site the drug occupies and the RPP clears. Ungrounded: no ontology term denotes
+      it.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,43 +62,84 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1281-1287.2002
-      notes: 'Auto-drafted: mechanism class ARO:0001003 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001003); verbatim snippet pending curation.'
-    - reference: ARO:3007124
-      snippet: Tet(W/32/O) is a mosaic tetracycline resistance gene and ribosomal protection protein.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001003 (antibiotic target protection)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:23027944
+      snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
+        and chasing the drug from its binding site.
+      notes: Family mechanism ARO:0001003.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1281-1287.2002
-      notes: 'Auto-drafted: mechanism ARO:0001003 → resistance; snippet pending curation.'
-    - reference: ARO:0001003
-      snippet: Protection of antibiotic action target from antibiotic binding, which process will result
-        in antibiotic resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001003 (antibiotic target protection),
-        which states the causal link to resistance.
+    - reference: PMID:23027944
+      snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
+        and chasing the drug from its binding site.
+      notes: Mechanism ARO:0001003 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1281-1287.2002
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3007124
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000051 ! tetracycline'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:23027944
+      snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
+        and chasing the drug from its binding site.
+      notes: 'Donhofer et al. 2012. The mechanism in one sentence: bind the ribosome, chase the drug off
+        it.'
+    - reference: PMID:23027944
+      snippet: Moreover, we observe direct interaction between domain IV of TetM and the tetracycline
+        binding site and identify residues critical for conferring tetracycline resistance.
+      notes: And the cryo-EM structure that made it direct rather than inferred, plus the residues that
+        matter.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to tetracycline antibiotic.
     evidence:
     - reference: ARO:0000002
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000050 ! tetracycline antibiotic'
       notes: Asserted on ARO:0000002 (tetracycline-resistant ribosomal protection protein), an is_a ancestor
         of this record's ARO:3007124; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to tetracycline antibiotic.
+  - subject: determinant
+    predicate: enables (binds the ribosome)
+    predicate_id: RO:0002327
+    object: ribosome_binding
+    evidence:
+    - reference: PMID:23027944
+      snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
+        and chasing the drug from its binding site.
+      notes: Binding the ribosome is the first half of the mechanism.
+  - subject: drug0
+    predicate: molecularly interacts with (occupies its binding site)
+    predicate_id: RO:0002436
+    object: tet_site
+    evidence:
+    - reference: PMID:23027944
+      snippet: Ribosome protection proteins (RPPs) confer tetracycline resistance by binding to the ribosome
+        and chasing the drug from its binding site.
+      notes: 'Drug action: the site the RPP exists to clear.'
+  - subject: ribosome_binding
+    predicate: negatively regulates (chases the drug from the site)
+    predicate_id: RO:0002212
+    object: tet_site
+    description: 'The causal core, and the seventh kind of mechanism in this corpus: the drug is displaced
+      from a target that is not itself altered.'
+    evidence:
+    - reference: PMID:23027944
+      snippet: Moreover, we observe direct interaction between domain IV of TetM and the tetracycline
+        binding site and identify residues critical for conferring tetracycline resistance.
+      notes: Domain IV of TetM contacts the tetracycline binding site directly, seen by cryo-EM at 7.2
+        A.
+    - reference: PMID:23027944
+      snippet: The current model for the mechanism of action of RPPs proposes that drug release is indirect
+        and achieved via conformational changes within the drug-binding site induced upon binding of the
+        RPP to the ribosome.
+      notes: The prior model had release happening INDIRECTLY via conformational change. The paper's own
+        framing is that its structure supports direct dislodgement instead, so both readings are recorded
+        rather than only the newer one.
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
