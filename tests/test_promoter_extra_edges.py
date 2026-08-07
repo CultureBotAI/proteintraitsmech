@@ -1644,8 +1644,13 @@ def test_inactivation_transfer_configs_never_pin_a_hedged_donor():
     "usually AMP", "usually by ATP, sometimes GTP", "often via acetylCoA". Round 63's
     rule, and here it is a property of the whole family's text rather than one term.
     """
-    cfgs = promote.family_configs("ARO:3000557")
-    assert len(cfgs) == 3
+    # Select on the mechanism ids, NOT on len(cfgs) -- round 68 asserted a count and
+    # round 69's four cleavage configs broke it. Third time this session a config-count
+    # assertion failed for a reason unrelated to what it was testing.
+    transfers = {"ARO:3000107", "ARO:3000105", "ARO:3000106"}
+    cfgs = [c for c in promote.family_configs("ARO:3000557")
+            if c["reference"] in transfers]
+    assert len(cfgs) == len(transfers)
     for cfg in cfgs:
         labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
         for donor in ("atp", "gtp", "amp", "coa", "donor"):
@@ -1681,3 +1686,18 @@ def test_mate_keeps_the_almost_all_hedge_on_substrate_recognition():
     cfg = promote.family_configs("ARO:3000112")[0]
     edge = next(e for e in cfg["extra_edges"] if e["object"] == "drug0")
     assert "almost all" in edge["evidence"][0]["snippet"]
+
+
+def test_cleavage_chemistries_do_not_claim_a_hedged_donor():
+    """Hydrolyses and hydroxylation have NO donor -- claiming CARD hedges one is false.
+
+    The first version of these four configs reused the group-transfer factory unchanged
+    and wrote "the donor is given as 'usually'/'often'" onto 8 records whose definitions
+    mention no donor at all. `hedged_donor=False` now selects the correct wording.
+    """
+    cleavers = {"ARO:3000187", "ARO:3004140", "ARO:3003985", "ARO:3000450"}
+    for cfg in promote.family_configs("ARO:3000557"):
+        if cfg["reference"] not in cleavers:
+            continue
+        assert "No group donor is involved" in cfg["det_res"][0]["notes"]
+        assert "usually" not in cfg["note"]
