@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   899.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   882.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -78,10 +78,8 @@ cleared._
    the ICR transferases, PhoP), and target protection's rifamycin (6) and fusidane (5)
    arms. ~~**Efflux (137) is filed as #223**~~ **— #223 was wrong and round 33 corrected it.** The
    SUBUNITS have no pump-class ancestry, but each is `part_of` a complex and the COMPLEX is
-   `is_a` RND/MFS/ABC/…, so the class is two hops away and derivable. RND (77, round 33) and **ABC (14, round 34)** are done. **MFS (13)** and **SMR (4)** remain
-   and are now trivial to scope: `_requires_pump_class` with ARO:0010002 / ARO:0010003 plus
-   a paper each — both secondary transporters, so their evidence must describe proton
-   antiport rather than being borrowed. **~31 efflux drafts have no `part_of` complex at
+   `is_a` RND/MFS/ABC/…, so the class is two hops away and derivable. RND (77, round 33) and **ABC (14, round 34)** are done. ~~**MFS (13)** and **SMR (4)**~~ **DONE (round 35)** — four configs now sit under one
+   family term, one per pump class. **~31 efflux drafts have no `part_of` complex at
    all** and are invisible to every class precondition; they need individual checking, and
    some may be complexes rather than subunits.
 

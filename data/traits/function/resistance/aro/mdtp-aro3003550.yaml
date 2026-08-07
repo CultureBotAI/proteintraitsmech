@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000748
 trait_relations:
@@ -27,11 +27,12 @@ evidence:
 - reference: DOI:10.1128/JB.00108-09
   notes: PMID:19429622 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] mdtP → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: mdtP → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:16675700). Secondary-transporter efflux, distinct from RND's periplasmic capture and ABC's ATP-driven
+    mechanotransmission.
   nodes:
   - node_id: determinant
     label: mdtP
@@ -41,6 +42,15 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: transporter
+    label: MFS transporter with an internal cavity and inner-leaflet loops
+    node_type: STATE
+    description: 'Ungrounded: the specific transporter differs per record and is on that record''s own
+      ARO relations.'
+  - node_id: export
+    label: drug export out of the cell
+    node_type: BIOLOGICAL_PROCESS
+    description: Ungrounded, as in rounds 33-34.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -54,34 +64,55 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.45.4.1126-1136.2001
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
-    - reference: ARO:3003550
-      snippet: Multidrug resistance efflux pump. Could be involved in resistance to puromycin, acriflavine
-        and tetraphenylarsonium chloride.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:16675700
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily that expels amphipathic
+        compounds across the inner membrane of Escherichia coli.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.45.4.1126-1136.2001
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: PMID:16675700
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily that expels amphipathic
+        compounds across the inner membrane of Escherichia coli.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.45.4.1126-1136.2001
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003550
-      snippet: Multidrug resistance efflux pump. Could be involved in resistance to puromycin, acriflavine
-        and tetraphenylarsonium chloride.
-      notes: ARO definition of this determinant (mdtP).
+    - reference: PMID:16675700
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily that expels amphipathic
+        compounds across the inner membrane of Escherichia coli.
+      notes: The transporter and what it expels.
+    - reference: PMID:16675700
+      snippet: Two long loops extend into the inner leaflet side of the cell membrane. This region can
+        serve to recognize and bind substrate directly from the lipid bilayer.
+      notes: 'Yin et al. 2006. The distinctive step: substrate is recognised DIRECTLY FROM THE LIPID BILAYER
+        by loops in the inner leaflet, not captured from the periplasm as RND does.'
+  - subject: determinant
+    predicate: part of (the transporter)
+    predicate_id: BFO:0000050
+    object: transporter
+    evidence:
+    - reference: PMID:16675700
+      snippet: EmrD is a multidrug transporter from the Major Facilitator Superfamily that expels amphipathic
+        compounds across the inner membrane of Escherichia coli.
+      notes: The determinant is a component of this transporter.
+  - subject: transporter
+    predicate: causally upstream of (binds substrate from the bilayer and exports it)
+    predicate_id: RO:0002411
+    object: export
+    evidence:
+    - reference: PMID:16675700
+      snippet: Two long loops extend into the inner leaflet side of the cell membrane. This region can
+        serve to recognize and bind substrate directly from the lipid bilayer.
+      notes: 'Yin et al. 2006. The distinctive step: substrate is recognised DIRECTLY FROM THE LIPID BILAYER
+        by loops in the inner leaflet, not captured from the periplasm as RND does.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
