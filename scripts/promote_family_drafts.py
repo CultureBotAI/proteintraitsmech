@@ -272,6 +272,23 @@ def _requires_rnd_pump(ident: str, label: str, text: str):
             "and MATE pumps have different subunit counts and energetics)")
 
 
+# The 27 efflux repressors, verified by READING each record's definition rather than by
+# keyword (#231). A keyword match returned 31 and was wrong on four: ArmR is an
+# ANTIrepressor (opposite direction), and CpxR, MvaT and P. aeruginosa CpxR merely mention
+# repression without being the repressor. The direction lives in prose, not in the ontology
+# structure, so this is a checked list rather than a derivation -- and the check is recorded
+# here and in the round report so it can be re-run rather than trusted.
+_EFFLUX_REPRESSORS = frozenset(['ARO:3000506', 'ARO:3000518', 'ARO:3000526', 'ARO:3000559', 'ARO:3000656', 'ARO:3000676', 'ARO:3000702', 'ARO:3000718', 'ARO:3000746', 'ARO:3000815', 'ARO:3000817', 'ARO:3000818', 'ARO:3000819', 'ARO:3000820', 'ARO:3000821', 'ARO:3000824', 'ARO:3000834', 'ARO:3003028', 'ARO:3003373', 'ARO:3003374', 'ARO:3003378', 'ARO:3003379', 'ARO:3003380', 'ARO:3003479', 'ARO:3003710', 'ARO:3003807', 'ARO:3003838'])
+
+
+def _requires_efflux_repressor(ident: str, label: str, text: str):
+    if ident in _EFFLUX_REPRESSORS:
+        return None
+    return ("not on the verified efflux-repressor list: this config's mechanism is loss of "
+            "repression, and activators, antirepressors and records that merely mention "
+            "repression have the opposite or no such direction")
+
+
 def _requires_mprf(ident: str, label: str, text: str):
     """This config is MprF's lysinylation, not every way of altering envelope charge.
 
@@ -442,6 +459,51 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Efflux repressors (ARO:3000451, the 27 verified ones). The regulation shape of rounds
+    # 22 and 24 applied to efflux: the determinant confers resistance by FAILING to repress,
+    # so more pump is made. Its downstream is the pump records curated in rounds 33-36.
+    "ARO:3000451": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_efflux_repressor,
+        "reference": "ARO:3000702",        # CARD's own AcrR definition, the archetype
+        "mech": {"ARO:0010000": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.", "ARO:3000212": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.", "ARO:0001002": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.",
+                 "ARO:3003588": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.", "ARO:0010001": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance."},
+        "mech_res": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.",
+        "det_res": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.",
+        "res_drug": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.",
+        "note": "Loss of repression: the determinant represses an efflux pump, and mutations in it raise pump expression.",
+        "extra_nodes": [
+            {"node_id": "pump", "label": "the efflux pump this determinant represses",
+             "node_type": "PROTEIN",
+             "description": "Which pump differs per record and is named in that record's own definition -- AcrAB-TolC for AcrR, AdeIJK for AdeN, CmeABC for CmeR. The pump mechanisms themselves are curated records (rounds 33-36)."},
+            {"node_id": "repression", "label": "repression of efflux pump expression",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: negative regulation of transcription exists in GO, but which promoter differs per record."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "repression",
+             "predicate": "enables (represses the pump operon)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3000702", "snippet": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.",
+                           "notes": "CARD's definition of AcrR, the archetype. Each record's own definition names the pump IT represses; this config asserts only the shared direction."}]},
+            {"subject": "repression", "object": "pump",
+             "predicate": "negatively regulates (holds pump expression down)", "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3000702", "snippet": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.",
+                           "notes": "The wild-type function. Resistance is the loss of it."}]},
+            {"subject": "determinant", "object": "repression",
+             "predicate": "negatively regulates (mutation lifts the repression)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, and it runs backwards as katG's does (round 27): resistance is the ABSENCE of a function. A mutated repressor stops holding the pump down, so more pump is made.",
+             "evidence": [{"reference": "ARO:3000702", "snippet": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.",
+                           "notes": "'AcrR mutations result in high level antibiotic resistance' -- CARD states the direction outright."}]},
+            {"subject": "pump", "object": "drug0",
+             "predicate": "negatively regulates (more pump means more efflux)",
+             "predicate_id": "RO:0002212",
+             "description": "The pump's own mechanism is curated on its record; this edge only carries the consequence of making more of it.",
+             "evidence": [{"reference": "ARO:3000702", "snippet": "AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in high level antibiotic resistance.",
+                           "notes": "The resistance follows from pump over-expression, not from any change to the pump itself."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # ABC efflux subunits (ARO:3000748, ABC complexes only). Same family term as round 33's
     # RND pumps and a genuinely different machine: RND runs on the proton gradient and

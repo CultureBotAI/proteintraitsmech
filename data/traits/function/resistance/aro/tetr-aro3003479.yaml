@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000219
   - ARO:3000451
@@ -23,11 +23,12 @@ evidence:
 - reference: DOI:10.1016/0022-2836(88)90120-9
   notes: PMID:3062183 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] tetR → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: tetR → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3000702). Loss of repression: the determinant represses an efflux pump, and mutations in it raise
+    pump expression.'
   nodes:
   - node_id: determinant
     label: tetR
@@ -41,6 +42,17 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: pump
+    label: the efflux pump this determinant represses
+    node_type: PROTEIN
+    description: Which pump differs per record and is named in that record's own definition -- AcrAB-TolC
+      for AcrR, AdeIJK for AdeN, CmeABC for CmeR. The pump mechanisms themselves are curated records (rounds
+      33-36).
+  - node_id: repression
+    label: repression of efflux pump expression
+    node_type: BIOLOGICAL_PROCESS
+    description: 'Ungrounded: negative regulation of transcription exists in GO, but which promoter differs
+      per record.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -54,68 +66,80 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1016/0022-2836(88)90120-9
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
-    - reference: ARO:3003479
-      snippet: TetR is the repressor of the tetracycline resistance element; its N-terminal region forms
-        a helix-turn-helix structure and binds DNA. Binding of tetracycline to TetR reduces the repressor
-        affinity for the tetracycline resistance gene (tetA) promoter operator sites. Mutations arise
-        within tetR results in lower affinity for tetracyclin.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3000702
+      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
+        high level antibiotic resistance.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1016/0022-2836(88)90120-9
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: ARO:3000702
+      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
+        high level antibiotic resistance.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1016/0022-2836(88)90120-9
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003479
-      snippet: TetR is the repressor of the tetracycline resistance element; its N-terminal region forms
-        a helix-turn-helix structure and binds DNA. Binding of tetracycline to TetR reduces the repressor
-        affinity for the tetracycline resistance gene (tetA) promoter operator sites. Mutations arise
-        within tetR results in lower affinity for tetracyclin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3000702
+      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
+        high level antibiotic resistance.
+      notes: Family mechanism ARO:3000212.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1016/0022-2836(88)90120-9
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3000702
+      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
+        high level antibiotic resistance.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1016/0022-2836(88)90120-9
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003479
-      snippet: TetR is the repressor of the tetracycline resistance element; its N-terminal region forms
-        a helix-turn-helix structure and binds DNA. Binding of tetracycline to TetR reduces the repressor
-        affinity for the tetracycline resistance gene (tetA) promoter operator sites. Mutations arise
-        within tetR results in lower affinity for tetracyclin.
-      notes: ARO definition of this determinant (tetR).
+    - reference: ARO:3000702
+      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
+        high level antibiotic resistance.
+      notes: Determinant → resistance phenotype.
+  - subject: determinant
+    predicate: enables (represses the pump operon)
+    predicate_id: RO:0002327
+    object: repression
+    evidence:
+    - reference: ARO:3000702
+      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
+        high level antibiotic resistance.
+      notes: CARD's definition of AcrR, the archetype. Each record's own definition names the pump IT
+        represses; this config asserts only the shared direction.
+  - subject: repression
+    predicate: negatively regulates (holds pump expression down)
+    predicate_id: RO:0002212
+    object: pump
+    evidence:
+    - reference: ARO:3000702
+      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
+        high level antibiotic resistance.
+      notes: The wild-type function. Resistance is the loss of it.
+  - subject: determinant
+    predicate: negatively regulates (mutation lifts the repression)
+    predicate_id: RO:0002212
+    object: repression
+    description: 'The causal core, and it runs backwards as katG''s does (round 27): resistance is the
+      ABSENCE of a function. A mutated repressor stops holding the pump down, so more pump is made.'
+    evidence:
+    - reference: ARO:3000702
+      snippet: AcrR is a repressor of the AcrAB-TolC multidrug efflux complex. AcrR mutations result in
+        high level antibiotic resistance.
+      notes: '''AcrR mutations result in high level antibiotic resistance'' -- CARD states the direction
+        outright.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
