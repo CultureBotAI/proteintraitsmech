@@ -1317,3 +1317,41 @@ def test_pilq_is_excluded_from_the_pbp_affinity_mechanism():
            "ARO:0000031 antibiotic resistant gene variant or mutant\"\n")
     reason = promote._requires_mutant_pbp("ARO:3004835", "pilQ", rec)
     assert reason is not None and "penicillin-binding protein" in reason
+
+
+ROUND52_RECORD = (
+    "identifier: ARO:3007423\n"
+    "definition: >-\n"
+    "  Mutant PBP3 in E. coli conferring resistance to beta-lactams.\n"
+    "drug_class_note: lower binding affinities and the deactivation of repressors\n"
+)
+
+
+def test_probe_catches_the_round_52_false_skip_reason():
+    """The probe's own canary: it must fire on the bug that motivated it (#253)."""
+    bad = promote.skip_reason_contradicted(
+        "definition describes a repressor, not a replacement PBP", ROUND52_RECORD)
+    assert bad, "probe missed the exact bug it exists to catch"
+    assert "repressor" in bad
+
+
+def test_probe_stays_quiet_on_a_true_skip_reason():
+    """A reason that IS true must not be flagged -- a noisy probe gets ignored."""
+    meci = ("identifier: ARO:3005046\n"
+            "definition: >-\n  This MecI is a methicillin-resistant repressor.\n")
+    assert not promote.skip_reason_contradicted(
+        "own definition describes a repressor, not a replacement PBP", meci)
+
+
+def test_probe_does_not_catch_the_round_53_synonym_case():
+    """Documents the real limitation rather than implying full coverage.
+
+    Round 53's reason said "does not name a penicillin-binding protein" of a definition
+    reading "PBP transpeptidases" -- literally true, wrong because PBP is a synonym.
+    Catching it needs a lexicon this repo does not have. If that changes, this test
+    should flip rather than quietly keep passing.
+    """
+    rec = ("identifier: ARO:3003938\n"
+           "definition: >-\n  Mutations in PBP transpeptidases that change affinity.\n")
+    assert not promote.skip_reason_contradicted(
+        "own definition does not name a penicillin-binding protein", rec)
