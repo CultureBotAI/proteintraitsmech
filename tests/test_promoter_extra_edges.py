@@ -1449,3 +1449,30 @@ def test_baca_bcrc_share_one_config_and_omit_the_drug_target_edge():
             "drug->carrier edge added without evidence"
         )
         assert "NOT asserted" in cfg["note"]
+
+
+def test_class_d_does_not_borrow_class_a_active_site():
+    """PROSITE:PS00146 is class A's signature. Citing it for class D would be #196."""
+    cfg = promote.family_configs("ARO:3000075")[0]
+    assert cfg["protein_traits"]["active_site"][0] == "PROSITE:PS00337"
+
+
+def test_class_d_pattern_allows_a_family_token_before_beta_lactamase():
+    """RAD-1 reads "a class D RAD beta-lactamase"; adjacency wrongly excluded it."""
+    rec = ("identifier: ARO:3007483\n"
+           "definition: >-\n  RAD-1 is a class D RAD beta-lactamase found in"
+           " Riemerella anatipestifer.\n"
+           "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000187\n"
+           "    relation_source: \"ARO participates_in (mechanism) via ARO:0000031\"\n")
+    assert promote._requires_class_d("ARO:3007483", "RAD-1", rec) is None
+
+
+def test_class_d_omits_the_carbamylated_lysine_chemistry():
+    """The feature that makes OXA enzymes distinctive, and no source read stated it."""
+    cfg = promote.family_configs("ARO:3000075")[0]
+    asserted = [e["evidence"][0]["snippet"] for e in cfg["extra_edges"]]
+    asserted += list(cfg["mech"].values())
+    assert not any("carbamyl" in s.lower() for s in asserted), (
+        "carbamylated-lysine chemistry asserted without a source stating it"
+    )
+    assert "NOT the carbamylated" in cfg["note"], "the omission must be documented"

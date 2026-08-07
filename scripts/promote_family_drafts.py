@@ -673,7 +673,75 @@ def _requires_upp_recycler(ident: str, label: str, text: str):
     return None
 
 
+def _requires_class_d(ident: str, label: str, text: str):
+    """Determinant must be a class D beta-lactamase, per its OWN definition."""
+    if "ARO:3000187" not in D.parse_relations(text)[0]:
+        return "record carries no serine-beta-lactamase hydrolysis mechanism (ARO:3000187)"
+    own = _own_definition(text).lower()
+    # Allow a family token between "class D" and "beta-lactamase": RAD-1's definition
+    # reads "a class D RAD beta-lactamase", and requiring the two adjacent wrongly
+    # excluded it. Fourth instance this session of an over-narrow pattern producing a
+    # false skip (after #252, #255, and the role-mismatch audit's \b bug) -- caught, again,
+    # by reading the records the guard refused rather than trusting the count.
+    if not re.search(r"class d\b.{0,24}?beta[- ]?lactamase", own):
+        return "own definition does not call it a class D beta-lactamase"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Class D beta-lactamases (ARO:3000075) -- inactivation by serine hydrolysis.
+    #
+    # Rounds 12-16 curated class A (KPC, TEM) with PROSITE:PS00146, the class-A-specific
+    # active-site signature. That motif MUST NOT be reused here: it is class A's, and
+    # citing it for class D would be exactly the borrowed-evidence defect in #196.
+    #
+    # PROSITE:PS00337 is the right record, and unusually its own definition NAMES class D
+    # ("class -A, C and D enzymes are serine hydrolases"), so the membership claim rests on
+    # the source saying so rather than on my inference.
+    #
+    # NOT asserted: the carbamylated-lysine general base that distinguishes class D
+    # chemistry from class A. It is real, it is what makes OXA enzymes interesting, and no
+    # source read this round states it. Round 58's lesson -- the claim I know best is the
+    # one most likely to arrive uncited.
+    "ARO:3000075": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_class_d,
+        "reference": "PROSITE:PS00337",
+        "mech": {
+            "ARO:0001004": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+            "ARO:3000187": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+        },
+        "mech_res": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+        "det_res": [
+            {"reference": "PROSITE:PS00337", "snippet": "Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases.",
+             "notes": "PROSITE names class D as a SERINE hydrolase -- which is why the serine mechanism applies to these records and the class B zinc mechanism does not."},
+            {"reference": "PROSITE:PS00337", "snippet": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+             "notes": "And the reaction itself."},
+        ],
+        "res_drug": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+        "note": ("Serine hydrolysis. Deliberately NOT the carbamylated-lysine general-base "
+                 "chemistry specific to class D -- no source read this round states it."),
+        "protein_traits": {
+            "active_site": ("PROSITE:PS00337",
+                            "beta-lactamase class A/C/D active-site signature (S-x-x-K)",
+                            "MOTIF",
+                            "All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue."),
+            "enables_mech": "ARO:3000187",
+        },
+        "extra_nodes": [
+            {"node_id": "amide", "label": "amide bond of the beta-lactam ring",
+             "node_type": "CHEMICAL",
+             "description": "Ungrounded: the specific bond, not the drug class. Not guessing a CHEBI id (rounds 56-58)."},
+        ],
+        "extra_edges": [
+            {"subject": "mech0", "object": "amide",
+             "predicate": "has input (the beta-lactam amide bond)", "predicate_id": "RO:0002233",
+             "description": "What the hydrolysis acts on -- the bond whose cleavage destroys the drug.",
+             "evidence": [{"reference": "PROSITE:PS00337", "snippet": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+                           "notes": "'catalyze the hydrolysis of an amide bond in the beta-lactam ring'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # bacA / bcrC -- undecaprenyl pyrophosphate recycling, bacitracin resistance.
     #
