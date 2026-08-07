@@ -1525,3 +1525,22 @@ def test_tet34_is_excluded_from_the_hydroxylase_mechanism():
     assert "hydroxylation of the drug" in reason
     # and not for the wrong reason -- it DOES carry the mechanism id
     assert "carries no hydroxylation mechanism" not in reason
+
+
+def test_topoisomerase_scope_note_names_the_worked_case_only():
+    """gyrB/aminocoumarin is quoted for a family that also covers parE and parY."""
+    cfg = promote.family_configs("ARO:3000370")[0]
+    ev = cfg["det_res"][1]
+    assert "SCOPE" in ev["notes"] and "parY" in ev["notes"]
+
+
+def test_topoisomerase_is_binding_loss_not_cleavage_complex_trapping():
+    """Rounds 18-19 curated the fluoroquinolone trap; this is a different mechanism.
+
+    If someone merges the two configs, the aminocoumarin records would silently acquire
+    a cleavage-complex claim no source here makes.
+    """
+    cfg = promote.family_configs("ARO:3000370")[0]
+    assert any(e["object"] == "binding_loss" for e in cfg["extra_edges"])
+    assert "cleavage complex" not in " ".join(
+        e["evidence"][0]["snippet"] for e in cfg["extra_edges"]).lower()

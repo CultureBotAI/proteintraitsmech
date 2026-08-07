@@ -712,7 +712,71 @@ def _requires_tet_hydroxylase(ident: str, label: str, text: str):
     return None
 
 
+def _requires_topoisomerase_subunit(ident: str, label: str, text: str):
+    """Target alteration of a topoisomerase subunit -- the drug can no longer bind it.
+
+    Rounds 18-19 curated the FLUOROQUINOLONE story on gyrA/parC/gyrB/parE, where the
+    drug traps the cleavage complex. These records are mostly AMINOCOUMARIN resistance,
+    which acts at the ATPase site instead -- a different drug class on overlapping genes,
+    which is why config_for's selector matters here rather than a single family config.
+    """
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    own = _own_definition(text).lower()
+    if not re.search(r"topoisomerase|gyrase|\bgyr[ab]\b|\bpar[ceyx]\b", own):
+        return "own definition does not name a topoisomerase or gyrase subunit"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Antibiotic resistant DNA topoisomerase subunits (ARO:3000370).
+    #
+    # CARD's parent term states the mechanism in one sentence, and it is a DIFFERENT
+    # sentence from rounds 18-19's: there the fluoroquinolone traps the cleavage complex;
+    # here resistance is simply that the drug can no longer BIND the subunit. Most of
+    # these records are aminocoumarin resistance, which acts at the ATPase site.
+    "ARO:3000370": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_topoisomerase_subunit,
+        "reference": "ARO:3000370",
+        "mech": {"ARO:3000212": "Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase subunits prevent antibiotic binding and thus confer resistance."},
+        "mech_res": "Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase subunits prevent antibiotic binding and thus confer resistance.",
+        "det_res": [
+            {"reference": "ARO:3000370", "snippet": "Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase subunits prevent antibiotic binding and thus confer resistance.",
+             "notes": "Both halves in one sentence: drugs target topoisomerases, and a resistant subunit prevents binding."},
+            {"reference": "ARO:3000479", "snippet": "Point mutations in DNA gyrase subunit B (gyrB) can result in resistance to aminocoumarins. These mutations usually involve arginine residues in organisms.",
+             "notes": "The worked case. SCOPE: gyrB and aminocoumarins specifically -- the family also covers parE and parY, which this sentence does not name."},
+        ],
+        "res_drug": "Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase subunits prevent antibiotic binding and thus confer resistance.",
+        "note": "Target alteration by loss of drug binding. Distinct from rounds 18-19, where the fluoroquinolone traps the cleavage complex.",
+        "extra_nodes": [
+            {"node_id": "binding_loss", "label": "loss of antibiotic binding to the mutated subunit",
+             "node_type": "STATE",
+             "description": "The causal core, in CARD's own words. Ungrounded."},
+            {"node_id": "dna_synth", "label": "DNA biosynthetic process",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0071897"},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "binding_loss",
+             "predicate": "has quality (prevents antibiotic binding)",
+             "predicate_id": "RO:0000086",
+             "evidence": [{"reference": "ARO:3000370", "snippet": "Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase subunits prevent antibiotic binding and thus confer resistance.",
+                           "notes": "'Resistant DNA topoisomerase subunits prevent antibiotic binding'."}]},
+            {"subject": "drug0", "object": "dna_synth",
+             "predicate": "negatively regulates (inhibits DNA synthesis)",
+             "predicate_id": "RO:0002212",
+             "description": "What the drug does when it CAN bind, and therefore what resistance restores.",
+             "evidence": [{"reference": "ARO:3000370", "snippet": "Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase subunits prevent antibiotic binding and thus confer resistance.",
+                           "notes": "'Many drugs target topoisomerases to inhibit DNA synthesis'."}]},
+            {"subject": "binding_loss", "object": "dna_synth",
+             "predicate": "causally upstream of (DNA synthesis continues)",
+             "predicate_id": "RO:0002411",
+             "description": "Why the loss of binding is the resistance: synthesis is no longer inhibited.",
+             "evidence": [{"reference": "ARO:3000370", "snippet": "Many drugs target topoisomerases to inhibit DNA synthesis. Resistant DNA topoisomerase subunits prevent antibiotic binding and thus confer resistance.",
+                           "notes": "'and thus confer resistance' -- CARD's own 'thus' is the causal link."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Tetracycline inactivation by hydroxylation (ARO:3000036).
     #
