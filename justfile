@@ -878,3 +878,7 @@ enrich-definitions *args:
 #   just analyze-merges --apply         # execute merges
 analyze-merges *args:
     python3 scripts/analyze_trait_equivalence.py {{args}}
+
+# Shortlist records whose own definition names a role their curated graph contradicts
+audit-roles:
+    uv run python scripts/audit_role_mismatch.py
