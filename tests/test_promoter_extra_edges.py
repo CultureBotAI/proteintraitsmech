@@ -1510,3 +1510,18 @@ def test_near_miss_stays_quiet_on_a_genuine_miss():
            "term_kind: CLASS\n")
     assert not promote.skip_reason_near_miss(
         "own definition does not call it a class D beta-lactamase", rec)
+
+
+def test_tet34_is_excluded_from_the_hydroxylase_mechanism():
+    """tet(34) carries the hydroxylation id but protects, it does not hydroxylate (#267)."""
+    rec = ("identifier: ARO:3002870\n"
+           "definition: >-\n  tet(34) causes the activation of Mg2+-dependent purine"
+           " nucleotide synthesis, which protects the protein synthesis pathway.\n"
+           "term_kind: CLASS\n"
+           "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000450\n"
+           "    relation_source: \"ARO participates_in (mechanism) via ARO:0000031\"\n")
+    reason = promote._requires_tet_hydroxylase("ARO:3002870", "tet(34)", rec)
+    assert reason is not None, "tet(34) must not receive a hydroxylase graph"
+    assert "hydroxylation of the drug" in reason
+    # and not for the wrong reason -- it DOES carry the mechanism id
+    assert "carries no hydroxylation mechanism" not in reason
