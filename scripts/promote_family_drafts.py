@@ -683,7 +683,12 @@ def _requires_class_d(ident: str, label: str, text: str):
     # excluded it. Fourth instance this session of an over-narrow pattern producing a
     # false skip (after #252, #255, and the role-mismatch audit's \b bug) -- caught, again,
     # by reading the records the guard refused rather than trusting the count.
-    if not re.search(r"class d\b.{0,24}?beta[- ]?lactamase", own):
+    # No proximity requirement at all. Round 59 used 24 characters and #264's detector
+    # immediately found two records it still missed: LRA-13 ("class D/class C fusion
+    # bifunctional beta-lactamase") and ARO:3000017, whose definition says "they belong to
+    # molecular class D" a full paragraph away from any "beta-lactamase". Three attempts at
+    # a proximity window is enough evidence that the window was the wrong idea.
+    if not (re.search(r"class d\b", own) and re.search(r"beta[- ]?lactamase", own)):
         return "own definition does not call it a class D beta-lactamase"
     return None
 
@@ -3752,6 +3757,64 @@ def record_identifiers(root: Path) -> set[str]:
     return found
 
 
+def _required_phrase(reason: str) -> str:
+    """The thing a skip reason says the definition lacks, if it says that at all."""
+    m = re.search(r"does not (?:name|call it|describe)(?: an?)? ([a-z][a-z0-9 /-]{2,44})",
+                  reason, re.I)
+    return m.group(1).strip() if m else ""
+
+
+def skip_reason_near_miss(reason: str, text: str) -> str:
+    """Did a precondition refuse a record that its OWN definition nearly satisfies? (#264)
+
+    #256 catches a reason CONTRADICTED by the record. This catches the harder case: a
+    reason that is LITERALLY TRUE and still wrong, because the pattern was too narrow.
+    Three instances this session, none of which #256 sees:
+
+      round 53  "does not name a penicillin-binding protein"  <- def said "PBP transpeptidases"
+      round 59  "does not call it a class D beta-lactamase"   <- def said "class D RAD beta-lactamase"
+
+    Two cheap signals, both of which those cases trip:
+
+      scattered -- every token of the required phrase appears, just not contiguously
+      acronym   -- the phrase's initials appear as a word (penicillin-binding protein -> PBP)
+
+    Returns a description for a human to read, or "". Like the role audit, this is triage:
+    a genuine miss ("BSU-1 is a BSU beta-lactamase" lacking "class D") stays silent because
+    its tokens really are absent.
+    """
+    phrase = _required_phrase(reason)
+    if not phrase:
+        return ""
+    own = _own_definition(text).lower()
+    if not own or phrase in own:
+        return ""
+    # .lower() FIRST. Without it the [^a-z0-9] split treats an uppercase letter as a
+    # separator, so "class D beta-lactamase" tokenised to [class, beta, lactamase] and the
+    # discriminating "D" disappeared -- the second, independent way this detector lost the
+    # same letter. Both are the defect class it exists to catch, in its own code.
+    tokens = [w for w in re.split(r"[^a-z0-9]+", phrase.lower()) if w]
+    if not tokens:
+        return ""
+    # Short tokens need FULL word boundaries. Dropping them (the first version's
+    # `len(w) > 1`) discarded the discriminating letter: "class d beta-lactamase" became
+    # "class beta-lactamase", which matched OXA-663's definition -- a record that really
+    # does lack the "D". The detector reproducing the exact defect class it exists to find
+    # is worth stating rather than quietly fixing.
+    def _present(w: str) -> bool:
+        pat = rf"\b{re.escape(w)}\b" if len(w) <= 2 else rf"\b{re.escape(w)}"
+        return bool(re.search(pat, own))
+
+    if all(_present(w) for w in tokens):
+        return (f'refused for lacking "{phrase}", but every token of it appears in the '
+                f"definition -- the pattern is probably too strict about adjacency")
+    initials = "".join(w[0] for w in tokens)
+    if len(initials) >= 2 and re.search(rf"\b{re.escape(initials)}\b", own):
+        return (f'refused for lacking "{phrase}", but its acronym "{initials.upper()}" '
+                f"appears in the definition")
+    return ""
+
+
 def skip_reason_contradicted(reason: str, text: str) -> str:
     """Is a skip reason's claim about the record's own definition actually true? (#253)
 
@@ -3851,6 +3914,15 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
             if bad:
                 problems += 1
                 print(f"  FALSE SKIP REASON    {ident} ({label}): {bad}")
+                continue
+            near = skip_reason_near_miss(reason, text)
+            if near:
+                # Deliberately NOT counted as a problem. A contradicted reason (#256) is
+                # always a defect; a near miss is a CANDIDATE -- eptA is correctly refused
+                # by the L-Ara4N config and still trips the token test. Counting these
+                # would leave verify-all permanently red, which this file already argues
+                # is a gate nobody reads.
+                print(f"  near-miss skip       {ident} ({label}): {near}")
     # A part-of edge asserts "this determinant HAS this domain", and its evidence is the
     # 4-tuple's snippet. Nothing checks that the snippet supports a MEMBERSHIP claim: 27 of
     # 33 families cite a bare source entry TITLE ("Beta-lactamase class-A active site"),

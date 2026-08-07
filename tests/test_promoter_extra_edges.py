@@ -1476,3 +1476,37 @@ def test_class_d_omits_the_carbamylated_lysine_chemistry():
         "carbamylated-lysine chemistry asserted without a source stating it"
     )
     assert "NOT the carbamylated" in cfg["note"], "the omission must be documented"
+
+
+def test_near_miss_catches_the_acronym_case():
+    """Round 53: "PBP transpeptidases" refused for lacking "penicillin-binding protein"."""
+    rec = ("identifier: ARO:3003938\n"
+           "definition: >-\n  Mutations in PBP transpeptidases that change affinity.\n"
+           "term_kind: CLASS\n")
+    hit = promote.skip_reason_near_miss(
+        "own definition does not name a penicillin-binding protein", rec)
+    assert hit and "acronym" in hit
+
+
+def test_near_miss_catches_the_adjacency_case():
+    """Round 59: "class D RAD beta-lactamase" refused for lacking "class D beta-lactamase"."""
+    rec = ("identifier: ARO:3007483\n"
+           "definition: >-\n  RAD-1 is a class D RAD beta-lactamase.\n"
+           "term_kind: CLASS\n")
+    hit = promote.skip_reason_near_miss(
+        "own definition does not call it a class D beta-lactamase", rec)
+    assert hit and "adjacency" in hit
+
+
+def test_near_miss_stays_quiet_on_a_genuine_miss():
+    """BSU-1 really does lack "class D" -- the discriminating letter must be required.
+
+    This failed twice while being written, both times by losing the "D": once by dropping
+    single-character tokens, once by tokenising before lowercasing so the uppercase D acted
+    as a separator. Same defect class the detector exists to catch, in its own code.
+    """
+    rec = ("identifier: ARO:3006902\n"
+           "definition: >-\n  BSU-1 is a BSU beta-lactamase.\n"
+           "term_kind: CLASS\n")
+    assert not promote.skip_reason_near_miss(
+        "own definition does not call it a class D beta-lactamase", rec)
