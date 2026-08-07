@@ -681,3 +681,30 @@ def test_vany_records_why_two_d_d_peptidases_are_not_redundant():
     assert "non-overlapping functions" in out          # VanX vs VanY division of labour
     assert "17- to 67-fold higher" in out              # the quantified preference
     assert "but not the dipeptide D-Ala-D-Ala" in out  # the negative result
+
+
+# --- round 26: rpoB, and two mechanism ids on one record --------------------------
+
+def test_rpob_supplies_a_snippet_for_both_of_its_mechanism_ids():
+    """These records carry ARO:0001002 AND ARO:3000212.
+
+    The UncoveredMechanism guard (#203) refuses to substitute one mechanism's evidence for
+    another, so both had to be written. Before that guard this round would silently have
+    cited one for both.
+    """
+    cfg = promote.family_configs("ARO:3000210")[0]
+    assert {"ARO:0001002", "ARO:3000212"} <= set(cfg["mech"])
+    out = _graph(cfg, mech=("ARO:0001002", "ARO:3000212"), drug=("ARO:3000157",))
+    assert "graph_id: resistance" in out
+
+
+def test_rpob_records_that_the_inhibition_is_allosteric():
+    """>12 Å from the active site: the drug obstructs the transcript, not the chemistry.
+
+    That is what explains rifampicin blocking initiation rather than ongoing elongation,
+    and a graph saying only "drug inhibits enzyme" would lose it.
+    """
+    out = _graph(promote.family_configs("ARO:3000210")[0],
+                 mech=("ARO:0001002", "ARO:3000212"), drug=("ARO:3000157",))
+    assert "more than 12 A away from the active site" in out
+    assert "2 to 3 nt in length" in out

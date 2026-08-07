@@ -348,6 +348,80 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # rpoB -- rifamycin TARGET ALTERATION (ARO:3000210). The same shape as gyrA's QRDR
+    # (round 18) on a different target: substitutions in a short conserved region of the
+    # RNA polymerase beta subunit reduce the drug's grip on its binding pocket.
+    #
+    # These records carry TWO mechanism ids, so both need snippets -- the UncoveredMechanism
+    # guard (#203) refuses to substitute one for the other.
+    "ARO:3000210": {
+        "curated": "2026-08-06T00:00:00Z",
+        "reference": "PMID:8095569",       # Telenti et al. 1993, Lancet -- defined the RRDR
+        "mech": {
+            "ARO:0001002": "Thus, substitution of a limited number of highly conserved aminoacids encoded by the rpoB gene appears to be the molecular mechanism responsible for \u201csingle step\u201d high-level resistance to rifampicin in M tuberculosis.",
+            "ARO:3000212": "Mutations involving 8 conserved aminoacids were identified in 64 of 66 rifampicin-resistant isolates of diverse geographical origin, but in none of 56 sensitive isolates. All mutations were clustered within a region of 23 aminoacids.",
+        },
+        "mech_res": "Thus, substitution of a limited number of highly conserved aminoacids encoded by the rpoB gene appears to be the molecular mechanism responsible for \u201csingle step\u201d high-level resistance to rifampicin in M tuberculosis.",
+        "det_res": [
+            {"reference": "PMID:8095569", "snippet": "Mutations involving 8 conserved aminoacids were identified in 64 of 66 rifampicin-resistant isolates of diverse geographical origin, but in none of 56 sensitive isolates. All mutations were clustered within a region of 23 aminoacids.",
+             "notes": "Telenti et al. 1993. A case-control result, not an observation: the substitutions are in 64 of 66 resistant isolates and in NONE of 56 sensitive ones."},
+            {"reference": "PMID:8095569", "snippet": "Thus, substitution of a limited number of highly conserved aminoacids encoded by the rpoB gene appears to be the molecular mechanism responsible for \u201csingle step\u201d high-level resistance to rifampicin in M tuberculosis.",
+             "notes": "And the authors' own causal reading of it."},
+        ],
+        "res_drug": "Thus, substitution of a limited number of highly conserved aminoacids encoded by the rpoB gene appears to be the molecular mechanism responsible for \u201csingle step\u201d high-level resistance to rifampicin in M tuberculosis.",
+        "note": "Target alteration: rifamycins bind a pocket in the RNA polymerase beta subunit, and substitutions in a 23-residue region of rpoB confer high-level resistance in one step.",
+        "protein_traits": {
+            "primary_key": "domain",
+            "domain": ("Pfam:PF04563", "RNA polymerase beta subunit domain", "DOMAIN", "RNA polymerases catalyse the DNA dependent polymerisation of RNA. Prokaryotes contain a single RNA polymerase compared to three in eukaryotes. This domain forms one of the two distinctive lobes of the Rpb2 structure."),
+            "part_pred": "part of (the beta-subunit domain of this determinant)",
+            "part_note": "KB trait record Pfam:PF04563; snippet is the InterPro:IPR007644 abstract that record's definition is taken from. Rpb2 is the structural name for the beta subunit, which is what makes this the right domain for an rpoB determinant.",
+        },
+        "extra_nodes": [
+            {"node_id": "rrdr",
+             "label": "rifampicin resistance-determining region of RpoB, substituted in this determinant",
+             "node_type": "MOTIF",
+             "description": "The 23-residue region in which resistance substitutions cluster (Telenti et al. 1993). Positions differ per organism, so no per-record residue node is asserted -- the same frame caveat as the QRDR in rounds 18-19. Ungrounded: no ontology term denotes the RRDR."},
+            {"node_id": "rnap_activity", "label": "DNA-directed RNA polymerase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0003899"},
+            {"node_id": "rif", "label": "rifampicin", "node_type": "CHEMICAL",
+             "grounding": "CHEBI:28077"},
+            {"node_id": "rif_pocket", "label": "rifamycin-binding pocket of the beta subunit",
+             "node_type": "STATE",
+             "description": "The drug bound in the DNA/RNA channel, >12 A from the catalytic site. Ungrounded: a binding site on a complex, not a compound."},
+        ],
+        "extra_edges": [
+            {"subject": "rrdr", "object": "domain",
+             "predicate": "part of (the RRDR lies in the beta subunit)", "predicate_id": "BFO:0000050",
+             "evidence": [
+                 {"reference": "PMID:8095569", "snippet": "Mutations involving 8 conserved aminoacids were identified in 64 of 66 rifampicin-resistant isolates of diverse geographical origin, but in none of 56 sensitive isolates. All mutations were clustered within a region of 23 aminoacids.",
+                  "notes": "Telenti et al. 1993 located the substitutions to a 23-residue region of rpoB."},
+                 {"reference": "PMID:11290327", "snippet": "The inhibitor binds in a pocket of the RNAP beta subunit deep within the DNA/RNA channel, but more than 12 A away from the active site.",
+                  "notes": "Campbell et al. 2001 place the drug's pocket in that same beta subunit. The containment is an inference FROM THESE TWO SOURCES TOGETHER, not a single asserted statement."},
+             ]},
+            {"subject": "domain", "object": "rnap_activity",
+             "predicate": "enables (transcription elongation)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:11290327", "snippet": "The structure, combined with biochemical results, explains the effects of Rif on RNAP function and indicates that the inhibitor acts by directly blocking the path of the elongating RNA when the transcript becomes 2 to 3 nt in length.",
+                           "notes": "The activity the drug blocks: extension of the nascent transcript."}]},
+            {"subject": "rif", "object": "rif_pocket",
+             "predicate": "molecularly interacts with (binds the beta-subunit pocket)",
+             "predicate_id": "RO:0002436",
+             "description": "Drug action, and it is allosteric rather than catalytic: the pocket is >12 A from the active site, so the drug obstructs the RNA's path instead of the chemistry.",
+             "evidence": [{"reference": "PMID:11290327", "snippet": "The inhibitor binds in a pocket of the RNAP beta subunit deep within the DNA/RNA channel, but more than 12 A away from the active site.",
+                           "notes": "Campbell et al. 2001, crystal structure of Thermus aquaticus core RNAP with rifampicin."}]},
+            {"subject": "rif_pocket", "object": "rnap_activity",
+             "predicate": "negatively regulates (blocks the elongating transcript)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "PMID:11290327", "snippet": "The structure, combined with biochemical results, explains the effects of Rif on RNAP function and indicates that the inhibitor acts by directly blocking the path of the elongating RNA when the transcript becomes 2 to 3 nt in length.",
+                           "notes": "Blocking happens once the transcript reaches 2-3 nt -- which is why rifampicin stops initiation rather than ongoing elongation."}]},
+            {"subject": "rrdr", "object": "rif_pocket",
+             "predicate": "negatively regulates (substitution weakens drug binding)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core: substitutions in the RRDR reshape the pocket the drug binds, and resistance is high-level and single-step.",
+             "evidence": [{"reference": "PMID:8095569", "snippet": "Thus, substitution of a limited number of highly conserved aminoacids encoded by the rpoB gene appears to be the molecular mechanism responsible for \u201csingle step\u201d high-level resistance to rifampicin in M tuberculosis.",
+                           "notes": "Telenti et al. 1993. The RRDR is defined by where resistance substitutions fall; Campbell et al. 2001 later showed that region lines the drug's pocket."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # vanY -- the D,D-carboxypeptidase, and the last enzyme family of the van set. Unlike
     # vanX it acts on the ASSEMBLED precursor rather than the free dipeptide, and the two
     # were shown to be non-redundant.
