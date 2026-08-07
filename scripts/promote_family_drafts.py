@@ -747,6 +747,76 @@ def _requires_adp_ribosyltransferase(ident: str, label: str, text: str):
     return None
 
 
+def _requires_mech(mech_id: str, human: str):
+    """Precondition factory: this config's chemistry, and only it.
+
+    ARO:3000576 holds four reactions that inactivate the same drug (round 62). Each needs
+    its own snippets, and the discriminator is purely structural -- the mechanism id the
+    record itself carries -- so one factory serves all of them rather than four
+    near-identical hand-written predicates, each an opportunity for the pattern bugs that
+    cost this session four fixes (#252, #255, #264, #267).
+    """
+    def _pred(ident: str, label: str, text: str):
+        if mech_id not in D.parse_relations(text)[0]:
+            return f"record carries no {human} mechanism ({mech_id})"
+        return None
+    return _pred
+
+
+def _rifampin_modification_config(mech_id: str, human: str, snippet: str,
+                                  activity_label: str, extra_note: str = "") -> dict:
+    """One rifampin-inactivation chemistry, from CARD's own mechanism-term definition.
+
+    Every one of these is "enzyme covalently modifies the drug, drug stops working", so
+    the graph shape is shared and only the chemistry differs. Writing them as a factory
+    keeps the four subsets provably parallel; writing them out by hand would let them
+    drift, which is what the round 55 test guarding the two rRNA configs was about.
+    """
+    return {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech(mech_id, human),
+        "reference": mech_id,
+        "mech": {"ARO:0001004": "Enzymes that inactivate rifampin antibiotics by chemical modification.", mech_id: snippet},
+        "mech_res": snippet,
+        "det_res": [
+            {"reference": mech_id, "snippet": snippet,
+             "notes": f"CARD's own definition of {human}."},
+            {"reference": "ARO:3000576", "snippet": "Enzymes that inactivate rifampin antibiotics by chemical modification.",
+             "notes": ("And what it achieves. SCOPE: this family sentence covers all four "
+                       "chemistries under ARO:3000576; only the " + human + " members are "
+                       "curated by this config (round 62).")},
+        ],
+        "res_drug": snippet,
+        "note": ("Inactivation by chemical modification -- " + human + " subset of "
+                 "ARO:3000576." + (" " + extra_note if extra_note else "")),
+        "extra_nodes": [
+            {"node_id": "modification", "label": activity_label,
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": ("Ungrounded: a rifampin-specific " + human + " activity, not "
+                             "looked up rather than guessed (rounds 56-62).")},
+            {"node_id": "modified", "label": "chemically modified, inactive rifampin",
+             "node_type": "STATE", "description": "The product state. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "modification",
+             "predicate": "enables (modifies the drug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": mech_id, "snippet": snippet,
+                           "notes": "The reaction CARD names for this mechanism id."}]},
+            {"subject": "modification", "object": "drug0",
+             "predicate": "has input (the drug)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": mech_id, "snippet": snippet,
+                           "notes": ("The antibiotic is the substrate, which is what makes "
+                                     "this inactivation rather than target alteration.")}]},
+            {"subject": "modification", "object": "modified",
+             "predicate": "causally upstream of (inactivates the drug)",
+             "predicate_id": "RO:0002411",
+             "description": "The causal core.",
+             "evidence": [{"reference": mech_id, "snippet": snippet,
+                           "notes": "CARD names the chemistry and the inactivation together."}]},
+        ],
+    }
+
+
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
     # Rifampin ADP-ribosyltransferases (arr) -- inactivation by chemical modification.
@@ -4273,6 +4343,30 @@ def config_for(family: str, ident: str, label: str, text: str):
 FAMILY_SNIPPETS["ARO:3003040"] = [
     FAMILY_SNIPPETS["ARO:3003040"],
     FAMILY_SNIPPETS.pop("ARO:3003040-mutation"),
+]
+
+
+# ARO:3000576 holds FOUR chemistries that inactivate rifampin (round 62): the arr
+# ADP-ribosyltransferases curated first, plus hydroxylation, phosphorylation and
+# glycosylation. Each config's precondition selects on the mechanism id the record itself
+# carries, so they are mutually exclusive and order is not load-bearing.
+FAMILY_SNIPPETS["ARO:3000576"] = [
+    FAMILY_SNIPPETS["ARO:3000576"],
+    _rifampin_modification_config(
+        "ARO:3000450", "hydroxylation",
+        "Inactivation of an antibiotic via introduction a hydroxyl group (-OH).",
+        "rifampin hydroxylase activity"),
+    _rifampin_modification_config(
+        "ARO:3000105", "phosphorylation",
+        "Phosphorylation of antibiotic usually by ATP, sometimes GTP.",
+        "rifampin phosphotransferase activity",
+        extra_note=("The phosphoryl donor is deliberately NOT a node: CARD says 'usually "
+                    "by ATP, sometimes GTP', and picking one would assert a specificity "
+                    "the source explicitly declines to give.")),
+    _rifampin_modification_config(
+        "ARO:3000208", "glycosylation",
+        "Addition of glycosyl moiety to antibiotics thereby inactivating them.",
+        "rifampin glycosyltransferase activity"),
 ]
 
 def _check_config_order() -> None:
