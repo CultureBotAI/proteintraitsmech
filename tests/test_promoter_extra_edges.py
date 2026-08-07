@@ -1701,3 +1701,22 @@ def test_cleavage_chemistries_do_not_claim_a_hedged_donor():
             continue
         assert "No group donor is involved" in cfg["det_res"][0]["notes"]
         assert "usually" not in cfg["note"]
+
+
+def test_repromote_blast_radius_threshold():
+    """#280: refuse when the rewrite dwarfs the drafts it is meant to refresh.
+
+    The real event was 5,036 already-curated against 1 draft under ARO:3000557 -- a
+    family term that is a deep ancestor of thousands of beta-lactamases curated by their
+    OWN configs. The threshold has a floor of 25 so that re-promoting a small family
+    after a genuine config change stays frictionless.
+    """
+    def refuses(n_repromote, n_draft):
+        return n_repromote > max(25, 5 * n_draft)
+
+    assert refuses(5036, 1), "the actual incident must be refused"
+    assert not refuses(10, 0), "a small family re-promote must stay frictionless"
+    assert not refuses(25, 0), "the floor is inclusive"
+    assert refuses(26, 0)
+    assert not refuses(50, 10), "5x the drafts is a plausible config change"
+    assert refuses(51, 10)

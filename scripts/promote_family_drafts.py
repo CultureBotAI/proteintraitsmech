@@ -4829,6 +4829,10 @@ def main() -> int:
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--drafts-only", action="store_true",
                     help="accepted for compatibility and now the DEFAULT; see --repromote")
+    ap.add_argument("--force-repromote", action="store_true",
+                    help="bypass the #280 blast-radius refusal; rewrites every already-"
+                         "curated record under the family term, including ones curated "
+                         "by other configs")
     ap.add_argument("--repromote", action="store_true",
                     help="also rewrite this promoter's own existing `resistance` graphs "
                          "(needed after a config change). Off by default: rewriting a "
@@ -4865,6 +4869,38 @@ def main() -> int:
         cands = _candidates(args.family, terms)
         return 1 if sum(verify(args.family, c, terms, cands)
                         for c in family_configs(args.family)) else 0
+
+    # #280: --repromote's blast radius is the whole family SUBTREE, and ARO family terms
+    # are deep ancestors. Refreshing 8 records under ARO:3000557 re-promoted 5,036 --
+    # thousands of beta-lactamases curated in rounds 12-16 under their OWN, more specific
+    # configs, whose class A active-site wiring the generic config overwrote. Nothing was
+    # committed and all 5,036 were restored, but nothing warned either.
+    #
+    # A pre-pass, because the guard is useless after the first write.
+    if args.repromote and args.apply and not args.force_repromote:
+        n_draft = n_repromote = 0
+        for pth in sorted(ARO_DIR.glob("*.yaml")):
+            text = pth.read_text(encoding="utf-8")
+            im = re.search(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', text, re.M)
+            if not im or args.family not in E.ancestry(terms, im.group(1)):
+                continue
+            lm = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M)
+            if config_for(args.family, im.group(1), lm.group(1) if lm else "", text) is None:
+                continue
+            if "graph_id: resistance-draft" in text:
+                n_draft += 1
+            elif ("graph_id: resistance\n" in text
+                  and "curator: edison-causal-graphs" in text):
+                n_repromote += 1
+        # Refuse when the rewrite dwarfs the actual work. 5,036-vs-8 was three orders of
+        # magnitude; a legitimate config change touching its own family is the same order.
+        if n_repromote > max(25, 5 * n_draft):
+            print(f"REFUSING --repromote: it would rewrite {n_repromote:,} already-curated "
+                  f"records against {n_draft:,} draft(s) under {args.family}.")
+            print("  Family terms are deep ancestors, so this set includes records curated "
+                  "by OTHER, more specific configs (#280).")
+            print("  If that is genuinely intended, re-run with --force-repromote.")
+            return 1
 
     promoted = repromoted = skip_done = skip_nodraft = skip_excluded = 0
     skip_unreadable = 0
