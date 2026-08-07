@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000328
 trait_relations:
@@ -25,21 +25,34 @@ evidence:
 - reference: DOI:10.1073/pnas.0508444102
   notes: PMID:16269538 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] 16S rRNA with mutation conferring antibiotic resistance → mechanism → resistance (auto-scaffold
-    from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: 16S rRNA with mutation conferring antibiotic resistance → mechanism → resistance (curated from
+    ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3003211). Target alteration of an RNA target. The drug's binding site is the mutated structure.
   nodes:
   - node_id: determinant
     label: 16S rRNA with mutation conferring antibiotic resistance
-    node_type: PROTEIN
+    node_type: NUCLEIC_ACID
     grounding: ARO:3003211
   - node_id: mech0
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: binding_site
+    label: antibiotic-binding site within the 16S rRNA
+    node_type: NUCLEIC_ACID
+    description: 'Ungrounded: a per-drug rRNA binding site (helix 34, helix 44, the 3'' major/minor domains)
+      has no single term.'
+  - node_id: subunit
+    label: small ribosomal subunit (30S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015935
+  - node_id: translation
+    label: translation
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0006412
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,44 +66,58 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1038/370659a0
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3003211
-      snippet: Many antibiotics inhibit the growth of bacteria by blocking protein synthesis on the ribosome.
-        The antibiotic-binding sites are located within functionally important structures in the ribosomal
-        RNA. Antibiotic resistance is often conferred by base substitutions or methylations at these sites
-        in the rRNA. Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer
-        resistance to antibiotics.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      snippet: The antibiotic-binding sites are located within functionally important structures in the
+        ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations
+        at these sites in the rRNA.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/370659a0
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3003211
+      snippet: Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer
+        resistance to antibiotics.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/370659a0
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3003211
-      snippet: Many antibiotics inhibit the growth of bacteria by blocking protein synthesis on the ribosome.
-        The antibiotic-binding sites are located within functionally important structures in the ribosomal
-        RNA. Antibiotic resistance is often conferred by base substitutions or methylations at these sites
-        in the rRNA. Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer
+      snippet: Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer
         resistance to antibiotics.
-      notes: ARO definition of this determinant (16S rRNA with mutation conferring antibiotic resistance).
+      notes: CARD's parent term, stating the resistance claim for the whole family.
+    - reference: ARO:3003211
+      snippet: The antibiotic-binding sites are located within functionally important structures in the
+        ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations
+        at these sites in the rRNA.
+      notes: 'And WHY it works: the drug''s binding site is IN the rRNA, so a base substitution there
+        changes the site itself.'
+  - subject: binding_site
+    predicate: part of (the 16S rRNA)
+    predicate_id: BFO:0000050
+    object: determinant
+    description: Why a mutation in the rRNA IS a mutation in the drug's target.
+    evidence:
+    - reference: ARO:3003211
+      snippet: The antibiotic-binding sites are located within functionally important structures in the
+        ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations
+        at these sites in the rRNA.
+      notes: '''binding sites are located within functionally important structures in the ribosomal RNA''.'
+  - subject: determinant
+    predicate: part of (the 30S subunit)
+    predicate_id: BFO:0000050
+    object: subunit
+    evidence:
+    - reference: ARO:3003211
+      snippet: Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer
+        resistance to antibiotics.
+      notes: CARD places the 16S rRNA in the small 30S subunit.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -622,7 +622,79 @@ def _requires_mutant_pbp(ident: str, label: str, text: str):
     return None
 
 
+def _requires_16s_rrna(ident: str, label: str, text: str):
+    """The determinant must actually be 16S rRNA -- checked on its OWN definition (#253).
+
+    Round 53's pilQ found a record filed under a family whose mechanism its definition
+    contradicted, so every new config now carries this check rather than trusting the
+    family term.
+    """
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    own = _own_definition(text).lower()
+    if "16s" not in own and "16s" not in label.lower():
+        return "own definition does not name 16S rRNA"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # 16S rRNA mutations (ARO:3003211) -- target alteration where the target is RNA.
+    #
+    # The counterpart to round 50's 23S macrolide config, and the same modelling choice:
+    # determinant_node_type NUCLEIC_ACID, because the determinant is rRNA and calling it a
+    # PROTEIN in a protein-traits KB would be false rather than merely awkward (#215).
+    #
+    # CARD carries the whole chain verbatim -- the general rule on the parent term and the
+    # worked tetracycline case on ARO:3003499 -- so round 51's lesson holds again: read the
+    # source before searching.
+    "ARO:3003211": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_16s_rrna,
+        "determinant_node_type": "NUCLEIC_ACID",
+        "reference": "ARO:3003211",
+        "mech": {"ARO:3000212": "The antibiotic-binding sites are located within functionally important structures in the ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations at these sites in the rRNA."},
+        "mech_res": "Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer resistance to antibiotics.",
+        "det_res": [
+            {"reference": "ARO:3003211", "snippet": "Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer resistance to antibiotics.",
+             "notes": "CARD's parent term, stating the resistance claim for the whole family."},
+            {"reference": "ARO:3003211", "snippet": "The antibiotic-binding sites are located within functionally important structures in the ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations at these sites in the rRNA.",
+             "notes": "And WHY it works: the drug's binding site is IN the rRNA, so a base substitution there changes the site itself."},
+        ],
+        "res_drug": "Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer resistance to antibiotics.",
+        "note": "Target alteration of an RNA target. The drug's binding site is the mutated structure.",
+        "extra_nodes": [
+            {"node_id": "binding_site", "label": "antibiotic-binding site within the 16S rRNA",
+             "node_type": "NUCLEIC_ACID",
+             "description": "Ungrounded: a per-drug rRNA binding site (helix 34, helix 44, the 3' major/minor domains) has no single term."},
+            {"node_id": "subunit", "label": "small ribosomal subunit (30S)",
+             "node_type": "CELLULAR_LOCALIZATION", "grounding": "GO:0015935"},
+            {"node_id": "translation", "label": "translation",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0006412"},
+        ],
+        "extra_edges": [
+            {"subject": "binding_site", "object": "determinant",
+             "predicate": "part of (the 16S rRNA)", "predicate_id": "BFO:0000050",
+             "description": "Why a mutation in the rRNA IS a mutation in the drug's target.",
+             "evidence": [{"reference": "ARO:3003211", "snippet": "The antibiotic-binding sites are located within functionally important structures in the ribosomal RNA. Antibiotic resistance is often conferred by base substitutions or methylations at these sites in the rRNA.",
+                           "notes": "'binding sites are located within functionally important structures in the ribosomal RNA'."}]},
+            {"subject": "determinant", "object": "subunit",
+             "predicate": "part of (the 30S subunit)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3003211", "snippet": "Point mutations in the bacterial 16S ribosomal RNA in the small 30S subunit can confer resistance to antibiotics.",
+                           "notes": "CARD places the 16S rRNA in the small 30S subunit."}]},
+            {"subject": "drug0", "object": "binding_site",
+             "predicate": "molecularly interacts with (binds the rRNA site)",
+             "predicate_id": "RO:0002436",
+             "evidence": [{"reference": "ARO:3003499", "snippet": "Tetracycline binds tightly to the helix 34 domain in 16S rRNA, where it interferes sterically with the binding of aminoacyl-tRNA to the ribosome A site to block protein synthesis.",
+                           "notes": "The worked case: tetracycline at helix 34. Quoted as the family's exemplar -- the other drugs here (pactamycin, edeine, viomycin) bind their own sites, which this snippet does not cover."}]},
+            {"subject": "drug0", "object": "translation",
+             "predicate": "negatively regulates (blocks protein synthesis)",
+             "predicate_id": "RO:0002212",
+             "description": "What the drug does once bound, and therefore what resistance restores.",
+             "evidence": [{"reference": "ARO:3003499", "snippet": "Tetracycline binds tightly to the helix 34 domain in 16S rRNA, where it interferes sterically with the binding of aminoacyl-tRNA to the ribosome A site to block protein synthesis.",
+                           "notes": "'interferes sterically with the binding of aminoacyl-tRNA to the ribosome A site to block protein synthesis'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Mutant PBPs (ARO:3003040 / ARO:3003938) -- TARGET ALTERATION, the round 18-19 shape.
     #
