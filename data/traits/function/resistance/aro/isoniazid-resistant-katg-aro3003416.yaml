@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004266
 trait_relations:
@@ -20,11 +20,12 @@ synonyms:
   - synonym_text: catalase-peroxidases
     synonym_type: EXACT_SYNONYM
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] isoniazid resistant katG → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: isoniazid resistant katG → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:1501713). Prodrug activation loss: isoniazid is inert until katG activates it, so a katG that
+    cannot leaves the drug inert.'
   nodes:
   - node_id: determinant
     label: isoniazid resistant katG
@@ -38,6 +39,34 @@ causal_graphs:
     label: isoniazid-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007152
+  - node_id: family
+    label: catalase-peroxidase (KatG)
+    node_type: PROTEIN
+    grounding: NCBIfam:TIGR00198
+    description: KB protein-trait record for the catalase-peroxidase family. This determinant is a DEFECTIVE
+      member of it -- the resistance is the defect.
+  - node_id: peroxidase
+    label: peroxidase activity (the activity isoniazid activation requires)
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004601
+  - node_id: inh
+    label: isoniazid (inert prodrug)
+    node_type: CHEMICAL
+    grounding: CHEBI:6030
+  - node_id: activated_inh
+    label: activated isoniazid
+    node_type: STATE
+    description: 'The reactive species katG generates. Ungrounded: the paper says ''the activated form
+      of the drug'' without naming a compound this corpus can cite a CURIE for.'
+  - node_id: inh_nad
+    label: isoniazid-NAD adduct in the InhA active site
+    node_type: STATE
+    description: 'The inhibitory species: activated drug covalently attached to the nicotinamide ring
+      of NAD bound in InhA. Ungrounded.'
+  - node_id: inha
+    label: enoyl-[acyl-carrier-protein] reductase (NADH) activity (InhA)
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004318
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -51,48 +80,135 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: ARO:3003416
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003416
-      snippet: Bifunctional enzyme with both catalase and broad-spectrum peroxidase activity. It is a
-        catalase-peroxidases that catalyzes the activation of isoniazid. Mutations that arises within
-        this protein cause changes that results in the inability for katG to activate antibiotics, conferring
-        resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: PMID:1501713
+      snippet: Deletion of katG from the chromosome was associated with INH resistance in two patient
+        isolates of M. tuberculosis.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3003416
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: PMID:1501713
+      snippet: Deletion of katG from the chromosome was associated with INH resistance in two patient
+        isolates of M. tuberculosis.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3003416
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003416
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:1501713
+      snippet: Deletion of katG from the chromosome was associated with INH resistance in two patient
+        isolates of M. tuberculosis.
+      notes: 'Zhang et al. 1992, loss of function: deleting katG confers resistance in patient isolates.'
+    - reference: PMID:1501713
+      snippet: A single M. tuberculosis gene, katG, encoding both catalase and peroxidase, restored sensitivity
+        to INH in a resistant mutant of Mycobacterium smegmatis, and conferred INH susceptibility in some
+        strains of Escherichia coli.
+      notes: 'And the converse, in the same paper: restoring katG restores SENSITIVITY, in two different
+        host species. Both directions is what makes this causal rather than correlative.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
     evidence:
     - reference: ARO:3003416
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
-      notes: Asserted directly on ARO:3003416 (isoniazid resistant katG) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
+      notes: Asserted on ARO:3003416 (isoniazid resistant katG), an is_a ancestor of this record's ARO:3003416;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: member of (the catalase-peroxidase family, defectively)
+    predicate_id: RO:0002350
+    object: family
+    evidence:
+    - reference: PMID:1501713
+      snippet: A single M. tuberculosis gene, katG, encoding both catalase and peroxidase, restored sensitivity
+        to INH in a resistant mutant of Mycobacterium smegmatis, and conferred INH susceptibility in some
+        strains of Escherichia coli.
+      notes: 'Zhang et al. 1992 establish what katG is: one gene encoding both activities.'
+    - reference: NCBIfam:TIGR00198
+      snippet: catalase/peroxidase HPI
+      notes: NCBIfam's own product name for the family this node grounds to. NOT the KB record's definition,
+        which this repo composes.
+  - subject: family
+    predicate: enables (peroxidase activity)
+    predicate_id: RO:0002327
+    object: peroxidase
+    evidence:
+    - reference: PMID:1501713
+      snippet: A single M. tuberculosis gene, katG, encoding both catalase and peroxidase, restored sensitivity
+        to INH in a resistant mutant of Mycobacterium smegmatis, and conferred INH susceptibility in some
+        strains of Escherichia coli.
+      notes: The peroxidase half is the one isoniazid activation needs.
+  - subject: peroxidase
+    predicate: causally upstream of (activates the prodrug)
+    predicate_id: RO:0002411
+    object: activated_inh
+    description: Isoniazid is inert as given; katG converts it to the species that inhibits InhA.
+    evidence:
+    - reference: PMID:1501713
+      snippet: A single M. tuberculosis gene, katG, encoding both catalase and peroxidase, restored sensitivity
+        to INH in a resistant mutant of Mycobacterium smegmatis, and conferred INH susceptibility in some
+        strains of Escherichia coli.
+      notes: Restoring katG restores INH sensitivity in two host species, so the gene's product is what
+        makes the drug work.
+    - reference: PMID:9417034
+      snippet: Data from x-ray crystallography and mass spectrometry reveal that the mechanism of isoniazid
+        action against InhA is covalent attachment of the activated form of the drug to the nicotinamide
+        ring of nicotinamide adenine dinucleotide bound within the active site of InhA.
+      notes: Rozwarski et al. 1998 name the acting species 'the activated form of the drug'. That katG
+        is what activates it is an inference FROM THESE TWO SOURCES TOGETHER.
+  - subject: inh
+    predicate: causally upstream of (is the substrate of activation)
+    predicate_id: RO:0002411
+    object: activated_inh
+    evidence:
+    - reference: PMID:9417034
+      snippet: The preferred antitubercular drug isoniazid specifically targets a long-chain enoyl-acyl
+        carrier protein reductase (InhA), an enzyme essential for mycolic acid biosynthesis in Mycobacterium
+        tuberculosis.
+      notes: 'Rozwarski et al. 1998: isoniazid is the drug whose activated form does the work.'
+  - subject: activated_inh
+    predicate: causally upstream of (forms the covalent adduct)
+    predicate_id: RO:0002411
+    object: inh_nad
+    evidence:
+    - reference: PMID:9417034
+      snippet: Data from x-ray crystallography and mass spectrometry reveal that the mechanism of isoniazid
+        action against InhA is covalent attachment of the activated form of the drug to the nicotinamide
+        ring of nicotinamide adenine dinucleotide bound within the active site of InhA.
+      notes: Covalent attachment to the nicotinamide ring of NAD bound in the InhA active site, shown
+        by crystallography and mass spectrometry.
+  - subject: inh_nad
+    predicate: negatively regulates (inhibits the target)
+    predicate_id: RO:0002212
+    object: inha
+    description: InhA is essential for mycolic acid biosynthesis, so inhibiting it is what kills the cell.
+    evidence:
+    - reference: PMID:9417034
+      snippet: The preferred antitubercular drug isoniazid specifically targets a long-chain enoyl-acyl
+        carrier protein reductase (InhA), an enzyme essential for mycolic acid biosynthesis in Mycobacterium
+        tuberculosis.
+      notes: Rozwarski et al. 1998 identify InhA as the target and why it matters.
+  - subject: determinant
+    predicate: negatively regulates (the defective katG cannot activate the prodrug)
+    predicate_id: RO:0002212
+    object: peroxidase
+    description: 'THE CAUSAL CORE, and it runs backwards compared with every earlier round: this determinant
+      confers resistance by NOT doing something. A katG that has lost peroxidase activity leaves isoniazid
+      inert, so none of the chain below it happens.'
+    evidence:
+    - reference: PMID:1501713
+      snippet: Deletion of katG from the chromosome was associated with INH resistance in two patient
+        isolates of M. tuberculosis.
+      notes: Deletion -- the extreme case of loss -- confers resistance in patient isolates. Clinical
+        katG resistance mutations are usually point substitutions that reduce rather than abolish the
+        activity.
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

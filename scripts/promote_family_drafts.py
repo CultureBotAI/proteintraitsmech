@@ -348,6 +348,94 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # katG -- resistance by LOSING a function (ARO:3004266). A fifth kind of mechanism,
+    # and the first that is not something the determinant DOES:
+    #
+    #   inactivation      the enzyme destroys the drug          (rounds 12-16)
+    #   target alteration the target binds the drug less well   (18-19, 26)
+    #   precursor depletion / substitution                      (20-21, 23)
+    #   regulation        it switches on the genes that do      (22, 24)
+    #   PRODRUG ACTIVATION LOSS  the determinant FAILS to turn the prodrug on
+    #
+    # Isoniazid is inert until katG's peroxidase activates it. A katG that has lost that
+    # activity leaves the drug inert, so the graph's causal core is a NEGATIVE regulation
+    # BY the determinant of a step it would otherwise perform -- which is why the node
+    # labels say "defective" rather than leaving the reader to infer it.
+    "ARO:3004266": {
+        "curated": "2026-08-06T00:00:00Z",
+        "reference": "PMID:1501713",       # Zhang, Heym, Allen, Young & Cole 1992, Nature
+        "mech": {"ARO:3000212": "Deletion of katG from the chromosome was associated with INH resistance in two patient isolates of M. tuberculosis."},
+        "mech_res": "Deletion of katG from the chromosome was associated with INH resistance in two patient isolates of M. tuberculosis.",
+        "det_res": [
+            {"reference": "PMID:1501713", "snippet": "Deletion of katG from the chromosome was associated with INH resistance in two patient isolates of M. tuberculosis.",
+             "notes": "Zhang et al. 1992, loss of function: deleting katG confers resistance in patient isolates."},
+            {"reference": "PMID:1501713", "snippet": "A single M. tuberculosis gene, katG, encoding both catalase and peroxidase, restored sensitivity to INH in a resistant mutant of Mycobacterium smegmatis, and conferred INH susceptibility in some strains of Escherichia coli.",
+             "notes": "And the converse, in the same paper: restoring katG restores SENSITIVITY, in two different host species. Both directions is what makes this causal rather than correlative."},
+        ],
+        "res_drug": "A single M. tuberculosis gene, katG, encoding both catalase and peroxidase, restored sensitivity to INH in a resistant mutant of Mycobacterium smegmatis, and conferred INH susceptibility in some strains of Escherichia coli.",
+        "note": "Prodrug activation loss: isoniazid is inert until katG activates it, so a katG that cannot leaves the drug inert.",
+        "extra_nodes": [
+            {"node_id": "family", "label": "catalase-peroxidase (KatG)", "node_type": "PROTEIN",
+             "grounding": "NCBIfam:TIGR00198",
+             "description": "KB protein-trait record for the catalase-peroxidase family. This determinant is a DEFECTIVE member of it -- the resistance is the defect."},
+            {"node_id": "peroxidase", "label": "peroxidase activity (the activity isoniazid activation requires)",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0004601"},
+            {"node_id": "inh", "label": "isoniazid (inert prodrug)", "node_type": "CHEMICAL",
+             "grounding": "CHEBI:6030"},
+            {"node_id": "activated_inh", "label": "activated isoniazid", "node_type": "STATE",
+             "description": "The reactive species katG generates. Ungrounded: the paper says 'the activated form of the drug' without naming a compound this corpus can cite a CURIE for."},
+            {"node_id": "inh_nad", "label": "isoniazid-NAD adduct in the InhA active site",
+             "node_type": "STATE",
+             "description": "The inhibitory species: activated drug covalently attached to the nicotinamide ring of NAD bound in InhA. Ungrounded."},
+            {"node_id": "inha", "label": "enoyl-[acyl-carrier-protein] reductase (NADH) activity (InhA)",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0004318"},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "family",
+             "predicate": "member of (the catalase-peroxidase family, defectively)",
+             "predicate_id": "RO:0002350",
+             "evidence": [
+                 {"reference": "PMID:1501713", "snippet": "A single M. tuberculosis gene, katG, encoding both catalase and peroxidase, restored sensitivity to INH in a resistant mutant of Mycobacterium smegmatis, and conferred INH susceptibility in some strains of Escherichia coli.",
+                  "notes": "Zhang et al. 1992 establish what katG is: one gene encoding both activities."},
+                 {"reference": "NCBIfam:TIGR00198", "snippet": "catalase/peroxidase HPI",
+                  "notes": "NCBIfam's own product name for the family this node grounds to. NOT the KB record's definition, which this repo composes."},
+             ]},
+            {"subject": "family", "object": "peroxidase",
+             "predicate": "enables (peroxidase activity)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:1501713", "snippet": "A single M. tuberculosis gene, katG, encoding both catalase and peroxidase, restored sensitivity to INH in a resistant mutant of Mycobacterium smegmatis, and conferred INH susceptibility in some strains of Escherichia coli.",
+                           "notes": "The peroxidase half is the one isoniazid activation needs."}]},
+            {"subject": "peroxidase", "object": "activated_inh",
+             "predicate": "causally upstream of (activates the prodrug)", "predicate_id": "RO:0002411",
+             "description": "Isoniazid is inert as given; katG converts it to the species that inhibits InhA.",
+             "evidence": [
+                 {"reference": "PMID:1501713", "snippet": "A single M. tuberculosis gene, katG, encoding both catalase and peroxidase, restored sensitivity to INH in a resistant mutant of Mycobacterium smegmatis, and conferred INH susceptibility in some strains of Escherichia coli.",
+                  "notes": "Restoring katG restores INH sensitivity in two host species, so the gene's product is what makes the drug work."},
+                 {"reference": "PMID:9417034", "snippet": "Data from x-ray crystallography and mass spectrometry reveal that the mechanism of isoniazid action against InhA is covalent attachment of the activated form of the drug to the nicotinamide ring of nicotinamide adenine dinucleotide bound within the active site of InhA.",
+                  "notes": "Rozwarski et al. 1998 name the acting species 'the activated form of the drug'. That katG is what activates it is an inference FROM THESE TWO SOURCES TOGETHER."},
+             ]},
+            {"subject": "inh", "object": "activated_inh",
+             "predicate": "causally upstream of (is the substrate of activation)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:9417034", "snippet": "The preferred antitubercular drug isoniazid specifically targets a long-chain enoyl-acyl carrier protein reductase (InhA), an enzyme essential for mycolic acid biosynthesis in Mycobacterium tuberculosis.",
+                           "notes": "Rozwarski et al. 1998: isoniazid is the drug whose activated form does the work."}]},
+            {"subject": "activated_inh", "object": "inh_nad",
+             "predicate": "causally upstream of (forms the covalent adduct)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:9417034", "snippet": "Data from x-ray crystallography and mass spectrometry reveal that the mechanism of isoniazid action against InhA is covalent attachment of the activated form of the drug to the nicotinamide ring of nicotinamide adenine dinucleotide bound within the active site of InhA.",
+                           "notes": "Covalent attachment to the nicotinamide ring of NAD bound in the InhA active site, shown by crystallography and mass spectrometry."}]},
+            {"subject": "inh_nad", "object": "inha",
+             "predicate": "negatively regulates (inhibits the target)", "predicate_id": "RO:0002212",
+             "description": "InhA is essential for mycolic acid biosynthesis, so inhibiting it is what kills the cell.",
+             "evidence": [{"reference": "PMID:9417034", "snippet": "The preferred antitubercular drug isoniazid specifically targets a long-chain enoyl-acyl carrier protein reductase (InhA), an enzyme essential for mycolic acid biosynthesis in Mycobacterium tuberculosis.",
+                           "notes": "Rozwarski et al. 1998 identify InhA as the target and why it matters."}]},
+            {"subject": "determinant", "object": "peroxidase",
+             "predicate": "negatively regulates (the defective katG cannot activate the prodrug)",
+             "predicate_id": "RO:0002212",
+             "description": "THE CAUSAL CORE, and it runs backwards compared with every earlier round: this determinant confers resistance by NOT doing something. A katG that has lost peroxidase activity leaves isoniazid inert, so none of the chain below it happens.",
+             "evidence": [{"reference": "PMID:1501713", "snippet": "Deletion of katG from the chromosome was associated with INH resistance in two patient isolates of M. tuberculosis.",
+                           "notes": "Deletion -- the extreme case of loss -- confers resistance in patient isolates. Clinical katG resistance mutations are usually point substitutions that reduce rather than abolish the activity."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # rpoB -- rifamycin TARGET ALTERATION (ARO:3000210). The same shape as gyrA's QRDR
     # (round 18) on a different target: substitutions in a short conserved region of the
     # RNA polymerase beta subunit reduce the drug's grip on its binding pocket.
