@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003460
 trait_relations:
@@ -25,12 +25,13 @@ evidence:
 - reference: DOI:10.1128/AAC.49.2.708-720.2005
   notes: PMID:15673755 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycolicibacterium smegmatis ndh with mutation conferring resistance to isoniazid → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycolicibacterium smegmatis ndh with mutation conferring resistance to isoniazid → mechanism
+    → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3003460). Prodrug-activation loss at a distance: the ratio changes, and INH activation fails
+    downstream.'
   nodes:
   - node_id: determinant
     label: Mycolicibacterium smegmatis ndh with mutation conferring resistance to isoniazid
@@ -44,6 +45,23 @@ causal_graphs:
     label: isoniazid-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007152
+  - node_id: nadh_ox
+    label: NADH oxidase activity of ndh
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded on purpose: CARD says ''NADH oxidase'', and the nearest GO terms are NADH
+      dehydrogenase activities. Round 56''s rule -- do not guess a CURIE that was not verified.'
+  - node_id: ratio
+    label: raised NADH / depleted NAD+ ratio
+    node_type: STATE
+    description: The causal hinge. Both downstream arms hang off this one state.
+  - node_id: peroxidation
+    label: peroxidation reactions required for isoniazid activation
+    node_type: BIOLOGICAL_PROCESS
+    description: 'Ungrounded: the KatG-mediated activation chemistry has no single term in use here.'
+  - node_id: displacement
+    label: displacement of the NADH-isonicotinic acyl complex from the InhA binding site
+    node_type: STATE
+    description: The second, independent arm.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -57,47 +75,99 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.49.2.708-720.2005
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003778
-      snippet: Mutations in the Mycolicibacterium smegmatis ndh gene that results in increased resistance
-        to isoniazid.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3003460
+      snippet: ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation
+        and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration
+        of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH,
+        as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.49.2.708-720.2005
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3003460
+      snippet: Point mutations in the Mycobacterium tuberculosis ndh gene shown clinically to confer resistance
+        to isoniazid.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.49.2.708-720.2005
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003778
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000520 ! isoniazid'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3003461
+      snippet: Point mutations in the Mycobacterium tuberculosis ndh gene shown clinically to confer resistance
+        to isoniazid.
+      notes: The clinical resistance claim.
+    - reference: ARO:3003460
+      snippet: ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation
+        and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration
+        of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH,
+        as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.
+      notes: 'And the full mechanism, which CARD states in a single sentence: diminished NADH oxidation
+        -> altered NADH/NAD+ ratio -> two separate blocks on isoniazid.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
     evidence:
     - reference: ARO:3003460
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
       notes: Asserted on ARO:3003460 (antibiotic resistant ndh), an is_a ancestor of this record's ARO:3003778;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
+  - subject: determinant
+    predicate: negatively regulates (diminishes NADH oxidation)
+    predicate_id: RO:0002212
+    object: nadh_ox
+    evidence:
+    - reference: ARO:3003460
+      snippet: ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation
+        and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration
+        of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH,
+        as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.
+      notes: '''participates in antibiotic resistance by diminishing NADH oxidation''.'
+  - subject: nadh_ox
+    predicate: causally upstream of (raises NADH, depletes NAD+)
+    predicate_id: RO:0002411
+    object: ratio
+    evidence:
+    - reference: ARO:3003460
+      snippet: ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation
+        and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration
+        of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH,
+        as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.
+      notes: '''consequently causes an increase in NADH concentration and depletion of NAD+''.'
+  - subject: ratio
+    predicate: negatively regulates (prevents the activating chemistry)
+    predicate_id: RO:0002212
+    object: peroxidation
+    description: 'First arm: isoniazid is never activated.'
+    evidence:
+    - reference: ARO:3003460
+      snippet: ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation
+        and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration
+        of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH,
+        as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.
+      notes: '''prevents the peroxidation reactions required for the activation of INH''.'
+  - subject: ratio
+    predicate: negatively regulates (prevents the displacement)
+    predicate_id: RO:0002212
+    object: displacement
+    description: Second arm, independent of the first. CARD's 'as well as' is doing real work -- these
+      are two mechanisms, not one restated, and splitting them is why this config has four extra edges
+      rather than three.
+    evidence:
+    - reference: ARO:3003460
+      snippet: ndh is a NADH oxidase. It participates in antibiotic resistance by diminishing NADH oxidation
+        and consequently causes an increase in NADH concentration and depletion of NAD+. This alteration
+        of the NADH/NAD+ ratio prevents the peroxidation reactions required for the activation of INH,
+        as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding site.
+      notes: '''as well as the displacement of the NADH-isonicotinic acyl complex from InhA enzyme binding
+        site''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -1414,3 +1414,22 @@ def test_pnca_active_metabolite_is_left_ungrounded_on_purpose():
     poa = next(n for n in cfg["extra_nodes"] if n["node_id"] == "poa")
     assert "grounding" not in poa
     assert "guessing" in _flat(poa["description"]).lower()
+
+
+def test_ndh_keeps_both_downstream_arms_separate():
+    """CARD's "as well as" joins two independent blocks on isoniazid, not one restated.
+
+    Collapsing them would lose a mechanism: the ratio blocks INH ACTIVATION and,
+    separately, blocks DISPLACEMENT of the NADH-isonicotinic acyl complex from InhA.
+    """
+    cfg = promote.family_configs("ARO:3003460")[0]
+    downstream = {e["object"] for e in cfg["extra_edges"] if e["subject"] == "ratio"}
+    assert downstream == {"peroxidation", "displacement"}
+
+
+def test_ndh_oxidase_node_is_ungrounded_on_purpose():
+    """CARD says "NADH oxidase"; nearest GO terms are dehydrogenases (round 56's rule)."""
+    cfg = promote.family_configs("ARO:3003460")[0]
+    node = next(n for n in cfg["extra_nodes"] if n["node_id"] == "nadh_ox")
+    assert "grounding" not in node
+    assert "do not guess" in _flat(node["description"]).lower()
