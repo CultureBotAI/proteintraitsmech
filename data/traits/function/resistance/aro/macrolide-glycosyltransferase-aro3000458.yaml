@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000201
 trait_relations:
@@ -22,11 +22,12 @@ evidence:
 - reference: DOI:10.1073/pnas.0607897104
   notes: PMID:17376874 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] macrolide glycosyltransferase → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: macrolide glycosyltransferase → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:17376874). Drug inactivation by glycosylation -- originally a macrolide producer's own immunity
+    mechanism.
   nodes:
   - node_id: determinant
     label: macrolide glycosyltransferase
@@ -40,6 +41,19 @@ causal_graphs:
     label: glycosylation of antibiotic conferring resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000208
+  - node_id: glycosyl
+    label: macrolide glycosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: GO has glycosyltransferase terms but none specific to macrolide inactivation.'
+  - node_id: glyco_drug
+    label: glycosylated (inactive) macrolide
+    node_type: CHEMICAL
+    description: 'Ungrounded: the product differs per drug.'
+  - node_id: ribosome_site
+    label: 23S rRNA macrolide binding site
+    node_type: NUCLEIC_ACID
+    description: The target the drug can no longer occupy. Same site round 29's 16S work neighbours, and
+      ungrounded for the same reason.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,64 +67,84 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1073/pnas.0607897104
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
-    - reference: ARO:3000458
-      snippet: Macrolide glycosyltransferases are enzymes encoded by macrolide glycosyltransferase genes
-        and inactivate macrolides by glycosylating them at 2'-OH of desosamine sugar moiety. They are
-        predominantly found in macrolide producers and are also found in non-producers and are used as
-        a resistance mechanism. Different variants of this enzyme has been reported.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:17376874
+      snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
+        oleandomycin and diverse macrolides including erythromycin, respectively.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1073/pnas.0607897104
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: PMID:17376874
+      snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
+        oleandomycin and diverse macrolides including erythromycin, respectively.
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1073/pnas.0607897104
-      notes: Auto-drafted from ARO participates_in ARO:3000208; verbatim snippet pending curation.
-    - reference: ARO:3000458
-      snippet: Macrolide glycosyltransferases are enzymes encoded by macrolide glycosyltransferase genes
-        and inactivate macrolides by glycosylating them at 2'-OH of desosamine sugar moiety. They are
-        predominantly found in macrolide producers and are also found in non-producers and are used as
-        a resistance mechanism. Different variants of this enzyme has been reported.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000208 (glycosylation of antibiotic
-        conferring resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: PMID:17376874
+      snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
+        oleandomycin and diverse macrolides including erythromycin, respectively.
+      notes: Family mechanism ARO:3000208.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1073/pnas.0607897104
-      notes: 'Auto-drafted: mechanism ARO:3000208 → resistance; snippet pending curation.'
-    - reference: ARO:3000208
-      snippet: Addition of glycosyl moiety to antibiotics thereby inactivating them.
-      notes: ARO definition of the resistance mechanism class ARO:3000208 (glycosylation of antibiotic
-        conferring resistance), which states the causal link to resistance.
+    - reference: PMID:17376874
+      snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
+        oleandomycin and diverse macrolides including erythromycin, respectively.
+      notes: Mechanism ARO:3000208 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1073/pnas.0607897104
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000458
-      snippet: Macrolide glycosyltransferases are enzymes encoded by macrolide glycosyltransferase genes
-        and inactivate macrolides by glycosylating them at 2'-OH of desosamine sugar moiety. They are
-        predominantly found in macrolide producers and are also found in non-producers and are used as
-        a resistance mechanism. Different variants of this enzyme has been reported.
-      notes: ARO definition of this determinant (macrolide glycosyltransferase).
+    - reference: PMID:17376874
+      snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
+        oleandomycin and diverse macrolides including erythromycin, respectively.
+      notes: 'Bolam et al. 2007. The third chemistry under this family term: a sugar is ADDED, rather
+        than the ring being opened (r46) or phosphorylated (r47).'
+    - reference: PMID:17376874
+      snippet: Glycosylation of macrolide antibiotics confers host cell immunity from endogenous and exogenous
+        agents.
+      notes: 'And its origin, which the other two chemistries do not share: these enzymes are the PRODUCER''s
+        self-protection. Resistance in a pathogen is that immunity system turning up elsewhere.'
+  - subject: determinant
+    predicate: enables (macrolide glycosylation)
+    predicate_id: RO:0002327
+    object: glycosyl
+    evidence:
+    - reference: PMID:17376874
+      snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
+        oleandomycin and diverse macrolides including erythromycin, respectively.
+      notes: OleI and OleD glycosylate and inactivate.
+  - subject: glycosyl
+    predicate: has output
+    predicate_id: RO:0002234
+    object: glyco_drug
+    evidence:
+    - reference: PMID:17376874
+      snippet: The Streptomyces antibioticus glycosyltransferases, OleI and OleD, glycosylate and inactivate
+        oleandomycin and diverse macrolides including erythromycin, respectively.
+      notes: OleD acts on diverse macrolides including erythromycin, which is why one enzyme covers a
+        class.
+  - subject: glyco_drug
+    predicate: negatively regulates (the glycosylated drug cannot occupy the site)
+    predicate_id: RO:0002212
+    object: ribosome_site
+    description: 'The causal core, and the structures explain WHY: erythromycin binds OleD in the same
+      conformation it adopts on the 23S RNA, so the sugar is added exactly where the ribosome would bind.'
+    evidence:
+    - reference: PMID:17376874
+      snippet: Erythromycin binds to OleD and the 23S RNA of its target ribosome in the same conformation
+      notes: Bolam et al. 2007 -- the enzyme recognises the drug in its target-bound conformation.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
