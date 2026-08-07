@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   1,030.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   1,021.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -113,22 +113,25 @@ cleared._
      own evidence.
    - ~~**katG (5)**~~ **DONE (round 27)** — a FIFTH mechanism kind: resistance by
      *losing* a function, since isoniazid is inert until katG activates it.
-   - **ethA (9)** — same kind, deliberately not bundled: its primary characterisation was
-     not found in round 27's searches (what surfaced was recent *booster* work on MymA /
-     VirS / alpibectir). Needs its own round with the right paper.
+   - ~~**ethA (9)**~~ **DONE (round 30)** — found by fetching PMID:10944230 *by
+     identifier* rather than by title, which is the reusable trick: a title search for a
+     25-year-old mechanism paper competes with everything published since.
    - ~~**inhA (5)**~~ **DONE (round 28)** — TWO routes on one determinant, both from
      PMID:8284673: a missense substitution (target alteration) and the **wild-type** gene
      on a multicopy plasmid (titration by overexpression — a **sixth** mechanism kind).
    - **fabG1 (7)** — the promoter half of that operon. Round 28's overexpression edge
      *predicts* it, but the paper demonstrating chromosomal promoter alleles in
      M. tuberculosis was not found; stretching the multicopy-plasmid result to cover them
-     is the over-reach #201 exists to stop.
+     is the over-reach #201 exists to stop. Round 30 retried by identifier too —
+     PMID:12406222 returns a *Lactococcus* nisA paper, so that citation is simply wrong.
    - **the other ~40 isoniazid-related genes** are 1–2 record chains (ndh, nudC, mshA/B/C,
      nat, furA, sigI, iniA, mymA, Rv0565c, inbR, kasA, mmaA3, Rv1258c). Several have thin
      or contested evidence; for some the honest outcome is staying drafts.
    - **rRNA target alteration — 105 drafts, not ~22.** ~~16S/aminoglycoside (45)~~
      **DONE (round 29)**; 23S/macrolide (26) is next by size, then linezolid,
-     pleuromutilin, oxazolidinone and tetracycline families.
+     pleuromutilin, oxazolidinone and tetracycline families. **23S is filed as #217**: no
+     source found that *constructs* a substitution and measures the affinity loss, which
+     is the tier round 29 had.
      **Settle #215 first:** these determinants are RNA, the KB is of protein traits, and
      their graphs cannot route through any protein-trait record because the corpus holds
      no rRNA trait records. Round 29 curated them as they are and said so.

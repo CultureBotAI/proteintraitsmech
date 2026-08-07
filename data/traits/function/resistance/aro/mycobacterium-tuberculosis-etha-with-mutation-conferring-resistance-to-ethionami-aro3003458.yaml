@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003457
 trait_relations:
@@ -37,12 +37,13 @@ evidence:
 - reference: DOI:10.1038/s41598-018-33731-1
   notes: PMID:30337678 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis ethA with mutation conferring resistance to ethionamide →
-    mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycobacterium tuberculosis ethA with mutation conferring resistance to ethionamide → mechanism
+    → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (PMID:10944230). Prodrug activation loss, as katG is for isoniazid: a defective EthA leaves ethionamide
+    inert.'
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis ethA with mutation conferring resistance to ethionamide
@@ -56,6 +57,24 @@ causal_graphs:
     label: thioamide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007156
+  - node_id: monooxygenase
+    label: monooxygenase activity (EthA/EtaA)
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004497
+  - node_id: eta
+    label: ethionamide (inert prodrug)
+    node_type: CHEMICAL
+    grounding: CHEBI:4885
+  - node_id: activated_eta
+    label: S-oxidised ethionamide (4-pyridylmethanol product)
+    node_type: STATE
+    description: 'The activated species. Ungrounded: the paper characterises it as a 4-pyridylmethanol
+      product without a CURIE this corpus can cite.'
+  - node_id: inha_gene
+    label: inhA (the shared target of isoniazid and ethionamide)
+    node_type: PROTEIN
+    grounding: ARO:3003417
+    description: KB record, curated in round 28 -- the target both prodrugs converge on.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -69,48 +88,115 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.01461-17
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003458
-      snippet: Mycobacterium tuberculosis ethA (Rv3854c) is a mono-oxygenase enzyme which activates the
-        antibiotic ethionamide in vivo. Mutations in ethA confer resistance to ethionamide by modulating
-        the activation and activity of the ethionamide prodrug.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: PMID:10944230
+      snippet: We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein
+        from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase
+        (Rv3854c, EtaA) confers ETA hypersensitivity.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01461-17
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: PMID:10944230
+      snippet: We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein
+        from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase
+        (Rv3854c, EtaA) confers ETA hypersensitivity.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01461-17
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003458
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3003474 ! ethionamide'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:10944230
+      snippet: We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein
+        from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase
+        (Rv3854c, EtaA) confers ETA hypersensitivity.
+      notes: 'DeBarber et al. 2000, demonstrated by its CONVERSE: overproducing EtaA makes cells HYPERsensitive,
+        so less of it means less activation and more resistance. The same paper shows overproducing the
+        regulator EtaR confers resistance, which is the same fact from the other side.'
+    - reference: PMID:10944230
+      snippet: Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells
+        of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation
+        before interacting with its cellular target.
+      notes: 'And what the activation is: S-oxidation, shown with radiolabelled drug and metabolite analysis
+        in whole cells.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to thioamide antibiotic.
     evidence:
     - reference: ARO:3003457
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007156 ! thioamide antibiotic'
       notes: Asserted on ARO:3003457 (ethionamide resistant ethA), an is_a ancestor of this record's ARO:3003458;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to thioamide antibiotic.
+  - subject: determinant
+    predicate: enables (S-oxidation of the prodrug)
+    predicate_id: RO:0002327
+    object: monooxygenase
+    evidence:
+    - reference: PMID:10944230
+      snippet: We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein
+        from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase
+        (Rv3854c, EtaA) confers ETA hypersensitivity.
+      notes: EtaA (Rv3854c) is identified in this paper as the clustered monooxygenase whose level sets
+        ethionamide sensitivity.
+  - subject: eta
+    predicate: causally upstream of (is S-oxidised)
+    predicate_id: RO:0002411
+    object: activated_eta
+    evidence:
+    - reference: PMID:10944230
+      snippet: Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells
+        of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation
+        before interacting with its cellular target.
+      notes: Activation precedes target engagement -- the drug as given does nothing.
+  - subject: monooxygenase
+    predicate: causally upstream of (activates the prodrug)
+    predicate_id: RO:0002411
+    object: activated_eta
+    evidence:
+    - reference: PMID:10944230
+      snippet: We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein
+        from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase
+        (Rv3854c, EtaA) confers ETA hypersensitivity.
+      notes: 'More EtaA, more sensitivity: the activity is what converts the prodrug.'
+    - reference: PMID:10944230
+      snippet: ETA is metabolized by MTb to a 4-pyridylmethanol product remarkably similar in structure
+        to that formed by the activation of isoniazid by the catalase-peroxidase KatG.
+      notes: And the product is 'remarkably similar in structure' to isoniazid's KatG-activated product,
+        which is why the two drugs share a target and a resistance logic (round 27).
+  - subject: activated_eta
+    predicate: negatively regulates (inhibits the shared target)
+    predicate_id: RO:0002212
+    object: inha_gene
+    description: Ethionamide and isoniazid converge on InhA, whose own record carries both resistance
+      routes (round 28).
+    evidence:
+    - reference: PMID:10944230
+      snippet: Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells
+        of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation
+        before interacting with its cellular target.
+      notes: The paper says activation happens 'before interacting with its cellular target'; that the
+        target is InhA is curated on ARO:3003417 from PMID:8284673, which showed inhA mutations confer
+        resistance to BOTH drugs.
+  - subject: determinant
+    predicate: negatively regulates (the defective EthA cannot activate the prodrug)
+    predicate_id: RO:0002212
+    object: monooxygenase
+    description: 'The causal core, and it runs backwards as katG''s does: resistance is the ABSENCE of
+      an activity.'
+    evidence:
+    - reference: PMID:10944230
+      snippet: We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein
+        from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase
+        (Rv3854c, EtaA) confers ETA hypersensitivity.
+      notes: 'Shown by the converse rather than by knockout: overproduction gives hypersensitivity, so
+        loss gives resistance.'
+curation_history:
+- timestamp: '2026-08-06T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

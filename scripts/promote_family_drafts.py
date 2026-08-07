@@ -348,6 +348,70 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # ethA / EtaA -- the ethionamide half of round 27's mechanism kind (ARO:3003456).
+    # Ethionamide is a prodrug like isoniazid, and EthA is its activator, so a defective
+    # EthA leaves it inert. Same shape as katG, and the source paper draws the parallel
+    # itself: the activated product is "remarkably similar in structure" to isoniazid's.
+    #
+    # Deferred from round 27 because its characterisation was not found then; the searches
+    # that round ran surfaced recent BOOSTER work (MymA, VirS, alpibectir) instead. Fetching
+    # PMID:10944230 directly rather than by title is what found it.
+    "ARO:3003456": {
+        "curated": "2026-08-06T00:00:00Z",
+        "reference": "PMID:10944230",      # DeBarber, Mdluli, Bosman, Bekker & Barry 2000, PNAS
+        "mech": {"ARO:3000212": "We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase (Rv3854c, EtaA) confers ETA hypersensitivity."},
+        "mech_res": "We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase (Rv3854c, EtaA) confers ETA hypersensitivity.",
+        "det_res": [
+            {"reference": "PMID:10944230", "snippet": "We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase (Rv3854c, EtaA) confers ETA hypersensitivity.",
+             "notes": "DeBarber et al. 2000, demonstrated by its CONVERSE: overproducing EtaA makes cells HYPERsensitive, so less of it means less activation and more resistance. The same paper shows overproducing the regulator EtaR confers resistance, which is the same fact from the other side."},
+            {"reference": "PMID:10944230", "snippet": "Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation before interacting with its cellular target.",
+             "notes": "And what the activation is: S-oxidation, shown with radiolabelled drug and metabolite analysis in whole cells."},
+        ],
+        "res_drug": "Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation before interacting with its cellular target.",
+        "note": "Prodrug activation loss, as katG is for isoniazid: a defective EthA leaves ethionamide inert.",
+        "extra_nodes": [
+            {"node_id": "monooxygenase", "label": "monooxygenase activity (EthA/EtaA)",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0004497"},
+            {"node_id": "eta", "label": "ethionamide (inert prodrug)", "node_type": "CHEMICAL",
+             "grounding": "CHEBI:4885"},
+            {"node_id": "activated_eta",
+             "label": "S-oxidised ethionamide (4-pyridylmethanol product)", "node_type": "STATE",
+             "description": "The activated species. Ungrounded: the paper characterises it as a 4-pyridylmethanol product without a CURIE this corpus can cite."},
+            {"node_id": "inha_gene", "label": "inhA (the shared target of isoniazid and ethionamide)",
+             "node_type": "PROTEIN", "grounding": "ARO:3003417",
+             "description": "KB record, curated in round 28 -- the target both prodrugs converge on."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "monooxygenase",
+             "predicate": "enables (S-oxidation of the prodrug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "PMID:10944230", "snippet": "We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase (Rv3854c, EtaA) confers ETA hypersensitivity.",
+                           "notes": "EtaA (Rv3854c) is identified in this paper as the clustered monooxygenase whose level sets ethionamide sensitivity."}]},
+            {"subject": "eta", "object": "activated_eta",
+             "predicate": "causally upstream of (is S-oxidised)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "PMID:10944230", "snippet": "Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation before interacting with its cellular target.",
+                           "notes": "Activation precedes target engagement -- the drug as given does nothing."}]},
+            {"subject": "monooxygenase", "object": "activated_eta",
+             "predicate": "causally upstream of (activates the prodrug)", "predicate_id": "RO:0002411",
+             "evidence": [
+                 {"reference": "PMID:10944230", "snippet": "We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase (Rv3854c, EtaA) confers ETA hypersensitivity.",
+                  "notes": "More EtaA, more sensitivity: the activity is what converts the prodrug."},
+                 {"reference": "PMID:10944230", "snippet": "ETA is metabolized by MTb to a 4-pyridylmethanol product remarkably similar in structure to that formed by the activation of isoniazid by the catalase-peroxidase KatG.",
+                  "notes": "And the product is 'remarkably similar in structure' to isoniazid's KatG-activated product, which is why the two drugs share a target and a resistance logic (round 27)."},
+             ]},
+            {"subject": "activated_eta", "object": "inha_gene",
+             "predicate": "negatively regulates (inhibits the shared target)", "predicate_id": "RO:0002212",
+             "description": "Ethionamide and isoniazid converge on InhA, whose own record carries both resistance routes (round 28).",
+             "evidence": [{"reference": "PMID:10944230", "snippet": "Synthesis of radiolabeled ETA and an examination of drug metabolites formed by whole cells of Mycobacterium tuberculosis (MTb) have allowed us to demonstrate that ETA is activated by S-oxidation before interacting with its cellular target.",
+                           "notes": "The paper says activation happens 'before interacting with its cellular target'; that the target is InhA is curated on ARO:3003417 from PMID:8284673, which showed inhA mutations confer resistance to BOTH drugs."}]},
+            {"subject": "determinant", "object": "monooxygenase",
+             "predicate": "negatively regulates (the defective EthA cannot activate the prodrug)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, and it runs backwards as katG's does: resistance is the ABSENCE of an activity.",
+             "evidence": [{"reference": "PMID:10944230", "snippet": "We have demonstrated that overproduction of Rv3855 (EtaR), a putative regulatory protein from MTb, confers ETA resistance whereas overproduction of an adjacent, clustered monooxygenase (Rv3854c, EtaA) confers ETA hypersensitivity.",
+                           "notes": "Shown by the converse rather than by knockout: overproduction gives hypersensitivity, so loss gives resistance."}]},
+        ],
+    },
+    # ---------------------------------------------------------------------------------
     # 16S rRNA / aminoglycoside (ARO:3003666) -- the first family whose determinant is NOT
     # A PROTEIN. 45 records, and `determinant_node_type` exists for them (#215).
     #
