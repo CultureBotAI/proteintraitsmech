@@ -1555,3 +1555,19 @@ def test_rifampin_config_covers_only_the_adp_ribosylating_subset():
             f"{other} is a different chemistry and needs its own snippets"
         )
     assert "SCOPE" in cfg["det_res"][1]["notes"]
+
+
+def test_rifampin_family_has_one_config_per_chemistry():
+    """Four reactions inactivate rifampin; each needs its own snippets (rounds 62-63)."""
+    cfgs = promote.family_configs("ARO:3000576")
+    mechs = {m for c in cfgs for m in c["mech"]} - {"ARO:0001004"}
+    assert mechs == {"ARO:3000266", "ARO:3000450", "ARO:3000105", "ARO:3000208"}
+
+
+def test_rifampin_phosphorylation_does_not_pin_the_donor():
+    """CARD says "usually by ATP, sometimes GTP" -- naming one would over-assert."""
+    cfg = next(c for c in promote.family_configs("ARO:3000576")
+               if "ARO:3000105" in c["mech"])
+    assert "declines to give" in _flat(cfg["note"])
+    labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    assert "atp" not in labels and "gtp" not in labels

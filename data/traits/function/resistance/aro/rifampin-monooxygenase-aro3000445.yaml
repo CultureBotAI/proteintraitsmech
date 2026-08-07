@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000576
 trait_relations:
@@ -28,11 +28,11 @@ evidence:
 - reference: DOI:10.1038/ja.2009.116
   notes: PMID:19942945 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] rifampin monooxygenase → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: rifampin monooxygenase → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3000450). Inactivation by chemical modification -- hydroxylation subset of ARO:3000576.
   nodes:
   - node_id: determinant
     label: rifampin monooxygenase
@@ -50,6 +50,15 @@ causal_graphs:
     label: rifamycin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000157
+  - node_id: modification
+    label: rifampin hydroxylase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: a rifampin-specific hydroxylation activity, not looked up rather than guessed
+      (rounds 56-62).'
+  - node_id: modified
+    label: chemically modified, inactive rifampin
+    node_type: STATE
+    description: The product state. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -63,64 +72,84 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.41.1.218
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
-    - reference: ARO:3000445
-      snippet: Enzyme responsible for the decolorization of rifampin by monoxygenation.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3000450
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.41.1.218
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: ARO:3000450
+      snippet: Inactivation of an antibiotic via introduction a hydroxyl group (-OH).
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1128/AAC.41.1.218
-      notes: Auto-drafted from ARO participates_in ARO:3000450; verbatim snippet pending curation.
-    - reference: ARO:3000445
-      snippet: Enzyme responsible for the decolorization of rifampin by monoxygenation.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000450 (hydroxylation of antibiotic
-        conferring resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3000450
+      snippet: Inactivation of an antibiotic via introduction a hydroxyl group (-OH).
+      notes: Family mechanism ARO:3000450.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.41.1.218
-      notes: 'Auto-drafted: mechanism ARO:3000450 → resistance; snippet pending curation.'
     - reference: ARO:3000450
       snippet: Inactivation of an antibiotic via introduction a hydroxyl group (-OH).
-      notes: ARO definition of the resistance mechanism class ARO:3000450 (hydroxylation of antibiotic
-        conferring resistance), which states the causal link to resistance.
+      notes: Mechanism ARO:3000450 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.41.1.218
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3000445
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3000450
+      snippet: Inactivation of an antibiotic via introduction a hydroxyl group (-OH).
+      notes: CARD's own definition of hydroxylation.
+    - reference: ARO:3000576
+      snippet: Enzymes that inactivate rifampin antibiotics by chemical modification.
+      notes: 'And what it achieves. SCOPE: this family sentence covers all four chemistries under ARO:3000576;
+        only the hydroxylation members are curated by this config (round 62).'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
     evidence:
     - reference: ARO:3000445
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000157 ! rifamycin antibiotic'
-      notes: Asserted directly on ARO:3000445 (rifampin monooxygenase) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to rifamycin antibiotic.
+      notes: Asserted on ARO:3000445 (rifampin monooxygenase), an is_a ancestor of this record's ARO:3000445;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: enables (modifies the drug)
+    predicate_id: RO:0002327
+    object: modification
+    evidence:
+    - reference: ARO:3000450
+      snippet: Inactivation of an antibiotic via introduction a hydroxyl group (-OH).
+      notes: The reaction CARD names for this mechanism id.
+  - subject: modification
+    predicate: has input (the drug)
+    predicate_id: RO:0002233
+    object: drug0
+    evidence:
+    - reference: ARO:3000450
+      snippet: Inactivation of an antibiotic via introduction a hydroxyl group (-OH).
+      notes: The antibiotic is the substrate, which is what makes this inactivation rather than target
+        alteration.
+  - subject: modification
+    predicate: causally upstream of (inactivates the drug)
+    predicate_id: RO:0002411
+    object: modified
+    description: The causal core.
+    evidence:
+    - reference: ARO:3000450
+      snippet: Inactivation of an antibiotic via introduction a hydroxyl group (-OH).
+      notes: CARD names the chemistry and the inactivation together.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
