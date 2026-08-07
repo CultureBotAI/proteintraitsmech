@@ -50,7 +50,7 @@ than deferred (see `research/docs-scalability-audit-1.md`). Issue #5 is all but
 cleared._
 
 1. **Per-gene curation of the remaining resistance causal-graph drafts — 1,219 →
-   1,085.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
+   1,080.** The family-level promotion is done (6,180 REVIEWED). PR #84 made every
    draft edge *cited* (the corpus is 100% snippet-covered), so these are no longer
    defective — they are simply still `graph_id: resistance-draft` rather than
    family-wired graphs.
@@ -60,7 +60,14 @@ cleared._
    **Round 20 closed vanX: 9 records, 81 edges, and a third kind of mechanism —
    precursor depletion** — `research/causal-graphs-round20.md`. **Round 21 closed vanH:
    8 records, 80 edges, the other end of the same pathway** —
-   `research/causal-graphs-round21.md`.
+   `research/causal-graphs-round21.md`. **Rounds 22–27** then covered vanR/vanS (16 + 12,
+   a fourth kind — regulation — and the first graphs citing earlier rounds' records as
+   nodes), the D-Ala-D-Ser route (19: ligase, vanT, vanXY), vanY (6), rpoB (11, the
+   rifamycin RRDR — first round outside the van set) and katG (5, a **fifth** kind:
+   resistance by *losing* a function). Reports `research/causal-graphs-round{22..27}.md`.
+
+   **The mechanism kinds now in the corpus:** inactivation · target alteration · precursor
+   depletion · precursor substitution · regulation · prodrug-activation loss.
 
    **"No shared family config fits" — this item's own claim — is wrong for the
    target-alteration genes, and round 18 measured it.** 25 of the 30 gyrA drafts are
@@ -102,7 +109,16 @@ cleared._
      target. The remaining rpo* records are **different drugs** (daptomycin, vancomycin)
      under different parents, plus rpoA/rpoC compensatory substitutions; each needs its
      own evidence.
-   - **katG/ahpC/fabG1/ethA/msh* (~40)** — prodrug activation, not target alteration.
+   - ~~**katG (5)**~~ **DONE (round 27)** — a FIFTH mechanism kind: resistance by
+     *losing* a function, since isoniazid is inert until katG activates it.
+   - **ethA (9)** — same kind, deliberately not bundled: its primary characterisation was
+     not found in round 27's searches (what surfaced was recent *booster* work on MymA /
+     VirS / alpibectir). Needs its own round with the right paper.
+   - **fabG1/inhA (12)** — a different mechanism again: promoter substitutions that
+     *overexpress* the target and titrate the drug. Must not reuse katG's config.
+   - **the other ~40 isoniazid-related genes** are 1–2 record chains (ndh, nudC, mshA/B/C,
+     nat, furA, sigI, iniA, mymA, Rv0565c, inbR, kasA, mmaA3, Rv1258c). Several have thin
+     or contested evidence; for some the honest outcome is staying drafts.
    - **16S/23S rRNA (~22)**.
    - **565 with no gene symbol** — per-record triage, genuinely not a family PR.
 

@@ -41,6 +41,17 @@ def _cfg(**over):
     return cfg
 
 
+
+def _flat(text: str) -> str:
+    """Collapse whitespace before matching a quoted phrase.
+
+    `yaml.safe_dump(width=100)` wraps long snippets, so a phrase from the middle of one is
+    split across lines and a raw substring test fails on text that is actually present.
+    The same trap as #199, where prose-grepping a wrapped `action:` string was the defect.
+    """
+    return " ".join(text.split())
+
+
 def _graph(cfg, mech=("ARO:3000212",), drug=("ARO:0000001",)):
     return "\n".join(promote.promoted_graph(
         "ARO:9999999", "test determinant", list(mech), list(drug),
@@ -614,7 +625,7 @@ def test_vanxy_cites_the_negative_result_that_makes_the_pathway_coherent():
     """
     out = _graph(promote.FAMILY_SNIPPETS["ARO:3000496"],
                  mech=("ARO:3000213",), drug=("ARO:3000081",))
-    assert "very low dipeptidase activity against D-Ala-D-Ser" in out
+    assert "very low dipeptidase activity against D-Ala-D-Ser" in _flat(out)
 
 
 def test_ec_and_the_other_record_prefixes_are_checked_by_verify():
@@ -678,9 +689,9 @@ def test_vany_refuses_a_d_ala_d_ser_cluster():
 def test_vany_records_why_two_d_d_peptidases_are_not_redundant():
     out = _graph(promote.family_configs("ARO:3000077")[0],
                  mech=("ARO:3000213",), drug=("ARO:3000081",))
-    assert "non-overlapping functions" in out          # VanX vs VanY division of labour
-    assert "17- to 67-fold higher" in out              # the quantified preference
-    assert "but not the dipeptide D-Ala-D-Ala" in out  # the negative result
+    assert "non-overlapping functions" in _flat(out)          # VanX vs VanY division of labour
+    assert "17- to 67-fold higher" in _flat(out)              # the quantified preference
+    assert "but not the dipeptide D-Ala-D-Ala" in _flat(out)  # the negative result
 
 
 # --- round 26: rpoB, and two mechanism ids on one record --------------------------
@@ -706,5 +717,40 @@ def test_rpob_records_that_the_inhibition_is_allosteric():
     """
     out = _graph(promote.family_configs("ARO:3000210")[0],
                  mech=("ARO:0001002", "ARO:3000212"), drug=("ARO:3000157",))
-    assert "more than 12 A away from the active site" in out
-    assert "2 to 3 nt in length" in out
+    assert "more than 12 A away from the active site" in _flat(out)
+    assert "2 to 3 nt in length" in _flat(out)
+
+
+# --- round 27: katG, resistance by losing a function -------------------------------
+
+def test_katg_causal_core_runs_backwards():
+    """The determinant confers resistance by NOT doing something.
+
+    Every earlier round's core edge is something the determinant does; katG's is a
+    negative regulation BY the determinant of a step it would otherwise perform.
+    """
+    cfg = promote.family_configs("ARO:3004266")[0]
+    core = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "peroxidase"][0]
+    assert core["predicate_id"] == "RO:0002212"          # negatively regulates
+    assert "cannot activate" in core["predicate"]
+
+
+def test_katg_cites_both_directions_of_the_1992_experiment():
+    """Gain restores sensitivity; loss confers resistance. Both, or it is correlative."""
+    out = _graph(promote.family_configs("ARO:3004266")[0],
+                 mech=("ARO:3000212",), drug=("ARO:3000157",))
+    assert "restored sensitivity to INH" in _flat(out)
+    assert "Deletion of katG from the chromosome" in _flat(out)
+
+
+def test_katg_records_that_its_core_evidence_is_a_deletion():
+    """Clinical katG resistance is usually a point substitution that REDUCES activity.
+
+    A reader who took "deletion confers resistance" as the mechanism of every katG allele
+    would be wrong about the commonest one, so the edge's notes say which it is.
+    """
+    cfg = promote.family_configs("ARO:3004266")[0]
+    core = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "peroxidase"][0]
+    assert "point substitutions" in core["evidence"][0]["notes"]
