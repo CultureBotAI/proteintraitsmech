@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003398
 trait_relations:
@@ -22,11 +22,14 @@ evidence:
 - reference: DOI:10.1093/jac/dkt048
   notes: PMID:23460607 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] bacA → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: bacA → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3002986). Undecaprenyl pyrophosphate recycling. NOT asserted: that bacitracin binds or sequesters
+    undecaprenyl pyrophosphate. That is the textbook mode of action and neither CARD definition states
+    it, so the drug->carrier edge is deliberately absent (round 51''s lesson). Adding it needs its own
+    evidence.'
   nodes:
   - node_id: determinant
     label: bacA
@@ -40,6 +43,20 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
+  - node_id: upp
+    label: undecaprenyl pyrophosphate (the lipid carrier)
+    node_type: CHEMICAL
+    description: 'Ungrounded: no CHEBI id verified this round, and rounds 56-57 established not guessing
+      one.'
+  - node_id: recycling
+    label: undecaprenyl pyrophosphate recycling / dephosphorylation
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: BacA''s recycling and BcrC''s phosphatase activity are the same step described
+      two ways.'
+  - node_id: wall
+    label: peptidoglycan biosynthetic process
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0009252
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,45 +70,77 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1093/jac/dkt048
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
     - reference: ARO:3002986
       snippet: The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis
         which confers resistance to bacitracin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:3000213.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1093/jac/dkt048
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: ARO:3002986
+      snippet: The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis
+        which confers resistance to bacitracin.
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1093/jac/dkt048
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3002986
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000629 ! bacitracin A'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis
+        which confers resistance to bacitracin.
+      notes: 'BacA: recycling undecaprenyl pyrophosphate confers bacitracin resistance.'
+    - reference: ARO:3003250
+      snippet: The bcrC gene product (BcrC) is an undecaprenyl pyrophosphate phosphatase originally isolated
+        from Bacillus subtilis. When overexpressed it can confer resistance to bacitracin.
+      notes: 'BcrC: the same carrier, as a phosphatase, and resistance on OVEREXPRESSION -- more recycling
+        capacity, not a different activity.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
     evidence:
     - reference: ARO:3003398
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
       notes: Asserted on ARO:3003398 (undecaprenyl pyrophosphate related proteins), an is_a ancestor of
         this record's ARO:3002986; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+  - subject: determinant
+    predicate: enables (recycles the lipid carrier)
+    predicate_id: RO:0002327
+    object: recycling
+    evidence:
+    - reference: ARO:3002986
+      snippet: The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis
+        which confers resistance to bacitracin.
+      notes: BacA 'recycles undecaprenyl pyrophosphate'.
+    - reference: ARO:3003250
+      snippet: The bcrC gene product (BcrC) is an undecaprenyl pyrophosphate phosphatase originally isolated
+        from Bacillus subtilis. When overexpressed it can confer resistance to bacitracin.
+      notes: BcrC is 'an undecaprenyl pyrophosphate phosphatase' -- the same step.
+  - subject: recycling
+    predicate: has input (the lipid carrier)
+    predicate_id: RO:0002233
+    object: upp
+    evidence:
+    - reference: ARO:3002986
+      snippet: The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis
+        which confers resistance to bacitracin.
+      notes: The substrate CARD names.
+  - subject: recycling
+    predicate: part of (cell wall biosynthesis)
+    predicate_id: BFO:0000050
+    object: wall
+    evidence:
+    - reference: ARO:3002986
+      snippet: The bacA gene product (BacA) recycles undecaprenyl pyrophosphate during cell wall biosynthesis
+        which confers resistance to bacitracin.
+      notes: '''during cell wall biosynthesis''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
