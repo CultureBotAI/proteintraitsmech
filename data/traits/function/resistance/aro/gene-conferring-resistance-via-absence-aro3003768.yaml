@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000000
 trait_relations:
@@ -14,12 +14,15 @@ trait_relations:
     object: ARO:3003764
     relation_source: "ARO participates_in (mechanism) via ARO:3003768 gene conferring resistance via absence"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] gene conferring resistance via absence → mechanism → resistance (auto-scaffold from
-    ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: gene conferring resistance via absence → mechanism → resistance (curated from ARO relations +
+    literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3003764). Resistance by absence. Neither the identity of the deleted gene nor the downstream
+    consequence is asserted: CARD hedges the first and the second differs per record (chitin exposure,
+    metabolite accumulation, blocked entry). Both are good per-record additions and neither is a family
+    claim.'
   nodes:
   - node_id: determinant
     label: gene conferring resistance via absence
@@ -29,6 +32,10 @@ causal_graphs:
     label: resistance by absence
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3003764
+  - node_id: absence
+    label: absence of the gene product
+    node_type: STATE
+    description: 'The determinant state, and the whole mechanism. Ungrounded: an absence is not an entity.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -42,33 +49,55 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: ARO:3003768
-      notes: Auto-drafted from ARO participates_in ARO:3003764; verbatim snippet pending curation.
-    - reference: ARO:3003768
-      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
-        gene blocks drug from entering the cell.
-      notes: ARO definition of this determinant. The mechanism class ARO:3003764 (resistance by absence)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3003764
+      snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
+      notes: Family mechanism ARO:3003764.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3003768
-      notes: 'Auto-drafted: mechanism ARO:3003764 → resistance; snippet pending curation.'
     - reference: ARO:3003764
       snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
-      notes: ARO definition of the resistance mechanism class ARO:3003764 (resistance by absence), which
-        states the causal link to resistance.
+      notes: Mechanism ARO:3003764 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3003768
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+    - reference: ARO:3003764
+      snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
+      notes: 'The mechanism, with its hedge intact: ''usually a porin'' -- so porin-ness is NOT asserted
+        for these records, which include a kinase, a decarboxylase and a regulator.'
     - reference: ARO:3003768
       snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
         gene blocks drug from entering the cell.
-      notes: ARO definition of this determinant (gene conferring resistance via absence).
+      notes: The general statement. Its porin example is quoted as an EXAMPLE, which is what CARD calls
+        it, not as this family's route.
+  - subject: determinant
+    predicate: has quality (deleted or inactivated)
+    predicate_id: RO:0000086
+    object: absence
+    description: The determinant here IS a loss -- what the record names is a gene whose deletion confers
+      resistance, not a gene product that acts.
+    evidence:
+    - reference: ARO:3003768
+      snippet: Deletion of gene or gene product results in resistance. For example, deletion of a porin
+        gene blocks drug from entering the cell.
+      notes: '''Deletion of gene or gene product results in resistance''.'
+  - subject: absence
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    description: The causal core, and deliberately the ONLY downstream edge -- what the absence leads
+      to differs across these records and no source covers all of them.
+    evidence:
+    - reference: ARO:3003764
+      snippet: Mechanism of antibiotic resistance conferred by deletion of gene (usually a porin).
+      notes: '''antibiotic resistance conferred by deletion of gene''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
