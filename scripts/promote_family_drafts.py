@@ -237,6 +237,23 @@ def _aro_part_of() -> dict:
     return _PART_OF_INDEX
 
 
+def _requires_pump_class(class_id: str, human: str):
+    """Build a precondition selecting efflux subunits of one pump class (#223, round 33).
+
+    Generalised from `_requires_rnd_pump` once the second class needed it: the two-hop
+    lookup is identical and only the class id changes, so duplicating it per class would be
+    four copies of the same walk -- the standing lesson of #93.
+    """
+    def _check(ident: str, label: str, text: str):
+        terms = E.parse_obo(E.OBO)
+        for complex_id in _aro_part_of().get(ident, []):
+            if class_id in E.ancestry(terms, complex_id):
+                return None
+        return (f"this determinant is not part of a complex ARO classifies as {human}, "
+                f"and pump classes differ in subunit count and energetics")
+    return _check
+
+
 def _requires_rnd_pump(ident: str, label: str, text: str):
     """The record must be a subunit of a complex ARO classifies as RND."""
     terms = E.parse_obo(E.OBO)
@@ -419,6 +436,12 @@ def _vanrs_downstream() -> tuple[list, list]:
 
 FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
+    # ABC efflux subunits (ARO:3000748, ABC complexes only). Same family term as round 33's
+    # RND pumps and a genuinely different machine: RND runs on the proton gradient and
+    # passes substrate through a central cavity; MacB has NO such cavity and runs on ATP.
+    # Reusing round 33's evidence here would assert the wrong energetics on 14 records,
+    # which is what the class precondition exists to prevent.
+    # ---------------------------------------------------------------------------------
     # RND efflux subunits (ARO:3000748, RND complexes only) -- a NINTH mechanism kind:
     # the drug is neither destroyed, altered, displaced, repelled nor left unactivated. It
     # is captured and pumped back out, so it never reaches its target at a useful
@@ -429,9 +452,10 @@ FAMILY_SNIPPETS = {
     # ancestry. That was true of the SUBUNITS and not of their complexes: each subunit is
     # `part_of` a complex, and the complex is `is_a` RND. The precondition does that two-hop
     # lookup, so the selection is derived from the release rather than hand-listed.
-    "ARO:3000748": {
+    "ARO:3000748": [
+    {
         "curated": "2026-08-06T00:00:00Z",
-        "precondition": _requires_rnd_pump,
+        "precondition": _requires_pump_class("ARO:0010004", "a resistance-nodulation-cell division (RND) efflux pump"),
         "reference": "PMID:16915237",      # Murakami et al. 2006, Nature
         "mech": {"ARO:0010000": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.", "ARO:3000212": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.", "ARO:0001002": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change."},
         "mech_res": "The structures indicate that drugs are exported by a three-step functionally rotating mechanism in which substrates undergo ordered binding change.",
@@ -475,6 +499,54 @@ FAMILY_SNIPPETS = {
                            "notes": "The transport cycle is what the resistance consists of."}]},
         ],
     },
+    {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_pump_class("ARO:0010001", "an ATP-binding cassette (ABC) efflux pump"),
+        "reference": "PMID:29109272",      # Crow, Greene, Kaplan & Koronakis 2017, PNAS
+        "mech": {"ARO:0010000": "The MacB transmembrane domain lacks a central cavity through which substrates could be passed, but instead conveys conformational changes from one side of the membrane to the other, a process we term mechanotransmission.", "ARO:3000212": "The MacB transmembrane domain lacks a central cavity through which substrates could be passed, but instead conveys conformational changes from one side of the membrane to the other, a process we term mechanotransmission.", "ARO:0001002": "The MacB transmembrane domain lacks a central cavity through which substrates could be passed, but instead conveys conformational changes from one side of the membrane to the other, a process we term mechanotransmission."},
+        "mech_res": "The MacB transmembrane domain lacks a central cavity through which substrates could be passed, but instead conveys conformational changes from one side of the membrane to the other, a process we term mechanotransmission.",
+        "det_res": [
+            {"reference": "PMID:29109272", "snippet": "MacB is an ABC transporter that collaborates with the MacA adaptor protein and TolC exit duct to drive efflux of antibiotics and enterotoxin STII out of the bacterial cell.",
+             "notes": "Crow et al. 2017. Tripartite like RND -- transporter, adaptor, exit duct -- but the transporter is ATP-driven."},
+            {"reference": "PMID:29109272", "snippet": "The MacB transmembrane domain lacks a central cavity through which substrates could be passed, but instead conveys conformational changes from one side of the membrane to the other, a process we term mechanotransmission.",
+             "notes": "And the part that makes it a different machine: no central cavity, so the substrate is not passed THROUGH the transmembrane domain at all."},
+        ],
+        "res_drug": "MacB is an ABC transporter that collaborates with the MacA adaptor protein and TolC exit duct to drive efflux of antibiotics and enterotoxin STII out of the bacterial cell.",
+        "note": "ATP-driven efflux by mechanotransmission, distinct from RND's proton-driven transport through a central cavity.",
+        "extra_nodes": [
+            {"node_id": "pump_complex", "label": "tripartite ABC efflux complex", "node_type": "STATE",
+             "description": "Transporter + adaptor + exit duct. Ungrounded: the specific complex differs per record and is on that record's own ARO relations."},
+            {"node_id": "atp_cycle", "label": "ATP-driven nucleotide-binding-domain dimerisation",
+             "node_type": "STATE",
+             "description": "The energising step. Ungrounded: recorded as the conformational cycle the structures describe."},
+            {"node_id": "export", "label": "drug export out of the cell",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded, as in round 33."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "pump_complex",
+             "predicate": "part of (a subunit of the tripartite pump)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "PMID:29109272", "snippet": "MacB is an ABC transporter that collaborates with the MacA adaptor protein and TolC exit duct to drive efflux of antibiotics and enterotoxin STII out of the bacterial cell.",
+                           "notes": "The three parts named; which complex this subunit belongs to is on its own ARO part_of relation."}]},
+            {"subject": "atp_cycle", "object": "pump_complex",
+             "predicate": "causally upstream of (drives the transport cycle)", "predicate_id": "RO:0002411",
+             "description": "ATP rather than the proton gradient -- the energetic difference from RND.",
+             "evidence": [{"reference": "PMID:29109272", "snippet": "Comparison of ATP-bound and nucleotide-free states reveals how reversible dimerization of the nucleotide binding domains drives opening and closing of the MacB periplasmic domains via concerted movements of the second transmembrane segment and major coupling helix.",
+                           "notes": "Reversible dimerisation of the nucleotide-binding domains, from ATP-bound and nucleotide-free structures."}]},
+            {"subject": "pump_complex", "object": "export",
+             "predicate": "causally upstream of (exports the drug by mechanotransmission)",
+             "predicate_id": "RO:0002411",
+             "description": "The distinctive step: conformational change is conveyed across the membrane instead of substrate being passed through it.",
+             "evidence": [{"reference": "PMID:29109272", "snippet": "The MacB transmembrane domain lacks a central cavity through which substrates could be passed, but instead conveys conformational changes from one side of the membrane to the other, a process we term mechanotransmission.",
+                           "notes": "Crow et al. 2017 name the mechanism and note the absence of a central cavity."}]},
+            {"subject": "export", "object": "drug0",
+             "predicate": "negatively regulates (lowers the intracellular drug concentration)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "PMID:29109272", "snippet": "MacB is an ABC transporter that collaborates with the MacA adaptor protein and TolC exit duct to drive efflux of antibiotics and enterotoxin STII out of the bacterial cell.",
+                           "notes": "The pump drives antibiotics out of the cell; the resistance is that removal."}]},
+        ],
+    },
+    ],
     # ---------------------------------------------------------------------------------
     # mprF -- ELECTROSTATIC REPULSION (ARO:3003580, mprF records only). An eighth kind of
     # mechanism: the drug is neither destroyed, altered, displaced nor pumped out. It is

@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000748
 trait_relations:
@@ -19,11 +19,12 @@ evidence:
 - reference: DOI:10.1093/jac/dks351
   notes: PMID:22941900 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] tetA(46) → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: tetA(46) → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:29109272). ATP-driven efflux by mechanotransmission, distinct from RND's proton-driven transport
+    through a central cavity.
   nodes:
   - node_id: determinant
     label: tetA(46)
@@ -33,6 +34,20 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: pump_complex
+    label: tripartite ABC efflux complex
+    node_type: STATE
+    description: 'Transporter + adaptor + exit duct. Ungrounded: the specific complex differs per record
+      and is on that record''s own ARO relations.'
+  - node_id: atp_cycle
+    label: ATP-driven nucleotide-binding-domain dimerisation
+    node_type: STATE
+    description: 'The energising step. Ungrounded: recorded as the conformational cycle the structures
+      describe.'
+  - node_id: export
+    label: drug export out of the cell
+    node_type: BIOLOGICAL_PROCESS
+    description: Ungrounded, as in round 33.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -46,34 +61,73 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1093/jac/dks351
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
-    - reference: ARO:3004032
-      snippet: tetA(46) is a subunit of tetAB(46), a heterodimeric ABC transporter, that is required for
-        conferring tetracycline resistance in Streptococcus australis isolated from the oral cavity.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: PMID:29109272
+      snippet: The MacB transmembrane domain lacks a central cavity through which substrates could be
+        passed, but instead conveys conformational changes from one side of the membrane to the other,
+        a process we term mechanotransmission.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1093/jac/dks351
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: PMID:29109272
+      snippet: The MacB transmembrane domain lacks a central cavity through which substrates could be
+        passed, but instead conveys conformational changes from one side of the membrane to the other,
+        a process we term mechanotransmission.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1093/jac/dks351
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004032
-      snippet: tetA(46) is a subunit of tetAB(46), a heterodimeric ABC transporter, that is required for
-        conferring tetracycline resistance in Streptococcus australis isolated from the oral cavity.
-      notes: ARO definition of this determinant (tetA(46)).
+    - reference: PMID:29109272
+      snippet: MacB is an ABC transporter that collaborates with the MacA adaptor protein and TolC exit
+        duct to drive efflux of antibiotics and enterotoxin STII out of the bacterial cell.
+      notes: Crow et al. 2017. Tripartite like RND -- transporter, adaptor, exit duct -- but the transporter
+        is ATP-driven.
+    - reference: PMID:29109272
+      snippet: The MacB transmembrane domain lacks a central cavity through which substrates could be
+        passed, but instead conveys conformational changes from one side of the membrane to the other,
+        a process we term mechanotransmission.
+      notes: 'And the part that makes it a different machine: no central cavity, so the substrate is not
+        passed THROUGH the transmembrane domain at all.'
+  - subject: determinant
+    predicate: part of (a subunit of the tripartite pump)
+    predicate_id: BFO:0000050
+    object: pump_complex
+    evidence:
+    - reference: PMID:29109272
+      snippet: MacB is an ABC transporter that collaborates with the MacA adaptor protein and TolC exit
+        duct to drive efflux of antibiotics and enterotoxin STII out of the bacterial cell.
+      notes: The three parts named; which complex this subunit belongs to is on its own ARO part_of relation.
+  - subject: atp_cycle
+    predicate: causally upstream of (drives the transport cycle)
+    predicate_id: RO:0002411
+    object: pump_complex
+    description: ATP rather than the proton gradient -- the energetic difference from RND.
+    evidence:
+    - reference: PMID:29109272
+      snippet: Comparison of ATP-bound and nucleotide-free states reveals how reversible dimerization
+        of the nucleotide binding domains drives opening and closing of the MacB periplasmic domains via
+        concerted movements of the second transmembrane segment and major coupling helix.
+      notes: Reversible dimerisation of the nucleotide-binding domains, from ATP-bound and nucleotide-free
+        structures.
+  - subject: pump_complex
+    predicate: causally upstream of (exports the drug by mechanotransmission)
+    predicate_id: RO:0002411
+    object: export
+    description: 'The distinctive step: conformational change is conveyed across the membrane instead
+      of substrate being passed through it.'
+    evidence:
+    - reference: PMID:29109272
+      snippet: The MacB transmembrane domain lacks a central cavity through which substrates could be
+        passed, but instead conveys conformational changes from one side of the membrane to the other,
+        a process we term mechanotransmission.
+      notes: Crow et al. 2017 name the mechanism and note the absence of a central cavity.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

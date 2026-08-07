@@ -902,3 +902,29 @@ def test_the_rnd_graph_says_a_subunit_is_part_of_the_pump():
     out = _flat(_graph(cfg, mech=("ARO:0010000",), drug=("ARO:0000045",)))
     assert "cooperates with an outer-membrane channel, TolC" in out
     assert "allows multi-site binding" in out                # why it is a MULTIdrug pump
+
+
+# --- round 34: two pump classes under one family term ------------------------------
+
+def test_the_efflux_family_carries_a_config_per_pump_class():
+    """RND and ABC are the same ARO family term and different machines.
+
+    RND runs on the proton gradient through a central cavity; MacB has no such cavity and
+    runs on ATP. Reusing one config's evidence for the other would assert the wrong
+    energetics AND the wrong route for the substrate.
+    """
+    cfgs = promote.family_configs("ARO:3000748")
+    assert len(cfgs) == 2
+    abc = [c for c in cfgs if any(n["node_id"] == "atp_cycle" for n in c["extra_nodes"])]
+    assert len(abc) == 1
+    out = _flat(_graph(abc[0], mech=("ARO:0010000",), drug=("ARO:0000045",)))
+    assert "lacks a central cavity" in out
+    assert "mechanotransmission" in out
+
+
+def test_the_pump_class_precondition_is_built_once_not_per_class():
+    """Four classes would otherwise be four copies of the same two-hop walk (#93)."""
+    rnd = promote._requires_pump_class("ARO:0010004", "RND")
+    abc = promote._requires_pump_class("ARO:0010001", "ABC")
+    assert rnd("ARO:3000216", "acrB", "") is None          # acrB is RND
+    assert abc("ARO:3000216", "acrB", "") is not None       # and not ABC
