@@ -637,7 +637,81 @@ def _requires_16s_rrna(ident: str, label: str, text: str):
     return None
 
 
+def _requires_23s_rrna(ident: str, label: str, text: str):
+    """Determinant must be 23S rRNA, checked on its OWN definition (#253, #254)."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    if "23s" not in _own_definition(text).lower() and "23s" not in label.lower():
+        return "own definition does not name 23S rRNA"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # 23S rRNA mutations (ARO:3000336) -- the non-macrolide remainder, after round 50.
+    #
+    # Round 50 curated the macrolide subset and needed a literature search to do it. The
+    # rest needs none: CARD's parent term states the FULL chain -- what the drug does
+    # (blocks peptidyl transferase), what the mutation does (reduces binding affinity),
+    # and that this confers resistance. Round 51's lesson, third round running.
+    "ARO:3000336": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_23s_rrna,
+        "determinant_node_type": "NUCLEIC_ACID",
+        "reference": "ARO:3000336",
+        "mech": {"ARO:3000212": "Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites, conferring resistance."},
+        "mech_res": "Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites, conferring resistance.",
+        "det_res": [
+            {"reference": "ARO:3000336", "snippet": "Point mutations in bacterial 23S rRNA from the large ribosomal subunit that confer resistance to antibiotics.",
+             "notes": "CARD's parent term, stating the resistance claim for the family."},
+            {"reference": "ARO:3000336", "snippet": "Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites, conferring resistance.",
+             "notes": "And the mechanism, with its direction: binding affinity is REDUCED, at specific sites."},
+        ],
+        "res_drug": "Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites, conferring resistance.",
+        "note": "Target alteration of an RNA target; the counterpart to round 54's 16S config.",
+        "extra_nodes": [
+            {"node_id": "binding_site", "label": "antibiotic-binding site within the 23S rRNA",
+             "node_type": "NUCLEIC_ACID",
+             "description": "Ungrounded: the per-drug site (domain V, the peptidyl transferase centre) has no single term."},
+            {"node_id": "low_affinity", "label": "reduced antibiotic binding affinity at the mutated site",
+             "node_type": "STATE",
+             "description": "The causal core, in CARD's own words. Ungrounded: an affinity property has no term here."},
+            {"node_id": "subunit", "label": "large ribosomal subunit (50S)",
+             "node_type": "CELLULAR_LOCALIZATION", "grounding": "GO:0015934"},
+            {"node_id": "pt_activity", "label": "peptidyl transferase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0000048"},
+        ],
+        "extra_edges": [
+            {"subject": "binding_site", "object": "determinant",
+             "predicate": "part of (the 23S rRNA)", "predicate_id": "BFO:0000050",
+             "description": "Why a mutation in the rRNA IS a mutation in the drug's target -- the same shape as round 54's 16S config.",
+             "evidence": [{"reference": "ARO:3000336", "snippet": "Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites, conferring resistance.",
+                           "notes": "'at specific sites' -- the sites are in the rRNA itself."}]},
+            {"subject": "determinant", "object": "subunit",
+             "predicate": "part of (the 50S subunit)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3000336", "snippet": "Point mutations in bacterial 23S rRNA from the large ribosomal subunit that confer resistance to antibiotics.",
+                           "notes": "CARD places the 23S rRNA in the large ribosomal subunit."}]},
+            {"subject": "determinant", "object": "low_affinity",
+             "predicate": "has quality (reduced antibiotic binding affinity)",
+             "predicate_id": "RO:0000086",
+             "evidence": [
+                 {"reference": "ARO:3000336", "snippet": "Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites, conferring resistance.",
+                  "notes": "The family-level claim."},
+                 {"reference": "ARO:3004187", "snippet": "Point mutations in the 23S rRNA subunit may confer resistance to lincosamide antibiotics by reducing antibiotic binding-site affinity.",
+                  "notes": "Restated for lincosamides -- 'by reducing antibiotic binding-site affinity' -- which shows the family claim is not linezolid-only."}]},
+            {"subject": "low_affinity", "object": "binding_site",
+             "predicate": "negatively regulates (drug occupancy of the site)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3000336", "snippet": "Mutations in the 23S rRNA subunit reduce antibiotic binding affinity at specific sites, conferring resistance.",
+                           "notes": "Reduced affinity means the drug occupies its site less."}]},
+            {"subject": "drug0", "object": "pt_activity",
+             "predicate": "negatively regulates (blocks peptide synthesis)",
+             "predicate_id": "RO:0002212",
+             "description": "What the drug does when it IS bound, and therefore what resistance restores.",
+             "evidence": [{"reference": "ARO:3000336", "snippet": "Antibiotics such as linezolid block peptide synthesis through peptidyl transferase activity.",
+                           "notes": "Stated for linezolid. SCOPE: this family also spans lincosamides, phenicols, pleuromutilins, streptogramins, aminoglycosides and capreomycin, which act at the same centre but are not named by this sentence."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # 16S rRNA mutations (ARO:3003211) -- target alteration where the target is RNA.
     #

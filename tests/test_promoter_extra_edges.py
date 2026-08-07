@@ -1371,3 +1371,25 @@ def test_16s_tetracycline_snippet_is_flagged_as_one_drug_of_several():
     assert "does not cover" in notes or "other drugs" in notes, (
         "a single-drug snippet used family-wide must say so"
     )
+
+
+def test_23s_linezolid_snippet_declares_its_scope():
+    """The drug-action sentence names linezolid; the family spans seven drug classes."""
+    cfg = promote.family_configs("ARO:3000336")[0]
+    edge = next(e for e in cfg["extra_edges"] if e["object"] == "pt_activity")
+    notes = _flat(edge["evidence"][0]["notes"]).lower()
+    assert "scope" in notes and "not named by this sentence" in notes
+
+
+def test_23s_and_16s_share_the_binding_site_partonomy():
+    """Both rRNA configs must carry binding_site --part of--> determinant.
+
+    That edge is what makes an rRNA graph different from ordinary target alteration:
+    the drug's site is INSIDE the target, so a base substitution changes the site.
+    """
+    for fam in ("ARO:3000336", "ARO:3003211"):
+        cfg = promote.family_configs(fam)[0]
+        assert any(e["subject"] == "binding_site" and e["object"] == "determinant"
+                   and e["predicate_id"] == "BFO:0000050"
+                   for e in cfg["extra_edges"]), f"{fam} lost the partonomy edge"
+        assert cfg["determinant_node_type"] == "NUCLEIC_ACID"
