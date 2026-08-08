@@ -2331,3 +2331,18 @@ def test_drug_specific_inactivation_terms_name_no_reaction():
         blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
         for chem in ("acetyl", "phospho", "nucleotidyl", "hydroxyl", "esterase"):
             assert chem not in blob, f"{fam} imported the {chem!r} chemistry"
+
+
+def test_every_drug_specific_inactivation_term_is_registered():
+    """Round 100 built the builder and registered three of five families.
+
+    A family's MEMBERS being curated (rounds 62-64) does not curate its TERM, and the
+    two missed terms sat as drafts until audit-drafts named them. Pinned so the next
+    such term is added to the list rather than rediscovered.
+    """
+    expected = {"ARO:3004260", "ARO:3000342", "ARO:3000201",
+                "ARO:3000576", "ARO:3000233"}
+    for fam in expected:
+        cfgs = promote.family_configs(fam)
+        assert any(any(n["node_id"] == "modification" for n in c.get("extra_nodes", ()))
+                   for c in cfgs), f"{fam} has no drug-specific inactivation config"
