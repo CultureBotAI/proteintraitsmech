@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000748
 trait_relations:
@@ -20,11 +20,13 @@ evidence:
 - reference: DOI:10.1074/jbc.C400164200
   notes: PMID:15117957 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] MexA → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: MexA → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3000748). A named subunit of a named efflux complex. The graph routes through the COMPLEX because
+    no subunit effluxes anything alone -- and stops at the efflux process, since the pump's energetics
+    live on the pump records (rounds 67, 69).
   nodes:
   - node_id: determinant
     label: MexA
@@ -34,6 +36,16 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: complex
+    label: the efflux pump complex this subunit belongs to
+    node_type: PROTEIN
+    description: 'Ungrounded: the complex records exist but are themselves #229''s open categorisation
+      question, so this does not point at one.'
+  - node_id: efflux_process
+    label: antibiotic efflux
+    node_type: BIOLOGICAL_PROCESS
+    grounding: ARO:0010000
+    description: Where this graph stops.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -47,32 +59,66 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1074/jbc.C400164200
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
-    - reference: ARO:3000377
-      snippet: MexA is the membrane fusion protein of the MexAB-OprM multidrug efflux complex.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3000748
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1074/jbc.C400164200
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
+    - reference: ARO:3000748
       snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1074/jbc.C400164200
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3000377
       snippet: MexA is the membrane fusion protein of the MexAB-OprM multidrug efflux complex.
-      notes: ARO definition of this determinant (MexA).
+      notes: A subunit describes its place in something larger -- 'the membrane fusion protein OF the
+        MexAB-OprM complex'. That phrasing is what distinguishes these from the complexes filed alongside
+        them (#229).
+    - reference: ARO:3000378
+      snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
+      notes: 'And the transporting subunit: ''the inner membrane multidrug exporter''. SCOPE: MexA and
+        MexB are the only two records in this family whose definitions take this form.'
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: What the complex they belong to achieves.
+  - subject: determinant
+    predicate: part of (the efflux complex)
+    predicate_id: BFO:0000050
+    object: complex
+    description: 'The defining claim: a subunit is PART OF the transporter, not the transporter. Writing
+      determinant --> efflux directly would make each subunit a pump.'
+    evidence:
+    - reference: ARO:3000377
+      snippet: MexA is the membrane fusion protein of the MexAB-OprM multidrug efflux complex.
+      notes: '''the membrane fusion protein OF the MexAB-OprM multidrug efflux complex''.'
+    - reference: ARO:3000378
+      snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
+      notes: '''the inner membrane multidrug exporter OF the efflux complex MexAB-OprM''.'
+  - subject: complex
+    predicate: participates in (antibiotic efflux)
+    predicate_id: RO:0000056
+    object: efflux_process
+    evidence:
+    - reference: ARO:3000378
+      snippet: MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.
+      notes: '''multidrug exporter'' -- the complex is what transports.'
+  - subject: efflux_process
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: '''via the transport of antibiotics out of the cell''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

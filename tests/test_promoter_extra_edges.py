@@ -921,7 +921,11 @@ def test_the_efflux_family_carries_a_config_per_pump_class():
     runs on ATP. Reusing one config's evidence for the other would assert the wrong
     energetics AND the wrong route for the substrate.
     """
-    cfgs = promote.family_configs("ARO:3000748")
+    # Select PUMP-CLASS configs structurally, by the export node every one of them has.
+    # This asserted len(cfgs) == 4 and broke when a subunit config joined the family --
+    # #287's shape, fifth instance this session.
+    cfgs = [c for c in promote.family_configs("ARO:3000748")
+            if any(n["node_id"] == "export" for n in c["extra_nodes"])]
     assert len(cfgs) == 4          # RND, ABC, MFS, SMR — one per pump class
     abc = [c for c in cfgs if any(n["node_id"] == "atp_cycle" for n in c["extra_nodes"])]
     assert len(abc) == 1
@@ -945,7 +949,13 @@ def test_every_efflux_config_grounds_its_export_node():
     in all four pump-class configs and had no CURIE, so the same node was label-only 108
     times over.
     """
-    for cfg in promote.family_configs("ARO:3000748"):
+    # Applies to the PUMP-CLASS configs. A subunit config (round 86) routes through the
+    # complex and has no export node of its own, so it is out of scope by construction
+    # rather than by exception.
+    pumps = [c for c in promote.family_configs("ARO:3000748")
+             if any(n["node_id"] == "export" for n in c["extra_nodes"])]
+    assert len(pumps) == 4, "the four pump classes must still be present"
+    for cfg in pumps:
         export = [n for n in cfg["extra_nodes"] if n["node_id"] == "export"]
         assert export and export[0].get("grounding") == "GO:1990961"
 
@@ -1987,3 +1997,13 @@ def test_rv0678_states_repression_and_stops_before_derepression():
     assert edge["predicate_id"] == "RO:0002212"
     assert "NOT asserted" in edge["evidence"][0]["notes"]
     assert "deliberately absent" in cfg["note"]
+
+
+def test_subunit_config_routes_through_the_complex_not_straight_to_efflux():
+    """No subunit effluxes anything alone; determinant --> efflux would make each a pump."""
+    cfg = next(c for c in promote.family_configs("ARO:3000748")
+               if any(n["node_id"] == "complex" for n in c["extra_nodes"]))
+    first = next(e for e in cfg["extra_edges"] if e["subject"] == "determinant")
+    assert first["object"] == "complex" and first["predicate_id"] == "BFO:0000050"
+    assert not any(e["subject"] == "determinant" and e["object"] == "efflux_process"
+                   for e in cfg["extra_edges"])

@@ -1059,7 +1059,82 @@ def _requires_rv0678(ident: str, label: str, text: str):
     return None
 
 
+def _requires_named_efflux_subunit(ident: str, label: str, text: str):
+    """A record whose own definition names it a SUBUNIT of a specific named complex.
+
+    ARO:3000748 mixes four things (#229): genuine subunits, complexes filed as subunits
+    (MexAB, MexCD, MexEF, MexGHI, MexMN, MexPQ, MexVW), a regulator (arlS) and the ini
+    operon records whose efflux role is only proposed. Only the first group is curatable
+    without the categorisation decision #229 is about.
+
+    The pattern requires "IS the <role> OF <complex>" -- a subunit describes its place in
+    something larger. A complex's definition says it "consists of" or "is composed of"
+    components, which this deliberately does not match. Checked: widening to a bare
+    "component" match pulls in all seven Mex complexes, so the narrow form is right.
+    """
+    if "ARO:0010000" not in D.parse_relations(text)[0]:
+        return "record carries no efflux mechanism (ARO:0010000)"
+    own = _own_definition(text).lower()
+    if not re.search(r"\b(is|are) (a |an |the )?"
+                     r"(membrane fusion protein|periplasmic|inner membrane|outer membrane|"
+                     r"subunit|component)\b", own):
+        return ("own definition does not name it a subunit of a specific complex (#229 "
+                "-- may be a complex, a regulator, or an operon member)")
+    if "operon" in own:
+        return "own definition describes an operon member, not a subunit (#229)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # Named efflux subunits (under ARO:3000748) -- the part of #229's family that does NOT
+    # need the categorisation decision, because their own definitions say what they are.
+    "ARO:3000748-subunit": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_named_efflux_subunit,
+        "reference": "ARO:3000748",
+        "mech": {"ARO:0010000": "Antibiotic resistance via the transport of antibiotics out of the cell."},
+        "mech_res": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "det_res": [
+            {"reference": "ARO:3000377", "snippet": "MexA is the membrane fusion protein of the MexAB-OprM multidrug efflux complex.",
+             "notes": "A subunit describes its place in something larger -- 'the membrane fusion protein OF the MexAB-OprM complex'. That phrasing is what distinguishes these from the complexes filed alongside them (#229)."},
+            {"reference": "ARO:3000378", "snippet": "MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.",
+             "notes": "And the transporting subunit: 'the inner membrane multidrug exporter'. SCOPE: MexA and MexB are the only two records in this family whose definitions take this form."},
+            {"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+             "notes": "What the complex they belong to achieves."},
+        ],
+        "res_drug": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "note": ("A named subunit of a named efflux complex. The graph routes through the "
+                 "COMPLEX because no subunit effluxes anything alone -- and stops at the "
+                 "efflux process, since the pump's energetics live on the pump records "
+                 "(rounds 67, 69)."),
+        "extra_nodes": [
+            {"node_id": "complex", "label": "the efflux pump complex this subunit belongs to",
+             "node_type": "PROTEIN",
+             "description": "Ungrounded: the complex records exist but are themselves #229's open categorisation question, so this does not point at one."},
+            {"node_id": "efflux_process", "label": "antibiotic efflux",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "ARO:0010000",
+             "description": "Where this graph stops."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "complex",
+             "predicate": "part of (the efflux complex)", "predicate_id": "BFO:0000050",
+             "description": "The defining claim: a subunit is PART OF the transporter, not the transporter. Writing determinant --> efflux directly would make each subunit a pump.",
+             "evidence": [
+                 {"reference": "ARO:3000377", "snippet": "MexA is the membrane fusion protein of the MexAB-OprM multidrug efflux complex.",
+                  "notes": "'the membrane fusion protein OF the MexAB-OprM multidrug efflux complex'."},
+                 {"reference": "ARO:3000378", "snippet": "MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.",
+                  "notes": "'the inner membrane multidrug exporter OF the efflux complex MexAB-OprM'."}]},
+            {"subject": "complex", "object": "efflux_process",
+             "predicate": "participates in (antibiotic efflux)", "predicate_id": "RO:0000056",
+             "evidence": [{"reference": "ARO:3000378", "snippet": "MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.",
+                           "notes": "'multidrug exporter' -- the complex is what transports."}]},
+            {"subject": "efflux_process", "object": "resistance",
+             "predicate": "causally upstream of (confers resistance)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+                           "notes": "'via the transport of antibiotics out of the cell'."}]},
+        ],
+    },
     # Aminoglycoside-modifying enzymes (ARO:3007380) -- generic chemical modification.
     #
     # Round 68 curated the specific chemistries (nucleotidylation, phosphorylation,
@@ -5840,6 +5915,12 @@ FAMILY_SNIPPETS["ARO:3000557"] = FAMILY_SNIPPETS["ARO:3000557"] + [
 # (existing) and
 # phosphoethanolamine addition (round 73). Same charge outcome, different moiety; each
 # precondition selects on the record's own definition.
+# APPEND, never assign: ARO:3000748 already carries configs from earlier rounds and
+# a bare assignment silently dropped all four of them.
+FAMILY_SNIPPETS["ARO:3000748"] = (
+    family_configs("ARO:3000748") + [FAMILY_SNIPPETS.pop("ARO:3000748-subunit")]
+)
+
 FAMILY_SNIPPETS["ARO:3003580"] = [
     FAMILY_SNIPPETS["ARO:3003580"],
     FAMILY_SNIPPETS.pop("ARO:3003580-petn"),
