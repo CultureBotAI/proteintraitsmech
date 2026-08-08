@@ -2538,3 +2538,22 @@ def test_drma_keeps_uncharacterized_and_modest():
     assert "UNCHARACTERIZED" in cfg["note"] and "MODEST" in cfg["note"]
     assert "uncharacterized" in cfg["mech"]["ARO:3000212"].lower()
     assert "modest" in cfg["mech"]["ARO:3000212"].lower()
+
+
+def test_both_nudc_records_refuse_the_prodrug_edge_for_the_same_word():
+    """Ethionamide (round 110) and isoniazid (round 112) nudC records both say
+    "inability ... to FUNCTION". Both are prodrugs; neither definition licenses the edge."""
+    for fam in ("ARO:3004892", "ARO:3004911"):
+        cfg = promote.family_configs(fam)[0]
+        assert "to function" in cfg["mech"]["ARO:3000212"].lower()
+        asserted = " ".join(e["predicate"] for e in cfg["extra_edges"]).lower()
+        assert "activat" not in asserted, f"{fam} wrote a prodrug edge"
+
+
+def test_kasa_has_no_config_pending_220():
+    """kasA asserts isoniazid resistance that PMID:12406221 contradicts (#220).
+
+    It is the last function-naming draft and is deliberately left. Round 102's eccC5
+    showed this corpus has no structural way to carry a contested claim.
+    """
+    assert promote.family_configs("ARO:3003462") == []
