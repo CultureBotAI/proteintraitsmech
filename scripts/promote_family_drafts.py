@@ -1112,7 +1112,68 @@ def _requires_van_protein(mech_id: str, marker: str, human: str):
     return _pred
 
 
+def _requires_vanj_homologue(ident: str, label: str, text: str):
+    """A vanJ HOMOLOGUE -- and never vanJ itself.
+
+    ARO:3002914 (vanJ) is a descendant of this family term and its own definition contains
+    "vanJ", so a naive marker match gave it a "shares ancestor with vanJ" edge pointing at
+    its own record. A homology edge to oneself is not a weaker claim, it is a meaningless
+    one, and nothing but reading the written record would have caught it.
+    """
+    if ident == "ARO:3002914":
+        return "record IS vanJ; the homologue config must not point it at itself"
+    return _requires_van_protein("ARO:3000213", "homologue", "vanJ homology")(
+        ident, label, text)
+
+
 FAMILY_SNIPPETS = {
+    # vanJ homologues (ARO:3004255) -- the mechanism is on ARO:3002914, and this record
+    # names it. Round 22's cross-record citation: point at the curated record rather than
+    # copy its chemistry, so this inherits whatever ARO:3002914 says today.
+    #
+    # This is the ONE case in the van remainder where a bare resistance claim can be
+    # honestly extended, because the record's own definition names the protein whose
+    # mechanism is curated. The two remaining family terms (ARO:3002976, ARO:3000234) say
+    # only that van genes confer resistance, and stay drafts.
+    "ARO:3004255": {
+        "curated": "2026-08-07T00:00:00Z",
+        # Must NOT match vanJ itself. ARO:3002914 is a descendant of this family term and
+        # its own definition contains "vanJ", so the first version gave vanJ a
+        # "shares ancestor with vanJ" edge pointing at its own record. A homology edge to
+        # oneself is not a weaker claim, it is a meaningless one.
+        "precondition": _requires_vanj_homologue,
+        "reference": "ARO:3004255",
+        "mech": {"ARO:3000213": "vanJ and vanJ homologue proteins confer resistance to teicoplanin."},
+        "mech_res": "vanJ and vanJ homologue proteins confer resistance to teicoplanin.",
+        "det_res": [
+            {"reference": "ARO:3004255", "snippet": "vanJ and vanJ homologue proteins confer resistance to teicoplanin.",
+             "notes": "The whole claim: vanJ AND its homologues confer teicoplanin resistance. No mechanism of its own."},
+            {"reference": "ARO:3002914", "snippet": "vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.",
+             "notes": "The mechanism, cited FROM vanJ's record because this definition names vanJ. NOT asserted: that every homologue recycles undecaprenol pyrophosphate -- CARD groups them by resistance phenotype, not by demonstrated mechanism."},
+        ],
+        "res_drug": "vanJ and vanJ homologue proteins confer resistance to teicoplanin.",
+        "note": ("A homologue group whose mechanism lives on ARO:3002914 (round 88). The "
+                 "graph points at that record rather than copying its chemistry, so it "
+                 "inherits whatever vanJ's record says today -- round 22's rule."),
+        "extra_nodes": [
+            {"node_id": "vanj_record", "label": "vanJ (undecaprenol pyrophosphate recycling)",
+             "node_type": "PROTEIN", "grounding": "ARO:3002914",
+             "description": "A KB record curated in round 88. Pointing at it rather than restating it is the whole point of this config."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "vanj_record",
+             # RO:0002158 "shares ancestor with", NOT RO:0002159. The first version used
+             # 0002159, which is "SERIALLY homologous to" -- a developmental term for
+             # repeated structures within an organism (vertebrae), not sequence homology.
+             # The OLS lookup returned no _embedded block and I nearly took that as
+             # "unverifiable" rather than checking the search endpoint, which named it.
+             "predicate": "shares ancestor with (vanJ homologue)",
+             "predicate_id": "RO:0002158",
+             "description": "Homology, NOT mechanism. CARD groups these by shared resistance phenotype and does not say every homologue performs vanJ's reaction.",
+             "evidence": [{"reference": "ARO:3004255", "snippet": "vanJ and vanJ homologue proteins confer resistance to teicoplanin.",
+                           "notes": "'vanJ and vanJ HOMOLOGUE proteins' -- the relationship CARD asserts is homology."}]},
+        ],
+    },
     # vanU (ARO:3000575) -- REGULATION. Round 22's shape: the graph ends at the resistance
     # genes rather than restating their chemistry, which rounds 20-23 already curated.
     "ARO:3000575": {
