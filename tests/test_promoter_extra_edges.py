@@ -1832,3 +1832,22 @@ def test_cprrs_graph_ends_at_the_arn_records_not_their_chemistry():
     assert "lipid a" not in blob and "charge" not in blob, (
         "the regulator's graph must not restate the downstream chemistry"
     )
+
+
+def test_lpx_is_biosynthesis_disruption_not_charge_alteration():
+    """ARO:3003580's five routes modify an intact lipid A; these change whether it is
+    made properly at all. Reaching for the charge snippets here would be wrong."""
+    cfg = promote.family_configs("ARO:3000012")[0]
+    blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    assert "biosynthesis" in blob
+    assert "negative charge" not in blob
+    assert "NOT the charge-alteration mechanism" in cfg["note"]
+
+
+def test_lpx_keeps_cards_double_hedge_visible():
+    """"widely known to be INVOLVED IN" and mutations "MAY cause" -- neither upgraded."""
+    cfg = promote.family_configs("ARO:3000012")[0]
+    notes = " ".join(e["notes"] for e in cfg["det_res"])
+    assert "both hedges" in notes.lower()
+    edge = next(e for e in cfg["extra_edges"] if e["subject"] == "determinant")
+    assert edge["predicate_id"] == "RO:0000056", "'participates in', matching 'involved in'"
