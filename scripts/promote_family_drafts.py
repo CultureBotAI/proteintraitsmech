@@ -957,7 +957,82 @@ def _requires_cpr_regulator(ident: str, label: str, text: str):
     return None
 
 
+def _requires_lpx(ident: str, label: str, text: str):
+    """Lipid A BIOSYNTHESIS mutations -- distinct from the charge-alteration routes.
+
+    ARO:3003580's five routes all MODIFY an intact lipid A to neutralise its charge.
+    These records mutate lipid A biosynthesis itself, so the target the peptide binds is
+    altered or absent rather than merely less negative. Same molecule, opposite direction
+    of intervention.
+    """
+    if "ARO:3000213" not in D.parse_relations(text)[0]:
+        return "record carries no cell-wall-restructuring mechanism (ARO:3000213)"
+    own = _own_definition(text).lower()
+    if "biosynthesis of lipid a" not in own:
+        return "own definition does not describe lipid A biosynthesis"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Lpx lipid A biosynthesis mutations (ARO:3000012) -- NOT charge alteration.
+    #
+    # ARO:3003580's five routes (rounds 73-76) all MODIFY an intact lipid A to neutralise
+    # its charge. These mutate its BIOSYNTHESIS, so the surface the peptide binds is
+    # altered or absent rather than merely less negative. Same molecule, opposite
+    # direction of intervention, and a reason not to reach for the charge snippets.
+    #
+    # CARD hedges twice in one sentence -- "widely known to be involved" and "may cause
+    # resistance" -- so neither the enzyme's role nor the resistance is stated firmly, and
+    # the notes say so rather than quoting past the hedge.
+    "ARO:3000012": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_lpx,
+        "reference": "ARO:3003573",
+        # BOTH ids. These records carry ARO:3000212 (mutation) as well, and
+        # UncoveredMechanism correctly refused them otherwise -- the seventh time this
+        # session it has stopped a write. The same sentence genuinely serves both: it
+        # names the biosynthetic role AND says "mutations to this gene may cause
+        # resistance", so it is one claim covering two ids rather than a borrowed snippet.
+        "mech": {"ARO:3000212": "The LpxA gene is widely known to be involved in the biosynthesis of lipid A in Gram-negative bacteria and mutations to this gene may cause resistance to antimicrobial peptides that target the outer membrane.",
+                 "ARO:3000213": "The LpxA gene is widely known to be involved in the biosynthesis of lipid A in Gram-negative bacteria and mutations to this gene may cause resistance to antimicrobial peptides that target the outer membrane."},
+        "mech_res": "The LpxA gene is widely known to be involved in the biosynthesis of lipid A in Gram-negative bacteria and mutations to this gene may cause resistance to antimicrobial peptides that target the outer membrane.",
+        "det_res": [
+            {"reference": "ARO:3003573", "snippet": "The LpxA gene is widely known to be involved in the biosynthesis of lipid A in Gram-negative bacteria and mutations to this gene may cause resistance to antimicrobial peptides that target the outer membrane.",
+             "notes": "NOTE both hedges: 'widely known to be INVOLVED IN' the biosynthesis, and mutations 'MAY cause' resistance. Neither the role nor the resistance is stated firmly, so neither is upgraded here."},
+            {"reference": "ARO:3000012", "snippet": "Proteins involved in restructuring of the cell wall, causing antibiotic resistance.",
+             "notes": "The family claim, which IS causal ('causing antibiotic resistance') where the record-level sentence hedges."},
+        ],
+        "res_drug": "The LpxA gene is widely known to be involved in the biosynthesis of lipid A in Gram-negative bacteria and mutations to this gene may cause resistance to antimicrobial peptides that target the outer membrane.",
+        "note": ("Lipid A biosynthesis disruption. NOT the charge-alteration mechanism of "
+                 "ARO:3003580's five routes: those modify an intact lipid A, these change "
+                 "whether it is made properly at all."),
+        "extra_nodes": [
+            {"node_id": "lipid_a_synthesis", "label": "lipid A biosynthesis",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-76)."},
+            {"node_id": "altered_membrane", "label": "altered outer membrane targeted by the peptide",
+             "node_type": "STATE",
+             "description": "The causal core. Deliberately vague: CARD says the drug 'targets the outer membrane' and does not say what the mutation does to it."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "lipid_a_synthesis",
+             "predicate": "participates in (lipid A biosynthesis)", "predicate_id": "RO:0000056",
+             "description": "'Participates in', matching CARD's own 'involved in' -- LpxA/C/D are successive steps and the record does not claim any one performs the pathway.",
+             "evidence": [{"reference": "ARO:3003573", "snippet": "The LpxA gene is widely known to be involved in the biosynthesis of lipid A in Gram-negative bacteria and mutations to this gene may cause resistance to antimicrobial peptides that target the outer membrane.",
+                           "notes": "'involved in the biosynthesis of lipid A'."}]},
+            {"subject": "lipid_a_synthesis", "object": "altered_membrane",
+             "predicate": "causally upstream of (changes the membrane the drug targets)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3003573", "snippet": "The LpxA gene is widely known to be involved in the biosynthesis of lipid A in Gram-negative bacteria and mutations to this gene may cause resistance to antimicrobial peptides that target the outer membrane.",
+                           "notes": "Implied by the pairing of the biosynthesis role with resistance to peptides 'that target the outer membrane'. NOT a mechanism CARD spells out."}]},
+            {"subject": "altered_membrane", "object": "drug0",
+             "predicate": "negatively regulates (the peptide's target is changed)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3003573", "snippet": "The LpxA gene is widely known to be involved in the biosynthesis of lipid A in Gram-negative bacteria and mutations to this gene may cause resistance to antimicrobial peptides that target the outer membrane.",
+                           "notes": "'resistance to antimicrobial peptides that target the outer membrane'."}]},
+        ],
+    },
     # Aminoacylation of LPS (ARO:3003580) -- a fifth surface-charge route.
     "ARO:3003580-acyl": {
         "curated": "2026-08-07T00:00:00Z",
