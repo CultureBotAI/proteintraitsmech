@@ -1332,6 +1332,92 @@ def _fungal_p450_config(fam_id: str, snippet: str, drug: str, hedged: bool) -> d
 
 
 FAMILY_SNIPPETS = {
+    # uhpA (ARO:3003893) -- a 16th mechanism kind: resistance by losing an IMPORTER's
+    # activator. The whole chain is in one sentence, and the causal words are CARD's.
+    #
+    # Distinct from every efflux config (rounds 67-79, 93): nothing is pumped out. And
+    # distinct from round 71's resistance-by-absence: what is lost is not the determinant's
+    # own function but its REGULATORY effect on a transporter that lets the drug IN.
+    "ARO:3003893": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3003893",
+        "mech": {"ARO:3000212": "uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer fosfomycin resistance by reducing uhpT expression."},
+        "mech_res": "uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer fosfomycin resistance by reducing uhpT expression.",
+        "det_res": [
+            {"reference": "ARO:3003893", "snippet": "uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer fosfomycin resistance by reducing uhpT expression.",
+             "notes": "The complete chain with CARD's own causal words: uhpA is a POSITIVE ACTIVATOR of the fosfomycin IMPORTER, THUS mutations confer resistance BY REDUCING uhpT expression. Rare in this corpus -- most definitions give a role and a resistance claim with nothing between."},
+        ],
+        "res_drug": "uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer fosfomycin resistance by reducing uhpT expression.",
+        "note": ("Resistance by losing an importer's activator -- the drug is not pumped "
+                 "out, it is not let in. Distinct from every efflux config and from round "
+                 "71's resistance-by-absence: what is lost is a REGULATORY effect on a "
+                 "transporter, not the determinant's own catalytic function."),
+        "extra_nodes": [
+            {"node_id": "uhpt_expression", "label": "expression of the fosfomycin importer uhpT",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "What uhpA activates and the mutation reduces. Ungrounded."},
+            {"node_id": "import", "label": "uptake of fosfomycin into the cell",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The step that fails. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "uhpt_expression",
+             "predicate": "positively regulates (activates uhpT expression)",
+             "predicate_id": "RO:0002213",
+             "description": "The POSITIVE form, licensed by CARD's own 'positive activator' -- and it is the loss of this activation that resists.",
+             "evidence": [{"reference": "ARO:3003893", "snippet": "uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer fosfomycin resistance by reducing uhpT expression.",
+                           "notes": "'uhpA is a positive activator of the fosfomycin importer uhpT'."}]},
+            {"subject": "uhpt_expression", "object": "import",
+             "predicate": "causally upstream of (fosfomycin uptake)", "predicate_id": "RO:0002411",
+             "description": "Why less transporter is resistance: uhpT is how the drug enters.",
+             "evidence": [{"reference": "ARO:3003893", "snippet": "uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer fosfomycin resistance by reducing uhpT expression.",
+                           "notes": "'the fosfomycin IMPORTER uhpT' -- CARD names the transporter's direction."}]},
+            {"subject": "determinant", "object": "import",
+             "predicate": "negatively regulates (mutations reduce drug uptake)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, in CARD's own words -- 'thus ... by reducing uhpT expression'.",
+             "evidence": [{"reference": "ARO:3003893", "snippet": "uhpA is a positive activator of the fosfomycin importer uhpT, thus mutations to uhpA confer fosfomycin resistance by reducing uhpT expression.",
+                           "notes": "'thus mutations to uhpA confer fosfomycin resistance BY REDUCING uhpT expression'."}]},
+        ],
+    },
+    # mshB (ARO:3004903) -- a named reaction and no resistance claim at all.
+    "ARO:3004903": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004903",
+        "mech": {"ARO:3000212": "mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins is deacetylated by MshB to produce GlcN-Ins."},
+        "mech_res": "mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins is deacetylated by MshB to produce GlcN-Ins.",
+        "det_res": [
+            {"reference": "ARO:3004903", "snippet": "mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins is deacetylated by MshB to produce GlcN-Ins.",
+             "notes": "A named reaction with named substrate and product -- more chemistry than most records here -- and NO resistance claim whatsoever. CARD does not say mutations do anything."},
+        ],
+        "res_drug": "mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins is deacetylated by MshB to produce GlcN-Ins.",
+        "note": ("Reaction only. CARD gives substrate, product and pathway step, and never "
+                 "mentions a drug, a mutation or resistance -- less than round 95's aftA, "
+                 "which at least called its product essential. The neighbouring mshA record "
+                 "(round 95) says 'inability for antibiotic to ACTIVATE'; this one says "
+                 "nothing of the kind."),
+        "extra_nodes": [
+            {"node_id": "deacetylation", "label": "GlcNAc-Ins deacetylase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed."},
+            {"node_id": "mycothiol", "label": "mycothiol synthesis",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The pathway. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "deacetylation",
+             "predicate": "enables (deacetylation of GlcNAc-Ins)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004903", "snippet": "mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins is deacetylated by MshB to produce GlcN-Ins.",
+                           "notes": "'GlcNAc-Ins is deacetylated by MshB to produce GlcN-Ins' -- substrate and product both named."}]},
+            {"subject": "deacetylation", "object": "mycothiol",
+             "predicate": "part of (the second step of mycothiol synthesis)",
+             "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3004903", "snippet": "mshB is a deacetylase that is involved in the second step of mycothiol synthesis. GlcNAc-Ins is deacetylated by MshB to produce GlcN-Ins.",
+                           "notes": "'involved in the second step of mycothiol synthesis'. NOT asserted: any link to a drug or to resistance, which this definition never mentions."}]},
+        ],
+    },
     # FUR1 (ARO:3007557) -- prodrug-activation loss, in a fungal pathway.
     #
     # 5-flucytosine is a prodrug converted by the pyrimidine salvage pathway, and UPRT is

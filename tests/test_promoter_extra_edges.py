@@ -2473,3 +2473,24 @@ def test_fur1_and_hmg1_stop_before_the_standard_story():
             + [n["label"] for n in cfg["extra_nodes"]]).lower()
         for word in banned:
             assert word not in asserted, f"{fam} asserts {word!r} uncited"
+
+
+def test_uhpa_is_reduced_import_not_efflux():
+    """A 16th mechanism kind: the drug is not pumped out, it is not let in.
+
+    Every efflux config (rounds 67-79, 93) exports the drug. uhpA loses a transporter's
+    ACTIVATOR, so less drug enters. Neither shape may borrow the other's vocabulary.
+    """
+    cfg = promote.family_configs("ARO:3003893")[0]
+    labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    assert "uptake" in labels and "importer" in labels
+    for effluxy in ("efflux", "extrud", "export", "antiport"):
+        assert effluxy not in labels, f"uhpA config uses efflux vocabulary: {effluxy}"
+
+
+def test_mshb_asserts_no_resistance_at_all():
+    """CARD gives substrate, product and pathway step, and never mentions a drug."""
+    cfg = promote.family_configs("ARO:3004903")[0]
+    asserted = " ".join(e["predicate"] for e in cfg["extra_edges"]).lower()
+    for banned in ("resist", "drug", "antibiotic", "mutation"):
+        assert banned not in asserted, f"mshB config asserts {banned!r} uncited"
