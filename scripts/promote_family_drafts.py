@@ -1158,6 +1158,56 @@ def _requires_ddl_ligase(ident: str, label: str, text: str):
 
 
 FAMILY_SNIPPETS = {
+    # Generic target-replacement proteins (ARO:3000381).
+    #
+    # Round 52 curated the WORKED case -- mecA/PBP2a, a foreign PBP doing the wall
+    # synthesis. This is the same mechanism stated abstractly, and CARD supplies the piece
+    # round 52 had to infer: WHY the alternate protein escapes the drug. "Structurally
+    # different and THUS resistant" is the causal link, and "same functions" is why
+    # substituting works at all. Both halves in one sentence.
+    "ARO:3000381": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:0001002", "target replacement"),
+        "reference": "ARO:3000381",
+        "mech": {"ARO:0001002": "Alternate proteins that have the same functions as other antibiotic target proteins, but are structurally different and thus resistant to antibiotics. These can replace the activity of other antibiotic-sensitive proteins in the presence of antibiotics."},
+        "mech_res": "Alternate proteins that have the same functions as other antibiotic target proteins, but are structurally different and thus resistant to antibiotics. These can replace the activity of other antibiotic-sensitive proteins in the presence of antibiotics.",
+        "det_res": [
+            {"reference": "ARO:3000381", "snippet": "Alternate proteins that have the same functions as other antibiotic target proteins, but are structurally different and thus resistant to antibiotics. These can replace the activity of other antibiotic-sensitive proteins in the presence of antibiotics.",
+             "notes": "Both halves: 'the SAME FUNCTIONS as other antibiotic target proteins' (why substitution works) and 'STRUCTURALLY DIFFERENT and thus resistant' (why the drug does not stop it). Round 52's mecA config had to leave the second implicit."},
+        ],
+        "res_drug": "Alternate proteins that have the same functions as other antibiotic target proteins, but are structurally different and thus resistant to antibiotics. These can replace the activity of other antibiotic-sensitive proteins in the presence of antibiotics.",
+        "note": ("Target replacement, stated abstractly. The determinant does the SAME JOB "
+                 "as the drug's target while being structurally unlike it. NOT asserted: "
+                 "which target it replaces -- CARD's sentence is deliberately general and "
+                 "the members do not name a specific one."),
+        "extra_nodes": [
+            {"node_id": "shared_function", "label": "the function shared with the drug's target",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Deliberately unnamed: CARD's claim is that the function is the SAME, not what it is."},
+            {"node_id": "structural_difference", "label": "structural difference from the sensitive target",
+             "node_type": "STATE",
+             "description": "The causal core -- 'structurally different and THUS resistant'."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "shared_function",
+             "predicate": "enables (the same function as the drug's target)",
+             "predicate_id": "RO:0002327",
+             "description": "Why substitution restores the cell: the replacement does the job the inhibited protein was doing.",
+             "evidence": [{"reference": "ARO:3000381", "snippet": "Alternate proteins that have the same functions as other antibiotic target proteins, but are structurally different and thus resistant to antibiotics. These can replace the activity of other antibiotic-sensitive proteins in the presence of antibiotics.",
+                           "notes": "'Alternate proteins that have the SAME FUNCTIONS as other antibiotic target proteins'."}]},
+            {"subject": "determinant", "object": "structural_difference",
+             "predicate": "has quality (structurally unlike the sensitive target)",
+             "predicate_id": "RO:0000086",
+             "evidence": [{"reference": "ARO:3000381", "snippet": "Alternate proteins that have the same functions as other antibiotic target proteins, but are structurally different and thus resistant to antibiotics. These can replace the activity of other antibiotic-sensitive proteins in the presence of antibiotics.",
+                           "notes": "'but are STRUCTURALLY DIFFERENT and thus resistant to antibiotics' -- CARD's own 'thus' is the causal link round 52 had to infer."}]},
+            {"subject": "structural_difference", "object": "drug0",
+             "predicate": "negatively regulates (the drug does not act on it)",
+             "predicate_id": "RO:0002212",
+             "description": "The replacement escapes the drug BECAUSE it is built differently -- which is what distinguishes this from target alteration, where the same protein is modified.",
+             "evidence": [{"reference": "ARO:3000381", "snippet": "Alternate proteins that have the same functions as other antibiotic target proteins, but are structurally different and thus resistant to antibiotics. These can replace the activity of other antibiotic-sensitive proteins in the presence of antibiotics.",
+                           "notes": "'thus resistant to antibiotics'. NOT asserted: any binding measurement, which CARD does not give."}]},
+        ],
+    },
     # Rv1258c / Tap (ARO:3007183) -- named an efflux pump, and hedged.
     #
     # CARD gives one sentence: mutations in "the Rv1258c (Tap) EFFLUX PUMP" CONTRIBUTING

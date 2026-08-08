@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000000
 trait_relations:
@@ -14,12 +14,14 @@ trait_relations:
     object: ARO:0001002
     relation_source: "ARO participates_in (mechanism) via ARO:3000381 antibiotic target replacement protein"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic target replacement protein → mechanism → resistance (auto-scaffold from ARO
-    relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic target replacement protein → mechanism → resistance (curated from ARO relations +
+    literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3000381). Target replacement, stated abstractly. The determinant does the SAME JOB as the drug''s
+    target while being structurally unlike it. NOT asserted: which target it replaces -- CARD''s sentence
+    is deliberately general and the members do not name a specific one.'
   nodes:
   - node_id: determinant
     label: antibiotic target replacement protein
@@ -29,6 +31,14 @@ causal_graphs:
     label: antibiotic target replacement
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0001002
+  - node_id: shared_function
+    label: the function shared with the drug's target
+    node_type: MOLECULAR_FUNCTION
+    description: 'Deliberately unnamed: CARD''s claim is that the function is the SAME, not what it is.'
+  - node_id: structural_difference
+    label: structural difference from the sensitive target
+    node_type: STATE
+    description: The causal core -- 'structurally different and THUS resistant'.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -43,35 +53,58 @@ causal_graphs:
     object: mech0
     evidence:
     - reference: ARO:3000381
-      notes: Auto-drafted from ARO participates_in ARO:0001002; verbatim snippet pending curation.
-    - reference: ARO:3000381
       snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
         are structurally different and thus resistant to antibiotics. These can replace the activity of
         other antibiotic-sensitive proteins in the presence of antibiotics.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001002 (antibiotic target replacement)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:0001002.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3000381
-      notes: 'Auto-drafted: mechanism ARO:0001002 → resistance; snippet pending curation.'
-    - reference: ARO:0001002
-      snippet: Replacement or substitution of antibiotic action target, which process will result in antibiotic
-        resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001002 (antibiotic target replacement),
-        which states the causal link to resistance.
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: Mechanism ARO:0001002 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3000381
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: 'Both halves: ''the SAME FUNCTIONS as other antibiotic target proteins'' (why substitution
+        works) and ''STRUCTURALLY DIFFERENT and thus resistant'' (why the drug does not stop it). Round
+        52''s mecA config had to leave the second implicit.'
+  - subject: determinant
+    predicate: enables (the same function as the drug's target)
+    predicate_id: RO:0002327
+    object: shared_function
+    description: 'Why substitution restores the cell: the replacement does the job the inhibited protein
+      was doing.'
+    evidence:
     - reference: ARO:3000381
       snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
         are structurally different and thus resistant to antibiotics. These can replace the activity of
         other antibiotic-sensitive proteins in the presence of antibiotics.
-      notes: ARO definition of this determinant (antibiotic target replacement protein).
+      notes: '''Alternate proteins that have the SAME FUNCTIONS as other antibiotic target proteins''.'
+  - subject: determinant
+    predicate: has quality (structurally unlike the sensitive target)
+    predicate_id: RO:0000086
+    object: structural_difference
+    evidence:
+    - reference: ARO:3000381
+      snippet: Alternate proteins that have the same functions as other antibiotic target proteins, but
+        are structurally different and thus resistant to antibiotics. These can replace the activity of
+        other antibiotic-sensitive proteins in the presence of antibiotics.
+      notes: '''but are STRUCTURALLY DIFFERENT and thus resistant to antibiotics'' -- CARD''s own ''thus''
+        is the causal link round 52 had to infer.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
