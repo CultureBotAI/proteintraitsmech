@@ -1331,6 +1331,41 @@ def _fungal_p450_config(fam_id: str, snippet: str, drug: str, hedged: bool) -> d
     }
 
 
+def _minimal_enzyme_config(fam_id: str, snippet: str, activity: str, extra_note: str = "") -> dict:
+    """A record naming an enzyme and a resistance claim, with nothing between.
+
+    Round 66's EF-Tu shape, which rounds 104 and 105 established should be applied
+    consistently rather than judged case by case. The graph asserts the functional
+    identity CARD's naming supplies and stops.
+    """
+    return {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": fam_id,
+        "mech": {"ARO:3000212": snippet},
+        "mech_res": snippet,
+        "det_res": [
+            {"reference": fam_id, "snippet": snippet,
+             "notes": ("A functional identity and a resistance claim, with no mechanism "
+                       "between them -- round 66's EF-Tu shape." + (" " + extra_note if extra_note else ""))},
+        ],
+        "res_drug": snippet,
+        "note": ("Mechanism NOT asserted: CARD names what the protein is and that its "
+                 "mutations resist, and nothing joins the two." + (" " + extra_note if extra_note else "")),
+        "extra_nodes": [
+            {"node_id": "activity", "label": activity, "node_type": "MOLECULAR_FUNCTION",
+             "description": "The one functional fact CARD's naming supplies. Ungrounded: not looked up rather than guessed (rounds 56-109)."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "activity",
+             "predicate": "enables (" + activity + ")", "predicate_id": "RO:0002327",
+             "description": "What the determinant IS, which is all CARD gives.",
+             "evidence": [{"reference": fam_id, "snippet": snippet,
+                           "notes": "The functional name. NOT asserted: any interaction with the drug, which CARD does not describe."}]},
+        ],
+    }
+
+
 FAMILY_SNIPPETS = {
     # Upc2 (ARO:3007551) -- target OVEREXPRESSION via a regulator, complete in one sentence.
     #
@@ -7461,6 +7496,32 @@ FAMILY_SNIPPETS["ARO:3007522"] = [_fungal_p450_config(
     "ARO:3007522", "Fungal cytochrome P450 enzymes which include mutations or other modifications to confer resistance to antifungal drug compounds.", "antifungal compounds", True)]
 FAMILY_SNIPPETS["ARO:3007523"] = [_fungal_p450_config(
     "ARO:3007523", "Fungal cytochrome P450 enzymes which include mutations to confer resistance to triazole-class antibiotics.", "triazoles", False)]
+
+
+# The daptomycin trio (rounds 110-111): three records naming an enzyme and a resistance
+# claim with nothing between. Round 66's shape, applied by a builder so the three cannot
+# drift -- rounds 104-105 found two cases where I had applied this shape inconsistently
+# by hand.
+#
+# drmA is the interesting one: CARD calls it "UNCHARACTERIZED", which is a statement about
+# the evidence rather than the protein, and the note keeps it.
+for _fam, _snip, _act, _note in [
+    ("ARO:3003800",
+     "gdpD is a glycerolphosphodiesterase whose mutations confer resistance to daptomycin.",
+     "glycerolphosphodiesterase activity", ""),
+    ("ARO:3003805",
+     "gshF is a bifunctional glutamate-cysteine ligase/ glutathione synthetase that when "
+     "mutated, confers daptomycin resistance.",
+     "bifunctional glutamate-cysteine ligase / glutathione synthetase activity",
+     "CARD names BOTH activities of the bifunctional enzyme; neither is linked to the drug."),
+    ("ARO:3003813",
+     "drmA is an uncharacterized 6-pass membrane protein, with mutations to the protein "
+     "causing modest resistance to daptomycin.",
+     "uncharacterized 6-pass membrane protein",
+     "CARD calls it UNCHARACTERIZED and the resistance MODEST -- a statement about the "
+     "evidence and the effect size, both kept rather than trimmed."),
+]:
+    FAMILY_SNIPPETS[_fam] = [_minimal_enzyme_config(_fam, _snip, _act, _note)]
 
 def _check_config_order() -> None:
     for fam in FAMILY_SNIPPETS:

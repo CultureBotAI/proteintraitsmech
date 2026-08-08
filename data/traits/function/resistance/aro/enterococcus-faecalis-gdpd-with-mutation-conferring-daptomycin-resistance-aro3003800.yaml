@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003802
 trait_relations:
@@ -25,12 +25,13 @@ evidence:
 - reference: DOI:10.1128/AAC.01473-13
   notes: PMID:23959318 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Enterococcus faecalis gdpD with mutation conferring daptomycin resistance → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Enterococcus faecalis gdpD with mutation conferring daptomycin resistance → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3003800). Mechanism NOT asserted: CARD names what the protein is and that its mutations resist,
+    and nothing joins the two.'
   nodes:
   - node_id: determinant
     label: Enterococcus faecalis gdpD with mutation conferring daptomycin resistance
@@ -44,6 +45,11 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
+  - node_id: activity
+    label: glycerolphosphodiesterase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'The one functional fact CARD''s naming supplies. Ungrounded: not looked up rather than
+      guessed (rounds 56-109).'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -57,46 +63,48 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.01473-13
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3003800
       snippet: gdpD is a glycerolphosphodiesterase whose mutations confer resistance to daptomycin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01473-13
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3003800
+      snippet: gdpD is a glycerolphosphodiesterase whose mutations confer resistance to daptomycin.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.01473-13
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3003800
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000068 ! daptomycin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: gdpD is a glycerolphosphodiesterase whose mutations confer resistance to daptomycin.
+      notes: A functional identity and a resistance claim, with no mechanism between them -- round 66's
+        EF-Tu shape.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
     evidence:
     - reference: ARO:3003802
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
       notes: Asserted on ARO:3003802 (daptomycin resistant gdpD), an is_a ancestor of this record's ARO:3003800;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+  - subject: determinant
+    predicate: enables (glycerolphosphodiesterase activity)
+    predicate_id: RO:0002327
+    object: activity
+    description: What the determinant IS, which is all CARD gives.
+    evidence:
+    - reference: ARO:3003800
+      snippet: gdpD is a glycerolphosphodiesterase whose mutations confer resistance to daptomycin.
+      notes: 'The functional name. NOT asserted: any interaction with the drug, which CARD does not describe.'
+curation_history:
+- timestamp: '2026-08-08T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

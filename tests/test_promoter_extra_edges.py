@@ -2517,3 +2517,24 @@ def test_nudc_says_function_not_activate():
     assert "to function" in cfg["mech"]["ARO:3000212"].lower()
     asserted = " ".join(e["predicate"] for e in cfg["extra_edges"]).lower()
     assert "activat" not in asserted
+
+
+def test_daptomycin_trio_share_one_builder_and_assert_no_drug_link():
+    """Rounds 104-105 found two cases where I applied round 66's shape inconsistently
+    by hand. These three use a builder so they cannot drift."""
+    for fam in ("ARO:3003800", "ARO:3003805", "ARO:3003813"):
+        cfg = promote.family_configs(fam)[0]
+        assert len(cfg["extra_edges"]) == 1
+        asserted = " ".join(
+            [e["predicate"] for e in cfg["extra_edges"]]
+            + [n["label"] for n in cfg["extra_nodes"]]).lower()
+        for banned in ("daptomycin", "resist", "membrane depolar"):
+            assert banned not in asserted, f"{fam} asserts {banned!r} uncited"
+
+
+def test_drma_keeps_uncharacterized_and_modest():
+    """Both are statements about evidence and effect size, not decoration."""
+    cfg = promote.family_configs("ARO:3003813")[0]
+    assert "UNCHARACTERIZED" in cfg["note"] and "MODEST" in cfg["note"]
+    assert "uncharacterized" in cfg["mech"]["ARO:3000212"].lower()
+    assert "modest" in cfg["mech"]["ARO:3000212"].lower()
