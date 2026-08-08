@@ -1871,3 +1871,30 @@ def test_two_component_edge_keeps_cards_directly_or_indirectly_hedge():
     edge = next(e for e in cfg["extra_edges"] if e["object"] == "efflux_process")
     assert edge["predicate_id"] == "RO:0002211"
     assert "directly or indirectly" in edge["evidence"][0]["snippet"]
+
+
+def test_mutant_efflux_regulators_use_the_positive_predicate_but_round78_does_not():
+    """The direction is licensed by the source, and only in one of the two families.
+
+    ARO:3000219 says "result in INCREASED expression"; ARO:3000750 says only "directly
+    or indirectly change rates". Harmonising them would either invent a direction or
+    discard a stated one.
+    """
+    mut = promote.family_configs("ARO:3000219")[0]
+    up = next(e for e in mut["extra_edges"] if e["object"] == "pump_expression")
+    assert up["predicate_id"] == "RO:0002213"
+
+    tc = promote.family_configs("ARO:3000750")[0]
+    neutral = next(e for e in tc["extra_edges"] if e["object"] == "efflux_process")
+    assert neutral["predicate_id"] == "RO:0002211"
+
+
+def test_axyz_mutation_id_is_covered_by_its_own_family_not_a_borrowed_snippet():
+    """Round 79 refused to borrow AxyZ's regulation snippet for its mutation id.
+
+    ARO:3000219 is where that evidence actually lives -- AxyZ carries ARO:3000212
+    because it belongs to this family, whose sentence is about mutations.
+    """
+    cfg = promote.family_configs("ARO:3000219")[0]
+    assert "mutations" in cfg["mech"]["ARO:3000212"]
+    assert cfg["mech"]["ARO:3000212"] == cfg["mech"]["ARO:0010000"]

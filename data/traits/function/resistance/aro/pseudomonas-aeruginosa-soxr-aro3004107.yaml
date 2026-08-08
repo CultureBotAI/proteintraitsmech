@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000836
 trait_relations:
@@ -28,11 +28,13 @@ evidence:
 - reference: DOI:10.1111/j.1365-2958.2006.05306.x
   notes: PMID:16879411 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Pseudomonas aeruginosa soxR → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Pseudomonas aeruginosa soxR → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3000219). Regulation, not efflux: these proteins transport nothing. The graph ends at the efflux
+    process. Uses the POSITIVE predicate because CARD states the direction here, unlike ARO:3000750 (round
+    78).'
   nodes:
   - node_id: determinant
     label: Pseudomonas aeruginosa soxR
@@ -42,6 +44,16 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: pump_expression
+    label: expression of efflux pump proteins
+    node_type: BIOLOGICAL_PROCESS
+    description: 'The regulated quantity. Ungrounded: ''expression of a particular pump set'' has no term
+      here.'
+  - node_id: efflux_process
+    label: antibiotic efflux
+    node_type: BIOLOGICAL_PROCESS
+    grounding: ARO:0010000
+    description: Where this graph stops; pump chemistry lives on the pump records (rounds 67, 69).
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -55,40 +67,65 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/IAI.73.5.2958-2966.2005
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004107
-      snippet: SoxR is a redox-sensitive transcriptional activator that induces expression of a small
-        regulon that includes the RND efflux pump-encoding operon mexGHI-opmD. SoxR was shown to be activated
-        by pyocyanin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3000219
+      snippet: Efflux regulatory proteins with mutations that result in increased expression of efflux
+        proteins.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/IAI.73.5.2958-2966.2005
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3000219
+      snippet: Efflux regulatory proteins with mutations that result in increased expression of efflux
+        proteins.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/IAI.73.5.2958-2966.2005
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004107
-      snippet: SoxR is a redox-sensitive transcriptional activator that induces expression of a small
-        regulon that includes the RND efflux pump-encoding operon mexGHI-opmD. SoxR was shown to be activated
-        by pyocyanin.
-      notes: ARO definition of this determinant (Pseudomonas aeruginosa soxR).
+    - reference: ARO:3000219
+      snippet: Efflux regulatory proteins with mutations that result in increased expression of efflux
+        proteins.
+      notes: 'The mechanism with its direction: mutations ''result in INCREASED expression of efflux proteins''.
+        Contrast round 78''s ARO:3000750, which says only ''directly or indirectly change rates'' and
+        therefore got a neutral predicate.'
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: What the raised efflux achieves. Cited so this graph can END at the process rather than restate
+        any pump's chemistry.
+  - subject: determinant
+    predicate: positively regulates (mutation raises pump expression)
+    predicate_id: RO:0002213
+    object: pump_expression
+    description: The POSITIVE form, licensed by CARD stating the direction. Round 78's config deliberately
+      used the neutral RO:0002211 because its family term did not.
+    evidence:
+    - reference: ARO:3000219
+      snippet: Efflux regulatory proteins with mutations that result in increased expression of efflux
+        proteins.
+      notes: '''mutations that RESULT IN INCREASED expression of efflux proteins''.'
+  - subject: pump_expression
+    predicate: causally upstream of (more pump, more efflux)
+    predicate_id: RO:0002411
+    object: efflux_process
+    evidence:
+    - reference: ARO:3000219
+      snippet: Efflux regulatory proteins with mutations that result in increased expression of efflux
+        proteins.
+      notes: The point of raising expression of EFFLUX proteins.
+  - subject: efflux_process
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: '''via the transport of antibiotics out of the cell''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
