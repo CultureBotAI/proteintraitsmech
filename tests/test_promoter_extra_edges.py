@@ -2139,3 +2139,25 @@ def test_subunit_pattern_matches_both_phrasings_card_uses():
         "ARO:Y", "", base.format(
             "MexAB is a multidrug efflux pump complex consisting of Mex A and Mex B.")
     ) is not None
+
+
+def test_tet34_is_refused_by_the_generic_hydroxylation_config_too():
+    """Round 60 excluded tet(34) by reading; round 70's factory re-accepted it by id.
+
+    A guard that a later, more general config silently undoes is worse than no guard --
+    round 60's report still claims the record is excluded. Found by asking "which drafts
+    would an existing config accept?", not by any gate.
+    """
+    rec = ("identifier: ARO:3002870\n"
+           "definition: >-\n  tet(34) causes the activation of Mg2+-dependent purine"
+           " nucleotide synthesis, which protects the protein synthesis pathway.\n"
+           "term_kind: CLASS\n"
+           "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000450\n"
+           "    relation_source: \"ARO participates_in (mechanism) via ARO:0000031\"\n")
+    assert promote.config_for("ARO:3000557", "ARO:3002870", "tet(34)", rec) is None
+
+    real = rec.replace(
+        "tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis,"
+        " which protects the protein synthesis pathway.",
+        "A tetracycline hydroxylase.")
+    assert promote.config_for("ARO:3000557", "ARO:X", "x", real) is not None
