@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3007419
 trait_relations:
@@ -34,12 +34,14 @@ evidence:
 - reference: DOI:10.1016/S1074-5521(99)80006-4
   notes: PMID:10021417 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] AAC(6'')-Ie-APH(2'''')-Ia bifunctional protein → mechanism → resistance (auto-scaffold
-    from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: AAC(6')-Ie-APH(2'')-Ia bifunctional protein → mechanism → resistance (curated from ARO relations
+    + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3007380). Inactivation by unspecified chemical modification. Deliberately no reaction node: CARD
+    names none here, and guessing one would import round 68''s chemistries onto records that do not claim
+    them.'
   nodes:
   - node_id: determinant
     label: AAC(6')-Ie-APH(2'')-Ia bifunctional protein
@@ -53,6 +55,14 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
+  - node_id: modification
+    label: enzymatic modification of the aminoglycoside
+    node_type: MOLECULAR_FUNCTION
+    description: Deliberately unspecific -- see the config note.
+  - node_id: inactivated
+    label: chemically modified, inactive aminoglycoside
+    node_type: STATE
+    description: The product state. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -66,43 +76,69 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1099/00221287-133-11-3039
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
-    - reference: ARO:3002597
-      snippet: AAC(6')-Ie-APH(2'')-Ia is an aminoglycoside acetyltransferase encoded by plasmids and transposons
-        in S. aureus, E. faecalis, E. faecium and Staphylococcus warneri.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1099/00221287-133-11-3039
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1099/00221287-133-11-3039
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3002597
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000007 ! dibekacin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: 'The claim at the level CARD makes it: ''enzymatic inactivation … through chemical modification'',
+        with no reaction named. Round 68''s three chemistries are curated separately under ARO:3000557.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3007419
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted on ARO:3007419 (aminoglycoside bifunctional resistance protein), an is_a ancestor
         of this record's ARO:3002597; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+  - subject: determinant
+    predicate: enables (modifies the drug)
+    predicate_id: RO:0002327
+    object: modification
+    evidence:
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: '''proteins involved in the enzymatic inactivation … through chemical modification''.'
+  - subject: modification
+    predicate: has input (the drug)
+    predicate_id: RO:0002233
+    object: drug0
+    evidence:
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: The antibiotic is the substrate -- inactivation, not target alteration.
+  - subject: modification
+    predicate: causally upstream of (inactivates the drug)
+    predicate_id: RO:0002411
+    object: inactivated
+    evidence:
+    - reference: ARO:3007380
+      snippet: Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation
+        of aminoglycoside antibiotics through chemical modification.
+      notes: '''enzymatic inactivation of aminoglycoside antibiotics''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

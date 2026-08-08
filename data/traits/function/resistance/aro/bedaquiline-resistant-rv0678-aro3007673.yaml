@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3007672
 trait_relations:
@@ -22,11 +22,13 @@ evidence:
 - reference: DOI:10.1038/s41598-023-35563-0
   notes: PMID:37280265 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] bedaquiline resistant Rv0678 → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: bedaquiline resistant Rv0678 → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3007672). Repression of an efflux pump. The DEREPRESSION step -- mutation relieves repression,
+    efflux rises -- is deliberately absent: CARD states the repression and never states that mutations
+    lift it.'
   nodes:
   - node_id: determinant
     label: bedaquiline resistant Rv0678
@@ -40,6 +42,10 @@ causal_graphs:
     label: diarylquinoline antibiotic
     node_type: CHEMICAL
     grounding: ARO:3004491
+  - node_id: pump_expression
+    label: expression of the mmpS5/L5 efflux pump
+    node_type: BIOLOGICAL_PROCESS
+    description: What Rv0678 represses. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,47 +59,54 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1038/s41598-023-35563-0
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3007673
-      snippet: Loss-of-function mutations in the Mycobacterium Rv0678 gene associated with bedaquiline
-        resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3007672
+      snippet: Rv0678 encodes a transcription factor which negatively regulates the expression of the
+        mmpS5/L5 efflux pump.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41598-023-35563-0
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3007672
+      snippet: Rv0678 encodes a transcription factor which negatively regulates the expression of the
+        mmpS5/L5 efflux pump.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41598-023-35563-0
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3007673
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3004491 ! diarylquinoline antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3007672
+      snippet: Rv0678 encodes a transcription factor which negatively regulates the expression of the
+        mmpS5/L5 efflux pump.
+      notes: The repression, with its direction. CARD does NOT say that mutations relieve it -- the derepression
+        step is the reason these records confer resistance and is nowhere stated.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to diarylquinoline antibiotic.
     evidence:
     - reference: ARO:3007673
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3004491 ! diarylquinoline antibiotic'
-      notes: Asserted directly on ARO:3007673 (bedaquiline resistant Rv0678) in the CARD/ARO release in
-        data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to diarylquinoline antibiotic.
+      notes: Asserted on ARO:3007673 (bedaquiline resistant Rv0678), an is_a ancestor of this record's
+        ARO:3007673; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: negatively regulates (represses pump expression)
+    predicate_id: RO:0002212
+    object: pump_expression
+    description: The NEGATIVE form, licensed by CARD's own 'negatively regulates' -- the mirror of round
+      79's positive edge, where mutations raise expression directly.
+    evidence:
+    - reference: ARO:3007672
+      snippet: Rv0678 encodes a transcription factor which negatively regulates the expression of the
+        mmpS5/L5 efflux pump.
+      notes: '''a transcription factor which negatively regulates the expression of the mmpS5/L5 efflux
+        pump''. NOT asserted: that mutation relieves this repression.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -1045,7 +1045,99 @@ def _requires_mura(ident: str, label: str, text: str):
     return None
 
 
+def _requires_amg_modifying(ident: str, label: str, text: str):
+    """An aminoglycoside-modifying enzyme (ARO:3007380)."""
+    if "ARO:0001004" not in D.parse_relations(text)[0]:
+        return "record carries no antibiotic-inactivation mechanism (ARO:0001004)"
+    return None
+
+
+def _requires_rv0678(ident: str, label: str, text: str):
+    """Rv0678 -- a REPRESSOR of an efflux pump. Its mutation derepresses."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # Aminoglycoside-modifying enzymes (ARO:3007380) -- generic chemical modification.
+    #
+    # Round 68 curated the specific chemistries (nucleotidylation, phosphorylation,
+    # acylation) under ARO:3000557. This family term names only "chemical modification",
+    # so the graph is correspondingly general: no reaction node, because CARD does not say
+    # which reaction, and the members here do not either.
+    "ARO:3007380": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_amg_modifying,
+        "reference": "ARO:3007380",
+        "mech": {"ARO:0001004": "Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation of aminoglycoside antibiotics through chemical modification."},
+        "mech_res": "Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation of aminoglycoside antibiotics through chemical modification.",
+        "det_res": [
+            {"reference": "ARO:3007380", "snippet": "Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation of aminoglycoside antibiotics through chemical modification.",
+             "notes": "The claim at the level CARD makes it: 'enzymatic inactivation … through chemical modification', with no reaction named. Round 68's three chemistries are curated separately under ARO:3000557."},
+        ],
+        "res_drug": "Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation of aminoglycoside antibiotics through chemical modification.",
+        "note": ("Inactivation by unspecified chemical modification. Deliberately no "
+                 "reaction node: CARD names none here, and guessing one would import "
+                 "round 68's chemistries onto records that do not claim them."),
+        "extra_nodes": [
+            {"node_id": "modification", "label": "enzymatic modification of the aminoglycoside",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Deliberately unspecific -- see the config note."},
+            {"node_id": "inactivated", "label": "chemically modified, inactive aminoglycoside",
+             "node_type": "STATE", "description": "The product state. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "modification",
+             "predicate": "enables (modifies the drug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3007380", "snippet": "Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation of aminoglycoside antibiotics through chemical modification.",
+                           "notes": "'proteins involved in the enzymatic inactivation … through chemical modification'."}]},
+            {"subject": "modification", "object": "drug0",
+             "predicate": "has input (the drug)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3007380", "snippet": "Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation of aminoglycoside antibiotics through chemical modification.",
+                           "notes": "The antibiotic is the substrate -- inactivation, not target alteration."}]},
+            {"subject": "modification", "object": "inactivated",
+             "predicate": "causally upstream of (inactivates the drug)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3007380", "snippet": "Resistance-conferring genetic elements encoding proteins involved in the enzymatic inactivation of aminoglycoside antibiotics through chemical modification.",
+                           "notes": "'enzymatic inactivation of aminoglycoside antibiotics'."}]},
+        ],
+    },
+    # Rv0678 (ARO:3007672) -- a REPRESSOR, so its mutation DEREPRESSES.
+    #
+    # The mirror of round 79's ARO:3000219, where mutations raise expression directly.
+    # Here CARD states the repression ("NEGATIVELY regulates the expression of the
+    # mmpS5/L5 efflux pump") but NOT that mutations relieve it. That step is the whole
+    # reason these records confer resistance and it is not written down, so the graph
+    # carries the repression and stops.
+    "ARO:3007672": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_rv0678,
+        "reference": "ARO:3007672",
+        "mech": {"ARO:3000212": "Rv0678 encodes a transcription factor which negatively regulates the expression of the mmpS5/L5 efflux pump."},
+        "mech_res": "Rv0678 encodes a transcription factor which negatively regulates the expression of the mmpS5/L5 efflux pump.",
+        "det_res": [
+            {"reference": "ARO:3007672", "snippet": "Rv0678 encodes a transcription factor which negatively regulates the expression of the mmpS5/L5 efflux pump.",
+             "notes": "The repression, with its direction. CARD does NOT say that mutations relieve it -- the derepression step is the reason these records confer resistance and is nowhere stated."},
+        ],
+        "res_drug": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "note": ("Repression of an efflux pump. The DEREPRESSION step -- mutation relieves "
+                 "repression, efflux rises -- is deliberately absent: CARD states the "
+                 "repression and never states that mutations lift it."),
+        "extra_nodes": [
+            {"node_id": "pump_expression", "label": "expression of the mmpS5/L5 efflux pump",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "What Rv0678 represses. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "pump_expression",
+             "predicate": "negatively regulates (represses pump expression)",
+             "predicate_id": "RO:0002212",
+             "description": "The NEGATIVE form, licensed by CARD's own 'negatively regulates' -- the mirror of round 79's positive edge, where mutations raise expression directly.",
+             "evidence": [{"reference": "ARO:3007672", "snippet": "Rv0678 encodes a transcription factor which negatively regulates the expression of the mmpS5/L5 efflux pump.",
+                           "notes": "'a transcription factor which negatively regulates the expression of the mmpS5/L5 efflux pump'. NOT asserted: that mutation relieves this repression."}]},
+        ],
+    },
     # murA (ARO:3002811) -- target OVEREXPRESSION, distinct from target alteration.
     #
     # Rounds 53, 61, 80 and 82 all curated mutations that change the TARGET so the drug
