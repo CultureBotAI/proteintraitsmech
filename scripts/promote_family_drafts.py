@@ -747,7 +747,7 @@ def _requires_adp_ribosyltransferase(ident: str, label: str, text: str):
     return None
 
 
-def _requires_mech(mech_id: str, human: str):
+def _requires_mech(mech_id: str, human: str, exclude_marker: str = ""):
     """Precondition factory: this config's chemistry, and only it.
 
     ARO:3000576 holds four reactions that inactivate the same drug (round 62). Each needs
@@ -759,6 +759,15 @@ def _requires_mech(mech_id: str, human: str):
     def _pred(ident: str, label: str, text: str):
         if mech_id not in D.parse_relations(text)[0]:
             return f"record carries no {human} mechanism ({mech_id})"
+        # An id-only check is not enough where a record carries the id and its own
+        # definition describes something else. tet(34) carries ARO:3000450 and describes
+        # TARGET PROTECTION (#267); round 60 excluded it by reading, and this factory
+        # then silently re-accepted it because it only looked at the id. A guard that a
+        # later, more general config undoes is worse than no guard, because the earlier
+        # round's report still claims the record is excluded.
+        if exclude_marker and exclude_marker in _own_definition(text).lower():
+            return (f"own definition mentions {exclude_marker!r}, so it does not support "
+                    f"{human} despite carrying {mech_id} (#267)")
         return None
     return _pred
 
@@ -818,7 +827,8 @@ def _rifampin_modification_config(mech_id: str, human: str, snippet: str,
 
 
 def _inactivation_transfer_config(mech_id: str, human: str, snippet: str,
-                                  activity_label: str, hedged_donor: bool = True) -> dict:
+                                  activity_label: str, hedged_donor: bool = True,
+                                  exclude_marker: str = "") -> dict:
     """One group-transfer chemistry under ARO:3000557, from CARD's mechanism-term text.
 
     All three of the big ones -- nucleotidylation, phosphorylation, acylation -- HEDGE
@@ -832,7 +842,7 @@ def _inactivation_transfer_config(mech_id: str, human: str, snippet: str,
     """
     return {
         "curated": "2026-08-07T00:00:00Z",
-        "precondition": _requires_mech(mech_id, human),
+        "precondition": _requires_mech(mech_id, human, exclude_marker),
         "reference": mech_id,
         "mech": {"ARO:0001004": "Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation includes chemical modification, destruction, etc.", mech_id: snippet},
         "mech_res": snippet,
@@ -6232,7 +6242,9 @@ FAMILY_SNIPPETS["ARO:3000557"] = FAMILY_SNIPPETS["ARO:3000557"] + [
     _inactivation_transfer_config(
         "ARO:3000450", "hydroxylation",
         "Inactivation of an antibiotic via introduction a hydroxyl group (-OH).",
-        "antibiotic hydroxylase activity", hedged_donor=False),
+        "antibiotic hydroxylase activity", hedged_donor=False,
+        # tet(34) carries ARO:3000450 and describes target PROTECTION (#267).
+        exclude_marker="purine nucleotide"),
 ]
 
 
