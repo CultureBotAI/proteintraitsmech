@@ -2416,3 +2416,20 @@ def test_rrna_parent_does_not_borrow_its_children_binding_site_edge():
     for child in ("ARO:3003211", "ARO:3000336"):
         cfg = promote.family_configs(child)[0]
         assert any(n["node_id"] == "binding_site" for n in cfg["extra_nodes"])
+
+
+def test_rpob_and_rpoc_both_omit_the_rifampicin_edge():
+    """Round 83 refused rpoC the mechanism because it belongs to rpoB. rpoB does not
+    state it either, so the refusal was doubly right and both configs must stay bare.
+
+    This is the most inviting uncited edge in the corpus: rifampicin-rpoB is textbook
+    and this is the record it belongs to.
+    """
+    for fam in ("ARO:3003289", "ARO:3003276"):
+        cfg = promote.family_configs(fam)[0]
+        asserted = " ".join(
+            [e["predicate"] for e in cfg["extra_edges"]]
+            + [n["label"] for n in cfg["extra_nodes"]]).lower()
+        for banned in ("rifampicin", "rifamycin", "binds the drug", "inhibit"):
+            assert banned not in asserted, f"{fam} asserts {banned!r} uncited"
+        assert "NOT asserted" in cfg["note"]

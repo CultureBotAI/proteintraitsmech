@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -17,11 +17,13 @@ synonyms:
   - synonym_text: "RNA polymerase beta subunit"
     synonym_type: EXACT_SYNONYM
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic resistant rpoB → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic resistant rpoB → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3003276). Mechanism deliberately NOT asserted. The rifampicin-rpoB interaction is textbook and
+    this is the record it belongs to -- which makes it the most inviting uncited edge in the corpus, and
+    the reason the omission is pinned rather than trusted.
   nodes:
   - node_id: determinant
     label: antibiotic resistant rpoB
@@ -31,6 +33,14 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: transcription
+    label: transcription
+    node_type: BIOLOGICAL_PROCESS
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-104).'
+  - node_id: active_center
+    label: RNA polymerase active center and template/transcript binding sites
+    node_type: PROTEIN
+    description: What the beta-subunit forms. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -45,39 +55,57 @@ causal_graphs:
     object: mech0
     evidence:
     - reference: ARO:3003276
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003276
       snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
         of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
         Mutations in rpoB gene confers antibiotic resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3003276
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
+        of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
+        Mutations in rpoB gene confers antibiotic resistance.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3003276
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
+        of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
+        Mutations in rpoB gene confers antibiotic resistance.
+      notes: Role, structural contribution, and a bare resistance claim. Rifampicin DOES bind rpoB --
+        and CARD does not say so here, so it is not asserted. Round 83 refused this mechanism for rpoC
+        because it belongs to rpoB; it turns out not to be citable for rpoB either.
+  - subject: determinant
+    predicate: part of (the polymerase active center)
+    predicate_id: BFO:0000050
+    object: active_center
+    evidence:
     - reference: ARO:3003276
       snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
         of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
         Mutations in rpoB gene confers antibiotic resistance.
-      notes: ARO definition of this determinant (antibiotic resistant rpoB).
+      notes: '''The beta-subunit of RNA polymerase forms the active center of the enzyme and template/transcript
+        binding sites''.'
+  - subject: active_center
+    predicate: part of (transcription)
+    predicate_id: BFO:0000050
+    object: transcription
+    evidence:
+    - reference: ARO:3003276
+      snippet: RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit
+        of RNA polymerase forms the active center of the enzyme and template/transcript binding sites.
+        Mutations in rpoB gene confers antibiotic resistance.
+      notes: '''RNA polymerase ... is necessary for transcription''. NOT asserted: that rifampicin binds
+        this centre, which CARD does not state even here.'
+curation_history:
+- timestamp: '2026-08-08T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
