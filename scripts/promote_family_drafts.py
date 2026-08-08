@@ -984,7 +984,71 @@ def _requires_two_component_efflux(ident: str, label: str, text: str):
     return None
 
 
+def _requires_mutant_efflux_regulator(ident: str, label: str, text: str):
+    """A regulator whose MUTATION raises pump expression (ARO:3000219).
+
+    Distinct from round 78's ARO:3000750 in two ways worth keeping apart:
+      - there the protein regulates efflux as its normal job; here a MUTATION in it
+        raises pump expression, which is why these records carry ARO:3000212;
+      - CARD states a DIRECTION here ("result in increased expression") where round 78
+        only had "directly or indirectly change rates", so this config may use the
+        positive predicate and that one may not.
+
+    This also unblocks AxyZ (round 79): it carries ARO:3000212 because it belongs to THIS
+    family, and this family's sentence is the evidence for that id. Round 79 correctly
+    refused to borrow the regulation snippet for it.
+    """
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # Mutant efflux regulatory proteins (ARO:3000219) -- regulation, with a DIRECTION.
+    "ARO:3000219": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mutant_efflux_regulator,
+        "reference": "ARO:3000219",
+        "mech": {"ARO:3000212": "Efflux regulatory proteins with mutations that result in increased expression of efflux proteins.",
+                 "ARO:0010000": "Efflux regulatory proteins with mutations that result in increased expression of efflux proteins."},
+        "mech_res": "Efflux regulatory proteins with mutations that result in increased expression of efflux proteins.",
+        "det_res": [
+            {"reference": "ARO:3000219", "snippet": "Efflux regulatory proteins with mutations that result in increased expression of efflux proteins.",
+             "notes": "The mechanism with its direction: mutations 'result in INCREASED expression of efflux proteins'. Contrast round 78's ARO:3000750, which says only 'directly or indirectly change rates' and therefore got a neutral predicate."},
+            {"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+             "notes": "What the raised efflux achieves. Cited so this graph can END at the process rather than restate any pump's chemistry."},
+        ],
+        "res_drug": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "note": ("Regulation, not efflux: these proteins transport nothing. The graph ends "
+                 "at the efflux process. Uses the POSITIVE predicate because CARD states "
+                 "the direction here, unlike ARO:3000750 (round 78)."),
+        "extra_nodes": [
+            {"node_id": "pump_expression", "label": "expression of efflux pump proteins",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The regulated quantity. Ungrounded: 'expression of a particular pump set' has no term here."},
+            {"node_id": "efflux_process", "label": "antibiotic efflux",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "ARO:0010000",
+             "description": "Where this graph stops; pump chemistry lives on the pump records (rounds 67, 69)."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "pump_expression",
+             "predicate": "positively regulates (mutation raises pump expression)",
+             "predicate_id": "RO:0002213",
+             "description": "The POSITIVE form, licensed by CARD stating the direction. Round 78's config deliberately used the neutral RO:0002211 because its family term did not.",
+             "evidence": [{"reference": "ARO:3000219", "snippet": "Efflux regulatory proteins with mutations that result in increased expression of efflux proteins.",
+                           "notes": "'mutations that RESULT IN INCREASED expression of efflux proteins'."}]},
+            {"subject": "pump_expression", "object": "efflux_process",
+             "predicate": "causally upstream of (more pump, more efflux)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3000219", "snippet": "Efflux regulatory proteins with mutations that result in increased expression of efflux proteins.",
+                           "notes": "The point of raising expression of EFFLUX proteins."}]},
+            {"subject": "efflux_process", "object": "resistance",
+             "predicate": "causally upstream of (confers resistance)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+                           "notes": "'via the transport of antibiotics out of the cell'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Two-component regulators of efflux (ARO:3000750) -- round 22's shape.
     #
