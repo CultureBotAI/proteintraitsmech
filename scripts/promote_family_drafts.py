@@ -1279,6 +1279,58 @@ def _requires_esx5_subunit(ident: str, label: str, text: str):
     return None
 
 
+def _fungal_p450_config(fam_id: str, snippet: str, drug: str, hedged: bool) -> dict:
+    """A fungal cytochrome P450 family term -- round 66's EF-Tu shape.
+
+    Round 84 read these and left them, calling them "thinner than EF-Tu". Comparing the
+    two side by side, that judgement does not hold:
+
+        EF-Tu  "Sequence variants of ELONGATION FACTOR TU that confer resistance..."
+        P450   "Fungal CYTOCHROME P450 ENZYMES which include mutations ... to confer
+                resistance to antifungal drug compounds."
+
+    Both name a FUNCTION and claim resistance; neither gives a mechanism. Round 66
+    curated the first on exactly that basis, so leaving the second was an inconsistency,
+    not a standard.
+    """
+    note_hedge = (" NOTE the hedge: 'mutations OR OTHER MODIFICATIONS' -- the determinant "
+                  "class is not even resolved to mutation." if hedged else
+                  " Unlike its parent term, this one says 'mutations' without the "
+                  "'or other modifications' hedge.")
+    return {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": fam_id,
+        "mech": {"ARO:3000212": snippet},
+        "mech_res": snippet,
+        "det_res": [
+            {"reference": fam_id, "snippet": snippet,
+             "notes": ("A functional identity and a resistance claim, with no mechanism "
+                       "between them -- round 66's EF-Tu shape." + note_hedge)},
+        ],
+        "res_drug": snippet,
+        "note": ("Mechanism deliberately NOT asserted. These are the azole target "
+                 "(lanosterol 14-alpha-demethylase) in most fungi and the binding story "
+                 "is standard, but CARD's sentence gives a function and a resistance claim "
+                 "and nothing between. Round 66's position, and #219's lesson."),
+        "extra_nodes": [
+            {"node_id": "p450_activity", "label": "cytochrome P450 monooxygenase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "The one functional fact CARD's naming supplies. Ungrounded: not looked up rather than guessed (rounds 56-103)."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "p450_activity",
+             "predicate": "enables (cytochrome P450 activity)", "predicate_id": "RO:0002327",
+             "description": "What the determinant IS, which is all CARD's naming gives.",
+             "evidence": [{"reference": fam_id, "snippet": snippet,
+                           "notes": ("'Fungal cytochrome P450 enzymes' -- a functional name. "
+                                     "NOT asserted: that the drug binds this enzyme, or how "
+                                     "the mutations resist " + drug + ", neither of which "
+                                     "CARD states.")}]},
+        ],
+    }
+
+
 FAMILY_SNIPPETS = {
     # cls / cardiolipin synthetase (ARO:3003272) -- three sentences, and the third does
     # not connect to the first two.
@@ -6902,6 +6954,15 @@ for _fam, _drug, _snip in [
     FAMILY_SNIPPETS[_fam] = (
         family_configs(_fam) + [_drug_specific_inactivation_config(_fam, _drug, _snip)]
     )
+
+
+# Two fungal cytochrome P450 family terms, round 66's EF-Tu shape. Round 84 left these
+# calling them thinner than EF-Tu; comparing the definitions side by side shows the same
+# shape, so leaving them was an inconsistency rather than a standard.
+FAMILY_SNIPPETS["ARO:3007522"] = [_fungal_p450_config(
+    "ARO:3007522", "Fungal cytochrome P450 enzymes which include mutations or other modifications to confer resistance to antifungal drug compounds.", "antifungal compounds", True)]
+FAMILY_SNIPPETS["ARO:3007523"] = [_fungal_p450_config(
+    "ARO:3007523", "Fungal cytochrome P450 enzymes which include mutations to confer resistance to triazole-class antibiotics.", "triazoles", False)]
 
 def _check_config_order() -> None:
     for fam in FAMILY_SNIPPETS:
