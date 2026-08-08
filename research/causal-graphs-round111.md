@@ -3,7 +3,6 @@ topic: causal-graphs
 round: 111
 date: 2026-08-08
 target: aro/FUNC_RESISTANCE — gdpD, gshF, drmA (daptomycin), 3 records
-prior_north: causal-graphs-round110.md
 prior_round: causal-graphs-round110.md
 ---
 
