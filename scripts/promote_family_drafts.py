@@ -1221,6 +1221,55 @@ def _requires_generic_target_protection(ident: str, label: str, text: str):
     return None
 
 
+def _drug_specific_inactivation_config(fam_id: str, drug: str, snippet: str) -> dict:
+    """A drug-specific "enzymes inactivate X by chemical modification" family term.
+
+    Round 85 built this shape for aminoglycosides. Bacitracin, fosfomycin and macrolides
+    have the same one: a family term naming a drug and a reaction type, with the specific
+    chemistries curated separately or not at all. No reaction node, for round 85's reason
+    -- naming one would import a chemistry the term does not claim.
+    """
+    return {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:0001004", "antibiotic inactivation"),
+        "reference": fam_id,
+        "mech": {"ARO:0001004": snippet},
+        "mech_res": snippet,
+        "det_res": [
+            {"reference": fam_id, "snippet": snippet,
+             "notes": ("The claim at the level the family term makes it: enzymes inactivate "
+                       + drug + ", by modification the term does not specify.")},
+        ],
+        "res_drug": snippet,
+        "note": ("Inactivation of " + drug + " by unspecified modification. Deliberately no "
+                 "reaction node -- naming one would import a chemistry this term does not "
+                 "claim (round 85's rule for the aminoglycoside family term)."),
+        "extra_nodes": [
+            {"node_id": "modification", "label": "enzymatic modification of " + drug,
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Deliberately unspecific -- see the config note."},
+            {"node_id": "inactivated", "label": "modified, inactive " + drug,
+             "node_type": "STATE", "description": "The product state. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "modification",
+             "predicate": "enables (modifies the drug)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": fam_id, "snippet": snippet,
+                           "notes": "The family term's own claim about what these enzymes do."}]},
+            {"subject": "modification", "object": "drug0",
+             "predicate": "has input (the drug)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": fam_id, "snippet": snippet,
+                           "notes": ("The antibiotic is the substrate -- inactivation, not "
+                                     "target alteration.")}]},
+            {"subject": "modification", "object": "inactivated",
+             "predicate": "causally upstream of (inactivates the drug)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": fam_id, "snippet": snippet,
+                           "notes": "'inactivate' is the term's own verb."}]},
+        ],
+    }
+
+
 FAMILY_SNIPPETS = {
     # Generic target protection (ARO:3000185) -- the records the three MODE configs miss.
     #
@@ -6716,6 +6765,23 @@ FAMILY_SNIPPETS["ARO:3003580"] = [
     FAMILY_SNIPPETS.pop("ARO:3003580-acyl"),
     FAMILY_SNIPPETS.pop("ARO:3003580-cpr"),
 ]
+
+
+# Three drug-specific inactivation family terms, same shape as round 85's aminoglycoside
+# one. Each is a single record: the family term itself, whose members are curated by the
+# chemistry configs (rounds 62-64, 68, 70) or not yet at all.
+for _fam, _drug, _snip in [
+    ("ARO:3004260", "bacitracin",
+     "Bah amidohydrolases are membrane proteins that inactivate bacitracin."),
+    ("ARO:3000342", "fosfomycin",
+     "Enzymes that inactivate fosfomycin by chemical modification."),
+    ("ARO:3000201", "macrolide antibiotics",
+     "Enzymes shown to inactivate macrolide antibiotics by chemical modification, thereby "
+     "conferring resistance to macrolides."),
+]:
+    FAMILY_SNIPPETS[_fam] = (
+        family_configs(_fam) + [_drug_specific_inactivation_config(_fam, _drug, _snip)]
+    )
 
 def _check_config_order() -> None:
     for fam in FAMILY_SNIPPETS:

@@ -2316,3 +2316,18 @@ def test_generic_protection_does_not_claim_a_mode():
     blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
     for mode in ("displac", "ef-g", "rescue", "ribosom"):
         assert mode not in blob, f"generic config claims the {mode!r} mode"
+
+
+def test_drug_specific_inactivation_terms_name_no_reaction():
+    """Round 85's rule, applied to three more family terms.
+
+    Bacitracin, fosfomycin and macrolide inactivation are all "by chemical modification"
+    with no reaction named. Naming one would import a chemistry the term does not claim --
+    and the specific chemistries ARE curated elsewhere (rounds 62-64, 68, 70).
+    """
+    for fam in ("ARO:3004260", "ARO:3000342", "ARO:3000201"):
+        cfg = next(c for c in promote.family_configs(fam)
+                   if any(n["node_id"] == "modification" for n in c.get("extra_nodes", ())))
+        blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+        for chem in ("acetyl", "phospho", "nucleotidyl", "hydroxyl", "esterase"):
+            assert chem not in blob, f"{fam} imported the {chem!r} chemistry"
