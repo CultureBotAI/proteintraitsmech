@@ -71,3 +71,15 @@ def test_pbp_pattern_matches_numbered_pbps():
            "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000212\n"
            "    relation_source: \"ARO participates_in (mechanism) via ARO:0000031\"\n")
     assert promote._requires_mutant_pbp("ARO:3007060", "H. pylori pbp1", rec) is None
+
+
+def test_has_quality_state_edges_are_not_effector_acts():
+    """Round 71 writes "has quality (deleted or inactivated)" -- a state, not an act.
+
+    It matched `inactivat\\w*` and flagged pvrR, a regulator correctly described as
+    inactivated. Third false-positive shape from this audit, all over-broad predicate
+    matching: `enables`, the \\b-boundary bug, and now this.
+    """
+    line = "predicate: has quality (deleted or inactivated)"
+    assert audit.EFFECTOR_PREDICATE.search(line), "the raw pattern still matches"
+    assert "has quality" in line, "so the caller must exclude it structurally"

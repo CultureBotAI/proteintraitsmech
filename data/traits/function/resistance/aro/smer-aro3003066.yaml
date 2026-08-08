@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000750
 trait_relations:
@@ -19,11 +19,13 @@ evidence:
 - reference: DOI:10.1128/AAC.46.2.333-343.2002
   notes: PMID:11796339 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] smeR → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: smeR → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3000750). Regulation of efflux, not efflux. The graph stops at the efflux process; pump chemistry
+    lives on the pump records (rounds 67, 69). The edge says 'modulates' because CARD says 'directly or
+    indirectly'.
   nodes:
   - node_id: determinant
     label: smeR
@@ -33,6 +35,17 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: signalling
+    label: two-component signal transduction
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0000160
+    description: Checked non-obsolete against OLS (#157).
+  - node_id: efflux_process
+    label: antibiotic efflux
+    node_type: BIOLOGICAL_PROCESS
+    grounding: ARO:0010000
+    description: Where this graph stops. The pumps' own mechanisms are curated on their records (SMR round
+      67, MATE round 69).
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -46,34 +59,68 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.46.2.333-343.2002
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
-    - reference: ARO:3003066
-      snippet: smeR is the responder component of a two component signal transduction system that includes
-        smeS.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+    - reference: ARO:3000750
+      snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
+        regulatory system that directly or indirectly change rates of antibiotic efflux.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.46.2.333-343.2002
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: ARO:3000750
+      snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
+        regulatory system that directly or indirectly change rates of antibiotic efflux.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.46.2.333-343.2002
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003066
-      snippet: smeR is the responder component of a two component signal transduction system that includes
-        smeS.
-      notes: ARO definition of this determinant (smeR).
+    - reference: ARO:3000750
+      snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
+        regulatory system that directly or indirectly change rates of antibiotic efflux.
+      notes: 'The family claim, with its hedge: these proteins ''directly or INDIRECTLY change rates of
+        antibiotic efflux''. They do not efflux anything themselves.'
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: And what the efflux they modulate achieves -- cited so the graph can END here rather than
+        restate any pump's chemistry.
+  - subject: determinant
+    predicate: participates in (two-component signal transduction)
+    predicate_id: RO:0000056
+    object: signalling
+    description: '''Participates in'', not ''enables'': each record is ONE half of a pair -- a sensor
+      kinase or a response regulator -- and neither performs the transduction alone.'
+    evidence:
+    - reference: ARO:3000750
+      snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
+        regulatory system that directly or indirectly change rates of antibiotic efflux.
+      notes: '''either a histidine kinase or a response regulator, that is PART OF a two-component regulatory
+        system''.'
+  - subject: signalling
+    predicate: regulates (changes efflux rates, directly or indirectly)
+    predicate_id: RO:0002211
+    object: efflux_process
+    description: 'RO:0002211 ''regulates'', not the positive form: CARD says ''change rates'', not ''increase''
+      them, and ''directly or indirectly''. kdpD''s own definition is about potassium homeostasis, so
+      for at least one member the link really is indirect.'
+    evidence:
+    - reference: ARO:3000750
+      snippet: A protein, either a histidine kinase or a response regulator, that is part of a two-component
+        regulatory system that directly or indirectly change rates of antibiotic efflux.
+      notes: '''directly or indirectly change rates of antibiotic efflux''.'
+  - subject: efflux_process
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: '''via the transport of antibiotics out of the cell''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

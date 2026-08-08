@@ -973,7 +973,75 @@ def _requires_lpx(ident: str, label: str, text: str):
     return None
 
 
+def _requires_two_component_efflux(ident: str, label: str, text: str):
+    """A two-component protein that MODULATES efflux -- it does not transport anything."""
+    if "ARO:0010000" not in D.parse_relations(text)[0]:
+        return "record carries no efflux mechanism (ARO:0010000)"
+    own = _own_definition(text).lower()
+    if not re.search(r"two.component|sensor|response regulator|histidine kinase|"
+                     r"transcription regulator", own):
+        return "own definition does not describe a two-component or regulatory protein"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Two-component regulators of efflux (ARO:3000750) -- round 22's shape.
+    #
+    # These proteins transport nothing. Writing them as if they effluxed the drug would
+    # be the ArmR/MecI/arlS error a sixth time. The graph ends at the efflux PROCESS, the
+    # way round 22's vanR/vanS ended at vanH/vanX and round 76's cprRS ended at the Arn
+    # records.
+    #
+    # CARD hedges the coupling: "DIRECTLY OR INDIRECTLY change rates of antibiotic
+    # efflux". So the regulatory edge says "modulates" and its notes keep that hedge --
+    # for kdpD, whose own definition is about potassium homeostasis, the connection to
+    # efflux really is indirect, and a "positively regulates" edge would overstate it for
+    # the whole family.
+    "ARO:3000750": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_two_component_efflux,
+        "reference": "ARO:3000750",
+        "mech": {"ARO:0010000": "A protein, either a histidine kinase or a response regulator, that is part of a two-component regulatory system that directly or indirectly change rates of antibiotic efflux."},
+        "mech_res": "A protein, either a histidine kinase or a response regulator, that is part of a two-component regulatory system that directly or indirectly change rates of antibiotic efflux.",
+        "det_res": [
+            {"reference": "ARO:3000750", "snippet": "A protein, either a histidine kinase or a response regulator, that is part of a two-component regulatory system that directly or indirectly change rates of antibiotic efflux.",
+             "notes": "The family claim, with its hedge: these proteins 'directly or INDIRECTLY change rates of antibiotic efflux'. They do not efflux anything themselves."},
+            {"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+             "notes": "And what the efflux they modulate achieves -- cited so the graph can END here rather than restate any pump's chemistry."},
+        ],
+        "res_drug": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "note": ("Regulation of efflux, not efflux. The graph stops at the efflux process; "
+                 "pump chemistry lives on the pump records (rounds 67, 69). The edge says "
+                 "'modulates' because CARD says 'directly or indirectly'."),
+        "extra_nodes": [
+            {"node_id": "signalling", "label": "two-component signal transduction",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0000160",
+             "description": "Checked non-obsolete against OLS (#157)."},
+            {"node_id": "efflux_process", "label": "antibiotic efflux",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "ARO:0010000",
+             "description": "Where this graph stops. The pumps' own mechanisms are curated on their records (SMR round 67, MATE round 69)."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "signalling",
+             "predicate": "participates in (two-component signal transduction)",
+             "predicate_id": "RO:0000056",
+             "description": "'Participates in', not 'enables': each record is ONE half of a pair -- a sensor kinase or a response regulator -- and neither performs the transduction alone.",
+             "evidence": [{"reference": "ARO:3000750", "snippet": "A protein, either a histidine kinase or a response regulator, that is part of a two-component regulatory system that directly or indirectly change rates of antibiotic efflux.",
+                           "notes": "'either a histidine kinase or a response regulator, that is PART OF a two-component regulatory system'."}]},
+            {"subject": "signalling", "object": "efflux_process",
+             "predicate": "regulates (changes efflux rates, directly or indirectly)",
+             "predicate_id": "RO:0002211",
+             "description": "RO:0002211 'regulates', not the positive form: CARD says 'change rates', not 'increase' them, and 'directly or indirectly'. kdpD's own definition is about potassium homeostasis, so for at least one member the link really is indirect.",
+             "evidence": [{"reference": "ARO:3000750", "snippet": "A protein, either a histidine kinase or a response regulator, that is part of a two-component regulatory system that directly or indirectly change rates of antibiotic efflux.",
+                           "notes": "'directly or indirectly change rates of antibiotic efflux'."}]},
+            {"subject": "efflux_process", "object": "resistance",
+             "predicate": "causally upstream of (confers resistance)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+                           "notes": "'via the transport of antibiotics out of the cell'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Lpx lipid A biosynthesis mutations (ARO:3000012) -- NOT charge alteration.
     #
