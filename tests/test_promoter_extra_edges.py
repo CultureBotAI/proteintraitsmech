@@ -2240,3 +2240,25 @@ def test_topoisomerase_precondition_reads_the_label_but_pilq_still_refused():
     assert promote._requires_mutant_pbp(
         "ARO:3004835", "Neisseria gonorrhoeae pilQ gene conferring resistance",
         pilq) is not None
+
+
+def test_armr_keeps_both_negatives_rather_than_collapsing_them():
+    """ArmR inhibits MexR; MexR represses the pump. Collapsing to "activates" hides that.
+
+    ArmR is the record that defeated three keyword patterns in the efflux rounds -- it is
+    neither repressor nor activator. Both edges must survive.
+    """
+    cfg = promote.family_configs("ARO:3004056")[0]
+    preds = {e["predicate_id"] for e in cfg["extra_edges"]}
+    assert {"RO:0002212", "RO:0002213"} <= preds, "both negatives must be present"
+    blocked = next(e for e in cfg["extra_edges"] if e["object"] == "mexr_dna_binding")
+    assert "allosteric" in blocked["predicate"].lower()
+
+
+def test_pdr1_is_not_treated_as_a_two_component_pair():
+    """Most of ARO:3000451's drafts are pair records (#215); PDR1 is a single factor."""
+    pair = ("identifier: ARO:3000531\n"
+            "definition: >-\n  BaeSR is a two component regulatory system for efflux"
+            " proteins. BaeR is a transcription factor.\nterm_kind: CLASS\n")
+    reason = promote._requires_transcription_factor_regulator("ARO:3000531", "baeSR", pair)
+    assert reason is not None and "#215" in reason

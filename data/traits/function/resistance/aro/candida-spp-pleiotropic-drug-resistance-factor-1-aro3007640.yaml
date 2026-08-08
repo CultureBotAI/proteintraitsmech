@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3007552
 trait_relations:
@@ -28,12 +28,13 @@ evidence:
 - reference: DOI:10.1128/AAC.48.10.3773-3781.2004
   notes: PMID:15388433 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Candida spp. pleiotropic drug resistance factor 1 → mechanism → resistance (auto-scaffold
-    from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Candida spp. pleiotropic drug resistance factor 1 → mechanism → resistance (curated from ARO
+    relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3007640). Transcriptional regulation of ABC transporters. CARD does not say whether PDR1 activates
+    or represses -- 'regulates' -- so the neutral predicate is used, as in round 78 and unlike round 79.
   nodes:
   - node_id: determinant
     label: Candida spp. pleiotropic drug resistance factor 1
@@ -55,6 +56,10 @@ causal_graphs:
     label: imidazole antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007500
+  - node_id: transporter_genes
+    label: genes encoding ABC transporters
+    node_type: NUCLEIC_ACID
+    description: 'What PDR1 regulates. Ungrounded: CARD names no specific gene.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -68,63 +73,73 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.48.10.3773-3781.2004
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
     - reference: ARO:3007640
       snippet: PDR1 is a transcription factor that regulates the expression of several genes encoding
         ABC transporters, contributing to multidrug resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.48.10.3773-3781.2004
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: ARO:3007640
+      snippet: PDR1 is a transcription factor that regulates the expression of several genes encoding
+        ABC transporters, contributing to multidrug resistance.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.48.10.3773-3781.2004
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3007640
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007498 ! allylamine antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: PDR1 is a transcription factor that regulates the expression of several genes encoding
+        ABC transporters, contributing to multidrug resistance.
+      notes: 'A single transcription factor regulating ABC transporter genes -- round 78''s shape, not
+        a two-component pair (#215). NOTE the hedge: ''CONTRIBUTING TO multidrug resistance''.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to allylamine antibiotic.
     evidence:
     - reference: ARO:3007640
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007498 ! allylamine antibiotic'
-      notes: Asserted directly on ARO:3007640 (Candida spp. pleiotropic drug resistance factor 1) in the
-        CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to allylamine antibiotic.
+      notes: Asserted on ARO:3007640 (Candida spp. pleiotropic drug resistance factor 1), an is_a ancestor
+        of this record's ARO:3007640; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug1
+    description: CARD asserts that this determinant confers resistance to triazole antibiotic.
     evidence:
     - reference: ARO:3007640
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007499 ! triazole antibiotic'
-      notes: Asserted directly on ARO:3007640 (Candida spp. pleiotropic drug resistance factor 1) in the
-        CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to triazole antibiotic.
+      notes: Asserted on ARO:3007640 (Candida spp. pleiotropic drug resistance factor 1), an is_a ancestor
+        of this record's ARO:3007640; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug2
+    description: CARD asserts that this determinant confers resistance to imidazole antibiotic.
     evidence:
     - reference: ARO:3007640
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007500 ! imidazole antibiotic'
-      notes: Asserted directly on ARO:3007640 (Candida spp. pleiotropic drug resistance factor 1) in the
-        CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to imidazole antibiotic.
+      notes: Asserted on ARO:3007640 (Candida spp. pleiotropic drug resistance factor 1), an is_a ancestor
+        of this record's ARO:3007640; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: regulates (expression of ABC transporter genes)
+    predicate_id: RO:0002211
+    object: transporter_genes
+    description: 'Neutral RO:0002211: CARD says ''regulates'' without a direction, the same call as round
+      78''s ARO:3000750 and the opposite of round 79''s.'
+    evidence:
+    - reference: ARO:3007640
+      snippet: PDR1 is a transcription factor that regulates the expression of several genes encoding
+        ABC transporters, contributing to multidrug resistance.
+      notes: '''regulates the expression of several genes encoding ABC transporters''.'
+curation_history:
+- timestamp: '2026-08-08T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
