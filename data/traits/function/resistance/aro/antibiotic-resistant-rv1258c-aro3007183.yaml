@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -14,11 +14,13 @@ trait_relations:
     object: ARO:3000212
     relation_source: "ARO participates_in (mechanism) via ARO:0000031 antibiotic resistant gene variant or mutant"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic resistant Rv1258c → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic resistant Rv1258c → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3007183). An efflux pump named by its own record. NOT asserted: the coupling ion or energy source
+    -- unlike SMR (round 67, protons) and MATE (round 69, a cationic gradient), CARD says nothing here
+    about what drives Tap.'
   nodes:
   - node_id: determinant
     label: antibiotic resistant Rv1258c
@@ -28,6 +30,11 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: efflux_process
+    label: antibiotic efflux
+    node_type: BIOLOGICAL_PROCESS
+    grounding: ARO:0010000
+    description: Where this graph stops, for want of any energetics in the source.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -42,35 +49,50 @@ causal_graphs:
     object: mech0
     evidence:
     - reference: ARO:3007183
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3007183
       snippet: Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3007183
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      snippet: Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3007183
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+      snippet: Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.
+      notes: 'The whole claim, with its hedge: mutations ''CONTRIBUTING TO'' antibiotic resistance --
+        weaker than the ''confers'' most families use.'
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: What efflux achieves. Cited so the graph can end at the process rather than invent a transport
+        mechanism CARD does not describe.
+  - subject: determinant
+    predicate: participates in (antibiotic efflux)
+    predicate_id: RO:0000056
+    object: efflux_process
+    description: '''Participates in'' rather than ''enables'': these records are MUTANTS of the pump,
+      and CARD says they contribute to resistance without saying the mutation increases transport.'
+    evidence:
     - reference: ARO:3007183
       snippet: Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.
-      notes: ARO definition of this determinant (antibiotic resistant Rv1258c).
+      notes: '''the Rv1258c (Tap) efflux pump''.'
+  - subject: efflux_process
+    predicate: causally upstream of (confers resistance)
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: '''via the transport of antibiotics out of the cell''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

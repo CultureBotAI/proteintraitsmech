@@ -1158,6 +1158,47 @@ def _requires_ddl_ligase(ident: str, label: str, text: str):
 
 
 FAMILY_SNIPPETS = {
+    # Rv1258c / Tap (ARO:3007183) -- named an efflux pump, and hedged.
+    #
+    # CARD gives one sentence: mutations in "the Rv1258c (Tap) EFFLUX PUMP" CONTRIBUTING
+    # to resistance. The determinant is the pump itself, so unlike rounds 78-79 and 91
+    # the graph does not route through a complex or a regulator. But "contributing to" is
+    # weaker than "confers", and the pump's ENERGETICS are absent -- so no coupling node,
+    # unlike SMR (round 67) and MATE (round 69) whose definitions supply one.
+    "ARO:3007183": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3007183",
+        "mech": {"ARO:3000212": "Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance."},
+        "mech_res": "Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.",
+        "det_res": [
+            {"reference": "ARO:3007183", "snippet": "Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.",
+             "notes": "The whole claim, with its hedge: mutations 'CONTRIBUTING TO' antibiotic resistance -- weaker than the 'confers' most families use."},
+            {"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+             "notes": "What efflux achieves. Cited so the graph can end at the process rather than invent a transport mechanism CARD does not describe."},
+        ],
+        "res_drug": "Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.",
+        "note": ("An efflux pump named by its own record. NOT asserted: the coupling ion or "
+                 "energy source -- unlike SMR (round 67, protons) and MATE (round 69, a "
+                 "cationic gradient), CARD says nothing here about what drives Tap."),
+        "extra_nodes": [
+            {"node_id": "efflux_process", "label": "antibiotic efflux",
+             "node_type": "BIOLOGICAL_PROCESS", "grounding": "ARO:0010000",
+             "description": "Where this graph stops, for want of any energetics in the source."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "efflux_process",
+             "predicate": "participates in (antibiotic efflux)", "predicate_id": "RO:0000056",
+             "description": "'Participates in' rather than 'enables': these records are MUTANTS of the pump, and CARD says they contribute to resistance without saying the mutation increases transport.",
+             "evidence": [{"reference": "ARO:3007183", "snippet": "Mutations in the Rv1258c (Tap) efflux pump contributing to antibiotic resistance.",
+                           "notes": "'the Rv1258c (Tap) efflux pump'."}]},
+            {"subject": "efflux_process", "object": "resistance",
+             "predicate": "causally upstream of (confers resistance)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+                           "notes": "'via the transport of antibiotics out of the cell'."}]},
+        ],
+    },
     # ileS (ARO:3000446) -- target alteration, with the drug's action stated and the
     # resistance LEVEL qualified. Two sentences, and the second hedges twice: "CAN confer
     # LOW-LEVEL" resistance. Both hedges are kept.

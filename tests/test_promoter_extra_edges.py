@@ -2169,3 +2169,16 @@ def test_iles_keeps_both_hedges_on_the_resistance_claim():
     assert "can confer low-level" in cfg["mech"]["ARO:3000212"].lower()
     assert "LOW-LEVEL" in cfg["note"] and "conditional" in cfg["note"]
     assert "NOT asserted" in cfg["note"]
+
+
+def test_tap_pump_has_no_energetics_because_card_gives_none():
+    """SMR (r67) names protons, MATE (r69) a cationic gradient; Tap's record names neither.
+
+    Copying either across would assert a coupling CARD does not describe -- the mistake
+    round 67's own report warned about for RND/MFS/ABC.
+    """
+    cfg = promote.family_configs("ARO:3007183")[0]
+    labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    for word in ("proton", "gradient", "atp", "antiport"):
+        assert word not in labels, f"Tap config asserts {word!r} uncited"
+    assert "NOT asserted" in cfg["note"]
