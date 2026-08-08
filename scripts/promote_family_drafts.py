@@ -1280,6 +1280,57 @@ def _requires_esx5_subunit(ident: str, label: str, text: str):
 
 
 FAMILY_SNIPPETS = {
+    # cls / cardiolipin synthetase (ARO:3003272) -- three sentences, and the third does
+    # not connect to the first two.
+    #
+    # CARD gives the reaction, says the product matters for "membrane translocation and
+    # permeabilization", and then states that mutations confer daptomycin resistance. It
+    # never says HOW altered cardiolipin resists daptomycin -- and daptomycin is a
+    # membrane-active lipopeptide, so the connection is inviting and uncited. Round 81's
+    # ppsA-E position, with one more sentence of context and the same gap.
+    "ARO:3003272": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3003272",
+        "mech": {"ARO:3000212": "Cardiolipin synthetase catalyzes the formation of cardiolipin from two phosphatidylglycerol molecules. Cardiolipin is important in membrane translocation and permeabilization. Current known mutations on the enzyme confer resistance to daptomycin."},
+        "mech_res": "Cardiolipin synthetase catalyzes the formation of cardiolipin from two phosphatidylglycerol molecules. Cardiolipin is important in membrane translocation and permeabilization. Current known mutations on the enzyme confer resistance to daptomycin.",
+        "det_res": [
+            {"reference": "ARO:3003272", "snippet": "Cardiolipin synthetase catalyzes the formation of cardiolipin from two phosphatidylglycerol molecules. Cardiolipin is important in membrane translocation and permeabilization. Current known mutations on the enzyme confer resistance to daptomycin.",
+             "notes": "Three sentences: the reaction, why the product matters, and the resistance. The third does not follow from the first two in anything CARD writes -- 'Current known mutations on the enzyme confer resistance to daptomycin' is asserted, not derived."},
+        ],
+        "res_drug": "Cardiolipin synthetase catalyzes the formation of cardiolipin from two phosphatidylglycerol molecules. Cardiolipin is important in membrane translocation and permeabilization. Current known mutations on the enzyme confer resistance to daptomycin.",
+        "note": ("Cardiolipin synthesis. NOT asserted: how altered cardiolipin resists "
+                 "daptomycin. Daptomycin is membrane-active and the inference is inviting, "
+                 "which is exactly why it is left out -- the same reason round 83 refused "
+                 "to give rpoC rifampicin's rpoB mechanism."),
+        "extra_nodes": [
+            {"node_id": "cl_synthesis", "label": "cardiolipin synthase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-102)."},
+            {"node_id": "cardiolipin", "label": "cardiolipin",
+             "node_type": "CHEMICAL",
+             "description": "The product. Ungrounded: no CHEBI id verified this round."},
+            {"node_id": "membrane_role", "label": "membrane translocation and permeabilization",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "What CARD says cardiolipin matters for -- quoted, not connected to the drug."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "cl_synthesis",
+             "predicate": "enables (cardiolipin synthesis)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3003272", "snippet": "Cardiolipin synthetase catalyzes the formation of cardiolipin from two phosphatidylglycerol molecules. Cardiolipin is important in membrane translocation and permeabilization. Current known mutations on the enzyme confer resistance to daptomycin.",
+                           "notes": "'Cardiolipin synthetase catalyzes the formation of cardiolipin from two phosphatidylglycerol molecules'."}]},
+            {"subject": "cl_synthesis", "object": "cardiolipin",
+             "predicate": "has output (cardiolipin)", "predicate_id": "RO:0002234",
+             "evidence": [{"reference": "ARO:3003272", "snippet": "Cardiolipin synthetase catalyzes the formation of cardiolipin from two phosphatidylglycerol molecules. Cardiolipin is important in membrane translocation and permeabilization. Current known mutations on the enzyme confer resistance to daptomycin.",
+                           "notes": "The product named in the same sentence."}]},
+            {"subject": "cardiolipin", "object": "membrane_role",
+             "predicate": "participates in (membrane translocation and permeabilization)",
+             "predicate_id": "RO:0000056",
+             "description": "Where the graph stops. CARD says cardiolipin is IMPORTANT IN these processes and never links them to daptomycin.",
+             "evidence": [{"reference": "ARO:3003272", "snippet": "Cardiolipin synthetase catalyzes the formation of cardiolipin from two phosphatidylglycerol molecules. Cardiolipin is important in membrane translocation and permeabilization. Current known mutations on the enzyme confer resistance to daptomycin.",
+                           "notes": "'Cardiolipin is important in membrane translocation and permeabilization'. NOT asserted: any connection between that role and daptomycin resistance, which CARD asserts separately and does not derive."}]},
+        ],
+    },
     # ESX-5 secretion subunits (under ARO:3004916) -- reduced permeability, and one
     # record in which CARD contradicts itself.
     #

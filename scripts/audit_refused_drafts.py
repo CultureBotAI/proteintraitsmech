@@ -81,6 +81,33 @@ def main() -> int:
     if len(accepted) > 20:
         print(f"  ... and {len(accepted) - 20:,} more")
 
+    # THIRD section, added round 103. The two above only see records under a CONFIGURED
+    # family. Round 102's ESX-5 records sat under a family with no config AND no mechanism
+    # id, so nothing pointed at them -- the mirror of the blind spot this audit was built
+    # to fix. Finding them took a hand-written query, which is exactly the shape of thing
+    # that gets run once and forgotten.
+    unconfigured = collections.Counter()
+    for p2 in sorted(ARO_DIR.rglob("*.yaml")):
+        text2 = p2.read_text(encoding="utf-8")
+        if "graph_id: resistance-draft" not in text2:
+            continue
+        m2 = re.search(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', text2, re.M)
+        if not m2:
+            continue
+        anc = set(E.ancestry(terms, m2.group(1)))
+        if [f for f in anc if f in P.FAMILY_SNIPPETS and f != "ARO:3000000"]:
+            continue
+        for a in anc:
+            if a != m2.group(1) and a not in P.FAMILY_SNIPPETS:
+                unconfigured[a] += 1
+
+    print(f"\nUNCONFIGURED families with drafts ({sum(1 for _ in unconfigured):,} terms) "
+          f"-- nothing has ever considered these:")
+    for fam, n in unconfigured.most_common(30):
+        if not 3 <= n <= 40:
+            continue
+        print(f"  {n:5}  {fam:14} {terms.get(fam, {}).get('name', '?')[:52]}")
+
     print(f"\nREFUSED under a configured family ({sum(refused.values()):,}) "
           f"-- expected in bulk; skim for a family that should not be here:")
     for fam, n in refused.most_common(12):
