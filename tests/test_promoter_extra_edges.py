@@ -2120,3 +2120,22 @@ def test_ddl_does_not_flatten_dependence_into_resistance():
     cfg = promote.family_configs("ARO:3003970")[0]
     assert "DEPENDENT" in cfg["note"]
     assert "conditional" in cfg["note"]
+
+
+def test_subunit_pattern_matches_both_phrasings_card_uses():
+    """"is the <role> OF X" and "required for X activity" are both subunit claims.
+
+    Round 86 matched only the first and missed MexG. Seventh too-narrow pattern this
+    session, so both forms are pinned rather than left to the next reader to rediscover.
+    """
+    base = ("identifier: ARO:X\ndefinition: >-\n  {}\nterm_kind: CLASS\n"
+            "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:0010000\n"
+            "    relation_source: \"ARO participates_in (mechanism) via ARO:0000031\"\n")
+    for defn in ("MexA is the membrane fusion protein of the MexAB-OprM complex.",
+                 "MexG is a membrane protein required for MexGHI-OpmD efflux activity."):
+        assert promote._requires_named_efflux_subunit("ARO:X", "", base.format(defn)) is None, defn
+    # and still refuses a complex
+    assert promote._requires_named_efflux_subunit(
+        "ARO:Y", "", base.format(
+            "MexAB is a multidrug efflux pump complex consisting of Mex A and Mex B.")
+    ) is not None

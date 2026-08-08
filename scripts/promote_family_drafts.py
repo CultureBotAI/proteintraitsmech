@@ -1075,9 +1075,15 @@ def _requires_named_efflux_subunit(ident: str, label: str, text: str):
     if "ARO:0010000" not in D.parse_relations(text)[0]:
         return "record carries no efflux mechanism (ARO:0010000)"
     own = _own_definition(text).lower()
-    if not re.search(r"\b(is|are) (a |an |the )?"
-                     r"(membrane fusion protein|periplasmic|inner membrane|outer membrane|"
-                     r"subunit|component)\b", own):
+    # Also "required for X activity", not just "is the <role> OF X". Round 86's pattern
+    # demanded the second form and missed MexG -- "a membrane protein REQUIRED FOR
+    # MexGHI-OpmD efflux activity" -- which is as clear a subunit claim as MexA's.
+    # Seventh too-narrow pattern of mine this session, found by counting rather than
+    # by trusting the earlier count.
+    if not (re.search(r"\b(is|are) (a |an |the )?"
+                      r"(membrane fusion protein|periplasmic|inner membrane|outer membrane|"
+                      r"subunit|component)\b", own)
+            or re.search(r"required for .{0,40}efflux", own)):
         return ("own definition does not name it a subunit of a specific complex (#229 "
                 "-- may be a complex, a regulator, or an operon member)")
     if "operon" in own:
@@ -1417,6 +1423,8 @@ FAMILY_SNIPPETS = {
              "notes": "A subunit describes its place in something larger -- 'the membrane fusion protein OF the MexAB-OprM complex'. That phrasing is what distinguishes these from the complexes filed alongside them (#229)."},
             {"reference": "ARO:3000378", "snippet": "MexB is the inner membrane multidrug exporter of the efflux complex MexAB-OprM.",
              "notes": "And the transporting subunit: 'the inner membrane multidrug exporter'. SCOPE: MexA and MexB are the only two records in this family whose definitions take this form."},
+            {"reference": "ARO:3000806", "snippet": "MexG is a membrane protein required for MexGHI-OpmD efflux activity.",
+             "notes": "The other subunit phrasing CARD uses: 'REQUIRED FOR MexGHI-OpmD efflux activity'. Round 86's pattern only matched 'is the <role> OF X' and missed this."},
             {"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
              "notes": "What the complex they belong to achieves."},
         ],
