@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004269
 trait_relations:
@@ -22,11 +22,12 @@ evidence:
 - reference: DOI:10.3201/eid2011.140206
   notes: PMID:25341126 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] ArnT → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: ArnT → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3003588). Charge alteration by Ara4N addition to lipid A. Distinct from mprF (lysyl-PG), pEtN
+    and glycylation routes on this family.
   nodes:
   - node_id: determinant
     label: ArnT
@@ -40,6 +41,19 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
+  - node_id: ara4n_pathway
+    label: Ara4N synthesis and transfer to lipid A
+    node_type: MOLECULAR_FUNCTION
+    description: 'One node for a multi-step pathway: CARD''s sentence bundles ''synthesis and transfer'',
+      and these records are different steps of it.'
+  - node_id: lipid_a
+    label: lipid A of the outer membrane
+    node_type: CHEMICAL
+    description: 'The modified surface. Ungrounded: no CHEBI id verified this round.'
+  - node_id: charge
+    label: reduced net negative surface charge
+    node_type: STATE
+    description: The causal core, shared across this family's routes.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,46 +67,93 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.3201/eid2011.140206
-      notes: 'Auto-drafted: mechanism class ARO:3003588 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3003588); verbatim snippet pending curation.'
-    - reference: ARO:3005053
-      snippet: ArnT is involved in Cell Wall Biosynthesis, specifically 4-amino-4-deoxy-L-arabinose (Ara4N).
-        It confers resistance to peptide antibiotics.
-      notes: ARO definition of this determinant. The mechanism class ARO:3003588 (charge alteration conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: Family mechanism ARO:3003588.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.3201/eid2011.140206
-      notes: 'Auto-drafted: mechanism ARO:3003588 → resistance; snippet pending curation.'
     - reference: ARO:3003588
       snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
         bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
         charge for binding to the surface.
-      notes: ARO definition of the resistance mechanism class ARO:3003588 (charge alteration conferring
-        antibiotic resistance), which states the causal link to resistance.
+      notes: Mechanism ARO:3003588 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.3201/eid2011.140206
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3005053
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000622 ! colistin A'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: The shared causal sentence, as for the pEtN and glycylation routes.
+    - reference: ARO:3003578
+      snippet: PmrF is required for the synthesis and transfer of 4-amino-4-deoxy-L-arabinose (Ara4N)
+        to Lipid A, which allows gram-negative bacteria to resist the antimicrobial activity of cationic
+        antimicrobial peptides and antibiotics such as polymyxin.
+      notes: 'The route and its consequence in one sentence. SCOPE: PmrF''s; these records span synthesis
+        (PmrE/ugd, arnA) and transfer (ArnT), which this sentence covers collectively as ''synthesis and
+        transfer''.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
     evidence:
     - reference: ARO:3004269
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
       notes: Asserted on ARO:3004269 (pmr phosphoethanolamine transferase), an is_a ancestor of this record's
         ARO:3005053; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+  - subject: determinant
+    predicate: participates in (Ara4N synthesis and transfer)
+    predicate_id: RO:0000056
+    object: ara4n_pathway
+    description: '''Participates in'' rather than ''enables'', for round 74''s reason: these records are
+      different steps (PmrE/ugd synthesis, ArnT transfer) and no one of them performs the route.'
+    evidence:
+    - reference: ARO:3003578
+      snippet: PmrF is required for the synthesis and transfer of 4-amino-4-deoxy-L-arabinose (Ara4N)
+        to Lipid A, which allows gram-negative bacteria to resist the antimicrobial activity of cationic
+        antimicrobial peptides and antibiotics such as polymyxin.
+      notes: '''required for the synthesis AND transfer'' -- CARD treats it as a multi-step route.'
+  - subject: ara4n_pathway
+    predicate: causally upstream of (modifies lipid A)
+    predicate_id: RO:0002411
+    object: lipid_a
+    evidence:
+    - reference: ARO:3002985
+      snippet: arnA modifies lipid A with 4-amino-4-deoxy-L-arabinose (Ara4N) which allows gram-negative
+        bacteria to resist the antimicrobial activity of cationic antimicrobial peptides and antibiotics
+        such as polymyxin.
+      notes: '''modifies lipid A with 4-amino-4-deoxy-L-arabinose''.'
+  - subject: lipid_a
+    predicate: causally upstream of (reduces surface negative charge)
+    predicate_id: RO:0002411
+    object: charge
+    evidence:
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: '''loss or reduction of the net negative charge within the cell wall''.'
+  - subject: charge
+    predicate: negatively regulates (impedes drug binding)
+    predicate_id: RO:0002212
+    object: drug0
+    evidence:
+    - reference: ARO:3003578
+      snippet: PmrF is required for the synthesis and transfer of 4-amino-4-deoxy-L-arabinose (Ara4N)
+        to Lipid A, which allows gram-negative bacteria to resist the antimicrobial activity of cationic
+        antimicrobial peptides and antibiotics such as polymyxin.
+      notes: '''allows gram-negative bacteria to resist ... cationic antimicrobial peptides''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
