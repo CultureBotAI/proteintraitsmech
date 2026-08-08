@@ -1367,6 +1367,122 @@ def _minimal_enzyme_config(fam_id: str, snippet: str, activity: str, extra_note:
 
 
 FAMILY_SNIPPETS = {
+    # thyA (ARO:3004152) -- prodrug-activation loss, and CARD says HOW the mutation works.
+    #
+    # Round 113's folC named the intermediate; this one names the DEFECT: "disrupting the
+    # substrate-binding affinity and catalytic activity". Same drug (p-aminosalicylic acid),
+    # same pathway, and between them the two records give more of this mechanism than any
+    # other pair in the corpus.
+    "ARO:3004152": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004152",
+        "mech": {"ARO:3000212": "Antibiotic resistant form of thymidylate synthase (synthetase), an enzyme that catalyzes the conversion of dUMP to dTMP in nucleotide biosynthesis. Loss-of-function mutations in thymidylate synthase confer resistance to p-aminosalicylic acid by disrupting the substrate-binding affinity and catalytic activity."},
+        "mech_res": "Antibiotic resistant form of thymidylate synthase (synthetase), an enzyme that catalyzes the conversion of dUMP to dTMP in nucleotide biosynthesis. Loss-of-function mutations in thymidylate synthase confer resistance to p-aminosalicylic acid by disrupting the substrate-binding affinity and catalytic activity.",
+        "det_res": [
+            {"reference": "ARO:3004152", "snippet": "Antibiotic resistant form of thymidylate synthase (synthetase), an enzyme that catalyzes the conversion of dUMP to dTMP in nucleotide biosynthesis. Loss-of-function mutations in thymidylate synthase confer resistance to p-aminosalicylic acid by disrupting the substrate-binding affinity and catalytic activity.",
+             "notes": "Reaction, and the mutation's actual defect: 'LOSS-OF-FUNCTION mutations ... by DISRUPTING THE SUBSTRATE-BINDING AFFINITY AND CATALYTIC ACTIVITY'. Round 113's folC named the intermediate for the same drug; this names the defect."},
+        ],
+        "res_drug": "Antibiotic resistant form of thymidylate synthase (synthetase), an enzyme that catalyzes the conversion of dUMP to dTMP in nucleotide biosynthesis. Loss-of-function mutations in thymidylate synthase confer resistance to p-aminosalicylic acid by disrupting the substrate-binding affinity and catalytic activity.",
+        "note": ("Prodrug-activation loss with the defect named. Pairs with folC (round 113) "
+                 "on p-aminosalicylic acid: folC gives the intermediate, thyA gives what "
+                 "the mutation breaks."),
+        "extra_nodes": [
+            {"node_id": "ts_activity", "label": "thymidylate synthase activity (dUMP to dTMP)",
+             "node_type": "MOLECULAR_FUNCTION", "description": "Ungrounded: not looked up rather than guessed."},
+            {"node_id": "defect", "label": "disrupted substrate binding and catalysis",
+             "node_type": "STATE",
+             "description": "What the loss-of-function mutation causes, in CARD's own words."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "ts_activity",
+             "predicate": "enables (dUMP to dTMP conversion)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004152", "snippet": "Antibiotic resistant form of thymidylate synthase (synthetase), an enzyme that catalyzes the conversion of dUMP to dTMP in nucleotide biosynthesis. Loss-of-function mutations in thymidylate synthase confer resistance to p-aminosalicylic acid by disrupting the substrate-binding affinity and catalytic activity.",
+                           "notes": "'catalyzes the conversion of dUMP to dTMP in nucleotide biosynthesis'."}]},
+            {"subject": "determinant", "object": "defect",
+             "predicate": "has quality (disrupted binding and catalysis)",
+             "predicate_id": "RO:0000086",
+             "evidence": [{"reference": "ARO:3004152", "snippet": "Antibiotic resistant form of thymidylate synthase (synthetase), an enzyme that catalyzes the conversion of dUMP to dTMP in nucleotide biosynthesis. Loss-of-function mutations in thymidylate synthase confer resistance to p-aminosalicylic acid by disrupting the substrate-binding affinity and catalytic activity.",
+                           "notes": "'by disrupting the substrate-binding affinity and catalytic activity'."}]},
+            {"subject": "defect", "object": "ts_activity",
+             "predicate": "negatively regulates (the enzyme stops working)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core: loss of function is the resistance, as in rounds 56 and 113.",
+             "evidence": [{"reference": "ARO:3004152", "snippet": "Antibiotic resistant form of thymidylate synthase (synthetase), an enzyme that catalyzes the conversion of dUMP to dTMP in nucleotide biosynthesis. Loss-of-function mutations in thymidylate synthase confer resistance to p-aminosalicylic acid by disrupting the substrate-binding affinity and catalytic activity.",
+                           "notes": "'LOSS-OF-FUNCTION mutations ... confer resistance'. NOT asserted: how thymidylate synthase activates PAS, which CARD does not say here (folC's record does, for its own step)."}]},
+        ],
+    },
+    # atpE (ARO:3007477) -- target alteration, with the drug's action named.
+    "ARO:3007477": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3007477",
+        "mech": {"ARO:3000212": "ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding and blocking of ATP synthase reactions by Bedaquiline."},
+        "mech_res": "ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding and blocking of ATP synthase reactions by Bedaquiline.",
+        "det_res": [
+            {"reference": "ARO:3007477", "snippet": "ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding and blocking of ATP synthase reactions by Bedaquiline.",
+             "notes": "Both halves: what Bedaquiline does ('binding and BLOCKING of ATP synthase reactions') and what the mutation does to it ('DISRUPTING' that). SCOPE: subunit C specifically."},
+        ],
+        "res_drug": "ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding and blocking of ATP synthase reactions by Bedaquiline.",
+        "note": "Target alteration of ATP synthase subunit C; the drug's action is stated, unlike most target-alteration records here.",
+        "extra_nodes": [
+            {"node_id": "atp_synthesis", "label": "ATP synthase reactions",
+             "node_type": "BIOLOGICAL_PROCESS", "description": "Ungrounded: not looked up rather than guessed."},
+            {"node_id": "blocking", "label": "Bedaquiline binding and blocking of ATP synthase",
+             "node_type": "STATE", "description": "What the mutation disrupts."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "atp_synthesis",
+             "predicate": "part of (ATP synthase)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3007477", "snippet": "ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding and blocking of ATP synthase reactions by Bedaquiline.",
+                           "notes": "'ATP synthase enzymes, specifically subunit C'."}]},
+            {"subject": "drug0", "object": "blocking",
+             "predicate": "causally upstream of (binds and blocks ATP synthase)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3007477", "snippet": "ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding and blocking of ATP synthase reactions by Bedaquiline.",
+                           "notes": "'binding and blocking of ATP synthase reactions by Bedaquiline'."}]},
+            {"subject": "determinant", "object": "blocking",
+             "predicate": "negatively regulates (mutations disrupt the drug's binding)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3007477", "snippet": "ATP synthase enzymes, specifically subunit C, resistant to diarylquinolone antibiotics including Bedaquiline. Mutations in ATP synthase confer antibiotic resistance by disrupting binding and blocking of ATP synthase reactions by Bedaquiline.",
+                           "notes": "'Mutations in ATP synthase confer antibiotic resistance by DISRUPTING binding'."}]},
+        ],
+    },
+    # cya (ARO:3004251) -- reduced import, two regulatory steps removed. uhpA's shape
+    # (round 109) at one more remove: cya makes cAMP, cAMP regulates the transporter.
+    "ARO:3004251": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004251",
+        "mech": {"ARO:3000212": "Adenylate cyclases encoded by cya genes, which are involved in the synthesis cyclic AMP which regulates the fosfomycin transporter glpT. Mutations in cya genes can confer resistance to fosfomycin."},
+        "mech_res": "Adenylate cyclases encoded by cya genes, which are involved in the synthesis cyclic AMP which regulates the fosfomycin transporter glpT. Mutations in cya genes can confer resistance to fosfomycin.",
+        "det_res": [
+            {"reference": "ARO:3004251", "snippet": "Adenylate cyclases encoded by cya genes, which are involved in the synthesis cyclic AMP which regulates the fosfomycin transporter glpT. Mutations in cya genes can confer resistance to fosfomycin.",
+             "notes": "Two steps from the drug: cya makes cAMP, cAMP regulates the fosfomycin TRANSPORTER glpT. Round 109's uhpA was one step; this is the same reduced-import shape at a further remove. NOTE the hedge: 'CAN confer'."},
+        ],
+        "res_drug": "Adenylate cyclases encoded by cya genes, which are involved in the synthesis cyclic AMP which regulates the fosfomycin transporter glpT. Mutations in cya genes can confer resistance to fosfomycin.",
+        "note": ("Reduced import at two removes -- the determinant makes a second messenger "
+                 "that regulates the importer. NOT asserted: the DIRECTION of cAMP's effect "
+                 "on glpT, which CARD gives as 'regulates' without saying which way."),
+        "extra_nodes": [
+            {"node_id": "camp", "label": "cyclic AMP", "node_type": "CHEMICAL",
+             "description": "The second messenger. Ungrounded: no CHEBI id verified this round."},
+            {"node_id": "glpt", "label": "the fosfomycin transporter glpT",
+             "node_type": "PROTEIN", "description": "The importer. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "camp",
+             "predicate": "participates in (cyclic AMP synthesis)", "predicate_id": "RO:0000056",
+             "description": "'Participates in', matching CARD's 'are INVOLVED IN the synthesis'.",
+             "evidence": [{"reference": "ARO:3004251", "snippet": "Adenylate cyclases encoded by cya genes, which are involved in the synthesis cyclic AMP which regulates the fosfomycin transporter glpT. Mutations in cya genes can confer resistance to fosfomycin.",
+                           "notes": "'Adenylate cyclases ... involved in the synthesis cyclic AMP'."}]},
+            {"subject": "camp", "object": "glpt",
+             "predicate": "regulates (the fosfomycin transporter)", "predicate_id": "RO:0002211",
+             "description": "Neutral RO:0002211: CARD says 'regulates' without a direction, as in rounds 78 and 110.",
+             "evidence": [{"reference": "ARO:3004251", "snippet": "Adenylate cyclases encoded by cya genes, which are involved in the synthesis cyclic AMP which regulates the fosfomycin transporter glpT. Mutations in cya genes can confer resistance to fosfomycin.",
+                           "notes": "'cyclic AMP which regulates the fosfomycin transporter glpT'. NOT asserted: which way, nor that reduced glpT is what confers resistance -- CARD states the resistance separately."}]},
+        ],
+    },
     # folC / dihydrofolate synthase (ARO:3004155) -- the fullest prodrug-activation-loss
     # statement in this corpus, and it names the INTERMEDIATE.
     #
