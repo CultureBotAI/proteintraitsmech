@@ -2557,3 +2557,17 @@ def test_kasa_has_no_config_pending_220():
     showed this corpus has no structural way to carry a contested claim.
     """
     assert promote.family_configs("ARO:3003462") == []
+
+
+def test_folc_names_the_intermediate_that_other_prodrug_configs_lack():
+    """Rounds 56, 57, 95, 108 curated prodrug-activation loss from shorter sentences.
+
+    folC's runs end to end and names hydroxyl-dihydrofolate -- the only intermediate
+    named in any of them. If the node vanishes, the graph has lost what makes it fullest.
+    """
+    cfg = promote.family_configs("ARO:3004155")[0]
+    assert any(n["node_id"] == "analog" for n in cfg["extra_nodes"])
+    assert "hydroxyl-dihydrofolate" in " ".join(
+        n["label"] for n in cfg["extra_nodes"]).lower()
+    pnca = promote.family_configs("ARO:3004267")[0]
+    assert not any("analog" == n["node_id"] for n in pnca["extra_nodes"])
