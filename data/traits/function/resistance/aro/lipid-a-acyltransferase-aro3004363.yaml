@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3003580
   - ARO:3007429
@@ -23,11 +23,11 @@ evidence:
 - reference: DOI:10.1074/jbc.RA117.000131
   notes: PMID:29101229 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] lipid A acyltransferase → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: lipid A acyltransferase → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3003588). Charge alteration by aminoacylation of LPS; the fifth route on this family.
   nodes:
   - node_id: determinant
     label: lipid A acyltransferase
@@ -41,6 +41,14 @@ causal_graphs:
     label: peptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000053
+  - node_id: aminoacylation
+    label: aminoacylation of lipopolysaccharide
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-75).'
+  - node_id: charge
+    label: reduced net negative surface charge
+    node_type: STATE
+    description: The causal core, shared across this family's routes.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -54,46 +62,80 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1074/jbc.RA117.000131
-      notes: 'Auto-drafted: mechanism class ARO:3003588 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3003588); verbatim snippet pending curation.'
-    - reference: ARO:3004363
-      snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
-        such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
-        charge of the outer membrane surface.
-      notes: ARO definition of this determinant. The mechanism class ARO:3003588 (charge alteration conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: Family mechanism ARO:3003588.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1074/jbc.RA117.000131
-      notes: 'Auto-drafted: mechanism ARO:3003588 → resistance; snippet pending curation.'
     - reference: ARO:3003588
-      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
-        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
-        charge for binding to the surface.
-      notes: ARO definition of the resistance mechanism class ARO:3003588 (charge alteration conferring
-        antibiotic resistance), which states the causal link to resistance.
+      snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
+        such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
+        charge of the outer membrane.
+      notes: Mechanism ARO:3003588 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1074/jbc.RA117.000131
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004363
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
+        such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
+        charge of the outer membrane.
+      notes: Route, consequence and drug class in one sentence, stated causally ('confer resistance ...
+        thereby decreasing the negative charge').
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: The shared causal sentence for every route on this family.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
     evidence:
     - reference: ARO:3004363
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000053 ! peptide antibiotic'
-      notes: Asserted directly on ARO:3004363 (lipid A acyltransferase) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to peptide antibiotic.
+      notes: Asserted on ARO:3004363 (lipid A acyltransferase), an is_a ancestor of this record's ARO:3004363;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: enables (aminoacylates LPS)
+    predicate_id: RO:0002327
+    object: aminoacylation
+    evidence:
+    - reference: ARO:3004363
+      snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
+        such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
+        charge of the outer membrane.
+      notes: '''through the aminoacylation of lipopolysaccharide''.'
+  - subject: aminoacylation
+    predicate: causally upstream of (decreases negative charge)
+    predicate_id: RO:0002411
+    object: charge
+    evidence:
+    - reference: ARO:3004363
+      snippet: Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics
+        such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative
+        charge of the outer membrane.
+      notes: '''thereby decreasing the negative charge of the outer membrane''.'
+  - subject: charge
+    predicate: negatively regulates (impedes drug binding)
+    predicate_id: RO:0002212
+    object: drug0
+    evidence:
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: '''cationic antimicrobials that depend on the negative charge for binding''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

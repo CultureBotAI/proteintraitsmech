@@ -1816,3 +1816,19 @@ def test_charge_alteration_now_has_three_lipid_a_routes():
                       for n in c.get("extra_nodes", ()))
     assert "phosphoethanolamine" in labels, "pEtN route missing"
     assert "glycyl" in labels, "glycylation route missing"
+
+
+def test_cprrs_graph_ends_at_the_arn_records_not_their_chemistry():
+    """Round 22's rule: a regulator points at what does the work.
+
+    cprRS induces the Arn operon; the Ara4N chemistry lives on those records (round 75).
+    Restating it here would duplicate and then drift from them.
+    """
+    cfg = next(c for c in promote.family_configs("ARO:3003580")
+               if any(n["node_id"] == "arn_operon" for n in c.get("extra_nodes", ())))
+    node = next(n for n in cfg["extra_nodes"] if n["node_id"] == "arn_operon")
+    assert node["grounding"] == "ARO:3003578", "must point at a real KB record"
+    blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    assert "lipid a" not in blob and "charge" not in blob, (
+        "the regulator's graph must not restate the downstream chemistry"
+    )

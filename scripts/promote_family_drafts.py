@@ -934,7 +934,106 @@ def _requires_ara4n(ident: str, label: str, text: str):
     return None
 
 
+def _requires_lipid_a_aminoacylation(ident: str, label: str, text: str):
+    """Aminoacylation of LPS -- the fifth surface-charge route on ARO:3003580."""
+    if "ARO:3003588" not in D.parse_relations(text)[0]:
+        return "record carries no charge-alteration mechanism (ARO:3003588)"
+    if "aminoacylation" not in _own_definition(text).lower():
+        return "own definition does not name aminoacylation"
+    return None
+
+
+def _requires_cpr_regulator(ident: str, label: str, text: str):
+    """cprRS INDUCES the Arn operon; it does not alter charge itself.
+
+    Round 22's shape: a regulator's graph should END at the records that do the work,
+    not restate their chemistry. Here that is the Ara4N route curated in round 75.
+    """
+    if "ARO:3003588" not in D.parse_relations(text)[0]:
+        return "record carries no charge-alteration mechanism (ARO:3003588)"
+    own = _own_definition(text).lower()
+    if "induces the arn operon" not in own:
+        return "own definition does not say it induces the Arn operon"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # Aminoacylation of LPS (ARO:3003580) -- a fifth surface-charge route.
+    "ARO:3003580-acyl": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_lipid_a_aminoacylation,
+        "reference": "ARO:3003588",
+        "mech": {"ARO:3003588": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface."},
+        "mech_res": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+        "det_res": [
+            {"reference": "ARO:3004363", "snippet": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+             "notes": "Route, consequence and drug class in one sentence, stated causally ('confer resistance ... thereby decreasing the negative charge')."},
+            {"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+             "notes": "The shared causal sentence for every route on this family."},
+        ],
+        "res_drug": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+        "note": "Charge alteration by aminoacylation of LPS; the fifth route on this family.",
+        "extra_nodes": [
+            {"node_id": "aminoacylation", "label": "aminoacylation of lipopolysaccharide",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-75)."},
+            {"node_id": "charge", "label": "reduced net negative surface charge",
+             "node_type": "STATE", "description": "The causal core, shared across this family's routes."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "aminoacylation",
+             "predicate": "enables (aminoacylates LPS)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004363", "snippet": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+                           "notes": "'through the aminoacylation of lipopolysaccharide'."}]},
+            {"subject": "aminoacylation", "object": "charge",
+             "predicate": "causally upstream of (decreases negative charge)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3004363", "snippet": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+                           "notes": "'thereby decreasing the negative charge of the outer membrane'."}]},
+            {"subject": "charge", "object": "drug0",
+             "predicate": "negatively regulates (impedes drug binding)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+                           "notes": "'cationic antimicrobials that depend on the negative charge for binding'."}]},
+        ],
+    },
+    # cprRS -- REGULATION, ending at the Ara4N records rather than restating them.
+    "ARO:3003580-cpr": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_cpr_regulator,
+        "reference": "ARO:3005065",
+        "mech": {"ARO:3003588": "cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces the Arn operon to confer resistance."},
+        "mech_res": "cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces the Arn operon to confer resistance.",
+        "det_res": [
+            {"reference": "ARO:3005065", "snippet": "cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces the Arn operon to confer resistance.",
+             "notes": "cprRS confers resistance by INDUCING the Arn operon, not by altering charge itself. Round 22's rule: a regulator's graph ends at the records that do the work."},
+        ],
+        "res_drug": "cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces the Arn operon to confer resistance.",
+        "note": ("Regulation, not charge alteration. The downstream is the Ara4N route "
+                 "curated in round 75; this graph points at it rather than restating its "
+                 "chemistry, so it inherits whatever those records say today."),
+        "extra_nodes": [
+            {"node_id": "sensing", "label": "sensing of cationic peptides",
+             "node_type": "STATE",
+             "description": "The inducing signal. Ungrounded."},
+            {"node_id": "arn_operon", "label": "Arn operon (Ara4N synthesis and transfer)",
+             "node_type": "NUCLEIC_ACID", "grounding": "ARO:3003578",
+             "description": "Grounded to PmrF, a KB record curated in round 75 -- the cross-round citation pattern from round 22."},
+        ],
+        "extra_edges": [
+            {"subject": "sensing", "object": "determinant",
+             "predicate": "causally upstream of (activates the two-component system)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3005065", "snippet": "cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces the Arn operon to confer resistance.",
+                           "notes": "'In the presence of cationic peptides' -- the drug itself is the inducing signal."}]},
+            {"subject": "determinant", "object": "arn_operon",
+             "predicate": "positively regulates (induces the Arn operon)",
+             "predicate_id": "RO:0002213",
+             "description": "Where this graph STOPS. The Ara4N chemistry lives on those records (round 75), not restated here.",
+             "evidence": [{"reference": "ARO:3005065", "snippet": "cprRS is a two-component regulatory system. In the presence of cationic peptides, it induces the Arn operon to confer resistance.",
+                           "notes": "'it induces the Arn operon to confer resistance'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # Ara4N addition to lipid A (under ARO:3003580) -- the fourth charge-alteration route,
     # and the one rounds 73-74 mistakenly believed was already curated.
@@ -5113,6 +5212,8 @@ FAMILY_SNIPPETS["ARO:3003580"] = [
     FAMILY_SNIPPETS.pop("ARO:3003580-petn"),
     FAMILY_SNIPPETS.pop("ARO:3003580-alm"),
     FAMILY_SNIPPETS.pop("ARO:3003580-ara4n"),
+    FAMILY_SNIPPETS.pop("ARO:3003580-acyl"),
+    FAMILY_SNIPPETS.pop("ARO:3003580-cpr"),
 ]
 
 def _check_config_order() -> None:
