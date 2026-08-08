@@ -1169,7 +1169,104 @@ def _requires_ddl_ligase(ident: str, label: str, text: str):
     return None
 
 
+def _requires_armr(ident: str, label: str, text: str):
+    """ArmR -- an ANTIrepressor, the record that defeated three keyword patterns."""
+    if "antirepressor" not in _own_definition(text).lower():
+        return "own definition does not describe an antirepressor"
+    return None
+
+
+def _requires_transcription_factor_regulator(ident: str, label: str, text: str):
+    """A transcription factor regulating transporter genes -- NOT a two-component pair.
+
+    Most of ARO:3000451's drafts are two-component PAIR records (baeSR, basRS, evgSA,
+    kdpDE, liaFSR), which are #215's open question. PDR1 is not a pair; it is a single
+    transcription factor, and round 78's shape fits it.
+    """
+    own = _own_definition(text).lower()
+    if "transcription factor" not in own:
+        return "own definition does not describe a transcription factor"
+    if "two-component" in own or "two component" in own:
+        return "own definition describes a two-component system (a pair record, #215)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ArmR (ARO:3004056) -- the antirepressor that defeated three keyword patterns.
+    #
+    # Referenced all session as the reason regulator lists cannot be built by keyword:
+    # it is neither a repressor nor an activator, but an ANTIrepressor -- it inhibits a
+    # repressor, and the double negative is what makes it an efflux determinant. Its own
+    # definition states the whole chain, including the STRUCTURAL basis, which almost no
+    # other regulator record in this corpus does.
+    "ARO:3004056": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_armr,
+        "reference": "ARO:3004056",
+        "mech": {"ARO:0010000": "ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM."},
+        "mech_res": "ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM.",
+        "det_res": [
+            {"reference": "ARO:3004056", "snippet": "ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM.",
+             "notes": "The full chain and its structural basis: ArmR occupies a hydrophobic cavity in the MexR dimer, blocks MexR-DNA binding, and the resulting complex upregulates MexAB-OprM. A double negative -- inhibiting a repressor -- which is why keyword lists of repressors and activators both missed it."},
+            {"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+             "notes": "What the upregulated pump achieves."},
+        ],
+        "res_drug": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "note": ("Antirepression. ArmR inhibits MexR, MexR represses MexAB-OprM, so "
+                 "inhibiting it raises efflux. The graph carries both negatives rather "
+                 "than collapsing them into 'activates the pump'."),
+        "extra_nodes": [
+            {"node_id": "mexr_dna_binding", "label": "MexR dimer binding to DNA",
+             "node_type": "STATE",
+             "description": "What ArmR blocks. Ungrounded."},
+            {"node_id": "pump_expression", "label": "MexAB-OprM expression",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The outcome CARD names. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "mexr_dna_binding",
+             "predicate": "negatively regulates (allosterically blocks MexR-DNA binding)",
+             "predicate_id": "RO:0002212",
+             "description": "The FIRST negative, with its structural basis stated -- ArmR occupies a cavity in the MexR dimer rather than competing at the DNA site.",
+             "evidence": [{"reference": "ARO:3004056", "snippet": "ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM.",
+                           "notes": "'allosterically inhibits MexR dimer-DNA binding by occupying a hydrophobic binding cavity within the center of the MexR dimer'."}]},
+            {"subject": "determinant", "object": "pump_expression",
+             "predicate": "positively regulates (upregulates MexAB-OprM)",
+             "predicate_id": "RO:0002213",
+             "description": "The NET effect, stated separately from the mechanism because CARD states it separately -- and because collapsing the two would hide that this is antirepression rather than activation.",
+             "evidence": [{"reference": "ARO:3004056", "snippet": "ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM.",
+                           "notes": "'ArmR up-regulation and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM'. NOTE the hedge: 'have PREVIOUSLY BEEN SHOWN', which CARD attributes rather than asserts directly."}]},
+        ],
+    },
+    # PDR1 (ARO:3007640) -- a transcription factor, not a two-component pair.
+    "ARO:3007640": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_transcription_factor_regulator,
+        "reference": "ARO:3007640",
+        "mech": {"ARO:0010000": "PDR1 is a transcription factor that regulates the expression of several genes encoding ABC transporters, contributing to multidrug resistance."},
+        "mech_res": "PDR1 is a transcription factor that regulates the expression of several genes encoding ABC transporters, contributing to multidrug resistance.",
+        "det_res": [
+            {"reference": "ARO:3007640", "snippet": "PDR1 is a transcription factor that regulates the expression of several genes encoding ABC transporters, contributing to multidrug resistance.",
+             "notes": "A single transcription factor regulating ABC transporter genes -- round 78's shape, not a two-component pair (#215). NOTE the hedge: 'CONTRIBUTING TO multidrug resistance'."},
+        ],
+        "res_drug": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+        "note": ("Transcriptional regulation of ABC transporters. CARD does not say whether "
+                 "PDR1 activates or represses -- 'regulates' -- so the neutral predicate is "
+                 "used, as in round 78 and unlike round 79."),
+        "extra_nodes": [
+            {"node_id": "transporter_genes", "label": "genes encoding ABC transporters",
+             "node_type": "NUCLEIC_ACID",
+             "description": "What PDR1 regulates. Ungrounded: CARD names no specific gene."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "transporter_genes",
+             "predicate": "regulates (expression of ABC transporter genes)",
+             "predicate_id": "RO:0002211",
+             "description": "Neutral RO:0002211: CARD says 'regulates' without a direction, the same call as round 78's ARO:3000750 and the opposite of round 79's.",
+             "evidence": [{"reference": "ARO:3007640", "snippet": "PDR1 is a transcription factor that regulates the expression of several genes encoding ABC transporters, contributing to multidrug resistance.",
+                           "notes": "'regulates the expression of several genes encoding ABC transporters'."}]},
+        ],
+    },
     # mshA (ARO:3004900) -- prodrug-activation loss, in four words.
     #
     # The neighbouring mshC record reads "inability for antibiotic to FUNCTION" and was

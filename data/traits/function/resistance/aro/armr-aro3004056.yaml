@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000451
 trait_relations:
@@ -22,11 +22,12 @@ evidence:
 - reference: DOI:10.1073/pnas.0805489105
   notes: PMID:18812515 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] ArmR → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: ArmR → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3004056). Antirepression. ArmR inhibits MexR, MexR represses MexAB-OprM, so inhibiting it raises
+    efflux. The graph carries both negatives rather than collapsing them into 'activates the pump'.
   nodes:
   - node_id: determinant
     label: ArmR
@@ -36,6 +37,14 @@ causal_graphs:
     label: antibiotic efflux
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:0010000
+  - node_id: mexr_dna_binding
+    label: MexR dimer binding to DNA
+    node_type: STATE
+    description: What ArmR blocks. Ungrounded.
+  - node_id: pump_expression
+    label: MexAB-OprM expression
+    node_type: BIOLOGICAL_PROCESS
+    description: The outcome CARD names. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -49,36 +58,67 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/JB.00543-07
-      notes: 'Auto-drafted: mechanism class ARO:0010000 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0010000); verbatim snippet pending curation.'
     - reference: ARO:3004056
       snippet: ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by
         occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation
         and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM.
-      notes: ARO definition of this determinant. The mechanism class ARO:0010000 (antibiotic efflux) is
-        CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/JB.00543-07
-      notes: 'Auto-drafted: mechanism ARO:0010000 → resistance; snippet pending curation.'
-    - reference: ARO:0010000
-      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
-      notes: ARO definition of the resistance mechanism class ARO:0010000 (antibiotic efflux), which states
-        the causal link to resistance.
+    - reference: ARO:3004056
+      snippet: ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by
+        occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation
+        and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM.
+      notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/JB.00543-07
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004056
       snippet: ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by
         occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation
         and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM.
-      notes: ARO definition of this determinant (ArmR).
+      notes: 'The full chain and its structural basis: ArmR occupies a hydrophobic cavity in the MexR
+        dimer, blocks MexR-DNA binding, and the resulting complex upregulates MexAB-OprM. A double negative
+        -- inhibiting a repressor -- which is why keyword lists of repressors and activators both missed
+        it.'
+    - reference: ARO:0010000
+      snippet: Antibiotic resistance via the transport of antibiotics out of the cell.
+      notes: What the upregulated pump achieves.
+  - subject: determinant
+    predicate: negatively regulates (allosterically blocks MexR-DNA binding)
+    predicate_id: RO:0002212
+    object: mexr_dna_binding
+    description: The FIRST negative, with its structural basis stated -- ArmR occupies a cavity in the
+      MexR dimer rather than competing at the DNA site.
+    evidence:
+    - reference: ARO:3004056
+      snippet: ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by
+        occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation
+        and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM.
+      notes: '''allosterically inhibits MexR dimer-DNA binding by occupying a hydrophobic binding cavity
+        within the center of the MexR dimer''.'
+  - subject: determinant
+    predicate: positively regulates (upregulates MexAB-OprM)
+    predicate_id: RO:0002213
+    object: pump_expression
+    description: The NET effect, stated separately from the mechanism because CARD states it separately
+      -- and because collapsing the two would hide that this is antirepression rather than activation.
+    evidence:
+    - reference: ARO:3004056
+      snippet: ArmR, a 53-amino-acid antirepressor, allosterically inhibits MexR dimer-DNA binding by
+        occupying a hydrophobic binding cavity within the center of the MexR dimer. ArmR up-regulation
+        and MexR-ArmR complex formation have previously been shown to upregulate MexAB-OprM.
+      notes: '''ArmR up-regulation and MexR-ArmR complex formation have previously been shown to upregulate
+        MexAB-OprM''. NOTE the hedge: ''have PREVIOUSLY BEEN SHOWN'', which CARD attributes rather than
+        asserts directly.'
+curation_history:
+- timestamp: '2026-08-08T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
