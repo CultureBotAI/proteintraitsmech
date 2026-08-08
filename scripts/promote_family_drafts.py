@@ -884,7 +884,7 @@ def _inactivation_transfer_config(mech_id: str, human: str, snippet: str,
 def _requires_petn_transferase(ident: str, label: str, text: str):
     """Phosphoethanolamine addition, the OTHER way to neutralise lipid A.
 
-    ARO:3003580's existing config describes L-Ara4N addition. These records add
+    ARO:3003580's existing config describes mprF / lysyl-phosphatidylglycerol. These records add
     phosphoethanolamine instead -- same charge outcome, different moiety -- and round 69's
     #264 near-miss detector is what surfaced them, flagging eptA and the pmr family as
     refused-for-lacking-"L-Ara4N addition" while every token of it was present.
@@ -918,11 +918,77 @@ def _requires_alm_glycylation(ident: str, label: str, text: str):
     return None
 
 
+def _requires_ara4n(ident: str, label: str, text: str):
+    """Ara4N addition to lipid A -- the route rounds 73-74 wrongly said was already done.
+
+    Those rounds described ARO:3003580's pre-existing config as "the L-Ara4N config". It
+    is not: it is mprF / lysyl-phosphatidylglycerol. Ara4N had NO config, which is why
+    arnA, ArnT, PmrE and PmrF were still drafts after two rounds that claimed to be
+    adding routes alongside it. Comments corrected in this commit.
+    """
+    if "ARO:3003588" not in D.parse_relations(text)[0]:
+        return "record carries no charge-alteration mechanism (ARO:3003588)"
+    own = _own_definition(text).lower()
+    if not re.search(r"ara4n|4-amino-4-deoxy-l-arabinose", own):
+        return "own definition does not name Ara4N"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ---------------------------------------------------------------------------------
+    # Ara4N addition to lipid A (under ARO:3003580) -- the fourth charge-alteration route,
+    # and the one rounds 73-74 mistakenly believed was already curated.
+    "ARO:3003580-ara4n": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_ara4n,
+        "reference": "ARO:3003588",
+        "mech": {"ARO:3003588": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface."},
+        "mech_res": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+        "det_res": [
+            {"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+             "notes": "The shared causal sentence, as for the pEtN and glycylation routes."},
+            {"reference": "ARO:3003578", "snippet": "PmrF is required for the synthesis and transfer of 4-amino-4-deoxy-L-arabinose (Ara4N) to Lipid A, which allows gram-negative bacteria to resist the antimicrobial activity of cationic antimicrobial peptides and antibiotics such as polymyxin.",
+             "notes": "The route and its consequence in one sentence. SCOPE: PmrF's; these records span synthesis (PmrE/ugd, arnA) and transfer (ArnT), which this sentence covers collectively as 'synthesis and transfer'."},
+        ],
+        "res_drug": "arnA modifies lipid A with 4-amino-4-deoxy-L-arabinose (Ara4N) which allows gram-negative bacteria to resist the antimicrobial activity of cationic antimicrobial peptides and antibiotics such as polymyxin.",
+        "note": "Charge alteration by Ara4N addition to lipid A. Distinct from mprF (lysyl-PG), pEtN and glycylation routes on this family.",
+        "extra_nodes": [
+            {"node_id": "ara4n_pathway", "label": "Ara4N synthesis and transfer to lipid A",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "One node for a multi-step pathway: CARD's sentence bundles 'synthesis and transfer', and these records are different steps of it."},
+            {"node_id": "lipid_a", "label": "lipid A of the outer membrane",
+             "node_type": "CHEMICAL",
+             "description": "The modified surface. Ungrounded: no CHEBI id verified this round."},
+            {"node_id": "charge", "label": "reduced net negative surface charge",
+             "node_type": "STATE", "description": "The causal core, shared across this family's routes."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "ara4n_pathway",
+             "predicate": "participates in (Ara4N synthesis and transfer)",
+             "predicate_id": "RO:0000056",
+             "description": "'Participates in' rather than 'enables', for round 74's reason: these records are different steps (PmrE/ugd synthesis, ArnT transfer) and no one of them performs the route.",
+             "evidence": [{"reference": "ARO:3003578", "snippet": "PmrF is required for the synthesis and transfer of 4-amino-4-deoxy-L-arabinose (Ara4N) to Lipid A, which allows gram-negative bacteria to resist the antimicrobial activity of cationic antimicrobial peptides and antibiotics such as polymyxin.",
+                           "notes": "'required for the synthesis AND transfer' -- CARD treats it as a multi-step route."}]},
+            {"subject": "ara4n_pathway", "object": "lipid_a",
+             "predicate": "causally upstream of (modifies lipid A)", "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3002985", "snippet": "arnA modifies lipid A with 4-amino-4-deoxy-L-arabinose (Ara4N) which allows gram-negative bacteria to resist the antimicrobial activity of cationic antimicrobial peptides and antibiotics such as polymyxin.",
+                           "notes": "'modifies lipid A with 4-amino-4-deoxy-L-arabinose'."}]},
+            {"subject": "lipid_a", "object": "charge",
+             "predicate": "causally upstream of (reduces surface negative charge)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+                           "notes": "'loss or reduction of the net negative charge within the cell wall'."}]},
+            {"subject": "charge", "object": "drug0",
+             "predicate": "negatively regulates (impedes drug binding)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3003578", "snippet": "PmrF is required for the synthesis and transfer of 4-amino-4-deoxy-L-arabinose (Ara4N) to Lipid A, which allows gram-negative bacteria to resist the antimicrobial activity of cationic antimicrobial peptides and antibiotics such as polymyxin.",
+                           "notes": "'allows gram-negative bacteria to resist ... cationic antimicrobial peptides'."}]},
+        ],
+    },
     # ---------------------------------------------------------------------------------
     # alm glycylation (under ARO:3003580) -- the THIRD lipid A charge-alteration route.
     #
-    # L-Ara4N addition and phosphoethanolamine addition (round 73) are the other two. All
+    # mprF acylation and phosphoethanolamine addition (round 73) are two of the others. All
     # three neutralise the same negative charge by attaching a different group, and all
     # three share ARO:3003588's causal sentence.
     "ARO:3003580-alm": {
@@ -975,7 +1041,7 @@ FAMILY_SNIPPETS = {
     # ---------------------------------------------------------------------------------
     # Phosphoethanolamine transferases (under ARO:3003580) -- charge alteration, pEtN route.
     #
-    # The family already carries an L-Ara4N config. These records neutralise lipid A with
+    # The family already carries an mprF config. These records neutralise lipid A with
     # phosphoethanolamine instead. Same outcome, different moiety, and the causal sentence
     # is the same: less negative charge, so the cationic drug binds less.
     #
@@ -5038,13 +5104,15 @@ FAMILY_SNIPPETS["ARO:3000557"] = FAMILY_SNIPPETS["ARO:3000557"] + [
 
 
 
-# ARO:3003580 carries BOTH lipid A neutralisation routes: L-Ara4N addition (existing) and
+# ARO:3003580 carries several surface-charge routes: mprF lysyl-phosphatidylglycerol
+# (existing) and
 # phosphoethanolamine addition (round 73). Same charge outcome, different moiety; each
 # precondition selects on the record's own definition.
 FAMILY_SNIPPETS["ARO:3003580"] = [
     FAMILY_SNIPPETS["ARO:3003580"],
     FAMILY_SNIPPETS.pop("ARO:3003580-petn"),
     FAMILY_SNIPPETS.pop("ARO:3003580-alm"),
+    FAMILY_SNIPPETS.pop("ARO:3003580-ara4n"),
 ]
 
 def _check_config_order() -> None:
