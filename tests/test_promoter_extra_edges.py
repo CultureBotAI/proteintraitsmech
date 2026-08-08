@@ -2444,7 +2444,9 @@ def test_nfsb_keeps_its_genetic_precondition():
     cfg = promote.family_configs("ARO:3003755")[0]
     assert any(n["node_id"] == "nfsa_background" for n in cfg["extra_nodes"])
     edge = next(e for e in cfg["extra_edges"] if e["subject"] == "nfsa_background")
-    assert "nfsA mutant background" in edge["evidence"][0]["notes"]
+    # Case-insensitive: the note emphasises the clause in caps, and asserting the
+    # lowercase form failed while the DATA was correct.
+    assert "nfsa mutant background" in edge["evidence"][0]["notes"].lower()
     assert "CONDITIONAL" in cfg["note"]
 
 
