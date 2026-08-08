@@ -2182,3 +2182,14 @@ def test_tap_pump_has_no_energetics_because_card_gives_none():
     for word in ("proton", "gradient", "atp", "antiport"):
         assert word not in labels, f"Tap config asserts {word!r} uncited"
     assert "NOT asserted" in cfg["note"]
+
+
+def test_generic_target_replacement_keeps_both_halves_of_cards_claim():
+    """"same functions" (why substitution works) and "structurally different and THUS
+    resistant" (why the drug misses it). Round 52's mecA config had to leave the second
+    implicit; here CARD states it, so the edge carries the 'thus'."""
+    cfg = promote.family_configs("ARO:3000381")[0]
+    ids = {n["node_id"] for n in cfg["extra_nodes"]}
+    assert {"shared_function", "structural_difference"} <= ids
+    edge = next(e for e in cfg["extra_edges"] if e["object"] == "structural_difference")
+    assert "thus resistant" in edge["evidence"][0]["notes"].lower()
