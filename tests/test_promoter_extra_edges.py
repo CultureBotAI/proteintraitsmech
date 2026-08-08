@@ -1851,3 +1851,23 @@ def test_lpx_keeps_cards_double_hedge_visible():
     assert "both hedges" in notes.lower()
     edge = next(e for e in cfg["extra_edges"] if e["subject"] == "determinant")
     assert edge["predicate_id"] == "RO:0000056", "'participates in', matching 'involved in'"
+
+
+def test_two_component_regulators_do_not_efflux_anything():
+    """Sixth chance to repeat the ArmR/MecI/arlS error; the graph must end at the process.
+
+    These proteins transport nothing. Pump chemistry lives on the pump records
+    (SMR round 67, MATE round 69), so this graph stops at the efflux process.
+    """
+    cfg = promote.family_configs("ARO:3000750")[0]
+    labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    for pump_word in ("antiport", "transporter activity", "gradient", "extrud"):
+        assert pump_word not in labels, f"regulator graph restates pump chemistry: {pump_word}"
+
+
+def test_two_component_edge_keeps_cards_directly_or_indirectly_hedge():
+    """RO:0002211 'regulates', not the positive form -- CARD says "change rates"."""
+    cfg = promote.family_configs("ARO:3000750")[0]
+    edge = next(e for e in cfg["extra_edges"] if e["object"] == "efflux_process")
+    assert edge["predicate_id"] == "RO:0002211"
+    assert "directly or indirectly" in edge["evidence"][0]["snippet"]

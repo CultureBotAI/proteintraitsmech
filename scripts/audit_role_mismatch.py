@@ -64,8 +64,16 @@ def main() -> int:
         if not REGULATORY.search(own):
             continue
         # its graph asserts the determinant DOES the resisting act
+        # `has quality` is a STATE descriptor, never an effector act. Round 71's
+        # resistance-by-absence config writes "has quality (deleted or inactivated)",
+        # which matched `inactivat\w*` and flagged pvrR -- a regulator correctly described
+        # as inactivated. Third false-positive shape this audit has produced, after
+        # `enables` and the \b-boundary bug; all three were over-broad matching on a
+        # predicate string.
         hits = [ln.strip() for ln in text.splitlines()
-                if ln.strip().startswith("predicate:") and EFFECTOR_PREDICATE.search(ln)]
+                if ln.strip().startswith("predicate:")
+                and "has quality" not in ln
+                and EFFECTOR_PREDICATE.search(ln)]
         if not hits:
             continue
         flagged += 1
