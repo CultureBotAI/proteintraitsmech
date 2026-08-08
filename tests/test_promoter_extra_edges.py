@@ -642,9 +642,13 @@ def test_a_family_can_carry_two_configs_selected_by_precondition():
     """vanR/vanS span BOTH van routes, and the right downstream is a property of the
     RECORD, not the family. The `precondition` each config already has for #201 is the
     selector — the predicate that refuses a record is what chooses between configs."""
-    assert len(promote.family_configs("ARO:3000574")) == 2
+    # No count. What this test is about is that the SELECTOR distinguishes the two
+    # routes -- proven below by the two configs differing and grounding different
+    # downstreams. A count would also fail if a third van route were added, which would
+    # not make any of that untrue (#287).
     lac = promote.config_for("ARO:3000574", "ARO:1", "vanR gene in vanA cluster", "")
     ser = promote.config_for("ARO:3000574", "ARO:2", "vanR gene in vanC cluster", "")
+    assert lac is not None and ser is not None
     assert lac is not ser
     lac_ids = {n.get("grounding") for n in lac["extra_nodes"]}
     ser_ids = {n.get("grounding") for n in ser["extra_nodes"]}
@@ -926,9 +930,13 @@ def test_the_efflux_family_carries_a_config_per_pump_class():
     # #287's shape, fifth instance this session.
     cfgs = [c for c in promote.family_configs("ARO:3000748")
             if any(n["node_id"] == "export" for n in c["extra_nodes"])]
-    assert len(cfgs) == 4          # RND, ABC, MFS, SMR — one per pump class
+    # At least the four known classes, and EXACTLY ONE with the ATP cycle -- that
+    # uniqueness is the real claim, since the defect this guards against is ABC's
+    # energetics leaking into a proton-driven config. A fifth pump class joining is a
+    # legitimate addition and must not fail this (#287).
+    assert len(cfgs) >= 4           # RND, ABC, MFS, SMR
     abc = [c for c in cfgs if any(n["node_id"] == "atp_cycle" for n in c["extra_nodes"])]
-    assert len(abc) == 1
+    assert len(abc) == 1, "only ABC may carry the ATP cycle"
     out = _flat(_graph(abc[0], mech=("ARO:0010000",), drug=("ARO:0000045",)))
     assert "lacks a central cavity" in out
     assert "mechanotransmission" in out
@@ -1114,8 +1122,9 @@ def test_target_protection_now_has_three_configs_with_three_modes():
     TetM and HelR share a mode on different targets; FusB shares a target class with
     neither. Three configs, three papers, no borrowed sentences.
     """
+    # Assert the three MODES are present by their marker nodes, not that there are
+    # exactly three configs -- a fourth protection mechanism would not falsify this (#287).
     cfgs = promote.family_configs("ARO:3000185")
-    assert len(cfgs) == 3
     marks = {n["node_id"] for c in cfgs for n in c["extra_nodes"]}
     assert {"tet_site", "stalled", "inhibited"} <= marks
 
@@ -1300,8 +1309,10 @@ def test_replacement_pbp_predicate_discriminates_on_mechanism_not_keywords():
 
 def test_pbp_family_carries_both_mechanisms_as_a_list():
     """ARO:3003040 spans target replacement AND target alteration (rounds 52-53)."""
+    # The mechanism-id set is what "spans both" means; the count was standing in for it
+    # and broke when an unrelated config joined the family (#287).
     cfgs = promote.family_configs("ARO:3003040")
-    assert len(cfgs) == 2, "expected the list form, not a single config"
+    assert len(cfgs) > 1, "must be the list form, not a single config"
     mechs = {m for c in cfgs for m in c["mech"]}
     assert mechs == {"ARO:0001002", "ARO:3000212"}
 
@@ -1585,8 +1596,8 @@ def test_rifampin_phosphorylation_does_not_pin_the_donor():
 
 def test_streptogramin_has_one_config_per_chemistry_and_subtype():
     """vat acetylates type A; vgb linearizes type B. One config would be wrong twice."""
+    # Both chemistries present and no others -- the count was a proxy for that (#287).
     cfgs = promote.family_configs("ARO:3000233")
-    assert len(cfgs) == 2
     mechs = {m for c in cfgs for m in c["mech"]} - {"ARO:0001004"}
     assert mechs == {"ARO:3000106", "ARO:3000338"}
 
@@ -2069,3 +2080,17 @@ def test_vanj_homologue_uses_shares_ancestor_not_serially_homologous():
     edge = cfg["extra_edges"][0]
     assert edge["predicate_id"] == "RO:0002158"
     assert "homology, not mechanism" in edge["description"].lower()
+
+
+def test_no_test_asserts_an_exact_family_config_count():
+    """#287: a count breaks when a family gains an unrelated config, five times over.
+
+    Meta-test, because the fix is only durable if the pattern cannot come back. A count
+    is almost always a proxy for a real property -- a mechanism-id set, a marker node, a
+    uniqueness claim -- and asserting the proxy fails for reasons unrelated to the test.
+    """
+    src = pathlib.Path(__file__).read_text(encoding="utf-8")
+    brittle = re.findall(
+        r'assert len\(cfgs\) == \d|assert len\(promote\.family_configs\([^)]*\)\) == \d',
+        src)
+    assert not brittle, f"exact config-count assertions reintroduced: {brittle}"
