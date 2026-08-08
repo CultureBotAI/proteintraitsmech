@@ -1010,7 +1010,54 @@ def _requires_emb_arabinosyltransferase(ident: str, label: str, text: str):
     return None
 
 
+def _requires_pps_polyketide(ident: str, label: str, text: str):
+    """A ppsA-E polyketide synthase variant."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ppsA-E polyketide synthases (ARO:3005002) -- resistance claim WITHOUT a mechanism.
+    #
+    # Round 66's EF-Tu shape. CARD says these enzymes make phthiocerol dimycocerosate and
+    # that mutations "CAN RESULT IN" pyrazinamide resistance -- and never says how a lipid
+    # biosynthesis defect confers resistance to a prodrug activated by pncA (round 56).
+    # The connection is real in the literature and absent here, so it is not drawn.
+    #
+    # Note the family term describes an OPERON ("Genes ppsA-E constitute an operon") while
+    # the records are individual proteins. The operon is cited as the source of the
+    # biosynthetic claim, not modelled -- the same position round 74 took with almEFG.
+    "ARO:3005002": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_pps_polyketide,
+        "reference": "ARO:3005002",
+        "mech": {"ARO:3000212": "Genes ppsA-E constitute an operon encoding enzymes involved in the biosynthesis of phthiocerol dimycocerosate and other lipids in Mycobacterium tuberculosis. Mutations within this region can result in resistance to pyrazinamide."},
+        "mech_res": "Genes ppsA-E constitute an operon encoding enzymes involved in the biosynthesis of phthiocerol dimycocerosate and other lipids in Mycobacterium tuberculosis. Mutations within this region can result in resistance to pyrazinamide.",
+        "det_res": [
+            {"reference": "ARO:3005002", "snippet": "Genes ppsA-E constitute an operon encoding enzymes involved in the biosynthesis of phthiocerol dimycocerosate and other lipids in Mycobacterium tuberculosis. Mutations within this region can result in resistance to pyrazinamide.",
+             "notes": "Both claims and the gap between them: what these enzymes DO (phthiocerol dimycocerosate biosynthesis) and that mutations 'CAN RESULT IN' resistance to pyrazinamide. CARD never links the two, and the hedge is its own."},
+        ],
+        "res_drug": "Genes ppsA-E constitute an operon encoding enzymes involved in the biosynthesis of phthiocerol dimycocerosate and other lipids in Mycobacterium tuberculosis. Mutations within this region can result in resistance to pyrazinamide.",
+        "note": ("Resistance mechanism deliberately NOT asserted. CARD gives the enzymes' "
+                 "biosynthetic role and a hedged resistance claim ('can result in') with "
+                 "nothing between them. How a phthiocerol dimycocerosate defect confers "
+                 "pyrazinamide resistance is real elsewhere and uncited here -- round 66's "
+                 "EF-Tu position, and #219's lesson about sourcing mechanisms I know."),
+        "extra_nodes": [
+            {"node_id": "pdim_synthesis", "label": "phthiocerol dimycocerosate biosynthesis",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-80)."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "pdim_synthesis",
+             "predicate": "participates in (phthiocerol dimycocerosate biosynthesis)",
+             "predicate_id": "RO:0000056",
+             "description": "'Participates in', matching CARD's 'enzymes INVOLVED IN' and because ppsA-E are five enzymes of one pathway -- no single record performs it.",
+             "evidence": [{"reference": "ARO:3005002", "snippet": "Genes ppsA-E constitute an operon encoding enzymes involved in the biosynthesis of phthiocerol dimycocerosate and other lipids in Mycobacterium tuberculosis. Mutations within this region can result in resistance to pyrazinamide.",
+                           "notes": "'enzymes involved in the biosynthesis of phthiocerol dimycocerosate'. NOT asserted: any link between this pathway and pyrazinamide, which CARD does not draw."}]},
+        ],
+    },
     # emb arabinosyltransferases (ARO:3005005) -- target alteration, with the drug's own
     # target named by the record. Rounds 18-19, 53 and 61 curated target alteration where
     # the drug binds a nucleic acid or a wall-building enzyme; here CARD spells out the

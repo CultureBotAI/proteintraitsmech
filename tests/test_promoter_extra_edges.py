@@ -1907,3 +1907,15 @@ def test_emb_scopes_embbs_sentence_and_does_not_assert_erdr_family_wide():
     assert "SCOPE" in ev["notes"] and "embA and embC" in ev["notes"]
     labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
     assert "erdr" not in labels, "the region is embB's, not the family's"
+
+
+def test_pps_does_not_link_lipid_biosynthesis_to_pyrazinamide():
+    """CARD gives the biosynthetic role and a hedged resistance claim, nothing between.
+
+    The connection is real in the literature and absent from every source read here.
+    This is #219's lesson: the mechanism I know is the one most likely to arrive uncited.
+    """
+    cfg = promote.family_configs("ARO:3005002")[0]
+    assert len(cfg["extra_edges"]) == 1, "only the biosynthetic role may be asserted"
+    assert "NOT asserted" in cfg["extra_edges"][0]["evidence"][0]["notes"]
+    assert "can result in" in cfg["mech"]["ARO:3000212"], "CARD's hedge must survive"

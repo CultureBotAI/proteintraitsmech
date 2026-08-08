@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004884
 trait_relations:
@@ -30,12 +30,15 @@ evidence:
 - reference: DOI:10.1038/s41598-018-33731-1
   notes: PMID:30337678 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis ppsC mutations confer resistance to pyrazinamide → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycobacterium tuberculosis ppsC mutations confer resistance to pyrazinamide → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3005002). Resistance mechanism deliberately NOT asserted. CARD gives the enzymes'' biosynthetic
+    role and a hedged resistance claim (''can result in'') with nothing between them. How a phthiocerol
+    dimycocerosate defect confers pyrazinamide resistance is real elsewhere and uncited here -- round
+    66''s EF-Tu position, and #219''s lesson about sourcing mechanisms I know.'
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis ppsC mutations confer resistance to pyrazinamide
@@ -49,6 +52,10 @@ causal_graphs:
     label: pyrazine antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007155
+  - node_id: pdim_synthesis
+    label: phthiocerol dimycocerosate biosynthesis
+    node_type: BIOLOGICAL_PROCESS
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-80).'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,46 +69,59 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.00430-18
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004975
-      snippet: Mutations in ppsC can contribute to or confer resistance to pyrazinamide.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3005002
+      snippet: Genes ppsA-E constitute an operon encoding enzymes involved in the biosynthesis of phthiocerol
+        dimycocerosate and other lipids in Mycobacterium tuberculosis. Mutations within this region can
+        result in resistance to pyrazinamide.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00430-18
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3005002
+      snippet: Genes ppsA-E constitute an operon encoding enzymes involved in the biosynthesis of phthiocerol
+        dimycocerosate and other lipids in Mycobacterium tuberculosis. Mutations within this region can
+        result in resistance to pyrazinamide.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00430-18
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004975
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3003413 ! pyrazinamide'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3005002
+      snippet: Genes ppsA-E constitute an operon encoding enzymes involved in the biosynthesis of phthiocerol
+        dimycocerosate and other lipids in Mycobacterium tuberculosis. Mutations within this region can
+        result in resistance to pyrazinamide.
+      notes: 'Both claims and the gap between them: what these enzymes DO (phthiocerol dimycocerosate
+        biosynthesis) and that mutations ''CAN RESULT IN'' resistance to pyrazinamide. CARD never links
+        the two, and the hedge is its own.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to pyrazine antibiotic.
     evidence:
     - reference: ARO:3005002
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007155 ! pyrazine antibiotic'
       notes: Asserted on ARO:3005002 (antibiotic resistant polyketide synthase genes), an is_a ancestor
         of this record's ARO:3004975; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to pyrazine antibiotic.
+  - subject: determinant
+    predicate: participates in (phthiocerol dimycocerosate biosynthesis)
+    predicate_id: RO:0000056
+    object: pdim_synthesis
+    description: '''Participates in'', matching CARD''s ''enzymes INVOLVED IN'' and because ppsA-E are
+      five enzymes of one pathway -- no single record performs it.'
+    evidence:
+    - reference: ARO:3005002
+      snippet: Genes ppsA-E constitute an operon encoding enzymes involved in the biosynthesis of phthiocerol
+        dimycocerosate and other lipids in Mycobacterium tuberculosis. Mutations within this region can
+        result in resistance to pyrazinamide.
+      notes: '''enzymes involved in the biosynthesis of phthiocerol dimycocerosate''. NOT asserted: any
+        link between this pathway and pyrazinamide, which CARD does not draw.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
