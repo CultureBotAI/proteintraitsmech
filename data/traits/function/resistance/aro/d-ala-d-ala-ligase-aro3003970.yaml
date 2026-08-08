@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3002906
 trait_relations:
@@ -28,11 +28,13 @@ evidence:
 - reference: DOI:10.1086/491711
   notes: PMID:16323116 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] D-Ala-D-Ala ligase → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: D-Ala-D-Ala ligase → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3003970). The enzyme whose product makes the cell susceptible. NOT asserted: that losing it confers
+    resistance outright -- CARD says nonfunctional ddl can render bacteria glycopeptide DEPENDENT, conditional
+    on a van cluster being present, which is a different phenotype from resistance.'
   nodes:
   - node_id: determinant
     label: D-Ala-D-Ala ligase
@@ -46,6 +48,15 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: dala_dala_synthesis
+    label: D-Ala-D-Ala ligase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-89).'
+  - node_id: susceptible_precursor
+    label: D-Ala-D-Ala, the precursor glycopeptides bind
+    node_type: CHEMICAL
+    description: 'The VULNERABILITY, not the resistance. Ungrounded: rounds 20-23 recorded the same CHEBI
+      gap for UDP-MurNAc peptides.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -59,47 +70,85 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1110/ps.39101
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
     - reference: ARO:3003970
       snippet: Non-van ligases that synthesize D-Ala-D-Ala, the default cell wall precursor that makes
         a cell vulnerable to glycopeptide antibiotics. Mutations in the ddl gene can cause the production
         of nonfunctional/inactivated D-Ala-D-Ala ligases, which can render bacteria glycopeptide dependent
         depending on the presence of vancomycin resistance clusters.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:3000213.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1110/ps.39101
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: ARO:3003970
+      snippet: Non-van ligases that synthesize D-Ala-D-Ala, the default cell wall precursor that makes
+        a cell vulnerable to glycopeptide antibiotics. Mutations in the ddl gene can cause the production
+        of nonfunctional/inactivated D-Ala-D-Ala ligases, which can render bacteria glycopeptide dependent
+        depending on the presence of vancomycin resistance clusters.
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1110/ps.39101
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3003970
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000028 ! vancomycin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: Non-van ligases that synthesize D-Ala-D-Ala, the default cell wall precursor that makes
+        a cell vulnerable to glycopeptide antibiotics. Mutations in the ddl gene can cause the production
+        of nonfunctional/inactivated D-Ala-D-Ala ligases, which can render bacteria glycopeptide dependent
+        depending on the presence of vancomycin resistance clusters.
+      notes: The inversion, and the hedge. ddl makes the precursor that renders a cell VULNERABLE; mutations
+        inactivate it; and the resulting phenotype is glycopeptide DEPENDENCE, stated conditionally ('can
+        render … depending on the presence of vancomycin resistance clusters').
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3002906
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
       notes: Asserted on ARO:3002906 (Van ligase), an is_a ancestor of this record's ARO:3003970; inherited
         by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+  - subject: determinant
+    predicate: enables (D-Ala-D-Ala synthesis)
+    predicate_id: RO:0002327
+    object: dala_dala_synthesis
+    evidence:
+    - reference: ARO:3003970
+      snippet: Non-van ligases that synthesize D-Ala-D-Ala, the default cell wall precursor that makes
+        a cell vulnerable to glycopeptide antibiotics. Mutations in the ddl gene can cause the production
+        of nonfunctional/inactivated D-Ala-D-Ala ligases, which can render bacteria glycopeptide dependent
+        depending on the presence of vancomycin resistance clusters.
+      notes: '''Non-van ligases that synthesize D-Ala-D-Ala''.'
+  - subject: dala_dala_synthesis
+    predicate: has output (the susceptible precursor)
+    predicate_id: RO:0002234
+    object: susceptible_precursor
+    description: 'The inversion that makes this family unlike every other van record: the product is what
+      the drug binds, so making it is what makes the cell vulnerable.'
+    evidence:
+    - reference: ARO:3003970
+      snippet: Non-van ligases that synthesize D-Ala-D-Ala, the default cell wall precursor that makes
+        a cell vulnerable to glycopeptide antibiotics. Mutations in the ddl gene can cause the production
+        of nonfunctional/inactivated D-Ala-D-Ala ligases, which can render bacteria glycopeptide dependent
+        depending on the presence of vancomycin resistance clusters.
+      notes: '''the default cell wall precursor that makes a cell VULNERABLE to glycopeptide antibiotics''.'
+  - subject: susceptible_precursor
+    predicate: molecularly interacts with (the drug binds this precursor)
+    predicate_id: RO:0002436
+    object: drug0
+    evidence:
+    - reference: ARO:3003970
+      snippet: Non-van ligases that synthesize D-Ala-D-Ala, the default cell wall precursor that makes
+        a cell vulnerable to glycopeptide antibiotics. Mutations in the ddl gene can cause the production
+        of nonfunctional/inactivated D-Ala-D-Ala ligases, which can render bacteria glycopeptide dependent
+        depending on the presence of vancomycin resistance clusters.
+      notes: Implied by 'makes a cell vulnerable to glycopeptide antibiotics' plus rounds 20-21's curated
+        D-Ala-D-Ala binding; CARD does not write the binding step here.
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

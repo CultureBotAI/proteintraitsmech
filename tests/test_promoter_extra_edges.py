@@ -2094,3 +2094,29 @@ def test_no_test_asserts_an_exact_family_config_count():
         r'assert len\(cfgs\) == \d|assert len\(promote\.family_configs\([^)]*\)\) == \d',
         src)
     assert not brittle, f"exact config-count assertions reintroduced: {brittle}"
+
+
+def test_ddl_makes_the_cell_vulnerable_rather_than_resistant():
+    """Every other van record produces resistance; ddl produces the drug's target.
+
+    Inverting this into a resistance story would be the easiest possible error after
+    twenty van records that all run the other way.
+    """
+    cfg = promote.family_configs("ARO:3003970")[0]
+    out = next(e for e in cfg["extra_edges"] if e["object"] == "susceptible_precursor")
+    assert "VULNERABLE" in out["evidence"][0]["notes"]
+    # The node's ID carries the framing; its LABEL is the chemical name, which is right.
+    # Asserting on the label was my own slip -- the label should not editorialise.
+    assert any(n["node_id"] == "susceptible_precursor" for n in cfg["extra_nodes"])
+    assert "glycopeptides bind" in " ".join(n["label"] for n in cfg["extra_nodes"])
+
+
+def test_ddl_does_not_flatten_dependence_into_resistance():
+    """CARD says nonfunctional ddl can render bacteria glycopeptide DEPENDENT.
+
+    Doubly hedged ("can", "depending on the presence of vancomycin resistance clusters")
+    and a different phenotype from resistance. The note must keep both.
+    """
+    cfg = promote.family_configs("ARO:3003970")[0]
+    assert "DEPENDENT" in cfg["note"]
+    assert "conditional" in cfg["note"]
