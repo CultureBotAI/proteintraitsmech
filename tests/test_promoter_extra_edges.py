@@ -2360,3 +2360,18 @@ def test_eccc5_contradiction_travels_with_the_claim():
     assert "no evidence of an association" in contra["snippet"]
     assert "decreased uptake" in contra["snippet"], "both halves must be present"
     assert "#220" in cfg["note"], "the missing structural carrier is named"
+
+
+def test_cls_does_not_connect_cardiolipin_to_daptomycin():
+    """Daptomycin is membrane-active and the inference is inviting; CARD never makes it.
+
+    Same refusal as round 83's rpoC, where rifampicin's rpoB mechanism was the obvious
+    and wrong thing to reach for.
+    """
+    cfg = promote.family_configs("ARO:3003272")[0]
+    asserted = " ".join(
+        [e["predicate"] for e in cfg["extra_edges"]]
+        + [n["label"] for n in cfg["extra_nodes"]]).lower()
+    for banned in ("daptomycin", "resist", "drug"):
+        assert banned not in asserted, f"cls config asserts {banned!r} uncited"
+    assert "NOT asserted" in cfg["note"]

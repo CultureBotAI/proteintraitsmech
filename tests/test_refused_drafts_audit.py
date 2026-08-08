@@ -44,3 +44,16 @@ def test_the_root_is_excluded_from_refusal_reporting():
     src = (pathlib.Path(__file__).resolve().parent.parent
            / "scripts" / "audit_refused_drafts.py").read_text(encoding="utf-8")
     assert 'f != "ARO:3000000"' in src
+
+
+def test_the_audit_reports_unconfigured_families_too():
+    """Round 102's ESX-5 records were under a family with no config AND no mechanism id.
+
+    The first two sections only see records under a CONFIGURED family, so nothing pointed
+    at them; finding them took a hand-written query. That is the shape of thing that gets
+    run once and forgotten, so it is now a section of the recipe.
+    """
+    src = (pathlib.Path(__file__).resolve().parent.parent
+           / "scripts" / "audit_refused_drafts.py").read_text(encoding="utf-8")
+    assert "UNCONFIGURED families with drafts" in src
+    assert "unconfigured = collections.Counter()" in src
