@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3002976
 trait_relations:
@@ -22,11 +22,13 @@ evidence:
 - reference: DOI:10.1086/491711
   notes: PMID:16323116 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] vanZ → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: vanZ → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3000116). Exclusion of the terminal D-Ala. HOW VanZ prevents incorporation is not stated by CARD
+    and is not asserted; the link from a missing D-Ala to teicoplanin resistance is likewise left to the
+    ligase records.
   nodes:
   - node_id: determinant
     label: vanZ
@@ -40,6 +42,10 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: terminal_dala
+    label: terminal D-Ala of the peptidoglycan subunit
+    node_type: CHEMICAL
+    description: 'What is excluded. Ungrounded: a residue position in a precursor, not a compound.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,44 +59,53 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1086/491711
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
     - reference: ARO:3000116
       snippet: VanZ is a teicoplanin resistance gene that is an accessory protein. VanZ prevents the incorporation
         of the terminal D-Ala into peptidoglycan subunits.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:3000213.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1086/491711
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: ARO:3000116
+      snippet: VanZ is a teicoplanin resistance gene that is an accessory protein. VanZ prevents the incorporation
+        of the terminal D-Ala into peptidoglycan subunits.
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1086/491711
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3000116
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: VanZ is a teicoplanin resistance gene that is an accessory protein. VanZ prevents the incorporation
+        of the terminal D-Ala into peptidoglycan subunits.
+      notes: 'An ''accessory protein'' with a precise effect: it PREVENTS incorporation of the terminal
+        D-Ala. CARD does not say how, and that step is not drawn.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3000116
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted directly on ARO:3000116 (vanZ) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+      notes: Asserted on ARO:3000116 (vanZ), an is_a ancestor of this record's ARO:3000116; inherited
+        by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: negatively regulates (prevents its incorporation)
+    predicate_id: RO:0002212
+    object: terminal_dala
+    description: 'The one mechanistic claim CARD makes. NOT asserted: the mechanism by which it prevents
+      incorporation, nor the link from that to teicoplanin binding.'
+    evidence:
+    - reference: ARO:3000116
+      snippet: VanZ is a teicoplanin resistance gene that is an accessory protein. VanZ prevents the incorporation
+        of the terminal D-Ala into peptidoglycan subunits.
+      notes: '''VanZ prevents the incorporation of the terminal D-Ala into peptidoglycan subunits''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
