@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004900
 trait_relations:
@@ -17,11 +17,12 @@ trait_relations:
     object: ARO:3007152
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004901 isoniazid resistant mshA"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] isoniazid resistant mshA → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: isoniazid resistant mshA → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3004900). Prodrug-activation loss. NOT asserted: what mshA does, which drug it activates, or
+    how -- CARD gives none of it. The graph carries the activation failure and nothing else.'
   nodes:
   - node_id: determinant
     label: isoniazid resistant mshA
@@ -35,6 +36,11 @@ causal_graphs:
     label: isoniazid-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007152
+  - node_id: activation
+    label: activation of the antibiotic
+    node_type: STATE
+    description: 'What the mutation prevents. Ungrounded, and deliberately unspecific: CARD names neither
+      the drug nor the reaction.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -48,47 +54,50 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: ARO:3004901
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004901
-      snippet: mshA is a glycosyltransferase and is involved in the first step of mycothiol biosynthesis.
-        This is a step that is required for growth in mycobacterium tuberculosis. Resistance has been
-        shown in the gene to isoniazid.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3004900
+      snippet: Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3004901
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3004900
+      snippet: Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3004901
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004901
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3004900
+      snippet: Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.
+      notes: 'The whole claim, and the word that carries it: mutations leave the antibiotic unable to
+        ACTIVATE -- not merely to function. That makes it prodrug-activation loss (rounds 56, 57), which
+        is more than the neighbouring mshC record says.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
     evidence:
     - reference: ARO:3004901
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
-      notes: Asserted directly on ARO:3004901 (isoniazid resistant mshA) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
+      notes: Asserted on ARO:3004901 (isoniazid resistant mshA), an is_a ancestor of this record's ARO:3004901;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: negatively regulates (prevents the antibiotic activating)
+    predicate_id: RO:0002212
+    object: activation
+    description: The one mechanistic claim CARD makes here, and the word that distinguishes this family
+      from mshC's 'inability to function'.
+    evidence:
+    - reference: ARO:3004900
+      snippet: Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.
+      notes: '''resulting in the inability for antibiotic to ACTIVATE''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

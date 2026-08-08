@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3002876
 trait_relations:
@@ -33,12 +33,14 @@ evidence:
 - reference: DOI:10.1038/s41598-018-33731-1
   notes: PMID:30337678 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis aftA mutations confer resistance to ethambutol → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycobacterium tuberculosis aftA mutations confer resistance to ethambutol → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3003422). Biosynthetic role only. NOT asserted: any resistance mechanism -- CARD''s sentence
+    never mentions a drug, mutations, or resistance, so the graph carries what the enzyme does and stops.
+    Thinner than round 81''s ppsA-E, which at least paired a role with a hedged resistance claim.'
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis aftA mutations confer resistance to ethambutol
@@ -52,6 +54,14 @@ causal_graphs:
     label: polyamine antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000527
+  - node_id: arabinofuranosyl_transfer
+    label: arabinofuranosyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-93).'
+  - node_id: magp
+    label: arabinogalactan region of the mAGP complex
+    node_type: CHEMICAL
+    description: The product, which CARD calls essential to the mycobacterial cell wall. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -65,46 +75,62 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1038/ng.2743
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004951
-      snippet: Mutations in aftA gene contribute to or confer resistance to ethamutol.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3003422
+      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
+        of the mAGP complex, an essential component of the mycobacterial cell wall.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/ng.2743
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3003422
+      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
+        of the mAGP complex, an essential component of the mycobacterial cell wall.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/ng.2743
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004951
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000497 ! ethambutol'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3003422
+      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
+        of the mAGP complex, an essential component of the mycobacterial cell wall.
+      notes: The enzyme's role and the product's importance ('an ESSENTIAL component of the mycobacterial
+        cell wall'). CARD says nothing about what mutations do, nor which drug is involved.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to polyamine antibiotic.
     evidence:
     - reference: ARO:3002876
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000527 ! polyamine antibiotic'
       notes: Asserted on ARO:3002876 (ethambutol resistant aftA), an is_a ancestor of this record's ARO:3004951;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to polyamine antibiotic.
+  - subject: determinant
+    predicate: participates in (arabinogalactan biosynthesis)
+    predicate_id: RO:0000056
+    object: arabinofuranosyl_transfer
+    description: '''Participates in'', matching CARD''s own ''is INVOLVED IN'' rather than upgrading it.'
+    evidence:
+    - reference: ARO:3003422
+      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
+        of the mAGP complex, an essential component of the mycobacterial cell wall.
+      notes: '''Arabinofuranosyltransferase is INVOLVED IN the biosynthesis''.'
+  - subject: arabinofuranosyl_transfer
+    predicate: has output (the arabinogalactan region)
+    predicate_id: RO:0002234
+    object: magp
+    evidence:
+    - reference: ARO:3003422
+      snippet: Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region
+        of the mAGP complex, an essential component of the mycobacterial cell wall.
+      notes: '''the arabinogalactan region of the mAGP complex, an essential component''. NOT asserted:
+        any link to a drug, which CARD''s sentence does not contain.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

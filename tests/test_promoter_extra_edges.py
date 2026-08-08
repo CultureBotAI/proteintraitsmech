@@ -2193,3 +2193,25 @@ def test_generic_target_replacement_keeps_both_halves_of_cards_claim():
     assert {"shared_function", "structural_difference"} <= ids
     edge = next(e for e in cfg["extra_edges"] if e["object"] == "structural_difference")
     assert "thus resistant" in edge["evidence"][0]["notes"].lower()
+
+
+def test_msha_and_mshc_are_separated_by_one_word():
+    """mshA: "inability for antibiotic to ACTIVATE". mshC: "...to FUNCTION".
+
+    One word apart, and only the first names a mechanism. mshC stays a draft; a config
+    for mshA must not be generalised to cover it.
+    """
+    cfg = promote.family_configs("ARO:3004900")[0]
+    assert "activate" in cfg["mech"]["ARO:3000212"].lower()
+    assert any(n["node_id"] == "activation" for n in cfg["extra_nodes"])
+    # mshC is a different family term and must have no config
+    assert promote.family_configs("ARO:3004889") == []
+
+
+def test_afta_asserts_no_resistance_mechanism_at_all():
+    """CARD's sentence never mentions a drug, mutations, or resistance."""
+    cfg = promote.family_configs("ARO:3003422")[0]
+    asserted = " ".join(e["predicate"] for e in cfg["extra_edges"]).lower()
+    for banned in ("resist", "drug", "inhibit", "mutation"):
+        assert banned not in asserted, f"aftA config asserts {banned!r} uncited"
+    assert "NOT asserted" in cfg["note"]
