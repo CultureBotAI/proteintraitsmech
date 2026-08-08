@@ -1332,6 +1332,49 @@ def _fungal_p450_config(fam_id: str, snippet: str, drug: str, hedged: bool) -> d
 
 
 FAMILY_SNIPPETS = {
+    # rpoB (ARO:3003276) -- round 83's rpoC shape, and the symmetry is the point.
+    #
+    # Round 83 refused to give rpoC rifampicin's mechanism, noting that rifampicin binds
+    # rpoB, not rpoC -- so the obvious guess was attached to the wrong subunit. Here is
+    # rpoB, where that mechanism WOULD belong, and CARD does not state it either. Its
+    # definition is structurally identical to rpoC's: the polymerase's role, the subunit's
+    # structural contribution, and a bare "mutations confer resistance" with nothing
+    # between.
+    #
+    # So the refusal was doubly right, and rpoB gets the same graph its neighbour got.
+    "ARO:3003276": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3003276",
+        "mech": {"ARO:3000212": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoB gene confers antibiotic resistance."},
+        "mech_res": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoB gene confers antibiotic resistance.",
+        "det_res": [
+            {"reference": "ARO:3003276", "snippet": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoB gene confers antibiotic resistance.",
+             "notes": "Role, structural contribution, and a bare resistance claim. Rifampicin DOES bind rpoB -- and CARD does not say so here, so it is not asserted. Round 83 refused this mechanism for rpoC because it belongs to rpoB; it turns out not to be citable for rpoB either."},
+        ],
+        "res_drug": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoB gene confers antibiotic resistance.",
+        "note": ("Mechanism deliberately NOT asserted. The rifampicin-rpoB interaction is "
+                 "textbook and this is the record it belongs to -- which makes it the most "
+                 "inviting uncited edge in the corpus, and the reason the omission is "
+                 "pinned rather than trusted."),
+        "extra_nodes": [
+            {"node_id": "transcription", "label": "transcription", "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-104)."},
+            {"node_id": "active_center", "label": "RNA polymerase active center and template/transcript binding sites",
+             "node_type": "PROTEIN",
+             "description": "What the beta-subunit forms. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "active_center",
+             "predicate": "part of (the polymerase active center)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3003276", "snippet": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoB gene confers antibiotic resistance.",
+                           "notes": "'The beta-subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites'."}]},
+            {"subject": "active_center", "object": "transcription",
+             "predicate": "part of (transcription)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3003276", "snippet": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta-subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoB gene confers antibiotic resistance.",
+                           "notes": "'RNA polymerase ... is necessary for transcription'. NOT asserted: that rifampicin binds this centre, which CARD does not state even here."}]},
+        ],
+    },
     # pgsA (ARO:3003420) -- a biosynthetic role and no mechanism. Round 95's aftA shape.
     #
     # Left in round 96 as "a role and no mechanism", which is exactly what round 95 had
