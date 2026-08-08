@@ -1017,7 +1017,74 @@ def _requires_pps_polyketide(ident: str, label: str, text: str):
     return None
 
 
+def _requires_folp(ident: str, label: str, text: str):
+    """A folP / dihydropteroate synthase variant."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # folP dihydropteroate synthase (ARO:3000226) -- the most completely stated target
+    # alteration in this corpus. CARD gives enzyme, pathway, drug action, mutation effect
+    # and resistance in ONE sentence, and a second record adds that the inhibition is
+    # COMPETITIVE and that the mutation lowers drug AFFINITY.
+    #
+    # Competitive inhibition is why this is not round 80's embB shape repeated: the drug is
+    # a substrate analogue, so "lowered affinity for the drug" and "still binds its real
+    # substrate" are the same claim seen from two sides. The graph says so explicitly.
+    "ARO:3000226": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_folp,
+        "reference": "ARO:3000226",
+        "mech": {"ARO:3000212": "Point mutations in dihydropteroate synthase folP prevent sulfonamide antibiotics from inhibiting its role in folate synthesis, thus conferring sulfonamide resistance."},
+        "mech_res": "Point mutations in dihydropteroate synthase folP prevent sulfonamide antibiotics from inhibiting its role in folate synthesis, thus conferring sulfonamide resistance.",
+        "det_res": [
+            {"reference": "ARO:3000226", "snippet": "Point mutations in dihydropteroate synthase folP prevent sulfonamide antibiotics from inhibiting its role in folate synthesis, thus conferring sulfonamide resistance.",
+             "notes": "The whole chain in one sentence: mutations PREVENT sulfonamides from inhibiting folP's role in folate synthesis, THUS conferring resistance."},
+            {"reference": "ARO:3003388", "snippet": "Dapsone inhibits bacterial synthesis of dihydrofolic acid by competing with with para-aminobenzoate for the active site of dihydropteroate synthetase. Thus acts as a competitive inhibitor of folP. Point mutation within the folP gene results in lowered affinity of dapsone for folP.",
+             "notes": "And the kind of inhibition: COMPETITIVE, with para-aminobenzoate, plus the mutation's measured effect -- 'lowered affinity of dapsone for folP'. SCOPE: dapsone's sentence; the family term speaks of sulfonamides generally."},
+        ],
+        "res_drug": "Point mutations in dihydropteroate synthase folP prevent sulfonamide antibiotics from inhibiting its role in folate synthesis, thus conferring sulfonamide resistance.",
+        "note": "Target alteration by lowered drug affinity at a competitive-inhibitor site.",
+        "extra_nodes": [
+            {"node_id": "dhps_activity", "label": "dihydropteroate synthase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-81)."},
+            {"node_id": "folate_synthesis", "label": "folate synthesis",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The pathway the drug blocks. Ungrounded: no term verified this round."},
+            {"node_id": "low_affinity", "label": "lowered affinity of the drug for the mutant enzyme",
+             "node_type": "STATE",
+             "description": "The causal core, and measured for dapsone specifically."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "dhps_activity",
+             "predicate": "enables (dihydropteroate synthesis)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3000226", "snippet": "Point mutations in dihydropteroate synthase folP prevent sulfonamide antibiotics from inhibiting its role in folate synthesis, thus conferring sulfonamide resistance.",
+                           "notes": "folP IS the dihydropteroate synthase."}]},
+            {"subject": "dhps_activity", "object": "folate_synthesis",
+             "predicate": "part of (folate synthesis)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3000226", "snippet": "Point mutations in dihydropteroate synthase folP prevent sulfonamide antibiotics from inhibiting its role in folate synthesis, thus conferring sulfonamide resistance.",
+                           "notes": "'its role in folate synthesis'."}]},
+            {"subject": "drug0", "object": "dhps_activity",
+             "predicate": "negatively regulates (competitive inhibition at the PABA site)",
+             "predicate_id": "RO:0002212",
+             "description": "COMPETITIVE, not allosteric: the drug is a para-aminobenzoate analogue occupying the substrate's own site. That is why a mutation can lower drug affinity without abolishing catalysis.",
+             "evidence": [{"reference": "ARO:3003388", "snippet": "Dapsone inhibits bacterial synthesis of dihydrofolic acid by competing with with para-aminobenzoate for the active site of dihydropteroate synthetase. Thus acts as a competitive inhibitor of folP. Point mutation within the folP gene results in lowered affinity of dapsone for folP.",
+                           "notes": "'competing with para-aminobenzoate for the active site … Thus acts as a competitive inhibitor of folP'."}]},
+            {"subject": "determinant", "object": "low_affinity",
+             "predicate": "has quality (lowered drug affinity)", "predicate_id": "RO:0000086",
+             "evidence": [{"reference": "ARO:3003388", "snippet": "Dapsone inhibits bacterial synthesis of dihydrofolic acid by competing with with para-aminobenzoate for the active site of dihydropteroate synthetase. Thus acts as a competitive inhibitor of folP. Point mutation within the folP gene results in lowered affinity of dapsone for folP.",
+                           "notes": "'Point mutation within the folP gene results in lowered affinity of dapsone for folP'."}]},
+            {"subject": "low_affinity", "object": "dhps_activity",
+             "predicate": "causally upstream of (the enzyme keeps working under drug)",
+             "predicate_id": "RO:0002411",
+             "description": "The point of the whole mechanism: folate synthesis continues.",
+             "evidence": [{"reference": "ARO:3000226", "snippet": "Point mutations in dihydropteroate synthase folP prevent sulfonamide antibiotics from inhibiting its role in folate synthesis, thus conferring sulfonamide resistance.",
+                           "notes": "'prevent sulfonamide antibiotics from inhibiting its role in folate synthesis'."}]},
+        ],
+    },
     # ppsA-E polyketide synthases (ARO:3005002) -- resistance claim WITHOUT a mechanism.
     #
     # Round 66's EF-Tu shape. CARD says these enzymes make phthiocerol dimycocerosate and
