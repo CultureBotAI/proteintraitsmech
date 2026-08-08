@@ -728,8 +728,20 @@ def _requires_topoisomerase_subunit(ident: str, label: str, text: str):
     if "ARO:3000212" not in D.parse_relations(text)[0]:
         return "record carries no mutation mechanism (ARO:3000212)"
     own = _own_definition(text).lower()
-    if not re.search(r"topoisomerase|gyrase|\bgyr[ab]\b|\bpar[ceyx]\b", own):
-        return "own definition does not name a topoisomerase or gyrase subunit"
+    # Check the LABEL as well as the definition. Three gyrB records read only "Point
+    # mutation in <organism> resulting in aminocoumarin resistance" -- thin, but their
+    # ARO term NAME is "Escherichia coli gyrB conferring resistance to aminocoumarin",
+    # which is authoritative and unambiguous. Round 61 checked the definition only and
+    # left them as drafts for 34 rounds.
+    #
+    # This is safe here in a way it would NOT be for pilQ (#254): there the label said
+    # "pilQ gene conferring resistance to beta-lactam" while the mechanism was wrong, so
+    # the definition was the corrective. Here the label names the gene the family is
+    # about, and the parent term supplies the mechanism the members omit.
+    if not re.search(r"topoisomerase|gyrase|\bgyr[ab]\b|\bpar[ceyx]\b",
+                     own + " " + label.lower()):
+        return ("neither the definition nor the label names a topoisomerase or gyrase "
+                "subunit")
     return None
 
 

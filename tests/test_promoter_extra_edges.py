@@ -2215,3 +2215,28 @@ def test_afta_asserts_no_resistance_mechanism_at_all():
     for banned in ("resist", "drug", "inhibit", "mutation"):
         assert banned not in asserted, f"aftA config asserts {banned!r} uncited"
     assert "NOT asserted" in cfg["note"]
+
+
+def test_topoisomerase_precondition_reads_the_label_but_pilq_still_refused():
+    """Three gyrB records had thin definitions and authoritative labels (round 96).
+
+    Reading the label is safe HERE because the label names the gene the family is about.
+    It would not be safe for pilQ (#254), where the label said "pilQ gene conferring
+    resistance to beta-lactam" and the definition was the corrective. Both pinned.
+    """
+    thin = ("identifier: ARO:3003303\n"
+            "definition: >-\n  Point mutation in Escherichia coli resulting in"
+            " aminocoumarin resistance.\nterm_kind: CLASS\n"
+            "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000212\n"
+            "    relation_source: \"ARO participates_in (mechanism) via ARO:0000031\"\n")
+    assert promote._requires_topoisomerase_subunit(
+        "ARO:3003303", "Escherichia coli gyrB conferring resistance to aminocoumarin",
+        thin) is None
+
+    pilq = thin.replace(
+        "Point mutation in Escherichia coli resulting in aminocoumarin resistance.",
+        "PilQ is an important gonococcal outer membrane component, member of the"
+        " secretin protein family.")
+    assert promote._requires_mutant_pbp(
+        "ARO:3004835", "Neisseria gonorrhoeae pilQ gene conferring resistance",
+        pilq) is not None
