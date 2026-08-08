@@ -1113,6 +1113,105 @@ def _requires_van_protein(mech_id: str, marker: str, human: str):
 
 
 FAMILY_SNIPPETS = {
+    # vanU (ARO:3000575) -- REGULATION. Round 22's shape: the graph ends at the resistance
+    # genes rather than restating their chemistry, which rounds 20-23 already curated.
+    "ARO:3000575": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_van_protein("ARO:3000213", "transcriptional activator", "transcriptional activation"),
+        "reference": "ARO:3000575",
+        "mech": {"ARO:3000213": "VanU is a transcriptional activator of vancomycin resistance genes."},
+        "mech_res": "VanU is a transcriptional activator of vancomycin resistance genes.",
+        "det_res": [
+            {"reference": "ARO:3000575", "snippet": "VanU is a transcriptional activator of vancomycin resistance genes.",
+             "notes": "The whole claim, with its direction: an ACTIVATOR of the resistance genes. VanU transports nothing and modifies no precursor."},
+        ],
+        "res_drug": "VanU is a transcriptional activator of vancomycin resistance genes.",
+        "note": ("Transcriptional activation of the van genes. The graph ends at those "
+                 "genes; their chemistry is curated on their own records (rounds 20-23)."),
+        "extra_nodes": [
+            {"node_id": "van_genes", "label": "vancomycin resistance genes",
+             "node_type": "NUCLEIC_ACID",
+             "description": "Where this graph stops. Ungrounded: 'the van genes' as a set is not one record, and pointing at one would pick a cluster arbitrarily."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "van_genes",
+             "predicate": "positively regulates (activates transcription)",
+             "predicate_id": "RO:0002213",
+             "description": "The POSITIVE form, licensed by CARD's own word 'activator' -- as in round 79, and unlike round 78 where CARD gave no direction.",
+             "evidence": [{"reference": "ARO:3000575", "snippet": "VanU is a transcriptional activator of vancomycin resistance genes.",
+                           "notes": "'a transcriptional ACTIVATOR of vancomycin resistance genes'."}]},
+        ],
+    },
+    # vanJ (ARO:3002914) -- undecaprenol pyrophosphate recycling, the SAME mechanism as
+    # round 58's bacA/bcrC, arrived at from a completely different family. Worth noting:
+    # a mechanism can recur across ARO families that share no ancestor.
+    "ARO:3002914": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_van_protein("ARO:3000213", "recycling undecaprenol", "undecaprenol pyrophosphate recycling"),
+        "reference": "ARO:3002914",
+        "mech": {"ARO:3000213": "vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis."},
+        "mech_res": "vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.",
+        "det_res": [
+            {"reference": "ARO:3002914", "snippet": "vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.",
+             "notes": "Mechanism, drug and organism in one sentence: resistance to teicoplanin 'by RECYCLING undecaprenol pyrophosphate during cell wall biosynthesis'. Same step as round 58's bacA/bcrC, in an unrelated family."},
+        ],
+        "res_drug": "vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.",
+        "note": ("Undecaprenol pyrophosphate recycling -- round 58's bacA/bcrC mechanism "
+                 "reached from the van set. As there, NOT asserted: that the drug binds "
+                 "or sequesters the carrier, which CARD does not say."),
+        "extra_nodes": [
+            {"node_id": "upp_recycling", "label": "undecaprenol pyrophosphate recycling",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded, as in round 58."},
+            {"node_id": "wall", "label": "cell wall biosynthesis",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The process the recycling serves. Ungrounded: no term verified this round."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "upp_recycling",
+             "predicate": "enables (recycles the lipid carrier)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3002914", "snippet": "vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.",
+                           "notes": "'by recycling undecaprenol pyrophosphate'."}]},
+            {"subject": "upp_recycling", "object": "wall",
+             "predicate": "part of (cell wall biosynthesis)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3002914", "snippet": "vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.",
+                           "notes": "'during cell wall biosynthesis'."}]},
+        ],
+    },
+    # vanK (ARO:3002915) -- cross-bridge addition to the stem pentapeptide.
+    "ARO:3002915": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_van_protein("ARO:3000213", "cross-bridge", "cross-bridge addition"),
+        "reference": "ARO:3002915",
+        "mech": {"ARO:3000213": "VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible, high-level vancomycin resistance."},
+        "mech_res": "VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible, high-level vancomycin resistance.",
+        "det_res": [
+            {"reference": "ARO:3002915", "snippet": "VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible, high-level vancomycin resistance.",
+             "notes": "Enzyme family, reaction, substrate and phenotype: Fem-family, adds CROSS-BRIDGE amino acids to the stem pentapeptide, conferring 'inducible, high-level' vancomycin resistance."},
+        ],
+        "res_drug": "VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible, high-level vancomycin resistance.",
+        "note": ("Cross-bridge addition. NOT asserted: why a modified cross-bridge confers "
+                 "vancomycin resistance -- CARD states the reaction and the phenotype and "
+                 "nothing between them."),
+        "extra_nodes": [
+            {"node_id": "crossbridge_transfer", "label": "cross-bridge amino acid addition (Fem family)",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed."},
+            {"node_id": "stem_pentapeptide", "label": "stem pentapeptide of cell wall precursors",
+             "node_type": "CHEMICAL",
+             "description": "The substrate. Ungrounded -- the same CHEBI gap rounds 20-23 recorded for UDP-MurNAc peptides."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "crossbridge_transfer",
+             "predicate": "enables (cross-bridge addition)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3002915", "snippet": "VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible, high-level vancomycin resistance.",
+                           "notes": "'a member of the Fem family of enzymes that add the cross-bridge amino acids'."}]},
+            {"subject": "crossbridge_transfer", "object": "stem_pentapeptide",
+             "predicate": "has input (the stem pentapeptide)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3002915", "snippet": "VanK is a member of the Fem family of enzymes that add the cross-bridge amino acids to the stem pentapeptide of cell wall precursors in Streptomyces coelicolor that confers inducible, high-level vancomycin resistance.",
+                           "notes": "'to the stem pentapeptide of cell wall precursors'. NOT asserted: how this confers resistance, which CARD does not say."}]},
+        ],
+    },
     # Van ligases (ARO:3002906) -- precursor substitution, stated in one sentence.
     # Round 21's vanH/vanA shape, arrived at from the ligase's own definition rather than
     # from the pathway papers.

@@ -2026,3 +2026,24 @@ def test_pbp_replacement_still_uses_the_target_replacement_id():
     cfg = next(c for c in promote.family_configs("ARO:3003040")
                if "ARO:0001002" in c["mech"])
     assert "foreign PBP2a" in cfg["mech"]["ARO:0001002"]
+
+
+def test_vanj_reuses_round58s_mechanism_across_an_unrelated_family():
+    """UPP recycling recurs in the van set, sharing no ancestor with bacA/bcrC.
+
+    Both must also omit the drug->carrier edge: CARD says neither bacitracin nor
+    teicoplanin binds the carrier, however standard that is elsewhere.
+    """
+    vanj = promote.family_configs("ARO:3002914")[0]
+    assert any("undecaprenol" in n["label"] for n in vanj["extra_nodes"])
+    assert not any(e["subject"] == "drug0" for e in vanj["extra_edges"])
+
+    baca = promote.family_configs("ARO:3002986")[0]
+    assert not any(e["subject"] == "drug0" for e in baca["extra_edges"])
+
+
+def test_vanu_uses_the_positive_predicate_because_card_says_activator():
+    """Third direction judgement in the same session, and all three differ by source."""
+    cfg = promote.family_configs("ARO:3000575")[0]
+    assert cfg["extra_edges"][0]["predicate_id"] == "RO:0002213"
+    assert "activator" in cfg["mech"]["ARO:3000213"].lower()
