@@ -2007,3 +2007,22 @@ def test_subunit_config_routes_through_the_complex_not_straight_to_efflux():
     assert first["object"] == "complex" and first["predicate_id"] == "BFO:0000050"
     assert not any(e["subject"] == "determinant" and e["object"] == "efflux_process"
                    for e in cfg["extra_edges"])
+
+
+def test_van_protein_configs_target_the_mechanism_id_the_records_carry():
+    """I guessed ARO:0001002 (target replacement); both records carry ARO:3000213."""
+    for fam in ("ARO:3002906", "ARO:3000116"):
+        cfg = promote.family_configs(fam)[0]
+        assert "ARO:3000213" in cfg["mech"], f"{fam} must use the id its records carry"
+        assert "ARO:0001002" not in cfg["mech"]
+
+
+def test_pbp_replacement_still_uses_the_target_replacement_id():
+    """A blanket replace of ARO:0001002 briefly clobbered round 52's config.
+
+    Pinned because the damage was one line inside an unrelated family, and only a test
+    that names the id would have caught it if the suite had not already.
+    """
+    cfg = next(c for c in promote.family_configs("ARO:3003040")
+               if "ARO:0001002" in c["mech"])
+    assert "foreign PBP2a" in cfg["mech"]["ARO:0001002"]

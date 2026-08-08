@@ -1081,11 +1081,102 @@ def _requires_named_efflux_subunit(ident: str, label: str, text: str):
         return ("own definition does not name it a subunit of a specific complex (#229 "
                 "-- may be a complex, a regulator, or an operon member)")
     if "operon" in own:
-        return "own definition describes an operon member, not a subunit (#229)"
+        # Same correction as above: the check matches the word "operon", so the reason
+        # must claim no more than that.
+        return "own definition mentions an operon rather than a named subunit (#229)"
     return None
 
 
+def _requires_van_protein(mech_id: str, marker: str, human: str):
+    """Factory for the van records that are PROTEINS, not clusters.
+
+    Rounds 20-23 curated the van enzymes; the remainder was written off as operon-level
+    and blocked on the gene-cluster modelling question. Measuring the definitions showed
+    8 of 35 are not cluster-level at all -- they describe individual proteins with their
+    own mechanisms. This selects those by a marker phrase from the record's own text.
+    """
+    def _pred(ident: str, label: str, text: str):
+        if mech_id not in D.parse_relations(text)[0]:
+            return f"record carries no {human} mechanism ({mech_id})"
+        own = _own_definition(text).lower()
+        if re.search(r"cluster|operon|cassette", own):
+            # Say what was MATCHED, not what I inferred from it. #256 caught the first
+            # version claiming "describes a gene cluster" when the check only looks for
+            # the words cluster/operon/cassette -- my own guard, on my own code.
+            return ("own definition mentions a cluster, operon or cassette rather than "
+                    "describing a single protein -- the gene-cluster modelling question "
+                    "is still open")
+        if marker not in own:
+            return f"own definition does not describe {human}"
+        return None
+    return _pred
+
+
 FAMILY_SNIPPETS = {
+    # Van ligases (ARO:3002906) -- precursor substitution, stated in one sentence.
+    # Round 21's vanH/vanA shape, arrived at from the ligase's own definition rather than
+    # from the pathway papers.
+    "ARO:3002906": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_van_protein("ARO:3000213", "alternative substrates", "alternative-precursor synthesis"),
+        "reference": "ARO:3002906",
+        "mech": {"ARO:3000213": "Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin binding affinity."},
+        "mech_res": "Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin binding affinity.",
+        "det_res": [
+            {"reference": "ARO:3002906", "snippet": "Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin binding affinity.",
+             "notes": "Reaction and consequence in one sentence: alternative substrates for peptidoglycan synthesis that REDUCE vancomycin binding affinity."},
+        ],
+        "res_drug": "Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin binding affinity.",
+        "note": "Precursor substitution -- the target is rebuilt, not modified in place.",
+        "extra_nodes": [
+            {"node_id": "alt_precursor", "label": "alternative peptidoglycan precursor",
+             "node_type": "CHEMICAL",
+             "description": "Ungrounded: the UDP-MurNAc depsipeptides have no CHEBI term (rounds 20-21 noted the same gap)."},
+            {"node_id": "low_affinity", "label": "reduced vancomycin binding affinity",
+             "node_type": "STATE", "description": "The causal core, in CARD's own words."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "alt_precursor",
+             "predicate": "enables (synthesis of the alternative substrate)",
+             "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3002906", "snippet": "Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin binding affinity.",
+                           "notes": "'Van ligases synthesize alternative substrates for peptidoglycan synthesis'."}]},
+            {"subject": "alt_precursor", "object": "low_affinity",
+             "predicate": "causally upstream of (reduces drug binding)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3002906", "snippet": "Van ligases synthesize alternative substrates for peptidoglycan synthesis that reduce vancomycin binding affinity.",
+                           "notes": "'that reduce vancomycin binding affinity'."}]},
+        ],
+    },
+    # VanZ (ARO:3000116) -- an accessory protein with a stated, specific effect.
+    "ARO:3000116": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_van_protein("ARO:3000213", "terminal d-ala", "D-Ala exclusion"),
+        "reference": "ARO:3000116",
+        "mech": {"ARO:3000213": "VanZ is a teicoplanin resistance gene that is an accessory protein. VanZ prevents the incorporation of the terminal D-Ala into peptidoglycan subunits."},
+        "mech_res": "VanZ is a teicoplanin resistance gene that is an accessory protein. VanZ prevents the incorporation of the terminal D-Ala into peptidoglycan subunits.",
+        "det_res": [
+            {"reference": "ARO:3000116", "snippet": "VanZ is a teicoplanin resistance gene that is an accessory protein. VanZ prevents the incorporation of the terminal D-Ala into peptidoglycan subunits.",
+             "notes": "An 'accessory protein' with a precise effect: it PREVENTS incorporation of the terminal D-Ala. CARD does not say how, and that step is not drawn."},
+        ],
+        "res_drug": "VanZ is a teicoplanin resistance gene that is an accessory protein. VanZ prevents the incorporation of the terminal D-Ala into peptidoglycan subunits.",
+        "note": ("Exclusion of the terminal D-Ala. HOW VanZ prevents incorporation is not "
+                 "stated by CARD and is not asserted; the link from a missing D-Ala to "
+                 "teicoplanin resistance is likewise left to the ligase records."),
+        "extra_nodes": [
+            {"node_id": "terminal_dala", "label": "terminal D-Ala of the peptidoglycan subunit",
+             "node_type": "CHEMICAL",
+             "description": "What is excluded. Ungrounded: a residue position in a precursor, not a compound."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "terminal_dala",
+             "predicate": "negatively regulates (prevents its incorporation)",
+             "predicate_id": "RO:0002212",
+             "description": "The one mechanistic claim CARD makes. NOT asserted: the mechanism by which it prevents incorporation, nor the link from that to teicoplanin binding.",
+             "evidence": [{"reference": "ARO:3000116", "snippet": "VanZ is a teicoplanin resistance gene that is an accessory protein. VanZ prevents the incorporation of the terminal D-Ala into peptidoglycan subunits.",
+                           "notes": "'VanZ prevents the incorporation of the terminal D-Ala into peptidoglycan subunits'."}]},
+        ],
+    },
     # Named efflux subunits (under ARO:3000748) -- the part of #229's family that does NOT
     # need the categorisation decision, because their own definitions say what they are.
     "ARO:3000748-subunit": {
