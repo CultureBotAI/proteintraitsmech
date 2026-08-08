@@ -2262,3 +2262,31 @@ def test_pdr1_is_not_treated_as_a_two_component_pair():
             " proteins. BaeR is a transcription factor.\nterm_kind: CLASS\n")
     reason = promote._requires_transcription_factor_regulator("ARO:3000531", "baeSR", pair)
     assert reason is not None and "#215" in reason
+
+
+def test_tet34_is_curated_as_protection_and_still_refused_by_chemistry_configs():
+    """Four rounds refused it correctly; none asked which config DID fit.
+
+    Both must hold: the protection config accepts it, and the hydroxylation config
+    (round 70, fixed in #310) still does not.
+    """
+    rec = ("identifier: ARO:3002870\n"
+           "definition: >-\n  tet(34) causes the activation of Mg2+-dependent purine"
+           " nucleotide synthesis, which protects the protein synthesis pathway.\n"
+           "term_kind: CLASS\n"
+           "trait_relations:\n  - predicate: RO:0000056\n    object: ARO:3000450\n"
+           "    relation_source: \"ARO participates_in (mechanism) via ARO:0000031\"\n")
+    assert promote._requires_tet34_protection("ARO:3002870", "tet(34)", rec) is None
+    assert promote.config_for("ARO:3000557", "ARO:3002870", "tet(34)", rec) is None
+
+
+def test_tet34_covers_all_three_of_its_mechanism_ids_with_one_sentence():
+    """It carries three chemistry ids and describes none of them.
+
+    The same sentence is cited for all three because it is the only mechanism CARD
+    gives -- not a snippet borrowed to satisfy UncoveredMechanism.
+    """
+    cfg = promote.family_configs("ARO:3002870")[0]
+    assert set(cfg["mech"]) == {"ARO:0001004", "ARO:3000213", "ARO:3000450"}
+    assert len(set(cfg["mech"].values())) == 1
+    assert "describes none of them" in cfg["note"]
