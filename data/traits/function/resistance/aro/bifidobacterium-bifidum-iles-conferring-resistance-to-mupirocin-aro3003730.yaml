@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000446
 trait_relations:
@@ -25,12 +25,14 @@ evidence:
 - reference: DOI:10.1128/AEM.02540-10
   notes: PMID:21421794 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Bifidobacterium bifidum ileS conferring resistance to mupirocin → mechanism → resistance
-    (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Bifidobacterium bifidum ileS conferring resistance to mupirocin → mechanism → resistance (curated
+    from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3000446). Target alteration of the aminoacyl-tRNA synthetase mupirocin inhibits. The resistance
+    is qualified as LOW-LEVEL and conditional ('can confer'); NOT asserted is HOW the mutations reduce
+    the drug's effect, which CARD does not say.
   nodes:
   - node_id: determinant
     label: Bifidobacterium bifidum ileS conferring resistance to mupirocin
@@ -44,6 +46,14 @@ causal_graphs:
     label: mupirocin-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007151
+  - node_id: aminoacylation
+    label: isoleucyl-tRNA synthetase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-91).'
+  - node_id: protein_synthesis
+    label: protein synthesis
+    node_type: BIOLOGICAL_PROCESS
+    description: 'What the drug blocks. Ungrounded: no term verified this round.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -57,47 +67,71 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AEM.02540-10
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003730
-      snippet: Bifidobacteria have an intrinsically resistant form of ileS (isoleucyl-tRNA synthetase)
-        that confers resistance to mupirocin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3000446
+      snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
+        Mutations in ileS can confer low-level mupirocin resistance.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AEM.02540-10
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3000446
+      snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
+        Mutations in ileS can confer low-level mupirocin resistance.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AEM.02540-10
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003730
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000554 ! mupirocin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3000446
+      snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
+        Mutations in ileS can confer low-level mupirocin resistance.
+      notes: 'Drug action and resistance in two sentences. NOTE both hedges in the second: mutations ''CAN
+        confer LOW-LEVEL'' resistance -- neither the certainty nor the magnitude is asserted beyond that.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to mupirocin-like antibiotic.
     evidence:
     - reference: ARO:3000446
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007151 ! mupirocin-like antibiotic'
       notes: Asserted on ARO:3000446 (antibiotic-resistant isoleucyl-tRNA synthetase (ileS)), an is_a
         ancestor of this record's ARO:3003730; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to mupirocin-like antibiotic.
+  - subject: determinant
+    predicate: enables (isoleucyl-tRNA charging)
+    predicate_id: RO:0002327
+    object: aminoacylation
+    evidence:
+    - reference: ARO:3000446
+      snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
+        Mutations in ileS can confer low-level mupirocin resistance.
+      notes: ileS IS the isoleucyl-tRNA synthetase.
+  - subject: drug0
+    predicate: negatively regulates (interferes with the synthetase)
+    predicate_id: RO:0002212
+    object: aminoacylation
+    evidence:
+    - reference: ARO:3000446
+      snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
+        Mutations in ileS can confer low-level mupirocin resistance.
+      notes: '''Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase''.'
+  - subject: aminoacylation
+    predicate: part of (protein synthesis)
+    predicate_id: BFO:0000050
+    object: protein_synthesis
+    description: 'Why inhibiting one synthetase stops translation: charged tRNA is required for it.'
+    evidence:
+    - reference: ARO:3000446
+      snippet: Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS).
+        Mutations in ileS can confer low-level mupirocin resistance.
+      notes: '''Mupirocin inhibits protein synthesis BY interfering with'' the synthetase -- CARD makes
+        the synthetase the route to the process.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
