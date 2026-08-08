@@ -1270,7 +1270,67 @@ def _drug_specific_inactivation_config(fam_id: str, drug: str, snippet: str) -> 
     }
 
 
+def _requires_esx5_subunit(ident: str, label: str, text: str):
+    """An ESX-5 secretion-system subunit whose own definition states the mechanism."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    if "esx-5 secretion system complex" not in _own_definition(text).lower():
+        return "own definition does not place it in the ESX-5 secretion system complex"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # ESX-5 secretion subunits (under ARO:3004916) -- reduced permeability, and one
+    # record in which CARD contradicts itself.
+    #
+    # The family TERM carries no mechanism id at all, which is why nothing could be keyed
+    # on it; its MEMBERS do. Both curated records name their role in a named complex
+    # (round 86's subunit shape) and state the mechanism: mutations "contribute to a
+    # DECREASED UPTAKE of antibiotic in the outer membrane" -- reduced permeability.
+    "ARO:3004916": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_esx5_subunit,
+        "reference": "ARO:3004918",
+        "mech": {"ARO:3000212": "eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex is critical for mycobacterium viability and virulence in the host cell and mutations contribute to a decreased uptake of antibiotic in the outer membrane."},
+        "mech_res": "eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex is critical for mycobacterium viability and virulence in the host cell and mutations contribute to a decreased uptake of antibiotic in the outer membrane.",
+        "det_res": [
+            {"reference": "ARO:3004918", "snippet": "eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex is critical for mycobacterium viability and virulence in the host cell and mutations contribute to a decreased uptake of antibiotic in the outer membrane.",
+             "notes": "Role in a named complex, and the mechanism: mutations 'contribute to a DECREASED UPTAKE of antibiotic in the outer membrane'. NOTE the hedge -- 'contribute to', not 'confer'."},
+            {"reference": "ARO:3004919", "snippet": "eccC5 is a membrane-bound ATPase within the ESX-5 secretion system complex. The complex is critical for mycobacterium viability and virulence in the host cell and mutations contribute to a decreased uptake of antibiotic in the outer membrane, yet the Relational Sequencing Tuberculosis Data platform (ReSeqTB, https://platform.reseqtb.org) finds no evidence of an association between eccC5 mutations and drug resistance.",
+             "notes": "The SAME sentence for eccC5 -- followed by CARD contradicting it in the same breath: 'YET the Relational Sequencing Tuberculosis Data platform finds NO EVIDENCE of an association between eccC5 mutations and drug resistance'. Quoted whole rather than truncated at the comma."},
+        ],
+        "res_drug": "eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex is critical for mycobacterium viability and virulence in the host cell and mutations contribute to a decreased uptake of antibiotic in the outer membrane.",
+        "note": ("Reduced permeability via an ESX-5 subunit. The eccC5 record CONTRADICTS "
+                 "ITSELF -- it states the mechanism and then cites ReSeqTB finding no "
+                 "association -- and the snippet is quoted whole so the contradiction "
+                 "travels with the claim. This corpus has no way to mark a contested claim "
+                 "structurally (#220, #306); prose is the only available carrier."),
+        "extra_nodes": [
+            {"node_id": "esx5", "label": "ESX-5 secretion system complex",
+             "node_type": "PROTEIN",
+             "description": "The complex the determinant belongs to. Ungrounded."},
+            {"node_id": "uptake", "label": "uptake of antibiotic across the outer membrane",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "What the mutations reduce. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "esx5",
+             "predicate": "part of (the ESX-5 secretion system complex)",
+             "predicate_id": "BFO:0000050",
+             "description": "Round 86's subunit shape: a subunit is PART OF the complex, not the complex.",
+             "evidence": [{"reference": "ARO:3004918", "snippet": "eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex is critical for mycobacterium viability and virulence in the host cell and mutations contribute to a decreased uptake of antibiotic in the outer membrane.",
+                           "notes": "'a transmembrane protein WITHIN the ESX-5 secretion system complex'."}]},
+            {"subject": "determinant", "object": "uptake",
+             "predicate": "negatively regulates (decreased antibiotic uptake)",
+             "predicate_id": "RO:0002212",
+             "description": "The mechanism, hedged as CARD hedges it ('contribute to') -- and for eccC5 specifically, contradicted by the same definition's closing clause.",
+             "evidence": [
+                 {"reference": "ARO:3004918", "snippet": "eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex is critical for mycobacterium viability and virulence in the host cell and mutations contribute to a decreased uptake of antibiotic in the outer membrane.",
+                  "notes": "'mutations contribute to a decreased uptake of antibiotic in the outer membrane'."},
+                 {"reference": "ARO:3004919", "snippet": "eccC5 is a membrane-bound ATPase within the ESX-5 secretion system complex. The complex is critical for mycobacterium viability and virulence in the host cell and mutations contribute to a decreased uptake of antibiotic in the outer membrane, yet the Relational Sequencing Tuberculosis Data platform (ReSeqTB, https://platform.reseqtb.org) finds no evidence of an association between eccC5 mutations and drug resistance.",
+                  "notes": "The contradicting evidence, on the SAME edge rather than omitted: ReSeqTB 'finds no evidence of an association between eccC5 mutations and drug resistance'. A reader of this edge sees both."}]},
+        ],
+    },
     # Generic target protection (ARO:3000185) -- the records the three MODE configs miss.
     #
     # Rounds 31, 44 and 45 curated TetM, FusB and HelR, each a distinct protection MODE

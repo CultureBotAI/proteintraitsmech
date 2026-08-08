@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004917
 trait_relations:
@@ -28,12 +28,15 @@ evidence:
 - reference: DOI:10.1016/j.ijantimicag.2021.106385
   notes: PMID:34161790 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis eccB5 conferring resistance to fluoroquinolones → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycobacterium tuberculosis eccB5 conferring resistance to fluoroquinolones → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3004918). Reduced permeability via an ESX-5 subunit. The eccC5 record CONTRADICTS ITSELF -- it
+    states the mechanism and then cites ReSeqTB finding no association -- and the snippet is quoted whole
+    so the contradiction travels with the claim. This corpus has no way to mark a contested claim structurally
+    (#220, #306); prose is the only available carrier.'
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis eccB5 conferring resistance to fluoroquinolones
@@ -47,6 +50,14 @@ causal_graphs:
     label: fluoroquinolone antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000001
+  - node_id: esx5
+    label: ESX-5 secretion system complex
+    node_type: PROTEIN
+    description: The complex the determinant belongs to. Ungrounded.
+  - node_id: uptake
+    label: uptake of antibiotic across the outer membrane
+    node_type: BIOLOGICAL_PROCESS
+    description: What the mutations reduce. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,48 +71,85 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3004918
       snippet: eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex
         is critical for mycobacterium viability and virulence in the host cell and mutations contribute
         to a decreased uptake of antibiotic in the outer membrane.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3004918
+      snippet: eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex
+        is critical for mycobacterium viability and virulence in the host cell and mutations contribute
+        to a decreased uptake of antibiotic in the outer membrane.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004918
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000663 ! ofloxacin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex
+        is critical for mycobacterium viability and virulence in the host cell and mutations contribute
+        to a decreased uptake of antibiotic in the outer membrane.
+      notes: 'Role in a named complex, and the mechanism: mutations ''contribute to a DECREASED UPTAKE
+        of antibiotic in the outer membrane''. NOTE the hedge -- ''contribute to'', not ''confer''.'
+    - reference: ARO:3004919
+      snippet: eccC5 is a membrane-bound ATPase within the ESX-5 secretion system complex. The complex
+        is critical for mycobacterium viability and virulence in the host cell and mutations contribute
+        to a decreased uptake of antibiotic in the outer membrane, yet the Relational Sequencing Tuberculosis
+        Data platform (ReSeqTB, https://platform.reseqtb.org) finds no evidence of an association between
+        eccC5 mutations and drug resistance.
+      notes: 'The SAME sentence for eccC5 -- followed by CARD contradicting it in the same breath: ''YET
+        the Relational Sequencing Tuberculosis Data platform finds NO EVIDENCE of an association between
+        eccC5 mutations and drug resistance''. Quoted whole rather than truncated at the comma.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
     evidence:
     - reference: ARO:3004917
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000001 ! fluoroquinolone antibiotic'
       notes: Asserted on ARO:3004917 (fluoroquinolone resistant eccB5), an is_a ancestor of this record's
         ARO:3004918; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to fluoroquinolone antibiotic.
+  - subject: determinant
+    predicate: part of (the ESX-5 secretion system complex)
+    predicate_id: BFO:0000050
+    object: esx5
+    description: 'Round 86''s subunit shape: a subunit is PART OF the complex, not the complex.'
+    evidence:
+    - reference: ARO:3004918
+      snippet: eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex
+        is critical for mycobacterium viability and virulence in the host cell and mutations contribute
+        to a decreased uptake of antibiotic in the outer membrane.
+      notes: '''a transmembrane protein WITHIN the ESX-5 secretion system complex''.'
+  - subject: determinant
+    predicate: negatively regulates (decreased antibiotic uptake)
+    predicate_id: RO:0002212
+    object: uptake
+    description: The mechanism, hedged as CARD hedges it ('contribute to') -- and for eccC5 specifically,
+      contradicted by the same definition's closing clause.
+    evidence:
+    - reference: ARO:3004918
+      snippet: eccB5 is a transmembrane protein within the ESX-5 secretion system complex. The complex
+        is critical for mycobacterium viability and virulence in the host cell and mutations contribute
+        to a decreased uptake of antibiotic in the outer membrane.
+      notes: '''mutations contribute to a decreased uptake of antibiotic in the outer membrane''.'
+    - reference: ARO:3004919
+      snippet: eccC5 is a membrane-bound ATPase within the ESX-5 secretion system complex. The complex
+        is critical for mycobacterium viability and virulence in the host cell and mutations contribute
+        to a decreased uptake of antibiotic in the outer membrane, yet the Relational Sequencing Tuberculosis
+        Data platform (ReSeqTB, https://platform.reseqtb.org) finds no evidence of an association between
+        eccC5 mutations and drug resistance.
+      notes: 'The contradicting evidence, on the SAME edge rather than omitted: ReSeqTB ''finds no evidence
+        of an association between eccC5 mutations and drug resistance''. A reader of this edge sees both.'
+curation_history:
+- timestamp: '2026-08-08T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
