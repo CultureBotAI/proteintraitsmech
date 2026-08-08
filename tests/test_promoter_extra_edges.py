@@ -2047,3 +2047,25 @@ def test_vanu_uses_the_positive_predicate_because_card_says_activator():
     cfg = promote.family_configs("ARO:3000575")[0]
     assert cfg["extra_edges"][0]["predicate_id"] == "RO:0002213"
     assert "activator" in cfg["mech"]["ARO:3000213"].lower()
+
+
+def test_vanj_homologue_config_never_points_vanj_at_itself():
+    """ARO:3002914 is a descendant of this family and its definition contains "vanJ".
+
+    The first version gave vanJ a "shares ancestor with vanJ" edge on its own record.
+    A homology edge to oneself is not a weaker claim, it is a meaningless one.
+    """
+    rec = ("identifier: ARO:3002914\n"
+           "definition: >-\n  vanJ is a novel membrane protein that confers resistance"
+           " to teicoplanin.\n"
+           "term_kind: CLASS\n")
+    reason = promote._requires_vanj_homologue("ARO:3002914", "vanJ", rec)
+    assert reason is not None and "IS vanJ" in reason
+
+
+def test_vanj_homologue_uses_shares_ancestor_not_serially_homologous():
+    """RO:0002159 is "serially homologous to" -- a developmental term for vertebrae."""
+    cfg = promote.family_configs("ARO:3004255")[0]
+    edge = cfg["extra_edges"][0]
+    assert edge["predicate_id"] == "RO:0002158"
+    assert "homology, not mechanism" in edge["description"].lower()

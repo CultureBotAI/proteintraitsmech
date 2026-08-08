@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3002976
 trait_relations:
@@ -22,11 +22,13 @@ evidence:
 - reference: DOI:10.1128/AAC.05869-11
   notes: PMID:22232274 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] vanJ membrane protein → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: vanJ membrane protein → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3004255). A homologue group whose mechanism lives on ARO:3002914 (round 88). The graph points
+    at that record rather than copying its chemistry, so it inherits whatever vanJ's record says today
+    -- round 22's rule.
   nodes:
   - node_id: determinant
     label: vanJ membrane protein
@@ -40,6 +42,12 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: vanj_record
+    label: vanJ (undecaprenol pyrophosphate recycling)
+    node_type: PROTEIN
+    grounding: ARO:3002914
+    description: A KB record curated in round 88. Pointing at it rather than restating it is the whole
+      point of this config.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,43 +61,55 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.05869-11
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
     - reference: ARO:3004255
       snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:3000213.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.05869-11
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: ARO:3004255
+      snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.05869-11
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004255
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
+      notes: 'The whole claim: vanJ AND its homologues confer teicoplanin resistance. No mechanism of
+        its own.'
+    - reference: ARO:3002914
+      snippet: vanJ is a novel membrane protein that confers resistance to teicoplanin and its derivatives
+        in Streptomyces coelicolor by recycling undecaprenol pyrophosphate during cell wall biosynthesis.
+      notes: 'The mechanism, cited FROM vanJ''s record because this definition names vanJ. NOT asserted:
+        that every homologue recycles undecaprenol pyrophosphate -- CARD groups them by resistance phenotype,
+        not by demonstrated mechanism.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3004255
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
-      notes: Asserted directly on ARO:3004255 (vanJ membrane protein) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+      notes: Asserted on ARO:3004255 (vanJ membrane protein), an is_a ancestor of this record's ARO:3004255;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: shares ancestor with (vanJ homologue)
+    predicate_id: RO:0002158
+    object: vanj_record
+    description: Homology, NOT mechanism. CARD groups these by shared resistance phenotype and does not
+      say every homologue performs vanJ's reaction.
+    evidence:
+    - reference: ARO:3004255
+      snippet: vanJ and vanJ homologue proteins confer resistance to teicoplanin.
+      notes: '''vanJ and vanJ HOMOLOGUE proteins'' -- the relationship CARD asserts is homology.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
