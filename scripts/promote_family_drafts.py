@@ -7523,6 +7523,42 @@ for _fam, _snip, _act, _note in [
 ]:
     FAMILY_SNIPPETS[_fam] = [_minimal_enzyme_config(_fam, _snip, _act, _note)]
 
+
+# The last of the function-naming tail (round 112). Same builder as the daptomycin trio,
+# for the same reason. kasA is deliberately NOT here: it is #220's original record, whose
+# isoniazid claim PMID:12406221 contradicts, and round 102's eccC5 showed this corpus has
+# no structural way to carry a contested claim.
+for _fam, _snip, _act, _note in [
+    ("ARO:3004953",
+     "Rv0565c is a bacterial monoxygenase that has been newly uncovered in recent "
+     "literature to show resistance to antibiotic.",
+     "monooxygenase activity",
+     "CARD dates its own evidence -- 'NEWLY UNCOVERED in recent literature' -- and names "
+     "no drug at all, only 'antibiotic'."),
+    ("ARO:3004878",
+     "clpC1 is a subunit of the clp protease that is ATP-dependent. It functions to direct "
+     "the clp protease to specific substrates.",
+     "substrate-targeting subunit of the ATP-dependent clp protease",
+     "A SUBUNIT with a stated role in a named complex; its resistance mechanism is not "
+     "given, so unlike round 86's efflux subunits there is no complex-to-process edge to "
+     "write either."),
+    ("ARO:3004882",
+     "Mas is a multifunctional mycocerosic acid synthase membrane-associated mas. It "
+     "catalyzes the elongation of N-fatty acyl-CoA with methylamalonyl-CoA as the "
+     "elongating agent to form mycocerosyl fatty acids.",
+     "mycocerosic acid synthase activity",
+     "CARD names substrate, co-substrate and product -- more chemistry than most records "
+     "here -- and no drug."),
+    ("ARO:3004911",
+     "nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide "
+     "metabolism. Mutations that occur on the nudC gene resulting in the inability for "
+     "isoniazid to function.",
+     "NADH pyrophosphatase activity",
+     "The isoniazid twin of round 110's ethionamide nudC record, and it says 'to FUNCTION' "
+     "as well -- so the same refusal to write a prodrug edge applies, for the same word."),
+]:
+    FAMILY_SNIPPETS[_fam] = [_minimal_enzyme_config(_fam, _snip, _act, _note)]
+
 def _check_config_order() -> None:
     for fam in FAMILY_SNIPPETS:
         cfgs = family_configs(fam)
