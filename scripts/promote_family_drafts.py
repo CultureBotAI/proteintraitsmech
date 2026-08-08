@@ -6778,6 +6778,15 @@ for _fam, _drug, _snip in [
     ("ARO:3000201", "macrolide antibiotics",
      "Enzymes shown to inactivate macrolide antibiotics by chemical modification, thereby "
      "conferring resistance to macrolides."),
+    # Added round 101. Round 100 built this builder for exactly this shape and registered
+    # three families, missing two whose FAMILY TERMS have the same wording while their
+    # MEMBERS were curated long before (rounds 62-64). Curating a family's members does
+    # not curate the term, and nothing had been asking.
+    ("ARO:3000576", "rifampin antibiotics",
+     "Enzymes that inactivate rifampin antibiotics by chemical modification."),
+    ("ARO:3000233", "streptogramin antibiotics",
+     "Resistance to streptogramin antibiotics may be conferred through enzymatic "
+     "inactivation."),
 ]:
     FAMILY_SNIPPETS[_fam] = (
         family_configs(_fam) + [_drug_specific_inactivation_config(_fam, _drug, _snip)]
