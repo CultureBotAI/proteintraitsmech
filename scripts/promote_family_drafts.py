@@ -1332,6 +1332,125 @@ def _fungal_p450_config(fam_id: str, snippet: str, drug: str, hedged: bool) -> d
 
 
 FAMILY_SNIPPETS = {
+    # fabI (ARO:3004270) -- target alteration, complete, and the pathway round 51 could not
+    # source for fabG1. CARD gives enzyme, drug action, mutation and resistance in three
+    # sentences, which fabG1's definitions never did.
+    "ARO:3004270": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004270",
+        "mech": {"ARO:3000212": "fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid."},
+        "mech_res": "fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.",
+        "det_res": [
+            {"reference": "ARO:3004270", "snippet": "fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.",
+             "notes": "Enzyme, drug action and resistance. NOTE the hedge -- mutations 'CAN confer' -- and that TWO drugs are named, Triclosan and isoniazid, of which only Triclosan's action is described."},
+        ],
+        "res_drug": "fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.",
+        "note": ("Target alteration in FAS-II. Same pathway as round 51's fabG1, where CARD "
+                 "gave no drug action and three rounds were spent failing to source one. "
+                 "Here it is stated. NOT asserted: isoniazid's action, which CARD names as "
+                 "a resisted drug without describing what it does."),
+        "extra_nodes": [
+            {"node_id": "enoyl_reduction", "label": "enoyl-acyl carrier reductase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-105)."},
+            {"node_id": "fa_elongation", "label": "final reduction step of fatty acid elongation",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The step CARD says Triclosan blocks. Ungrounded."},
+            {"node_id": "inhibition", "label": "Triclosan inhibition of fatty acid biosynthesis",
+             "node_type": "STATE", "description": "What the mutation relieves. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "enoyl_reduction",
+             "predicate": "enables (enoyl-ACP reduction)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004270", "snippet": "fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.",
+                           "notes": "'fabI is a enoyl-acyl carrier reductase'."}]},
+            {"subject": "enoyl_reduction", "object": "fa_elongation",
+             "predicate": "part of (the final reduction step)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3004270", "snippet": "fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.",
+                           "notes": "'the final reduction step in fatty acid elongation'."}]},
+            {"subject": "drug0", "object": "inhibition",
+             "predicate": "causally upstream of (blocks the reduction step)",
+             "predicate_id": "RO:0002411",
+             "description": "Stated for TRICLOSAN specifically. Isoniazid is named as resisted without its action described -- and round 51 spent three rounds failing to source that action for fabG1.",
+             "evidence": [{"reference": "ARO:3004270", "snippet": "fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.",
+                           "notes": "'The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting biosynthesis'."}]},
+            {"subject": "determinant", "object": "inhibition",
+             "predicate": "negatively regulates (the mutant is no longer inhibited)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3004270", "snippet": "fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis. The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.",
+                           "notes": "'Point mutations in fabI CAN confer resistance to Triclosan and Isoniazid' -- the hedge is CARD's."}]},
+        ],
+    },
+    # nfsB (ARO:3003755) -- prodrug-activation loss, with a CONDITIONAL phenotype.
+    "ARO:3003755": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3003755",
+        "mech": {"ARO:3000212": "The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone in an nfsA mutant background."},
+        "mech_res": "The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone in an nfsA mutant background.",
+        "det_res": [
+            {"reference": "ARO:3003755", "snippet": "The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone in an nfsA mutant background.",
+             "notes": "The enzyme reduces the nitroaromatic antibiotics themselves, so losing it is prodrug-activation loss (rounds 56, 57, 95). NOTE the condition: resistance rises 'IN AN nfsA MUTANT BACKGROUND' -- a genetic precondition CARD states and this graph does not drop."},
+        ],
+        "res_drug": "The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone in an nfsA mutant background.",
+        "note": ("Prodrug-activation loss, CONDITIONAL on an nfsA mutant background. That "
+                 "condition is stated by CARD and kept -- it is the difference between "
+                 "'mutations confer resistance' and 'mutations confer resistance when "
+                 "another gene is already broken'."),
+        "extra_nodes": [
+            {"node_id": "nitroreduction", "label": "oxygen-insensitive nitroreductase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed."},
+            {"node_id": "nfsa_background", "label": "nfsA mutant background",
+             "node_type": "EXPERIMENTAL_FACTOR",
+             "description": "The condition under which the resistance is observed. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "nitroreduction",
+             "predicate": "enables (nitroreduction)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3003755", "snippet": "The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone in an nfsA mutant background.",
+                           "notes": "'The nsfB gene encodes a minor oxygen-insensitive nitroreductase'."}]},
+            {"subject": "nitroreduction", "object": "drug0",
+             "predicate": "has input (the nitroaromatic antibiotic)", "predicate_id": "RO:0002233",
+             "description": "The enzyme acts ON the drug -- which is what makes losing it prodrug-activation loss rather than target alteration.",
+             "evidence": [{"reference": "ARO:3003755", "snippet": "The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone in an nfsA mutant background.",
+                           "notes": "'NfsB reduces a broad range of nitroaromatic compounds INCLUDING THE ANTIBIOTICS nitrofurazone and nitrofurantoin'."}]},
+            {"subject": "nfsa_background", "object": "determinant",
+             "predicate": "causally upstream of (the background in which resistance is seen)",
+             "predicate_id": "RO:0002411",
+             "description": "A genetic PRECONDITION, not a mechanism step. Kept because dropping it would turn a conditional observation into an unconditional claim.",
+             "evidence": [{"reference": "ARO:3003755", "snippet": "The nsfB gene encodes a minor oxygen-insensitive nitroreductase. NfsB reduces a broad range of nitroaromatic compounds including the antibiotics nitrofurazone and nitrofurantoin. NfsB is a flavin mononucleotide (FMN)-containing protein and uses both NADH and NADPH as a source of reducing equivalents. Mutations in nfsB lead to increased resistance to nitrofurazone and furazolidone in an nfsA mutant background.",
+                           "notes": "'Mutations in nfsB lead to increased resistance ... IN AN nfsA MUTANT BACKGROUND'."}]},
+        ],
+    },
+    # rpoA (ARO:3004997) -- round 106's rpoB shape, one sentence shorter.
+    "ARO:3004997": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004997",
+        "mech": {"ARO:3000212": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. Mutations in rpoA gene confer antibiotic resistance."},
+        "mech_res": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. Mutations in rpoA gene confer antibiotic resistance.",
+        "det_res": [
+            {"reference": "ARO:3004997", "snippet": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. Mutations in rpoA gene confer antibiotic resistance.",
+             "notes": "Even barer than rpoB and rpoC (rounds 106, 83): the polymerase's role and a resistance claim, with not even a statement of what the alpha-subunit contributes."},
+        ],
+        "res_drug": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. Mutations in rpoA gene confer antibiotic resistance.",
+        "note": ("Mechanism NOT asserted, and less is available than for rpoB or rpoC -- "
+                 "CARD does not say what the alpha-subunit does, so there is no structural "
+                 "edge to write either."),
+        "extra_nodes": [
+            {"node_id": "transcription", "label": "transcription", "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: not looked up rather than guessed."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "transcription",
+             "predicate": "participates in (transcription)", "predicate_id": "RO:0000056",
+             "description": "'Participates in', not 'part of the active center' as for rpoB and rpoC -- CARD says what those subunits form and does not say it here.",
+             "evidence": [{"reference": "ARO:3004997", "snippet": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. Mutations in rpoA gene confer antibiotic resistance.",
+                           "notes": "'RNA polymerase is a multisubunit enzyme that is necessary for transcription'. NOT asserted: the alpha-subunit's specific contribution, or any drug interaction."}]},
+        ],
+    },
     # rpoB (ARO:3003276) -- round 83's rpoC shape, and the symmetry is the point.
     #
     # Round 83 refused to give rpoC rifampicin's mechanism, noting that rifampicin binds

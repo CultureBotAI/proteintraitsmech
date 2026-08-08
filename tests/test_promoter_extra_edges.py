@@ -2433,3 +2433,25 @@ def test_rpob_and_rpoc_both_omit_the_rifampicin_edge():
         for banned in ("rifampicin", "rifamycin", "binds the drug", "inhibit"):
             assert banned not in asserted, f"{fam} asserts {banned!r} uncited"
         assert "NOT asserted" in cfg["note"]
+
+
+def test_nfsb_keeps_its_genetic_precondition():
+    """"in an nfsA mutant background" is the difference between a claim and a conditional.
+
+    Dropping it would turn "mutations confer resistance when another gene is already
+    broken" into "mutations confer resistance".
+    """
+    cfg = promote.family_configs("ARO:3003755")[0]
+    assert any(n["node_id"] == "nfsa_background" for n in cfg["extra_nodes"])
+    edge = next(e for e in cfg["extra_edges"] if e["subject"] == "nfsa_background")
+    assert "nfsA mutant background" in edge["evidence"][0]["notes"]
+    assert "CONDITIONAL" in cfg["note"]
+
+
+def test_rpo_subunits_are_curated_to_what_each_definition_gives():
+    """rpoB and rpoC say what their subunit forms; rpoA does not, so it gets less."""
+    for fam in ("ARO:3003276", "ARO:3003289"):
+        cfg = promote.family_configs(fam)[0]
+        assert any(n["node_id"] == "active_center" for n in cfg["extra_nodes"]), fam
+    rpoa = promote.family_configs("ARO:3004997")[0]
+    assert not any(n["node_id"] == "active_center" for n in rpoa["extra_nodes"])

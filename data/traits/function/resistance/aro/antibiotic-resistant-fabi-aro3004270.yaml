@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -25,11 +25,13 @@ evidence:
 - reference: DOI:10.1038/srep32322
   notes: PMID:27577999 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic resistant fabI → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic resistant fabI → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3004270). Target alteration in FAS-II. Same pathway as round 51''s fabG1, where CARD gave no
+    drug action and three rounds were spent failing to source one. Here it is stated. NOT asserted: isoniazid''s
+    action, which CARD names as a resisted drug without describing what it does.'
   nodes:
   - node_id: determinant
     label: antibiotic resistant fabI
@@ -47,6 +49,18 @@ causal_graphs:
     label: isoniazid-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007152
+  - node_id: enoyl_reduction
+    label: enoyl-acyl carrier reductase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-105).'
+  - node_id: fa_elongation
+    label: final reduction step of fatty acid elongation
+    node_type: BIOLOGICAL_PROCESS
+    description: The step CARD says Triclosan blocks. Ungrounded.
+  - node_id: inhibition
+    label: Triclosan inhibition of fatty acid biosynthesis
+    node_type: STATE
+    description: What the mutation relieves. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,56 +74,99 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1038/srep32322
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3004270
       snippet: fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis.
         The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting
         biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/srep32322
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3004270
+      snippet: fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis.
+        The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting
+        biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/srep32322
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004270
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3005386 ! disinfecting agents and antiseptics'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis.
+        The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting
+        biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.
+      notes: Enzyme, drug action and resistance. NOTE the hedge -- mutations 'CAN confer' -- and that
+        TWO drugs are named, Triclosan and isoniazid, of which only Triclosan's action is described.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to disinfecting agents and antiseptics.
     evidence:
     - reference: ARO:3004270
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3005386 ! disinfecting agents and antiseptics'
-      notes: Asserted directly on ARO:3004270 (antibiotic resistant fabI) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to disinfecting agents and antiseptics.
+      notes: Asserted on ARO:3004270 (antibiotic resistant fabI), an is_a ancestor of this record's ARO:3004270;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug1
+    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
     evidence:
     - reference: ARO:3004270
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
-      notes: Asserted directly on ARO:3004270 (antibiotic resistant fabI) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
+      notes: Asserted on ARO:3004270 (antibiotic resistant fabI), an is_a ancestor of this record's ARO:3004270;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: enables (enoyl-ACP reduction)
+    predicate_id: RO:0002327
+    object: enoyl_reduction
+    evidence:
+    - reference: ARO:3004270
+      snippet: fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis.
+        The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting
+        biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.
+      notes: '''fabI is a enoyl-acyl carrier reductase''.'
+  - subject: enoyl_reduction
+    predicate: part of (the final reduction step)
+    predicate_id: BFO:0000050
+    object: fa_elongation
+    evidence:
+    - reference: ARO:3004270
+      snippet: fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis.
+        The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting
+        biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.
+      notes: '''the final reduction step in fatty acid elongation''.'
+  - subject: drug0
+    predicate: causally upstream of (blocks the reduction step)
+    predicate_id: RO:0002411
+    object: inhibition
+    description: Stated for TRICLOSAN specifically. Isoniazid is named as resisted without its action
+      described -- and round 51 spent three rounds failing to source that action for fabG1.
+    evidence:
+    - reference: ARO:3004270
+      snippet: fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis.
+        The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting
+        biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.
+      notes: '''The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation,
+        inhibiting biosynthesis''.'
+  - subject: determinant
+    predicate: negatively regulates (the mutant is no longer inhibited)
+    predicate_id: RO:0002212
+    object: inhibition
+    evidence:
+    - reference: ARO:3004270
+      snippet: fabI is a enoyl-acyl carrier reductase used in lipid metabolism and fatty acid biosynthesis.
+        The bacterial biocide Triclosan blocks the final reduction step in fatty acid elongation, inhibiting
+        biosynthesis. Point mutations in fabI can confer resistance to Triclosan and Isoniazid.
+      notes: '''Point mutations in fabI CAN confer resistance to Triclosan and Isoniazid'' -- the hedge
+        is CARD''s.'
+curation_history:
+- timestamp: '2026-08-08T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
