@@ -2571,3 +2571,25 @@ def test_folc_names_the_intermediate_that_other_prodrug_configs_lack():
         n["label"] for n in cfg["extra_nodes"]).lower()
     pnca = promote.family_configs("ARO:3004267")[0]
     assert not any("analog" == n["node_id"] for n in pnca["extra_nodes"])
+
+
+def test_folc_and_thya_give_different_halves_of_one_mechanism():
+    """Both are p-aminosalicylic acid prodrug-activation loss (rounds 113, 114).
+
+    folC names the INTERMEDIATE whose absence is the resistance; thyA names the DEFECT
+    the mutation causes. Neither may borrow the other's half.
+    """
+    folc = promote.family_configs("ARO:3004155")[0]
+    thya = promote.family_configs("ARO:3004152")[0]
+    assert any(n["node_id"] == "analog" for n in folc["extra_nodes"])
+    assert not any(n["node_id"] == "analog" for n in thya["extra_nodes"])
+    assert any(n["node_id"] == "defect" for n in thya["extra_nodes"])
+    assert not any(n["node_id"] == "defect" for n in folc["extra_nodes"])
+
+
+def test_cya_keeps_the_neutral_regulation_predicate():
+    """CARD says cAMP "regulates" glpT without a direction (rounds 78, 110 precedent)."""
+    cfg = promote.family_configs("ARO:3004251")[0]
+    edge = next(e for e in cfg["extra_edges"] if e["object"] == "glpt")
+    assert edge["predicate_id"] == "RO:0002211"
+    assert "without saying which way" in cfg["note"] or "which way" in edge["evidence"][0]["notes"]
