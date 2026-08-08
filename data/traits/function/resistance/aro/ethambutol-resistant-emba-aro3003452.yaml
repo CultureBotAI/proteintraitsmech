@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3005005
 trait_relations:
@@ -17,11 +17,12 @@ trait_relations:
     object: ARO:3000527
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3003452 ethambutol resistant embA"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] ethambutol resistant embA → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: ethambutol resistant embA → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3005005). Target alteration of the drug's own enzyme; the ERDR region is named by embB's definition
+    but not by the family term, so it is not asserted family-wide.
   nodes:
   - node_id: determinant
     label: ethambutol resistant embA
@@ -35,6 +36,18 @@ causal_graphs:
     label: polyamine antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000527
+  - node_id: arabinosyl_transfer
+    label: arabinosyl transferase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-79).'
+  - node_id: arabinogalactan
+    label: arabinogalactan synthesis pathway
+    node_type: PATHWAY
+    description: 'The cell-wall pathway the enzyme serves. Ungrounded: no term verified this round.'
+  - node_id: inhibition
+    label: ethambutol inhibition of the transferase
+    node_type: STATE
+    description: What the mutation prevents. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -48,45 +61,91 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: ARO:3003452
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003452
-      snippet: Mutations that occurs on the embA genes resulting in the resistance to ethambutol.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3005005
+      snippet: Known antibiotic-resistant variants of emb arabinosyltransferases, primarily in Mycobacterium
+        and conferring resistance to ethambutol through point mutation.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3003452
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3005005
+      snippet: Known antibiotic-resistant variants of emb arabinosyltransferases, primarily in Mycobacterium
+        and conferring resistance to ethambutol through point mutation.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3003452
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003452
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000497 ! ethambutol'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3005005
+      snippet: Known antibiotic-resistant variants of emb arabinosyltransferases, primarily in Mycobacterium
+        and conferring resistance to ethambutol through point mutation.
+      notes: 'The family claim: resistance to ethambutol through point mutation.'
+    - reference: ARO:3000235
+      snippet: embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway.
+        It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to
+        ethambutol.
+      notes: 'And the mechanism it leaves out: what the enzyme does, that ethambutol inhibits it, and
+        where the mutations sit. SCOPE: embB''s sentence -- embA and embC are the same enzyme family but
+        their own definitions do not repeat the pathway.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to polyamine antibiotic.
     evidence:
     - reference: ARO:3003452
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000527 ! polyamine antibiotic'
-      notes: Asserted directly on ARO:3003452 (ethambutol resistant embA) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to polyamine antibiotic.
+      notes: Asserted on ARO:3003452 (ethambutol resistant embA), an is_a ancestor of this record's ARO:3003452;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: enables (arabinosyl transfer)
+    predicate_id: RO:0002327
+    object: arabinosyl_transfer
+    evidence:
+    - reference: ARO:3000235
+      snippet: embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway.
+        It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to
+        ethambutol.
+      notes: '''encodes for an arabinosyl transferase''.'
+  - subject: arabinosyl_transfer
+    predicate: part of (arabinogalactan synthesis)
+    predicate_id: BFO:0000050
+    object: arabinogalactan
+    evidence:
+    - reference: ARO:3000235
+      snippet: embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway.
+        It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to
+        ethambutol.
+      notes: '''in the arabinogalactan synthesis pathway''.'
+  - subject: drug0
+    predicate: causally upstream of (inhibits the transferase)
+    predicate_id: RO:0002411
+    object: inhibition
+    description: What the drug does to the unmutated enzyme, and therefore what resistance restores.
+    evidence:
+    - reference: ARO:3000235
+      snippet: embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway.
+        It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to
+        ethambutol.
+      notes: '''It is inhibited by ethambutol'' -- stated outright, unlike fabG1 (#219) where the drug''s
+        action had to be sourced separately.'
+  - subject: determinant
+    predicate: negatively regulates (the mutant is no longer inhibited)
+    predicate_id: RO:0002212
+    object: inhibition
+    description: The causal core.
+    evidence:
+    - reference: ARO:3000235
+      snippet: embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway.
+        It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to
+        ethambutol.
+      notes: '''Mutations within the ERDR region of embB confers resistance to ethambutol''.'
+curation_history:
+- timestamp: '2026-08-07T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

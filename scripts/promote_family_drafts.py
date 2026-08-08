@@ -1003,7 +1003,67 @@ def _requires_mutant_efflux_regulator(ident: str, label: str, text: str):
     return None
 
 
+def _requires_emb_arabinosyltransferase(ident: str, label: str, text: str):
+    """An emb arabinosyltransferase variant -- target alteration of a drug's own enzyme."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # emb arabinosyltransferases (ARO:3005005) -- target alteration, with the drug's own
+    # target named by the record. Rounds 18-19, 53 and 61 curated target alteration where
+    # the drug binds a nucleic acid or a wall-building enzyme; here CARD spells out the
+    # pathway the enzyme serves AND that ethambutol inhibits it, so the graph has a real
+    # process at the end rather than a bare "resistance".
+    "ARO:3005005": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_emb_arabinosyltransferase,
+        "reference": "ARO:3005005",
+        "mech": {"ARO:3000212": "Known antibiotic-resistant variants of emb arabinosyltransferases, primarily in Mycobacterium and conferring resistance to ethambutol through point mutation."},
+        "mech_res": "Known antibiotic-resistant variants of emb arabinosyltransferases, primarily in Mycobacterium and conferring resistance to ethambutol through point mutation.",
+        "det_res": [
+            {"reference": "ARO:3005005", "snippet": "Known antibiotic-resistant variants of emb arabinosyltransferases, primarily in Mycobacterium and conferring resistance to ethambutol through point mutation.",
+             "notes": "The family claim: resistance to ethambutol through point mutation."},
+            {"reference": "ARO:3000235", "snippet": "embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway. It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to ethambutol.",
+             "notes": "And the mechanism it leaves out: what the enzyme does, that ethambutol inhibits it, and where the mutations sit. SCOPE: embB's sentence -- embA and embC are the same enzyme family but their own definitions do not repeat the pathway."},
+        ],
+        "res_drug": "embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway. It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to ethambutol.",
+        "note": "Target alteration of the drug's own enzyme; the ERDR region is named by embB's definition but not by the family term, so it is not asserted family-wide.",
+        "extra_nodes": [
+            {"node_id": "arabinosyl_transfer", "label": "arabinosyl transferase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-79)."},
+            {"node_id": "arabinogalactan", "label": "arabinogalactan synthesis pathway",
+             "node_type": "PATHWAY",
+             "description": "The cell-wall pathway the enzyme serves. Ungrounded: no term verified this round."},
+            {"node_id": "inhibition", "label": "ethambutol inhibition of the transferase",
+             "node_type": "STATE",
+             "description": "What the mutation prevents. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "arabinosyl_transfer",
+             "predicate": "enables (arabinosyl transfer)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3000235", "snippet": "embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway. It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to ethambutol.",
+                           "notes": "'encodes for an arabinosyl transferase'."}]},
+            {"subject": "arabinosyl_transfer", "object": "arabinogalactan",
+             "predicate": "part of (arabinogalactan synthesis)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3000235", "snippet": "embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway. It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to ethambutol.",
+                           "notes": "'in the arabinogalactan synthesis pathway'."}]},
+            {"subject": "drug0", "object": "inhibition",
+             "predicate": "causally upstream of (inhibits the transferase)",
+             "predicate_id": "RO:0002411",
+             "description": "What the drug does to the unmutated enzyme, and therefore what resistance restores.",
+             "evidence": [{"reference": "ARO:3000235", "snippet": "embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway. It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to ethambutol.",
+                           "notes": "'It is inhibited by ethambutol' -- stated outright, unlike fabG1 (#219) where the drug's action had to be sourced separately."}]},
+            {"subject": "determinant", "object": "inhibition",
+             "predicate": "negatively regulates (the mutant is no longer inhibited)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core.",
+             "evidence": [{"reference": "ARO:3000235", "snippet": "embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway. It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to ethambutol.",
+                           "notes": "'Mutations within the ERDR region of embB confers resistance to ethambutol'."}]},
+        ],
+    },
     # Mutant efflux regulatory proteins (ARO:3000219) -- regulation, with a DIRECTION.
     "ARO:3000219": {
         "curated": "2026-08-07T00:00:00Z",

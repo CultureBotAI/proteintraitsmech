@@ -1898,3 +1898,12 @@ def test_axyz_mutation_id_is_covered_by_its_own_family_not_a_borrowed_snippet():
     cfg = promote.family_configs("ARO:3000219")[0]
     assert "mutations" in cfg["mech"]["ARO:3000212"]
     assert cfg["mech"]["ARO:3000212"] == cfg["mech"]["ARO:0010000"]
+
+
+def test_emb_scopes_embbs_sentence_and_does_not_assert_erdr_family_wide():
+    """embB's definition names the ERDR region; embA and embC's do not."""
+    cfg = promote.family_configs("ARO:3005005")[0]
+    ev = next(e for e in cfg["det_res"] if e["reference"] == "ARO:3000235")
+    assert "SCOPE" in ev["notes"] and "embA and embC" in ev["notes"]
+    labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    assert "erdr" not in labels, "the region is embB's, not the family's"
