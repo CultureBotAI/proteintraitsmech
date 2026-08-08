@@ -2494,3 +2494,26 @@ def test_mshb_asserts_no_resistance_at_all():
     asserted = " ".join(e["predicate"] for e in cfg["extra_edges"]).lower()
     for banned in ("resist", "drug", "antibiotic", "mutation"):
         assert banned not in asserted, f"mshB config asserts {banned!r} uncited"
+
+
+def test_upc2_uses_the_overexpression_id_its_record_carries():
+    """The label says "with mutations"; the record carries ARO:3007609, not ARO:3000212.
+
+    I assumed the mutation id and the promoter wrote zero records. Second time this
+    session (round 87 the first). Pinned so the label cannot mislead again.
+    """
+    cfg = promote.family_configs("ARO:3007551")[0]
+    assert "ARO:3007609" in cfg["mech"]
+    assert "ARO:3000212" not in cfg["mech"]
+
+
+def test_nudc_says_function_not_activate():
+    """Round 95's mshA/mshC line: "activate" licenses a prodrug edge, "function" does not.
+
+    Ethionamide IS a prodrug and ndh (round 57) curates that story for a neighbour, which
+    is exactly why the distinction has to be enforced rather than judged each time.
+    """
+    cfg = promote.family_configs("ARO:3004892")[0]
+    assert "to function" in cfg["mech"]["ARO:3000212"].lower()
+    asserted = " ".join(e["predicate"] for e in cfg["extra_edges"]).lower()
+    assert "activat" not in asserted

@@ -1332,6 +1332,112 @@ def _fungal_p450_config(fam_id: str, snippet: str, drug: str, hedged: bool) -> d
 
 
 FAMILY_SNIPPETS = {
+    # Upc2 (ARO:3007551) -- target OVEREXPRESSION via a regulator, complete in one sentence.
+    #
+    # Round 84's murA was overexpression of the target itself; this is a REGULATOR whose
+    # mutation raises the target's expression. CARD gives the whole chain and names the
+    # gene: "by upregulating ERG11 expression". ERG11 is the azole target.
+    "ARO:3007551": {
+        "curated": "2026-08-08T00:00:00Z",
+        # ARO:3007609 (target overexpression), NOT ARO:3000212. I assumed the mutation id
+        # because the label says "with mutations", and the record carries the mechanism id
+        # for what the mutations DO. Second time this session I guessed a mechanism id
+        # rather than reading it (round 87 was the first), and both times the promoter
+        # wrote zero records until I looked.
+        "precondition": _requires_mech("ARO:3007609", "target overexpression"),
+        "reference": "ARO:3007551",
+        "mech": {"ARO:3007609": "Upc2 is a sterol synthesis regulatory element binding protein in Candida spp. Mutations in Upc2 have been shown to confer resistance to azole antibiotics including fluconazole by upregulating ERG11 expression."},
+        "mech_res": "Upc2 is a sterol synthesis regulatory element binding protein in Candida spp. Mutations in Upc2 have been shown to confer resistance to azole antibiotics including fluconazole by upregulating ERG11 expression.",
+        "det_res": [
+            {"reference": "ARO:3007551", "snippet": "Upc2 is a sterol synthesis regulatory element binding protein in Candida spp. Mutations in Upc2 have been shown to confer resistance to azole antibiotics including fluconazole by upregulating ERG11 expression.",
+             "notes": "The complete chain with CARD's own 'BY': mutations confer azole resistance BY UPREGULATING ERG11 expression. The mechanism is named, the target gene is named, and the resistance is attributed ('have been SHOWN to')."},
+        ],
+        "res_drug": "Upc2 is a sterol synthesis regulatory element binding protein in Candida spp. Mutations in Upc2 have been shown to confer resistance to azole antibiotics including fluconazole by upregulating ERG11 expression.",
+        "note": ("Target overexpression via a regulator. Round 84's murA overexpressed the "
+                 "target itself; here a regulator's mutation raises the target's "
+                 "expression. NOT asserted: that ERG11 is the azole target or what it does "
+                 "-- CARD names the gene and not its role."),
+        "extra_nodes": [
+            {"node_id": "erg11_expression", "label": "ERG11 expression",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "What the mutation raises. Ungrounded, and deliberately unelaborated: CARD names the gene without saying what it does."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "erg11_expression",
+             "predicate": "positively regulates (upregulates ERG11 expression)",
+             "predicate_id": "RO:0002213",
+             "description": "The POSITIVE form, licensed by CARD's own 'by UPREGULATING'.",
+             "evidence": [{"reference": "ARO:3007551", "snippet": "Upc2 is a sterol synthesis regulatory element binding protein in Candida spp. Mutations in Upc2 have been shown to confer resistance to azole antibiotics including fluconazole by upregulating ERG11 expression.",
+                           "notes": "'by upregulating ERG11 expression'. NOT asserted: that ERG11 encodes the azole target, which CARD does not say here."}]},
+        ],
+    },
+    # FUR1 in Saccharomyces (ARO:3007559) -- round 108's Candida FUR1, same sentence.
+    "ARO:3007559": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3007559",
+        "mech": {"ARO:3000212": "FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine."},
+        "mech_res": "FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.",
+        "det_res": [
+            {"reference": "ARO:3007559", "snippet": "FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.",
+             "notes": "Word for word the Candida FUR1 sentence (round 108) with the genus changed. Curated identically -- the 5-FC activation story is standard and CARD tells it for neither species."},
+        ],
+        "res_drug": "FUR1 is a fungal uracil phosphoribosyltransferase in Saccharomyces spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.",
+        "note": ("The Saccharomyces FUR1 record, identical in wording to the Candida one "
+                 "(round 108) and curated identically. NOT asserted: that 5-FC is activated "
+                 "by pyrimidine salvage."),
+        "extra_nodes": [
+            {"node_id": "uprt", "label": "uracil phosphoribosyltransferase activity",
+             "node_type": "MOLECULAR_FUNCTION", "description": "Ungrounded."},
+            {"node_id": "salvage", "label": "pyrimidine salvage",
+             "node_type": "BIOLOGICAL_PROCESS", "description": "Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "uprt",
+             "predicate": "enables (uracil phosphoribosyltransferase activity)",
+             "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3007559", "snippet": "It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage.",
+                           "notes": "Same sentence as the Candida record."}]},
+            {"subject": "uprt", "object": "salvage",
+             "predicate": "part of (pyrimidine salvage)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3007559", "snippet": "It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage.",
+                           "notes": "'a key regulating enzyme in pyrimidine salvage'. NOT asserted: the 5-FC activation step."}]},
+        ],
+    },
+    # nudC (ARO:3004892) -- a named function, and "inability to FUNCTION" not "to ACTIVATE".
+    "ARO:3004892": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004892",
+        "mech": {"ARO:3000212": "nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism. Mutations that occur on the nudC gene resulting in the inability for ethionamide to function."},
+        "mech_res": "nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism. Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.",
+        "det_res": [
+            {"reference": "ARO:3004892", "snippet": "nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism. Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.",
+             "notes": "Names an enzyme and a pathway -- unlike the bare nudC family term left in round 84 -- but says 'inability for ethionamide to FUNCTION', not 'to ACTIVATE'. Round 95 drew that line between mshA and mshC and it holds here: no activation claim, so no prodrug edge."},
+        ],
+        "res_drug": "nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism. Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.",
+        "note": ("Enzyme and pathway only. The word is 'FUNCTION', not 'activate' -- round "
+                 "95's mshA/mshC distinction -- so no prodrug-activation edge is written, "
+                 "even though ethionamide is a prodrug and ndh (round 57) curates that "
+                 "story for a neighbouring enzyme."),
+        "extra_nodes": [
+            {"node_id": "nadh_pp", "label": "NADH pyrophosphatase activity",
+             "node_type": "MOLECULAR_FUNCTION", "description": "Ungrounded."},
+            {"node_id": "nad_metabolism", "label": "nicotinate and nicotinamide metabolism",
+             "node_type": "BIOLOGICAL_PROCESS", "description": "Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "nadh_pp",
+             "predicate": "enables (NADH pyrophosphatase activity)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004892", "snippet": "nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism. Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.",
+                           "notes": "'nudC is a NADH pyrophosphatase'."}]},
+            {"subject": "nadh_pp", "object": "nad_metabolism",
+             "predicate": "part of (nicotinate and nicotinamide metabolism)",
+             "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3004892", "snippet": "nudC is a NADH pyrophosphatase that is involved in nicotinate and nicotinamide metabolism. Mutations that occur on the nudC gene resulting in the inability for ethionamide to function.",
+                           "notes": "'involved in nicotinate and nicotinamide metabolism'. NOT asserted: how that relates to ethionamide, which CARD does not say."}]},
+        ],
+    },
     # uhpA (ARO:3003893) -- a 16th mechanism kind: resistance by losing an IMPORTER's
     # activator. The whole chain is in one sentence, and the causal words are CARD's.
     #
