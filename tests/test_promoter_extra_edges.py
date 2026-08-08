@@ -1966,3 +1966,24 @@ def test_mura_is_overexpression_not_altered_affinity():
     assert "elevated" in labels
     assert "affinity" not in labels, "murA resists by amount, not by binding"
     assert "Overexpression of murA" in cfg["mech"]["ARO:3000212"]
+
+
+def test_amg_family_does_not_import_round68_chemistries():
+    """CARD names only "chemical modification" here; the specific reactions are elsewhere."""
+    cfg = promote.family_configs("ARO:3007380")[0]
+    blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    for chem in ("acetyl", "phospho", "nucleotidyl", "adenylyl"):
+        assert chem not in blob, f"imported a reaction CARD does not name: {chem}"
+
+
+def test_rv0678_states_repression_and_stops_before_derepression():
+    """The step that makes these records resistant is the one CARD never writes.
+
+    Mirror of round 79: there mutations raise expression and CARD says so, so the edge
+    is positive. Here CARD gives only the repression, so the derepression is absent.
+    """
+    cfg = promote.family_configs("ARO:3007672")[0]
+    edge = cfg["extra_edges"][0]
+    assert edge["predicate_id"] == "RO:0002212"
+    assert "NOT asserted" in edge["evidence"][0]["notes"]
+    assert "deliberately absent" in cfg["note"]
