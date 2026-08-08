@@ -1919,3 +1919,17 @@ def test_pps_does_not_link_lipid_biosynthesis_to_pyrazinamide():
     assert len(cfg["extra_edges"]) == 1, "only the biosynthetic role may be asserted"
     assert "NOT asserted" in cfg["extra_edges"][0]["evidence"][0]["notes"]
     assert "can result in" in cfg["mech"]["ARO:3000212"], "CARD's hedge must survive"
+
+
+def test_folp_records_competitive_inhibition_not_generic_blocking():
+    """The drug is a PABA analogue at the substrate's own site.
+
+    That is why a mutation can lower drug affinity without abolishing catalysis --
+    a distinction a generic "inhibits" edge would lose.
+    """
+    cfg = promote.family_configs("ARO:3000226")[0]
+    edge = next(e for e in cfg["extra_edges"]
+                if e["subject"] == "drug0" and e["object"] == "dhps_activity")
+    assert "competitive" in edge["predicate"].lower()
+    assert "competitive inhibitor" in edge["evidence"][0]["snippet"]
+    assert "allosteric" in edge["description"]
