@@ -1332,6 +1332,80 @@ def _fungal_p450_config(fam_id: str, snippet: str, drug: str, hedged: bool) -> d
 
 
 FAMILY_SNIPPETS = {
+    # pgsA (ARO:3003420) -- a biosynthetic role and no mechanism. Round 95's aftA shape.
+    #
+    # Left in round 96 as "a role and no mechanism", which is exactly what round 95 had
+    # curated aftA on one round earlier. Second inconsistency of the same kind as round
+    # 104's P450, and found the same way -- by re-reading what I had written.
+    "ARO:3003420": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3003420",
+        "mech": {"ARO:3000212": "pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase."},
+        "mech_res": "pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.",
+        "det_res": [
+            {"reference": "ARO:3003420", "snippet": "pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.",
+             "notes": "Enzyme identity and pathway, twice over: the protein class and the exact transferase (EC-style) name. CARD says nothing about mutations, a drug, or resistance -- as with aftA (round 95)."},
+        ],
+        "res_drug": "pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.",
+        "note": ("Biosynthetic role only. NOT asserted: any resistance mechanism -- CARD's "
+                 "sentences name an enzyme and a pathway and never mention a drug. Round "
+                 "95's aftA position, applied consistently this time."),
+        "extra_nodes": [
+            {"node_id": "pgp_synthase", "label": "CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "CARD names the reaction precisely. Ungrounded: not looked up rather than guessed."},
+            {"node_id": "phospholipid", "label": "phospholipid biosynthesis",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The pathway. Ungrounded: no term verified this round."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "pgp_synthase",
+             "predicate": "enables (phosphatidylglycerophosphate synthesis)",
+             "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3003420", "snippet": "pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.",
+                           "notes": "'It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase' -- CARD names the reaction, not just the pathway."}]},
+            {"subject": "pgp_synthase", "object": "phospholipid",
+             "predicate": "part of (phospholipid biosynthesis)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3003420", "snippet": "pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.",
+                           "notes": "'involved in phospholipid biosynthesis'. NOT asserted: any link to a drug, which CARD's sentences do not contain."}]},
+        ],
+    },
+    # The rRNA PARENT term (ARO:3000328) -- rounds 54-55 curated its children, not it.
+    "ARO:3000328": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "determinant_node_type": "NUCLEIC_ACID",
+        "reference": "ARO:3000328",
+        "mech": {"ARO:3000212": "Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs that target the bacterial ribosome."},
+        "mech_res": "Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs that target the bacterial ribosome.",
+        "det_res": [
+            {"reference": "ARO:3000328", "snippet": "Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs that target the bacterial ribosome.",
+             "notes": "The general claim over both subunits: SNPs in rRNA confer resistance to drugs that TARGET THE RIBOSOME. Rounds 54-55 curated the 16S and 23S children with their own mechanism sentences; this term is the shared statement above them."},
+        ],
+        "res_drug": "Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs that target the bacterial ribosome.",
+        "note": ("The rRNA parent term. NOT asserted: the binding-site partonomy that makes "
+                 "rounds 54-55's graphs distinctive -- that comes from the 16S and 23S "
+                 "definitions, not from this one, which says only that the drugs target "
+                 "the ribosome."),
+        "extra_nodes": [
+            {"node_id": "ribosome", "label": "the bacterial ribosome",
+             "node_type": "CELLULAR_LOCALIZATION",
+             "description": "What the drugs target. Ungrounded: CARD says 'the bacterial ribosome' without a subunit, and rounds 54-55 grounded the specific subunits from the specific terms."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "ribosome",
+             "predicate": "part of (the bacterial ribosome)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3000328", "snippet": "Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs that target the bacterial ribosome.",
+                           "notes": "rRNA is a ribosomal component; CARD frames the drugs as targeting the ribosome."}]},
+            {"subject": "drug0", "object": "ribosome",
+             "predicate": "molecularly interacts with (targets the ribosome)",
+             "predicate_id": "RO:0002436",
+             "description": "The general form of what rounds 54-55 stated per-subunit with a named binding site.",
+             "evidence": [{"reference": "ARO:3000328", "snippet": "Single nucleotide polymorphisms (SNPs) in rRNA can confer antibiotic resistance to drugs that target the bacterial ribosome.",
+                           "notes": "'drugs that target the bacterial ribosome'. NOT asserted: which site, which this term does not give."}]},
+        ],
+    },
     # cls / cardiolipin synthetase (ARO:3003272) -- three sentences, and the third does
     # not connect to the first two.
     #

@@ -2392,3 +2392,27 @@ def test_p450_and_eftu_get_the_same_treatment():
         for banned in ("bind", "inhibit", "resist"):
             assert banned not in asserted, f"{fam} asserts {banned!r} uncited"
         assert "NOT asserted" in cfg["note"]
+
+
+def test_pgsa_and_afta_get_the_same_treatment():
+    """Round 96 left pgsA as "a role and no mechanism" -- what round 95 curated aftA on.
+
+    Second inconsistency of the shape round 104 found. Both configs must assert the role
+    and no drug link.
+    """
+    for fam in ("ARO:3003422", "ARO:3003420"):
+        cfg = promote.family_configs(fam)[0]
+        asserted = " ".join(e["predicate"] for e in cfg["extra_edges"]).lower()
+        for banned in ("resist", "drug", "inhibit", "mutation"):
+            assert banned not in asserted, f"{fam} asserts {banned!r} uncited"
+
+
+def test_rrna_parent_does_not_borrow_its_children_binding_site_edge():
+    """Rounds 54-55 built binding_site --part of--> determinant from the 16S/23S
+    definitions. The parent says only that drugs target the ribosome."""
+    parent = promote.family_configs("ARO:3000328")[0]
+    assert not any(n["node_id"] == "binding_site" for n in parent["extra_nodes"])
+    assert parent["determinant_node_type"] == "NUCLEIC_ACID"
+    for child in ("ARO:3003211", "ARO:3000336"):
+        cfg = promote.family_configs(child)[0]
+        assert any(n["node_id"] == "binding_site" for n in cfg["extra_nodes"])

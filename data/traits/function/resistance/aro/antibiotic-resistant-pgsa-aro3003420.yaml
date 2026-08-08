@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -17,11 +17,13 @@ synonyms:
   - synonym_text: "phosphatidylglycerophosphate synthetase"
     synonym_type: EXACT_SYNONYM
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic resistant pgsA → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic resistant pgsA → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3003420). Biosynthetic role only. NOT asserted: any resistance mechanism -- CARD''s sentences
+    name an enzyme and a pathway and never mention a drug. Round 95''s aftA position, applied consistently
+    this time.'
   nodes:
   - node_id: determinant
     label: antibiotic resistant pgsA
@@ -31,6 +33,14 @@ causal_graphs:
     label: mutation conferring antibiotic resistance
     node_type: MOLECULAR_FUNCTION
     grounding: ARO:3000212
+  - node_id: pgp_synthase
+    label: CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    description: 'CARD names the reaction precisely. Ungrounded: not looked up rather than guessed.'
+  - node_id: phospholipid
+    label: phospholipid biosynthesis
+    node_type: BIOLOGICAL_PROCESS
+    description: 'The pathway. Ungrounded: no term verified this round.'
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -45,37 +55,51 @@ causal_graphs:
     object: mech0
     evidence:
     - reference: ARO:3003420
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3003420
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
+        in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3003420
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
+      snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
+        in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
+      notes: 'Enzyme identity and pathway, twice over: the protein class and the exact transferase (EC-style)
+        name. CARD says nothing about mutations, a drug, or resistance -- as with aftA (round 95).'
+  - subject: determinant
+    predicate: enables (phosphatidylglycerophosphate synthesis)
+    predicate_id: RO:0002327
+    object: pgp_synthase
+    evidence:
     - reference: ARO:3003420
       snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
         in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
-      notes: ARO definition of this determinant (antibiotic resistant pgsA).
+      notes: '''It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase'' -- CARD names
+        the reaction, not just the pathway.'
+  - subject: pgp_synthase
+    predicate: part of (phospholipid biosynthesis)
+    predicate_id: BFO:0000050
+    object: phospholipid
+    evidence:
+    - reference: ARO:3003420
+      snippet: pgsA or phosphatidylglycerophosphate synthetase is an integral membrane protein involved
+        in phospholipid biosynthesis. It is a CDP-diacylglycerol-glycerol-3-phosphate 3-phosphatidyltransferase.
+      notes: '''involved in phospholipid biosynthesis''. NOT asserted: any link to a drug, which CARD''s
+        sentences do not contain.'
+curation_history:
+- timestamp: '2026-08-08T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
