@@ -2346,3 +2346,17 @@ def test_every_drug_specific_inactivation_term_is_registered():
         cfgs = promote.family_configs(fam)
         assert any(any(n["node_id"] == "modification" for n in c.get("extra_nodes", ()))
                    for c in cfgs), f"{fam} has no drug-specific inactivation config"
+
+
+def test_eccc5_contradiction_travels_with_the_claim():
+    """CARD states the mechanism and then cites evidence against it, in one sentence.
+
+    Truncating at the comma would leave a clean claim that the source itself disputes.
+    The whole sentence is quoted, on the same edge, so a reader sees both halves.
+    """
+    cfg = promote.family_configs("ARO:3004916")[0]
+    edge = next(e for e in cfg["extra_edges"] if e["object"] == "uptake")
+    contra = next(e for e in edge["evidence"] if e["reference"] == "ARO:3004919")
+    assert "no evidence of an association" in contra["snippet"]
+    assert "decreased uptake" in contra["snippet"], "both halves must be present"
+    assert "#220" in cfg["note"], "the missing structural carrier is named"
