@@ -1367,6 +1367,59 @@ def _minimal_enzyme_config(fam_id: str, snippet: str, activity: str, extra_note:
 
 
 FAMILY_SNIPPETS = {
+    # folC / dihydrofolate synthase (ARO:3004155) -- the fullest prodrug-activation-loss
+    # statement in this corpus, and it names the INTERMEDIATE.
+    #
+    # Rounds 56 (pncA), 57 (ndh), 95 (mshA), 108 (FUR1) all curated this mechanism from
+    # sentences that stopped earlier. This one runs the whole way: the enzyme is required
+    # for bioactivation, the mutation stops production of a NAMED analog, and that prevents
+    # activation "thus conferring resistance". Every link is CARD's.
+    "ARO:3004155": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004155",
+        "mech": {"ARO:3000212": "Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate, thus preventing activation and conferring resistance."},
+        "mech_res": "Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate, thus preventing activation and conferring resistance.",
+        "det_res": [
+            {"reference": "ARO:3004155", "snippet": "Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate, thus preventing activation and conferring resistance.",
+             "notes": "The complete chain, and the only one in this corpus to name the intermediate: 'required for BIOACTIVATION', mutation 'inhibits production of the dihydrofolate analog HYDROXYL-DIHYDROFOLATE', 'THUS preventing activation and conferring resistance'."},
+        ],
+        "res_drug": "Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate, thus preventing activation and conferring resistance.",
+        "note": ("Prodrug-activation loss, stated end to end. Rounds 56, 57, 95 and 108 "
+                 "curated this mechanism from sentences that stopped earlier; this one "
+                 "names the analog whose absence is the resistance."),
+        "extra_nodes": [
+            {"node_id": "dhfs", "label": "dihydrofolate synthase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-111)."},
+            {"node_id": "analog", "label": "hydroxyl-dihydrofolate, the activated drug analog",
+             "node_type": "CHEMICAL",
+             "description": "The intermediate CARD names -- rare here. Ungrounded: no CHEBI id verified this round."},
+            {"node_id": "activation", "label": "bioactivation of p-aminosalicylic acid",
+             "node_type": "STATE", "description": "What the mutation prevents. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "dhfs",
+             "predicate": "enables (dihydrofolate synthase activity)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004155", "snippet": "Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate, thus preventing activation and conferring resistance.",
+                           "notes": "The enzyme the record is named for."}]},
+            {"subject": "dhfs", "object": "analog",
+             "predicate": "has output (hydroxyl-dihydrofolate)", "predicate_id": "RO:0002234",
+             "description": "The step the mutation breaks, with the product named -- which is what makes this the fullest statement of the mechanism in the corpus.",
+             "evidence": [{"reference": "ARO:3004155", "snippet": "Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate, thus preventing activation and conferring resistance.",
+                           "notes": "'mutation ... inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate'."}]},
+            {"subject": "analog", "object": "activation",
+             "predicate": "causally upstream of (the drug is activated)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3004155", "snippet": "Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate, thus preventing activation and conferring resistance.",
+                           "notes": "'Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid'."}]},
+            {"subject": "determinant", "object": "activation",
+             "predicate": "negatively regulates (prevents activation)", "predicate_id": "RO:0002212",
+             "description": "The causal core, with CARD's own 'thus'.",
+             "evidence": [{"reference": "ARO:3004155", "snippet": "Dihydrofolate synthase (synthetase) enzymes resistant to aminosalicylates (inc. para-aminosalicylic acid) caused by mutation. Dihydrofolate synthase is required for bioactivation of p-aminosalicylic acid, and mutation in dihydrofolate synthase inhibits production of the dihydrofolate analog hydroxyl-dihydrofolate, thus preventing activation and conferring resistance.",
+                           "notes": "'thus preventing activation and conferring resistance'."}]},
+        ],
+    },
     # Upc2 (ARO:3007551) -- target OVEREXPRESSION via a regulator, complete in one sentence.
     #
     # Round 84's murA was overexpression of the target itself; this is a REGULATOR whose
@@ -7556,6 +7609,26 @@ for _fam, _snip, _act, _note in [
      "NADH pyrophosphatase activity",
      "The isoniazid twin of round 110's ethionamide nudC record, and it says 'to FUNCTION' "
      "as well -- so the same refusal to write a prodrug edge applies, for the same word."),
+]:
+    FAMILY_SNIPPETS[_fam] = [_minimal_enzyme_config(_fam, _snip, _act, _note)]
+
+
+# Two more from the tail my narrow "names a function" regex missed (round 113): both name
+# a function in a form the pattern did not match -- "An alanyl-tRNA synthetase ..." and
+# "Positive regulator of ...". Ninth too-narrow pattern of the session.
+for _fam, _snip, _act, _note in [
+    ("ARO:3003830",
+     "An alanyl-tRNA synthetase conferring resistance to novobiocin in Escherichia coli. "
+     "Sequence data unavailable.",
+     "alanyl-tRNA synthetase activity",
+     "CARD records its own gap: 'Sequence data unavailable.'"),
+    ("ARO:3003840",
+     "Positive regulator of gene expression in the cysteine regulon. cysB mutants confer "
+     "resistance to novobiocin, an aminocoumarin antibiotic, in Escherichia coli. "
+     "Sequence data unavailable.",
+     "positive regulation of the cysteine regulon",
+     "A regulator of a regulon unrelated to the drug, and CARD joins the two only by "
+     "juxtaposition. 'Sequence data unavailable.' here too."),
 ]:
     FAMILY_SNIPPETS[_fam] = [_minimal_enzyme_config(_fam, _snip, _act, _note)]
 
