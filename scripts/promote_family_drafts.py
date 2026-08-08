@@ -1024,7 +1024,102 @@ def _requires_folp(ident: str, label: str, text: str):
     return None
 
 
+def _requires_rpoc(ident: str, label: str, text: str):
+    """An rpoC variant -- RNA polymerase beta prime subunit."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    return None
+
+
+def _requires_liafsr(ident: str, label: str, text: str):
+    """A liaFSR component -- envelope stress regulation, not an effector."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # rpoC (ARO:3003289) -- role and resistance stated, mechanism ABSENT.
+    #
+    # Round 81's ppsA-E shape. CARD describes what the beta prime subunit does -- "forms
+    # the active center of the enzyme and template/transcript binding sites" -- and says
+    # "Mutations in rpoC gene confers antibiotic resistance", with nothing between. It
+    # never says a drug binds there, nor what the mutations change. Rifampicin binds rpoB,
+    # not rpoC, so the obvious guess would also be the wrong one.
+    "ARO:3003289": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_rpoc,
+        "reference": "ARO:3003289",
+        "mech": {"ARO:3000212": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoC gene confers antibiotic resistance."},
+        "mech_res": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoC gene confers antibiotic resistance.",
+        "det_res": [
+            {"reference": "ARO:3003289", "snippet": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoC gene confers antibiotic resistance.",
+             "notes": "Role and resistance, with no mechanism between them. CARD does not say what a drug does to rpoC or what the mutations change -- and rifampicin binds rpoB, so the obvious guess is not even the right one."},
+        ],
+        "res_drug": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoC gene confers antibiotic resistance.",
+        "note": ("Mechanism deliberately NOT asserted. CARD gives the subunit's structural "
+                 "role and a bare resistance claim; nothing connects them. Round 66's EF-Tu "
+                 "and round 81's ppsA-E position."),
+        "extra_nodes": [
+            {"node_id": "transcription", "label": "transcription", "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-82)."},
+            {"node_id": "active_center", "label": "RNA polymerase active center and template/transcript binding sites",
+             "node_type": "PROTEIN",
+             "description": "What the beta prime subunit forms. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "active_center",
+             "predicate": "part of (the polymerase active center)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3003289", "snippet": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoC gene confers antibiotic resistance.",
+                           "notes": "'The beta prime subunit … forms the active center of the enzyme and template/transcript binding sites'."}]},
+            {"subject": "active_center", "object": "transcription",
+             "predicate": "part of (transcription)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3003289", "snippet": "RNA polymerase is a multisubunit enzyme that is necessary for transcription. The beta prime subunit of RNA polymerase forms the active center of the enzyme and template/transcript binding sites. Mutations in rpoC gene confers antibiotic resistance.",
+                           "notes": "'RNA polymerase … is necessary for transcription'. NOT asserted: any drug interaction with this centre, which CARD does not describe."}]},
+        ],
+    },
+    # liaFSR (ARO:3003279) -- envelope stress regulation, drug as the INDUCING signal.
+    "ARO:3003279": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_liafsr,
+        "reference": "ARO:3003279",
+        "mech": {"ARO:3000212": "The liaFSR system regulates the cell envelope stress response. It is transcriptionally activated by exposure to alkaline shock, detergents, and particularly antibiotics with lipid II inhibition properties."},
+        "mech_res": "The liaFSR system regulates the cell envelope stress response. It is transcriptionally activated by exposure to alkaline shock, detergents, and particularly antibiotics with lipid II inhibition properties.",
+        "det_res": [
+            {"reference": "ARO:3003279", "snippet": "The liaFSR system regulates the cell envelope stress response. It is transcriptionally activated by exposure to alkaline shock, detergents, and particularly antibiotics with lipid II inhibition properties.",
+             "notes": "What the system regulates, and what induces it -- 'particularly antibiotics with lipid II inhibition properties'. CARD does NOT say how the stress response then confers resistance."},
+        ],
+        "res_drug": "The liaFSR system regulates the cell envelope stress response. It is transcriptionally activated by exposure to alkaline shock, detergents, and particularly antibiotics with lipid II inhibition properties.",
+        "note": ("Regulation of the envelope stress response. The drug is the INDUCER, as "
+                 "with cprRS (round 76). How the response confers resistance is not stated "
+                 "and is not drawn."),
+        "extra_nodes": [
+            {"node_id": "lipid_ii_stress", "label": "envelope stress from lipid II-inhibiting antibiotics",
+             "node_type": "STATE", "description": "The inducing signal. Ungrounded."},
+            {"node_id": "stress_response", "label": "cell envelope stress response",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "What the system regulates. Ungrounded: no term verified this round."},
+        ],
+        "extra_edges": [
+            {"subject": "drug0", "object": "lipid_ii_stress",
+             "predicate": "causally upstream of (creates envelope stress)",
+             "predicate_id": "RO:0002411",
+             "description": "The drug is the inducing signal, not the thing resisted at this step -- the same inversion as cprRS in round 76.",
+             "evidence": [{"reference": "ARO:3003279", "snippet": "The liaFSR system regulates the cell envelope stress response. It is transcriptionally activated by exposure to alkaline shock, detergents, and particularly antibiotics with lipid II inhibition properties.",
+                           "notes": "'transcriptionally activated by exposure to … particularly antibiotics with lipid II inhibition properties'."}]},
+            {"subject": "lipid_ii_stress", "object": "determinant",
+             "predicate": "causally upstream of (activates the liaFSR system)",
+             "predicate_id": "RO:0002411",
+             "evidence": [{"reference": "ARO:3003279", "snippet": "The liaFSR system regulates the cell envelope stress response. It is transcriptionally activated by exposure to alkaline shock, detergents, and particularly antibiotics with lipid II inhibition properties.",
+                           "notes": "'It is transcriptionally activated by exposure to…'."}]},
+            {"subject": "determinant", "object": "stress_response",
+             "predicate": "regulates (the cell envelope stress response)",
+             "predicate_id": "RO:0002211",
+             "description": "Where this graph stops. CARD says the system REGULATES the response and never says how the response confers resistance.",
+             "evidence": [{"reference": "ARO:3003279", "snippet": "The liaFSR system regulates the cell envelope stress response. It is transcriptionally activated by exposure to alkaline shock, detergents, and particularly antibiotics with lipid II inhibition properties.",
+                           "notes": "'The liaFSR system regulates the cell envelope stress response'. Neutral predicate: CARD gives no direction."}]},
+        ],
+    },
     # folP dihydropteroate synthase (ARO:3000226) -- the most completely stated target
     # alteration in this corpus. CARD gives enzyme, pathway, drug action, mutation effect
     # and resistance in ONE sentence, and a second record adds that the inhibition is

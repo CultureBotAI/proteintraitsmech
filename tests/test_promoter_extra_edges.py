@@ -1933,3 +1933,23 @@ def test_folp_records_competitive_inhibition_not_generic_blocking():
     assert "competitive" in edge["predicate"].lower()
     assert "competitive inhibitor" in edge["evidence"][0]["snippet"]
     assert "allosteric" in edge["description"]
+
+
+def test_rpoc_does_not_borrow_rifampicins_rpob_mechanism():
+    """Rifampicin binds rpoB, not rpoC -- so the obvious guess is also the wrong one."""
+    cfg = promote.family_configs("ARO:3003289")[0]
+    asserted = " ".join(
+        [e["predicate"] for e in cfg["extra_edges"]]
+        + [n["label"] for n in cfg["extra_nodes"]]).lower()
+    for banned in ("rifampicin", "rifamycin", "rpob", "binds the drug", "inhibit"):
+        assert banned not in asserted, f"rpoC config asserts {banned!r} uncited"
+    assert "NOT asserted" in cfg["note"]
+
+
+def test_liafsr_treats_the_drug_as_inducer_not_as_the_thing_resisted():
+    """Same inversion as cprRS (round 76): the antibiotic activates the system."""
+    cfg = promote.family_configs("ARO:3003279")[0]
+    first = next(e for e in cfg["extra_edges"] if e["subject"] == "drug0")
+    assert first["object"] == "lipid_ii_stress"
+    tail = next(e for e in cfg["extra_edges"] if e["object"] == "stress_response")
+    assert tail["predicate_id"] == "RO:0002211", "CARD gives no direction"
