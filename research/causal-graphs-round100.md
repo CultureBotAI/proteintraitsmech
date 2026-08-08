@@ -28,7 +28,7 @@ and phosphotransferases are exactly what a reader would reach for here.
 
 The rule that survived from round 51 onward, in one line: **assert what the source says,
 quote its hedges, and when a mechanism you know is absent, leave the edge out and say why.**
-Most of the 694 tests pin one instance of it.
+Most of the 693 tests pin one instance of it.
 
 The rule that arrived late and mattered most: **ask what your own guards refused.** Rounds
 96–100 curated fourteen records that were never blocked, never hard, and never asked about
@@ -38,7 +38,7 @@ of them surfaced from `audit-drafts` (#316), built at round 96.
 ## Provenance
 
 * records touched: **3** · SEEDED → REVIEWED
-* `just test`: **694 passed** (+2) · `--verify-all`: **0 problems** · `audit-drafts`: 0 accepted
+* `just test`: **693 passed** (+1) · `--verify-all`: **0 problems** · `audit-drafts`: 0 accepted
 * corpus: **0 errors · all edges snippet-cited**
 * drafts remaining: **282 → 279**
 
