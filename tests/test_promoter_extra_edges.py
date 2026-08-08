@@ -2290,3 +2290,29 @@ def test_tet34_covers_all_three_of_its_mechanism_ids_with_one_sentence():
     assert set(cfg["mech"]) == {"ARO:0001004", "ARO:3000213", "ARO:3000450"}
     assert len(set(cfg["mech"].values())) == 1
     assert "describes none of them" in cfg["note"]
+
+
+def test_generic_protection_binds_the_target_not_the_drug():
+    """Protection binds the TARGET; sequestration (round 72) binds the DRUG.
+
+    One edge apart, and the distinction is what separates the two mechanism kinds.
+    """
+    cfg = next(c for c in promote.family_configs("ARO:3000185")
+               if any(n["node_id"] == "blocked_binding" for n in c["extra_nodes"]))
+    edge = next(e for e in cfg["extra_edges"] if e["object"] == "target")
+    assert "binds the antibiotic target" in edge["predicate"]
+    assert "sequestration" in edge["description"].lower()
+
+    seq = next(c for c in promote.family_configs("ARO:3000000")
+               if "ARO:3001206" in c["mech"])
+    assert any(e["subject"] == "determinant" and e["object"] == "drug0"
+               for e in seq["extra_edges"]), "sequestration binds the drug"
+
+
+def test_generic_protection_does_not_claim_a_mode():
+    """Rounds 31/44/45 curated three modes with three papers; these records name none."""
+    cfg = next(c for c in promote.family_configs("ARO:3000185")
+               if any(n["node_id"] == "blocked_binding" for n in c["extra_nodes"]))
+    blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    for mode in ("displac", "ef-g", "rescue", "ribosom"):
+        assert mode not in blob, f"generic config claims the {mode!r} mode"

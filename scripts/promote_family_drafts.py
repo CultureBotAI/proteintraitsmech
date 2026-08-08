@@ -1205,7 +1205,72 @@ def _requires_tet34_protection(ident: str, label: str, text: str):
     return None
 
 
+def _requires_generic_target_protection(ident: str, label: str, text: str):
+    """The target-protection records the three mode-specific configs do not reach.
+
+    Rounds 31, 44 and 45 curated TetM (ribosome displacement), FusB (EF-G rescue) and
+    HelR (RNAP displacement) -- three distinct MODES, each with its own paper. These
+    three records state protection without naming a mode, so none of those configs fits
+    and none should be stretched to.
+    """
+    if "ARO:0001003" not in D.parse_relations(text)[0]:
+        return "record carries no target-protection mechanism (ARO:0001003)"
+    own = _own_definition(text).lower()
+    if not re.search(r"protect|prevent antibiotic binding|altered sensitivity", own):
+        return "own definition does not describe protection of a target"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # Generic target protection (ARO:3000185) -- the records the three MODE configs miss.
+    #
+    # Rounds 31, 44 and 45 curated TetM, FusB and HelR, each a distinct protection MODE
+    # with its own paper. These three records describe protection WITHOUT naming a mode,
+    # so no mode config fits and none should be stretched. The family term itself states
+    # the general mechanism completely.
+    "ARO:3000185-generic": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_generic_target_protection,
+        "reference": "ARO:3000185",
+        "mech": {"ARO:0001003": "These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic binding."},
+        "mech_res": "These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic binding.",
+        "det_res": [
+            {"reference": "ARO:3000185", "snippet": "These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic binding.",
+             "notes": "The general mechanism, complete: the determinant BINDS THE TARGET to PREVENT THE ANTIBIOTIC BINDING. (CARD's 'by bind' is its own wording, quoted verbatim.)"},
+            {"reference": "ARO:3000507", "snippet": "Proteins which have been experimentally shown to protect RNA-polymerase from rifampin inhibition.",
+             "notes": "The RNAP case, with its evidential status stated: 'have been EXPERIMENTALLY SHOWN to protect'. SCOPE: rifampin and RNA polymerase specifically."},
+        ],
+        "res_drug": "These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic binding.",
+        "note": ("Target protection without a named mode. Rounds 31/44/45 curated the three "
+                 "modes that DO have papers -- ribosome displacement, EF-G rescue, RNAP "
+                 "displacement. NOT asserted here: which of them applies, since these "
+                 "records do not say and stretching a mode config to cover them would "
+                 "import a mechanism from an unrelated paper."),
+        "extra_nodes": [
+            {"node_id": "target", "label": "the antibiotic's target",
+             "node_type": "PROTEIN",
+             "description": "Deliberately unnamed: CARD's general claim is about ANY target, and one member names RNA polymerase while another does not."},
+            {"node_id": "blocked_binding", "label": "antibiotic prevented from binding its target",
+             "node_type": "STATE",
+             "description": "The causal core, in CARD's own words."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "target",
+             "predicate": "molecularly interacts with (binds the antibiotic target)",
+             "predicate_id": "RO:0002436",
+             "description": "The defining act: protection works by binding the TARGET, not the drug -- which is what separates it from sequestration (round 72), where the determinant binds the drug.",
+             "evidence": [{"reference": "ARO:3000185", "snippet": "These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic binding.",
+                           "notes": "'bind the antibiotic target'."}]},
+            {"subject": "determinant", "object": "blocked_binding",
+             "predicate": "causally upstream of (prevents antibiotic binding)",
+             "predicate_id": "RO:0002411",
+             "evidence": [
+                 {"reference": "ARO:3000185", "snippet": "These proteins confer antibiotic resistance by bind the antibiotic target to prevent antibiotic binding.",
+                  "notes": "'to prevent antibiotic binding'."},
+                 {"reference": "ARO:3000507", "snippet": "Proteins which have been experimentally shown to protect RNA-polymerase from rifampin inhibition.",
+                  "notes": "And the one member with an evidential claim attached: 'experimentally shown'."}]},
+        ],
+    },
     # tet(34) (ARO:3002870) -- target protection, curated at last.
     #
     # Excluded from four chemistry configs across rounds 60, 70 and 91 because its
@@ -6637,6 +6702,10 @@ FAMILY_SNIPPETS["ARO:3000557"] = FAMILY_SNIPPETS["ARO:3000557"] + [
 # a bare assignment silently dropped all four of them.
 FAMILY_SNIPPETS["ARO:3000748"] = (
     family_configs("ARO:3000748") + [FAMILY_SNIPPETS.pop("ARO:3000748-subunit")]
+)
+
+FAMILY_SNIPPETS["ARO:3000185"] = (
+    family_configs("ARO:3000185") + [FAMILY_SNIPPETS.pop("ARO:3000185-generic")]
 )
 
 FAMILY_SNIPPETS["ARO:3003580"] = [
