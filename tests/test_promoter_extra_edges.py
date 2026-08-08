@@ -2161,3 +2161,11 @@ def test_tet34_is_refused_by_the_generic_hydroxylation_config_too():
         " which protects the protein synthesis pathway.",
         "A tetracycline hydroxylase.")
     assert promote.config_for("ARO:3000557", "ARO:X", "x", real) is not None
+
+
+def test_iles_keeps_both_hedges_on_the_resistance_claim():
+    """"CAN confer LOW-LEVEL resistance" -- neither certainty nor magnitude asserted."""
+    cfg = promote.family_configs("ARO:3000446")[0]
+    assert "can confer low-level" in cfg["mech"]["ARO:3000212"].lower()
+    assert "LOW-LEVEL" in cfg["note"] and "conditional" in cfg["note"]
+    assert "NOT asserted" in cfg["note"]

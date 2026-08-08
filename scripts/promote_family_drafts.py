@@ -1158,6 +1158,49 @@ def _requires_ddl_ligase(ident: str, label: str, text: str):
 
 
 FAMILY_SNIPPETS = {
+    # ileS (ARO:3000446) -- target alteration, with the drug's action stated and the
+    # resistance LEVEL qualified. Two sentences, and the second hedges twice: "CAN confer
+    # LOW-LEVEL" resistance. Both hedges are kept.
+    "ARO:3000446": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3000446",
+        "mech": {"ARO:3000212": "Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS). Mutations in ileS can confer low-level mupirocin resistance."},
+        "mech_res": "Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS). Mutations in ileS can confer low-level mupirocin resistance.",
+        "det_res": [
+            {"reference": "ARO:3000446", "snippet": "Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS). Mutations in ileS can confer low-level mupirocin resistance.",
+             "notes": "Drug action and resistance in two sentences. NOTE both hedges in the second: mutations 'CAN confer LOW-LEVEL' resistance -- neither the certainty nor the magnitude is asserted beyond that."},
+        ],
+        "res_drug": "Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS). Mutations in ileS can confer low-level mupirocin resistance.",
+        "note": ("Target alteration of the aminoacyl-tRNA synthetase mupirocin inhibits. "
+                 "The resistance is qualified as LOW-LEVEL and conditional ('can confer'); "
+                 "NOT asserted is HOW the mutations reduce the drug's effect, which CARD "
+                 "does not say."),
+        "extra_nodes": [
+            {"node_id": "aminoacylation", "label": "isoleucyl-tRNA synthetase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-91)."},
+            {"node_id": "protein_synthesis", "label": "protein synthesis",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "What the drug blocks. Ungrounded: no term verified this round."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "aminoacylation",
+             "predicate": "enables (isoleucyl-tRNA charging)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3000446", "snippet": "Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS). Mutations in ileS can confer low-level mupirocin resistance.",
+                           "notes": "ileS IS the isoleucyl-tRNA synthetase."}]},
+            {"subject": "drug0", "object": "aminoacylation",
+             "predicate": "negatively regulates (interferes with the synthetase)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3000446", "snippet": "Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS). Mutations in ileS can confer low-level mupirocin resistance.",
+                           "notes": "'Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase'."}]},
+            {"subject": "aminoacylation", "object": "protein_synthesis",
+             "predicate": "part of (protein synthesis)", "predicate_id": "BFO:0000050",
+             "description": "Why inhibiting one synthetase stops translation: charged tRNA is required for it.",
+             "evidence": [{"reference": "ARO:3000446", "snippet": "Mupirocin inhibits protein synthesis by interfering with isoleucyl-tRNA synthetase (ileS). Mutations in ileS can confer low-level mupirocin resistance.",
+                           "notes": "'Mupirocin inhibits protein synthesis BY interfering with' the synthetase -- CARD makes the synthetase the route to the process."}]},
+        ],
+    },
     # ddl (ARO:3003970) -- the enzyme that makes the cell VULNERABLE.
     #
     # Every other van record curated in rounds 20-23 and 87-89 describes something that
