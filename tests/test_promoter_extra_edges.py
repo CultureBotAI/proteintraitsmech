@@ -2375,3 +2375,20 @@ def test_cls_does_not_connect_cardiolipin_to_daptomycin():
     for banned in ("daptomycin", "resist", "drug"):
         assert banned not in asserted, f"cls config asserts {banned!r} uncited"
     assert "NOT asserted" in cfg["note"]
+
+
+def test_p450_and_eftu_get_the_same_treatment():
+    """Round 84 left P450 calling it "thinner than EF-Tu". The definitions say otherwise.
+
+    Both name a FUNCTION and claim resistance with no mechanism between. Round 66 curated
+    EF-Tu on exactly that basis, so leaving P450 was an inconsistency, not a standard.
+    Both configs must now assert only the functional identity.
+    """
+    for fam in ("ARO:3003356", "ARO:3007522"):
+        cfg = promote.family_configs(fam)[0]
+        asserted = " ".join(
+            [e["predicate"] for e in cfg["extra_edges"]]
+            + [n["label"] for n in cfg["extra_nodes"]]).lower()
+        for banned in ("bind", "inhibit", "resist"):
+            assert banned not in asserted, f"{fam} asserts {banned!r} uncited"
+        assert "NOT asserted" in cfg["note"]
