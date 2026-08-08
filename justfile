@@ -886,3 +886,7 @@ audit-roles:
 # Which already-curated records would no config accept today (#267)
 audit-fit:
     uv run python scripts/audit_config_fit.py
+
+# Which drafts would a config accept, and which does a configured family refuse (#316)
+audit-drafts:
+    uv run python scripts/audit_refused_drafts.py
