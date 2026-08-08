@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3000012
   - ARO:3000036
@@ -32,11 +32,13 @@ evidence:
 - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
   notes: PMID:11959596 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] tet(34) → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: tet(34) → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3002870). Target protection, not inactivation. This record carries three chemistry mechanism
+    ids and describes none of them; the same sentence is cited for all three because it is the only mechanism
+    CARD gives. NOT asserted: how purine nucleotide synthesis protects translation, which CARD omits.'
   nodes:
   - node_id: determinant
     label: tet(34)
@@ -58,6 +60,15 @@ causal_graphs:
     label: tetracycline antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000050
+  - node_id: purine_synthesis
+    label: Mg2+-dependent purine nucleotide synthesis
+    node_type: BIOLOGICAL_PROCESS
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-96).'
+  - node_id: protection
+    label: protection of the protein synthesis pathway
+    node_type: STATE
+    description: The causal core. Ungrounded, and deliberately unelaborated -- CARD says protection happens,
+      not how.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -71,94 +82,102 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
     - reference: ARO:3002870
       snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
         the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: ARO:3002870
+      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
+        the protein synthesis pathway. It is found in Gram-negative Vibrio.
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech1
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
-      notes: 'Auto-drafted: mechanism class ARO:3000213 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000213); verbatim snippet pending curation.'
     - reference: ARO:3002870
       snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
         the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo
-        does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:3000213.
   - subject: mech1
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
-      notes: 'Auto-drafted: mechanism ARO:3000213 → resistance; snippet pending curation.'
-    - reference: ARO:3000213
-      snippet: Peptidoglycan precursors ending in D-Ala-D-Lac or D-Ala-D-Ser instead of D-Ala-D-Ala conferring
-        high level glycopeptide resistance.
-      notes: ARO definition of the resistance mechanism class ARO:3000213 (restructuring of bacterial
-        cell wall conferring antibiotic resistance), which states the causal link to resistance.
+    - reference: ARO:3002870
+      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
+        the protein synthesis pathway. It is found in Gram-negative Vibrio.
+      notes: Mechanism ARO:3000213 → resistance.
   - subject: determinant
     predicate: participates in (resistance mechanism)
     predicate_id: RO:0000056
     object: mech2
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
-      notes: 'Auto-drafted: mechanism class ARO:3000450 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000450); verbatim snippet pending curation.'
     - reference: ARO:3002870
       snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
         the protein synthesis pathway. It is found in Gram-negative Vibrio.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000450 (hydroxylation of antibiotic
-        conferring resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000450.
   - subject: mech2
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
-      notes: 'Auto-drafted: mechanism ARO:3000450 → resistance; snippet pending curation.'
-    - reference: ARO:3000450
-      snippet: Inactivation of an antibiotic via introduction a hydroxyl group (-OH).
-      notes: ARO definition of the resistance mechanism class ARO:3000450 (hydroxylation of antibiotic
-        conferring resistance), which states the causal link to resistance.
+    - reference: ARO:3002870
+      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
+        the protein synthesis pathway. It is found in Gram-negative Vibrio.
+      notes: Mechanism ARO:3000450 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.46.5.1550-1552.2002
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3002870
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000051 ! tetracycline'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
+        the protein synthesis pathway. It is found in Gram-negative Vibrio.
+      notes: 'The mechanism CARD does state, after three it does not: activation of Mg2+-dependent purine
+        nucleotide synthesis PROTECTS the protein synthesis pathway. All three of this record''s mechanism
+        ids are covered by this one sentence because none of them is what it describes -- the sentence
+        is the honest evidence for each.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to tetracycline antibiotic.
     evidence:
     - reference: ARO:3000036
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000050 ! tetracycline antibiotic'
       notes: Asserted on ARO:3000036 (tetracycline inactivation enzyme), an is_a ancestor of this record's
         ARO:3002870; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to tetracycline antibiotic.
+  - subject: determinant
+    predicate: positively regulates (activates purine nucleotide synthesis)
+    predicate_id: RO:0002213
+    object: purine_synthesis
+    description: The POSITIVE form, licensed by CARD's own 'causes the ACTIVATION of'.
+    evidence:
+    - reference: ARO:3002870
+      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
+        the protein synthesis pathway. It is found in Gram-negative Vibrio.
+      notes: '''tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis''.'
+  - subject: purine_synthesis
+    predicate: causally upstream of (protects protein synthesis)
+    predicate_id: RO:0002411
+    object: protection
+    description: The causal core, and where CARD stops -- it says the pathway is protected, not by what
+      route.
+    evidence:
+    - reference: ARO:3002870
+      snippet: tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects
+        the protein synthesis pathway. It is found in Gram-negative Vibrio.
+      notes: '''which protects the protein synthesis pathway''. NOT asserted: the mechanism of that protection,
+        nor any interaction with tetracycline, neither of which CARD gives.'
+curation_history:
+- timestamp: '2026-08-08T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

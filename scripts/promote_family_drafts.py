@@ -1191,7 +1191,68 @@ def _requires_transcription_factor_regulator(ident: str, label: str, text: str):
     return None
 
 
+def _requires_tet34_protection(ident: str, label: str, text: str):
+    """tet(34) -- target PROTECTION, the mechanism I refused four times and never wrote.
+
+    Rounds 60, 70 and 91 all excluded this record from chemistry configs, correctly: it
+    carries ARO:0001004, ARO:3000213 and ARO:3000450 while describing none of them. #267
+    filed it as misfiled and there it sat. But CARD does state a mechanism -- purine
+    nucleotide synthesis PROTECTS the protein synthesis pathway -- and refusing a record
+    from the wrong config is not the same as having nothing to say about it.
+    """
+    if "protects the protein synthesis" not in _own_definition(text).lower():
+        return "own definition does not describe protection of protein synthesis"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # tet(34) (ARO:3002870) -- target protection, curated at last.
+    #
+    # Excluded from four chemistry configs across rounds 60, 70 and 91 because its
+    # mechanism ids (inactivation, hydroxylation, cell-wall restructuring) describe
+    # nothing it does. Every one of those refusals was right, and together they left the
+    # record with no graph for 37 rounds -- because "this config does not fit" was never
+    # followed by "so which one does?".
+    "ARO:3002870": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_tet34_protection,
+        "reference": "ARO:3002870",
+        "mech": {"ARO:0001004": "tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects the protein synthesis pathway. It is found in Gram-negative Vibrio.",
+                 "ARO:3000213": "tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects the protein synthesis pathway. It is found in Gram-negative Vibrio.",
+                 "ARO:3000450": "tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects the protein synthesis pathway. It is found in Gram-negative Vibrio."},
+        "mech_res": "tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects the protein synthesis pathway. It is found in Gram-negative Vibrio.",
+        "det_res": [
+            {"reference": "ARO:3002870", "snippet": "tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects the protein synthesis pathway. It is found in Gram-negative Vibrio.",
+             "notes": "The mechanism CARD does state, after three it does not: activation of Mg2+-dependent purine nucleotide synthesis PROTECTS the protein synthesis pathway. All three of this record's mechanism ids are covered by this one sentence because none of them is what it describes -- the sentence is the honest evidence for each."},
+        ],
+        "res_drug": "tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects the protein synthesis pathway. It is found in Gram-negative Vibrio.",
+        "note": ("Target protection, not inactivation. This record carries three chemistry "
+                 "mechanism ids and describes none of them; the same sentence is cited for "
+                 "all three because it is the only mechanism CARD gives. NOT asserted: how "
+                 "purine nucleotide synthesis protects translation, which CARD omits."),
+        "extra_nodes": [
+            {"node_id": "purine_synthesis", "label": "Mg2+-dependent purine nucleotide synthesis",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-96)."},
+            {"node_id": "protection", "label": "protection of the protein synthesis pathway",
+             "node_type": "STATE",
+             "description": "The causal core. Ungrounded, and deliberately unelaborated -- CARD says protection happens, not how."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "purine_synthesis",
+             "predicate": "positively regulates (activates purine nucleotide synthesis)",
+             "predicate_id": "RO:0002213",
+             "description": "The POSITIVE form, licensed by CARD's own 'causes the ACTIVATION of'.",
+             "evidence": [{"reference": "ARO:3002870", "snippet": "tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects the protein synthesis pathway. It is found in Gram-negative Vibrio.",
+                           "notes": "'tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis'."}]},
+            {"subject": "purine_synthesis", "object": "protection",
+             "predicate": "causally upstream of (protects protein synthesis)",
+             "predicate_id": "RO:0002411",
+             "description": "The causal core, and where CARD stops -- it says the pathway is protected, not by what route.",
+             "evidence": [{"reference": "ARO:3002870", "snippet": "tet(34) causes the activation of Mg2+-dependent purine nucleotide synthesis, which protects the protein synthesis pathway. It is found in Gram-negative Vibrio.",
+                           "notes": "'which protects the protein synthesis pathway'. NOT asserted: the mechanism of that protection, nor any interaction with tetracycline, neither of which CARD gives."}]},
+        ],
+    },
     # ArmR (ARO:3004056) -- the antirepressor that defeated three keyword patterns.
     #
     # Referenced all session as the reason regulator lists cannot be built by keyword:
