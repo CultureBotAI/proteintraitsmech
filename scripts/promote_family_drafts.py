@@ -1158,6 +1158,82 @@ def _requires_ddl_ligase(ident: str, label: str, text: str):
 
 
 FAMILY_SNIPPETS = {
+    # mshA (ARO:3004900) -- prodrug-activation loss, in four words.
+    #
+    # The neighbouring mshC record reads "inability for antibiotic to FUNCTION" and was
+    # left as a draft (round 94) because that says nothing mechanistic. mshA reads
+    # "inability for antibiotic to ACTIVATE" -- one word different, and it names a
+    # mechanism: the drug is a prodrug and this determinant's loss stops its activation.
+    # Rounds 56 (pncA) and 57 (ndh) curated the same kind from richer sentences.
+    "ARO:3004900": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004900",
+        "mech": {"ARO:3000212": "Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate."},
+        "mech_res": "Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.",
+        "det_res": [
+            {"reference": "ARO:3004900", "snippet": "Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.",
+             "notes": "The whole claim, and the word that carries it: mutations leave the antibiotic unable to ACTIVATE -- not merely to function. That makes it prodrug-activation loss (rounds 56, 57), which is more than the neighbouring mshC record says."},
+        ],
+        "res_drug": "Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.",
+        "note": ("Prodrug-activation loss. NOT asserted: what mshA does, which drug it "
+                 "activates, or how -- CARD gives none of it. The graph carries the "
+                 "activation failure and nothing else."),
+        "extra_nodes": [
+            {"node_id": "activation", "label": "activation of the antibiotic",
+             "node_type": "STATE",
+             "description": "What the mutation prevents. Ungrounded, and deliberately unspecific: CARD names neither the drug nor the reaction."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "activation",
+             "predicate": "negatively regulates (prevents the antibiotic activating)",
+             "predicate_id": "RO:0002212",
+             "description": "The one mechanistic claim CARD makes here, and the word that distinguishes this family from mshC's 'inability to function'.",
+             "evidence": [{"reference": "ARO:3004900", "snippet": "Mutations that occur in the mshA gene resulting in the inability for antibiotic to activate.",
+                           "notes": "'resulting in the inability for antibiotic to ACTIVATE'."}]},
+        ],
+    },
+    # aftA (ARO:3003422) -- a biosynthetic role, and no resistance mechanism at all.
+    #
+    # CARD describes what the enzyme does and calls the product ESSENTIAL, but never says
+    # what mutations do or why they confer resistance. Round 81's ppsA-E shape, minus even
+    # the resistance sentence. Curated for the role; the gap is stated.
+    "ARO:3003422": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3003422",
+        "mech": {"ARO:3000212": "Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region of the mAGP complex, an essential component of the mycobacterial cell wall."},
+        "mech_res": "Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region of the mAGP complex, an essential component of the mycobacterial cell wall.",
+        "det_res": [
+            {"reference": "ARO:3003422", "snippet": "Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region of the mAGP complex, an essential component of the mycobacterial cell wall.",
+             "notes": "The enzyme's role and the product's importance ('an ESSENTIAL component of the mycobacterial cell wall'). CARD says nothing about what mutations do, nor which drug is involved."},
+        ],
+        "res_drug": "Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region of the mAGP complex, an essential component of the mycobacterial cell wall.",
+        "note": ("Biosynthetic role only. NOT asserted: any resistance mechanism -- CARD's "
+                 "sentence never mentions a drug, mutations, or resistance, so the graph "
+                 "carries what the enzyme does and stops. Thinner than round 81's ppsA-E, "
+                 "which at least paired a role with a hedged resistance claim."),
+        "extra_nodes": [
+            {"node_id": "arabinofuranosyl_transfer", "label": "arabinofuranosyltransferase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-93)."},
+            {"node_id": "magp", "label": "arabinogalactan region of the mAGP complex",
+             "node_type": "CHEMICAL",
+             "description": "The product, which CARD calls essential to the mycobacterial cell wall. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "arabinofuranosyl_transfer",
+             "predicate": "participates in (arabinogalactan biosynthesis)",
+             "predicate_id": "RO:0000056",
+             "description": "'Participates in', matching CARD's own 'is INVOLVED IN' rather than upgrading it.",
+             "evidence": [{"reference": "ARO:3003422", "snippet": "Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region of the mAGP complex, an essential component of the mycobacterial cell wall.",
+                           "notes": "'Arabinofuranosyltransferase is INVOLVED IN the biosynthesis'."}]},
+            {"subject": "arabinofuranosyl_transfer", "object": "magp",
+             "predicate": "has output (the arabinogalactan region)", "predicate_id": "RO:0002234",
+             "evidence": [{"reference": "ARO:3003422", "snippet": "Arabinofuranosyltransferase is involved in the biosynthesis of the arabinogalactan region of the mAGP complex, an essential component of the mycobacterial cell wall.",
+                           "notes": "'the arabinogalactan region of the mAGP complex, an essential component'. NOT asserted: any link to a drug, which CARD's sentence does not contain."}]},
+        ],
+    },
     # Generic target-replacement proteins (ARO:3000381).
     #
     # Round 52 curated the WORKED case -- mecA/PBP2a, a foreign PBP doing the wall
