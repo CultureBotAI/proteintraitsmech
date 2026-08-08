@@ -1953,3 +1953,16 @@ def test_liafsr_treats_the_drug_as_inducer_not_as_the_thing_resisted():
     assert first["object"] == "lipid_ii_stress"
     tail = next(e for e in cfg["extra_edges"] if e["object"] == "stress_response")
     assert tail["predicate_id"] == "RO:0002211", "CARD gives no direction"
+
+
+def test_mura_is_overexpression_not_altered_affinity():
+    """CARD says OVEREXPRESSION confers resistance -- the enzyme itself is unchanged.
+
+    Rounds 53, 61, 80 and 82 all curated altered-affinity mutations. Adding an affinity
+    node here would import their shape onto a mechanism that does not have it.
+    """
+    cfg = promote.family_configs("ARO:3002811")[0]
+    labels = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    assert "elevated" in labels
+    assert "affinity" not in labels, "murA resists by amount, not by binding"
+    assert "Overexpression of murA" in cfg["mech"]["ARO:3000212"]

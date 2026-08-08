@@ -1038,7 +1038,72 @@ def _requires_liafsr(ident: str, label: str, text: str):
     return None
 
 
+def _requires_mura(ident: str, label: str, text: str):
+    """A murA variant -- resistance by OVEREXPRESSION, not by altered affinity."""
+    if "ARO:3000212" not in D.parse_relations(text)[0]:
+        return "record carries no mutation mechanism (ARO:3000212)"
+    return None
+
+
 FAMILY_SNIPPETS = {
+    # murA (ARO:3002811) -- target OVEREXPRESSION, distinct from target alteration.
+    #
+    # Rounds 53, 61, 80 and 82 all curated mutations that change the TARGET so the drug
+    # binds it less. This one does not: CARD says "OVEREXPRESSION of murA through
+    # mutations confers fosfomycin resistance". The enzyme is unchanged and there is
+    # simply more of it than the drug can inhibit -- so no affinity node appears, and a
+    # test enforces that.
+    "ARO:3002811": {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": _requires_mura,
+        "reference": "ARO:3002811",
+        "mech": {"ARO:3000212": "murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers fosfomycin resistance."},
+        "mech_res": "murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers fosfomycin resistance.",
+        "det_res": [
+            {"reference": "ARO:3002811", "snippet": "murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers fosfomycin resistance.",
+             "notes": "Enzyme, pathway step, drug action and mechanism in two sentences -- and the mechanism is OVEREXPRESSION, not altered binding."},
+        ],
+        "res_drug": "murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers fosfomycin resistance.",
+        "note": ("Target overexpression. The enzyme itself is not changed; there is more "
+                 "of it than fosfomycin can inhibit. No affinity node, deliberately."),
+        "extra_nodes": [
+            {"node_id": "enolpyruvyl_transfer", "label": "UDP-N-acetylglucosamine enolpyruvyl transferase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-83)."},
+            {"node_id": "pg_synthesis", "label": "peptidoglycan biosynthesis (initial step)",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The pathway the drug blocks. Ungrounded: the general process has a GO term, this specific first step was not verified."},
+            {"node_id": "overexpression", "label": "elevated murA levels",
+             "node_type": "STATE",
+             "description": "The causal core. NOT an affinity change -- see the config note."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "enolpyruvyl_transfer",
+             "predicate": "enables (enolpyruvyl transfer)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3002811", "snippet": "murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers fosfomycin resistance.",
+                           "notes": "'murA or UDP-N-acetylglucosamine enolpyruvyl transferase'."}]},
+            {"subject": "enolpyruvyl_transfer", "object": "pg_synthesis",
+             "predicate": "part of (the initial step of peptidoglycan biosynthesis)",
+             "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3002811", "snippet": "murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers fosfomycin resistance.",
+                           "notes": "'catalyses the initial step in peptidoglycan biosynthesis'."}]},
+            {"subject": "drug0", "object": "enolpyruvyl_transfer",
+             "predicate": "negatively regulates (inhibits the transferase)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3002811", "snippet": "murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers fosfomycin resistance.",
+                           "notes": "'is inhibited by fosfomycin'."}]},
+            {"subject": "determinant", "object": "overexpression",
+             "predicate": "has quality (elevated expression)", "predicate_id": "RO:0000086",
+             "evidence": [{"reference": "ARO:3002811", "snippet": "murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers fosfomycin resistance.",
+                           "notes": "'OVEREXPRESSION of murA through mutations' -- the mutation raises the amount, it does not change the enzyme's affinity."}]},
+            {"subject": "overexpression", "object": "pg_synthesis",
+             "predicate": "causally upstream of (wall synthesis continues under drug)",
+             "predicate_id": "RO:0002411",
+             "description": "Why more enzyme is resistance: enough escapes inhibition to keep the pathway running.",
+             "evidence": [{"reference": "ARO:3002811", "snippet": "murA or UDP-N-acetylglucosamine enolpyruvyl transferase catalyses the initial step in peptidoglycan biosynthesis and is inhibited by fosfomycin. Overexpression of murA through mutations confers fosfomycin resistance.",
+                           "notes": "'confers fosfomycin resistance'. NOTE: that enough escapes inhibition is the reading CARD implies, not a sentence it writes."}]},
+        ],
+    },
     # rpoC (ARO:3003289) -- role and resistance stated, mechanism ABSENT.
     #
     # Round 81's ppsA-E shape. CARD describes what the beta prime subunit does -- "forms
