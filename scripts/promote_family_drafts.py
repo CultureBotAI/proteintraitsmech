@@ -1332,6 +1332,76 @@ def _fungal_p450_config(fam_id: str, snippet: str, drug: str, hedged: bool) -> d
 
 
 FAMILY_SNIPPETS = {
+    # FUR1 (ARO:3007557) -- prodrug-activation loss, in a fungal pathway.
+    #
+    # 5-flucytosine is a prodrug converted by the pyrimidine salvage pathway, and UPRT is
+    # the enzyme CARD names as "a key regulating enzyme" in it. Losing it is round 56's
+    # pncA shape in a eukaryote. NOT asserted: the conversion step itself, which CARD does
+    # not describe -- it names the pathway and the resistance and stops.
+    "ARO:3007557": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3007557",
+        "mech": {"ARO:3000212": "FUR1 is a fungal uracil phosphoribosyltransferase in Candida spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine."},
+        "mech_res": "FUR1 is a fungal uracil phosphoribosyltransferase in Candida spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.",
+        "det_res": [
+            {"reference": "ARO:3007557", "snippet": "FUR1 is a fungal uracil phosphoribosyltransferase in Candida spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.",
+             "notes": "Enzyme, its synonym, its pathway role, and the resistance -- with 'have been SHOWN to confer', an attribution rather than a bare claim. NOT stated: how a pyrimidine-salvage enzyme's loss resists 5-flucytosine."},
+        ],
+        "res_drug": "FUR1 is a fungal uracil phosphoribosyltransferase in Candida spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.",
+        "note": ("Pyrimidine-salvage enzyme whose mutation confers 5-flucytosine "
+                 "resistance. 5-FC is a prodrug and the activation-loss story is standard, "
+                 "and CARD does not tell it -- so the graph carries the enzyme's pathway "
+                 "role and the resistance, with nothing between."),
+        "extra_nodes": [
+            {"node_id": "uprt", "label": "uracil phosphoribosyltransferase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-106)."},
+            {"node_id": "salvage", "label": "pyrimidine salvage",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The pathway CARD names. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "uprt",
+             "predicate": "enables (uracil phosphoribosyltransferase activity)",
+             "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3007557", "snippet": "FUR1 is a fungal uracil phosphoribosyltransferase in Candida spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.",
+                           "notes": "'It encodes the UPRT protein, also known as uracil pyrophosphorylase'."}]},
+            {"subject": "uprt", "object": "salvage",
+             "predicate": "part of (pyrimidine salvage)", "predicate_id": "BFO:0000050",
+             "description": "Where the graph stops. CARD calls UPRT 'a key regulating enzyme' in this pathway and never connects the pathway to 5-flucytosine.",
+             "evidence": [{"reference": "ARO:3007557", "snippet": "FUR1 is a fungal uracil phosphoribosyltransferase in Candida spp. It encodes the UPRT protein, also known as uracil pyrophosphorylase, which is a key regulating enzyme in pyrimidine salvage. Mutations in FUR1 have been shown to confer resistance to 5-flucytosine.",
+                           "notes": "'a key regulating enzyme in pyrimidine salvage'. NOT asserted: that 5-FC is activated by this pathway, which is standard and uncited here."}]},
+        ],
+    },
+    # Hmg1 (ARO:3007670) -- one sentence, an enzyme name and a resistance claim.
+    "ARO:3007670": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3007670",
+        "mech": {"ARO:3000212": "Hmg1 is an HMG-CoA reductase-encoding gene with mutations in the gene causing triazole resistance."},
+        "mech_res": "Hmg1 is an HMG-CoA reductase-encoding gene with mutations in the gene causing triazole resistance.",
+        "det_res": [
+            {"reference": "ARO:3007670", "snippet": "Hmg1 is an HMG-CoA reductase-encoding gene with mutations in the gene causing triazole resistance.",
+             "notes": "One sentence: an enzyme name and a causal claim ('CAUSING triazole resistance', unhedged). Round 66's EF-Tu shape, with the causal verb stronger than most."},
+        ],
+        "res_drug": "Hmg1 is an HMG-CoA reductase-encoding gene with mutations in the gene causing triazole resistance.",
+        "note": ("An HMG-CoA reductase whose mutations cause triazole resistance. HMG-CoA "
+                 "reductase is upstream of ergosterol, which is what azoles target -- and "
+                 "CARD says none of that, so no pathway edge is written."),
+        "extra_nodes": [
+            {"node_id": "hmgcoa", "label": "HMG-CoA reductase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "The one functional fact the sentence gives. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "hmgcoa",
+             "predicate": "enables (HMG-CoA reductase activity)", "predicate_id": "RO:0002327",
+             "description": "What the determinant IS. NOT asserted: that this enzyme is upstream of ergosterol or that azoles target that pathway -- both true, neither in CARD's sentence.",
+             "evidence": [{"reference": "ARO:3007670", "snippet": "Hmg1 is an HMG-CoA reductase-encoding gene with mutations in the gene causing triazole resistance.",
+                           "notes": "'Hmg1 is an HMG-CoA reductase-encoding gene'."}]},
+        ],
+    },
     # fabI (ARO:3004270) -- target alteration, complete, and the pathway round 51 could not
     # source for fabG1. CARD gives enzyme, drug action, mutation and resistance in three
     # sentences, which fabG1's definitions never did.

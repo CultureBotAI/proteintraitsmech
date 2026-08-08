@@ -2457,3 +2457,19 @@ def test_rpo_subunits_are_curated_to_what_each_definition_gives():
         assert any(n["node_id"] == "active_center" for n in cfg["extra_nodes"]), fam
     rpoa = promote.family_configs("ARO:3004997")[0]
     assert not any(n["node_id"] == "active_center" for n in rpoa["extra_nodes"])
+
+
+def test_fur1_and_hmg1_stop_before_the_standard_story():
+    """Both are one inference from a textbook mechanism, and CARD gives neither.
+
+    FUR1: 5-FC is a prodrug activated by pyrimidine salvage. Hmg1: HMG-CoA reductase is
+    upstream of ergosterol, which azoles target. Both true, both uncited here.
+    """
+    for fam, banned in (("ARO:3007557", ("flucytosine", "prodrug", "activat")),
+                        ("ARO:3007670", ("ergosterol", "azole", "triazole"))):
+        cfg = promote.family_configs(fam)[0]
+        asserted = " ".join(
+            [e["predicate"] for e in cfg["extra_edges"]]
+            + [n["label"] for n in cfg["extra_nodes"]]).lower()
+        for word in banned:
+            assert word not in asserted, f"{fam} asserts {word!r} uncited"
