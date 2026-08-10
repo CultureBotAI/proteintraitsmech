@@ -1367,6 +1367,74 @@ def _minimal_enzyme_config(fam_id: str, snippet: str, activity: str, extra_note:
 
 
 FAMILY_SNIPPETS = {
+    # ampR (ARO:3007797) -- regulator, and the outcome is a mechanism ALREADY CURATED.
+    #
+    # Mutations confer resistance "due to BETA-LACTAMASE OVEREXPRESSION" -- and the
+    # beta-lactamases are curated (rounds 12-16, 59). Round 22's rule applies: the graph
+    # ends at the overexpression, and the hydrolysis chemistry lives on those records.
+    "ARO:3007797": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3007797",
+        "mech": {"ARO:3000212": "ampR is a LysR-type transcriptional regulator for beta-lactamase-encoding gene expression. Mutations in ampR of certain organisms have been shown to confer resistance to antibiotics due to beta-lactamase overexpression."},
+        "mech_res": "ampR is a LysR-type transcriptional regulator for beta-lactamase-encoding gene expression. Mutations in ampR of certain organisms have been shown to confer resistance to antibiotics due to beta-lactamase overexpression.",
+        "det_res": [
+            {"reference": "ARO:3007797", "snippet": "ampR is a LysR-type transcriptional regulator for beta-lactamase-encoding gene expression. Mutations in ampR of certain organisms have been shown to confer resistance to antibiotics due to beta-lactamase overexpression.",
+             "notes": "A regulator whose mutation raises its target's expression -- Upc2's shape (round 110) with a different target class. CARD names the outcome: 'due to BETA-LACTAMASE OVEREXPRESSION'. NOTE the scope hedge: 'of CERTAIN ORGANISMS', and the attribution: 'have been SHOWN to'."},
+        ],
+        "res_drug": "ampR is a LysR-type transcriptional regulator for beta-lactamase-encoding gene expression. Mutations in ampR of certain organisms have been shown to confer resistance to antibiotics due to beta-lactamase overexpression.",
+        "note": ("Regulation ending at beta-lactamase overexpression. The hydrolysis "
+                 "chemistry is curated on the beta-lactamase records (rounds 12-16, 59), so "
+                 "round 22's rule applies and this graph stops rather than restating it."),
+        "extra_nodes": [
+            {"node_id": "bla_expression", "label": "beta-lactamase expression",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "Where this graph stops. Ungrounded: CARD names no specific beta-lactamase, and picking one would choose arbitrarily among hundreds of curated records."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "bla_expression",
+             "predicate": "regulates (beta-lactamase gene expression)",
+             "predicate_id": "RO:0002211",
+             "description": "Neutral for the NORMAL role -- CARD says 'transcriptional regulator', not activator or repressor. The MUTATION's effect is overexpression, which is the next edge.",
+             "evidence": [{"reference": "ARO:3007797", "snippet": "ampR is a LysR-type transcriptional regulator for beta-lactamase-encoding gene expression. Mutations in ampR of certain organisms have been shown to confer resistance to antibiotics due to beta-lactamase overexpression.",
+                           "notes": "'a LysR-type transcriptional regulator for beta-lactamase-encoding gene expression' -- no direction given for the wild-type role."}]},
+            {"subject": "determinant", "object": "resistance",
+             "predicate": "causally upstream of (via beta-lactamase overexpression)",
+             "predicate_id": "RO:0002411",
+             "description": "The mutation's outcome, with CARD's own 'due to'.",
+             "evidence": [{"reference": "ARO:3007797", "snippet": "ampR is a LysR-type transcriptional regulator for beta-lactamase-encoding gene expression. Mutations in ampR of certain organisms have been shown to confer resistance to antibiotics due to beta-lactamase overexpression.",
+                           "notes": "'Mutations in ampR ... confer resistance to antibiotics DUE TO beta-lactamase overexpression'. NOT asserted: how beta-lactamases resist, which their own records carry."}]},
+        ],
+    },
+    # Fungal SREBPs (ARO:3007549) -- target overexpression, and CARD hedges the direction.
+    "ARO:3007549": {
+        "curated": "2026-08-08T00:00:00Z",
+        "precondition": _requires_mech("ARO:3007609", "target overexpression"),
+        "reference": "ARO:3007549",
+        "mech": {"ARO:3007609": "Fungal sterol regulatory element binding proteins are transcription factors that modulate antibiotic-susceptible genes. Mutations in these proteins confer resistance to antifungal drug compounds through differential gene regulation."},
+        "mech_res": "Fungal sterol regulatory element binding proteins are transcription factors that modulate antibiotic-susceptible genes. Mutations in these proteins confer resistance to antifungal drug compounds through differential gene regulation.",
+        "det_res": [
+            {"reference": "ARO:3007549", "snippet": "Fungal sterol regulatory element binding proteins are transcription factors that modulate antibiotic-susceptible genes. Mutations in these proteins confer resistance to antifungal drug compounds through differential gene regulation.",
+             "notes": "Transcription factors whose mutations resist 'through DIFFERENTIAL GENE REGULATION' -- CARD's phrase for a direction it declines to give, unlike Upc2 (round 110) which names 'upregulating ERG11'."},
+        ],
+        "res_drug": "Fungal sterol regulatory element binding proteins are transcription factors that modulate antibiotic-susceptible genes. Mutations in these proteins confer resistance to antifungal drug compounds through differential gene regulation.",
+        "note": ("Transcriptional regulation with the direction explicitly unresolved: "
+                 "'differential gene regulation' is CARD declining to say up or down. "
+                 "Contrast Upc2 (round 110), same mechanism id, where CARD says "
+                 "'by upregulating ERG11 expression' and the edge is positive."),
+        "extra_nodes": [
+            {"node_id": "susceptible_genes", "label": "antibiotic-susceptible genes",
+             "node_type": "NUCLEIC_ACID",
+             "description": "CARD's own phrase. Ungrounded, and deliberately vague -- no gene is named."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "susceptible_genes",
+             "predicate": "regulates (differential gene regulation)", "predicate_id": "RO:0002211",
+             "description": "Neutral RO:0002211, licensed by 'DIFFERENTIAL' -- the one word in this corpus that states a direction is deliberately unspecified rather than merely absent.",
+             "evidence": [{"reference": "ARO:3007549", "snippet": "Fungal sterol regulatory element binding proteins are transcription factors that modulate antibiotic-susceptible genes. Mutations in these proteins confer resistance to antifungal drug compounds through differential gene regulation.",
+                           "notes": "'modulate antibiotic-susceptible genes' and 'through differential gene regulation'. NOT asserted: which genes, or which way."}]},
+        ],
+    },
     # thyA (ARO:3004152) -- prodrug-activation loss, and CARD says HOW the mutation works.
     #
     # Round 113's folC named the intermediate; this one names the DEFECT: "disrupting the

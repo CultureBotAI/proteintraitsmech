@@ -2593,3 +2593,25 @@ def test_cya_keeps_the_neutral_regulation_predicate():
     edge = next(e for e in cfg["extra_edges"] if e["object"] == "glpt")
     assert edge["predicate_id"] == "RO:0002211"
     assert "without saying which way" in cfg["note"] or "which way" in edge["evidence"][0]["notes"]
+
+
+def test_srebp_and_upc2_differ_because_their_sources_do():
+    """Same mechanism id (ARO:3007609), opposite treatment of direction.
+
+    Upc2 says "by upregulating ERG11 expression" -> positive edge.
+    SREBP says "through differential gene regulation" -> neutral edge.
+    "Differential" is CARD declining to say, not omitting to say.
+    """
+    upc2 = promote.family_configs("ARO:3007551")[0]
+    srebp = promote.family_configs("ARO:3007549")[0]
+    assert upc2["extra_edges"][0]["predicate_id"] == "RO:0002213"
+    assert srebp["extra_edges"][0]["predicate_id"] == "RO:0002211"
+    assert "differential" in srebp["note"].lower()
+
+
+def test_ampr_ends_at_overexpression_not_hydrolysis():
+    """The beta-lactamases are curated (rounds 12-16, 59); round 22's rule applies."""
+    cfg = promote.family_configs("ARO:3007797")[0]
+    blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
+    for chem in ("hydrol", "acyl", "serine", "amide bond"):
+        assert chem not in blob, f"ampR config restates beta-lactamase chemistry: {chem}"
