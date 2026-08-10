@@ -1,4 +1,4 @@
-"""Which already-curated records would NO config accept today? (#267)
+r"""Which already-curated records would NO config accept today? (#267)
 
 Five records were found one at a time this session sitting under a mechanism their own
 definition contradicts -- MecI (#251), pilQ (#254), ahpC (#260), five class D records

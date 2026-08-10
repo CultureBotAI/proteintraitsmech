@@ -17,6 +17,7 @@ would, and only after the record was written.
 from __future__ import annotations
 
 import importlib
+import json
 import pathlib
 import re
 import sys
@@ -2732,3 +2733,115 @@ def test_esx5_system_term_is_not_curated_pending_229():
     curating it would answer that by fiat.
     """
     assert promote.family_configs("ARO:3004915") == []
+
+
+# ---------------------------------------------------------------------------------------
+# Round 121 — three ribosomal-protein families whose graphs differ because their CARD
+# definitions differ. Each test names the clause that decided the difference.
+
+def test_rpsa_asserts_no_loss_of_the_proteins_own_function():
+    """ARO:3004721 says mutations resist "maintaining rpsA function", and Shi 2011 says
+    POA inhibited "trans-translation rather than canonical translation".
+
+    Two independent statements that nothing is lost. The determinant must therefore
+    never be the subject of a negative edge onto trans-translation -- only POA is.
+    """
+    cfg = promote.family_configs("ARO:3004722")[0]
+    losses = [e for e in cfg["extra_edges"]
+              if e["subject"] == "determinant"
+              and e["object"] == "trans_translation"
+              and e["predicate_id"] in ("RO:0002212", "RO:0002411")]
+    assert losses == []
+    # and the positive edge IS there: the determinant enables the process
+    assert any(e["subject"] == "determinant" and e["object"] == "trans_translation"
+               and e["predicate_id"] == "RO:0002327" for e in cfg["extra_edges"])
+    # the inhibition is the drug's, not the mutation's
+    assert any(e["subject"] == "poa" and e["object"] == "trans_translation"
+               and e["predicate_id"] == "RO:0002212" for e in cfg["extra_edges"])
+
+
+def test_rpsa_carries_no_domain_node_because_pf00575s_definition_is_the_wrong_entry():
+    """PF00575 is labelled "S1 RNA binding domain" and would be the obvious trait node.
+
+    Its KB definition is IPR059328's abstract -- "Domain of unknown function DUF8284" --
+    the wrong InterPro entry (#344). Round 21's rule: no node rather than a node whose
+    evidence is about something else.
+    """
+    cfg = promote.family_configs("ARO:3004722")[0]
+    assert "protein_traits" not in cfg
+    # `repr`, not `json.dumps`: a config carries its `precondition` callable.
+    assert "PF00575" not in repr(cfg)
+
+
+def test_rpsl_follows_its_source_not_cards_stronger_wording():
+    """CARD: S12 "stabilizes" the pseudoknot, and resistance is "by disrupting
+    interactions". PMID:7934937, the paper CARD's definition is built from, says the
+    region "has been linked to" S12 and reports no stabilisation experiment.
+
+    The determinant->pseudoknot edge must be `correlated with`, never a causal or
+    regulatory predicate, and it must carry BOTH readings so the gap is visible.
+    """
+    cfg = promote.family_configs("ARO:3003395")[0]
+    pk = [e for e in cfg["extra_edges"]
+          if e["subject"] == "determinant" and e["object"] == "pseudoknot"]
+    assert len(pk) == 1
+    assert pk[0]["predicate_id"] == "RO:0002610"
+    for banned in ("RO:0002212", "RO:0002213", "RO:0002411", "RO:0002327", "RO:0002436"):
+        assert pk[0]["predicate_id"] != banned
+    refs = {ev["reference"] for ev in pk[0]["evidence"]}
+    assert refs == {"PMID:7934937", "ARO:3003395"}
+
+
+def test_rpse_never_joins_the_substitution_to_the_drug():
+    """CARD says only that substitutions "is associated with resistance", and supplies
+    two structural facts that it does not connect to the drug.
+
+    So no edge may run from the determinant to the drug node or to a binding-site node,
+    and the determinant->resistance edge this config adds must be `correlated with`.
+    """
+    cfg = promote.family_configs("ARO:3007526")[0]
+    assert not any(e["subject"] == "determinant" and e["object"].startswith("drug")
+                   for e in cfg["extra_edges"])
+    res = [e for e in cfg["extra_edges"]
+           if e["subject"] == "determinant" and e["object"] == "resistance"]
+    assert len(res) == 1 and res[0]["predicate_id"] == "RO:0002610"
+
+
+def test_rpse_uses_the_neisseria_modelling_result_as_context_only():
+    """PMID:42450237 carries three qualifications at once -- it is modelling, it is
+    hedged ("potentially altering"), and it is Neisseria, not these records' organisms.
+
+    It may ride on an edge CARD already supports; it may not be the sole evidence for
+    any edge.
+    """
+    cfg = promote.family_configs("ARO:3007526")[0]
+    for e in cfg["extra_edges"]:
+        refs = [ev["reference"] for ev in e["evidence"]]
+        if "PMID:42450237" in refs:
+            assert len(refs) > 1, "the modelling result must not be an edge's only evidence"
+            assert "ARO:3007526" in refs
+
+
+def test_the_three_ribosomal_families_do_not_share_one_config():
+    """rpsA, rpsL and rpsE are all ARO:3000212 small-subunit ribosomal proteins.
+
+    A single shared config was the tempting shortcut and would have asserted rpsA's
+    binding mechanism on rpsE, which CARD does not support for it.
+    """
+    cfgs = [promote.family_configs(f)[0]
+            for f in ("ARO:3004722", "ARO:3003395", "ARO:3007526")]
+    refs = [c["reference"] for c in cfgs]
+    assert len(set(refs)) == 3
+    counts = sorted(len(c["extra_edges"]) for c in cfgs)
+    assert counts[0] < counts[-1], "the three graphs should not be the same size"
+
+
+def test_rv3008_is_not_curated_because_card_hedges_both_halves():
+    """"A hypothetical protein for which it has been PREDICTED but no experimental
+    evidence exists to determine its function. MAY contribute to pyrazinamide
+    resistance."
+
+    Round 117's "putative" shape doubled: the function assignment is uncertain AND the
+    resistance contribution is uncertain. There is no claim left to assert.
+    """
+    assert promote.family_configs("ARO:3004989") == []

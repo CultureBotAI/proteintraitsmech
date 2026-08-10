@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004722
 trait_relations:
@@ -39,12 +39,15 @@ evidence:
 - reference: DOI:10.1128/AAC.02681-18
   notes: PMID:30858213 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis rpsA mutations conferring resistance to pyrazinamide → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycobacterium tuberculosis rpsA mutations conferring resistance to pyrazinamide → mechanism →
+    resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (PMID:21835980). rpsA -- target alteration with the target's own function EXPLICITLY PRESERVED. CARD
+    ARO:3004721 says mutations resist 'maintaining rpsA function', and Shi 2011 says POA inhibited 'trans-translation
+    rather than canonical translation'. Two independent statements that nothing is lost, so NO loss-of-function
+    edge is written -- see the test that pins the omission.
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis rpsA mutations conferring resistance to pyrazinamide
@@ -58,6 +61,21 @@ causal_graphs:
     label: pyrazine antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007155
+  - node_id: poa
+    label: pyrazinoic acid (POA), the active form of pyrazinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:71311
+    description: 'ChEBI `pyrazine-2-carboxylic acid`. Grounded by label match, not by recall: the recalled
+      CHEBI:45001 is obsolete AND was a different compound (#346).'
+  - node_id: trans_translation
+    label: trans-translation
+    node_type: BIOLOGICAL_PROCESS
+    grounding: GO:0070929
+  - node_id: poa_rpsa
+    label: POA-RpsA complex
+    node_type: STATE
+    description: The binding event the resistant mutant loses. Ungrounded, as with the other drug-target
+      complexes in this corpus (round 21).
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -71,49 +89,112 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: PMID:29921403
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004721
-      snippet: RpsA, the 30S ribosomal protein S1 of Mycobacterium tuberculosis, is involved in trans-translation
-        and is targeted by pyrazinonic acid, the active form of the antibiotic pyrazinamide, which disrupts
-        the initiation of mRNA translation. Mutations in the amino acid sequence of rpsA can confer resistance
-        to pyrazinamide maintaining rpsA function.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: PMID:21835980
+      snippet: RpsA overexpression conferred increased PZA resistance, and we confirmed that POA bound
+        to RpsA (but not a clinically identified ΔAla mutant) and subsequently inhibited trans-translation
+        rather than canonical translation.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: PMID:29921403
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: PMID:21835980
+      snippet: RpsA overexpression conferred increased PZA resistance, and we confirmed that POA bound
+        to RpsA (but not a clinically identified ΔAla mutant) and subsequently inhibited trans-translation
+        rather than canonical translation.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: PMID:29921403
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004721
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3003413 ! pyrazinamide'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: PMID:21835980
+      snippet: Three PZA-resistant clinical isolates without pncA mutation harbored RpsA mutations.
+      notes: Clinical isolates resistant WITHOUT a pncA mutation -- which is what makes RpsA itself, rather
+        than loss of drug activation, the determinant here.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to pyrazine antibiotic.
     evidence:
     - reference: ARO:3004722
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007155 ! pyrazine antibiotic'
       notes: Asserted on ARO:3004722 (pyrazinamide resistant rpsA), an is_a ancestor of this record's
         ARO:3004721; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to pyrazine antibiotic.
+  - subject: drug0
+    predicate: causally upstream of (hydrolysed to the active form)
+    predicate_id: RO:0002411
+    object: poa
+    description: Pyrazinamide is a prodrug; PZase (pncA) makes the species that acts.
+    evidence:
+    - reference: PMID:21835980
+      snippet: PZA is hydrolyzed intracellularly to pyrazinoic acid (POA) by pyrazinamidase (PZase, encoded
+        by pncA), an enzyme frequently lost in PZA-resistant strains, but the target of POA in Mycobacterium
+        tuberculosis has remained elusive.
+      notes: 'The activation step CARD ARO:3004722 names (''catalyzed by pncA''). NOT asserted here: loss
+        of pncA, which is a different determinant and this abstract''s own contrast case.'
+  - subject: poa
+    predicate: molecularly interacts with (binds RpsA)
+    predicate_id: RO:0002436
+    object: determinant
+    description: 'The drug''s normal action: POA binds the ribosomal protein.'
+    evidence:
+    - reference: PMID:21835980
+      snippet: RpsA overexpression conferred increased PZA resistance, and we confirmed that POA bound
+        to RpsA (but not a clinically identified ΔAla mutant) and subsequently inhibited trans-translation
+        rather than canonical translation.
+      notes: '''POA bound to RpsA''. This is the DRUG-ACTION arm; resistance is its loss.'
+  - subject: determinant
+    predicate: enables (ribosome-sparing trans-translation)
+    predicate_id: RO:0002327
+    object: trans_translation
+    evidence:
+    - reference: PMID:21835980
+      snippet: Here, we identify a previously unknown target of POA as the ribosomal protein S1 (RpsA),
+        a vital protein involved in protein translation and the ribosome-sparing process of trans-translation.
+      notes: '''a vital protein involved in protein translation and the ribosome-sparing process of trans-translation''.'
+  - subject: poa
+    predicate: negatively regulates (inhibits trans-translation)
+    predicate_id: RO:0002212
+    object: trans_translation
+    description: 'What the drug does once bound -- and the specificity that makes the mechanism coherent:
+      canonical translation is NOT inhibited.'
+    evidence:
+    - reference: PMID:21835980
+      snippet: RpsA overexpression conferred increased PZA resistance, and we confirmed that POA bound
+        to RpsA (but not a clinically identified ΔAla mutant) and subsequently inhibited trans-translation
+        rather than canonical translation.
+      notes: '''inhibited trans-translation rather than canonical translation''. The negative half is
+        the point -- the same device as round 23''s vanXY specificity edge.'
+  - subject: determinant
+    predicate: negatively regulates (substitution abolishes drug binding)
+    predicate_id: RO:0002212
+    object: poa_rpsa
+    description: 'The causal core: the resistant substitution is the loss of the binding, not the loss
+      of the protein''s job.'
+    evidence:
+    - reference: PMID:21835980
+      snippet: RpsA overexpression conferred increased PZA resistance, and we confirmed that POA bound
+        to RpsA (but not a clinically identified ΔAla mutant) and subsequently inhibited trans-translation
+        rather than canonical translation.
+      notes: The parenthesis '(but not a clinically identified ΔAla mutant)' is the resistance result
+        -- a NEGATIVE finding, which is why the whole sentence is quoted rather than its first clause.
+  - subject: poa_rpsa
+    predicate: negatively regulates (the bound complex is what inhibits)
+    predicate_id: RO:0002212
+    object: trans_translation
+    evidence:
+    - reference: PMID:21835980
+      snippet: RpsA overexpression conferred increased PZA resistance, and we confirmed that POA bound
+        to RpsA (but not a clinically identified ΔAla mutant) and subsequently inhibited trans-translation
+        rather than canonical translation.
+      notes: '''bound to RpsA and subsequently inhibited'' -- the binding is upstream of the inhibition
+        in the source''s own word order.'
+curation_history:
+- timestamp: '2026-08-10T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
