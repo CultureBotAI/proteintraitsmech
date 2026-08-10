@@ -2989,3 +2989,104 @@ def test_rv3008_is_not_curated_because_card_hedges_both_halves():
     resistance contribution is uncertain. There is no claim left to assert.
     """
     assert promote.family_configs("ARO:3004989") == []
+
+
+# ---------------------------------------------------------------------------------------
+# Round 122 — target alteration in trans, twice more.
+
+def test_ul3_family_splits_because_only_one_record_names_the_protein():
+    """ARO:3005081 says "ribosomal protein uL3"; ARO:3005082 says "Ribosomal protein
+    mutations" and names no protein.
+
+    One config with `protein_traits` would assert the L3 family node on the record that
+    never mentions L3 -- #371's borrowed specificity, filed one round earlier. Two configs,
+    selected by precondition.
+    """
+    cfgs = promote.family_configs("ARO:3005082")
+    # NOT an exact count -- #287 bans that, and the meta-test caught this test writing one.
+    named = [c for c in cfgs if "protein_traits" in c]
+    unnamed = [c for c in cfgs if "protein_traits" not in c]
+    assert len(named) >= 1 and len(unnamed) >= 1
+    named, unnamed = named[0], unnamed[0]
+    assert "protein_traits" in named
+    assert named["protein_traits"]["family"][0] == "Pfam:PF00297"
+    assert "protein_traits" not in unnamed
+    assert "PF00297" not in repr(unnamed)
+    # the catch-all must be LAST, or it shadows the specific one
+    assert named.get("precondition") is not None
+    assert unnamed.get("precondition") is None
+
+
+def test_the_ul3_precondition_reads_only_the_records_own_definition():
+    """#252: an ARO record's full YAML carries drug-class boilerplate naming other things.
+
+    Driven off the REAL records, not synthetic text -- `_own_definition` returns "" for a
+    definition block with no following key, so a hand-written fixture tests the parser
+    rather than the predicate.
+    """
+    named = [c for c in promote.family_configs("ARO:3005082") if "protein_traits" in c][0]
+    pre = named["precondition"]
+    seen = {}
+    for pth in promote.ARO_DIR.glob("*.yaml"):
+        text = pth.read_text(encoding="utf-8")
+        m = re.search(r'^identifier:\s*"?(ARO:3005081|ARO:3005082)"?\s*$', text, re.M)
+        if m:
+            seen[m.group(1)] = pre(m.group(1), "", text)
+    assert seen["ARO:3005081"] is None, "the record that names uL3 must be accepted"
+    assert seen["ARO:3005082"] is not None, "the record that names no protein must be refused"
+    assert "#371" in seen["ARO:3005082"]
+
+
+def test_ul3_quotes_both_of_its_sources_hedges_rather_than_around_them():
+    """Two hedges, on two different things:
+
+    * PMID:12936991 hedges the INFERENCE -- "It is inferred that the L3 mutation ... causes";
+    * the Pfam KB record hedges the FUNCTION -- L3 "may participate in the formation of
+      the peptidyltransferase centre".
+
+    Both must survive into the record verbatim rather than being quoted around.
+    """
+    named = promote.family_configs("ARO:3005082")[0]
+    core = [e for e in named["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "drug_binding"][0]
+    assert any("It is inferred that" in ev["snippet"] for ev in core["evidence"])
+    # and the measured result rides alongside, so the hedge is not the only support
+    assert any("Chemical footprinting experiments" in ev["snippet"] for ev in core["evidence"])
+    assert "may participate in the formation" in named["protein_traits"]["family"][3]
+
+
+def test_ul3_binding_state_is_defined_by_both_constituents():
+    """#370, applied prospectively rather than after review found it."""
+    for cfg in promote.family_configs("ARO:3005082"):
+        parts = {e["object"] for e in cfg["extra_edges"]
+                 if e["subject"] == "drug_binding" and e["predicate_id"] == "BFO:0000051"}
+        assert parts == {"drug0", "ptc"}
+
+
+def test_the_two_rpsl_records_differ_by_the_clause_that_names_the_drug_interaction():
+    """ARO:3003395 ends "...confer streptomycin resistance BY DISRUPTING INTERACTIONS
+    between 16S rRNA and streptomycin". ARO:3003419 ends "...confer antibiotic resistance".
+
+    Same first two sentences; the drug-interaction mechanism is only in one. So only one
+    carries the strep_binding arm. Round 120's FrxA/nfsB finding on a closer pair.
+    """
+    specific = promote.family_configs("ARO:3003395")[0]
+    generic = promote.family_configs("ARO:3003419")[0]
+    spec_nodes = {n["node_id"] for n in specific["extra_nodes"]}
+    gen_nodes = {n["node_id"] for n in generic["extra_nodes"]}
+    assert "strep_binding" in spec_nodes
+    assert "strep_binding" not in gen_nodes
+    # neither config may assert a drug interaction on the generic record
+    assert not any(e["object"].startswith("drug") or e["subject"].startswith("drug")
+                   for e in generic["extra_edges"])
+    # both DO keep the pseudoknot arm, which both definitions state
+    for cfg in (specific, generic):
+        pk = [e for e in cfg["extra_edges"]
+              if e["subject"] == "determinant" and e["object"] == "pseudoknot"]
+        assert len(pk) == 1 and pk[0]["predicate_id"] == "RO:0002610"
+
+
+def test_the_vanl_cluster_term_is_not_curated_pending_309():
+    """ARO:3000260 is a gene CLUSTER. Whether a cluster should carry a protein-trait causal
+    graph is #309's modelling question, and curating it would answer that by fiat."""
+    assert promote.family_configs("ARO:3000260") == []
