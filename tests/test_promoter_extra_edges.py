@@ -2714,3 +2714,21 @@ def test_the_two_mshc_records_are_curated_differently():
     """
     assert promote.family_configs("ARO:3004904") != []
     assert promote.family_configs("ARO:3004889") == []
+
+
+def test_frxa_and_nfsb_differ_because_only_nfsb_names_the_drug_as_substrate():
+    """Both are nitroreductases. nfsB (round 107) says it "reduces ... the antibiotics",
+    which licensed a prodrug-activation-loss edge. FrxA's sentence does not say it."""
+    nfsb = promote.family_configs("ARO:3003755")[0]
+    frxa = promote.family_configs("ARO:3007059")[0]
+    assert any(e["object"] == "drug0" for e in nfsb["extra_edges"])
+    assert not any(e["object"] == "drug0" for e in frxa["extra_edges"])
+
+
+def test_esx5_system_term_is_not_curated_pending_229():
+    """Round 102 curated its subunits with part-of edges into the complex.
+
+    The system term itself is the complex-versus-subunit question #229 is about, and
+    curating it would answer that by fiat.
+    """
+    assert promote.family_configs("ARO:3004915") == []

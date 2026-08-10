@@ -8121,6 +8121,28 @@ for _fam, _snip, _act, _note in [
 ]:
     FAMILY_SNIPPETS[_fam] = [_minimal_enzyme_config(_fam, _snip, _act, _note)]
 
+
+# FrxA (round 120) -- an NADH-flavin oxidoreductase resisting TWO drug classes.
+#
+# Its sibling nfsB (round 107) is also a nitroreductase acting on nitroaromatic
+# antibiotics, and CARD there says the enzyme reduces the drugs themselves, which licensed
+# a prodrug-activation-loss reading. FrxA's sentence says only that it IS an oxidoreductase
+# and that mutations confer resistance -- so the same reading is not available and the
+# graph carries the function alone.
+#
+# NOT curated this round: ARO:3004915, the ESX-5 SECRETION SYSTEM term. Round 102 curated
+# its subunits (eccB5, eccC5) with part-of edges into the complex; the system term itself
+# is the complex-versus-subunit question that #229 is about, and curating it would answer
+# that by fiat.
+FAMILY_SNIPPETS["ARO:3007059"] = [_minimal_enzyme_config(
+    "ARO:3007059",
+    "FrxA encodes an NADH-flavin oxidoreductase in Helicobacter pylori. Mutations in this "
+    "gene confer resistance to nitrofuran antibiotics and metronidazole.",
+    "NADH-flavin oxidoreductase activity",
+    "Two drug classes from one enzyme. Its sibling nfsB (round 107) says the enzyme REDUCES "
+    "the antibiotics, which licensed a prodrug reading; this one does not, so the same edge "
+    "is not written.")]
+
 def _check_config_order() -> None:
     for fam in FAMILY_SNIPPETS:
         cfgs = family_configs(fam)
