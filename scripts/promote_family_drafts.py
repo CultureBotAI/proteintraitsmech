@@ -1367,6 +1367,94 @@ def _minimal_enzyme_config(fam_id: str, snippet: str, activity: str, extra_note:
 
 
 FAMILY_SNIPPETS = {
+    # ddlA (ARO:3004939) -- SUBSTRATE-ANALOG inhibition, stated structurally.
+    #
+    # Round 82's folP was competitive inhibition, and CARD said so in those words. Here it
+    # says WHY: "Cycloserine has a SIMILAR STRUCTURE to d-alanine". That is the structural
+    # basis of a substrate analog, and it is the only record in this corpus that gives one.
+    #
+    # Note what is NOT said: that mutations in ddlA resist. CARD describes the enzyme and
+    # the drug's mimicry and stops -- so the resistance edge the family term implies is
+    # not written.
+    "ARO:3004939": {
+        "curated": "2026-08-10T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004939",
+        "mech": {"ARO:3000212": "ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and inhibits the growth of the cell wall."},
+        "mech_res": "ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and inhibits the growth of the cell wall.",
+        "det_res": [
+            {"reference": "ARO:3004939", "snippet": "ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and inhibits the growth of the cell wall.",
+             "notes": "The reaction with its cosubstrate ('ATP-driven ligation of TWO D-alanine molecules'), and the drug's structural basis: 'Cycloserine has a SIMILAR STRUCTURE to d-alanine'. NOT stated: what mutations in ddlA do -- CARD describes the enzyme and the mimicry and stops."},
+        ],
+        "res_drug": "ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and inhibits the growth of the cell wall.",
+        "note": ("Substrate-analog inhibition, with the structural basis given -- the only "
+                 "record here that says WHY a drug competes. Round 82's folP said the "
+                 "inhibition was competitive; this says the drug resembles the substrate. "
+                 "NOT asserted: the mutation's effect, which CARD does not describe."),
+        "extra_nodes": [
+            {"node_id": "ligation", "label": "D-Ala-D-Ala ligase activity (ATP-driven)",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "Ungrounded: not looked up rather than guessed (rounds 56-114)."},
+            {"node_id": "dala", "label": "D-alanine, the substrate cycloserine resembles",
+             "node_type": "CHEMICAL",
+             "description": "Ungrounded: rounds 20-23 recorded the same CHEBI gap for the wall precursors."},
+            {"node_id": "wall_growth", "label": "cell wall growth",
+             "node_type": "BIOLOGICAL_PROCESS", "description": "What the drug inhibits. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "ligation",
+             "predicate": "enables (D-Ala-D-Ala ligation)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004939", "snippet": "ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and inhibits the growth of the cell wall.",
+                           "notes": "'ddlA catalyzes the ATP-driven ligation of two D-alanine molecules'."}]},
+            {"subject": "ligation", "object": "dala",
+             "predicate": "has input (D-alanine)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "ARO:3004939", "snippet": "ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and inhibits the growth of the cell wall.",
+                           "notes": "Two molecules of it, per the same clause."}]},
+            {"subject": "drug0", "object": "dala",
+             "predicate": "similar to (cycloserine resembles D-alanine)",
+             "predicate_id": "RO:0002158",
+             "description": "The structural basis of the inhibition, and the reason this is substrate-analog rather than allosteric. RO:0002158 'shares ancestor with' is the closest verified predicate -- checked in round 89, where RO:0002159 turned out to be the developmental sense.",
+             "evidence": [{"reference": "ARO:3004939", "snippet": "ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and inhibits the growth of the cell wall.",
+                           "notes": "'Cycloserine has a similar structure to d-alanine'."}]},
+            {"subject": "drug0", "object": "wall_growth",
+             "predicate": "negatively regulates (inhibits cell wall growth)",
+             "predicate_id": "RO:0002212",
+             "evidence": [{"reference": "ARO:3004939", "snippet": "ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and inhibits the growth of the cell wall.",
+                           "notes": "'and inhibits the growth of the cell wall'."}]},
+        ],
+    },
+    # FKS2 (ARO:3007548) -- the echinocandin target, named with its product.
+    "ARO:3007548": {
+        "curated": "2026-08-10T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3007548",
+        "mech": {"ARO:3000212": "Glucan synthase FKS2 is involved in the production of the fungal cell wall by the synthesis of the core component beta-1,3-glucan in Candida spp. Mutations in FKS2 have been shown to confer resistance to echinocandin antibiotic micafungin."},
+        "mech_res": "Glucan synthase FKS2 is involved in the production of the fungal cell wall by the synthesis of the core component beta-1,3-glucan in Candida spp. Mutations in FKS2 have been shown to confer resistance to echinocandin antibiotic micafungin.",
+        "det_res": [
+            {"reference": "ARO:3007548", "snippet": "Glucan synthase FKS2 is involved in the production of the fungal cell wall by the synthesis of the core component beta-1,3-glucan in Candida spp. Mutations in FKS2 have been shown to confer resistance to echinocandin antibiotic micafungin.",
+             "notes": "Enzyme, product and pathway named, resistance attributed ('have been SHOWN to') and scoped to one drug (micafungin). NOT stated: that echinocandins inhibit glucan synthase, which is why they work -- CARD names the enzyme and the drug and does not join them."},
+        ],
+        "res_drug": "Glucan synthase FKS2 is involved in the production of the fungal cell wall by the synthesis of the core component beta-1,3-glucan in Candida spp. Mutations in FKS2 have been shown to confer resistance to echinocandin antibiotic micafungin.",
+        "note": ("Glucan synthase, the echinocandin target. NOT asserted: that echinocandins "
+                 "inhibit it. That is textbook and this is the record it belongs to -- the "
+                 "same position as rpoB (round 106) for rifampicin."),
+        "extra_nodes": [
+            {"node_id": "glucan_synthesis", "label": "beta-1,3-glucan synthase activity",
+             "node_type": "MOLECULAR_FUNCTION", "description": "Ungrounded."},
+            {"node_id": "cell_wall", "label": "fungal cell wall production",
+             "node_type": "BIOLOGICAL_PROCESS", "description": "Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "glucan_synthesis",
+             "predicate": "enables (beta-1,3-glucan synthesis)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3007548", "snippet": "Glucan synthase FKS2 is involved in the production of the fungal cell wall by the synthesis of the core component beta-1,3-glucan in Candida spp. Mutations in FKS2 have been shown to confer resistance to echinocandin antibiotic micafungin.",
+                           "notes": "'the synthesis of the core component beta-1,3-glucan'."}]},
+            {"subject": "glucan_synthesis", "object": "cell_wall",
+             "predicate": "part of (fungal cell wall production)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3007548", "snippet": "Glucan synthase FKS2 is involved in the production of the fungal cell wall by the synthesis of the core component beta-1,3-glucan in Candida spp. Mutations in FKS2 have been shown to confer resistance to echinocandin antibiotic micafungin.",
+                           "notes": "'involved in the production of the fungal cell wall'. NOT asserted: that micafungin inhibits this, which CARD does not say."}]},
+        ],
+    },
     # ampR (ARO:3007797) -- regulator, and the outcome is a mechanism ALREADY CURATED.
     #
     # Mutations confer resistance "due to BETA-LACTAMASE OVEREXPRESSION" -- and the
