@@ -54,9 +54,9 @@ causal_graphs:
     resistance (curated from ARO relations + literature)
   description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
     mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (PMID:7934937). rpsL -- target alteration IN TRANS: the determinant is a protein, but the drug''s
-    binding partner CARD names is the 16S rRNA. CARD says S12 ''stabilizes'' the pseudoknot; PMID:7934937,
-    its source, says only that the region ''has been linked to'' S12 -- so the edge is `correlated with`,
+    (ARO:3003395). rpsL -- target alteration IN TRANS: the determinant is a protein, but the drug''s binding
+    partner CARD names is the 16S rRNA. CARD says S12 ''stabilizes'' the pseudoknot; PMID:7934937, its
+    source, says only that the region ''has been linked to'' S12 -- so the edge is `correlated with`,
     not a causal one.'
   nodes:
   - node_id: determinant
@@ -102,30 +102,44 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: PMID:7934937
-      snippet: The mutations found either lead to amino acid changes in ribosomal protein S12 or alter
-        the primary structure of the 16S rRNA.
+    - reference: ARO:3003395
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        streptomycin resistance by disrupting interactions between 16S rRNA and streptomycin.
       notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: PMID:7934937
-      snippet: We demonstrate that streptomycin resistance is associated with mutations implicated in
-        ribosomal resistance.
+    - reference: ARO:3003395
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        streptomycin resistance by disrupting interactions between 16S rRNA and streptomycin.
       notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
+    - reference: ARO:3003395
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        streptomycin resistance by disrupting interactions between 16S rRNA and streptomycin.
+      notes: 'CARD makes the causal claim -- ''CONFER streptomycin resistance by disrupting interactions''
+        -- so CARD carries the edge that asserts it. Round 3 of review found this edge citing only Musser''s
+        ''is ASSOCIATED with'', which does not state conferral (#363, the same defect as #354).'
     - reference: PMID:8665467
       snippet: Streptomycin resistance in about one-half of M. tuberculosis isolates is associated with
         missense mutations in the rpsL gene coding for ribosomal protein S12 or nucleotide substitutions
         in the 16S rRNA gene (rrs).
-      notes: Musser 1995. The MAGNITUDE is part of the claim -- 'about one-half' of isolates, and the
-        other half is the rrs route, not this record.
+      notes: Musser 1995, corroborating and explicitly an ASSOCIATION. The MAGNITUDE is part of the claim
+        -- 'about one-half' of isolates, and the other half is the rrs route, not this record.
+    - reference: PMID:7934937
+      snippet: The mutations found either lead to amino acid changes in ribosomal protein S12 or alter
+        the primary structure of the 16S rRNA.
+      notes: Finken 1993, which is what the substitutions ARE. It reports the two routes and does not
+        state conferral, which is why it does not carry this edge alone (#363).
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001

@@ -209,7 +209,7 @@ asserted — and the test says why, so it does not read as an oversight.
 * corpus after: **39,647 records · 40,115 graphs · 350,242 nodes · 372,536 edges ·
   0 errors · 372,536/372,536 edges snippet-cited**
 * `just validate` on all 5 individually: **0 failures**
-* `--verify` on all three families: **7 KB CURIEs checked, 0 precondition skips,
+* `--verify` on all three families: **9 KB CURIEs checked, 0 precondition skips,
   0 uncovered mechanisms, 0 problems**
 * `just audit-fit`: **0** curated records accepted by no config
 * `just audit-drafts`: 0 accepted-but-unpromoted · **64 unconfigured family terms** remain
@@ -274,17 +274,18 @@ claim.*
 
 ## Provenance after review
 
-* review findings: **12 + 6** across two rounds · issues filed: **15** (#348–#362) ·
-  fixed in this PR: **13**
+* review findings: **12 + 6 + 5** across three rounds · issues filed: **17** (#348–#364) ·
+  fixed in this PR: **16**
 * left filed: **#355** (two `poa` node treatments across rounds 56 and 121),
-  **#356** (promotion drops the auto-draft's `participates_in` caveat, ~7,200 records)
+  **#356** (promotion drops the auto-draft's `participates_in` caveat, ~7,200 records),
+  **#364** (194 self-referential `is_a` ancestor notes, a promoter template defect)
 * `just test`: **737 passed** (+10), run before the push and again after each fix round
 * all three families re-promoted from clean drafts after each config change, never patched
   in place
 
 ## Review round 2: what the fixes got wrong
 
-Six more findings, all filed (#357–#362), five fixed. Two are worth recording.
+Six more findings, all filed (#357–#362), all six fixed. Two are worth recording.
 
 **The #349 fix relocated the contradiction rather than removing it.** Adding `rpsa_wt`
 stopped the graph asserting that POA both binds and does not bind the determinant. But
@@ -318,3 +319,46 @@ of the thing it fixes.** Round 1 caught tests that encoded the author's belief a
 config rather than a property of it; round 2 caught fixes that encoded the author's belief
 about what the shape allowed. Two review rounds found different classes of defect, which is
 the argument for running more than one.
+
+## Review round 3: the fix that was never checked against its own siblings
+
+Five findings, two filed (#363, #364), three corrections to the report's own numbers.
+
+**#354 was fixed on rpsA and left standing on rpsL.** rpsA's conferral edge had cited a
+co-occurrence; the remedy was to let CARD, which makes the causal claim, carry the edge.
+Round 3 found rpsL's conferral edge citing
+
+> *"Streptomycin resistance in about one-half of M. tuberculosis isolates **is associated
+> with** missense mutations in the rpsL gene…"*
+
+— the same defect, the same round, the same file, **and the same remedy already sitting
+unused in the config**: `_CARD_RPSL` says *"…**confer** streptomycin resistance by
+disrupting interactions…"* and was already cited on three other edges.
+
+Nothing prompted the check. Fixing a finding on the family it was reported against is the
+natural move, and it is not the same as fixing the defect.
+
+**And the fix collided with an earlier fix.** Moving CARD's sentence onto `mech_res` would
+have put CARD's text under `reference: PMID:7934937` — **re-creating #348 in the act of
+fixing #363.** Both are resolved by making `reference` the CARD term, as rpsE already does,
+and citing PMID:7934937 explicitly on the two edges whose claims it actually makes.
+
+Three findings collide on that one field, which is why the test now names all three and
+asserts the string **literally** rather than `== the_constant` (#360's residual gap: an
+identity check against a constant passes for any value the constant is edited to).
+
+## Where three rounds of review left this
+
+| round | findings | filed | fixed here |
+|---|--:|--:|--:|
+| 1 | 12 | 9 (#348–#356) | 7 |
+| 2 | 6 | 6 (#357–#362) | 6 |
+| 3 | 5 | 2 (#363–#364) | 3 + 2 report corrections |
+
+**Each round found a different class.** Round 1: claims not supported by their snippets.
+Round 2: fixes that inherited the mistaken frame of what they fixed. Round 3: a fix applied
+to one family and not its siblings, and a fix that collided with an earlier one.
+
+The rate is not falling because the work is getting worse — it is falling because each
+round can only see the artifact the previous round produced. Three rounds is not obviously
+enough; it is where the returns visibly narrowed, from correctness to bookkeeping.

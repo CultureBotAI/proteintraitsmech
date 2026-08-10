@@ -2820,28 +2820,39 @@ def test_rpsl_follows_its_source_not_cards_stronger_wording():
     assert refs == {"PMID:7934937", "ARO:3003395"}
 
 
-def test_rpsl_mech_res_is_a_sentence_from_the_paper_it_is_attributed_to():
-    """`mech_res` and `res_drug` are attributed by the promoter to `cfg["reference"]`.
+def test_rpsl_snippets_come_from_the_reference_they_are_attributed_to():
+    """`mech`, `mech_res` and `res_drug` are attributed by the promoter to `cfg["reference"]`.
 
-    Round 121 first shipped Musser's (PMID:8665467) "about one-half" sentence there, under
-    PMID:7934937, which does not contain it (#348). The Musser sentence belongs only on
-    `det_res`, which names its own reference.
+    Three review findings collide on this one field:
+
+    * #348 -- Musser's (PMID:8665467) sentence was placed there under PMID:7934937;
+    * #363 -- those three edges assert CONFERRAL, which only CARD states;
+    * so `reference` must be CARD, or fixing #363 re-creates #348.
+
+    #360: the string is asserted LITERALLY, not as `== the_constant`, so any edit to the
+    constant forces someone to re-verify it against the source rather than silently
+    carrying a foreign sentence.
     """
     cfg = promote.family_configs("ARO:3003395")[0]
-    assert cfg["reference"] == "PMID:7934937"
-    musser = "about one-half"
-    # #360: a substring check passes for ANY other foreign sentence. Pin the identity:
-    # every snippet the promoter attributes to cfg["reference"] must be the one verified
-    # to come from PMID:7934937.
-    from_7934937 = promote._RPSL_SOURCE_ASSOC
-    assert cfg["mech_res"] == from_7934937
-    assert cfg["res_drug"] == from_7934937
-    assert set(cfg["mech"].values()) == {promote._RPSL_MUTATIONS}
-    assert musser not in from_7934937
-    assert musser not in promote._RPSL_MUTATIONS
+    assert cfg["reference"] == "ARO:3003395"
+    card = ("Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure "
+            "formed by 16S rRNA. Amino acid substitutions in RpsL affect the higher-order "
+            "structure of 16S rRNA and confer streptomycin resistance by disrupting "
+            "interactions between 16S rRNA and streptomycin.")
+    assert cfg["mech_res"] == card
+    assert cfg["res_drug"] == card
+    assert set(cfg["mech"].values()) == {card}
+    # the two literature sentences appear ONLY where their own reference is named
+    for d in cfg["det_res"]:
+        if "about one-half" in d["snippet"]:
+            assert d["reference"] == "PMID:8665467"
+        if "either lead to amino acid changes" in d["snippet"]:
+            assert d["reference"] == "PMID:7934937"
+    assert "about one-half" not in card
     # and it IS still cited, on the edge that names Musser
     det = cfg["det_res"]
-    assert any(musser in d["snippet"] and d["reference"] == "PMID:8665467" for d in det)
+    assert any("about one-half" in d["snippet"] and d["reference"] == "PMID:8665467"
+               for d in det)
 
 
 def test_rpse_never_joins_the_substitution_to_the_drug():

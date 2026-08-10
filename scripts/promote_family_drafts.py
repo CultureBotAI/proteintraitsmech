@@ -8618,18 +8618,37 @@ _CARD_RPSL = "Ribosomal protein S12 stabilizes the highly conserved pseudoknot s
 FAMILY_SNIPPETS["ARO:3003395"] = {   # rpsL / ribosomal protein S12 — streptomycin
     "curated": "2026-08-10T00:00:00Z",
     "precondition": _requires_mech("ARO:3000212", "mutation"),
-    "reference": "PMID:7934937",
-    "mech": {"ARO:3000212": _RPSL_MUTATIONS},
+    # `reference` is CARD, not the 1993 paper, and that is forced by #348 + #363 together:
+    # the promoter attributes mech/mech_res/res_drug to `cfg["reference"]`, those three
+    # edges assert CONFERRAL, and only CARD states conferral. Putting CARD's sentence under
+    # PMID:7934937 would have re-created #348 in the act of fixing #363. The 1993 paper is
+    # cited explicitly on the two edges whose claims it does make. Same shape as rpsE.
+    "reference": "ARO:3003395",
+    "mech": {"ARO:3000212": _CARD_RPSL},
     # #348: mech_res and res_drug are attributed to cfg["reference"] by the promoter, so
-    # they must be sentences from PMID:7934937. _RPSL_ASSOC is Musser's (PMID:8665467) and
+    # a snippet placed there must come from that reference. Musser's (PMID:8665467) sentence
     # appears ONLY on det_res, which names its own reference.
-    "mech_res": _RPSL_SOURCE_ASSOC,
+    #
+    # #363: they now carry CARD's definition rather than PMID:7934937's association
+    # sentence, because these edges assert CONFERRAL and only CARD states it. `reference`
+    # stays PMID:7934937 for the mechanism edge, whose snippet IS that paper's.
+    "mech_res": _CARD_RPSL,
     "det_res": [
+        {"reference": "ARO:3003395", "snippet": _CARD_RPSL,
+         "notes": "CARD makes the causal claim -- 'CONFER streptomycin resistance by "
+                  "disrupting interactions' -- so CARD carries the edge that asserts it. "
+                  "Round 3 of review found this edge citing only Musser's 'is ASSOCIATED "
+                  "with', which does not state conferral (#363, the same defect as #354)."},
         {"reference": "PMID:8665467", "snippet": _RPSL_ASSOC,
-         "notes": "Musser 1995. The MAGNITUDE is part of the claim -- 'about one-half' of "
-                  "isolates, and the other half is the rrs route, not this record."},
+         "notes": "Musser 1995, corroborating and explicitly an ASSOCIATION. The MAGNITUDE is "
+                  "part of the claim -- 'about one-half' of isolates, and the other half is "
+                  "the rrs route, not this record."},
+        {"reference": "PMID:7934937", "snippet": _RPSL_MUTATIONS,
+         "notes": "Finken 1993, which is what the substitutions ARE. It reports the two "
+                  "routes and does not state conferral, which is why it does not carry this "
+                  "edge alone (#363)."},
     ],
-    "res_drug": _RPSL_SOURCE_ASSOC,
+    "res_drug": _CARD_RPSL,
     "note": ("rpsL -- target alteration IN TRANS: the determinant is a protein, but the "
              "drug's binding partner CARD names is the 16S rRNA. CARD says S12 'stabilizes' "
              "the pseudoknot; PMID:7934937, its source, says only that the region 'has been "
