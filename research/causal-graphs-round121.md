@@ -16,8 +16,8 @@ that decides how much may be asserted.
 
 | family | records | what CARD gives | graph |
 |---|--:|---|--:|
-| **rpsA** (ARO:3004722) | 2 | activation, binding, the process inhibited, **and that the function is kept** | 8 extra edges |
-| **rpsL** (ARO:3003395) | 1 | a mechanism its **own source only hedges** | 5 extra edges |
+| **rpsA** (ARO:3004722) | 2 | activation, binding, the process inhibited, **and that the function is kept** | 9 extra edges |
+| **rpsL** (ARO:3003395) | 1 | a mechanism its **own source only hedges** | 6 extra edges |
 | **rpsE** (ARO:3007526) | 2 | *"is associated with"*, and **no mechanism at all** | 5 extra edges |
 
 A single shared config was the obvious shortcut and would have written rpsA's binding
@@ -216,9 +216,9 @@ asserted — and the test says why, so it does not read as an oversight.
 * records touched: **5** (2 rpsA + 1 rpsL + 2 rpsE) · SEEDED → REVIEWED · 1 held
 * `just lint`: **all checks passed** — added to this block because it was RED for the
   whole PR and three review rounds missed it precisely because it was not listed (#366)
-* `just test`: **737 passed** (+10), **run before the push**
-* corpus after: **39,647 records · 40,115 graphs · 350,242 nodes · 372,536 edges ·
-  0 errors · 372,536/372,536 edges snippet-cited**
+* `just test`: **739 passed** (+12), **run before the push**
+* corpus after: **39,647 records · 40,115 graphs · 350,242 nodes · 372,539 edges ·
+  0 errors · 372,539/372,539 edges snippet-cited**
 * `just validate` on all 5 individually: **0 failures**
 * `--verify` on all three families: **9 KB CURIEs checked, 0 precondition skips,
   0 uncovered mechanisms, 0 problems**
@@ -293,7 +293,7 @@ claim.*
   **#364** (194 self-referential `is_a` ancestor notes, a promoter template defect),
   **#365** (276 ARO-cited snippets corpus-wide that their term does not contain),
   **#366** (`just lint` absent from the round-report checklist)
-* `just test`: **737 passed** (+10), run before the push and again after each fix round
+* `just test`: **739 passed** (+12), run before the push and again after each fix round
 * all three families re-promoted from clean drafts after each config change, never patched
   in place
 
@@ -475,3 +475,58 @@ The returns did not diminish smoothly — **round 4 found the largest thing**, b
 the first round with enough of the artifact settled to ask corpus-scale questions instead of
 edge-level ones. That is the case for running the review more than twice, and it is the
 opposite of what "diminishing returns" would have predicted.
+
+## The codex escalation: what five rounds all read and none questioned
+
+Five inner rounds each returned findings, which triggered an independent review by a
+different model. **It errored out partway on a content-safety filter** — the AMR mechanism
+text tripped a biosecurity classifier — but its partial output named two things, and both
+were real.
+
+**1. Every complex node was defined by half of itself (#370).** Round 21 established that a
+drug–target complex is *defined by its constituents* rather than interacting with them.
+Round 121 applied that to one half of each:
+
+| node | label | `has part` |
+|---|---|---|
+| `strep_binding` | "16S rRNA–**streptomycin** interaction" | `→ rrna16s` only |
+| `poa_rpsa` | "**POA**–RpsA complex" | `→ rpsa_wt` only |
+
+Both times the **drug half was missing**, so a node whose label names two participants was
+structurally made of one. On rpsL that is the causal core: `determinant --negatively
+regulates--> strep_binding` says the substitution disrupts a thing that did not contain the
+drug. Both snippets already supported the missing edge — CARD's *"interactions between 16S
+rRNA and **streptomycin**"*, Shi's *"**POA** bound to RpsA"*.
+
+**2. The parent record's preservation claim is the child's alone (#371).** ARO:3004722's own
+definition says mutations *"prevent pyrazinoic acid … from **targeting** RpsA"* — prevention
+of targeting, not preservation of function. *"maintaining rpsA function"* is ARO:3004721's
+wording. Review round 3 checked that citing a descendant is legitimate here (51 instances)
+and **stopped there** — it never asked whether the parent said it too. The notes now say
+which term the claim comes from.
+
+**Why five rounds missed both.** Every round read these edges. What none of them asked was a
+*completeness* question — "is this node defined by everything its label names?", "does this
+record's own definition support what its edge says?" — because each round was checking the
+previous round's fixes. **A review that tracks a diff inherits the diff's frame.** The codex
+pass had no such history, and its first two observations were both things the frame excluded.
+
+That is the argument for the escalation existing, and it survived the pass failing: a review
+that dies partway through can still be worth more than the round before it.
+
+## Final tally
+
+| round | findings | filed | fixed here |
+|---|--:|--:|--:|
+| 1 | 12 | 9 (#348–#356) | 7 |
+| 2 | 6 | 6 (#357–#362) | 6 |
+| 3 | 5 | 2 (#363–#364) | 2 + 3 report corrections |
+| 4 | 7 | 3 (#365–#367) | 4 + 3 report corrections |
+| 5 | 6 | 2 (#368–#369) | 4 |
+| codex | 2 | 2 (#370–#371) | 2 |
+| **total** | **38** | **24** | **25 + 6 corrections** |
+
+**Thirty-eight findings on five records**, and the two most structural — a defect class 276
+items wide (#365) and a complex defined by half of itself (#370) — came from round 4 and the
+escalation, not from rounds 1–3. The early rounds fix what you wrote; the late ones find what
+you never thought to ask.

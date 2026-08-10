@@ -8555,6 +8555,13 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
                        "notes": "'POA bound to RpsA' -- and the parenthesis says which RpsA: "
                                 "'but not a clinically identified ΔAla mutant'. DRUG-ACTION arm; "
                                 "resistance is its loss."}]},
+        {"subject": "poa_rpsa", "object": "poa",
+         "predicate": "has part (the drug half of the complex)", "predicate_id": "BFO:0000051",
+         "description": "The other constituent. Round 121 first defined this complex by its "
+                        "protein half alone, so a node labelled for two participants was "
+                        "structurally made of one (#370).",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_BINDING,
+                       "notes": "'POA bound to RpsA' -- POA is the other constituent."}]},
         {"subject": "poa_rpsa", "object": "rpsa_wt",
          "predicate": "has part (the protein half of the complex)", "predicate_id": "BFO:0000051",
          "description": "Round 21's rule: a complex is DEFINED by its constituents rather than "
@@ -8573,7 +8580,10 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
                        "notes": "The claim the description makes, cited where it is actually "
                                 "made: 'maintaining rpsA function'. Round 2 of review found the "
                                 "description asserting this over evidence that did not say it "
-                                "(#359)."},
+                                "(#359). NOTE this is the more specific term ARO:3004721; "
+                                "ARO:3004722's own definition says mutations 'prevent pyrazinoic "
+                                "acid from TARGETING RpsA' and does not itself state that the "
+                                "function is preserved (#371)."},
                       {"reference": "PMID:21835980", "snippet": _POA_TARGET,
                        "notes": "'a vital protein involved in protein translation and the "
                                 "ribosome-sparing process of trans-translation'."}]},
@@ -8731,6 +8741,17 @@ FAMILY_SNIPPETS["ARO:3003395"] = {   # rpsL / ribosomal protein S12 — streptom
                        "notes": "'confer streptomycin resistance by disrupting interactions "
                                 "between 16S rRNA and streptomycin'. CARD's mechanism claim, "
                                 "attributed to CARD because its source does not make it."}]},
+        {"subject": "strep_binding", "object": "drug0",
+         "predicate": "has part (the streptomycin half of the interaction)",
+         "predicate_id": "BFO:0000051",
+         "requires": {"drug0": "ARO:0000016"},
+         "description": "The other constituent, and the more important one: the causal core "
+                        "edge says the substitution disrupts THIS, and without the drug half "
+                        "the thing disrupted did not structurally contain the drug (#370).",
+         "evidence": [{"reference": "ARO:3003395", "snippet": _CARD_RPSL,
+                       "notes": "'interactions between 16S rRNA and STREPTOMYCIN'. The drug0 "
+                                "node is the CLASS (ARO:0000016), as elsewhere on this record "
+                                "(#353)."}]},
         {"subject": "strep_binding", "object": "rrna16s",
          "predicate": "has part (the 16S rRNA half of the interaction)",
          "predicate_id": "BFO:0000051",

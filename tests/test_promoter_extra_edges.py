@@ -2771,6 +2771,37 @@ def test_rpsa_asserts_no_loss_of_the_proteins_own_function():
     assert [e["object"] for e in binds] == ["rpsa_wt"]
 
 
+def test_every_complex_node_is_defined_by_all_its_named_constituents():
+    """Round 21's rule: a drug-target complex is DEFINED by its constituents.
+
+    Round 121 first applied it to one half of each -- `strep_binding` had the rRNA but
+    not the drug, `poa_rpsa` had the protein but not POA -- so a node labelled for two
+    participants was structurally made of one (#370). Five review rounds read these edges
+    and none asked whether the constituents were complete.
+    """
+    for fam, node, want in (("ARO:3003395", "strep_binding", {"rrna16s", "drug0"}),
+                            ("ARO:3004722", "poa_rpsa", {"rpsa_wt", "poa"})):
+        cfg = promote.family_configs(fam)[0]
+        parts = {e["object"] for e in cfg["extra_edges"]
+                 if e["subject"] == node and e["predicate_id"] == "BFO:0000051"}
+        assert parts == want, f"{node} is defined by {parts}, not {want}"
+
+
+def test_rpsa_parent_records_that_its_preservation_claim_is_the_child_terms():
+    """ARO:3004722's own definition says mutations "prevent pyrazinoic acid from TARGETING
+    RpsA" -- prevention of targeting, not preservation of function.
+
+    "maintaining rpsA function" is the child term ARO:3004721's wording. Citing a
+    descendant is an established pattern here, but the notes must say so (#371).
+    """
+    cfg = promote.family_configs("ARO:3004722")[0]
+    kept = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "trans_translation"][0]
+    ev = [x for x in kept["evidence"] if x["reference"] == "ARO:3004721"][0]
+    assert "more specific term" in ev["notes"]
+    assert "does not itself state" in ev["notes"]
+
+
 def test_rpsa_wt_says_it_is_the_same_protein_as_the_determinant():
     """RO has no allelic-variant predicate (#357), so the relation cannot be an edge.
 
