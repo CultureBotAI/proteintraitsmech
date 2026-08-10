@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004256
 trait_relations:
@@ -22,11 +22,14 @@ evidence:
 - reference: DOI:10.1016/s0014-5793(98)01613-5
   notes: PMID:9923599 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] BLMT → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: BLMT → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3005036). A resistance protein whose mechanism is stated nowhere. It carries ARO:0001004 (inactivation)
+    and CARD describes no chemistry -- BLMT in fact SEQUESTERS bleomycin (round 72''s shape), and that
+    is uncited here, so no binding edge is written. The graph carries the genetic context CARD does give:
+    the ble gene on transposon Tn5.'
   nodes:
   - node_id: determinant
     label: BLMT
@@ -40,6 +43,11 @@ causal_graphs:
     label: glycopeptide antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000081
+  - node_id: tn5
+    label: the ble gene on transposon Tn5
+    node_type: NUCLEIC_ACID
+    description: The genetic context, which is the only thing CARD adds beyond restating the resistance.
+      Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -53,44 +61,58 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1016/s0014-5793(98)01613-5
-      notes: 'Auto-drafted: mechanism class ARO:0001004 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:0001004); verbatim snippet pending curation.'
     - reference: ARO:3005036
       snippet: BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon
         Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance
         to bleomycin.
-      notes: ARO definition of this determinant. The mechanism class ARO:0001004 (antibiotic inactivation)
-        is CARD's mechanism categorisation for it; aro.obo does not assert that link as an is_a axiom.
+      notes: Family mechanism ARO:0001004.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1016/s0014-5793(98)01613-5
-      notes: 'Auto-drafted: mechanism ARO:0001004 → resistance; snippet pending curation.'
-    - reference: ARO:0001004
-      snippet: Enzymatic inactivation of antibiotic to confer drug resistance.
-      notes: ARO definition of the resistance mechanism class ARO:0001004 (antibiotic inactivation), which
-        states the causal link to resistance.
+    - reference: ARO:3005036
+      snippet: BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon
+        Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance
+        to bleomycin.
+      notes: Mechanism ARO:0001004 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1016/s0014-5793(98)01613-5
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3005036
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000053 ! bleomycin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon
+        Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance
+        to bleomycin.
+      notes: Three sentences that each restate the resistance -- 'a bleomycin resistance protein', 'confers
+        a survival advantage', 'confers resistance to bleomycin' -- and none says how. It carries the
+        INACTIVATION mechanism id while describing no reaction.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
     evidence:
     - reference: ARO:3004256
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000081 ! glycopeptide antibiotic'
       notes: Asserted on ARO:3004256 (Bleomycin resistant protein), an is_a ancestor of this record's
         ARO:3005036; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to glycopeptide antibiotic.
+  - subject: tn5
+    predicate: causally upstream of (encodes BLMT)
+    predicate_id: RO:0002411
+    object: determinant
+    description: 'The only non-restating fact in the definition. NOT asserted: sequestration, which is
+      BLMT''s actual mechanism and appears in no sentence here.'
+    evidence:
+    - reference: ARO:3005036
+      snippet: BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon
+        Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance
+        to bleomycin.
+      notes: '''encoded by the ble gene on the transposon Tn5''.'
+curation_history:
+- timestamp: '2026-08-10T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

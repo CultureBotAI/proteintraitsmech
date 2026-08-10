@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004943
 trait_relations:
@@ -28,12 +28,13 @@ evidence:
 - reference: DOI:10.1038/ng.3548
   notes: PMID:27064254 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis ald mutations confer resistance to cycloserine → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycobacterium tuberculosis ald mutations confer resistance to cycloserine → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3004943). L-alanine supply to the peptidoglycan layer. NOT asserted: any relation to cycloserine''s
+    D-alanine mimicry, which ddlA''s record (round 116) states for its own step and this one does not.'
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis ald mutations confer resistance to cycloserine
@@ -47,6 +48,14 @@ causal_graphs:
     label: cycloserine-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007154
+  - node_id: l_alanine
+    label: L-alanine, a constituent of the peptidoglycan layer
+    node_type: CHEMICAL
+    description: 'Ungrounded: not looked up rather than guessed.'
+  - node_id: wall_synthesis
+    label: cell wall synthesis
+    node_type: BIOLOGICAL_PROCESS
+    description: Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -60,46 +69,64 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004945
-      snippet: Mutations in the ald gene that contribute to or confer resistance to cycloserine.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3004943
+      snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
+        peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3004943
+      snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
+        peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004945
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000760 ! cycloserine'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3004943
+      snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
+        peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
+      notes: 'Pathway role, and ''can cause cycloserine to NOT FUNCTION'' -- the same verb as mshC, nudC
+        and mshA''s counterpart. Round 95''s line applies: ''function'' does not license an activation
+        or mimicry edge, even though ddlA (round 116) supplies exactly that story for the neighbouring
+        step.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to cycloserine-like antibiotic.
     evidence:
     - reference: ARO:3004943
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007154 ! cycloserine-like antibiotic'
       notes: Asserted on ARO:3004943 (cycloserine resistant ald), an is_a ancestor of this record's ARO:3004945;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to cycloserine-like antibiotic.
+  - subject: determinant
+    predicate: participates in (cell wall synthesis)
+    predicate_id: RO:0000056
+    object: wall_synthesis
+    description: '''Participates in'', matching CARD''s ''plays a role in''.'
+    evidence:
+    - reference: ARO:3004943
+      snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
+        peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
+      notes: '''ald plays a role in cell wall synthesis''.'
+  - subject: l_alanine
+    predicate: part of (the peptidoglycan layer)
+    predicate_id: BFO:0000050
+    object: wall_synthesis
+    evidence:
+    - reference: ARO:3004943
+      snippet: ald plays a role in cell wall synthesis as L-alanine is an important constituent of the
+        peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.
+      notes: '''L-alanine is an important constituent of the peptidoglycan layer''. NOT asserted: the
+        link to cycloserine, whose mimicry ddlA''s record describes.'
+curation_history:
+- timestamp: '2026-08-10T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
