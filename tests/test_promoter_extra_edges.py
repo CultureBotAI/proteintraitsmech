@@ -2663,3 +2663,30 @@ def test_pepq_keeps_putative_in_the_node_label():
     """
     cfg = promote.family_configs("ARO:3007690")[0]
     assert "putative" in cfg["extra_nodes"][0]["label"].lower()
+
+
+def test_ald_and_ddla_sit_either_side_of_one_step_and_only_ddla_gets_the_mimicry():
+    """ddlA's record says cycloserine resembles D-alanine; ald's says only "not function".
+
+    The two records are one step apart in the same wall pathway, which makes borrowing
+    the mimicry edge across especially tempting.
+    """
+    ddla = promote.family_configs("ARO:3004939")[0]
+    ald = promote.family_configs("ARO:3004943")[0]
+    assert any(e["predicate_id"] == "RO:0002158" for e in ddla["extra_edges"])
+    assert not any(e["predicate_id"] == "RO:0002158" for e in ald["extra_edges"])
+    assert "to not function" in ald["mech"]["ARO:3000212"].lower()
+
+
+def test_blmt_does_not_assert_sequestration():
+    """BLMT sequesters bleomycin (round 72's shape) and CARD says so nowhere.
+
+    Its three sentences each restate the resistance; only the Tn5 context adds anything.
+    """
+    cfg = promote.family_configs("ARO:3005036")[0]
+    asserted = " ".join(
+        [e["predicate"] for e in cfg["extra_edges"]]
+        + [n["label"] for n in cfg["extra_nodes"]]).lower()
+    for banned in ("sequest", "binds", "complex"):
+        assert banned not in asserted, f"BLMT config asserts {banned!r} uncited"
+    assert "SEQUESTERS" in cfg["note"], "the known-but-uncited mechanism must be named"

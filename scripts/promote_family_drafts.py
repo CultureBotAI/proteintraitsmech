@@ -1367,6 +1367,75 @@ def _minimal_enzyme_config(fam_id: str, snippet: str, activity: str, extra_note:
 
 
 FAMILY_SNIPPETS = {
+    # ald (ARO:3004943) -- the cycloserine partner of ddlA (round 116).
+    #
+    # ddlA ligates two D-alanines and cycloserine mimics D-alanine. ald supplies L-alanine
+    # to the same wall. CARD gives the pathway role and says mutations "can cause
+    # cycloserine to not function" -- the "FUNCTION" word again (rounds 95, 110, 112), so
+    # no prodrug or activation edge, even though the two records sit either side of the
+    # same step.
+    "ARO:3004943": {
+        "curated": "2026-08-10T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004943",
+        "mech": {"ARO:3000212": "ald plays a role in cell wall synthesis as L-alanine is an important constituent of the peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function."},
+        "mech_res": "ald plays a role in cell wall synthesis as L-alanine is an important constituent of the peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.",
+        "det_res": [
+            {"reference": "ARO:3004943", "snippet": "ald plays a role in cell wall synthesis as L-alanine is an important constituent of the peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.",
+             "notes": "Pathway role, and 'can cause cycloserine to NOT FUNCTION' -- the same verb as mshC, nudC and mshA's counterpart. Round 95's line applies: 'function' does not license an activation or mimicry edge, even though ddlA (round 116) supplies exactly that story for the neighbouring step."},
+        ],
+        "res_drug": "ald plays a role in cell wall synthesis as L-alanine is an important constituent of the peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.",
+        "note": ("L-alanine supply to the peptidoglycan layer. NOT asserted: any relation "
+                 "to cycloserine's D-alanine mimicry, which ddlA's record (round 116) "
+                 "states for its own step and this one does not."),
+        "extra_nodes": [
+            {"node_id": "l_alanine", "label": "L-alanine, a constituent of the peptidoglycan layer",
+             "node_type": "CHEMICAL", "description": "Ungrounded: not looked up rather than guessed."},
+            {"node_id": "wall_synthesis", "label": "cell wall synthesis",
+             "node_type": "BIOLOGICAL_PROCESS", "description": "Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "wall_synthesis",
+             "predicate": "participates in (cell wall synthesis)", "predicate_id": "RO:0000056",
+             "description": "'Participates in', matching CARD's 'plays a role in'.",
+             "evidence": [{"reference": "ARO:3004943", "snippet": "ald plays a role in cell wall synthesis as L-alanine is an important constituent of the peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.",
+                           "notes": "'ald plays a role in cell wall synthesis'."}]},
+            {"subject": "l_alanine", "object": "wall_synthesis",
+             "predicate": "part of (the peptidoglycan layer)", "predicate_id": "BFO:0000050",
+             "evidence": [{"reference": "ARO:3004943", "snippet": "ald plays a role in cell wall synthesis as L-alanine is an important constituent of the peptidoglycan layer. Resistance due to mutations in ald can cause cycloserine to not function.",
+                           "notes": "'L-alanine is an important constituent of the peptidoglycan layer'. NOT asserted: the link to cycloserine, whose mimicry ddlA's record describes."}]},
+        ],
+    },
+    # BLMT (ARO:3005036) -- resistance stated three times and never explained.
+    "ARO:3005036": {
+        "curated": "2026-08-10T00:00:00Z",
+        "precondition": _requires_mech("ARO:0001004", "antibiotic inactivation"),
+        "reference": "ARO:3005036",
+        "mech": {"ARO:0001004": "BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance to bleomycin."},
+        "mech_res": "BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance to bleomycin.",
+        "det_res": [
+            {"reference": "ARO:3005036", "snippet": "BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance to bleomycin.",
+             "notes": "Three sentences that each restate the resistance -- 'a bleomycin resistance protein', 'confers a survival advantage', 'confers resistance to bleomycin' -- and none says how. It carries the INACTIVATION mechanism id while describing no reaction."},
+        ],
+        "res_drug": "BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance to bleomycin.",
+        "note": ("A resistance protein whose mechanism is stated nowhere. It carries "
+                 "ARO:0001004 (inactivation) and CARD describes no chemistry -- BLMT in "
+                 "fact SEQUESTERS bleomycin (round 72's shape), and that is uncited here, "
+                 "so no binding edge is written. The graph carries the genetic context CARD "
+                 "does give: the ble gene on transposon Tn5."),
+        "extra_nodes": [
+            {"node_id": "tn5", "label": "the ble gene on transposon Tn5",
+             "node_type": "NUCLEIC_ACID",
+             "description": "The genetic context, which is the only thing CARD adds beyond restating the resistance. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "tn5", "object": "determinant",
+             "predicate": "causally upstream of (encodes BLMT)", "predicate_id": "RO:0002411",
+             "description": "The only non-restating fact in the definition. NOT asserted: sequestration, which is BLMT's actual mechanism and appears in no sentence here.",
+             "evidence": [{"reference": "ARO:3005036", "snippet": "BLMT is a bleomycin (Bm) resistance protein, encoded by the ble gene on the transposon Tn5. This protein confers a survival advantage to Escherichia coli host cells. BLMT confers resistance to bleomycin.",
+                           "notes": "'encoded by the ble gene on the transposon Tn5'."}]},
+        ],
+    },
     # MSH2 (ARO:3009134) -- resistance across three unrelated drug classes at once.
     #
     # Every other record in this corpus resists one drug or one class. MSH2 is a MISMATCH
