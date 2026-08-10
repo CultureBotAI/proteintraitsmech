@@ -1367,6 +1367,70 @@ def _minimal_enzyme_config(fam_id: str, snippet: str, activity: str, extra_note:
 
 
 FAMILY_SNIPPETS = {
+    # MSH2 (ARO:3009134) -- resistance across three unrelated drug classes at once.
+    #
+    # Every other record in this corpus resists one drug or one class. MSH2 is a MISMATCH
+    # REPAIR gene, and strains altered in it resist polyenes, echinocandins AND azoles --
+    # three classes with three different targets. The obvious reading is hypermutation, and
+    # CARD does not say it, so it is not written.
+    "ARO:3009134": {
+        "curated": "2026-08-10T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3009134",
+        "mech": {"ARO:3000212": "MSH2 is a mismatch repair gene in fungi. Strains with alterations in this gene exhibit the resistance to Polyenes (Amphotericin B), Echinocandins (Caspofungin, Micafungin), and Azoles (Fluconazole, Voriconazole)."},
+        "mech_res": "MSH2 is a mismatch repair gene in fungi. Strains with alterations in this gene exhibit the resistance to Polyenes (Amphotericin B), Echinocandins (Caspofungin, Micafungin), and Azoles (Fluconazole, Voriconazole).",
+        "det_res": [
+            {"reference": "ARO:3009134", "snippet": "MSH2 is a mismatch repair gene in fungi. Strains with alterations in this gene exhibit the resistance to Polyenes (Amphotericin B), Echinocandins (Caspofungin, Micafungin), and Azoles (Fluconazole, Voriconazole).",
+             "notes": "Three drug classes with three different targets, from one altered gene. CARD names the gene's function (mismatch repair) and lists the classes, and joins them by nothing. NOTE the phrasing: 'STRAINS WITH ALTERATIONS ... EXHIBIT' -- an observation about strains, not a claim about the protein."},
+        ],
+        "res_drug": "MSH2 is a mismatch repair gene in fungi. Strains with alterations in this gene exhibit the resistance to Polyenes (Amphotericin B), Echinocandins (Caspofungin, Micafungin), and Azoles (Fluconazole, Voriconazole).",
+        "note": ("Mismatch repair, and resistance to three unrelated drug classes. The "
+                 "obvious reading is that losing repair raises the mutation rate and "
+                 "resistance follows by any route -- hypermutation. CARD does not say it, "
+                 "so it is not written. The graph carries the gene's function and stops."),
+        "extra_nodes": [
+            {"node_id": "mismatch_repair", "label": "DNA mismatch repair",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The one functional fact CARD gives. Ungrounded: not looked up rather than guessed."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "mismatch_repair",
+             "predicate": "participates in (DNA mismatch repair)", "predicate_id": "RO:0000056",
+             "description": "What the gene IS. NOT asserted: that losing repair causes hypermutation, or that hypermutation is how three drug classes are resisted at once -- neither is in CARD's two sentences.",
+             "evidence": [{"reference": "ARO:3009134", "snippet": "MSH2 is a mismatch repair gene in fungi. Strains with alterations in this gene exhibit the resistance to Polyenes (Amphotericin B), Echinocandins (Caspofungin, Micafungin), and Azoles (Fluconazole, Voriconazole).",
+                           "notes": "'MSH2 is a mismatch repair gene in fungi'."}]},
+        ],
+    },
+    # pepQ (ARO:3007690) -- a "putative" function and a "cross-resistance" phenotype.
+    "ARO:3007690": {
+        "curated": "2026-08-10T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3007690",
+        "mech": {"ARO:3000212": "Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated."},
+        "mech_res": "Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.",
+        "det_res": [
+            {"reference": "ARO:3007690", "snippet": "Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.",
+             "notes": "Four qualifiers in one sentence: the function is 'PUTATIVE', the determinant is 'NEW', the resistance is 'LOW-LEVEL', and it is 'CROSS-RESISTANCE' to two drugs. All four are kept."},
+        ],
+        "res_drug": "Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.",
+        "note": ("A putative aminopeptidase conferring low-level cross-resistance. The "
+                 "function itself is hedged -- 'encodes a PUTATIVE Xaa-Pro aminopeptidase' "
+                 "-- which is a step further than round 111's drmA, where the protein was "
+                 "'uncharacterized' but its identity was not in doubt."),
+        "extra_nodes": [
+            {"node_id": "aminopeptidase", "label": "putative Xaa-Pro aminopeptidase activity",
+             "node_type": "MOLECULAR_FUNCTION",
+             "description": "The word 'putative' is CARD's and is kept in the label -- the assignment itself is uncertain, not merely uncharacterised."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "aminopeptidase",
+             "predicate": "enables (putative Xaa-Pro aminopeptidase activity)",
+             "predicate_id": "RO:0002327",
+             "description": "Hedged at the level CARD hedges it. NOT asserted: any route from peptidase activity to bedaquiline or clofazimine, which CARD does not describe.",
+             "evidence": [{"reference": "ARO:3007690", "snippet": "Rv2535c or pepQ encodes a putative Xaa-Pro aminopeptidase and is a new genetic determinant of low-level bedaquiline and clofazimine cross-resistance in Mycobacterium tuberculosis when mutated.",
+                           "notes": "'encodes a putative Xaa-Pro aminopeptidase'."}]},
+        ],
+    },
     # ddlA (ARO:3004939) -- SUBSTRATE-ANALOG inhibition, stated structurally.
     #
     # Round 82's folP was competitive inhibition, and CARD said so in those words. Here it
