@@ -126,7 +126,7 @@ definitions are *cited as evidence snippets*: the label looks right, the CURIE i
 and only the prose is another domain's — which defeats the #196 check that a domain's
 abstract must mention the protein.
 
-## rpsL — curated at its source's strength, not CARD's
+## rpsL — the one claim where CARD and its source disagree
 
 CARD asserts a mechanism:
 
@@ -143,6 +143,15 @@ A hedged linkage, and no stabilisation experiment. So the edge is
 `determinant --correlated with [RO:0002610]--> pseudoknot`, not a causal or regulatory
 predicate — and it carries **both** references, so the disagreement is visible on the edge
 rather than only in this report. A test pins the predicate and the two-reference set.
+
+**The stance is per-claim, not per-record, and review round 4 was right that the first
+draft of this section overstated it.** After #363, six of the rpsL graph's ten edges cite
+CARD — including all three conferral edges, because CARD is the *only* source that says
+"confer", and refusing it there would leave the record asserting a mechanism with nobody
+claiming the outcome. **Exactly one edge** is curated below CARD's strength: the
+`determinant → pseudoknot` edge, which is the one claim the two sources actually disagree
+about. Following the weaker source *there* is the finding; "follow the source everywhere"
+was never what the artifact did.
 
 This is round 51's lesson pointed the other way. Round 51: *don't source a mechanism the
 record doesn't claim.* Round 121: **when the record claims more than its own source, follow
@@ -205,6 +214,8 @@ asserted — and the test says why, so it does not read as an oversight.
 ## Provenance
 
 * records touched: **5** (2 rpsA + 1 rpsL + 2 rpsE) · SEEDED → REVIEWED · 1 held
+* `just lint`: **all checks passed** — added to this block because it was RED for the
+  whole PR and three review rounds missed it precisely because it was not listed (#366)
 * `just test`: **737 passed** (+10), **run before the push**
 * corpus after: **39,647 records · 40,115 graphs · 350,242 nodes · 372,536 edges ·
   0 errors · 372,536/372,536 edges snippet-cited**
@@ -213,7 +224,8 @@ asserted — and the test says why, so it does not read as an oversight.
   0 uncovered mechanisms, 0 problems**
 * `just audit-fit`: **0** curated records accepted by no config
 * `just audit-drafts`: 0 accepted-but-unpromoted · **64 unconfigured family terms** remain
-* canary: rpsL promoted alone and verified on disk (status flipped, 12 snippets, validates)
+* canary: rpsL promoted alone and verified on disk (status flipped, snippets on every
+  edge, validates)
   before the other two families were run
 * drafts remaining: **198 → 193**
 
@@ -274,11 +286,13 @@ claim.*
 
 ## Provenance after review
 
-* review findings: **12 + 6 + 5** across three rounds · issues filed: **17** (#348–#364) ·
-  fixed in this PR: **16**
+* review findings: **12 + 6 + 5 + 7 = 30** across four rounds · issues filed: **20**
+  (#348–#367) · fixed in this PR: **22**
 * left filed: **#355** (two `poa` node treatments across rounds 56 and 121),
   **#356** (promotion drops the auto-draft's `participates_in` caveat, ~7,200 records),
-  **#364** (194 self-referential `is_a` ancestor notes, a promoter template defect)
+  **#364** (194 self-referential `is_a` ancestor notes, a promoter template defect),
+  **#365** (276 ARO-cited snippets corpus-wide that their term does not contain),
+  **#366** (`just lint` absent from the round-report checklist)
 * `just test`: **737 passed** (+10), run before the push and again after each fix round
 * all three families re-promoted from clean drafts after each config change, never patched
   in place
@@ -322,7 +336,7 @@ the argument for running more than one.
 
 ## Review round 3: the fix that was never checked against its own siblings
 
-Five findings, two filed (#363, #364), three corrections to the report's own numbers.
+Five findings, two filed (#363, #364), and three corrections to this report's numbers.
 
 **#354 was fixed on rpsA and left standing on rpsL.** rpsA's conferral edge had cited a
 co-occurrence; the remedy was to let CARD, which makes the causal claim, carry the edge.
@@ -333,7 +347,7 @@ Round 3 found rpsL's conferral edge citing
 
 — the same defect, the same round, the same file, **and the same remedy already sitting
 unused in the config**: `_CARD_RPSL` says *"…**confer** streptomycin resistance by
-disrupting interactions…"* and was already cited on three other edges.
+disrupting interactions…"* and was already cited on four other edges.
 
 Nothing prompted the check. Fixing a finding on the family it was reported against is the
 natural move, and it is not the same as fixing the defect.
@@ -353,7 +367,7 @@ identity check against a constant passes for any value the constant is edited to
 |---|--:|--:|--:|
 | 1 | 12 | 9 (#348–#356) | 7 |
 | 2 | 6 | 6 (#357–#362) | 6 |
-| 3 | 5 | 2 (#363–#364) | 3 + 2 report corrections |
+| 3 | 5 | 2 (#363–#364) | 2 + 3 report corrections |
 
 **Each round found a different class.** Round 1: claims not supported by their snippets.
 Round 2: fixes that inherited the mistaken frame of what they fixed. Round 3: a fix applied
@@ -362,3 +376,63 @@ to one family and not its siblings, and a fix that collided with an earlier one.
 The rate is not falling because the work is getting worse — it is falling because each
 round can only see the artifact the previous round produced. Three rounds is not obviously
 enough; it is where the returns visibly narrowed, from correctness to bookkeeping.
+
+## Review round 4: the gate nobody ran, and the defect class at corpus scale
+
+**`just lint` was red for the entire PR, through three review rounds.** An unused
+`import json` landed in the first commit. The justfile documents lint as zero-tolerance
+(*"no reason for the count to be anything but zero"*), `main` was clean, and every round ran
+`just test`, `just validate`, `just audit-graphs`, `just audit-roles`, `just audit-fit` and
+`just audit-drafts`.
+
+The reason is worth stating plainly: **the Provenance block of these reports is the
+checklist, and lint is not in it.** Six gates are listed every round; the seventh is not,
+so it is the one that goes unrun. Filed as **#366** — the fix is to the template, not to
+this PR.
+
+**And the defect the last three rounds have been fixing by hand is 276 items wide.**
+Generalising round 1's check — *does an ARO-cited snippet actually appear in that term's
+stanza?* — over the resistance corpus:
+
+```
+17,151 ARO-cited evidence items checked
+   276 FAIL, across 142 records, 21 distinct (term, snippet) pairs
+```
+
+113 are **another ARO term's definition, verbatim** — real CARD text under the wrong term,
+which is #348 exactly. 163 **match no text on disk**: truncated or reworded quotations
+presented as verbatim, and the truncation sometimes changes the claim —
+
+> `ARO:3007427` is cited as *"…expands the substrate profile of endogenous ECF transporters
+> **to include folate.**"* The definition continues: *"…to include folate biosynthesis end
+> products. It confers resistance to the folate synthesis inhibitor sulfamethoxazole by
+> allowing uptake of host folate."*
+
+**No gate sees any of it.** `verify()` checks that a cited CURIE *resolves to a record*;
+`audit-graphs` checks that a snippet is *present*. Neither compares the snippet to its
+source — and `data/raw/aro/aro.obo` is on disk, so the check is ~30 lines and runs in
+seconds. Filed as **#365**.
+
+That is the real result of this round. Rounds 1, 2 and 3 each caught one instance of this
+class by hand, on one family, and each fix taught me something true about that family.
+**None of them told me the class was 276 items wide.** Hand review finds instances; only a
+count finds classes — which is the same lesson `audit-drafts` (#316) taught 20 rounds ago,
+learned again on a different defect.
+
+## Where four rounds of review left this
+
+| round | findings | filed | fixed here |
+|---|--:|--:|--:|
+| 1 | 12 | 9 (#348–#356) | 7 |
+| 2 | 6 | 6 (#357–#362) | 6 |
+| 3 | 5 | 2 (#363–#364) | 2 + 3 report corrections |
+| 4 | 7 | 3 (#365–#367) | 4 + 3 report corrections |
+
+**Each round found a class the previous one could not.** 1: claims unsupported by their
+snippets. 2: fixes that inherited the frame of what they fixed. 3: a fix applied to one
+family and not its siblings. 4: a gate absent from the checklist, and the corpus-scale size
+of the class rounds 1–3 were sampling.
+
+Thirty findings on five records is not a comment on these five records. It is what an
+adversarial pass finds when it is run four times instead of once, and the fourth round
+found the largest thing.

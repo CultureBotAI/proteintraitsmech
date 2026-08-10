@@ -17,7 +17,6 @@ would, and only after the record was written.
 from __future__ import annotations
 
 import importlib
-import json
 import pathlib
 import re
 import sys
@@ -2796,7 +2795,7 @@ def test_rpsa_carries_no_domain_node_because_pf00575s_definition_is_the_wrong_en
     """
     cfg = promote.family_configs("ARO:3004722")[0]
     assert "protein_traits" not in cfg
-    # `repr`, not `json.dumps`: a config carries its `precondition` callable.
+    # `repr`, not a serialiser: a config carries its `precondition` callable.
     assert "PF00575" not in repr(cfg)
 
 

@@ -8629,9 +8629,10 @@ FAMILY_SNIPPETS["ARO:3003395"] = {   # rpsL / ribosomal protein S12 — streptom
     # a snippet placed there must come from that reference. Musser's (PMID:8665467) sentence
     # appears ONLY on det_res, which names its own reference.
     #
-    # #363: they now carry CARD's definition rather than PMID:7934937's association
-    # sentence, because these edges assert CONFERRAL and only CARD states it. `reference`
-    # stays PMID:7934937 for the mechanism edge, whose snippet IS that paper's.
+    # #363: all three carry CARD's definition rather than PMID:7934937's association
+    # sentence, because all three assert CONFERRAL and only CARD states it. That is exactly
+    # WHY `reference` had to become ARO:3003395 -- do not repoint it back to the PMID
+    # without also moving these snippets, or #348 returns.
     "mech_res": _CARD_RPSL,
     "det_res": [
         {"reference": "ARO:3003395", "snippet": _CARD_RPSL,
@@ -8647,12 +8648,20 @@ FAMILY_SNIPPETS["ARO:3003395"] = {   # rpsL / ribosomal protein S12 — streptom
          "notes": "Finken 1993, which is what the substitutions ARE. It reports the two "
                   "routes and does not state conferral, which is why it does not carry this "
                   "edge alone (#363)."},
+        {"reference": "PMID:7934937", "snippet": _RPSL_SOURCE_ASSOC,
+         "notes": "Finken 1993 stating the association in its own voice. Retained after the "
+                  "#363 fix moved the conferral claim to CARD, so the source's own weaker "
+                  "wording stays on the record beside CARD's stronger one (#367)."},
     ],
     "res_drug": _CARD_RPSL,
     "note": ("rpsL -- target alteration IN TRANS: the determinant is a protein, but the "
              "drug's binding partner CARD names is the 16S rRNA. CARD says S12 'stabilizes' "
              "the pseudoknot; PMID:7934937, its source, says only that the region 'has been "
-             "linked to' S12 -- so the edge is `correlated with`, not a causal one."),
+             "linked to' S12 -- so THAT edge is `correlated with`, not a causal one. The "
+             "conferral edges DO follow CARD (#363): CARD is the only source that states "
+             "conferral, and refusing it there would leave the record asserting a mechanism "
+             "with no one claiming the outcome. The record follows the weaker source on the "
+             "one claim where the two disagree, not everywhere."),
     "protein_traits": {
         "primary_key": "domain",
         "domain": ("Pfam:PF00164", "Ribosomal protein S12/S23", "DOMAIN",
