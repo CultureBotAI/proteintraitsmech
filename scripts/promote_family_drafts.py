@@ -8486,6 +8486,7 @@ _POA_TARGET = "Here, we identify a previously unknown target of POA as the ribos
 # two-arms-in-one-sentence shape as round 21's vanH affinity quote.
 _POA_BINDING = "RpsA overexpression conferred increased PZA resistance, and we confirmed that POA bound to RpsA (but not a clinically identified ΔAla mutant) and subsequently inhibited trans-translation rather than canonical translation."
 _CARD_RPSA = "The 30S ribosomal protein S1 of Mycobacterium tuberculosis is required for mRNA translation initiation, playing a particular role in trans-translation. Mutations to rpsA prevent pyrazinoic acid, the active form of pyrazinamide catalyzed by pncA, from targeting RpsA to inhibit translation."
+_CARD_RPSA_KEPT = "RpsA, the 30S ribosomal protein S1 of Mycobacterium tuberculosis, is involved in trans-translation and is targeted by pyrazinonic acid, the active form of the antibiotic pyrazinamide, which disrupts the initiation of mRNA translation. Mutations in the amino acid sequence of rpsA can confer resistance to pyrazinamide maintaining rpsA function."
 _POA_ISOLATES = "Three PZA-resistant clinical isolates without pncA mutation harbored RpsA mutations."
 
 FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinamide
@@ -8520,10 +8521,13 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
          "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0070929"},
         {"node_id": "rpsa_wt", "label": "ribosomal protein S1 (RpsA), drug-sensitive form",
          "node_type": "PROTEIN",
-         "description": "The drug's TARGET, which is not the same thing as this record's "
-                        "determinant: ARO:3004722 denotes the resistant variant, and the "
-                        "source says POA does not bind that (#349). Ungrounded -- the "
-                        "wild-type protein has no ARO term, only the resistant allele does."},
+         "description": "The drug's TARGET. THE SAME PROTEIN AS `determinant`, in its "
+                        "unsubstituted form -- ARO:3004722 denotes the resistant allele, and "
+                        "the source says POA does not bind that (#349). No EDGE states that "
+                        "relation because RO has no allelic-variant predicate: RO:0002312 is "
+                        "'evolutionary variant of', RO:0001000 'derives from', neither means "
+                        "this. Forcing one would be #346's mistake (#357). Ungrounded -- only "
+                        "the resistant allele has an ARO term."},
         {"node_id": "poa_rpsa", "label": "POA-RpsA complex", "node_type": "STATE",
          "description": "The binding event the resistant mutant loses. Ungrounded, as with "
                         "the other drug-target complexes in this corpus (round 21)."},
@@ -8532,6 +8536,7 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
         {"subject": "drug0", "object": "poa",
          "predicate": "causally upstream of (hydrolysed to the active form)",
          "predicate_id": "RO:0002411",
+         "requires": {"drug0": "ARO:3007155"},
          "description": "Pyrazinamide is a prodrug; PZase (pncA) makes the species that acts.",
          "evidence": [{"reference": "PMID:21835980", "snippet": _POA_ACTIVATION,
                        "notes": "The activation step CARD ARO:3004722 names ('catalyzed by pncA'). "
@@ -8563,9 +8568,13 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
                                 "interrupts."}]},
         {"subject": "determinant", "object": "trans_translation",
          "predicate": "enables (ribosome-sparing trans-translation)", "predicate_id": "RO:0002327",
-         "description": "The resistant variant STILL does this -- ARO:3004721's 'maintaining "
-                        "rpsA function' and Shi's 'rather than canonical translation'.",
-         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_TARGET,
+         "description": "The resistant variant STILL does this.",
+         "evidence": [{"reference": "ARO:3004721", "snippet": _CARD_RPSA_KEPT,
+                       "notes": "The claim the description makes, cited where it is actually "
+                                "made: 'maintaining rpsA function'. Round 2 of review found the "
+                                "description asserting this over evidence that did not say it "
+                                "(#359)."},
+                      {"reference": "PMID:21835980", "snippet": _POA_TARGET,
                        "notes": "'a vital protein involved in protein translation and the "
                                 "ribosome-sparing process of trans-translation'."}]},
         {"subject": "poa", "object": "trans_translation",
@@ -8725,18 +8734,30 @@ FAMILY_SNIPPETS["ARO:3007526"] = {   # rpsE / ribosomal protein S5 — spectinom
                    "Small ribosomal subunit protein uS5 is one of the proteins from the small ribosomal subunit, and is a protein of 166 to 254 amino acid residues. In Escherichia coli, uS5 is known to be important in the assembly and function of the 30S ribosomal subunit."),
         "part_pred": "part of (the S5 N-terminal domain of this determinant)",
         "part_note": "KB trait: the S5 N-terminal domain. Its InterPro abstract names uS5.",
-        # Pfam:PF03719 (S5 C-terminal domain) is deliberately absent. It is the
-        # determinant's other PART, and `protein_traits["fold"]` -- the only other slot the
-        # shape offers -- emits "member of (adopts fold)", which would type a domain as a
-        # fold. No node beats a mis-typed one (#352).
+        # Pfam:PF03719 (S5 C-terminal domain) is NOT here. `protein_traits["fold"]` emits
+        # "member of (adopts fold)", which would type a C-terminal DOMAIN as a fold (#352).
+        # It is instead an `extra_nodes` entry with a `part of` edge -- review round 2 was
+        # right that extra_nodes is the second part slot, and that dropping the node
+        # altogether lost a real KB-trait link for a reason that was not true (#358).
     },
     "extra_nodes": [
+        {"node_id": "domain_c", "label": "Ribosomal protein S5, C-terminal domain",
+         "node_type": "DOMAIN", "grounding": "Pfam:PF03719",
+         "description": "KB protein-trait record: the determinant's other half. Typed as the "
+                        "DOMAIN it is, rather than through protein_traits[\"fold\"] (#352, #358)."},
         {"node_id": "subunit30s", "label": "small ribosomal subunit (30S)",
          "node_type": "CELLULAR_LOCALIZATION", "grounding": "GO:0015935"},
         {"node_id": "rrna16s", "label": "16S ribosomal RNA", "node_type": "NUCLEIC_ACID",
          "description": "Ungrounded for the same reason as the rpsL graph (#346)."},
     ],
     "extra_edges": [
+        {"subject": "domain_c", "object": "determinant",
+         "predicate": "part of (the S5 C-terminal domain of this determinant)",
+         "predicate_id": "BFO:0000050",
+         "evidence": [{"reference": "Pfam:PF03719",
+                       "snippet": "This entry represents the C-terminal of the ribosomal protein uS5, which is related to the 30S ribosomal protein S5P from Sulfolobus acidocaldarius (UniProtKB:O05641).",
+                       "notes": "KB trait: the S5 C-terminal domain. Its InterPro abstract names "
+                                "uS5, per #196."}]},
         {"subject": "determinant", "object": "subunit30s",
          "predicate": "part of (located on the 30S subunit)", "predicate_id": "BFO:0000050",
          "evidence": [{"reference": "ARO:3007526", "snippet": _CARD_RPSE,

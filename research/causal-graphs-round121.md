@@ -18,7 +18,7 @@ that decides how much may be asserted.
 |---|--:|---|--:|
 | **rpsA** (ARO:3004722) | 2 | activation, binding, the process inhibited, **and that the function is kept** | 8 extra edges |
 | **rpsL** (ARO:3003395) | 1 | a mechanism its **own source only hedges** | 5 extra edges |
-| **rpsE** (ARO:3007526) | 2 | *"is associated with"*, and **no mechanism at all** | 4 extra edges |
+| **rpsE** (ARO:3007526) | 2 | *"is associated with"*, and **no mechanism at all** | 5 extra edges |
 
 A single shared config was the obvious shortcut and would have written rpsA's binding
 mechanism onto rpsE, which CARD does not support for it. A test pins that the three configs have three
@@ -205,9 +205,9 @@ asserted — and the test says why, so it does not read as an oversight.
 ## Provenance
 
 * records touched: **5** (2 rpsA + 1 rpsL + 2 rpsE) · SEEDED → REVIEWED · 1 held
-* `just test`: **736 passed** (+9), **run before the push**
-* corpus after: **39,647 records · 40,115 graphs · 350,240 nodes · 372,532 edges ·
-  0 errors · 372,532/372,532 edges snippet-cited**
+* `just test`: **737 passed** (+10), **run before the push**
+* corpus after: **39,647 records · 40,115 graphs · 350,242 nodes · 372,536 edges ·
+  0 errors · 372,536/372,536 edges snippet-cited**
 * `just validate` on all 5 individually: **0 failures**
 * `--verify` on all three families: **7 KB CURIEs checked, 0 precondition skips,
   0 uncovered mechanisms, 0 problems**
@@ -274,9 +274,47 @@ claim.*
 
 ## Provenance after review
 
-* review findings: **12** · issues filed: **9** (#348–#356) · fixed in this PR: **7**
+* review findings: **12 + 6** across two rounds · issues filed: **15** (#348–#362) ·
+  fixed in this PR: **13**
 * left filed: **#355** (two `poa` node treatments across rounds 56 and 121),
   **#356** (promotion drops the auto-draft's `participates_in` caveat, ~7,200 records)
-* `just test`: **736 passed** (+9), run before the push and again after the fixes
+* `just test`: **737 passed** (+10), run before the push and again after each fix round
 * all three families re-promoted from clean drafts after each config change, never patched
   in place
+
+## Review round 2: what the fixes got wrong
+
+Six more findings, all filed (#357–#362), five fixed. Two are worth recording.
+
+**The #349 fix relocated the contradiction rather than removing it.** Adding `rpsa_wt`
+stopped the graph asserting that POA both binds and does not bind the determinant. But
+nothing then related the two nodes, so a consumer saw **two unrelated proteins both
+enabling trans-translation**, with `poa_rpsa --has part--> rpsa_wt` sitting beside
+`determinant --negatively regulates--> poa_rpsa`.
+
+The honest fix wanted an allelic-variant predicate, and **RO has none**. Searched:
+`RO:0002312` is *"evolutionary variant of"* — about evolution, not alleles; `RO:0001000`
+*"derives from"*, `RO:0002156` *"derived by descent from"* and the allelopathy terms all
+mean something else. So the relation is stated in both nodes' `description`, with the
+absence of the edge and its reason written there, and a test asserts the description says
+it. **Forcing `RO:0002312` would have been this round's own #346 mistake** — a live,
+correct-looking CURIE that means the wrong thing.
+
+This will recur. **Every ARO determinant node denotes a resistant allele**, while most
+drug-action arms are about the sensitive form. Filed as **#357**; it wants a convention,
+not a per-round decision.
+
+**The #352 fix was right about the defect and wrong about the remedy.** `PF03719` really
+was mis-typed — `protein_traits["fold"]` emits *"member of (adopts fold)"* for what is a
+C-terminal **domain**. But the fix dropped the node entirely, on the stated ground that
+"the shape offers no second part slot" — and `extra_nodes` sits four lines below that
+comment, which is exactly the slot, and which the same config already uses for
+`subunit30s`. A real KB-trait link was deleted for a reason that was not true, and the
+false reason was then baked into a passing test's docstring. PF03719 is back as a
+correctly-typed `DOMAIN` node with a `part of` edge (**#358**).
+
+The pattern across both: **a fix written under time pressure inherits the mistaken frame
+of the thing it fixes.** Round 1 caught tests that encoded the author's belief about a
+config rather than a property of it; round 2 caught fixes that encoded the author's belief
+about what the shape allowed. Two review rounds found different classes of defect, which is
+the argument for running more than one.

@@ -2759,11 +2759,32 @@ def test_rpsa_asserts_no_loss_of_the_proteins_own_function():
     # the inhibition is the drug's, not the mutation's
     assert any(e["subject"] == "poa" and e["object"] == "trans_translation"
                and e["predicate_id"] == "RO:0002212" for e in cfg["extra_edges"])
+    # #359: the edge whose description says "the resistant variant STILL does this" must
+    # cite the text that says it, not only a sentence about RpsA generically.
+    kept = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "trans_translation"]
+    assert len(kept) == 1
+    assert any("maintaining rpsA function" in ev["snippet"] for ev in kept[0]["evidence"])
     # #349: the drug binds the DRUG-SENSITIVE protein, never the determinant -- whose node
     # denotes the resistant variant the snippet says POA does not bind.
     binds = [e for e in cfg["extra_edges"]
              if e["subject"] == "poa" and e["predicate_id"] == "RO:0002436"]
     assert [e["object"] for e in binds] == ["rpsa_wt"]
+
+
+def test_rpsa_wt_says_it_is_the_same_protein_as_the_determinant():
+    """RO has no allelic-variant predicate (#357), so the relation cannot be an edge.
+
+    It must then be in the node description, or a consumer sees two unrelated proteins
+    that both enable trans-translation.
+    """
+    cfg = promote.family_configs("ARO:3004722")[0]
+    wt = [n for n in cfg["extra_nodes"] if n["node_id"] == "rpsa_wt"]
+    assert len(wt) == 1
+    desc = wt[0]["description"].lower()
+    assert "same protein as `determinant`" in desc
+    assert "no edge" in desc          # and says why there is no edge
+    assert "grounding" not in wt[0]   # only the resistant allele has an ARO term
 
 
 def test_rpsa_carries_no_domain_node_because_pf00575s_definition_is_the_wrong_entry():
@@ -2809,10 +2830,15 @@ def test_rpsl_mech_res_is_a_sentence_from_the_paper_it_is_attributed_to():
     cfg = promote.family_configs("ARO:3003395")[0]
     assert cfg["reference"] == "PMID:7934937"
     musser = "about one-half"
-    assert musser not in cfg["mech_res"]
-    assert musser not in cfg["res_drug"]
-    for snip in cfg["mech"].values():
-        assert musser not in snip
+    # #360: a substring check passes for ANY other foreign sentence. Pin the identity:
+    # every snippet the promoter attributes to cfg["reference"] must be the one verified
+    # to come from PMID:7934937.
+    from_7934937 = promote._RPSL_SOURCE_ASSOC
+    assert cfg["mech_res"] == from_7934937
+    assert cfg["res_drug"] == from_7934937
+    assert set(cfg["mech"].values()) == {promote._RPSL_MUTATIONS}
+    assert musser not in from_7934937
+    assert musser not in promote._RPSL_MUTATIONS
     # and it IS still cited, on the edge that names Musser
     det = cfg["det_res"]
     assert any(musser in d["snippet"] and d["reference"] == "PMID:8665467" for d in det)
@@ -2842,7 +2868,8 @@ def test_rpse_never_joins_the_substitution_to_the_drug():
     assert len(to_drug) == 1
     assert to_drug[0]["predicate_id"] == "ARO:2000001"
     # no mechanism edge anywhere ties the determinant to a binding site
-    assert not any("binding" in e["object"] or "site" in e["object"] for e in graph["edges"])
+    endpoints = [x for e in graph["edges"] for x in (e["subject"], e["object"])]
+    assert not any("binding" in n or "site" in n for n in endpoints)
     # and the record carries the honest association edge
     assert any(e["subject"] == "determinant" and e["object"] == "resistance"
                and e["predicate_id"] == "RO:0002610" for e in graph["edges"])
@@ -2901,8 +2928,15 @@ def test_rpse_does_not_type_its_second_domain_as_a_fold():
     cfg = promote.family_configs("ARO:3007526")[0]
     pt = cfg["protein_traits"]
     assert "fold" not in pt
-    assert "PF03719" not in repr(cfg)
     assert pt[pt["primary_key"]][0] == "Pfam:PF00333"
+    # #358: it is not dropped -- it is an extra_node typed as the DOMAIN it is, with a
+    # `part of` edge. Dropping it lost a real KB-trait link for a reason that was untrue.
+    node = [n for n in cfg["extra_nodes"] if n.get("grounding") == "Pfam:PF03719"]
+    assert len(node) == 1 and node[0]["node_type"] == "DOMAIN"
+    edge = [e for e in cfg["extra_edges"] if e["subject"] == node[0]["node_id"]]
+    assert len(edge) == 1
+    assert edge[0]["predicate_id"] == "BFO:0000050" and edge[0]["object"] == "determinant"
+    assert "adopts fold" not in repr(cfg)
 
 
 def test_rv3008_is_not_curated_because_card_hedges_both_halves():

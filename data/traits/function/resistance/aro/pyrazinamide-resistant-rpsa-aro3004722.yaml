@@ -62,9 +62,11 @@ causal_graphs:
   - node_id: rpsa_wt
     label: ribosomal protein S1 (RpsA), drug-sensitive form
     node_type: PROTEIN
-    description: 'The drug''s TARGET, which is not the same thing as this record''s determinant: ARO:3004722
-      denotes the resistant variant, and the source says POA does not bind that (#349). Ungrounded --
-      the wild-type protein has no ARO term, only the resistant allele does.'
+    description: 'The drug''s TARGET. THE SAME PROTEIN AS `determinant`, in its unsubstituted form --
+      ARO:3004722 denotes the resistant allele, and the source says POA does not bind that (#349). No
+      EDGE states that relation because RO has no allelic-variant predicate: RO:0002312 is ''evolutionary
+      variant of'', RO:0001000 ''derives from'', neither means this. Forcing one would be #346''s mistake
+      (#357). Ungrounded -- only the resistant allele has an ARO term.'
   - node_id: poa_rpsa
     label: POA-RpsA complex
     node_type: STATE
@@ -177,9 +179,15 @@ causal_graphs:
     predicate: enables (ribosome-sparing trans-translation)
     predicate_id: RO:0002327
     object: trans_translation
-    description: The resistant variant STILL does this -- ARO:3004721's 'maintaining rpsA function' and
-      Shi's 'rather than canonical translation'.
+    description: The resistant variant STILL does this.
     evidence:
+    - reference: ARO:3004721
+      snippet: RpsA, the 30S ribosomal protein S1 of Mycobacterium tuberculosis, is involved in trans-translation
+        and is targeted by pyrazinonic acid, the active form of the antibiotic pyrazinamide, which disrupts
+        the initiation of mRNA translation. Mutations in the amino acid sequence of rpsA can confer resistance
+        to pyrazinamide maintaining rpsA function.
+      notes: 'The claim the description makes, cited where it is actually made: ''maintaining rpsA function''.
+        Round 2 of review found the description asserting this over evidence that did not say it (#359).'
     - reference: PMID:21835980
       snippet: Here, we identify a previously unknown target of POA as the ribosomal protein S1 (RpsA),
         a vital protein involved in protein translation and the ribosome-sparing process of trans-translation.
