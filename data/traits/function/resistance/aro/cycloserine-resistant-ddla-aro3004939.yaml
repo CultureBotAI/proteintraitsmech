@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004938
 trait_relations:
@@ -17,11 +17,13 @@ trait_relations:
     object: ARO:3007154
     relation_source: "ARO confers_resistance_to_drug_class via ARO:3004939 cycloserine resistant ddlA"
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] cycloserine resistant ddlA → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: cycloserine resistant ddlA → mechanism → resistance (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3004939). Substrate-analog inhibition, with the structural basis given -- the only record here
+    that says WHY a drug competes. Round 82''s folP said the inhibition was competitive; this says the
+    drug resembles the substrate. NOT asserted: the mutation''s effect, which CARD does not describe.'
   nodes:
   - node_id: determinant
     label: cycloserine resistant ddlA
@@ -35,6 +37,18 @@ causal_graphs:
     label: cycloserine-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007154
+  - node_id: ligation
+    label: D-Ala-D-Ala ligase activity (ATP-driven)
+    node_type: MOLECULAR_FUNCTION
+    description: 'Ungrounded: not looked up rather than guessed (rounds 56-114).'
+  - node_id: dala
+    label: D-alanine, the substrate cycloserine resembles
+    node_type: CHEMICAL
+    description: 'Ungrounded: rounds 20-23 recorded the same CHEBI gap for the wall precursors.'
+  - node_id: wall_growth
+    label: cell wall growth
+    node_type: BIOLOGICAL_PROCESS
+    description: What the drug inhibits. Ungrounded.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -49,47 +63,88 @@ causal_graphs:
     object: mech0
     evidence:
     - reference: ARO:3004939
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004939
       snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
         dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
         inhibits the growth of the cell wall.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3004939
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
+        dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
+        inhibits the growth of the cell wall.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3004939
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3004939
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:3007154 ! cycloserine-like antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
+        dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
+        inhibits the growth of the cell wall.
+      notes: 'The reaction with its cosubstrate (''ATP-driven ligation of TWO D-alanine molecules''),
+        and the drug''s structural basis: ''Cycloserine has a SIMILAR STRUCTURE to d-alanine''. NOT stated:
+        what mutations in ddlA do -- CARD describes the enzyme and the mimicry and stops.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to cycloserine-like antibiotic.
     evidence:
     - reference: ARO:3004939
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007154 ! cycloserine-like antibiotic'
-      notes: Asserted directly on ARO:3004939 (cycloserine resistant ddlA) in the CARD/ARO release in
-        data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to cycloserine-like antibiotic.
+      notes: Asserted on ARO:3004939 (cycloserine resistant ddlA), an is_a ancestor of this record's ARO:3004939;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: determinant
+    predicate: enables (D-Ala-D-Ala ligation)
+    predicate_id: RO:0002327
+    object: ligation
+    evidence:
+    - reference: ARO:3004939
+      snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
+        dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
+        inhibits the growth of the cell wall.
+      notes: '''ddlA catalyzes the ATP-driven ligation of two D-alanine molecules''.'
+  - subject: ligation
+    predicate: has input (D-alanine)
+    predicate_id: RO:0002233
+    object: dala
+    evidence:
+    - reference: ARO:3004939
+      snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
+        dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
+        inhibits the growth of the cell wall.
+      notes: Two molecules of it, per the same clause.
+  - subject: drug0
+    predicate: similar to (cycloserine resembles D-alanine)
+    predicate_id: RO:0002158
+    object: dala
+    description: The structural basis of the inhibition, and the reason this is substrate-analog rather
+      than allosteric. RO:0002158 'shares ancestor with' is the closest verified predicate -- checked
+      in round 89, where RO:0002159 turned out to be the developmental sense.
+    evidence:
+    - reference: ARO:3004939
+      snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
+        dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
+        inhibits the growth of the cell wall.
+      notes: '''Cycloserine has a similar structure to d-alanine''.'
+  - subject: drug0
+    predicate: negatively regulates (inhibits cell wall growth)
+    predicate_id: RO:0002212
+    object: wall_growth
+    evidence:
+    - reference: ARO:3004939
+      snippet: ddlA catalyzes the ATP-driven ligation of two D-alanine molecules to form the D-alanyl-D-alanine
+        dipeptide, key in forming the cell wall. Cycloserine has a similar structure to d-alanine and
+        inhibits the growth of the cell wall.
+      notes: '''and inhibits the growth of the cell wall''.'
+curation_history:
+- timestamp: '2026-08-10T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

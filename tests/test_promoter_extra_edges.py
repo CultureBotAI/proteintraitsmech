@@ -2615,3 +2615,27 @@ def test_ampr_ends_at_overexpression_not_hydrolysis():
     blob = " ".join(n["label"] for n in cfg["extra_nodes"]).lower()
     for chem in ("hydrol", "acyl", "serine", "amide bond"):
         assert chem not in blob, f"ampR config restates beta-lactamase chemistry: {chem}"
+
+
+def test_ddla_gives_the_structural_basis_folp_only_named():
+    """Round 82's folP said the inhibition was competitive; ddlA says WHY.
+
+    "Cycloserine has a similar structure to d-alanine" is the only structural basis for
+    competition stated anywhere in this corpus.
+    """
+    cfg = promote.family_configs("ARO:3004939")[0]
+    edge = next(e for e in cfg["extra_edges"]
+                if e["subject"] == "drug0" and e["object"] == "dala")
+    assert edge["predicate_id"] == "RO:0002158"
+    assert "similar structure" in edge["evidence"][0]["notes"]
+
+
+def test_fks2_omits_the_echinocandin_edge_like_rpob_omits_rifampicin():
+    """Both are the record the textbook mechanism belongs to, and neither source says it."""
+    for fam in ("ARO:3007548", "ARO:3003276"):
+        cfg = promote.family_configs(fam)[0]
+        asserted = " ".join(
+            [e["predicate"] for e in cfg["extra_edges"]]
+            + [n["label"] for n in cfg["extra_nodes"]]).lower()
+        for banned in ("inhibit", "binds the drug"):
+            assert banned not in asserted, f"{fam} asserts {banned!r} uncited"
