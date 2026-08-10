@@ -436,3 +436,42 @@ of the class rounds 1–3 were sampling.
 Thirty findings on five records is not a comment on these five records. It is what an
 adversarial pass finds when it is run four times instead of once, and the fourth round
 found the largest thing.
+
+## Review round 5: mergeable, and one thing that would have embarrassed on merge
+
+Verdict: **mergeable.** All seven gates green, all 81 evidence items across the five records
+verbatim from the references they name, re-promotion byte-identical, nothing dangling or
+duplicated.
+
+Six non-blocking findings, two filed (#368, #369), four fixed. The one that mattered:
+
+**The PR title still asserted the claim round 4 corrected.** *"Curate rpsA, rpsL and rpsE at
+their sources' strength, not CARD's"* — which the branch's own report, two commits earlier,
+says was an overstatement. On a squash merge that sentence becomes `main`'s permanent
+history. Retitled to *"…each at the strength its own sources support"*. The same stale
+framing survived in the config's rpsL section header and is now corrected there too.
+
+And the pattern round 5 named, which is the honest close of this round: **every review
+round corrected a number and introduced another.** Round 4's own correcting paragraph said
+"six of ten edges cite CARD" when the count is eight. A number in prose has no gate, so it
+degrades exactly the way an uncited snippet does — **#365's argument, applied to the report
+instead of the records.**
+
+## What five rounds cost and returned
+
+| round | findings | filed | fixed here |
+|---|--:|--:|--:|
+| 1 | 12 | 9 (#348–#356) | 7 |
+| 2 | 6 | 6 (#357–#362) | 6 |
+| 3 | 5 | 2 (#363–#364) | 2 + 3 report corrections |
+| 4 | 7 | 3 (#365–#367) | 4 + 3 report corrections |
+| 5 | 6 | 2 (#368–#369) | 4 |
+
+**36 findings on 5 records.** Rounds 1–3 found defects in the curation; round 4 found a gate
+that was never run and a defect class 276 items wide; round 5 found a merge-commit subject
+line that would have put a withdrawn claim into `main` forever.
+
+The returns did not diminish smoothly — **round 4 found the largest thing**, because it was
+the first round with enough of the artifact settled to ask corpus-scale questions instead of
+edge-level ones. That is the case for running the review more than twice, and it is the
+opposite of what "diminishing returns" would have predicted.

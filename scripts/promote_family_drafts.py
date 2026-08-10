@@ -8606,8 +8606,15 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
 
 # rpsL. CARD asserts a mechanism ('S12 stabilizes the pseudoknot'; resistance 'by disrupting
 # interactions between 16S rRNA and streptomycin') that PMID:7934937 -- the paper the
-# definition is built from -- states only as a LINKAGE and an ASSOCIATION. Curated at the
-# source's strength; the gap is stated on the edges rather than resolved in CARD's favour.
+# definition is built from -- states only as a LINKAGE and an ASSOCIATION.
+#
+# The stance is PER-CLAIM, not per-record (#347 review rounds 4 and 5, which found this
+# comment still asserting the record-level version). The conferral edges DO follow CARD,
+# because CARD is the only source that states conferral and refusing it there would leave
+# the record asserting a mechanism with nobody claiming the outcome. Exactly ONE edge --
+# determinant -> pseudoknot -- is curated below CARD's strength, and it is the one claim the
+# two sources actually disagree about. The gap is stated on that edge rather than resolved
+# in CARD's favour.
 _RPSL_MUTATIONS = "The mutations found either lead to amino acid changes in ribosomal protein S12 or alter the primary structure of the 16S rRNA."
 _RPSL_PSEUDOKNOT = "The 16S rRNA region mutated perturbs a pseudoknot structure in a region which has been linked to ribosomal S12 protein."
 _RPSL_SOURCE_ASSOC = "We demonstrate that streptomycin resistance is associated with mutations implicated in ribosomal resistance."
