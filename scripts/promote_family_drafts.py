@@ -8485,6 +8485,7 @@ _POA_TARGET = "Here, we identify a previously unknown target of POA as the ribos
 # The one sentence carrying BOTH the binding and its loss in the mutant — the same
 # two-arms-in-one-sentence shape as round 21's vanH affinity quote.
 _POA_BINDING = "RpsA overexpression conferred increased PZA resistance, and we confirmed that POA bound to RpsA (but not a clinically identified ΔAla mutant) and subsequently inhibited trans-translation rather than canonical translation."
+_CARD_RPSA = "The 30S ribosomal protein S1 of Mycobacterium tuberculosis is required for mRNA translation initiation, playing a particular role in trans-translation. Mutations to rpsA prevent pyrazinoic acid, the active form of pyrazinamide catalyzed by pncA, from targeting RpsA to inhibit translation."
 _POA_ISOLATES = "Three PZA-resistant clinical isolates without pncA mutation harbored RpsA mutations."
 
 FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinamide
@@ -8494,9 +8495,14 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
     "mech": {"ARO:3000212": _POA_BINDING},
     "mech_res": _POA_BINDING,
     "det_res": [
+        {"reference": "ARO:3004722", "snippet": _CARD_RPSA,
+         "notes": "CARD makes the causal claim ('Mutations to rpsA PREVENT pyrazinoic acid ... "
+                  "from targeting RpsA'), so CARD carries the edge that asserts it (#354)."},
         {"reference": "PMID:21835980", "snippet": _POA_ISOLATES,
-         "notes": "Clinical isolates resistant WITHOUT a pncA mutation -- which is what makes "
-                  "RpsA itself, rather than loss of drug activation, the determinant here."},
+         "notes": "Corroboration, and explicitly a CO-OCCURRENCE, not a conferral: three "
+                  "isolates resistant WITHOUT a pncA mutation that carried RpsA mutations. "
+                  "Shi's conferral result is about OVEREXPRESSION, not about these mutations, "
+                  "so it is not cited here."},
     ],
     "res_drug": _POA_TARGET,
     "note": ("rpsA -- target alteration with the target's own function EXPLICITLY PRESERVED. "
@@ -8512,6 +8518,12 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
                         "compound (#346)."},
         {"node_id": "trans_translation", "label": "trans-translation",
          "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0070929"},
+        {"node_id": "rpsa_wt", "label": "ribosomal protein S1 (RpsA), drug-sensitive form",
+         "node_type": "PROTEIN",
+         "description": "The drug's TARGET, which is not the same thing as this record's "
+                        "determinant: ARO:3004722 denotes the resistant variant, and the "
+                        "source says POA does not bind that (#349). Ungrounded -- the "
+                        "wild-type protein has no ARO term, only the resistant allele does."},
         {"node_id": "poa_rpsa", "label": "POA-RpsA complex", "node_type": "STATE",
          "description": "The binding event the resistant mutant loses. Ungrounded, as with "
                         "the other drug-target complexes in this corpus (round 21)."},
@@ -8523,16 +8535,36 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
          "description": "Pyrazinamide is a prodrug; PZase (pncA) makes the species that acts.",
          "evidence": [{"reference": "PMID:21835980", "snippet": _POA_ACTIVATION,
                        "notes": "The activation step CARD ARO:3004722 names ('catalyzed by pncA'). "
-                                "NOT asserted here: loss of pncA, which is a different determinant "
-                                "and this abstract's own contrast case."}]},
-        {"subject": "poa", "object": "determinant",
-         "predicate": "molecularly interacts with (binds RpsA)", "predicate_id": "RO:0002436",
-         "description": "The drug's normal action: POA binds the ribosomal protein.",
+                                "NOTE the drug0 node is the drug CLASS (ARO:3007155, pyrazine "
+                                "antibiotic) and this claim holds for pyrazinamide specifically, "
+                                "not for every pyrazine (#353). NOT asserted: loss of pncA, a "
+                                "different determinant and this abstract's own contrast case."}]},
+        {"subject": "poa", "object": "rpsa_wt",
+         "predicate": "molecularly interacts with (binds drug-sensitive RpsA)",
+         "predicate_id": "RO:0002436",
+         "description": "The drug's normal action. Its object is the drug-SENSITIVE protein, "
+                        "not this record's determinant -- pointing it at the determinant made "
+                        "the graph assert both that POA binds it and that it abolishes POA "
+                        "binding (#349).",
          "evidence": [{"reference": "PMID:21835980", "snippet": _POA_BINDING,
-                       "notes": "'POA bound to RpsA'. This is the DRUG-ACTION arm; resistance is "
-                                "its loss."}]},
+                       "notes": "'POA bound to RpsA' -- and the parenthesis says which RpsA: "
+                                "'but not a clinically identified ΔAla mutant'. DRUG-ACTION arm; "
+                                "resistance is its loss."}]},
+        {"subject": "poa_rpsa", "object": "rpsa_wt",
+         "predicate": "has part (the protein half of the complex)", "predicate_id": "BFO:0000051",
+         "description": "Round 21's rule: a complex is DEFINED by its constituents rather than "
+                        "interacting with them.",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_BINDING,
+                       "notes": "'POA bound to RpsA' -- the two constituents of the complex."}]},
+        {"subject": "rpsa_wt", "object": "trans_translation",
+         "predicate": "enables (ribosome-sparing trans-translation)", "predicate_id": "RO:0002327",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_TARGET,
+                       "notes": "What the drug-sensitive protein does, which is what the drug "
+                                "interrupts."}]},
         {"subject": "determinant", "object": "trans_translation",
          "predicate": "enables (ribosome-sparing trans-translation)", "predicate_id": "RO:0002327",
+         "description": "The resistant variant STILL does this -- ARO:3004721's 'maintaining "
+                        "rpsA function' and Shi's 'rather than canonical translation'.",
          "evidence": [{"reference": "PMID:21835980", "snippet": _POA_TARGET,
                        "notes": "'a vital protein involved in protein translation and the "
                                 "ribosome-sparing process of trans-translation'."}]},
@@ -8569,6 +8601,7 @@ FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinam
 # source's strength; the gap is stated on the edges rather than resolved in CARD's favour.
 _RPSL_MUTATIONS = "The mutations found either lead to amino acid changes in ribosomal protein S12 or alter the primary structure of the 16S rRNA."
 _RPSL_PSEUDOKNOT = "The 16S rRNA region mutated perturbs a pseudoknot structure in a region which has been linked to ribosomal S12 protein."
+_RPSL_SOURCE_ASSOC = "We demonstrate that streptomycin resistance is associated with mutations implicated in ribosomal resistance."
 _RPSL_ASSOC = "Streptomycin resistance in about one-half of M. tuberculosis isolates is associated with missense mutations in the rpsL gene coding for ribosomal protein S12 or nucleotide substitutions in the 16S rRNA gene (rrs)."
 _30S_ANTIBIOTICS = "We also describe the crystal structure of the 30S subunit complexed with the antibiotics paromomycin, streptomycin and spectinomycin, which interfere with decoding and translocation."
 _CARD_RPSL = "Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer streptomycin resistance by disrupting interactions between 16S rRNA and streptomycin."
@@ -8578,13 +8611,16 @@ FAMILY_SNIPPETS["ARO:3003395"] = {   # rpsL / ribosomal protein S12 — streptom
     "precondition": _requires_mech("ARO:3000212", "mutation"),
     "reference": "PMID:7934937",
     "mech": {"ARO:3000212": _RPSL_MUTATIONS},
-    "mech_res": _RPSL_ASSOC,
+    # #348: mech_res and res_drug are attributed to cfg["reference"] by the promoter, so
+    # they must be sentences from PMID:7934937. _RPSL_ASSOC is Musser's (PMID:8665467) and
+    # appears ONLY on det_res, which names its own reference.
+    "mech_res": _RPSL_SOURCE_ASSOC,
     "det_res": [
         {"reference": "PMID:8665467", "snippet": _RPSL_ASSOC,
          "notes": "Musser 1995. The MAGNITUDE is part of the claim -- 'about one-half' of "
                   "isolates, and the other half is the rrs route, not this record."},
     ],
-    "res_drug": _RPSL_ASSOC,
+    "res_drug": _RPSL_SOURCE_ASSOC,
     "note": ("rpsL -- target alteration IN TRANS: the determinant is a protein, but the "
              "drug's binding partner CARD names is the 16S rRNA. CARD says S12 'stabilizes' "
              "the pseudoknot; PMID:7934937, its source, says only that the region 'has been "
@@ -8631,7 +8667,9 @@ FAMILY_SNIPPETS["ARO:3003395"] = {   # rpsL / ribosomal protein S12 — streptom
          "predicate_id": "RO:0002436",
          "requires": {"drug0": "ARO:0000016"},
          "description": "The drug-action arm. Streptomycin acts on the 30S subunit; CARD names "
-                        "the 16S rRNA as its interaction partner on this record.",
+                        "the 16S rRNA as its interaction partner on this record. The drug0 node "
+                        "is the CLASS (ARO:0000016), which is as specific as the guard can be "
+                        "(#353).",
          "evidence": [{"reference": "PMID:11014183", "snippet": _30S_ANTIBIOTICS,
                        "notes": "Carter 2000. Establishes streptomycin binds the 30S subunit and "
                                 "interferes with decoding and translocation. It does NOT state "
@@ -8661,7 +8699,7 @@ FAMILY_SNIPPETS["ARO:3003395"] = {   # rpsL / ribosomal protein S12 — streptom
 
 # rpsE. CARD gives structure and an ASSOCIATION, and no mechanism whatever.
 _CARD_RPSE = "Amino acid substitutions in ribosomal protein S5, the product of the rpsE gene, is associated with resistance to spectinomycin (SpcR). This protein is located on the 30S subunit and interacts with 16S rRNA and other proteins."
-_RPSE_LOOP2 = "Modelling showed that these mutations perturb the conserved network of stabilizing contacts between RpsE residues Lys25 (Lys23 in Escherichia coli numbering) and Lys28 (Lys26), as well as helix 34 nucleotides G922, A923, and C1069 of 16S rRNA, potentially altering the architecture of the spectinomycin-binding site."
+_RPSE_LOOP2 = "Modelling showed that these mutations perturb the conserved network of stabilizing contacts between RpsE residues Lys25 (Lys23 in E. coli numbering) and Lys28 (Lys26), as well as helix 34 nucleotides G922, A923, and C1069 of 16S rRNA, potentially altering the architecture of the spectinomycin-binding site."
 
 FAMILY_SNIPPETS["ARO:3007526"] = {   # rpsE / ribosomal protein S5 — spectinomycin
     "curated": "2026-08-10T00:00:00Z",
@@ -8678,17 +8716,19 @@ FAMILY_SNIPPETS["ARO:3007526"] = {   # rpsE / ribosomal protein S5 — spectinom
     "res_drug": _CARD_RPSE,
     "note": ("rpsE -- an ASSOCIATION, not a mechanism. CARD supplies two structural facts "
              "(S5 is on the 30S subunit; it interacts with 16S rRNA) and links substitutions "
-             "to resistance without joining them. NO edge connects the substitution to the "
-             "drug; see the test that pins that omission."),
+             "to resistance without joining them. No MECHANISM edge connects the substitution "
+             "to the drug -- the promoter's fixed `confers resistance to (drug class)` edge is "
+             "still emitted and still carries CARD's own assertion (#345, #350)."),
     "protein_traits": {
         "primary_key": "domain",
         "domain": ("Pfam:PF00333", "Ribosomal protein S5, N-terminal domain", "DOMAIN",
                    "Small ribosomal subunit protein uS5 is one of the proteins from the small ribosomal subunit, and is a protein of 166 to 254 amino acid residues. In Escherichia coli, uS5 is known to be important in the assembly and function of the 30S ribosomal subunit."),
-        "fold": ("Pfam:PF03719", "Ribosomal protein S5, C-terminal domain", "DOMAIN",
-                 "This entry represents the C-terminal of the ribosomal protein uS5, which is related to the 30S ribosomal protein S5P from Sulfolobus acidocaldarius (UniProtKB:O05641)."),
         "part_pred": "part of (the S5 N-terminal domain of this determinant)",
         "part_note": "KB trait: the S5 N-terminal domain. Its InterPro abstract names uS5.",
-        "fold_note": "KB trait: the S5 C-terminal domain, the determinant's other half.",
+        # Pfam:PF03719 (S5 C-terminal domain) is deliberately absent. It is the
+        # determinant's other PART, and `protein_traits["fold"]` -- the only other slot the
+        # shape offers -- emits "member of (adopts fold)", which would type a domain as a
+        # fold. No node beats a mis-typed one (#352).
     },
     "extra_nodes": [
         {"node_id": "subunit30s", "label": "small ribosomal subunit (30S)",
@@ -8721,8 +8761,12 @@ FAMILY_SNIPPETS["ARO:3007526"] = {   # rpsE / ribosomal protein S5 — spectinom
          "description": "The drug-action arm, from the 30S crystal structures.",
          "evidence": [{"reference": "PMID:11014183", "snippet": _30S_ANTIBIOTICS,
                        "notes": "Carter 2000 solved the 30S subunit with spectinomycin bound. "
-                                "NOT asserted: that S5 is part of that binding site, which this "
-                                "abstract does not say and CARD does not claim."}]},
+                                "NOTE the drug0 node is the drug CLASS (ARO:0000016, "
+                                "aminoglycoside antibiotic); spectinomycin is an aminocyclitol "
+                                "that CARD files under it, and the `requires` guard can only "
+                                "check the class (#353). NOT asserted: that S5 is part of that "
+                                "binding site, which this abstract does not say and CARD does "
+                                "not claim."}]},
         {"subject": "determinant", "object": "resistance",
          "predicate": "correlated with (substitutions are associated with resistance)",
          "predicate_id": "RO:0002610",

@@ -16,13 +16,14 @@ that decides how much may be asserted.
 
 | family | records | what CARD gives | graph |
 |---|--:|---|--:|
-| **rpsA** (ARO:3004722) | 2 | activation, binding, the process inhibited, **and that the function is kept** | 6 extra edges |
+| **rpsA** (ARO:3004722) | 2 | activation, binding, the process inhibited, **and that the function is kept** | 8 extra edges |
 | **rpsL** (ARO:3003395) | 1 | a mechanism its **own source only hedges** | 5 extra edges |
 | **rpsE** (ARO:3007526) | 2 | *"is associated with"*, and **no mechanism at all** | 4 extra edges |
 
 A single shared config was the obvious shortcut and would have written rpsA's binding
-mechanism onto rpsE, which CARD does not support for it. A test pins that the three
-configs have three different references and are not the same size.
+mechanism onto rpsE, which CARD does not support for it. A test pins that the three configs have three
+different references AND three different edge shapes, and that rpsA's `poa`,
+`rpsa_wt` and `trans_translation` nodes appear nowhere in rpsE's config.
 
 ## rpsA — the first record whose definition rules a mechanism *out*
 
@@ -113,8 +114,14 @@ sampled 58  matching=57  MISMATCHED=1  api_errors=0
     PF22273  claims IPR055682  actually IPR054231
 ```
 
-One in the sample plus PF00575 ⇒ order **275–550 records** likely carry an unrelated
-entry's abstract. Filed as **#344**. This matters beyond cosmetics because these
+**One mismatch in 58 is one observation, and the review was right that it will not carry
+an extrapolation.** PF00575 cannot join the numerator — it was found by targeted
+inspection, not drawn in the sample — and a single hit at n=58 gives a 95% interval of
+roughly **0.04%–9%**, i.e. anywhere from ~7 to ~1,500 of 16,201 records. The honest
+statement is: **at least two records are confirmed wrong, and the rate is unknown.**
+Filed as **#344**, which needs the full 16,201-call check, not a better estimate.
+
+It matters beyond cosmetics because these
 definitions are *cited as evidence snippets*: the label looks right, the CURIE is right,
 and only the prose is another domain's — which defeats the #196 check that a domain's
 abstract must mention the protein.
@@ -159,8 +166,16 @@ CARD gives two structural facts and refuses to join them to anything:
 
 So the graph asserts the structure (`part of` the 30S subunit, `molecularly interacts with`
 16S rRNA), the drug's action on the 30S from Carter 2000, and
-`determinant --correlated with--> resistance`. **No edge joins the substitution to the
-drug.** A test pins that.
+`determinant --correlated with--> resistance`. **No mechanism edge joins the substitution
+to the drug** — the promoter's fixed `confers resistance to (drug class)` edge is still
+emitted, carrying CARD's own assertion.
+
+That distinction is the review's, not mine. The first version of this round said flatly
+"no edge connects the substitution to the drug", and the test that pinned it read the
+config's `extra_edges` — a subset that by construction can never hold the fixed edge. **The
+test passed vacuously while the sentence it defended was false of the artifact.** It now
+loads the emitted YAML and asserts what is actually there: exactly one edge to a drug node,
+and it is `ARO:2000001`.
 
 **The promoter cannot express this, and that is a defect.** `promoted_graph_dict` always
 emits `determinant --causally upstream of (confers resistance)--> resistance`. The record
@@ -190,7 +205,7 @@ asserted — and the test says why, so it does not read as an oversight.
 ## Provenance
 
 * records touched: **5** (2 rpsA + 1 rpsL + 2 rpsE) · SEEDED → REVIEWED · 1 held
-* `just test`: **734 passed** (+7), **run before the push**
+* `just test`: **736 passed** (+9), **run before the push**
 * corpus after: **39,647 records · 40,115 graphs · 350,240 nodes · 372,532 edges ·
   0 errors · 372,532/372,532 edges snippet-cited**
 * `just validate` on all 5 individually: **0 failures**
@@ -216,3 +231,52 @@ asserted — and the test says why, so it does not read as an oversight.
   **label match**, always.
 * **64 unconfigured family terms remain** in the ARO set, plus the decision-bound blocks
   (#309's 28, #229's 22, #215's 10).
+
+## What the adversarial review found, and what it cost
+
+Twelve findings, nine filed (#348–#356). Seven were fixed in the same PR. Three are worth
+recording here because they are defect *classes*, not slips:
+
+**1. A snippet under the wrong reference (#348).** `mech_res` and `res_drug` are attributed
+by the promoter to `cfg["reference"]`. rpsL's `reference` is PMID:7934937, but the sentence
+placed there was Musser's (PMID:8665467) — so one sentence was attributed to two papers in
+one record, and one of those attributions was false. The config *also* cited it correctly on
+`det_res`, which is what made it invisible: the right citation was present, just not on
+every edge carrying the text. There is now a test asserting Musser's sentence appears only
+where Musser is named — and **that test immediately failed**, because one of the three
+fixes had silently not applied.
+
+**2. A graph that asserted the negation of its own snippet (#349).** The rpsA config had
+`poa --molecularly interacts with--> determinant`, evidenced by *"POA bound to RpsA (but not
+a clinically identified ΔAla mutant)"*. But `determinant` is grounded to ARO:3004722,
+**"pyrazinamide-resistant rpsA"** — the very variant the parenthesis excludes. Ten lines
+later the same graph said that determinant abolishes POA binding. Both edges cited the same
+sentence; one of them read it backwards.
+
+The fix is a `rpsa_wt` node for the drug-sensitive protein, so the drug-action arm and the
+resistance arm attach to different things. **This is a shape problem, not a typo**: the
+determinant node in every ARO resistance record denotes the *resistant* allele, so any
+drug-action edge pointed at it is suspect. The other configs escaped it by hanging the drug
+off a sub-part; this one was the first to point it at the determinant directly.
+
+**3. Three tests weaker than they read (#350).** Beyond the vacuous rpsE test: a
+`for banned in (...)` loop that could never fail, because the line above it had already
+asserted the id equals a value in none of them; and `counts[0] < counts[-1]` over sorted
+sizes, which only rules out all three configs being identical — two could be byte-identical
+and it passes. Both now assert content.
+
+The pattern across all three: **the check was written from the same understanding as the
+thing checked.** A test written straight after a config tends to encode the author's belief
+about the config rather than an independent property of it. That is the argument for the
+review being a separate adversarial pass rather than a re-read, and it is why the round-39
+rule — gate before the push, separately — has a sibling: *have someone else try to break the
+claim.*
+
+## Provenance after review
+
+* review findings: **12** · issues filed: **9** (#348–#356) · fixed in this PR: **7**
+* left filed: **#355** (two `poa` node treatments across rounds 56 and 121),
+  **#356** (promotion drops the auto-draft's `participates_in` caveat, ~7,200 records)
+* `just test`: **736 passed** (+9), run before the push and again after the fixes
+* all three families re-promoted from clean drafts after each config change, never patched
+  in place

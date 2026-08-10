@@ -22,11 +22,12 @@ synonyms:
 causal_graphs:
 - graph_id: resistance
   title: spectinomycin resistant rpsE → mechanism → resistance (curated from ARO relations + literature)
-  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
-    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
     (ARO:3007526). rpsE -- an ASSOCIATION, not a mechanism. CARD supplies two structural facts (S5 is
     on the 30S subunit; it interacts with 16S rRNA) and links substitutions to resistance without joining
-    them. NO edge connects the substitution to the drug; see the test that pins that omission.
+    them. No MECHANISM edge connects the substitution to the drug -- the promoter''s fixed `confers resistance
+    to (drug class)` edge is still emitted and still carries CARD''s own assertion (#345, #350).'
   nodes:
   - node_id: determinant
     label: spectinomycin resistant rpsE
@@ -44,11 +45,6 @@ causal_graphs:
     label: Ribosomal protein S5, N-terminal domain
     node_type: DOMAIN
     grounding: Pfam:PF00333
-    description: KB protein-trait record carrying the mechanism.
-  - node_id: fold
-    label: Ribosomal protein S5, C-terminal domain
-    node_type: DOMAIN
-    grounding: Pfam:PF03719
     description: KB protein-trait record carrying the mechanism.
   - node_id: subunit30s
     label: small ribosomal subunit (30S)
@@ -119,15 +115,6 @@ causal_graphs:
         in the assembly and function of the 30S ribosomal subunit.
       notes: 'KB trait: the S5 N-terminal domain. Its InterPro abstract names uS5.'
   - subject: determinant
-    predicate: member of (adopts fold)
-    predicate_id: RO:0002350
-    object: fold
-    evidence:
-    - reference: Pfam:PF03719
-      snippet: This entry represents the C-terminal of the ribosomal protein uS5, which is related to
-        the 30S ribosomal protein S5P from Sulfolobus acidocaldarius (UniProtKB:O05641).
-      notes: 'KB trait: the S5 C-terminal domain, the determinant''s other half.'
-  - subject: determinant
     predicate: part of (located on the 30S subunit)
     predicate_id: BFO:0000050
     object: subunit30s
@@ -150,9 +137,9 @@ causal_graphs:
         nodes -- CARD does not name them.'
     - reference: PMID:42450237
       snippet: Modelling showed that these mutations perturb the conserved network of stabilizing contacts
-        between RpsE residues Lys25 (Lys23 in Escherichia coli numbering) and Lys28 (Lys26), as well as
-        helix 34 nucleotides G922, A923, and C1069 of 16S rRNA, potentially altering the architecture
-        of the spectinomycin-binding site.
+        between RpsE residues Lys25 (Lys23 in E. coli numbering) and Lys28 (Lys26), as well as helix 34
+        nucleotides G922, A923, and C1069 of 16S rRNA, potentially altering the architecture of the spectinomycin-binding
+        site.
       notes: 'CONTEXT ONLY, carrying three qualifications at once: it is a MODELLING result (''Modelling
         showed''), it is HEDGED (''potentially altering''), and it is Neisseria, whereas these records
         are Bacillus subtilis and unspecified. It is attached to the interaction edge CARD already supports,
@@ -166,8 +153,10 @@ causal_graphs:
     - reference: PMID:11014183
       snippet: We also describe the crystal structure of the 30S subunit complexed with the antibiotics
         paromomycin, streptomycin and spectinomycin, which interfere with decoding and translocation.
-      notes: 'Carter 2000 solved the 30S subunit with spectinomycin bound. NOT asserted: that S5 is part
-        of that binding site, which this abstract does not say and CARD does not claim.'
+      notes: 'Carter 2000 solved the 30S subunit with spectinomycin bound. NOTE the drug0 node is the
+        drug CLASS (ARO:0000016, aminoglycoside antibiotic); spectinomycin is an aminocyclitol that CARD
+        files under it, and the `requires` guard can only check the class (#353). NOT asserted: that S5
+        is part of that binding site, which this abstract does not say and CARD does not claim.'
   - subject: determinant
     predicate: correlated with (substitutions are associated with resistance)
     predicate_id: RO:0002610

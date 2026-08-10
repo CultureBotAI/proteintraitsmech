@@ -23,6 +23,7 @@ import re
 import sys
 
 import pytest
+import yaml
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "scripts"))
 
@@ -2758,6 +2759,11 @@ def test_rpsa_asserts_no_loss_of_the_proteins_own_function():
     # the inhibition is the drug's, not the mutation's
     assert any(e["subject"] == "poa" and e["object"] == "trans_translation"
                and e["predicate_id"] == "RO:0002212" for e in cfg["extra_edges"])
+    # #349: the drug binds the DRUG-SENSITIVE protein, never the determinant -- whose node
+    # denotes the resistant variant the snippet says POA does not bind.
+    binds = [e for e in cfg["extra_edges"]
+             if e["subject"] == "poa" and e["predicate_id"] == "RO:0002436"]
+    assert [e["object"] for e in binds] == ["rpsa_wt"]
 
 
 def test_rpsa_carries_no_domain_node_because_pf00575s_definition_is_the_wrong_entry():
@@ -2786,10 +2792,30 @@ def test_rpsl_follows_its_source_not_cards_stronger_wording():
           if e["subject"] == "determinant" and e["object"] == "pseudoknot"]
     assert len(pk) == 1
     assert pk[0]["predicate_id"] == "RO:0002610"
-    for banned in ("RO:0002212", "RO:0002213", "RO:0002411", "RO:0002327", "RO:0002436"):
-        assert pk[0]["predicate_id"] != banned
+    # the predicate TEXT must not smuggle CARD's stronger verb back in
+    assert "stabilis" not in pk[0]["predicate"].lower()
+    assert "stabiliz" not in pk[0]["predicate"].lower()
     refs = {ev["reference"] for ev in pk[0]["evidence"]}
     assert refs == {"PMID:7934937", "ARO:3003395"}
+
+
+def test_rpsl_mech_res_is_a_sentence_from_the_paper_it_is_attributed_to():
+    """`mech_res` and `res_drug` are attributed by the promoter to `cfg["reference"]`.
+
+    Round 121 first shipped Musser's (PMID:8665467) "about one-half" sentence there, under
+    PMID:7934937, which does not contain it (#348). The Musser sentence belongs only on
+    `det_res`, which names its own reference.
+    """
+    cfg = promote.family_configs("ARO:3003395")[0]
+    assert cfg["reference"] == "PMID:7934937"
+    musser = "about one-half"
+    assert musser not in cfg["mech_res"]
+    assert musser not in cfg["res_drug"]
+    for snip in cfg["mech"].values():
+        assert musser not in snip
+    # and it IS still cited, on the edge that names Musser
+    det = cfg["det_res"]
+    assert any(musser in d["snippet"] and d["reference"] == "PMID:8665467" for d in det)
 
 
 def test_rpse_never_joins_the_substitution_to_the_drug():
@@ -2805,6 +2831,21 @@ def test_rpse_never_joins_the_substitution_to_the_drug():
     res = [e for e in cfg["extra_edges"]
            if e["subject"] == "determinant" and e["object"] == "resistance"]
     assert len(res) == 1 and res[0]["predicate_id"] == "RO:0002610"
+    # #350: the config's own edges are a SUBSET -- the promoter always adds a fixed
+    # `confers resistance to (drug class)` edge, so the first assertion above passes
+    # vacuously for it. Read the emitted record and state what is actually true of it.
+    rec = yaml.safe_load(
+        (promote.ARO_DIR / "spectinomycin-resistant-rpse-aro3007526.yaml").read_text("utf-8"))
+    graph = [g for g in rec["causal_graphs"] if g["graph_id"] == "resistance"][0]
+    to_drug = [e for e in graph["edges"] if e["object"].startswith("drug")]
+    # exactly one, and it is the fixed CARD-assertion edge -- not a mechanism edge
+    assert len(to_drug) == 1
+    assert to_drug[0]["predicate_id"] == "ARO:2000001"
+    # no mechanism edge anywhere ties the determinant to a binding site
+    assert not any("binding" in e["object"] or "site" in e["object"] for e in graph["edges"])
+    # and the record carries the honest association edge
+    assert any(e["subject"] == "determinant" and e["object"] == "resistance"
+               and e["predicate_id"] == "RO:0002610" for e in graph["edges"])
 
 
 def test_rpse_uses_the_neisseria_modelling_result_as_context_only():
@@ -2815,11 +2856,17 @@ def test_rpse_uses_the_neisseria_modelling_result_as_context_only():
     any edge.
     """
     cfg = promote.family_configs("ARO:3007526")[0]
-    for e in cfg["extra_edges"]:
-        refs = [ev["reference"] for ev in e["evidence"]]
-        if "PMID:42450237" in refs:
-            assert len(refs) > 1, "the modelling result must not be an edge's only evidence"
-            assert "ARO:3007526" in refs
+    carrying = [e for e in cfg["extra_edges"]
+                if any(ev["reference"] == "PMID:42450237" for ev in e["evidence"])]
+    # assert it is PRESENT before constraining it -- otherwise a typo'd id passes (#350)
+    assert len(carrying) == 1
+    refs = [ev["reference"] for ev in carrying[0]["evidence"]]
+    assert len(refs) > 1, "the modelling result must not be an edge's only evidence"
+    assert "ARO:3007526" in refs
+    # the three qualifications must be stated in the notes, not merely known to the curator
+    notes = " ".join(ev.get("notes", "") for ev in carrying[0]["evidence"]).lower()
+    for qualification in ("modelling", "potentially altering", "neisseria"):
+        assert qualification in notes
 
 
 def test_the_three_ribosomal_families_do_not_share_one_config():
@@ -2832,8 +2879,30 @@ def test_the_three_ribosomal_families_do_not_share_one_config():
             for f in ("ARO:3004722", "ARO:3003395", "ARO:3007526")]
     refs = [c["reference"] for c in cfgs]
     assert len(set(refs)) == 3
-    counts = sorted(len(c["extra_edges"]) for c in cfgs)
-    assert counts[0] < counts[-1], "the three graphs should not be the same size"
+    # #350: sizes alone would pass with two configs byte-identical. Compare the edge
+    # CONTENT, which is the risk the docstring names.
+    shapes = [frozenset((e["subject"], e["predicate_id"], e["object"]) for e in c["extra_edges"])
+              for c in cfgs]
+    assert len(set(shapes)) == 3
+    rpsa, _, rpse = cfgs
+    # the specific over-reach: rpsA's binding chemistry must not appear on rpsE
+    rpse_blob = repr(rpse)
+    for rpsa_only in ("poa", "rpsa_wt", "trans_translation"):
+        assert rpsa_only not in rpse_blob
+    assert any("poa" in e["object"] or "poa" in e["subject"] for e in rpsa["extra_edges"])
+
+
+def test_rpse_does_not_type_its_second_domain_as_a_fold():
+    """`protein_traits["fold"]` emits `member of (adopts fold)`.
+
+    Pfam:PF03719 is the S5 C-TERMINAL DOMAIN -- the determinant's other part, not a fold.
+    The shape offers no second part slot, so it gets no node at all (#352).
+    """
+    cfg = promote.family_configs("ARO:3007526")[0]
+    pt = cfg["protein_traits"]
+    assert "fold" not in pt
+    assert "PF03719" not in repr(cfg)
+    assert pt[pt["primary_key"]][0] == "Pfam:PF00333"
 
 
 def test_rv3008_is_not_curated_because_card_hedges_both_halves():
