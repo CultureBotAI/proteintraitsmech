@@ -2639,3 +2639,27 @@ def test_fks2_omits_the_echinocandin_edge_like_rpob_omits_rifampicin():
             + [n["label"] for n in cfg["extra_nodes"]]).lower()
         for banned in ("inhibit", "binds the drug"):
             assert banned not in asserted, f"{fam} asserts {banned!r} uncited"
+
+
+def test_msh2_does_not_assert_hypermutation():
+    """Three unrelated drug classes from one mismatch-repair gene.
+
+    Losing repair raises the mutation rate; that is the obvious reading and CARD does not
+    say it. The most inviting inference in the corpus after rpoB's rifampicin edge.
+    """
+    cfg = promote.family_configs("ARO:3009134")[0]
+    blob = (" ".join(n["label"] for n in cfg["extra_nodes"])
+            + " " + " ".join(e["predicate"] for e in cfg["extra_edges"])).lower()
+    for banned in ("hypermut", "mutation rate", "resist"):
+        assert banned not in blob, f"MSH2 config asserts {banned!r} uncited"
+    assert "hypermutation" in cfg["note"].lower(), "the omission must be named"
+
+
+def test_pepq_keeps_putative_in_the_node_label():
+    """CARD hedges the function ASSIGNMENT, not just its characterisation.
+
+    A step further than round 111's drmA, where the protein was "uncharacterized" but its
+    identity was not in doubt.
+    """
+    cfg = promote.family_configs("ARO:3007690")[0]
+    assert "putative" in cfg["extra_nodes"][0]["label"].lower()
