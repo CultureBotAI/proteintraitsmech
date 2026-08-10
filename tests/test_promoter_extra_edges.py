@@ -2690,3 +2690,27 @@ def test_blmt_does_not_assert_sequestration():
     for banned in ("sequest", "binds", "complex"):
         assert banned not in asserted, f"BLMT config asserts {banned!r} uncited"
     assert "SEQUESTERS" in cfg["note"], "the known-but-uncited mechanism must be named"
+
+
+def test_fura_gives_the_dna_binding_basis_other_regulators_omit():
+    """Rounds 78, 79, 110 and 115 curated regulators with no molecular basis stated.
+
+    furA gives one -- "by binding to the promoter region" -- and states no resistance at
+    all, though katG activates isoniazid and repressing it is the obvious route.
+    """
+    cfg = promote.family_configs("ARO:3004897")[0]
+    assert any(n["node_id"] == "promoter_binding" for n in cfg["extra_nodes"])
+    asserted = " ".join(
+        [e["predicate"] for e in cfg["extra_edges"]]
+        + [n["label"] for n in cfg["extra_nodes"]]).lower()
+    for banned in ("isoniazid", "resist", "activat"):
+        assert banned not in asserted, f"furA config asserts {banned!r} uncited"
+
+
+def test_the_two_mshc_records_are_curated_differently():
+    """ARO:3004904 carries its reaction; ARO:3004889 (round 94) does not and stays a draft.
+
+    Two records for one gene, one curatable and one not -- as with mshA and mshB.
+    """
+    assert promote.family_configs("ARO:3004904") != []
+    assert promote.family_configs("ARO:3004889") == []
