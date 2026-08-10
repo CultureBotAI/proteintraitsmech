@@ -1367,6 +1367,90 @@ def _minimal_enzyme_config(fam_id: str, snippet: str, activity: str, extra_note:
 
 
 FAMILY_SNIPPETS = {
+    # furA (ARO:3004897) -- a repressor of katG, with the DNA-binding mechanism named,
+    # and no resistance claim at all.
+    #
+    # katG activates isoniazid, so repressing it is the obvious resistance route -- and
+    # CARD's sentence never mentions isoniazid, resistance or mutations. It describes a
+    # regulator and stops. The most complete regulatory sentence in the corpus attached to
+    # the least resistance content.
+    "ARO:3004897": {
+        "curated": "2026-08-10T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004897",
+        "mech": {"ARO:3000212": "Transcriptional regulator furA, represses the transcription of the catalase-peroxidase gene katG and its own transcription by binding to the promoter region."},
+        "mech_res": "Transcriptional regulator furA, represses the transcription of the catalase-peroxidase gene katG and its own transcription by binding to the promoter region.",
+        "det_res": [
+            {"reference": "ARO:3004897", "snippet": "Transcriptional regulator furA, represses the transcription of the catalase-peroxidase gene katG and its own transcription by binding to the promoter region.",
+             "notes": "Direction ('REPRESSES'), targets (katG AND its own gene), and the molecular basis ('BY BINDING TO THE PROMOTER REGION') -- more regulatory detail than any other record here. And no mention of isoniazid, resistance or mutations."},
+        ],
+        "res_drug": "Transcriptional regulator furA, represses the transcription of the catalase-peroxidase gene katG and its own transcription by binding to the promoter region.",
+        "note": ("A katG repressor with the DNA-binding basis stated and NO resistance "
+                 "claim. katG activates isoniazid, so repressing it is the obvious route "
+                 "-- CARD's sentence contains neither the drug nor the word resistance, so "
+                 "no such edge is written. Round 106's rpoB position, inverted: there the "
+                 "drug was known and unstated, here the whole resistance link is."),
+        "extra_nodes": [
+            {"node_id": "katg_transcription", "label": "transcription of the catalase-peroxidase gene katG",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "What furA represses. Ungrounded: katG has its own KB records, and pointing at one would pick arbitrarily."},
+            {"node_id": "promoter_binding", "label": "binding to the katG promoter region",
+             "node_type": "STATE",
+             "description": "The molecular basis CARD gives -- rare in this corpus's regulator records."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "promoter_binding",
+             "predicate": "molecularly interacts with (binds the promoter region)",
+             "predicate_id": "RO:0002436",
+             "description": "The mechanism of the repression, which most regulator records here leave out entirely (rounds 78, 79, 110, 115).",
+             "evidence": [{"reference": "ARO:3004897", "snippet": "Transcriptional regulator furA, represses the transcription of the catalase-peroxidase gene katG and its own transcription by binding to the promoter region.",
+                           "notes": "'by binding to the promoter region'."}]},
+            {"subject": "promoter_binding", "object": "katg_transcription",
+             "predicate": "negatively regulates (represses katG transcription)",
+             "predicate_id": "RO:0002212",
+             "description": "The NEGATIVE form, licensed by CARD's own 'represses'. NOT asserted: that repressing katG confers isoniazid resistance -- CARD's sentence mentions neither the drug nor resistance.",
+             "evidence": [{"reference": "ARO:3004897", "snippet": "Transcriptional regulator furA, represses the transcription of the catalase-peroxidase gene katG and its own transcription by binding to the promoter region.",
+                           "notes": "'represses the transcription of the catalase-peroxidase gene katG and its own transcription'."}]},
+        ],
+    },
+    # mshC (ARO:3004904) -- the mshC record that DOES carry a reaction.
+    #
+    # Round 94 left a different mshC record (ARO:3004889) reading only "Mutations ...
+    # resulting in the inability for antibiotic to function". This one adds the chemistry:
+    # "It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine". Two records
+    # for one gene, one curatable and one not -- as with mshA/mshB in round 109.
+    "ARO:3004904": {
+        "curated": "2026-08-10T00:00:00Z",
+        "precondition": _requires_mech("ARO:3000212", "mutation"),
+        "reference": "ARO:3004904",
+        "mech": {"ARO:3000212": "Mutations that occur on the mshC gene resulting in the inability for isoniazid to function. It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins."},
+        "mech_res": "Mutations that occur on the mshC gene resulting in the inability for isoniazid to function. It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.",
+        "det_res": [
+            {"reference": "ARO:3004904", "snippet": "Mutations that occur on the mshC gene resulting in the inability for isoniazid to function. It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.",
+             "notes": "The reaction with both substrates and the product named -- which the OTHER mshC record (ARO:3004889, left in round 94) does not have. Still 'to FUNCTION', so still no prodrug edge (rounds 95, 110, 112, 118)."},
+        ],
+        "res_drug": "Mutations that occur on the mshC gene resulting in the inability for isoniazid to function. It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.",
+        "note": ("The mshC record that carries its reaction. Its sibling ARO:3004889 says "
+                 "only 'inability for antibiotic to function' and remains a draft -- two "
+                 "records for one gene, one curatable and one not, as with mshA and mshB "
+                 "(round 109). The word is still 'function', so no activation edge."),
+        "extra_nodes": [
+            {"node_id": "condensation", "label": "ATP-dependent GlcN-Ins / L-cysteine ligase activity",
+             "node_type": "MOLECULAR_FUNCTION", "description": "Ungrounded: not looked up rather than guessed."},
+            {"node_id": "cys_glcn_ins", "label": "L-Cys-GlcN-Ins",
+             "node_type": "CHEMICAL", "description": "The product CARD names. Ungrounded."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "condensation",
+             "predicate": "enables (ATP-dependent condensation)", "predicate_id": "RO:0002327",
+             "evidence": [{"reference": "ARO:3004904", "snippet": "Mutations that occur on the mshC gene resulting in the inability for isoniazid to function. It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.",
+                           "notes": "'It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine'."}]},
+            {"subject": "condensation", "object": "cys_glcn_ins",
+             "predicate": "has output (L-Cys-GlcN-Ins)", "predicate_id": "RO:0002234",
+             "evidence": [{"reference": "ARO:3004904", "snippet": "Mutations that occur on the mshC gene resulting in the inability for isoniazid to function. It catalyzes the ATP-dependent condensation of GlcN-Ins and L-cysteine to form L-Cys-GlcN-Ins.",
+                           "notes": "'to form L-Cys-GlcN-Ins'. NOT asserted: any link to isoniazid, which CARD frames only as 'inability to function'."}]},
+        ],
+    },
     # ald (ARO:3004943) -- the cycloserine partner of ddlA (round 116).
     #
     # ddlA ligates two D-alanines and cycloserine mimics D-alanine. ald supplies L-alanine
