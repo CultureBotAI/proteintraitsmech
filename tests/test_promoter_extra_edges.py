@@ -3369,15 +3369,39 @@ def test_every_nat_evidence_reference_actually_contains_its_snippet():
                 if re.search(rf'^identifier:\s*"?{re.escape(ref)}"?\s*$', head, re.M):
                     bodies[ref] = " ".join(head.split())
                     break
-    # every reference must RESOLVE -- an unresolved one silently skipped is how the first
-    # version passed while checking a quarter of the items.
-    assert set(bodies) == cited, f"unresolved references: {cited - set(bodies)}"
+    # Every reference OF A RESOLVABLE TYPE must resolve -- an unresolved one silently
+    # skipped is how the first version passed while checking a quarter of the items.
+    # PMIDs and DOIs are valid and not on disk; requiring them to resolve would false-fail
+    # the moment these records cite primary literature, which 7,119 of 7,211 promoted ARO
+    # records already do (#404).
+    on_disk = {r for r in cited if r.split(":")[0] in ("ARO", "Pfam", "GO", "CATH",
+                                                       "PROSITE", "NCBIfam", "InterPro")}
+    assert set(bodies) == on_disk, f"unresolved references: {on_disk - set(bodies)}"
 
     checked = 0
     for name, graph in records.items():
         for e in graph["edges"]:
             for ev in e["evidence"]:
+                if ev["reference"] not in bodies:
+                    continue
                 checked += 1
                 assert " ".join(ev["snippet"].split()) in bodies[ev["reference"]], (
                     f"{ev['reference']} does not contain its snippet on {name}")
-    assert checked >= 18, f"only {checked} evidence items checked"
+    # EXACT, not a floor: `>= 18` against 19 real items let one evidence item vanish
+    # silently, which is the #382/#387 class this test exists to catch (#404).
+    assert checked == 19, f"{checked} on-disk evidence items, expected 19"
+
+
+def test_the_two_nat_configs_are_disjoint_so_list_order_is_not_load_bearing():
+    """#401 was fixed but pinned by nothing (#404). `_check_config_order` only asserts that
+    a precondition-less config is last; it cannot see two OVERLAPPING preconditions, which
+    was #401's actual defect -- ARO:3004930 passed both and won by position alone.
+    """
+    cfgs = promote.family_configs("ARO:3004910")
+    for ident in ("ARO:3004910", "ARO:3004930"):
+        text = next(q.read_text(encoding="utf-8") for q in promote.ARO_DIR.glob("*.yaml")
+                    if re.search(rf'^identifier:\s*"?{ident}"?\s*$',
+                                 q.read_text(encoding="utf-8"), re.M))
+        accepting = [c for c in cfgs
+                     if c["precondition"](ident, "", text) is None]
+        assert len(accepting) == 1, f"{ident} is accepted by {len(accepting)} configs"

@@ -129,9 +129,10 @@ corpus-wide check.
 | 1 | 6 | 5 (#395–#399) + #393 closed invalid | 6 |
 | 2 | 9 | 3 (#400–#402) | 3 |
 | 3 | 5 | 1 (#403) | 3 |
+| 4 | 8 | 1 (#404) | 4 |
 
 Round 2 left six non-blocking findings filed or noted, including that
-`test_nat_asserts_no_drug_edge_at_all` overclaims — both records **do** carry the promoter's
+`test_nat_asserts_no_extra_drug_edge` (renamed in round 3 from `..._no_drug_edge_at_all`) overclaimed — both records **do** carry the promoter's
 fixed `confers resistance to (drug class)` edge, and the test scans only `extra_edges`.
 
 Round 3's verdict was **not mergeable**, on **#403**: the #402 test — *the round's one
