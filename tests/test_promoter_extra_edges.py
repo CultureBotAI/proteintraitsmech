@@ -3242,38 +3242,67 @@ def test_the_vanl_cluster_term_is_not_curated_pending_309():
 # ---------------------------------------------------------------------------------------
 # Round 123 — nat.
 
-def test_nat_never_makes_isoniazid_the_enzymes_substrate():
+def test_nat_asserts_no_drug_edge_at_all():
     """CARD names "arylamines and hydrazines" and, separately, that overexpression may
-    confer isoniazid resistance. It never joins them.
+    confer isoniazid resistance. It never joins them, and isoniazid IS a hydrazine -- so the
+    inference is one step of chemistry away, which is what makes it easy to supply.
 
-    Isoniazid IS a hydrazine, so the inference is easy and tempting -- and it is the
-    reader's, not the source's. Round 120's FrxA/nfsB distinction.
+    #396: the first version DID supply it, as an `acetylation --> drug0` edge whose SOLE
+    evidence was Pfam's sentence about HUMAN NAT -- inverting round 121's rule that
+    out-of-scope context may ride on an edge CARD supports but may never be an edge's only
+    evidence. And the test pinned that wrong shape. No config may carry a drug edge.
     """
-    cfg = promote.family_configs("ARO:3004910")[0]
-    to_drug = [e for e in cfg["extra_edges"] if e["object"].startswith("drug")]
-    assert len(to_drug) == 1
-    # the one drug edge is CONTEXT from the Pfam record, and correlational, not `has input`
-    assert to_drug[0]["predicate_id"] == "RO:0002610"
-    assert to_drug[0]["evidence"][0]["reference"] == "Pfam:PF00797"
-    assert "in humans" in to_drug[0]["evidence"][0]["snippet"]
-    # nothing may make the drug an input or output of the enzyme's activity
-    for e in cfg["extra_edges"]:
-        if e["predicate_id"] in ("RO:0002233", "RO:0002234"):
-            assert not e["object"].startswith("drug")
+    for cfg in promote.family_configs("ARO:3004910"):
+        assert not any(e["object"].startswith("drug") or e["subject"].startswith("drug")
+                       for e in cfg["extra_edges"])
+        assert "in humans" not in repr(cfg["extra_edges"])
 
 
-def test_nat_records_the_route_its_definition_names_not_the_one_its_relation_asserts():
-    """The record carries ARO:3000212 ("mutation conferring antibiotic resistance") and its
-    definition says OVEREXPRESSION. The graph says overexpression, and #393 records the
-    mismatch rather than the graph quietly following the relation.
+def test_only_the_record_whose_definition_joins_the_routes_gets_the_joining_edge():
+    """ARO:3004930: "Mutations that occur in nat WHICH THROUGH OVEREXPRESSION of the enzyme
+    can result in ... resistance" -- CARD joins them.
+    ARO:3004910: names both separately and never joins them.
+
+    #395: the first version promoted BOTH with the parent's sentence, then annotated
+    ARO:3004930 with a "disagreement" its own definition refutes -- #371 inverted, a record
+    discarding its own more specific text for an ancestor's.
+    #397: the parent's `overexpression` node therefore has no incoming edge, and none is
+    invented for it.
     """
-    cfg = promote.family_configs("ARO:3004910")[0]
-    assert any(n["node_id"] == "overexpression" for n in cfg["extra_nodes"])
-    res = [e for e in cfg["extra_edges"]
-           if e["subject"] == "overexpression" and e["object"] == "resistance"]
-    assert len(res) == 1
-    # attributed AND hedged, so the predicate is correlational
-    assert res[0]["predicate_id"] == "RO:0002610"
-    snippet = res[0]["evidence"][0]["snippet"]
-    assert "Reports have shown" in snippet and "may be responsible" in snippet
-    assert "#393" in cfg["note"] or "#393" in repr(cfg["det_res"])
+    joined = [c for c in promote.family_configs("ARO:3004910")
+              if c.get("precondition") is promote._nat_joins_mutation][0]
+    generic = [c for c in promote.family_configs("ARO:3004910")
+               if c is not joined][0]
+
+    def incoming(cfg):
+        return [e for e in cfg["extra_edges"] if e["object"] == "overexpression"]
+
+    assert len(incoming(joined)) == 1
+    assert incoming(joined)[0]["subject"] == "determinant"
+    assert "through overexpression" in incoming(joined)[0]["evidence"][0]["snippet"].lower()
+    assert incoming(generic) == []
+    # and no circular "overexpression regulates the determinant" edge on either (#397)
+    for cfg in (joined, generic):
+        assert not any(e["subject"] == "overexpression" and e["object"] == "determinant"
+                       for e in cfg["extra_edges"])
+
+
+def test_nat_mech_edge_cites_the_mechanism_terms_own_definition():
+    """#398: the mech edge is about ARO:3000212, and the first version evidenced it with
+    nat's definition -- a sentence containing no mutation claim at all.
+
+    #393, corrected: ARO:3000212's own definition names "increased expression" among its
+    examples, so an overexpression route is IN SCOPE for it rather than a mismatch with it.
+    """
+    for cfg in promote.family_configs("ARO:3004910"):
+        assert set(cfg["mech"].values()) == {promote._MECH_MUTATION}
+        assert "increased expression" in promote._MECH_MUTATION
+        assert "Point mutations" in promote._MECH_MUTATION
+
+
+def test_nat_grounds_the_exact_activity_term_that_is_already_a_kb_record():
+    """#399: GO:0008080 (N-acetyltransferase activity) never names acetyl-CoA and its scope
+    includes histone and rRNA acetyltransferases. GO:0004060 is the exact term."""
+    for cfg in promote.family_configs("ARO:3004910"):
+        node = [n for n in cfg["extra_nodes"] if n["node_id"] == "acetylation"][0]
+        assert node["grounding"] == "GO:0004060"

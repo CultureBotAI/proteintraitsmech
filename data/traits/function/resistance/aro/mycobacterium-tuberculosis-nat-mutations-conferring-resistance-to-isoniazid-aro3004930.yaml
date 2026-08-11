@@ -35,10 +35,9 @@ causal_graphs:
     (curated from ARO relations + literature)
   description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
     mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3004910). nat -- an acetyltransferase whose resistance route CARD gives as OVEREXPRESSION while
-    the record''s ARO relation says mutation. NOT asserted: that isoniazid is this enzyme''s substrate.
-    CARD names ''arylamines and hydrazines'' and never joins them to the drug; the KB Pfam record does,
-    for HUMAN NAT, and is cited with that scope on its own edge.'
+    (ARO:3004930). nat (mutation record) -- CARD joins the mutation to the overexpression on THIS record,
+    so the graph does too. NOT asserted: that isoniazid is the enzyme''s substrate; CARD names no substrate
+    here at all.'
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis nat mutations conferring resistance to isoniazid
@@ -58,9 +57,12 @@ causal_graphs:
     grounding: Pfam:PF00797
     description: KB protein-trait record carrying the mechanism.
   - node_id: acetylation
-    label: N-acetyltransferase activity
+    label: arylamine N-acetyltransferase activity
     node_type: MOLECULAR_FUNCTION
-    grounding: GO:0008080
+    grounding: GO:0004060
+    description: The EXACT term, and a KB record. GO:0008080 (N-acetyltransferase activity) was used until
+      review noted its definition never names acetyl-CoA and its scope includes histone and rRNA acetyltransferases
+      (#399).
   - node_id: acetyl_coa
     label: acetyl-CoA
     node_type: CHEMICAL
@@ -68,9 +70,7 @@ causal_graphs:
   - node_id: overexpression
     label: overexpression of the enzyme
     node_type: STATE
-    description: The route CARD actually names. Recorded as its own node because the record's ARO relation
-      says MUTATION and its definition says OVEREXPRESSION, and the graph should not quietly pick one
-      (#393).
+    description: The route CARD names.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -84,33 +84,39 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: ARO:3004910
-      snippet: Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme
-        A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression
-        of this enzyme may be responsible for increased resistance to isoniazid.
+    - reference: ARO:3004930
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
       notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3004910
-      snippet: Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme
-        A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression
-        of this enzyme may be responsible for increased resistance to isoniazid.
+    - reference: ARO:3004930
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
       notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3004910
-      snippet: Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme
-        A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression
-        of this enzyme may be responsible for increased resistance to isoniazid.
-      notes: 'Quoted whole because BOTH qualifications matter: ''REPORTS HAVE SHOWN'' attributes the claim,
-        and ''MAY BE responsible'' hedges it. The route named is OVEREXPRESSION, not mutation, although
-        the record''s ARO relation is ARO:3000212 (#393).'
+    - reference: ARO:3004930
+      snippet: Mutations that occur in nat which through overexpression of the enzyme can result in or
+        contribute to antibiotic resistance to isoniazid.
+      notes: Quoted whole because the qualifications are part of the claim.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: The mechanism term's own definition, which names 'increased expression' among its examples
+        -- so an overexpression route is IN SCOPE for ARO:3000212, not a mismatch with it (#393, corrected).
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
@@ -132,62 +138,48 @@ causal_graphs:
         these compounds generally results in inactivation.
       notes: 'KB trait: the NAT family. Its abstract names arylamine N-acetyltransferase itself (#196).'
   - subject: determinant
-    predicate: enables (N-acetyltransferase activity)
+    predicate: causally upstream of (the mutation raises expression)
+    predicate_id: RO:0002411
+    object: overexpression
+    description: This record's own definition JOINS the two routes; the parent's does not (#395).
+    evidence:
+    - reference: ARO:3004930
+      snippet: Mutations that occur in nat which through overexpression of the enzyme can result in or
+        contribute to antibiotic resistance to isoniazid.
+      notes: '''Mutations that occur in nat WHICH THROUGH OVEREXPRESSION of the enzyme can result in ...
+        resistance''.'
+  - subject: determinant
+    predicate: enables (arylamine N-acetyltransferase activity)
     predicate_id: RO:0002327
     object: acetylation
     evidence:
-    - reference: ARO:3004910
-      snippet: Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme
-        A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression
-        of this enzyme may be responsible for increased resistance to isoniazid.
-      notes: '''catalyzes the transfer of the acetyl group''.'
+    - reference: Pfam:PF00797
+      snippet: Arylamine N-acetyltransferase (NAT) facilitates the transfer of an acetyl group from acetyl
+        coenzyme A on to a wide range of arylamine, N-hydroxyarylamines and hydrazines. Acetylation of
+        these compounds generally results in inactivation.
+      notes: 'KB trait: what an arylamine N-acetyltransferase does. This record''s own definition gives
+        the resistance route but not the chemistry.'
   - subject: acetylation
     predicate: has input (the acetyl donor)
     predicate_id: RO:0002233
     object: acetyl_coa
     evidence:
-    - reference: ARO:3004910
-      snippet: Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme
-        A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression
-        of this enzyme may be responsible for increased resistance to isoniazid.
-      notes: '''from acetyl coenzyme A''.'
-  - subject: overexpression
-    predicate: positively regulates (more enzyme)
-    predicate_id: RO:0002213
-    object: determinant
-    evidence:
-    - reference: ARO:3004910
-      snippet: Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme
-        A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression
-        of this enzyme may be responsible for increased resistance to isoniazid.
-      notes: '''OVEREXPRESSION of this enzyme''.'
-  - subject: overexpression
-    predicate: correlated with (reported, and hedged)
-    predicate_id: RO:0002610
-    object: resistance
-    description: 'Deliberately weak, and twice over: the claim is ATTRIBUTED (''Reports have shown'')
-      and then HEDGED (''may be responsible'').'
-    evidence:
-    - reference: ARO:3004910
-      snippet: Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme
-        A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression
-        of this enzyme may be responsible for increased resistance to isoniazid.
-      notes: Both qualifications are in the quoted sentence rather than paraphrased away.
-  - subject: acetylation
-    predicate: correlated with (human NAT inactivates isoniazid)
-    predicate_id: RO:0002610
-    object: drug0
-    description: CONTEXT, and scoped. CARD never says isoniazid is this enzyme's substrate -- it names
-      'arylamines and hydrazines' and stops. The KB Pfam record makes the link, for HUMAN NAT, and the
-      edge says so rather than letting it read as a claim about the mycobacterial enzyme this record is
-      about.
-    evidence:
     - reference: Pfam:PF00797
-      snippet: NAT is also responsible for the inactivation of Isoniazid (a drug used to treat tuberculosis)
-        in humans.
-      notes: '''NAT is also responsible for the inactivation of Isoniazid ... IN HUMANS.'' The organism
-        scope is the point; this record is M. tuberculosis nat. A causal predicate would assert the transfer
-        across organisms, which nothing here supports.'
+      snippet: Arylamine N-acetyltransferase (NAT) facilitates the transfer of an acetyl group from acetyl
+        coenzyme A on to a wide range of arylamine, N-hydroxyarylamines and hydrazines. Acetylation of
+        these compounds generally results in inactivation.
+      notes: '''transfer of an acetyl group from acetyl coenzyme A''.'
+  - subject: overexpression
+    predicate: causally upstream of (via overexpression)
+    predicate_id: RO:0002411
+    object: resistance
+    description: CARD joins the mutation and the overexpression on this record, so the causal predicate
+      is the source's own.
+    evidence:
+    - reference: ARO:3004930
+      snippet: Mutations that occur in nat which through overexpression of the enzyme can result in or
+        contribute to antibiotic resistance to isoniazid.
+      notes: '''can result in or contribute to antibiotic resistance''.'
 curation_history:
 - timestamp: '2026-08-10T00:00:00Z'
   curator: edison-causal-graphs

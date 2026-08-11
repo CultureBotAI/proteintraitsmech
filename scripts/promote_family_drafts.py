@@ -9227,103 +9227,146 @@ FAMILY_SNIPPETS["ARO:3003419"] = {
 
 
 # ---------------------------------------------------------------------------------------
-# Round 123 — nat (ARO:3004910), and a record whose stated mechanism is not the one its ARO
-# relation asserts.
+# Round 123 — nat, and the "mismatch" that was not one.
 #
-# CARD: "Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from
-# acetyl coenzyme A to the free amino group of arylamines and hydrazines. Reports have shown
-# that OVEREXPRESSION of this enzyme MAY BE responsible for increased resistance to
-# isoniazid."
+# The first draft of this round asserted that ARO:3000212 ("mutation conferring antibiotic
+# resistance") disagreed with nat's definition, which names OVEREXPRESSION. Reading
+# ARO:3000212's OWN definition settles it against that reading:
 #
-# Three things are true of that sentence and none of them is obvious:
-#   1. the resistance route CARD names is OVEREXPRESSION, while the record's ARO relation is
-#      ARO:3000212, "MUTATION conferring antibiotic resistance". The graph says overexpression
-#      because that is what the definition says, and records the mismatch rather than
-#      silently following the relation (#393).
-#   2. "Reports have shown" -- attribution (round 97's shape);
-#   3. "may be responsible" -- and a hedge on top of it. Both are quoted, not smoothed.
+#   "Point mutations in the DNA may lead to an altered gene product ... Examples included
+#    modified antibiotic targets with lower binding affinities and the deactivation of
+#    repressors that result in INCREASED EXPRESSION of genes that inactivate or pump out
+#    antibiotics."
 #
-# CARD never says isoniazid is the enzyme's substrate. It says the enzyme acts on "arylamines
-# and hydrazines", and separately that overexpression may confer isoniazid resistance. Joining
-# those is the reader's inference, not the source's -- round 120's FrxA/nfsB distinction.
-# The KB Pfam record DOES make the link, and it is cited for that with its scope intact.
+# The mechanism term explicitly covers the increased-expression route. There is no mismatch,
+# and #393 is corrected rather than curated around. This is round 51's lesson yet again:
+# before building on a claim about a source, read what the source says.
+#
+# TWO configs, because the two records say different things (#395):
+#   ARO:3004930 -- "Mutations that occur in nat WHICH THROUGH OVEREXPRESSION of the enzyme
+#                   can result in ... resistance". CARD JOINS the two, so the graph can too.
+#   ARO:3004910 -- names overexpression and mutation separately and never joins them.
 _CARD_NAT = "Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression of this enzyme may be responsible for increased resistance to isoniazid."
+_CARD_NAT_MUT = "Mutations that occur in nat which through overexpression of the enzyme can result in or contribute to antibiotic resistance to isoniazid."
+_MECH_MUTATION = "Point mutations in the DNA may lead to an altered gene product that may result in antibiotic resistance. Examples included modified antibiotic targets with lower binding affinities and the deactivation of repressors that result in increased expression of genes that inactivate or pump out antibiotics."
 _NAT_PFAM = "Arylamine N-acetyltransferase (NAT) facilitates the transfer of an acetyl group from acetyl coenzyme A on to a wide range of arylamine, N-hydroxyarylamines and hydrazines. Acetylation of these compounds generally results in inactivation."
-_NAT_INH_HUMAN = "NAT is also responsible for the inactivation of Isoniazid (a drug used to treat tuberculosis) in humans."
 
-FAMILY_SNIPPETS["ARO:3004910"] = {
-    "curated": "2026-08-10T00:00:00Z",
-    "precondition": _requires_mech("ARO:3000212", "mutation"),
-    "reference": "ARO:3004910",
-    "mech": {"ARO:3000212": _CARD_NAT},
-    "mech_res": _CARD_NAT,
-    "det_res": [
-        {"reference": "ARO:3004910", "snippet": _CARD_NAT,
-         "notes": "Quoted whole because BOTH qualifications matter: 'REPORTS HAVE SHOWN' "
-                  "attributes the claim, and 'MAY BE responsible' hedges it. The route named "
-                  "is OVEREXPRESSION, not mutation, although the record's ARO relation is "
-                  "ARO:3000212 (#393)."},
-    ],
-    "res_drug": _CARD_NAT,
-    "note": ("nat -- an acetyltransferase whose resistance route CARD gives as OVEREXPRESSION "
-             "while the record's ARO relation says mutation. NOT asserted: that isoniazid is "
-             "this enzyme's substrate. CARD names 'arylamines and hydrazines' and never joins "
-             "them to the drug; the KB Pfam record does, for HUMAN NAT, and is cited with "
-             "that scope on its own edge."),
-    "protein_traits": {
-        "primary_key": "family",
-        "family": ("Pfam:PF00797", "N-acetyltransferase", "DOMAIN", _NAT_PFAM),
-        "part_pred": "part of (the N-acetyltransferase family assignment)",
-        "part_note": "KB trait: the NAT family. Its abstract names arylamine "
-                     "N-acetyltransferase itself (#196).",
-    },
-    "extra_nodes": [
-        {"node_id": "acetylation", "label": "N-acetyltransferase activity",
-         "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0008080"},
-        {"node_id": "acetyl_coa", "label": "acetyl-CoA", "node_type": "CHEMICAL",
-         "grounding": "CHEBI:15351"},
-        {"node_id": "overexpression", "label": "overexpression of the enzyme",
-         "node_type": "STATE",
-         "description": "The route CARD actually names. Recorded as its own node because the "
-                        "record's ARO relation says MUTATION and its definition says "
-                        "OVEREXPRESSION, and the graph should not quietly pick one (#393)."},
-    ],
-    "extra_edges": [
-        {"subject": "determinant", "object": "acetylation",
-         "predicate": "enables (N-acetyltransferase activity)", "predicate_id": "RO:0002327",
-         "evidence": [{"reference": "ARO:3004910", "snippet": _CARD_NAT,
-                       "notes": "'catalyzes the transfer of the acetyl group'."}]},
-        {"subject": "acetylation", "object": "acetyl_coa",
-         "predicate": "has input (the acetyl donor)", "predicate_id": "RO:0002233",
-         "evidence": [{"reference": "ARO:3004910", "snippet": _CARD_NAT,
-                       "notes": "'from acetyl coenzyme A'."}]},
-        {"subject": "overexpression", "object": "determinant",
-         "predicate": "positively regulates (more enzyme)", "predicate_id": "RO:0002213",
-         "evidence": [{"reference": "ARO:3004910", "snippet": _CARD_NAT,
-                       "notes": "'OVEREXPRESSION of this enzyme'."}]},
-        {"subject": "overexpression", "object": "resistance",
-         "predicate": "correlated with (reported, and hedged)", "predicate_id": "RO:0002610",
-         "description": "Deliberately weak, and twice over: the claim is ATTRIBUTED ('Reports "
-                        "have shown') and then HEDGED ('may be responsible').",
-         "evidence": [{"reference": "ARO:3004910", "snippet": _CARD_NAT,
-                       "notes": "Both qualifications are in the quoted sentence rather than "
-                                "paraphrased away."}]},
-        {"subject": "acetylation", "object": "drug0",
-         "predicate": "correlated with (human NAT inactivates isoniazid)",
-         "predicate_id": "RO:0002610",
-         "requires": {"drug0": "ARO:3007152"},
-         "description": "CONTEXT, and scoped. CARD never says isoniazid is this enzyme's "
-                        "substrate -- it names 'arylamines and hydrazines' and stops. The KB "
-                        "Pfam record makes the link, for HUMAN NAT, and the edge says so "
-                        "rather than letting it read as a claim about the mycobacterial "
-                        "enzyme this record is about.",
-         "evidence": [{"reference": "Pfam:PF00797", "snippet": _NAT_INH_HUMAN,
-                       "notes": "'NAT is also responsible for the inactivation of Isoniazid "
-                                "... IN HUMANS.' The organism scope is the point; this record "
-                                "is M. tuberculosis nat. A causal predicate would assert the "
-                                "transfer across organisms, which nothing here supports."}]},
-    ],
-}
+
+def _nat_config(card_ref, card_snippet, joins_mutation):
+    """nat's graph. `joins_mutation` is true only where CARD itself joins the two routes."""
+    cfg = {
+        "curated": "2026-08-10T00:00:00Z",
+        "reference": card_ref,
+        # #398: the mech edge is about ARO:3000212, so it carries ARO:3000212's own
+        # definition -- which states BOTH point mutations and increased expression. The
+        # first draft cited nat's definition here, a sentence with no mutation claim at all.
+        "mech": {"ARO:3000212": _MECH_MUTATION},
+        "mech_res": _MECH_MUTATION,
+        "det_res": [
+            {"reference": card_ref, "snippet": card_snippet,
+             "notes": ("Quoted whole because the qualifications are part of the claim."
+                       if joins_mutation else
+                       "Quoted whole because BOTH qualifications matter: 'REPORTS HAVE SHOWN' "
+                       "attributes the claim and 'MAY BE responsible' hedges it.")},
+            {"reference": "ARO:3000212", "snippet": _MECH_MUTATION,
+             "notes": "The mechanism term's own definition, which names 'increased expression' "
+                      "among its examples -- so an overexpression route is IN SCOPE for "
+                      "ARO:3000212, not a mismatch with it (#393, corrected)."},
+        ],
+        "res_drug": card_snippet,
+        "protein_traits": {
+            "primary_key": "family",
+            "family": ("Pfam:PF00797", "N-acetyltransferase", "DOMAIN", _NAT_PFAM),
+            "part_pred": "part of (the N-acetyltransferase family assignment)",
+            "part_note": "KB trait: the NAT family. Its abstract names arylamine "
+                         "N-acetyltransferase itself (#196).",
+        },
+        "extra_nodes": [
+            {"node_id": "acetylation", "label": "arylamine N-acetyltransferase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0004060",
+             "description": "The EXACT term, and a KB record. GO:0008080 "
+                            "(N-acetyltransferase activity) was used until review noted its "
+                            "definition never names acetyl-CoA and its scope includes histone "
+                            "and rRNA acetyltransferases (#399)."},
+            {"node_id": "acetyl_coa", "label": "acetyl-CoA", "node_type": "CHEMICAL",
+             "grounding": "CHEBI:15351"},
+            {"node_id": "overexpression", "label": "overexpression of the enzyme",
+             "node_type": "STATE",
+             "description": "The route CARD names."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "acetylation",
+             "predicate": "enables (arylamine N-acetyltransferase activity)",
+             "predicate_id": "RO:0002327",
+             "evidence": [{"reference": card_ref, "snippet": card_snippet,
+                           "notes": "The enzyme's identity."}
+                          if not joins_mutation else
+                          {"reference": "Pfam:PF00797", "snippet": _NAT_PFAM,
+                           "notes": "KB trait: what an arylamine N-acetyltransferase does. "
+                                    "This record's own definition gives the resistance route "
+                                    "but not the chemistry."}]},
+            {"subject": "acetylation", "object": "acetyl_coa",
+             "predicate": "has input (the acetyl donor)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "Pfam:PF00797", "snippet": _NAT_PFAM,
+                           "notes": "'transfer of an acetyl group from acetyl coenzyme A'."}]},
+            {"subject": "overexpression", "object": "resistance",
+             "predicate": ("causally upstream of (via overexpression)" if joins_mutation
+                           else "correlated with (reported, and hedged)"),
+             "predicate_id": "RO:0002411" if joins_mutation else "RO:0002610",
+             "description": ("CARD joins the mutation and the overexpression on this record, "
+                             "so the causal predicate is the source's own."
+                             if joins_mutation else
+                             "Deliberately weak, and twice over: the claim is ATTRIBUTED "
+                             "('Reports have shown') and then HEDGED ('may be responsible')."),
+             "evidence": [{"reference": card_ref, "snippet": card_snippet,
+                           "notes": ("'can result in or contribute to antibiotic resistance'."
+                                     if joins_mutation else
+                                     "Both qualifications are in the quoted sentence rather "
+                                     "than paraphrased away.")}]},
+        ],
+    }
+    if joins_mutation:
+        # #397: the only edge that says what PRODUCES the overexpression, and it exists
+        # solely because this record's own definition supplies it. The parent's does not,
+        # so the parent's `overexpression` node has no incoming edge and gets none invented.
+        cfg["extra_edges"].insert(0, {
+            "subject": "determinant", "object": "overexpression",
+            "predicate": "causally upstream of (the mutation raises expression)",
+            "predicate_id": "RO:0002411",
+            "description": "This record's own definition JOINS the two routes; the parent's "
+                           "does not (#395).",
+            "evidence": [{"reference": card_ref, "snippet": card_snippet,
+                          "notes": "'Mutations that occur in nat WHICH THROUGH OVEREXPRESSION "
+                                   "of the enzyme can result in ... resistance'."}]})
+        cfg["note"] = ("nat (mutation record) -- CARD joins the mutation to the overexpression "
+                       "on THIS record, so the graph does too. NOT asserted: that isoniazid is "
+                       "the enzyme's substrate; CARD names no substrate here at all.")
+    else:
+        cfg["precondition"] = _requires_mech("ARO:3000212", "mutation")
+        cfg["determinant_note"] = (
+            "CARD names the chemistry and the resistance separately on this record and never "
+            "joins them. The mutation->overexpression link belongs to ARO:3004930, whose own "
+            "definition supplies it (#395).")
+        cfg["note"] = ("nat -- CARD names the chemistry ('arylamines and hydrazines') and, "
+                       "separately, that overexpression may confer isoniazid resistance. NOT "
+                       "asserted: that isoniazid is the enzyme's substrate. Isoniazid IS a "
+                       "hydrazine, so the inference is one step away -- and CARD does not take "
+                       "it. The Pfam record makes the link for HUMAN NAT, which is not "
+                       "evidence about this organism and carries no edge of its own (#396).")
+    return cfg
+
+
+def _nat_joins_mutation(ident, label, text):
+    own = _own_definition(text).lower()
+    if "through overexpression" in own:
+        return None
+    return "own definition does not join the mutation to the overexpression (#395)"
+
+
+_NAT_JOINED = _nat_config("ARO:3004930", _CARD_NAT_MUT, joins_mutation=True)
+_NAT_JOINED["precondition"] = _nat_joins_mutation
+FAMILY_SNIPPETS["ARO:3004910"] = [_NAT_JOINED,
+                                  _nat_config("ARO:3004910", _CARD_NAT, joins_mutation=False)]
 
 _check_config_order()
 

@@ -12,62 +12,83 @@ Chosen off the measured survey (#392), which found the standing hand-over note's
 figures stale in every particular and ~150 of 190 drafts to be effort rather than decision.
 `nat` is from the prodrug/isoniazid block that survey recommended first.
 
-## One sentence, three separate problems
+## The mismatch that was not one
 
-> *"Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl
-> coenzyme A to the free amino group of arylamines and hydrazines. **Reports have shown**
-> that **overexpression** of this enzyme **may be** responsible for increased resistance to
-> isoniazid."*
+The first draft of this round asserted that `ARO:3000212` — *"mutation conferring antibiotic
+resistance"* — disagreed with nat's definition, which names **overexpression**, and filed
+**#393** for the class.
 
-**1. The route CARD names is not the one its ARO relation asserts.** The record carries
-`ARO:3000212` — *"mutation conferring antibiotic resistance"* — and its definition says
-**overexpression**. The promoter takes the mechanism node from the relation and the snippets
-from the definition, so without care this record gets a mutation-mechanism edge evidenced by
-a sentence about expression level.
+`ARO:3000212`'s **own** definition settles it the other way:
 
-`overexpression` is therefore its own node, with its own edges, and the note says the
-relation and the definition disagree. Filed as **#393**, because nothing detects the class
-and it is the *first edge of every `ARO:3000212` graph*.
+> *"Point mutations in the DNA may lead to an altered gene product… Examples included
+> modified antibiotic targets with lower binding affinities and the deactivation of
+> repressors that result in **increased expression** of genes that inactivate or pump out
+> antibiotics."*
 
-**2. Attributed, then hedged.** *"Reports have shown"* (round 97's shape) and *"may be
-responsible"* (round 63's) stack on one claim. The `overexpression → resistance` edge is
-`RO:0002610 correlated with`, and the whole sentence is quoted so both survive.
+**The mechanism term explicitly covers the increased-expression route.** There is no
+mismatch. #393 is closed as invalid.
 
-**3. The easy inference is the reader's, not the source's.** Isoniazid **is** a hydrazine,
-and CARD says NAT acts on *"arylamines and hydrazines"*. Joining those two facts gives a
-clean drug-inactivation mechanism — and **CARD never joins them.** It states the chemistry,
-then states separately that overexpression may confer resistance.
+This is round 51's lesson, inverted and repeated: *before building on a claim about a source,
+read what the source says.* Round 51 spent three rounds sourcing a mechanism CARD never
+asserted. Round 123 spent a config asserting a disagreement between a record and its
+mechanism term **without reading the mechanism term** — which was one `grep` away.
 
-So no edge makes isoniazid the enzyme's substrate. This is round 120's FrxA/nfsB distinction
-on a harder case: there the missing clause was absent, here the missing clause is one step of
-chemical reasoning away, which makes it easier to supply without noticing.
+The mech edge now cites `ARO:3000212`'s own definition, which is what that edge is *about*.
+The first version cited nat's definition there — a sentence with no mutation claim at all
+(#398).
 
-**What can be said, and its scope.** The KB record `Pfam:PF00797` *does* make the link:
+## Two records, and only one of them joins the routes
 
-> *"NAT is also responsible for the inactivation of Isoniazid (a drug used to treat
-> tuberculosis) **in humans**."*
+| record | definition |
+|---|---|
+| **ARO:3004930** | *"Mutations that occur in nat **which through overexpression of the enzyme** can result in or contribute to antibiotic resistance to isoniazid."* |
+| **ARO:3004910** | *"…catalyzes the transfer of the acetyl group… **Reports have shown** that overexpression of this enzyme **may be** responsible for increased resistance to isoniazid."* |
 
-That is cited — as `RO:0002610`, on its own edge, with the organism scope stated in the notes,
-because this record is *M. tuberculosis* nat. A causal predicate would assert the transfer
-across organisms, and nothing supports that. Same treatment as round 121's Neisseria
-modelling result.
+CARD **joins** mutation and overexpression on ARO:3004930 and never joins them on
+ARO:3004910. So two configs: the joined record gets
+`determinant --causally upstream of--> overexpression` from its own sentence, and the parent
+gets **no incoming edge on that node at all**, because nothing supplies one.
+
+The first version promoted **both** with the parent's sentence and then annotated ARO:3004930
+with a "disagreement" its own definition refutes (#395). **That is #371 inverted** — every
+prior instance was a record borrowing a relative's specificity; this one *discarded its own*.
+
+## What is still not asserted
+
+Isoniazid **is** a hydrazine, and CARD says NAT acts on *"arylamines and hydrazines"*. The
+drug-inactivation mechanism is one step of chemical reasoning away — and CARD never takes it.
+No edge makes isoniazid the substrate; **no config carries a drug edge at all.**
+
+The first version did carry one, as `acetylation --RO:0002610--> drug0` whose **sole**
+evidence was Pfam's *"NAT is also responsible for the inactivation of Isoniazid … in humans"*
+— **inverting round 121's rule** that out-of-scope context may ride on an edge CARD supports
+but may never be an edge's only evidence. And the test pinned that wrong shape (#396). The
+weaker predicate hid the claim from the `has input`/`has output` ban without removing it from
+the graph.
 
 ## Provenance
 
 * records touched: **2** · SEEDED → REVIEWED
-* `just lint`: passed · `just test`: **751 passed** (+2), run before the push
-* corpus after: **350,267 nodes · 372,573 edges · 0 errors · 372,573/372,573 snippet-cited**
-* `just validate` on both: 0 failures · `--verify`: 3 KB CURIEs, 0 skips, 0 problems
-* `just audit-fit`: 0 · drafts remaining: **190 → 188**
+* `just lint`: passed · `just test`: **753 passed** (+4), run before the push
+* corpus after: **350,267 nodes · 372,570 edges · 0 errors · 372,570/372,570 snippet-cited**
+* `just validate` on both: 0 failures · `--verify`: 4 KB CURIEs, the split refusal firing by
+  name, 0 problems · `just audit-fit`: 0
+* drafts remaining: **190 → 188**
 
-## Open questions
+## Review
 
-* **#393 wants a count before more `ARO:3000212` families are curated.** For every promoted
-  record carrying that mechanism, does its own definition contain a mutation word, or does it
-  say *overexpression* / *upregulation* / *increased expression*? Unknown today.
-* **#345, #365 and #393 are one family of defect** — the graph's fixed structure asserting
-  something the record's own text does not. That framing is more useful than three issues.
-* **`ARO:3004893` (ahpC) is the other clean prodrug-activation record and is blocked on
-  #260**, where CARD contradicts itself: one ahpC record says the enzyme *activates*
-  antibiotics, the other calls it an alkyl hydroperoxide reductase protecting against
-  oxidative stress.
+One round, **six findings, all filed (#395–#399 plus #393's correction), all addressed.**
+The reviewer's verdict on the first version was **not mergeable**, and it was right:
+
+* **#395** the record discarding its own definition for its parent's — #371 inverted;
+* **#396** out-of-scope context as an edge's sole evidence, with a test pinning it;
+* **#397** an `overexpression --positively regulates--> determinant` edge that was circular
+  (overexpression *is* elevated abundance of the determinant, not a regulator of it),
+  unsupported by any sentence, and left the node with no incoming edge;
+* **#398** mech edges citing a sentence with no mutation claim;
+* **#399** `GO:0008080` where `GO:0004060` (*arylamine N-acetyltransferase activity*) is the
+  exact term, **already a KB record**, and whose definition literally states the
+  `has input acetyl-CoA` claim the graph made separately.
+
+**Only one review round ran**, against five in rounds 121–122. Given rounds 121 and 122 each
+found new defect classes in rounds 2, 3 and 4, this round should be assumed under-reviewed.
