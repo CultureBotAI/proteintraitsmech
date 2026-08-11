@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3005082
 trait_relations:
@@ -25,12 +25,14 @@ evidence:
 - reference: DOI:10.3390/antibiotics9060313
   notes: PMID:32526926 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Thermus thermophilus uL3 mutations conferring resistance to pleuromutilin antibiotics
-    → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Thermus thermophilus uL3 mutations conferring resistance to pleuromutilin antibiotics → mechanism
+    → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3005081). uL3 -- target alteration IN TRANS on the large subunit, the same shape round 121 named
+    for rpsL and the first family whose primary paper states it outright. The record names the protein,
+    so the L3 KB trait is used.
   nodes:
   - node_id: determinant
     label: Thermus thermophilus uL3 mutations conferring resistance to pleuromutilin antibiotics
@@ -44,6 +46,48 @@ causal_graphs:
     label: pleuromutilin antibiotic
     node_type: CHEMICAL
     grounding: ARO:3000670
+  - node_id: family
+    label: Ribosomal protein L3
+    node_type: DOMAIN
+    grounding: Pfam:PF00297
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: ptc
+    label: peptidyl transferase centre (the drug's binding site)
+    node_type: STATE
+    description: 'Ungrounded. GO:0000048 is `peptidyltransferase activity`, the FUNCTION, and this node
+      is the structural site the drug occupies -- not the same thing, so it is not reused (#346''s rule:
+      a live CURIE that means something else is worse than none).'
+  - node_id: subunit50s
+    label: large ribosomal subunit (50S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015934
+    description: What the snippet actually locates the PTC in. The earlier `ptc part of rrna23s` edge
+      asserted the PTC's COMPOSITION, which no snippet on this record states -- and PF00297's own hedge
+      (L3 'may participate in the formation of the PTC') says the PTC is not wholly 23S rRNA anyway (#373).
+  - node_id: rrna23s
+    label: 23S ribosomal RNA
+    node_type: NUCLEIC_ACID
+    description: The molecule whose conformation the mutation alters. Ungrounded for the same reason the
+      16S node is in round 121 (#346).
+  - node_id: peptide_bond
+    label: peptide bond formation
+    node_type: BIOLOGICAL_PROCESS
+    description: 'UNGROUNDED. GO:0006414 is `translational elongation` and GO:0000048 is `peptidyltransferase
+      activity` -- a broader process and an activity. Neither IS peptide bond formation, and #346''s rule
+      says a live CURIE that means something else is worse than none. It was grounded to GO:0006414 until
+      review caught the config applying that rule to the node above and breaking it here (#376).'
+  - node_id: altered_conformation
+    label: altered local 23S rRNA conformation at the active site
+    node_type: STATE
+    description: 'What the substitution produces. A STATE because the object of the causal edge should
+      be the CONFORMATION, not the molecule: ''interferes with the rRNA conformation'' does not say the
+      rRNA''s function is decreased, and resistant ribosomes still translate (#377). NOT because a STATE
+      object is disallowed -- round 121''s ARO:3003395 points RO:0002212 at a STATE, and so does this
+      graph, twice (#385).'
+  - node_id: drug_binding
+    label: tiamulin-ribosome binding
+    node_type: STATE
+    description: The interaction the mutation reduces.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -57,49 +101,177 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.3390/antibiotics9060313
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
     - reference: ARO:3005081
       snippet: Thermus thermophilus ribosomal protein uL3 containing various mutations conferring resistance
         to tiamulin. Mutations in the ribosomal protein of uL3 acts by interfering with local rRNA conformation
         thus conferring resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.3390/antibiotics9060313
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3005081
+      snippet: Thermus thermophilus ribosomal protein uL3 containing various mutations conferring resistance
+        to tiamulin. Mutations in the ribosomal protein of uL3 acts by interfering with local rRNA conformation
+        thus conferring resistance.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.3390/antibiotics9060313
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3005081
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000671 ! tiamulin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: Thermus thermophilus ribosomal protein uL3 containing various mutations conferring resistance
+        to tiamulin. Mutations in the ribosomal protein of uL3 acts by interfering with local rRNA conformation
+        thus conferring resistance.
+      notes: CARD states the causation -- 'thus conferring resistance'.
+    - reference: PMID:12936991
+      snippet: Selection in a strain with all seven chromosomal rRNA operons yielded a mutant with an
+        A445G mutation in the gene coding for ribosomal protein L3, resulting in an Asn149Asp alteration.
+      notes: Bosling 2003, the substitution itself -- Asn149Asp in L3. Cited only where the record names
+        L3 (#374).
+    - reference: PMID:12936991
+      snippet: Chemical footprinting experiments show a reduced binding of tiamulin to mutant ribosomes.
+      notes: 'The measurement: REDUCED BINDING to mutant ribosomes. This is what resistance is, physically.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to pleuromutilin antibiotic.
     evidence:
     - reference: ARO:3005082
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3000670 ! pleuromutilin antibiotic'
       notes: Asserted on ARO:3005082 (Ribosomal protein mutation conferring resistance to pleuromutilin
         antibiotics), an is_a ancestor of this record's ARO:3005081; inherited by this variant. CARD/ARO
         release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to pleuromutilin antibiotic.
+  - subject: family
+    predicate: part of (the L3 family assignment of this determinant)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF00297
+      snippet: Ribosomal protein L3 (also known as uL3) is one of the proteins from the large ribosomal
+        subunit. In Escherichia coli, L3 is known to bind to the 23S rRNA and may participate in the formation
+        of the peptidyltransferase centre of the ribosome.
+      notes: 'KB trait: the L3 family. Its abstract names uL3 (#196) AND hedges the PTC claim -- ''MAY
+        PARTICIPATE in the formation of the peptidyltransferase centre'' -- which is quoted with the hedge,
+        not around it.'
+  - subject: ptc
+    predicate: part of (the PTC of the 50S subunit)
+    predicate_id: BFO:0000050
+    object: subunit50s
+    description: Exactly what the snippet locates, and no more (#373).
+    evidence:
+    - reference: PMID:15554968
+      snippet: Our results show that tiamulin is located within the peptidyl transferase center (PTC)
+        of the 50S ribosomal subunit with its tricyclic mutilin core positioned in a tight pocket at the
+        A-tRNA binding site.
+      notes: '''the peptidyl transferase center (PTC) OF THE 50S RIBOSOMAL SUBUNIT''. NOT asserted: the
+        PTC''s composition, which this sentence does not give.'
+  - subject: drug0
+    predicate: molecularly interacts with (binds the peptidyl transferase centre)
+    predicate_id: RO:0002436
+    object: ptc
+    description: The drug-action arm.
+    evidence:
+    - reference: PMID:15554968
+      snippet: Our results show that tiamulin is located within the peptidyl transferase center (PTC)
+        of the 50S ribosomal subunit with its tricyclic mutilin core positioned in a tight pocket at the
+        A-tRNA binding site.
+      notes: NOTE the drug0 node is the drug CLASS (ARO:3000670, pleuromutilin antibiotic); tiamulin is
+        the member both papers studied (#353).
+    - reference: PMID:12936991
+      snippet: The antibiotic tiamulin targets the 50S subunit of the bacterial ribosome and interacts
+        at the peptidyl transferase center.
+      notes: Bosling 2003 states the same target independently.
+  - subject: drug_binding
+    predicate: has part (the antibiotic)
+    predicate_id: BFO:0000051
+    object: drug0
+    description: 'Round 21''s rule, and round 121''s #370: a binding state is defined by BOTH constituents,
+      not one.'
+    evidence:
+    - reference: PMID:12936991
+      snippet: Chemical footprinting experiments show a reduced binding of tiamulin to mutant ribosomes.
+      notes: '''binding of tiamulin to ... ribosomes'' -- the drug half.'
+  - subject: drug_binding
+    predicate: has part (the site it binds)
+    predicate_id: BFO:0000051
+    object: ptc
+    evidence:
+    - reference: PMID:15554968
+      snippet: Our results show that tiamulin is located within the peptidyl transferase center (PTC)
+        of the 50S ribosomal subunit with its tricyclic mutilin core positioned in a tight pocket at the
+        A-tRNA binding site.
+      notes: The site half of the same binding state.
+  - subject: determinant
+    predicate: causally upstream of (the substitution alters the conformation)
+    predicate_id: RO:0002411
+    object: altered_conformation
+    description: 'The in-trans step: a protein substitution changes the shape of the RNA that forms the
+      drug''s site.'
+    evidence:
+    - reference: ARO:3005081
+      snippet: Thermus thermophilus ribosomal protein uL3 containing various mutations conferring resistance
+        to tiamulin. Mutations in the ribosomal protein of uL3 acts by interfering with local rRNA conformation
+        thus conferring resistance.
+      notes: CARD's own words -- 'interfering with local rRNA conformation' / 'interfere with the rRNA
+        conformation at the active site'.
+    - reference: PMID:12936991
+      snippet: No mutations in the rRNA were selected as resistance determinants using a strain expressing
+        only a plasmid-encoded rRNA operon.
+      notes: 'The negative result that makes this IN TRANS rather than a plain target alteration: rRNA
+        mutations were NOT selected, so the protein is the determinant even though the drug binds the
+        RNA.'
+  - subject: altered_conformation
+    predicate: characteristic of (a conformation of the 23S rRNA)
+    predicate_id: RO:0000052
+    object: rrna23s
+    description: Which molecule's conformation it is -- the fact that made this an IN-TRANS mechanism.
+    evidence:
+    - reference: ARO:3005081
+      snippet: Thermus thermophilus ribosomal protein uL3 containing various mutations conferring resistance
+        to tiamulin. Mutations in the ribosomal protein of uL3 acts by interfering with local rRNA conformation
+        thus conferring resistance.
+      notes: '''the rRNA conformation''.'
+  - subject: altered_conformation
+    predicate: negatively regulates (the altered site binds the drug less well)
+    predicate_id: RO:0002212
+    object: drug_binding
+    evidence:
+    - reference: PMID:12936991
+      snippet: It is inferred that the L3 mutation, which points into the peptidyl transferase cleft,
+        causes tiamulin resistance by alteration of the drug-binding site.
+      notes: '''causes tiamulin resistance by ALTERATION OF THE DRUG-BINDING SITE'' -- quoted with its
+        ''It is inferred'' hedge intact.'
+  - subject: determinant
+    predicate: negatively regulates (mutation reduces drug binding)
+    predicate_id: RO:0002212
+    object: drug_binding
+    description: The causal core.
+    evidence:
+    - reference: PMID:12936991
+      snippet: Chemical footprinting experiments show a reduced binding of tiamulin to mutant ribosomes.
+      notes: 'Measured, not inferred: chemical footprinting.'
+    - reference: PMID:12936991
+      snippet: It is inferred that the L3 mutation, which points into the peptidyl transferase cleft,
+        causes tiamulin resistance by alteration of the drug-binding site.
+      notes: The mechanism sentence, and the paper hedges the INFERENCE itself -- 'It is INFERRED that
+        the L3 mutation ... causes tiamulin resistance by alteration of the drug-binding site.' Quoted
+        with the hedge rather than around it.
+  - subject: drug_binding
+    predicate: negatively regulates (bound drug blocks peptide bond formation)
+    predicate_id: RO:0002212
+    object: peptide_bond
+    description: 'Why losing the binding rescues the cell: the binding is what stops translation.'
+    evidence:
+    - reference: PMID:15554968
+      snippet: Thereby, tiamulin directly inhibits peptide bond formation.
+      notes: '''Thereby, tiamulin directly inhibits peptide bond formation.'''
+curation_history:
+- timestamp: '2026-08-10T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

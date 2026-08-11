@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3007526
 trait_relations:
@@ -25,12 +25,15 @@ evidence:
 - reference: DOI:10.1128/AAC.00891-21
   notes: PMID:34339280 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Bacillus subtilis rpsE mutations conferring resistance to spectinomycin → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Bacillus subtilis rpsE mutations conferring resistance to spectinomycin → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3007526). rpsE -- an ASSOCIATION, not a mechanism. CARD supplies two structural facts (S5 is
+    on the 30S subunit; it interacts with 16S rRNA) and links substitutions to resistance without joining
+    them. No MECHANISM edge connects the substitution to the drug -- the promoter''s fixed `confers resistance
+    to (drug class)` edge is still emitted and still carries CARD''s own assertion (#345, #350).'
   nodes:
   - node_id: determinant
     label: Bacillus subtilis rpsE mutations conferring resistance to spectinomycin
@@ -44,6 +47,25 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
+  - node_id: domain
+    label: Ribosomal protein S5, N-terminal domain
+    node_type: DOMAIN
+    grounding: Pfam:PF00333
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: domain_c
+    label: Ribosomal protein S5, C-terminal domain
+    node_type: DOMAIN
+    grounding: Pfam:PF03719
+    description: 'KB protein-trait record: the determinant''s other half. Typed as the DOMAIN it is, rather
+      than through protein_traits["fold"] (#352, #358).'
+  - node_id: subunit30s
+    label: small ribosomal subunit (30S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015935
+  - node_id: rrna16s
+    label: 16S ribosomal RNA
+    node_type: NUCLEIC_ACID
+    description: Ungrounded for the same reason as the rpsL graph (#346).
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -57,47 +79,121 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1128/AAC.00891-21
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3007527
-      snippet: Amino acid substitutions in ribosomal protein S5, rpsE, is associated with resistance to
-        spectinomycin (SpcR).
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+    - reference: ARO:3007526
+      snippet: Amino acid substitutions in ribosomal protein S5, the product of the rpsE gene, is associated
+        with resistance to spectinomycin (SpcR). This protein is located on the 30S subunit and interacts
+        with 16S rRNA and other proteins.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00891-21
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+    - reference: ARO:3007526
+      snippet: Amino acid substitutions in ribosomal protein S5, the product of the rpsE gene, is associated
+        with resistance to spectinomycin (SpcR). This protein is located on the 30S subunit and interacts
+        with 16S rRNA and other proteins.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1128/AAC.00891-21
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3007527
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:0000039 ! spectinomycin'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+    - reference: ARO:3007526
+      snippet: Amino acid substitutions in ribosomal protein S5, the product of the rpsE gene, is associated
+        with resistance to spectinomycin (SpcR). This protein is located on the 30S subunit and interacts
+        with 16S rRNA and other proteins.
+      notes: 'CARD says ''is ASSOCIATED WITH resistance'' and gives no mechanism. The fixed edge shape
+        can only say `causally upstream of`, which overstates that -- filed as #345. The explicit `correlated
+        with` edge below is the honest form.'
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3007526
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
       notes: Asserted on ARO:3007526 (spectinomycin resistant rpsE), an is_a ancestor of this record's
         ARO:3007527; inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+  - subject: domain
+    predicate: part of (the S5 N-terminal domain of this determinant)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF00333
+      snippet: Small ribosomal subunit protein uS5 is one of the proteins from the small ribosomal subunit,
+        and is a protein of 166 to 254 amino acid residues. In Escherichia coli, uS5 is known to be important
+        in the assembly and function of the 30S ribosomal subunit.
+      notes: 'KB trait: the S5 N-terminal domain. Its InterPro abstract names uS5.'
+  - subject: domain_c
+    predicate: part of (the S5 C-terminal domain of this determinant)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF03719
+      snippet: This entry represents the C-terminal of the ribosomal protein uS5, which is related to
+        the 30S ribosomal protein S5P from Sulfolobus acidocaldarius (UniProtKB:O05641).
+      notes: 'KB trait: the S5 C-terminal domain. Its InterPro abstract names uS5, per #196.'
+  - subject: determinant
+    predicate: part of (located on the 30S subunit)
+    predicate_id: BFO:0000050
+    object: subunit30s
+    evidence:
+    - reference: ARO:3007526
+      snippet: Amino acid substitutions in ribosomal protein S5, the product of the rpsE gene, is associated
+        with resistance to spectinomycin (SpcR). This protein is located on the 30S subunit and interacts
+        with 16S rRNA and other proteins.
+      notes: '''This protein is located on the 30S subunit''.'
+  - subject: determinant
+    predicate: molecularly interacts with (interacts with 16S rRNA)
+    predicate_id: RO:0002436
+    object: rrna16s
+    evidence:
+    - reference: ARO:3007526
+      snippet: Amino acid substitutions in ribosomal protein S5, the product of the rpsE gene, is associated
+        with resistance to spectinomycin (SpcR). This protein is located on the 30S subunit and interacts
+        with 16S rRNA and other proteins.
+      notes: '''and interacts with 16S rRNA and other proteins''. The ''other proteins'' are NOT given
+        nodes -- CARD does not name them.'
+    - reference: PMID:42450237
+      snippet: Modelling showed that these mutations perturb the conserved network of stabilizing contacts
+        between RpsE residues Lys25 (Lys23 in E. coli numbering) and Lys28 (Lys26), as well as helix 34
+        nucleotides G922, A923, and C1069 of 16S rRNA, potentially altering the architecture of the spectinomycin-binding
+        site.
+      notes: 'CONTEXT ONLY, carrying three qualifications at once: it is a MODELLING result (''Modelling
+        showed''), it is HEDGED (''potentially altering''), and it is Neisseria, whereas these records
+        are Bacillus subtilis and unspecified. It is attached to the interaction edge CARD already supports,
+        and licenses no edge of its own.'
+  - subject: drug0
+    predicate: molecularly interacts with (spectinomycin acts on the 30S subunit)
+    predicate_id: RO:0002436
+    object: subunit30s
+    description: The drug-action arm, from the 30S crystal structures.
+    evidence:
+    - reference: PMID:11014183
+      snippet: We also describe the crystal structure of the 30S subunit complexed with the antibiotics
+        paromomycin, streptomycin and spectinomycin, which interfere with decoding and translocation.
+      notes: 'Carter 2000 solved the 30S subunit with spectinomycin bound. NOTE the drug0 node is the
+        drug CLASS (ARO:0000016, aminoglycoside antibiotic); spectinomycin is an aminocyclitol that CARD
+        files under it, and the `requires` guard can only check the class (#353). NOT asserted: that S5
+        is part of that binding site, which this abstract does not say and CARD does not claim.'
+  - subject: determinant
+    predicate: correlated with (substitutions are associated with resistance)
+    predicate_id: RO:0002610
+    object: resistance
+    description: The honest strength of CARD's claim, written explicitly because the fixed determinant->resistance
+      edge cannot express it (#345).
+    evidence:
+    - reference: ARO:3007526
+      snippet: Amino acid substitutions in ribosomal protein S5, the product of the rpsE gene, is associated
+        with resistance to spectinomycin (SpcR). This protein is located on the 30S subunit and interacts
+        with 16S rRNA and other proteins.
+      notes: '''is associated with resistance to spectinomycin''. Association is all CARD asserts, so
+        association is all this edge asserts.'
+curation_history:
+- timestamp: '2026-08-10T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

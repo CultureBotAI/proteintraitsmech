@@ -7343,9 +7343,16 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
     # PROTEIN for every family until round 29, but 105 draft records are ribosomal RNA and
     # calling those a protein would be simply false (#215). Optional, defaulting to the
     # old value so no existing family changes.
-    nodes = [{"node_id": "determinant", "label": label,
-              "node_type": cfg.get("determinant_node_type", "PROTEIN"),
-              "grounding": ident}]
+    determinant_node = {"node_id": "determinant", "label": label,
+                        "node_type": cfg.get("determinant_node_type", "PROTEIN"),
+                        "grounding": ident}
+    # A limitation that is a property of the DETERMINANT -- "CARD names no specific protein
+    # here" -- belongs on the node. Round 122 first wrote it as a second, weaker edge on a
+    # pair that already had a strong one, which asserted and declined the same relation from
+    # the same sentence (#380).
+    if cfg.get("determinant_note"):
+        determinant_node["description"] = cfg["determinant_note"]
+    nodes = [determinant_node]
     for i, mid in enumerate(mech):
         nodes.append({"node_id": f"mech{i}", "label": names.get(mid, mid),
                       "node_type": "MOLECULAR_FUNCTION", "grounding": mid})
@@ -8450,6 +8457,936 @@ FAMILY_SNIPPETS["ARO:3000000"] = [
         ],
     },
 ]
+
+
+# ---------------------------------------------------------------------------------------
+# Round 121 — three ribosomal-protein target families, and what each source will and will
+# not support.
+#
+# All three are `ARO:3000212` (mutation conferring antibiotic resistance) and all three are
+# small-subunit ribosomal proteins. They get three DIFFERENT graphs, because their CARD
+# definitions differ in exactly the way that decides how much may be asserted:
+#
+#   rpsA (ARO:3004722) — CARD names the drug's activation, the binding, and the process
+#                        inhibited, AND states the function is preserved. Fullest graph.
+#   rpsL (ARO:3003395) — CARD states a mechanism its own primary source only hedges.
+#                        Curated at the SOURCE's strength, not CARD's.
+#   rpsE (ARO:3007526) — CARD says "associated with" and gives no mechanism at all.
+#                        Structural facts only, plus a `correlated with` edge (#345).
+#
+# `Pfam:PF00575` is deliberately NOT used as rpsA's domain node: the KB record's label says
+# "S1 RNA binding domain" but its definition is IPR059328's abstract ("Domain of unknown
+# function DUF8284") — the wrong InterPro entry, filed as #344. Round 21's rule applies:
+# the weaker-looking node with real evidence beats the better-looking node with borrowed
+# evidence, and here the borrowed evidence is a different domain entirely.
+#
+# Three groundings recalled from memory were wrong and are left ungrounded rather than
+# guessed (#346): CHEBI:45001 (obsolete, and its `term_replaced_by` is an unrelated
+# chemical), SO:0000407 (is `cytosolic_18S_rRNA`, not 16S), SO:0005836 (is
+# `regulatory_region`, not pseudoknot).
+
+# Shi et al., Science 2011 — the paper that identified RpsA as POA's target. Every clause
+# CARD's two rpsA records make is a sentence of this abstract.
+_POA_ACTIVATION = "PZA is hydrolyzed intracellularly to pyrazinoic acid (POA) by pyrazinamidase (PZase, encoded by pncA), an enzyme frequently lost in PZA-resistant strains, but the target of POA in Mycobacterium tuberculosis has remained elusive."
+_POA_TARGET = "Here, we identify a previously unknown target of POA as the ribosomal protein S1 (RpsA), a vital protein involved in protein translation and the ribosome-sparing process of trans-translation."
+# The one sentence carrying BOTH the binding and its loss in the mutant — the same
+# two-arms-in-one-sentence shape as round 21's vanH affinity quote.
+_POA_BINDING = "RpsA overexpression conferred increased PZA resistance, and we confirmed that POA bound to RpsA (but not a clinically identified ΔAla mutant) and subsequently inhibited trans-translation rather than canonical translation."
+_CARD_RPSA = "The 30S ribosomal protein S1 of Mycobacterium tuberculosis is required for mRNA translation initiation, playing a particular role in trans-translation. Mutations to rpsA prevent pyrazinoic acid, the active form of pyrazinamide catalyzed by pncA, from targeting RpsA to inhibit translation."
+_CARD_RPSA_KEPT = "RpsA, the 30S ribosomal protein S1 of Mycobacterium tuberculosis, is involved in trans-translation and is targeted by pyrazinonic acid, the active form of the antibiotic pyrazinamide, which disrupts the initiation of mRNA translation. Mutations in the amino acid sequence of rpsA can confer resistance to pyrazinamide maintaining rpsA function."
+_POA_ISOLATES = "Three PZA-resistant clinical isolates without pncA mutation harbored RpsA mutations."
+
+FAMILY_SNIPPETS["ARO:3004722"] = {   # rpsA / ribosomal protein S1 — pyrazinamide
+    "curated": "2026-08-10T00:00:00Z",
+    "precondition": _requires_mech("ARO:3000212", "mutation"),
+    "reference": "PMID:21835980",
+    "mech": {"ARO:3000212": _POA_BINDING},
+    "mech_res": _POA_BINDING,
+    "det_res": [
+        {"reference": "ARO:3004722", "snippet": _CARD_RPSA,
+         "notes": "CARD makes the causal claim ('Mutations to rpsA PREVENT pyrazinoic acid ... "
+                  "from targeting RpsA'), so CARD carries the edge that asserts it (#354)."},
+        {"reference": "PMID:21835980", "snippet": _POA_ISOLATES,
+         "notes": "Corroboration, and explicitly a CO-OCCURRENCE, not a conferral: three "
+                  "isolates resistant WITHOUT a pncA mutation that carried RpsA mutations. "
+                  "Shi's conferral result is about OVEREXPRESSION, not about these mutations, "
+                  "so it is not cited here."},
+    ],
+    "res_drug": _POA_TARGET,
+    "note": ("rpsA -- target alteration with the target's own function EXPLICITLY PRESERVED. "
+             "CARD ARO:3004721 says mutations resist 'maintaining rpsA function', and Shi 2011 "
+             "says POA inhibited 'trans-translation rather than canonical translation'. Two "
+             "independent statements that nothing is lost, so NO loss-of-function edge is "
+             "written -- see the test that pins the omission."),
+    "extra_nodes": [
+        {"node_id": "poa", "label": "pyrazinoic acid (POA), the active form of pyrazinamide",
+         "node_type": "CHEMICAL", "grounding": "CHEBI:71311",
+         "description": "ChEBI `pyrazine-2-carboxylic acid`. Grounded by label match, not by "
+                        "recall: the recalled CHEBI:45001 is obsolete AND was a different "
+                        "compound (#346)."},
+        {"node_id": "trans_translation", "label": "trans-translation",
+         "node_type": "BIOLOGICAL_PROCESS", "grounding": "GO:0070929"},
+        {"node_id": "rpsa_wt", "label": "ribosomal protein S1 (RpsA), drug-sensitive form",
+         "node_type": "PROTEIN",
+         "description": "The drug's TARGET. THE SAME PROTEIN AS `determinant`, in its "
+                        "unsubstituted form -- ARO:3004722 denotes the resistant allele, and "
+                        "the source says POA does not bind that (#349). No EDGE states that "
+                        "relation because RO has no allelic-variant predicate: RO:0002312 is "
+                        "'evolutionary variant of', RO:0001000 'derives from', neither means "
+                        "this. Forcing one would be #346's mistake (#357). Ungrounded -- only "
+                        "the resistant allele has an ARO term."},
+        {"node_id": "poa_rpsa", "label": "POA-RpsA complex", "node_type": "STATE",
+         "description": "The binding event the resistant mutant loses. Ungrounded, as with "
+                        "the other drug-target complexes in this corpus (round 21)."},
+    ],
+    "extra_edges": [
+        {"subject": "drug0", "object": "poa",
+         "predicate": "causally upstream of (hydrolysed to the active form)",
+         "predicate_id": "RO:0002411",
+         "requires": {"drug0": "ARO:3007155"},
+         "description": "Pyrazinamide is a prodrug; PZase (pncA) makes the species that acts.",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_ACTIVATION,
+                       "notes": "The activation step CARD ARO:3004722 names ('catalyzed by pncA'). "
+                                "NOTE the drug0 node is the drug CLASS (ARO:3007155, pyrazine "
+                                "antibiotic) and this claim holds for pyrazinamide specifically, "
+                                "not for every pyrazine (#353). NOT asserted: loss of pncA, a "
+                                "different determinant and this abstract's own contrast case."}]},
+        {"subject": "poa", "object": "rpsa_wt",
+         "predicate": "molecularly interacts with (binds drug-sensitive RpsA)",
+         "predicate_id": "RO:0002436",
+         "description": "The drug's normal action. Its object is the drug-SENSITIVE protein, "
+                        "not this record's determinant -- pointing it at the determinant made "
+                        "the graph assert both that POA binds it and that it abolishes POA "
+                        "binding (#349).",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_BINDING,
+                       "notes": "'POA bound to RpsA' -- and the parenthesis says which RpsA: "
+                                "'but not a clinically identified ΔAla mutant'. DRUG-ACTION arm; "
+                                "resistance is its loss."}]},
+        {"subject": "poa_rpsa", "object": "poa",
+         "predicate": "has part (the drug half of the complex)", "predicate_id": "BFO:0000051",
+         "description": "The other constituent. Round 121 first defined this complex by its "
+                        "protein half alone, so a node labelled for two participants was "
+                        "structurally made of one (#370).",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_BINDING,
+                       "notes": "'POA bound to RpsA' -- POA is the other constituent."}]},
+        {"subject": "poa_rpsa", "object": "rpsa_wt",
+         "predicate": "has part (the protein half of the complex)", "predicate_id": "BFO:0000051",
+         "description": "Round 21's rule: a complex is DEFINED by its constituents rather than "
+                        "interacting with them.",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_BINDING,
+                       "notes": "'POA bound to RpsA' -- the two constituents of the complex."}]},
+        {"subject": "rpsa_wt", "object": "trans_translation",
+         "predicate": "enables (ribosome-sparing trans-translation)", "predicate_id": "RO:0002327",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_TARGET,
+                       "notes": "What the drug-sensitive protein does, which is what the drug "
+                                "interrupts."}]},
+        {"subject": "determinant", "object": "trans_translation",
+         "predicate": "enables (ribosome-sparing trans-translation)", "predicate_id": "RO:0002327",
+         "description": "The resistant variant STILL does this.",
+         "evidence": [{"reference": "ARO:3004721", "snippet": _CARD_RPSA_KEPT,
+                       "notes": "The claim the description makes, cited where it is actually "
+                                "made: 'maintaining rpsA function'. Round 2 of review found the "
+                                "description asserting this over evidence that did not say it "
+                                "(#359). NOTE this is the more specific term ARO:3004721; "
+                                "ARO:3004722's own definition says mutations 'prevent pyrazinoic "
+                                "acid from TARGETING RpsA' and does not itself state that the "
+                                "function is preserved (#371)."},
+                      {"reference": "PMID:21835980", "snippet": _POA_TARGET,
+                       "notes": "'a vital protein involved in protein translation and the "
+                                "ribosome-sparing process of trans-translation'."}]},
+        {"subject": "poa", "object": "trans_translation",
+         "predicate": "negatively regulates (inhibits trans-translation)",
+         "predicate_id": "RO:0002212",
+         "description": "What the drug does once bound -- and the specificity that makes the "
+                        "mechanism coherent: canonical translation is NOT inhibited.",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_BINDING,
+                       "notes": "'inhibited trans-translation rather than canonical translation'. "
+                                "The negative half is the point -- the same device as round 23's "
+                                "vanXY specificity edge."}]},
+        {"subject": "determinant", "object": "poa_rpsa",
+         "predicate": "negatively regulates (substitution abolishes drug binding)",
+         "predicate_id": "RO:0002212",
+         "description": "The causal core: the resistant substitution is the loss of the binding, "
+                        "not the loss of the protein's job.",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_BINDING,
+                       "notes": "The parenthesis '(but not a clinically identified ΔAla mutant)' "
+                                "is the resistance result -- a NEGATIVE finding, which is why the "
+                                "whole sentence is quoted rather than its first clause."}]},
+        {"subject": "poa_rpsa", "object": "trans_translation",
+         "predicate": "negatively regulates (the bound complex is what inhibits)",
+         "predicate_id": "RO:0002212",
+         "evidence": [{"reference": "PMID:21835980", "snippet": _POA_BINDING,
+                       "notes": "'bound to RpsA and subsequently inhibited' -- the binding is "
+                                "upstream of the inhibition in the source's own word order."}]},
+    ],
+}
+
+# rpsL. CARD asserts a mechanism ('S12 stabilizes the pseudoknot'; resistance 'by disrupting
+# interactions between 16S rRNA and streptomycin') that PMID:7934937 -- the paper the
+# definition is built from -- states only as a LINKAGE and an ASSOCIATION.
+#
+# The stance is PER-CLAIM, not per-record (#347 review rounds 4 and 5, which found this
+# comment still asserting the record-level version). The conferral edges DO follow CARD,
+# because CARD is the only source that states conferral and refusing it there would leave
+# the record asserting a mechanism with nobody claiming the outcome. Exactly ONE edge --
+# determinant -> pseudoknot -- is curated below CARD's strength, and it is the one claim the
+# two sources actually disagree about. The gap is stated on that edge rather than resolved
+# in CARD's favour.
+_RPSL_MUTATIONS = "The mutations found either lead to amino acid changes in ribosomal protein S12 or alter the primary structure of the 16S rRNA."
+_RPSL_PSEUDOKNOT = "The 16S rRNA region mutated perturbs a pseudoknot structure in a region which has been linked to ribosomal S12 protein."
+_RPSL_SOURCE_ASSOC = "We demonstrate that streptomycin resistance is associated with mutations implicated in ribosomal resistance."
+_RPSL_ASSOC = "Streptomycin resistance in about one-half of M. tuberculosis isolates is associated with missense mutations in the rpsL gene coding for ribosomal protein S12 or nucleotide substitutions in the 16S rRNA gene (rrs)."
+_30S_ANTIBIOTICS = "We also describe the crystal structure of the 30S subunit complexed with the antibiotics paromomycin, streptomycin and spectinomycin, which interfere with decoding and translocation."
+_CARD_RPSL = "Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer streptomycin resistance by disrupting interactions between 16S rRNA and streptomycin."
+
+FAMILY_SNIPPETS["ARO:3003395"] = {   # rpsL / ribosomal protein S12 — streptomycin
+    "curated": "2026-08-10T00:00:00Z",
+    "precondition": _requires_mech("ARO:3000212", "mutation"),
+    # `reference` is CARD, not the 1993 paper, and that is forced by #348 + #363 together:
+    # the promoter attributes mech/mech_res/res_drug to `cfg["reference"]`, those three
+    # edges assert CONFERRAL, and only CARD states conferral. Putting CARD's sentence under
+    # PMID:7934937 would have re-created #348 in the act of fixing #363. The 1993 paper is
+    # cited explicitly on the two edges whose claims it does make. Same shape as rpsE.
+    "reference": "ARO:3003395",
+    "mech": {"ARO:3000212": _CARD_RPSL},
+    # #348: mech_res and res_drug are attributed to cfg["reference"] by the promoter, so
+    # a snippet placed there must come from that reference. Musser's (PMID:8665467) sentence
+    # appears ONLY on det_res, which names its own reference.
+    #
+    # #363: all three carry CARD's definition rather than PMID:7934937's association
+    # sentence, because all three assert CONFERRAL and only CARD states it. That is exactly
+    # WHY `reference` had to become ARO:3003395 -- do not repoint it back to the PMID
+    # without also moving these snippets, or #348 returns.
+    "mech_res": _CARD_RPSL,
+    "det_res": [
+        {"reference": "ARO:3003395", "snippet": _CARD_RPSL,
+         "notes": "CARD makes the causal claim -- 'CONFER streptomycin resistance by "
+                  "disrupting interactions' -- so CARD carries the edge that asserts it. "
+                  "Round 3 of review found this edge citing only Musser's 'is ASSOCIATED "
+                  "with', which does not state conferral (#363, the same defect as #354)."},
+        {"reference": "PMID:8665467", "snippet": _RPSL_ASSOC,
+         "notes": "Musser 1995, corroborating and explicitly an ASSOCIATION. The MAGNITUDE is "
+                  "part of the claim -- 'about one-half' of isolates, and the other half is "
+                  "the rrs route, not this record."},
+        {"reference": "PMID:7934937", "snippet": _RPSL_MUTATIONS,
+         "notes": "Finken 1993, which is what the substitutions ARE. It reports the two "
+                  "routes and does not state conferral, which is why it does not carry this "
+                  "edge alone (#363)."},
+        {"reference": "PMID:7934937", "snippet": _RPSL_SOURCE_ASSOC,
+         "notes": "Finken 1993 stating the association in its own voice. Retained after the "
+                  "#363 fix moved the conferral claim to CARD, so the source's own weaker "
+                  "wording stays on the record beside CARD's stronger one (#367)."},
+    ],
+    "res_drug": _CARD_RPSL,
+    "note": ("rpsL -- target alteration IN TRANS: the determinant is a protein, but the "
+             "drug's binding partner CARD names is the 16S rRNA. CARD says S12 'stabilizes' "
+             "the pseudoknot; PMID:7934937, its source, says only that the region 'has been "
+             "linked to' S12 -- so THAT edge is `correlated with`, not a causal one. The "
+             "conferral edges DO follow CARD (#363): CARD is the only source that states "
+             "conferral, and refusing it there would leave the record asserting a mechanism "
+             "with no one claiming the outcome. The record follows the weaker source on the "
+             "one claim where the two disagree, not everywhere."),
+    "protein_traits": {
+        "primary_key": "domain",
+        "domain": ("Pfam:PF00164", "Ribosomal protein S12/S23", "DOMAIN",
+                   "Ribosomal protein uS12 is one of the proteins from the small ribosomal subunit. In Escherichia coli, uS12 is known to be involved in the translation initiation step."),
+        "part_pred": "part of (the S12 domain of this determinant)",
+        "part_note": "KB trait: the S12 domain. Its InterPro abstract was checked to mention "
+                     "uS12 itself, per #196.",
+    },
+    "extra_nodes": [
+        {"node_id": "rrna16s", "label": "16S ribosomal RNA", "node_type": "NUCLEIC_ACID",
+         "description": "Ungrounded on purpose: SO:0000407, recalled as 16S rRNA, is "
+                        "`cytosolic_18S_rRNA` (#346). Not looked up further rather than guessed."},
+        {"node_id": "pseudoknot", "label": "16S rRNA pseudoknot structure", "node_type": "STATE",
+         "description": "Ungrounded: SO:0005836, recalled as pseudoknot, is `regulatory_region` "
+                        "(#346)."},
+        {"node_id": "strep_binding", "label": "16S rRNA-streptomycin interaction",
+         "node_type": "STATE",
+         "description": "The interaction CARD says the substitution disrupts."},
+    ],
+    "extra_edges": [
+        {"subject": "pseudoknot", "object": "rrna16s",
+         "predicate": "part of (a structure of the 16S rRNA)", "predicate_id": "BFO:0000050",
+         "evidence": [{"reference": "PMID:7934937", "snippet": _RPSL_PSEUDOKNOT,
+                       "notes": "'a pseudoknot structure in a region' of the 16S rRNA. The one "
+                                "claim in this graph both CARD and its source state plainly."}]},
+        {"subject": "determinant", "object": "pseudoknot",
+         "predicate": "correlated with (linked to the pseudoknot region)",
+         "predicate_id": "RO:0002610",
+         "description": "Deliberately WEAKER than CARD. CARD says S12 'stabilizes' the "
+                        "pseudoknot; the paper it is built from says the region 'has been linked "
+                        "to' S12 and reports no stabilisation experiment.",
+         "evidence": [{"reference": "PMID:7934937", "snippet": _RPSL_PSEUDOKNOT,
+                       "notes": "'has been linked to ribosomal S12 protein' -- a hedged linkage. "
+                                "CARD upgrades it to 'stabilizes'; this edge does not follow it."},
+                      {"reference": "ARO:3003395", "snippet": _CARD_RPSL,
+                       "notes": "CARD's stronger wording, recorded so the disagreement is visible "
+                                "on the edge rather than only in a round report."}]},
+        {"subject": "drug0", "object": "rrna16s",
+         "predicate": "molecularly interacts with (streptomycin binds the small subunit)",
+         "predicate_id": "RO:0002436",
+         "requires": {"drug0": "ARO:0000016"},
+         "description": "The drug-action arm. Streptomycin acts on the 30S subunit; CARD names "
+                        "the 16S rRNA as its interaction partner on this record. The drug0 node "
+                        "is the CLASS (ARO:0000016), which is as specific as the guard can be "
+                        "(#353).",
+         "evidence": [{"reference": "PMID:11014183", "snippet": _30S_ANTIBIOTICS,
+                       "notes": "Carter 2000. Establishes streptomycin binds the 30S subunit and "
+                                "interferes with decoding and translocation. It does NOT state "
+                                "the 16S rRNA contact residue-by-residue; that specificity is "
+                                "CARD's, cited alongside."},
+                      {"reference": "ARO:3003395", "snippet": _CARD_RPSL,
+                       "notes": "'interactions between 16S rRNA and streptomycin' -- CARD names "
+                                "the partner."}]},
+        {"subject": "determinant", "object": "strep_binding",
+         "predicate": "negatively regulates (substitution disrupts drug binding)",
+         "predicate_id": "RO:0002212",
+         "description": "The causal core as CARD states it -- and CARD alone: PMID:7934937 "
+                        "reports the association, not this step.",
+         "evidence": [{"reference": "ARO:3003395", "snippet": _CARD_RPSL,
+                       "notes": "'confer streptomycin resistance by disrupting interactions "
+                                "between 16S rRNA and streptomycin'. CARD's mechanism claim, "
+                                "attributed to CARD because its source does not make it."}]},
+        {"subject": "strep_binding", "object": "drug0",
+         "predicate": "has part (the streptomycin half of the interaction)",
+         "predicate_id": "BFO:0000051",
+         "requires": {"drug0": "ARO:0000016"},
+         "description": "The other constituent, and the more important one: the causal core "
+                        "edge says the substitution disrupts THIS, and without the drug half "
+                        "the thing disrupted did not structurally contain the drug (#370).",
+         "evidence": [{"reference": "ARO:3003395", "snippet": _CARD_RPSL,
+                       "notes": "'interactions between 16S rRNA and STREPTOMYCIN'. The drug0 "
+                                "node is the CLASS (ARO:0000016), as elsewhere on this record "
+                                "(#353)."}]},
+        {"subject": "strep_binding", "object": "rrna16s",
+         "predicate": "has part (the 16S rRNA half of the interaction)",
+         "predicate_id": "BFO:0000051",
+         "description": "Round 21's correction: the interaction node is DEFINED by its "
+                        "constituents rather than interacting with them.",
+         "evidence": [{"reference": "ARO:3003395", "snippet": _CARD_RPSL,
+                       "notes": "'interactions between 16S rRNA and streptomycin'."}]},
+    ],
+}
+
+# rpsE. CARD gives structure and an ASSOCIATION, and no mechanism whatever.
+_CARD_RPSE = "Amino acid substitutions in ribosomal protein S5, the product of the rpsE gene, is associated with resistance to spectinomycin (SpcR). This protein is located on the 30S subunit and interacts with 16S rRNA and other proteins."
+_RPSE_LOOP2 = "Modelling showed that these mutations perturb the conserved network of stabilizing contacts between RpsE residues Lys25 (Lys23 in E. coli numbering) and Lys28 (Lys26), as well as helix 34 nucleotides G922, A923, and C1069 of 16S rRNA, potentially altering the architecture of the spectinomycin-binding site."
+
+FAMILY_SNIPPETS["ARO:3007526"] = {   # rpsE / ribosomal protein S5 — spectinomycin
+    "curated": "2026-08-10T00:00:00Z",
+    "precondition": _requires_mech("ARO:3000212", "mutation"),
+    "reference": "ARO:3007526",
+    "mech": {"ARO:3000212": _CARD_RPSE},
+    "mech_res": _CARD_RPSE,
+    "det_res": [
+        {"reference": "ARO:3007526", "snippet": _CARD_RPSE,
+         "notes": "CARD says 'is ASSOCIATED WITH resistance' and gives no mechanism. The fixed "
+                  "edge shape can only say `causally upstream of`, which overstates that -- "
+                  "filed as #345. The explicit `correlated with` edge below is the honest form."},
+    ],
+    "res_drug": _CARD_RPSE,
+    "note": ("rpsE -- an ASSOCIATION, not a mechanism. CARD supplies two structural facts "
+             "(S5 is on the 30S subunit; it interacts with 16S rRNA) and links substitutions "
+             "to resistance without joining them. No MECHANISM edge connects the substitution "
+             "to the drug -- the promoter's fixed `confers resistance to (drug class)` edge is "
+             "still emitted and still carries CARD's own assertion (#345, #350)."),
+    "protein_traits": {
+        "primary_key": "domain",
+        "domain": ("Pfam:PF00333", "Ribosomal protein S5, N-terminal domain", "DOMAIN",
+                   "Small ribosomal subunit protein uS5 is one of the proteins from the small ribosomal subunit, and is a protein of 166 to 254 amino acid residues. In Escherichia coli, uS5 is known to be important in the assembly and function of the 30S ribosomal subunit."),
+        "part_pred": "part of (the S5 N-terminal domain of this determinant)",
+        "part_note": "KB trait: the S5 N-terminal domain. Its InterPro abstract names uS5.",
+        # Pfam:PF03719 (S5 C-terminal domain) is NOT here. `protein_traits["fold"]` emits
+        # "member of (adopts fold)", which would type a C-terminal DOMAIN as a fold (#352).
+        # It is instead an `extra_nodes` entry with a `part of` edge -- review round 2 was
+        # right that extra_nodes is the second part slot, and that dropping the node
+        # altogether lost a real KB-trait link for a reason that was not true (#358).
+    },
+    "extra_nodes": [
+        {"node_id": "domain_c", "label": "Ribosomal protein S5, C-terminal domain",
+         "node_type": "DOMAIN", "grounding": "Pfam:PF03719",
+         "description": "KB protein-trait record: the determinant's other half. Typed as the "
+                        "DOMAIN it is, rather than through protein_traits[\"fold\"] (#352, #358)."},
+        {"node_id": "subunit30s", "label": "small ribosomal subunit (30S)",
+         "node_type": "CELLULAR_LOCALIZATION", "grounding": "GO:0015935"},
+        {"node_id": "rrna16s", "label": "16S ribosomal RNA", "node_type": "NUCLEIC_ACID",
+         "description": "Ungrounded for the same reason as the rpsL graph (#346)."},
+    ],
+    "extra_edges": [
+        {"subject": "domain_c", "object": "determinant",
+         "predicate": "part of (the S5 C-terminal domain of this determinant)",
+         "predicate_id": "BFO:0000050",
+         "evidence": [{"reference": "Pfam:PF03719",
+                       "snippet": "This entry represents the C-terminal of the ribosomal protein uS5, which is related to the 30S ribosomal protein S5P from Sulfolobus acidocaldarius (UniProtKB:O05641).",
+                       "notes": "KB trait: the S5 C-terminal domain. Its InterPro abstract names "
+                                "uS5, per #196."}]},
+        {"subject": "determinant", "object": "subunit30s",
+         "predicate": "part of (located on the 30S subunit)", "predicate_id": "BFO:0000050",
+         "evidence": [{"reference": "ARO:3007526", "snippet": _CARD_RPSE,
+                       "notes": "'This protein is located on the 30S subunit'."}]},
+        {"subject": "determinant", "object": "rrna16s",
+         "predicate": "molecularly interacts with (interacts with 16S rRNA)",
+         "predicate_id": "RO:0002436",
+         "evidence": [{"reference": "ARO:3007526", "snippet": _CARD_RPSE,
+                       "notes": "'and interacts with 16S rRNA and other proteins'. The 'other "
+                                "proteins' are NOT given nodes -- CARD does not name them."},
+                      {"reference": "PMID:42450237", "snippet": _RPSE_LOOP2,
+                       "notes": "CONTEXT ONLY, carrying three qualifications at once: it is a "
+                                "MODELLING result ('Modelling showed'), it is HEDGED "
+                                "('potentially altering'), and it is Neisseria, whereas these "
+                                "records are Bacillus subtilis and unspecified. It is attached "
+                                "to the interaction edge CARD already supports, and licenses no "
+                                "edge of its own."}]},
+        {"subject": "drug0", "object": "subunit30s",
+         "predicate": "molecularly interacts with (spectinomycin acts on the 30S subunit)",
+         "predicate_id": "RO:0002436",
+         "requires": {"drug0": "ARO:0000016"},
+         "description": "The drug-action arm, from the 30S crystal structures.",
+         "evidence": [{"reference": "PMID:11014183", "snippet": _30S_ANTIBIOTICS,
+                       "notes": "Carter 2000 solved the 30S subunit with spectinomycin bound. "
+                                "NOTE the drug0 node is the drug CLASS (ARO:0000016, "
+                                "aminoglycoside antibiotic); spectinomycin is an aminocyclitol "
+                                "that CARD files under it, and the `requires` guard can only "
+                                "check the class (#353). NOT asserted: that S5 is part of that "
+                                "binding site, which this abstract does not say and CARD does "
+                                "not claim."}]},
+        {"subject": "determinant", "object": "resistance",
+         "predicate": "correlated with (substitutions are associated with resistance)",
+         "predicate_id": "RO:0002610",
+         "description": "The honest strength of CARD's claim, written explicitly because the "
+                        "fixed determinant->resistance edge cannot express it (#345).",
+         "evidence": [{"reference": "ARO:3007526", "snippet": _CARD_RPSE,
+                       "notes": "'is associated with resistance to spectinomycin'. Association is "
+                                "all CARD asserts, so association is all this edge asserts."}]},
+    ],
+}
+
+
+# ---------------------------------------------------------------------------------------
+# Round 122 — target alteration IN TRANS, the second and third instances.
+#
+# Round 121 named the shape on rpsL: the determinant is a PROTEIN, but the drug's binding
+# partner is the rRNA. The protein mutation does not change the drug's site; it changes the
+# conformation of the molecule that IS one. uL3/pleuromutilin is the same shape on the
+# large subunit, and it is the first family where a primary paper states it outright.
+#
+# The uL3 family needs TWO configs, and the reason is #371, filed one round earlier:
+#   ARO:3005081 names uL3 -- so the Pfam:PF00297 KB trait node is licensed.
+#   ARO:3005082 says only "Ribosomal protein mutations" -- naming no protein at all.
+# A single config with `protein_traits` would assert the L3 family node on a record whose
+# own definition never mentions L3, which is exactly the borrowed-specificity defect #371
+# describes. The list form selects by precondition, as vanR/vanS does (#208).
+
+_TIAMULIN_TARGET = "The antibiotic tiamulin targets the 50S subunit of the bacterial ribosome and interacts at the peptidyl transferase center."
+_TIAMULIN_MUTANT = "Selection in a strain with all seven chromosomal rRNA operons yielded a mutant with an A445G mutation in the gene coding for ribosomal protein L3, resulting in an Asn149Asp alteration."
+_TIAMULIN_FOOTPRINT = "Chemical footprinting experiments show a reduced binding of tiamulin to mutant ribosomes."
+# The mechanism sentence, and it hedges the INFERENCE itself -- round 111's shape.
+_TIAMULIN_INFERRED = "It is inferred that the L3 mutation, which points into the peptidyl transferase cleft, causes tiamulin resistance by alteration of the drug-binding site."
+# A negative result that settles WHICH molecule is the determinant.
+_TIAMULIN_NOT_RRNA = "No mutations in the rRNA were selected as resistance determinants using a strain expressing only a plasmid-encoded rRNA operon."
+_PLEURO_SITE = "Our results show that tiamulin is located within the peptidyl transferase center (PTC) of the 50S ribosomal subunit with its tricyclic mutilin core positioned in a tight pocket at the A-tRNA binding site."
+_PLEURO_INHIBITS = "Thereby, tiamulin directly inhibits peptide bond formation."
+_L3_HEDGE = "Ribosomal protein L3 (also known as uL3) is one of the proteins from the large ribosomal subunit. In Escherichia coli, L3 is known to bind to the 23S rRNA and may participate in the formation of the peptidyltransferase centre of the ribosome."
+_CARD_UL3 = "Thermus thermophilus ribosomal protein uL3 containing various mutations conferring resistance to tiamulin. Mutations in the ribosomal protein of uL3 acts by interfering with local rRNA conformation thus conferring resistance."
+_CARD_RPMUT = "Ribosomal protein mutations that interfere with the rRNA conformation at the active site thus conferring antibiotic resistance."
+
+
+def _ul3_shared(card_snippet, card_ref, names_l3):
+    """The pleuromutilin arm, identical whether or not the record names uL3.
+
+    What differs is ONLY the protein-trait node, because only ARO:3005081's definition
+    says which protein it is (#371).
+    """
+    return {
+        "curated": "2026-08-10T00:00:00Z",
+        "reference": card_ref,
+        "mech": {"ARO:3000212": card_snippet},
+        "mech_res": card_snippet,
+        "det_res": [
+            {"reference": card_ref, "snippet": card_snippet,
+             "notes": "CARD states the causation -- 'thus conferring resistance'."},
+        ] + ([
+            {"reference": "PMID:12936991", "snippet": _TIAMULIN_MUTANT,
+             "notes": "Bosling 2003, the substitution itself -- Asn149Asp in L3. Cited only "
+                      "where the record names L3 (#374)."},
+            {"reference": "PMID:12936991", "snippet": _TIAMULIN_FOOTPRINT,
+             "notes": "The measurement: REDUCED BINDING to mutant ribosomes. This is what "
+                      "resistance is, physically."},
+        ] if names_l3 else []),
+        "res_drug": card_snippet,
+        "extra_nodes": [
+            {"node_id": "ptc", "label": "peptidyl transferase centre (the drug's binding site)",
+             "node_type": "STATE",
+             "description": "Ungrounded. GO:0000048 is `peptidyltransferase activity`, the "
+                            "FUNCTION, and this node is the structural site the drug occupies "
+                            "-- not the same thing, so it is not reused (#346's rule: a live "
+                            "CURIE that means something else is worse than none)."},
+            {"node_id": "subunit50s", "label": "large ribosomal subunit (50S)",
+             "node_type": "CELLULAR_LOCALIZATION", "grounding": "GO:0015934",
+             "description": "What the snippet actually locates the PTC in. The earlier "
+                            "`ptc part of rrna23s` edge asserted the PTC's COMPOSITION, which "
+                            "no snippet on this record states -- and PF00297's own hedge (L3 "
+                            "'may participate in the formation of the PTC') says the PTC is "
+                            "not wholly 23S rRNA anyway (#373)."},
+            {"node_id": "rrna23s", "label": "23S ribosomal RNA", "node_type": "NUCLEIC_ACID",
+             "description": "The molecule whose conformation the mutation alters. Ungrounded "
+                            "for the same reason the 16S node is in round 121 (#346)."},
+            {"node_id": "peptide_bond", "label": "peptide bond formation",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "UNGROUNDED. GO:0006414 is `translational elongation` and "
+                            "GO:0000048 is `peptidyltransferase activity` -- a broader process "
+                            "and an activity. Neither IS peptide bond formation, and #346's "
+                            "rule says a live CURIE that means something else is worse than "
+                            "none. It was grounded to GO:0006414 until review caught the "
+                            "config applying that rule to the node above and breaking it here "
+                            "(#376)."},
+            {"node_id": "altered_conformation",
+             "label": "altered local 23S rRNA conformation at the active site",
+             "node_type": "STATE",
+             "description": "What the substitution produces. A STATE because the object of "
+                            "the causal edge should be the CONFORMATION, not the molecule: "
+                            "'interferes with the rRNA conformation' does not say the rRNA's "
+                            "function is decreased, and resistant ribosomes still translate "
+                            "(#377). NOT because a STATE object is disallowed -- round 121's "
+                            "ARO:3003395 points RO:0002212 at a STATE, and so does this "
+                            "graph, twice (#385)."},
+            {"node_id": "drug_binding", "label": "tiamulin-ribosome binding", "node_type": "STATE",
+             "description": "The interaction the mutation reduces."},
+        ],
+        "extra_edges": [
+            {"subject": "ptc", "object": "subunit50s",
+             "predicate": "part of (the PTC of the 50S subunit)", "predicate_id": "BFO:0000050",
+             "description": "Exactly what the snippet locates, and no more (#373).",
+             "evidence": [{"reference": "PMID:15554968", "snippet": _PLEURO_SITE,
+                           "notes": "'the peptidyl transferase center (PTC) OF THE 50S "
+                                    "RIBOSOMAL SUBUNIT'. NOT asserted: the PTC's composition, "
+                                    "which this sentence does not give."}]},
+            # NO `rrna23s part of subunit50s` edge. It was written to replace the one #373
+            # removed, and it repeated #373's defect: _PLEURO_23S says the structure gives
+            # "a detailed picture of ITS interactions with the 23S rRNA" -- "its" is
+            # tiamulin's. Co-mention in one sentence is not a part-hood claim (#383).
+            {"subject": "drug0", "object": "ptc",
+             "predicate": "molecularly interacts with (binds the peptidyl transferase centre)",
+             "predicate_id": "RO:0002436",
+             "requires": {"drug0": "ARO:3000670"},
+             "description": "The drug-action arm.",
+             "evidence": [{"reference": "PMID:15554968", "snippet": _PLEURO_SITE,
+                           "notes": "NOTE the drug0 node is the drug CLASS (ARO:3000670, "
+                                    "pleuromutilin antibiotic); tiamulin is the member both "
+                                    "papers studied (#353)."},
+                          {"reference": "PMID:12936991", "snippet": _TIAMULIN_TARGET,
+                           "notes": "Bosling 2003 states the same target independently."}]},
+            {"subject": "drug_binding", "object": "drug0",
+             "predicate": "has part (the antibiotic)", "predicate_id": "BFO:0000051",
+             "requires": {"drug0": "ARO:3000670"},
+             "description": "Round 21's rule, and round 121's #370: a binding state is defined "
+                            "by BOTH constituents, not one.",
+             "evidence": ([{"reference": "PMID:12936991", "snippet": _TIAMULIN_FOOTPRINT,
+                            "notes": "'binding of tiamulin to ... ribosomes' -- the drug half."}]
+                          if names_l3 else
+                          [{"reference": "PMID:12936991", "snippet": _TIAMULIN_TARGET,
+                            "notes": "'tiamulin ... INTERACTS AT the peptidyl transferase "
+                                     "center' -- the drug half, from a sentence about the DRUG "
+                                     "rather than about the L3 mutant, whose experiment belongs "
+                                     "to ARO:3005081 (#382)."}])},
+            {"subject": "drug_binding", "object": "ptc",
+             "predicate": "has part (the site it binds)", "predicate_id": "BFO:0000051",
+             "requires": {"drug0": "ARO:3000670"},
+             "evidence": [{"reference": "PMID:15554968", "snippet": _PLEURO_SITE,
+                           "notes": "The site half of the same binding state."}]},
+            {"subject": "determinant", "object": "altered_conformation",
+             "predicate": "causally upstream of (the substitution alters the conformation)",
+             "predicate_id": "RO:0002411",
+             "description": "The in-trans step: a protein substitution changes the shape of the "
+                            "RNA that forms the drug's site.",
+             "evidence": [{"reference": card_ref, "snippet": card_snippet,
+                           "notes": "CARD's own words -- 'interfering with local rRNA "
+                                    "conformation' / 'interfere with the rRNA conformation at "
+                                    "the active site'."}]},
+            {"subject": "altered_conformation", "object": "rrna23s",
+             "predicate": "characteristic of (a conformation of the 23S rRNA)",
+             "predicate_id": "RO:0000052",
+             "description": "Which molecule's conformation it is -- the fact that made this an "
+                            "IN-TRANS mechanism.",
+             "evidence": [{"reference": card_ref, "snippet": card_snippet,
+                           "notes": "'the rRNA conformation'."}]},
+            {"subject": "altered_conformation", "object": "drug_binding",
+             "predicate": "negatively regulates (the altered site binds the drug less well)",
+             "predicate_id": "RO:0002212",
+             "requires": {"drug0": "ARO:3000670"},   # #386: guard everything touching this node
+             "evidence": [{"reference": "PMID:12936991", "snippet": _TIAMULIN_INFERRED,
+                           "notes": "'causes tiamulin resistance by ALTERATION OF THE "
+                                    "DRUG-BINDING SITE' -- quoted with its 'It is inferred' "
+                                    "hedge intact."}]},
+            {"subject": "determinant", "object": "drug_binding",
+             "predicate": "negatively regulates (mutation reduces drug binding)",
+             "predicate_id": "RO:0002212",
+             "requires": {"drug0": "ARO:3000670"},
+             "description": "The causal core.",
+             # #382: BOTH Bosling sentences name L3, so on a record that names no protein
+             # they are the child term's evidence. The first fix removed one of five uses,
+             # from det_res only, and a node description was added claiming all were gone.
+             "evidence": [
+                 {"reference": "PMID:12936991", "snippet": _TIAMULIN_FOOTPRINT,
+                  "notes": "Measured, not inferred: chemical footprinting."},
+                 {"reference": "PMID:12936991", "snippet": _TIAMULIN_INFERRED,
+                  "notes": "The mechanism sentence, and the paper hedges the INFERENCE itself "
+                           "-- 'It is INFERRED that the L3 mutation ... causes tiamulin "
+                           "resistance by alteration of the drug-binding site.' Quoted with "
+                           "the hedge rather than around it."},
+             ]},
+            {"subject": "drug_binding", "object": "peptide_bond",
+             "predicate": "negatively regulates (bound drug blocks peptide bond formation)",
+             "predicate_id": "RO:0002212",
+             "requires": {"drug0": "ARO:3000670"},   # #386
+             "description": "Why losing the binding rescues the cell: the binding is what stops "
+                            "translation.",
+             "evidence": [{"reference": "PMID:15554968", "snippet": _PLEURO_INHIBITS,
+                           "notes": "'Thereby, tiamulin directly inhibits peptide bond "
+                                    "formation.'"}]},
+        ],
+    }
+
+
+def _ul3_named():
+    """ARO:3005081 and anything else whose own definition names uL3/L3."""
+    cfg = _ul3_shared(_CARD_UL3, "ARO:3005081", names_l3=True)
+    cfg["precondition"] = _requires_named_l3
+    # #375: the negative result that settles WHICH molecule is the determinant. It is on the
+    # named record only -- it is an L3 experiment (#374) -- and it was quoted as this round's
+    # headline finding while appearing in no record at all until review said so.
+    for e in cfg["extra_edges"]:
+        if e["subject"] == "determinant" and e["object"] == "altered_conformation":
+            e["evidence"] = e["evidence"] + [
+                {"reference": "PMID:12936991", "snippet": _TIAMULIN_NOT_RRNA,
+                 "notes": "The negative result that makes this IN TRANS rather than a plain "
+                          "target alteration: rRNA mutations were NOT selected, so the protein "
+                          "is the determinant even though the drug binds the RNA."}]
+    cfg["note"] = ("uL3 -- target alteration IN TRANS on the large subunit, the same shape "
+                   "round 121 named for rpsL and the first family whose primary paper states "
+                   "it outright. The record names the protein, so the L3 KB trait is used.")
+    cfg["protein_traits"] = {
+        "primary_key": "family",
+        "family": ("Pfam:PF00297", "Ribosomal protein L3", "DOMAIN", _L3_HEDGE),
+        "part_pred": "part of (the L3 family assignment of this determinant)",
+        "part_note": ("KB trait: the L3 family. Its abstract names uL3 (#196) AND hedges the "
+                      "PTC claim -- 'MAY PARTICIPATE in the formation of the peptidyltransferase "
+                      "centre' -- which is quoted with the hedge, not around it."),
+    }
+    return cfg
+
+
+def _ul3_unnamed():
+    """ARO:3005082, which says only "Ribosomal protein mutations" and names no protein.
+
+    No `protein_traits`. Asserting the L3 family here would borrow the child term's
+    specificity for a parent that does not state it -- #371 exactly.
+    """
+    cfg = _ul3_shared(_CARD_RPMUT, "ARO:3005082", names_l3=False)
+    # #387: #382 correctly withheld Bosling's L3 result from this record and left the two
+    # edges that rested on it, so they fell back to CARD's sentence -- which says nothing
+    # about the drug, about binding, or about any decrease. The edges go, not their evidence.
+    # ARO:3003419 in this same round gets exactly this treatment from a definition of the
+    # same shape ("...affect the higher-order structure of 16S rRNA and confer antibiotic
+    # resistance"): no drug-binding arm, because the record names no drug interaction.
+    cfg["extra_edges"] = [e for e in cfg["extra_edges"] if e["object"] != "drug_binding"]
+    # and then the node itself, which would otherwise be emitted with only outgoing edges
+    # while nothing establishes the mutation ever touches it (#391's orphan shape).
+    kept = {x for e in cfg["extra_edges"] for x in (e["subject"], e["object"])}
+    cfg["extra_nodes"] = [n for n in cfg["extra_nodes"] if n["node_id"] in kept]
+    cfg["note"] = ("Ribosomal protein mutation (generic) -- target alteration IN TRANS. NO "
+                   "protein-trait node: CARD names no protein here, and taking uL3 from the "
+                   "child term ARO:3005081 would be #371's borrowed specificity.")
+    # NO extra "correlated with" edge on the determinant->rrna23s pair. It asserted and
+    # declined to assert the same relation from the same sentence (#380), and the limitation
+    # it meant to record -- CARD names no protein -- is a property of the NODE, not of any
+    # relation, so no edge on that pair could carry it. It goes on the node instead.
+    cfg["determinant_note"] = (
+        "CARD names no specific ribosomal protein on this record. The uL3 identity, its "
+        "Pfam:PF00297 family node and Bosling 2003's L3 experiments all belong to the child "
+        "term ARO:3005081 and are deliberately absent here (#371, #374, #380).")
+    return cfg
+
+
+def _requires_named_l3(ident, label, text):
+    """Does the record's OWN definition name L3/uL3?
+
+    Reads only the record's own `definition:` -- the #252 lesson, since the ARO drug-class
+    boilerplate mentions plenty of other proteins.
+    """
+    own = _own_definition(text).lower()
+    if re.search(r"\bu?l3\b", own):
+        return None
+    return "own definition names no specific ribosomal protein, so the L3 KB trait is not licensed (#371)"
+
+
+FAMILY_SNIPPETS["ARO:3005082"] = [_ul3_named(), _ul3_unnamed()]
+
+
+# rpsL, drug-agnostic (ARO:3003419). Same first two sentences as ARO:3003395, and then it
+# STOPS: "confer antibiotic resistance", where the drug-specific record says "confer
+# streptomycin resistance BY DISRUPTING INTERACTIONS between 16S rRNA and streptomycin".
+# The disruption mechanism is absent, so the strep_binding arm is absent -- the round-120
+# FrxA/nfsB finding on a pair that differs by one clause of one sentence.
+_CARD_RPSL_GENERIC = "Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer antibiotic resistance."
+
+def _rpsl_generic_precondition(ident, label, text):
+    """Refuse the drug-specific descendant.
+
+    ARO:3003395 is under ARO:3003419 and has its own, STRICTLY STRONGER config (round 121:
+    the strep_binding arm this one deliberately omits). Without this, a routine
+    `--family ARO:3003419 --repromote --apply` silently replaces that graph with this
+    weaker one -- data loss, not a rewrite -- and #280's blast-radius guard cannot fire
+    because it refuses only above max(25, 5 * n_draft) and this family has two records
+    (#381).
+    """
+    if ident == "ARO:3003395":
+        return ("ARO:3003395 has its own drug-specific config, which asserts strictly more "
+                "than this one; re-promoting it here would downgrade it (#381)")
+    return _requires_mech("ARO:3000212", "mutation")(ident, label, text)
+
+
+FAMILY_SNIPPETS["ARO:3003419"] = {
+    "curated": "2026-08-10T00:00:00Z",
+    "precondition": _rpsl_generic_precondition,
+    "reference": "ARO:3003419",
+    "mech": {"ARO:3000212": _CARD_RPSL_GENERIC},
+    "mech_res": _CARD_RPSL_GENERIC,
+    "det_res": [
+        {"reference": "ARO:3003419", "snippet": _CARD_RPSL_GENERIC,
+         "notes": "CARD states conferral, so CARD carries this edge (#363)."},
+        {"reference": "PMID:7934937", "snippet": _RPSL_MUTATIONS,
+         "notes": "Finken 1993, what the substitutions ARE."},
+    ],
+    "res_drug": _CARD_RPSL_GENERIC,
+    "note": ("rpsL, drug-agnostic. Its definition ends at 'confer antibiotic resistance' "
+             "where ARO:3003395 continues 'by disrupting interactions between 16S rRNA and "
+             "streptomycin'. NO drug-binding arm is written, because this record names no "
+             "drug interaction to disrupt -- see the test that pins the difference."),
+    "protein_traits": {
+        "primary_key": "domain",
+        "domain": ("Pfam:PF00164", "Ribosomal protein S12/S23", "DOMAIN",
+                   "Ribosomal protein uS12 is one of the proteins from the small ribosomal subunit. In Escherichia coli, uS12 is known to be involved in the translation initiation step."),
+        "part_pred": "part of (the S12 domain of this determinant)",
+        "part_note": "KB trait: the S12 domain, as on ARO:3003395.",
+    },
+    "extra_nodes": [
+        {"node_id": "rrna16s", "label": "16S ribosomal RNA", "node_type": "NUCLEIC_ACID",
+         "description": "Ungrounded: SO:0000407, recalled as 16S rRNA, is `cytosolic_18S_rRNA` (#346)."},
+        {"node_id": "pseudoknot", "label": "16S rRNA pseudoknot structure", "node_type": "STATE",
+         "description": "Ungrounded: SO:0005836, recalled as pseudoknot, is `regulatory_region` (#346)."},
+        {"node_id": "altered_structure",
+         "label": "altered higher-order structure of the 16S rRNA", "node_type": "STATE",
+         "description": "What the substitution produces, as a STATE rather than the molecule "
+                        "itself (#377)."},
+    ],
+    "extra_edges": [
+        {"subject": "pseudoknot", "object": "rrna16s",
+         "predicate": "part of (a structure of the 16S rRNA)", "predicate_id": "BFO:0000050",
+         "evidence": [{"reference": "PMID:7934937", "snippet": _RPSL_PSEUDOKNOT,
+                       "notes": "'a pseudoknot structure in a region' of the 16S rRNA."}]},
+        {"subject": "altered_structure", "object": "rrna16s",
+         "predicate": "characteristic of (a structure of the 16S rRNA)",
+         "predicate_id": "RO:0000052",
+         "description": "A conformation INHERES IN a molecule; it is not a mereological part "
+                        "of one. BFO:0000050 was used here until review noted the snippet's "
+                        "genitive -- 'the higher-order structure OF 16S rRNA' -- is the "
+                        "inherence reading (#384).",
+         "evidence": [{"reference": "ARO:3003419", "snippet": _CARD_RPSL_GENERIC,
+                       "notes": "'the higher-order structure OF 16S rRNA'."}]},
+        {"subject": "determinant", "object": "pseudoknot",
+         "predicate": "correlated with (linked to the pseudoknot region)",
+         "predicate_id": "RO:0002610",
+         "description": "Same treatment as ARO:3003395: CARD says S12 'stabilizes', its source "
+                        "says the region 'has been linked to' S12, and the edge follows the "
+                        "source on the one claim they disagree about.",
+         "evidence": [{"reference": "PMID:7934937", "snippet": _RPSL_PSEUDOKNOT,
+                       "notes": "'has been linked to ribosomal S12 protein' -- hedged."},
+                      {"reference": "ARO:3003419", "snippet": _CARD_RPSL_GENERIC,
+                       "notes": "CARD's stronger 'stabilizes', recorded so the gap is on the "
+                                "edge."}]},
+        {"subject": "determinant", "object": "altered_structure",
+         "predicate": "causally upstream of (substitution alters the higher-order structure)",
+         "predicate_id": "RO:0002411",
+         "description": "The furthest this record's own definition goes. ARO:3003395 continues "
+                        "to the drug interaction; this one does not, and no drug-binding node "
+                        "is written. The object is the CONFORMATION, not the molecule: "
+                        "'affects the higher-order structure' does not say the rRNA's function "
+                        "is decreased (#377). A STATE object is fine -- round 121's ARO:3003395 "
+                        "uses one. That is a CORPUS convention, not something RO licenses: "
+                        "RO:0002212 reads 'decreases the rate or magnitude of EXECUTION of q' "
+                        "(#385, #388).",
+         "evidence": [{"reference": "ARO:3003419", "snippet": _CARD_RPSL_GENERIC,
+                       "notes": "'substitutions in RpsL AFFECT THE HIGHER-ORDER STRUCTURE of "
+                                "16S rRNA and confer antibiotic resistance'. NOT asserted: any "
+                                "disruption of a drug-rRNA interaction, which this definition "
+                                "-- unlike ARO:3003395's -- does not mention."}]},
+    ],
+}
+
+
+# ---------------------------------------------------------------------------------------
+# Round 123 — nat, and the "mismatch" that was not one.
+#
+# The first draft of this round asserted that ARO:3000212 ("mutation conferring antibiotic
+# resistance") disagreed with nat's definition, which names OVEREXPRESSION. Reading
+# ARO:3000212's OWN definition settles it against that reading:
+#
+#   "Point mutations in the DNA may lead to an altered gene product ... Examples included
+#    modified antibiotic targets with lower binding affinities and the deactivation of
+#    repressors that result in INCREASED EXPRESSION of genes that inactivate or pump out
+#    antibiotics."
+#
+# The mechanism term explicitly covers the increased-expression route. There is no mismatch,
+# and #393 is corrected rather than curated around. This is round 51's lesson yet again:
+# before building on a claim about a source, read what the source says.
+#
+# TWO configs, because the two records say different things (#395):
+#   ARO:3004930 -- "Mutations that occur in nat WHICH THROUGH OVEREXPRESSION of the enzyme
+#                   can result in ... resistance". CARD JOINS the two, so the graph can too.
+#   ARO:3004910 -- names overexpression and mutation separately and never joins them.
+_CARD_NAT = "Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression of this enzyme may be responsible for increased resistance to isoniazid."
+_CARD_NAT_MUT = "Mutations that occur in nat which through overexpression of the enzyme can result in or contribute to antibiotic resistance to isoniazid."
+_MECH_MUTATION = "Point mutations in the DNA may lead to an altered gene product that may result in antibiotic resistance. Examples included modified antibiotic targets with lower binding affinities and the deactivation of repressors that result in increased expression of genes that inactivate or pump out antibiotics."
+_NAT_PFAM = "Arylamine N-acetyltransferase (NAT) facilitates the transfer of an acetyl group from acetyl coenzyme A on to a wide range of arylamine, N-hydroxyarylamines and hydrazines. Acetylation of these compounds generally results in inactivation."
+
+
+def _nat_config(card_ref, card_snippet, joins_mutation):
+    """nat's graph. `joins_mutation` is true only where CARD itself joins the two routes."""
+    cfg = {
+        "curated": "2026-08-10T00:00:00Z",
+        "reference": card_ref,
+        # #400: the LIST form, so the reference travels with the snippet. Giving `mech`
+        # a bare string makes the promoter stamp cfg["reference"] on it -- which put
+        # ARO:3000212's definition under `reference: ARO:3004910` in the first fix for
+        # #398. The snippet moved; the attribution did not.
+        "mech": {"ARO:3000212": [
+            {"reference": "ARO:3000212", "snippet": _MECH_MUTATION,
+             "notes": "The mechanism term's own definition, which names both point mutations "
+                      "and 'increased expression' among its examples (#393, corrected)."}]},
+        "mech_res": [
+            {"reference": "ARO:3000212", "snippet": _MECH_MUTATION,
+             "notes": "ARO:3000212's own definition states that such mutations 'may result in "
+                      "antibiotic resistance'."}],
+        "det_res": [
+            {"reference": card_ref, "snippet": card_snippet,
+             "notes": ("Quoted whole because the qualifications are part of the claim."
+                       if joins_mutation else
+                       "Quoted whole because BOTH qualifications matter: 'REPORTS HAVE SHOWN' "
+                       "attributes the claim and 'MAY BE responsible' hedges it.")},
+            {"reference": "ARO:3000212", "snippet": _MECH_MUTATION,
+             "notes": "The mechanism term's own definition, which names 'increased expression' "
+                      "among its examples -- so an overexpression route is IN SCOPE for "
+                      "ARO:3000212, not a mismatch with it (#393, corrected)."},
+        ],
+        "res_drug": card_snippet,
+        "protein_traits": {
+            "primary_key": "family",
+            "family": ("Pfam:PF00797", "N-acetyltransferase", "DOMAIN", _NAT_PFAM),
+            "part_pred": "part of (the N-acetyltransferase family assignment)",
+            "part_note": "KB trait: the NAT family. Its abstract names arylamine "
+                         "N-acetyltransferase itself (#196).",
+        },
+        "extra_nodes": [
+            {"node_id": "acetylation", "label": "arylamine N-acetyltransferase activity",
+             "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0004060",
+             "description": "The EXACT term, and a KB record. GO:0008080 "
+                            "(N-acetyltransferase activity) was used until review noted its "
+                            "definition never names acetyl-CoA and its scope includes histone "
+                            "and rRNA acetyltransferases (#399)."},
+            {"node_id": "acetyl_coa", "label": "acetyl-CoA", "node_type": "CHEMICAL",
+             "grounding": "CHEBI:15351"},
+            {"node_id": "overexpression", "label": "overexpression of the enzyme",
+             "node_type": "STATE",
+             "description": "The route CARD names."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "acetylation",
+             "predicate": "enables (arylamine N-acetyltransferase activity)",
+             "predicate_id": "RO:0002327",
+             "evidence": [{"reference": card_ref, "snippet": card_snippet,
+                           "notes": "The enzyme's identity."}
+                          if not joins_mutation else
+                          {"reference": "Pfam:PF00797", "snippet": _NAT_PFAM,
+                           "notes": "KB trait: what an arylamine N-acetyltransferase does. "
+                                    "This record's own definition gives the resistance route "
+                                    "but not the chemistry."}]},
+            {"subject": "acetylation", "object": "acetyl_coa",
+             "predicate": "has input (the acetyl donor)", "predicate_id": "RO:0002233",
+             "evidence": [{"reference": "Pfam:PF00797", "snippet": _NAT_PFAM,
+                           "notes": "'transfer of an acetyl group from acetyl coenzyme A'."}]},
+            {"subject": "overexpression", "object": "resistance",
+             "predicate": ("causally upstream of (via overexpression)" if joins_mutation
+                           else "correlated with (reported, and hedged)"),
+             "predicate_id": "RO:0002411" if joins_mutation else "RO:0002610",
+             "description": ("CARD joins the mutation and the overexpression on this record, "
+                             "so the causal predicate is the source's own."
+                             if joins_mutation else
+                             "Deliberately weak, and twice over: the claim is ATTRIBUTED "
+                             "('Reports have shown') and then HEDGED ('may be responsible')."),
+             "evidence": [{"reference": card_ref, "snippet": card_snippet,
+                           "notes": ("'can result in or contribute to antibiotic resistance'."
+                                     if joins_mutation else
+                                     "Both qualifications are in the quoted sentence rather "
+                                     "than paraphrased away.")}]},
+        ],
+    }
+    if joins_mutation:
+        # #397: the only edge that says what PRODUCES the overexpression, and it exists
+        # solely because this record's own definition supplies it. The parent's does not,
+        # so the parent's `overexpression` node has no incoming edge and gets none invented.
+        cfg["extra_edges"].insert(0, {
+            "subject": "determinant", "object": "overexpression",
+            "predicate": "causally upstream of (the mutation raises expression)",
+            "predicate_id": "RO:0002411",
+            "description": "This record's own definition JOINS the two routes; the parent's "
+                           "does not (#395).",
+            "evidence": [{"reference": card_ref, "snippet": card_snippet,
+                          "notes": "'Mutations that occur in nat WHICH THROUGH OVEREXPRESSION "
+                                   "of the enzyme can result in ... resistance'."}]})
+        cfg["note"] = ("nat (mutation record) -- CARD joins the mutation to the overexpression "
+                       "on THIS record, so the graph does too. NOT asserted: that isoniazid is "
+                       "the enzyme's substrate; CARD names no substrate here at all.")
+    else:
+        cfg["precondition"] = _nat_does_not_join
+        cfg["determinant_note"] = (
+            "CARD names the chemistry and the resistance separately on this record and never "
+            "joins them. The mutation->overexpression link belongs to ARO:3004930, whose own "
+            "definition supplies it (#395).")
+        cfg["note"] = ("nat -- CARD names the chemistry ('arylamines and hydrazines') and, "
+                       "separately, that overexpression may confer isoniazid resistance. NOT "
+                       "asserted: that isoniazid is the enzyme's substrate. Isoniazid IS a "
+                       "hydrazine, so the inference is one step away -- and CARD does not take "
+                       "it. The Pfam record makes the link for HUMAN NAT, which is not "
+                       "evidence about this organism and carries no edge of its own (#396).")
+    return cfg
+
+
+def _nat_does_not_join(ident, label, text):
+    """The complement of `_nat_joins_mutation`, so the two configs are DISJOINT (#401).
+
+    Before this, ARO:3004930 passed both preconditions and was selected only because the
+    joined config happened to be first in the list -- reordering silently stripped its
+    `determinant -> overexpression` edge with every gate green.
+    """
+    if "through overexpression" in _own_definition(text).lower():
+        return ("own definition joins the mutation to the overexpression, so the joined "
+                "config serves this record (#401)")
+    return _requires_mech("ARO:3000212", "mutation")(ident, label, text)
+
+
+def _nat_joins_mutation(ident, label, text):
+    own = _own_definition(text).lower()
+    if "through overexpression" in own:
+        return None
+    return "own definition does not join the mutation to the overexpression (#395)"
+
+
+_NAT_JOINED = _nat_config("ARO:3004930", _CARD_NAT_MUT, joins_mutation=True)
+_NAT_JOINED["precondition"] = _nat_joins_mutation
+FAMILY_SNIPPETS["ARO:3004910"] = [_NAT_JOINED,
+                                  _nat_config("ARO:3004910", _CARD_NAT, joins_mutation=False)]
 
 _check_config_order()
 

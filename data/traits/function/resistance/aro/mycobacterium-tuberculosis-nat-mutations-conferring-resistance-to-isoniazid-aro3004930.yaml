@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:3004910
 trait_relations:
@@ -30,12 +30,14 @@ evidence:
 - reference: DOI:10.1128/microbiolspec.MGM2-0014-2013
   notes: PMID:26104204 (aro citation)
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] Mycobacterium tuberculosis nat mutations conferring resistance to isoniazid → mechanism
-    → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: Mycobacterium tuberculosis nat mutations conferring resistance to isoniazid → mechanism → resistance
+    (curated from ARO relations + literature)
+  description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
+    (ARO:3004930). nat (mutation record) -- CARD joins the mutation to the overexpression on THIS record,
+    so the graph does too. NOT asserted: that isoniazid is the enzyme''s substrate; CARD names no substrate
+    here at all.'
   nodes:
   - node_id: determinant
     label: Mycobacterium tuberculosis nat mutations conferring resistance to isoniazid
@@ -49,6 +51,26 @@ causal_graphs:
     label: isoniazid-like antibiotic
     node_type: CHEMICAL
     grounding: ARO:3007152
+  - node_id: family
+    label: N-acetyltransferase
+    node_type: DOMAIN
+    grounding: Pfam:PF00797
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: acetylation
+    label: arylamine N-acetyltransferase activity
+    node_type: MOLECULAR_FUNCTION
+    grounding: GO:0004060
+    description: The EXACT term, and a KB record. GO:0008080 (N-acetyltransferase activity) was used until
+      review noted its definition never names acetyl-CoA and its scope includes histone and rRNA acetyltransferases
+      (#399).
+  - node_id: acetyl_coa
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:15351
+  - node_id: overexpression
+    label: overexpression of the enzyme
+    node_type: STATE
+    description: The route CARD names.
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -62,47 +84,106 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3004930
-      snippet: Mutations that occur in nat which through overexpression of the enzyme can result in or
-        contribute to antibiotic resistance to isoniazid.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
-  - subject: mech0
-    predicate: causally upstream of
-    predicate_id: RO:0002411
-    object: resistance
-    evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
     - reference: ARO:3000212
       snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
         resistance. Examples included modified antibiotic targets with lower binding affinities and the
         deactivation of repressors that result in increased expression of genes that inactivate or pump
         out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      notes: The mechanism term's own definition, which names both point mutations and 'increased expression'
+        among its examples (#393, corrected).
+  - subject: mech0
+    predicate: causally upstream of
+    predicate_id: RO:0002411
+    object: resistance
+    evidence:
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: ARO:3000212's own definition states that such mutations 'may result in antibiotic resistance'.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: DOI:10.1038/s41598-018-33731-1
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
     - reference: ARO:3004930
-      snippet: 'relationship: confers_resistance_to_antibiotic ARO:3000520 ! isoniazid'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: Mutations that occur in nat which through overexpression of the enzyme can result in or
+        contribute to antibiotic resistance to isoniazid.
+      notes: Quoted whole because the qualifications are part of the claim.
+    - reference: ARO:3000212
+      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
+        resistance. Examples included modified antibiotic targets with lower binding affinities and the
+        deactivation of repressors that result in increased expression of genes that inactivate or pump
+        out antibiotics.
+      notes: The mechanism term's own definition, which names 'increased expression' among its examples
+        -- so an overexpression route is IN SCOPE for ARO:3000212, not a mismatch with it (#393, corrected).
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
     evidence:
     - reference: ARO:3004910
       snippet: 'relationship: confers_resistance_to_drug_class ARO:3007152 ! isoniazid-like antibiotic'
       notes: Asserted on ARO:3004910 (isoniazid resistant nat), an is_a ancestor of this record's ARO:3004930;
         inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to isoniazid-like antibiotic.
+  - subject: family
+    predicate: part of (the N-acetyltransferase family assignment)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF00797
+      snippet: Arylamine N-acetyltransferase (NAT) facilitates the transfer of an acetyl group from acetyl
+        coenzyme A on to a wide range of arylamine, N-hydroxyarylamines and hydrazines. Acetylation of
+        these compounds generally results in inactivation.
+      notes: 'KB trait: the NAT family. Its abstract names arylamine N-acetyltransferase itself (#196).'
+  - subject: determinant
+    predicate: causally upstream of (the mutation raises expression)
+    predicate_id: RO:0002411
+    object: overexpression
+    description: This record's own definition JOINS the two routes; the parent's does not (#395).
+    evidence:
+    - reference: ARO:3004930
+      snippet: Mutations that occur in nat which through overexpression of the enzyme can result in or
+        contribute to antibiotic resistance to isoniazid.
+      notes: '''Mutations that occur in nat WHICH THROUGH OVEREXPRESSION of the enzyme can result in ...
+        resistance''.'
+  - subject: determinant
+    predicate: enables (arylamine N-acetyltransferase activity)
+    predicate_id: RO:0002327
+    object: acetylation
+    evidence:
+    - reference: Pfam:PF00797
+      snippet: Arylamine N-acetyltransferase (NAT) facilitates the transfer of an acetyl group from acetyl
+        coenzyme A on to a wide range of arylamine, N-hydroxyarylamines and hydrazines. Acetylation of
+        these compounds generally results in inactivation.
+      notes: 'KB trait: what an arylamine N-acetyltransferase does. This record''s own definition gives
+        the resistance route but not the chemistry.'
+  - subject: acetylation
+    predicate: has input (the acetyl donor)
+    predicate_id: RO:0002233
+    object: acetyl_coa
+    evidence:
+    - reference: Pfam:PF00797
+      snippet: Arylamine N-acetyltransferase (NAT) facilitates the transfer of an acetyl group from acetyl
+        coenzyme A on to a wide range of arylamine, N-hydroxyarylamines and hydrazines. Acetylation of
+        these compounds generally results in inactivation.
+      notes: '''transfer of an acetyl group from acetyl coenzyme A''.'
+  - subject: overexpression
+    predicate: causally upstream of (via overexpression)
+    predicate_id: RO:0002411
+    object: resistance
+    description: CARD joins the mutation and the overexpression on this record, so the causal predicate
+      is the source's own.
+    evidence:
+    - reference: ARO:3004930
+      snippet: Mutations that occur in nat which through overexpression of the enzyme can result in or
+        contribute to antibiotic resistance to isoniazid.
+      notes: '''can result in or contribute to antibiotic resistance''.'
+curation_history:
+- timestamp: '2026-08-10T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

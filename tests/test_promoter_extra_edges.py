@@ -22,6 +22,7 @@ import re
 import sys
 
 import pytest
+import yaml
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "scripts"))
 
@@ -2732,3 +2733,675 @@ def test_esx5_system_term_is_not_curated_pending_229():
     curating it would answer that by fiat.
     """
     assert promote.family_configs("ARO:3004915") == []
+
+
+# ---------------------------------------------------------------------------------------
+# Round 121 — three ribosomal-protein families whose graphs differ because their CARD
+# definitions differ. Each test names the clause that decided the difference.
+
+def test_rpsa_asserts_no_loss_of_the_proteins_own_function():
+    """ARO:3004721 says mutations resist "maintaining rpsA function", and Shi 2011 says
+    POA inhibited "trans-translation rather than canonical translation".
+
+    Two independent statements that nothing is lost. The determinant must therefore
+    never be the subject of a negative edge onto trans-translation -- only POA is.
+    """
+    cfg = promote.family_configs("ARO:3004722")[0]
+    losses = [e for e in cfg["extra_edges"]
+              if e["subject"] == "determinant"
+              and e["object"] == "trans_translation"
+              and e["predicate_id"] in ("RO:0002212", "RO:0002411")]
+    assert losses == []
+    # and the positive edge IS there: the determinant enables the process
+    assert any(e["subject"] == "determinant" and e["object"] == "trans_translation"
+               and e["predicate_id"] == "RO:0002327" for e in cfg["extra_edges"])
+    # the inhibition is the drug's, not the mutation's
+    assert any(e["subject"] == "poa" and e["object"] == "trans_translation"
+               and e["predicate_id"] == "RO:0002212" for e in cfg["extra_edges"])
+    # #359: the edge whose description says "the resistant variant STILL does this" must
+    # cite the text that says it, not only a sentence about RpsA generically.
+    kept = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "trans_translation"]
+    assert len(kept) == 1
+    assert any("maintaining rpsA function" in ev["snippet"] for ev in kept[0]["evidence"])
+    # #349: the drug binds the DRUG-SENSITIVE protein, never the determinant -- whose node
+    # denotes the resistant variant the snippet says POA does not bind.
+    binds = [e for e in cfg["extra_edges"]
+             if e["subject"] == "poa" and e["predicate_id"] == "RO:0002436"]
+    assert [e["object"] for e in binds] == ["rpsa_wt"]
+
+
+def test_every_complex_node_is_defined_by_all_its_named_constituents():
+    """Round 21's rule: a drug-target complex is DEFINED by its constituents.
+
+    Round 121 first applied it to one half of each -- `strep_binding` had the rRNA but
+    not the drug, `poa_rpsa` had the protein but not POA -- so a node labelled for two
+    participants was structurally made of one (#370). Five review rounds read these edges
+    and none asked whether the constituents were complete.
+    """
+    for fam, node, want in (("ARO:3003395", "strep_binding", {"rrna16s", "drug0"}),
+                            ("ARO:3004722", "poa_rpsa", {"rpsa_wt", "poa"})):
+        cfg = promote.family_configs(fam)[0]
+        parts = {e["object"] for e in cfg["extra_edges"]
+                 if e["subject"] == node and e["predicate_id"] == "BFO:0000051"}
+        assert parts == want, f"{node} is defined by {parts}, not {want}"
+
+
+def test_rpsa_parent_records_that_its_preservation_claim_is_the_child_terms():
+    """ARO:3004722's own definition says mutations "prevent pyrazinoic acid from TARGETING
+    RpsA" -- prevention of targeting, not preservation of function.
+
+    "maintaining rpsA function" is the child term ARO:3004721's wording. Citing a
+    descendant is an established pattern here, but the notes must say so (#371).
+    """
+    cfg = promote.family_configs("ARO:3004722")[0]
+    kept = [e for e in cfg["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "trans_translation"][0]
+    ev = [x for x in kept["evidence"] if x["reference"] == "ARO:3004721"][0]
+    assert "more specific term" in ev["notes"]
+    assert "does not itself state" in ev["notes"]
+
+
+def test_rpsa_wt_says_it_is_the_same_protein_as_the_determinant():
+    """RO has no allelic-variant predicate (#357), so the relation cannot be an edge.
+
+    It must then be in the node description, or a consumer sees two unrelated proteins
+    that both enable trans-translation.
+    """
+    cfg = promote.family_configs("ARO:3004722")[0]
+    wt = [n for n in cfg["extra_nodes"] if n["node_id"] == "rpsa_wt"]
+    assert len(wt) == 1
+    desc = wt[0]["description"].lower()
+    assert "same protein as `determinant`" in desc
+    assert "no edge" in desc          # and says why there is no edge
+    assert "grounding" not in wt[0]   # only the resistant allele has an ARO term
+
+
+def test_rpsa_carries_no_domain_node_because_pf00575s_definition_is_the_wrong_entry():
+    """PF00575 is labelled "S1 RNA binding domain" and would be the obvious trait node.
+
+    Its KB definition is IPR059328's abstract -- "Domain of unknown function DUF8284" --
+    the wrong InterPro entry (#344). Round 21's rule: no node rather than a node whose
+    evidence is about something else.
+    """
+    cfg = promote.family_configs("ARO:3004722")[0]
+    assert "protein_traits" not in cfg
+    # `repr`, not a serialiser: a config carries its `precondition` callable.
+    assert "PF00575" not in repr(cfg)
+
+
+def test_rpsl_follows_its_source_not_cards_stronger_wording():
+    """CARD: S12 "stabilizes" the pseudoknot, and resistance is "by disrupting
+    interactions". PMID:7934937, the paper CARD's definition is built from, says the
+    region "has been linked to" S12 and reports no stabilisation experiment.
+
+    The determinant->pseudoknot edge must be `correlated with`, never a causal or
+    regulatory predicate, and it must carry BOTH readings so the gap is visible.
+    """
+    cfg = promote.family_configs("ARO:3003395")[0]
+    pk = [e for e in cfg["extra_edges"]
+          if e["subject"] == "determinant" and e["object"] == "pseudoknot"]
+    assert len(pk) == 1
+    assert pk[0]["predicate_id"] == "RO:0002610"
+    # the predicate TEXT must not smuggle CARD's stronger verb back in
+    assert "stabilis" not in pk[0]["predicate"].lower()
+    assert "stabiliz" not in pk[0]["predicate"].lower()
+    refs = {ev["reference"] for ev in pk[0]["evidence"]}
+    assert refs == {"PMID:7934937", "ARO:3003395"}
+
+
+def test_rpsl_snippets_come_from_the_reference_they_are_attributed_to():
+    """`mech`, `mech_res` and `res_drug` are attributed by the promoter to `cfg["reference"]`.
+
+    Three review findings collide on this one field:
+
+    * #348 -- Musser's (PMID:8665467) sentence was placed there under PMID:7934937;
+    * #363 -- those three edges assert CONFERRAL, which only CARD states;
+    * so `reference` must be CARD, or fixing #363 re-creates #348.
+
+    #360: the string is asserted LITERALLY, not as `== the_constant`, so any edit to the
+    constant forces someone to re-verify it against the source rather than silently
+    carrying a foreign sentence.
+    """
+    cfg = promote.family_configs("ARO:3003395")[0]
+    assert cfg["reference"] == "ARO:3003395"
+    card = ("Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure "
+            "formed by 16S rRNA. Amino acid substitutions in RpsL affect the higher-order "
+            "structure of 16S rRNA and confer streptomycin resistance by disrupting "
+            "interactions between 16S rRNA and streptomycin.")
+    assert cfg["mech_res"] == card
+    assert cfg["res_drug"] == card
+    assert set(cfg["mech"].values()) == {card}
+    # the two literature sentences appear ONLY where their own reference is named
+    for d in cfg["det_res"]:
+        if "about one-half" in d["snippet"]:
+            assert d["reference"] == "PMID:8665467"
+        if "either lead to amino acid changes" in d["snippet"]:
+            assert d["reference"] == "PMID:7934937"
+    assert "about one-half" not in card
+    # and it IS still cited, on the edge that names Musser
+    det = cfg["det_res"]
+    assert any("about one-half" in d["snippet"] and d["reference"] == "PMID:8665467"
+               for d in det)
+
+
+def test_rpse_never_joins_the_substitution_to_the_drug():
+    """CARD says only that substitutions "is associated with resistance", and supplies
+    two structural facts that it does not connect to the drug.
+
+    So no edge may run from the determinant to the drug node or to a binding-site node,
+    and the determinant->resistance edge this config adds must be `correlated with`.
+    """
+    cfg = promote.family_configs("ARO:3007526")[0]
+    assert not any(e["subject"] == "determinant" and e["object"].startswith("drug")
+                   for e in cfg["extra_edges"])
+    res = [e for e in cfg["extra_edges"]
+           if e["subject"] == "determinant" and e["object"] == "resistance"]
+    assert len(res) == 1 and res[0]["predicate_id"] == "RO:0002610"
+    # #350: the config's own edges are a SUBSET -- the promoter always adds a fixed
+    # `confers resistance to (drug class)` edge, so the first assertion above passes
+    # vacuously for it. Read the emitted record and state what is actually true of it.
+    rec = yaml.safe_load(
+        (promote.ARO_DIR / "spectinomycin-resistant-rpse-aro3007526.yaml").read_text("utf-8"))
+    graph = [g for g in rec["causal_graphs"] if g["graph_id"] == "resistance"][0]
+    to_drug = [e for e in graph["edges"] if e["object"].startswith("drug")]
+    # exactly one, and it is the fixed CARD-assertion edge -- not a mechanism edge
+    assert len(to_drug) == 1
+    assert to_drug[0]["predicate_id"] == "ARO:2000001"
+    # no mechanism edge anywhere ties the determinant to a binding site
+    endpoints = [x for e in graph["edges"] for x in (e["subject"], e["object"])]
+    assert not any("binding" in n or "site" in n for n in endpoints)
+    # and the record carries the honest association edge
+    assert any(e["subject"] == "determinant" and e["object"] == "resistance"
+               and e["predicate_id"] == "RO:0002610" for e in graph["edges"])
+
+
+def test_rpse_uses_the_neisseria_modelling_result_as_context_only():
+    """PMID:42450237 carries three qualifications at once -- it is modelling, it is
+    hedged ("potentially altering"), and it is Neisseria, not these records' organisms.
+
+    It may ride on an edge CARD already supports; it may not be the sole evidence for
+    any edge.
+    """
+    cfg = promote.family_configs("ARO:3007526")[0]
+    carrying = [e for e in cfg["extra_edges"]
+                if any(ev["reference"] == "PMID:42450237" for ev in e["evidence"])]
+    # assert it is PRESENT before constraining it -- otherwise a typo'd id passes (#350)
+    assert len(carrying) == 1
+    refs = [ev["reference"] for ev in carrying[0]["evidence"]]
+    assert len(refs) > 1, "the modelling result must not be an edge's only evidence"
+    assert "ARO:3007526" in refs
+    # the three qualifications must be stated in the notes, not merely known to the curator
+    notes = " ".join(ev.get("notes", "") for ev in carrying[0]["evidence"]).lower()
+    for qualification in ("modelling", "potentially altering", "neisseria"):
+        assert qualification in notes
+
+
+def test_the_three_ribosomal_families_do_not_share_one_config():
+    """rpsA, rpsL and rpsE are all ARO:3000212 small-subunit ribosomal proteins.
+
+    A single shared config was the tempting shortcut and would have asserted rpsA's
+    binding mechanism on rpsE, which CARD does not support for it.
+    """
+    cfgs = [promote.family_configs(f)[0]
+            for f in ("ARO:3004722", "ARO:3003395", "ARO:3007526")]
+    refs = [c["reference"] for c in cfgs]
+    assert len(set(refs)) == 3
+    # #350: sizes alone would pass with two configs byte-identical. Compare the edge
+    # CONTENT, which is the risk the docstring names.
+    shapes = [frozenset((e["subject"], e["predicate_id"], e["object"]) for e in c["extra_edges"])
+              for c in cfgs]
+    assert len(set(shapes)) == 3
+    rpsa, _, rpse = cfgs
+    # the specific over-reach: rpsA's binding chemistry must not appear on rpsE
+    rpse_blob = repr(rpse)
+    for rpsa_only in ("poa", "rpsa_wt", "trans_translation"):
+        assert rpsa_only not in rpse_blob
+    assert any("poa" in e["object"] or "poa" in e["subject"] for e in rpsa["extra_edges"])
+
+
+def test_rpse_does_not_type_its_second_domain_as_a_fold():
+    """`protein_traits["fold"]` emits `member of (adopts fold)`.
+
+    Pfam:PF03719 is the S5 C-TERMINAL DOMAIN -- the determinant's other part, not a fold.
+    The shape offers no second part slot, so it gets no node at all (#352).
+    """
+    cfg = promote.family_configs("ARO:3007526")[0]
+    pt = cfg["protein_traits"]
+    assert "fold" not in pt
+    assert pt[pt["primary_key"]][0] == "Pfam:PF00333"
+    # #358: it is not dropped -- it is an extra_node typed as the DOMAIN it is, with a
+    # `part of` edge. Dropping it lost a real KB-trait link for a reason that was untrue.
+    node = [n for n in cfg["extra_nodes"] if n.get("grounding") == "Pfam:PF03719"]
+    assert len(node) == 1 and node[0]["node_type"] == "DOMAIN"
+    edge = [e for e in cfg["extra_edges"] if e["subject"] == node[0]["node_id"]]
+    assert len(edge) == 1
+    assert edge[0]["predicate_id"] == "BFO:0000050" and edge[0]["object"] == "determinant"
+    assert "adopts fold" not in repr(cfg)
+
+
+def test_rv3008_is_not_curated_because_card_hedges_both_halves():
+    """"A hypothetical protein for which it has been PREDICTED but no experimental
+    evidence exists to determine its function. MAY contribute to pyrazinamide
+    resistance."
+
+    Round 117's "putative" shape doubled: the function assignment is uncertain AND the
+    resistance contribution is uncertain. There is no claim left to assert.
+    """
+    assert promote.family_configs("ARO:3004989") == []
+
+
+# ---------------------------------------------------------------------------------------
+# Round 122 — target alteration in trans, twice more.
+
+def test_ul3_family_splits_because_only_one_record_names_the_protein():
+    """ARO:3005081 says "ribosomal protein uL3"; ARO:3005082 says "Ribosomal protein
+    mutations" and names no protein.
+
+    One config with `protein_traits` would assert the L3 family node on the record that
+    never mentions L3 -- #371's borrowed specificity, filed one round earlier. Two configs,
+    selected by precondition.
+    """
+    cfgs = promote.family_configs("ARO:3005082")
+    # NOT an exact count -- #287 bans that, and the meta-test caught this test writing one.
+    named = [c for c in cfgs if "protein_traits" in c]
+    unnamed = [c for c in cfgs if "protein_traits" not in c]
+    assert len(named) >= 1 and len(unnamed) >= 1
+    named, unnamed = named[0], unnamed[0]
+    assert "protein_traits" in named
+    assert named["protein_traits"]["family"][0] == "Pfam:PF00297"
+    assert "protein_traits" not in unnamed
+    # groundings and references, NOT prose -- a comment explaining WHY PF00297 is absent
+    # legitimately names it, and the first version of this assertion failed on that.
+    assert not any(n.get("grounding") == "Pfam:PF00297" for n in unnamed["extra_nodes"])
+    refs = {ev["reference"] for e in unnamed["extra_edges"] for ev in e["evidence"]}
+    refs |= {d["reference"] for d in unnamed["det_res"]}
+    assert "Pfam:PF00297" not in refs, "the L3 abstract must not be cited on a record that names no protein (#374)"
+    # #380: the limitation is recorded on the determinant NODE, not as a second weaker edge
+    # on a pair that already has a strong one. `determinant_note` must be a key the promoter
+    # actually reads -- a config key it ignores records nothing.
+    assert "#371" in unnamed["determinant_note"]
+    assert not any(e["predicate_id"] == "RO:0002610" and e["subject"] == "determinant"
+                   and e["object"] == "rrna23s" for e in unnamed["extra_edges"])
+    # #374/#382: the L3-specific experiments stay on the named record only -- checked over
+    # the WHOLE config, not just det_res. The first version asserted this on det_res alone,
+    # which was the one place the fix had touched, and four L3 citations survived in
+    # extra_edges with the test green and a node description claiming they were gone.
+    def _all_refs(cfg):
+        refs = {d["reference"] for d in cfg["det_res"]}
+        refs |= {ev["reference"] for e in cfg["extra_edges"] for ev in e["evidence"]}
+        return refs
+
+    def _all_snippets(cfg):
+        s = [d["snippet"] for d in cfg["det_res"]]
+        s += [ev["snippet"] for e in cfg["extra_edges"] for ev in e["evidence"]]
+        return " ".join(s)
+
+    assert "PMID:12936991" in _all_refs(named)
+    # NOT a reference-level ban: PMID:12936991 also states what the DRUG does ("tiamulin
+    # targets the 50S subunit and interacts at the peptidyl transferase center"), which is
+    # true of any member. The constraint is on SNIPPETS that carry the L3-specific result.
+    assert not re.search(r"\bu?L3\b", _all_snippets(unnamed)), \
+        "no snippet on a record that names no protein may name L3 (#374, #382)"
+    for l3_only in (promote._TIAMULIN_INFERRED, promote._TIAMULIN_FOOTPRINT,
+                    promote._TIAMULIN_MUTANT, promote._TIAMULIN_NOT_RRNA):
+        assert l3_only not in _all_snippets(unnamed)
+    assert re.search(r"\bL3\b", _all_snippets(named))
+    # the catch-all must be LAST, or it shadows the specific one
+    assert named.get("precondition") is not None
+    assert unnamed.get("precondition") is None
+
+
+def test_the_ul3_precondition_reads_only_the_records_own_definition():
+    """#252: an ARO record's full YAML carries drug-class boilerplate naming other things.
+
+    Driven off the REAL records, not synthetic text -- `_own_definition` returns "" for a
+    definition block with no following key, so a hand-written fixture tests the parser
+    rather than the predicate.
+    """
+    named = [c for c in promote.family_configs("ARO:3005082") if "protein_traits" in c][0]
+    pre = named["precondition"]
+    seen = {}
+    for pth in promote.ARO_DIR.glob("*.yaml"):
+        text = pth.read_text(encoding="utf-8")
+        m = re.search(r'^identifier:\s*"?(ARO:3005081|ARO:3005082)"?\s*$', text, re.M)
+        if m:
+            seen[m.group(1)] = pre(m.group(1), "", text)
+    assert seen["ARO:3005081"] is None, "the record that names uL3 must be accepted"
+    assert seen["ARO:3005082"] is not None, "the record that names no protein must be refused"
+    assert "#371" in seen["ARO:3005082"]
+
+
+def test_ul3_quotes_both_of_its_sources_hedges_rather_than_around_them():
+    """Two hedges, on two different things:
+
+    * PMID:12936991 hedges the INFERENCE -- "It is inferred that the L3 mutation ... causes";
+    * the Pfam KB record hedges the FUNCTION -- L3 "may participate in the formation of
+      the peptidyltransferase centre".
+
+    Both must survive into the record verbatim rather than being quoted around.
+    """
+    named = promote.family_configs("ARO:3005082")[0]
+    core = [e for e in named["extra_edges"]
+            if e["subject"] == "determinant" and e["object"] == "drug_binding"][0]
+    assert any("It is inferred that" in ev["snippet"] for ev in core["evidence"])
+    # and the measured result rides alongside, so the hedge is not the only support
+    assert any("Chemical footprinting experiments" in ev["snippet"] for ev in core["evidence"])
+    assert "may participate in the formation" in named["protein_traits"]["family"][3]
+
+
+def test_ul3_binding_state_is_defined_by_both_constituents():
+    """#370, applied prospectively rather than after review found it.
+
+    #378: the config-level version could not fail for the reason it claimed -- emission
+    silently drops edges whose `requires` is unmet, so a member with a different first drug
+    class would get the drug half dropped, the site half kept, and exactly the one-sided
+    binding state #370 is about. Both halves now carry the same guard, and this reads the
+    emitted records.
+    """
+    for cfg in promote.family_configs("ARO:3005082"):
+        halves = [e for e in cfg["extra_edges"]
+                  if e["subject"] == "drug_binding" and e["predicate_id"] == "BFO:0000051"]
+        assert {e["object"] for e in halves} == {"drug0", "ptc"}
+        # both guarded, or neither -- an asymmetric guard is what emits a half-defined state
+        assert len({repr(e.get("requires")) for e in halves}) == 1
+        # #386: and EVERY edge touching the node, or it can be emitted with no parts at all
+        touching = [e for e in cfg["extra_edges"]
+                    if "drug_binding" in (e["subject"], e["object"])]
+        # NOT a count: the two configs legitimately differ here, because #387 removed the
+        # generic record's two mechanism edges into this node. The property is that every
+        # SURVIVING edge carries the same guard, or the node can be emitted with no parts.
+        assert touching
+        assert all(e.get("requires") == {"drug0": "ARO:3000670"} for e in touching)
+    seen = 0
+    for pth in promote.ARO_DIR.glob("*.yaml"):
+        text = pth.read_text(encoding="utf-8")
+        if not re.search(r'^identifier:\s*"?(ARO:3005081|ARO:3005082)"?\s*$', text, re.M):
+            continue
+        seen += 1
+        graph = [g for g in yaml.safe_load(text)["causal_graphs"]
+                 if g["graph_id"] == "resistance"][0]
+        parts = {e["object"] for e in graph["edges"]
+                 if e["subject"] == "drug_binding" and e["predicate_id"] == "BFO:0000051"}
+        assert parts == {"drug0", "ptc"}, f"{pth.name} has a half-defined binding state"
+    assert seen == 2
+
+
+def test_the_two_rpsl_records_differ_by_the_clause_that_names_the_drug_interaction():
+    """ARO:3003395 ends "...confer streptomycin resistance BY DISRUPTING INTERACTIONS
+    between 16S rRNA and streptomycin". ARO:3003419 ends "...confer antibiotic resistance".
+
+    Same first two sentences; the drug-interaction mechanism is only in one. So only one
+    carries the strep_binding arm. Round 120's FrxA/nfsB finding on a closer pair.
+    """
+    specific = promote.family_configs("ARO:3003395")[0]
+    generic = promote.family_configs("ARO:3003419")[0]
+    spec_nodes = {n["node_id"] for n in specific["extra_nodes"]}
+    gen_nodes = {n["node_id"] for n in generic["extra_nodes"]}
+    assert "strep_binding" in spec_nodes
+    assert "strep_binding" not in gen_nodes
+    # neither config may assert a drug interaction on the generic record
+    assert not any(e["object"].startswith("drug") or e["subject"].startswith("drug")
+                   for e in generic["extra_edges"])
+    # both DO keep the pseudoknot arm, which both definitions state
+    for cfg in (specific, generic):
+        pk = [e for e in cfg["extra_edges"]
+              if e["subject"] == "determinant" and e["object"] == "pseudoknot"]
+        assert len(pk) == 1 and pk[0]["predicate_id"] == "RO:0002610"
+
+
+def _assert_deliberately_held(aro_id):
+    """`family_configs(x) == []` is true of every id that does not exist (#379).
+
+    A held-record test has to distinguish "deliberately held" from "never noticed", so it
+    must also show the term is real and still has an unpromoted draft.
+    """
+    assert promote.family_configs(aro_id) == [], f"{aro_id} is configured after all"
+    drafts, found = 0, False
+    for pth in promote.ARO_DIR.glob("*.yaml"):
+        text = pth.read_text(encoding="utf-8")
+        if re.search(rf'^identifier:\s*"?{re.escape(aro_id)}"?\s*$', text, re.M):
+            found = True
+            if "graph_id: resistance-draft" in text:
+                drafts += 1
+    assert found, f"{aro_id} names no record -- a typo passes the config check silently"
+    assert drafts, f"{aro_id} has no draft left, so it is not being held"
+
+
+def test_the_generic_ul3_record_has_no_mechanism_edge_into_drug_binding():
+    """#387: #382 withheld Bosling's L3 result from the record that names no protein and
+    left the two edges that rested on it, so they fell back to CARD's sentence -- which
+    mentions neither the drug nor binding.
+
+    ARO:3003419 in the same round gets no drug-binding arm from a definition of the same
+    shape. This record gets the same treatment.
+    """
+    named = [c for c in promote.family_configs("ARO:3005082") if "protein_traits" in c][0]
+    unnamed = [c for c in promote.family_configs("ARO:3005082") if "protein_traits" not in c][0]
+    assert any(e["object"] == "drug_binding" for e in named["extra_edges"])
+    assert not any(e["object"] == "drug_binding" for e in unnamed["extra_edges"])
+    # and no node is left with nothing pointing at it
+    for cfg in (named, unnamed):
+        used = {x for e in cfg["extra_edges"] for x in (e["subject"], e["object"])}
+        assert all(n["node_id"] in used for n in cfg["extra_nodes"])
+
+
+def test_conformation_nodes_use_characteristic_of_not_part_of():
+    """#384 shipped with no test: reverting RO:0000052 to BFO:0000050 on both families left
+    the suite green (#389).
+
+    A conformation INHERES IN a molecule; it is not a mereological part of one.
+    """
+    seen = 0
+    for fam, state, mol in (("ARO:3005082", "altered_conformation", "rrna23s"),
+                            ("ARO:3003419", "altered_structure", "rrna16s")):
+        for cfg in promote.family_configs(fam):
+            edges = [e for e in cfg["extra_edges"]
+                     if e["subject"] == state and e["object"] == mol]
+            for e in edges:
+                seen += 1
+                assert e["predicate_id"] == "RO:0000052"
+                assert "characteristic of" in e["predicate"]
+    assert seen >= 3
+
+
+def test_no_edge_asserts_the_23s_rrna_is_part_of_the_50s_subunit():
+    """#383 shipped with no test: re-adding the deleted edge left the suite green (#389).
+
+    The snippet that edge cited says the structure gives "a detailed picture of ITS
+    interactions with the 23S rRNA" -- "its" is tiamulin's. Co-mention is not part-hood.
+    """
+    for cfg in promote.family_configs("ARO:3005082"):
+        assert not any(e["subject"] == "rrna23s" and e["object"] == "subunit50s"
+                       for e in cfg["extra_edges"])
+
+
+def test_every_snippet_constant_is_actually_used():
+    """#390, and #375 and #367 before it -- three rounds, three dead snippet constants,
+    each found only by a reviewer reading the artifact. Ruff does not flag them.
+
+    Scoped to the round 121/122 constants rather than the whole module, so it states a
+    claim it can actually keep.
+    """
+    src = pathlib.Path(promote.__file__).read_text(encoding="utf-8")
+    for name in ("_TIAMULIN_TARGET", "_TIAMULIN_MUTANT", "_TIAMULIN_FOOTPRINT",
+                 "_TIAMULIN_INFERRED", "_TIAMULIN_NOT_RRNA", "_PLEURO_SITE",
+                 "_PLEURO_INHIBITS", "_L3_HEDGE", "_CARD_UL3", "_CARD_RPMUT",
+                 "_CARD_RPSL_GENERIC", "_RPSL_SOURCE_ASSOC", "_RPSL_MUTATIONS",
+                 "_RPSL_PSEUDOKNOT", "_RPSL_ASSOC", "_CARD_RPSL"):
+        # one definition plus at least one use
+        assert src.count(name) >= 2, f"{name} is defined and never used (#390)"
+
+
+def test_the_vanl_cluster_term_is_not_curated_pending_309():
+    """ARO:3000260 is a gene CLUSTER. Whether a cluster should carry a protein-trait causal
+    graph is #309's modelling question, and curating it would answer that by fiat."""
+    _assert_deliberately_held("ARO:3000260")
+
+
+# ---------------------------------------------------------------------------------------
+# Round 123 — nat.
+
+def test_nat_asserts_no_extra_drug_edge():
+    """CARD names "arylamines and hydrazines" and, separately, that overexpression may
+    confer isoniazid resistance. It never joins them, and isoniazid IS a hydrazine -- so the
+    inference is one step of chemistry away, which is what makes it easy to supply.
+
+    Scope: `extra_edges` only. Both records DO carry the promoter's fixed
+    `determinant --confers resistance to (drug class)--> drug0` edge, which is CARD's own
+    assertion; the earlier name claimed the graph had no drug edge at all, which is false.
+
+    #396: the first version DID supply one, as an `acetylation --> drug0` edge whose SOLE
+    evidence was Pfam's sentence about HUMAN NAT -- inverting round 121's rule that
+    out-of-scope context may ride on an edge CARD supports but may never be an edge's only
+    evidence. And the test pinned that wrong shape. No config may carry a drug edge.
+    """
+    for cfg in promote.family_configs("ARO:3004910"):
+        assert not any(e["object"].startswith("drug") or e["subject"].startswith("drug")
+                       for e in cfg["extra_edges"])
+        assert "in humans" not in repr(cfg["extra_edges"])
+
+
+def test_only_the_record_whose_definition_joins_the_routes_gets_the_joining_edge():
+    """ARO:3004930: "Mutations that occur in nat WHICH THROUGH OVEREXPRESSION of the enzyme
+    can result in ... resistance" -- CARD joins them.
+    ARO:3004910: names both separately and never joins them.
+
+    #395: the first version promoted BOTH with the parent's sentence, then annotated
+    ARO:3004930 with a "disagreement" its own definition refutes -- #371 inverted, a record
+    discarding its own more specific text for an ancestor's.
+    #397: the parent's `overexpression` node therefore has no incoming edge, and none is
+    invented for it.
+    """
+    joined = [c for c in promote.family_configs("ARO:3004910")
+              if c.get("precondition") is promote._nat_joins_mutation][0]
+    generic = [c for c in promote.family_configs("ARO:3004910")
+               if c is not joined][0]
+
+    def incoming(cfg):
+        return [e for e in cfg["extra_edges"] if e["object"] == "overexpression"]
+
+    assert len(incoming(joined)) == 1
+    assert incoming(joined)[0]["subject"] == "determinant"
+    assert "through overexpression" in incoming(joined)[0]["evidence"][0]["snippet"].lower()
+    assert incoming(generic) == []
+    # and no circular "overexpression regulates the determinant" edge on either (#397)
+    for cfg in (joined, generic):
+        assert not any(e["subject"] == "overexpression" and e["object"] == "determinant"
+                       for e in cfg["extra_edges"])
+
+
+def test_nat_mech_edge_cites_the_mechanism_terms_own_definition():
+    """#398: the mech edge is about ARO:3000212, and the first version evidenced it with
+    nat's definition -- a sentence containing no mutation claim at all.
+
+    #393, corrected: ARO:3000212's own definition names "increased expression" among its
+    examples, so an overexpression route is IN SCOPE for it rather than a mismatch with it.
+    """
+    for cfg in promote.family_configs("ARO:3004910"):
+        # list form since #400 -- the reference travels with the snippet
+        snippets = {i["snippet"] for v in cfg["mech"].values() for i in v}
+        assert snippets == {promote._MECH_MUTATION}
+    assert "increased expression" in promote._MECH_MUTATION
+    assert "Point mutations" in promote._MECH_MUTATION
+
+
+def test_nat_grounds_the_exact_activity_term_that_is_already_a_kb_record():
+    """#399: GO:0008080 (N-acetyltransferase activity) never names acetyl-CoA and its scope
+    includes histone and rRNA acetyltransferases. GO:0004060 is the exact term."""
+    for cfg in promote.family_configs("ARO:3004910"):
+        node = [n for n in cfg["extra_nodes"] if n["node_id"] == "acetylation"][0]
+        assert node["grounding"] == "GO:0004060"
+
+
+def test_nat_mech_snippet_travels_with_its_own_reference():
+    """#400: giving `mech`/`mech_res` a bare string makes the promoter stamp
+    `cfg["reference"]` on it, which put ARO:3000212's definition under
+    `reference: ARO:3004910`. The snippet moved; the attribution did not.
+
+    Third round running in which a fix produced the defect it was fixing.
+    """
+    for cfg in promote.family_configs("ARO:3004910"):
+        for value in list(cfg["mech"].values()) + [cfg["mech_res"]]:
+            assert isinstance(value, list), "bare strings inherit cfg['reference'] (#400)"
+            for item in value:
+                assert item["reference"] == "ARO:3000212"
+                assert item["snippet"] == promote._MECH_MUTATION
+
+
+def test_every_nat_evidence_reference_actually_contains_its_snippet():
+    """#402: no test in the suite pinned an evidence `reference` -- the blind spot #348,
+    #382 and #400 all slipped through.
+
+    The FIRST version of this test indexed only `Pfam:`/`GO:` identifiers, so every `ARO:`
+    reference fell through its `continue` -- it checked 5 of 19 items and **none of the
+    class it was written for**. Reproducing #400 against it left it green. Fourth
+    consecutive round in which a fix left the shape it was aimed at.
+
+    It now resolves references it actually sees: ARO ids from `aro.obo`, KB CURIEs from
+    their record. Collect-then-look-up, not index-everything -- the naive fix would read
+    429,271 files.
+    """
+    import yaml as _yaml
+    records, cited = {}, set()
+    for pth in promote.ARO_DIR.glob("*.yaml"):
+        text = pth.read_text(encoding="utf-8")
+        if not re.search(r'^identifier:\s*"?(ARO:3004910|ARO:3004930)"?\s*$', text, re.M):
+            continue
+        graph = [g for g in _yaml.safe_load(text)["causal_graphs"]
+                 if g["graph_id"] == "resistance"][0]
+        records[pth.name] = graph
+        cited |= {ev["reference"] for e in graph["edges"] for ev in e["evidence"]}
+    assert records, "the two nat records were not found"
+
+    bodies = {}
+    obo = promote.E.OBO.read_text(encoding="utf-8")
+    for ref in cited:
+        if ref.startswith("ARO:"):
+            m = re.search(rf'^id: {re.escape(ref)}$(.*?)(?=^\[|\Z)', obo, re.M | re.S)
+            if m:
+                bodies[ref] = " ".join(m.group(1).split())
+        else:
+            hit = [q for q in promote.TRAITS_ROOT.rglob("*.yaml")
+                   if q.stem.endswith(ref.split(":")[1].lower())]
+            for q in hit:
+                head = q.read_text(encoding="utf-8")[:6000]
+                if re.search(rf'^identifier:\s*"?{re.escape(ref)}"?\s*$', head, re.M):
+                    bodies[ref] = " ".join(head.split())
+                    break
+    # Every reference OF A RESOLVABLE TYPE must resolve -- an unresolved one silently
+    # skipped is how the first version passed while checking a quarter of the items.
+    # PMIDs and DOIs are valid and not on disk; requiring them to resolve would false-fail
+    # the moment these records cite primary literature, which 7,119 of 7,211 promoted ARO
+    # records already do (#404).
+    on_disk = {r for r in cited if r.split(":")[0] in ("ARO", "Pfam", "GO", "CATH",
+                                                       "PROSITE", "NCBIfam", "InterPro")}
+    assert set(bodies) == on_disk, f"unresolved references: {on_disk - set(bodies)}"
+
+    checked = 0
+    for name, graph in records.items():
+        for e in graph["edges"]:
+            for ev in e["evidence"]:
+                if ev["reference"] not in bodies:
+                    continue
+                checked += 1
+                assert " ".join(ev["snippet"].split()) in bodies[ev["reference"]], (
+                    f"{ev['reference']} does not contain its snippet on {name}")
+    # EXACT, not a floor: `>= 18` against 19 real items let one evidence item vanish
+    # silently, which is the #382/#387 class this test exists to catch (#404).
+    assert checked == 19, f"{checked} on-disk evidence items, expected 19"
+
+
+def test_the_two_nat_configs_are_disjoint_so_list_order_is_not_load_bearing():
+    """#401 was fixed but pinned by nothing (#404). `_check_config_order` only asserts that
+    a precondition-less config is last; it cannot see two OVERLAPPING preconditions, which
+    was #401's actual defect -- ARO:3004930 passed both and won by position alone.
+    """
+    cfgs = promote.family_configs("ARO:3004910")
+    for ident in ("ARO:3004910", "ARO:3004930"):
+        text = next(q.read_text(encoding="utf-8") for q in promote.ARO_DIR.glob("*.yaml")
+                    if re.search(rf'^identifier:\s*"?{ident}"?\s*$',
+                                 q.read_text(encoding="utf-8"), re.M))
+        accepting = [c for c in cfgs
+                     if c["precondition"](ident, "", text) is None]
+        assert len(accepting) == 1, f"{ident} is accepted by {len(accepting)} configs"

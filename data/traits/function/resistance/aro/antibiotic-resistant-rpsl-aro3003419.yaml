@@ -6,7 +6,7 @@ definition_source: ARO
 trait_axis: FUNCTION
 trait_category: FUNC_RESISTANCE
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - ARO:0000031
 trait_relations:
@@ -20,11 +20,13 @@ synonyms:
   - synonym_text: "Ribosomal protein S12"
     synonym_type: EXACT_SYNONYM
 causal_graphs:
-- graph_id: resistance-draft
-  title: '[DRAFT] antibiotic-resistant rpsL → mechanism → resistance (auto-scaffold from ARO relations)'
-  description: 'Auto-drafted from this record''s enriched ARO trait_relations (participates_in mechanism
-    + confers_resistance_to_drug_class). NOT curator-reviewed: edges cite the ARO record but carry no
-    verbatim snippet yet. A curator should verify each edge and add quotes before flipping to REVIEWED.'
+- graph_id: resistance
+  title: antibiotic-resistant rpsL → mechanism → resistance (curated from ARO relations + literature)
+  description: Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
+    mechanism → resistance phenotype → drug classes; edges carry the family's verbatim literature evidence
+    (ARO:3003419). rpsL, drug-agnostic. Its definition ends at 'confer antibiotic resistance' where ARO:3003395
+    continues 'by disrupting interactions between 16S rRNA and streptomycin'. NO drug-binding arm is written,
+    because this record names no drug interaction to disrupt -- see the test that pins the difference.
   nodes:
   - node_id: determinant
     label: antibiotic-resistant rpsL
@@ -38,6 +40,23 @@ causal_graphs:
     label: aminoglycoside antibiotic
     node_type: CHEMICAL
     grounding: ARO:0000016
+  - node_id: domain
+    label: Ribosomal protein S12/S23
+    node_type: DOMAIN
+    grounding: Pfam:PF00164
+    description: KB protein-trait record carrying the mechanism.
+  - node_id: rrna16s
+    label: 16S ribosomal RNA
+    node_type: NUCLEIC_ACID
+    description: 'Ungrounded: SO:0000407, recalled as 16S rRNA, is `cytosolic_18S_rRNA` (#346).'
+  - node_id: pseudoknot
+    label: 16S rRNA pseudoknot structure
+    node_type: STATE
+    description: 'Ungrounded: SO:0005836, recalled as pseudoknot, is `regulatory_region` (#346).'
+  - node_id: altered_structure
+    label: altered higher-order structure of the 16S rRNA
+    node_type: STATE
+    description: What the substitution produces, as a STATE rather than the molecule itself (#377).
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -52,46 +71,112 @@ causal_graphs:
     object: mech0
     evidence:
     - reference: ARO:3003419
-      notes: 'Auto-drafted: mechanism class ARO:3000212 assigned by CARD''s categorisation (aro.obo asserts
-        no participates_in between this determinant and ARO:3000212); verbatim snippet pending curation.'
-    - reference: ARO:3003419
       snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
         rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
         antibiotic resistance.
-      notes: ARO definition of this determinant. The mechanism class ARO:3000212 (mutation conferring
-        antibiotic resistance) is CARD's mechanism categorisation for it; aro.obo does not assert that
-        link as an is_a axiom.
+      notes: Family mechanism ARO:3000212.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3003419
-      notes: 'Auto-drafted: mechanism ARO:3000212 → resistance; snippet pending curation.'
-    - reference: ARO:3000212
-      snippet: Point mutations in the DNA may lead to an altered gene product that may result in antibiotic
-        resistance. Examples included modified antibiotic targets with lower binding affinities and the
-        deactivation of repressors that result in increased expression of genes that inactivate or pump
-        out antibiotics.
-      notes: ARO definition of the resistance mechanism class ARO:3000212 (mutation conferring antibiotic
-        resistance), which states the causal link to resistance.
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        antibiotic resistance.
+      notes: Mechanism ARO:3000212 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
     - reference: ARO:3003419
-      notes: 'Auto-drafted: determinant → resistance phenotype; snippet pending curation.'
-    - reference: ARO:3003419
-      snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
-      notes: CARD asserts a resistance relation on this record's own ARO term.
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        antibiotic resistance.
+      notes: CARD states conferral, so CARD carries this edge (#363).
+    - reference: PMID:7934937
+      snippet: The mutations found either lead to amino acid changes in ribosomal protein S12 or alter
+        the primary structure of the 16S rRNA.
+      notes: Finken 1993, what the substitutions ARE.
   - subject: determinant
     predicate: confers resistance to (drug class)
+    predicate_id: ARO:2000001
     object: drug0
+    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
     evidence:
     - reference: ARO:3003419
       snippet: 'relationship: confers_resistance_to_drug_class ARO:0000016 ! aminoglycoside antibiotic'
-      notes: Asserted directly on ARO:3003419 (antibiotic-resistant rpsL) in the CARD/ARO release in data/raw/aro/aro.obo.
-    predicate_id: ARO:2000001
-    description: CARD asserts that this determinant confers resistance to aminoglycoside antibiotic.
+      notes: Asserted on ARO:3003419 (antibiotic-resistant rpsL), an is_a ancestor of this record's ARO:3003419;
+        inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.
+  - subject: domain
+    predicate: part of (the S12 domain of this determinant)
+    predicate_id: BFO:0000050
+    object: determinant
+    evidence:
+    - reference: Pfam:PF00164
+      snippet: Ribosomal protein uS12 is one of the proteins from the small ribosomal subunit. In Escherichia
+        coli, uS12 is known to be involved in the translation initiation step.
+      notes: 'KB trait: the S12 domain, as on ARO:3003395.'
+  - subject: pseudoknot
+    predicate: part of (a structure of the 16S rRNA)
+    predicate_id: BFO:0000050
+    object: rrna16s
+    evidence:
+    - reference: PMID:7934937
+      snippet: The 16S rRNA region mutated perturbs a pseudoknot structure in a region which has been
+        linked to ribosomal S12 protein.
+      notes: '''a pseudoknot structure in a region'' of the 16S rRNA.'
+  - subject: altered_structure
+    predicate: characteristic of (a structure of the 16S rRNA)
+    predicate_id: RO:0000052
+    object: rrna16s
+    description: A conformation INHERES IN a molecule; it is not a mereological part of one. BFO:0000050
+      was used here until review noted the snippet's genitive -- 'the higher-order structure OF 16S rRNA'
+      -- is the inherence reading (#384).
+    evidence:
+    - reference: ARO:3003419
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        antibiotic resistance.
+      notes: '''the higher-order structure OF 16S rRNA''.'
+  - subject: determinant
+    predicate: correlated with (linked to the pseudoknot region)
+    predicate_id: RO:0002610
+    object: pseudoknot
+    description: 'Same treatment as ARO:3003395: CARD says S12 ''stabilizes'', its source says the region
+      ''has been linked to'' S12, and the edge follows the source on the one claim they disagree about.'
+    evidence:
+    - reference: PMID:7934937
+      snippet: The 16S rRNA region mutated perturbs a pseudoknot structure in a region which has been
+        linked to ribosomal S12 protein.
+      notes: '''has been linked to ribosomal S12 protein'' -- hedged.'
+    - reference: ARO:3003419
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        antibiotic resistance.
+      notes: CARD's stronger 'stabilizes', recorded so the gap is on the edge.
+  - subject: determinant
+    predicate: causally upstream of (substitution alters the higher-order structure)
+    predicate_id: RO:0002411
+    object: altered_structure
+    description: 'The furthest this record''s own definition goes. ARO:3003395 continues to the drug interaction;
+      this one does not, and no drug-binding node is written. The object is the CONFORMATION, not the
+      molecule: ''affects the higher-order structure'' does not say the rRNA''s function is decreased
+      (#377). A STATE object is fine -- round 121''s ARO:3003395 uses one. That is a CORPUS convention,
+      not something RO licenses: RO:0002212 reads ''decreases the rate or magnitude of EXECUTION of q''
+      (#385, #388).'
+    evidence:
+    - reference: ARO:3003419
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        antibiotic resistance.
+      notes: '''substitutions in RpsL AFFECT THE HIGHER-ORDER STRUCTURE of 16S rRNA and confer antibiotic
+        resistance''. NOT asserted: any disruption of a drug-rRNA interaction, which this definition --
+        unlike ARO:3003395''s -- does not mention.'
+curation_history:
+- timestamp: '2026-08-10T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Promoted auto-draft to curated causal_graphs with family verbatim snippets; SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
