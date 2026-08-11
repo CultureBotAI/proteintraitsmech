@@ -69,12 +69,17 @@ from round 121's codex escalation hours earlier: *a parent record's claim restin
 on its child term's definition.*
 
 So the family gets **two configs**, selected by precondition (`vanR`/`vanS`'s list form,
-#208). The named record gets `Pfam:PF00297`; the generic one gets no protein-trait node and
-an extra deliberately-weak edge recording *why*:
+#208). The named record gets `Pfam:PF00297`; the generic one gets **no protein-trait node, no
+citation of PF00297's abstract, and none of Bøsling's L3-specific experiments** — the last
+two only after review, which found the split withholding the node and not the evidence
+(#374). The limitation is recorded on the determinant **node**:
 
-```
-determinant --correlated with (which protein is not stated)--> rrna23s
-```
+> *"CARD names no specific ribosomal protein on this record. The uL3 identity, its
+> `Pfam:PF00297` family node and Bøsling 2003's L3 experiments all belong to the child term
+> `ARO:3005081` and are deliberately absent here."*
+
+The first version wrote that as a second, weaker edge on a pair that already had a strong
+one — asserting and declining the same relation from the same sentence (#380).
 
 **This is the first time a review finding changed the shape of the next round's work rather
 than being fixed and filed.** #371 was two hours old and it decided a modelling question
@@ -96,7 +101,9 @@ sentences are **identical**. The third is not:
 
 The drug-interaction mechanism is in one and absent from the other. So `ARO:3003419` gets
 **no `strep_binding` node and no drug edge at all** — its graph stops at
-`determinant --negatively regulates--> rrna16s`, which is as far as its own definition goes.
+`determinant --causally upstream of--> altered_structure`, which is as far as its own
+definition goes. (That edge pointed `RO:0002212` straight at the rRNA molecule until review
+noted the predicate needs a *process* and a *decrease*, and CARD claims neither — #377.)
 
 Round 120 found FrxA and nfsB differing by one clause. This pair differs by **one clause of
 one sentence, in otherwise identical text** — and a test pins that the generic config
@@ -111,8 +118,14 @@ Round 121's `drug_binding` states were each defined by one of their two named co
 and the codex escalation caught it. This round's `drug_binding` node carries both
 `has part → drug0` and `has part → ptc` from the start, with a test.
 
-That is the first time one of these findings was applied **prospectively**. It cost nothing
-here; in round 121 it took six review passes to surface.
+That is the first time one of these findings was applied **prospectively**. But the test was
+weaker than the property: it read the config, and emission silently drops edges whose
+`requires` is unmet — and only the drug half was guarded. So the exact one-sided state #370
+is about could still have been emitted, with #370's own test green (#378). Both halves now
+carry the same guard and the test reads the emitted records.
+
+**Applying a finding prospectively is not the same as pinning it**, and this round proved it
+on the very finding it was applying.
 
 ## Held
 
