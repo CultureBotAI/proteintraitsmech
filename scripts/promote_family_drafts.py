@@ -8945,10 +8945,13 @@ def _ul3_shared(card_snippet, card_ref, names_l3):
             {"node_id": "altered_conformation",
              "label": "altered local 23S rRNA conformation at the active site",
              "node_type": "STATE",
-             "description": "What the substitution produces. A STATE, because RO:0002212 "
-                            "requires a PROCESS object and a DECREASE, and CARD claims neither "
-                            "-- it says the conformation is INTERFERED WITH, and resistant "
-                            "ribosomes still translate (#377)."},
+             "description": "What the substitution produces. A STATE because the object of "
+                            "the causal edge should be the CONFORMATION, not the molecule: "
+                            "'interferes with the rRNA conformation' does not say the rRNA's "
+                            "function is decreased, and resistant ribosomes still translate "
+                            "(#377). NOT because a STATE object is disallowed -- round 121's "
+                            "ARO:3003395 points RO:0002212 at a STATE, and so does this "
+                            "graph, twice (#385)."},
             {"node_id": "drug_binding", "label": "tiamulin-ribosome binding", "node_type": "STATE",
              "description": "The interaction the mutation reduces."},
         ],
@@ -8960,16 +8963,10 @@ def _ul3_shared(card_snippet, card_ref, names_l3):
                            "notes": "'the peptidyl transferase center (PTC) OF THE 50S "
                                     "RIBOSOMAL SUBUNIT'. NOT asserted: the PTC's composition, "
                                     "which this sentence does not give."}]},
-            {"subject": "rrna23s", "object": "subunit50s",
-             "predicate": "part of (the 23S rRNA of the 50S subunit)",
-             "predicate_id": "BFO:0000050",
-             "evidence": [{"reference": "PMID:15554968", "snippet": _PLEURO_23S,
-                           "notes": "'the 50S ribosomal subunit ... its interactions with the "
-                                    "23S rRNA' -- both named in one sentence, from a source "
-                                    "that is not about L3. Citing Pfam:PF00297 here would put "
-                                    "the L3 abstract on a record that names no protein (#374), "
-                                    "which this edge did until its own test caught it. The "
-                                    "PTC-composition claim is still NOT asserted (#373)."}]},
+            # NO `rrna23s part of subunit50s` edge. It was written to replace the one #373
+            # removed, and it repeated #373's defect: _PLEURO_23S says the structure gives
+            # "a detailed picture of ITS interactions with the 23S rRNA" -- "its" is
+            # tiamulin's. Co-mention in one sentence is not a part-hood claim (#383).
             {"subject": "drug0", "object": "ptc",
              "predicate": "molecularly interacts with (binds the peptidyl transferase centre)",
              "predicate_id": "RO:0002436",
@@ -8986,8 +8983,14 @@ def _ul3_shared(card_snippet, card_ref, names_l3):
              "requires": {"drug0": "ARO:3000670"},
              "description": "Round 21's rule, and round 121's #370: a binding state is defined "
                             "by BOTH constituents, not one.",
-             "evidence": [{"reference": "PMID:12936991", "snippet": _TIAMULIN_FOOTPRINT,
-                           "notes": "'binding of tiamulin to ... ribosomes' -- the drug half."}]},
+             "evidence": ([{"reference": "PMID:12936991", "snippet": _TIAMULIN_FOOTPRINT,
+                            "notes": "'binding of tiamulin to ... ribosomes' -- the drug half."}]
+                          if names_l3 else
+                          [{"reference": "PMID:12936991", "snippet": _TIAMULIN_TARGET,
+                            "notes": "'tiamulin ... INTERACTS AT the peptidyl transferase "
+                                     "center' -- the drug half, from a sentence about the DRUG "
+                                     "rather than about the L3 mutant, whose experiment belongs "
+                                     "to ARO:3005081 (#382)."}])},
             {"subject": "drug_binding", "object": "ptc",
              "predicate": "has part (the site it binds)", "predicate_id": "BFO:0000051",
              "requires": {"drug0": "ARO:3000670"},
@@ -9003,7 +9006,8 @@ def _ul3_shared(card_snippet, card_ref, names_l3):
                                     "conformation' / 'interfere with the rRNA conformation at "
                                     "the active site'."}]},
             {"subject": "altered_conformation", "object": "rrna23s",
-             "predicate": "part of (a conformation of the 23S rRNA)", "predicate_id": "BFO:0000050",
+             "predicate": "characteristic of (a conformation of the 23S rRNA)",
+             "predicate_id": "RO:0000052",
              "description": "Which molecule's conformation it is -- the fact that made this an "
                             "IN-TRANS mechanism.",
              "evidence": [{"reference": card_ref, "snippet": card_snippet,
@@ -9011,27 +9015,40 @@ def _ul3_shared(card_snippet, card_ref, names_l3):
             {"subject": "altered_conformation", "object": "drug_binding",
              "predicate": "negatively regulates (the altered site binds the drug less well)",
              "predicate_id": "RO:0002212",
-             "evidence": [{"reference": "PMID:12936991", "snippet": _TIAMULIN_INFERRED,
-                           "notes": "'causes tiamulin resistance by ALTERATION OF THE "
-                                    "DRUG-BINDING SITE' -- quoted with its 'It is inferred' "
-                                    "hedge intact."}]},
+             "requires": {"drug0": "ARO:3000670"},   # #386: guard everything touching this node
+             "evidence": ([{"reference": "PMID:12936991", "snippet": _TIAMULIN_INFERRED,
+                            "notes": "'causes tiamulin resistance by ALTERATION OF THE "
+                                     "DRUG-BINDING SITE' -- quoted with its 'It is inferred' "
+                                     "hedge intact."}] if names_l3 else
+                          [{"reference": card_ref, "snippet": card_snippet,
+                            "notes": "CARD's own sentence. The L3-specific mechanism sentence "
+                                     "belongs to ARO:3005081 (#382)."}])},
             {"subject": "determinant", "object": "drug_binding",
              "predicate": "negatively regulates (mutation reduces drug binding)",
              "predicate_id": "RO:0002212",
              "requires": {"drug0": "ARO:3000670"},
-             "description": "The causal core, and the one step this family has a direct "
-                            "measurement for. Guarded because its evidence is tiamulin-"
-                            "specific footprinting (#378).",
-             "evidence": [{"reference": "PMID:12936991", "snippet": _TIAMULIN_FOOTPRINT,
-                           "notes": "Measured, not inferred: chemical footprinting."},
-                          {"reference": "PMID:12936991", "snippet": _TIAMULIN_INFERRED,
-                           "notes": "The mechanism sentence, and the paper hedges the INFERENCE "
-                                    "itself -- 'It is INFERRED that the L3 mutation ... causes "
-                                    "tiamulin resistance by alteration of the drug-binding "
-                                    "site.' Quoted with the hedge rather than around it."}]},
+             "description": "The causal core.",
+             # #382: BOTH Bosling sentences name L3, so on a record that names no protein
+             # they are the child term's evidence. The first fix removed one of five uses,
+             # from det_res only, and a node description was added claiming all were gone.
+             "evidence": ([
+                 {"reference": "PMID:12936991", "snippet": _TIAMULIN_FOOTPRINT,
+                  "notes": "Measured, not inferred: chemical footprinting."},
+                 {"reference": "PMID:12936991", "snippet": _TIAMULIN_INFERRED,
+                  "notes": "The mechanism sentence, and the paper hedges the INFERENCE itself "
+                           "-- 'It is INFERRED that the L3 mutation ... causes tiamulin "
+                           "resistance by alteration of the drug-binding site.' Quoted with "
+                           "the hedge rather than around it."},
+             ] if names_l3 else [
+                 {"reference": card_ref, "snippet": card_snippet,
+                  "notes": "CARD's own sentence, which is all this record has: it names no "
+                           "protein, so Bosling 2003's L3 experiments are the child term "
+                           "ARO:3005081's evidence and are not cited here (#374, #382)."},
+             ])},
             {"subject": "drug_binding", "object": "peptide_bond",
              "predicate": "negatively regulates (bound drug blocks peptide bond formation)",
              "predicate_id": "RO:0002212",
+             "requires": {"drug0": "ARO:3000670"},   # #386
              "description": "Why losing the binding rescues the cell: the binding is what stops "
                             "translation.",
              "evidence": [{"reference": "PMID:15554968", "snippet": _PLEURO_INHIBITS,
@@ -9168,7 +9185,12 @@ FAMILY_SNIPPETS["ARO:3003419"] = {
          "evidence": [{"reference": "PMID:7934937", "snippet": _RPSL_PSEUDOKNOT,
                        "notes": "'a pseudoknot structure in a region' of the 16S rRNA."}]},
         {"subject": "altered_structure", "object": "rrna16s",
-         "predicate": "part of (a structure of the 16S rRNA)", "predicate_id": "BFO:0000050",
+         "predicate": "characteristic of (a structure of the 16S rRNA)",
+         "predicate_id": "RO:0000052",
+         "description": "A conformation INHERES IN a molecule; it is not a mereological part "
+                        "of one. BFO:0000050 was used here until review noted the snippet's "
+                        "genitive -- 'the higher-order structure OF 16S rRNA' -- is the "
+                        "inherence reading (#384).",
          "evidence": [{"reference": "ARO:3003419", "snippet": _CARD_RPSL_GENERIC,
                        "notes": "'the higher-order structure OF 16S rRNA'."}]},
         {"subject": "determinant", "object": "pseudoknot",

@@ -3023,9 +3023,30 @@ def test_ul3_family_splits_because_only_one_record_names_the_protein():
     assert "#371" in unnamed["determinant_note"]
     assert not any(e["predicate_id"] == "RO:0002610" and e["subject"] == "determinant"
                    and e["object"] == "rrna23s" for e in unnamed["extra_edges"])
-    # #374: the L3-specific experiments stay on the named record only
-    assert "PMID:12936991" in repr(named["det_res"])
-    assert "PMID:12936991" not in repr(unnamed["det_res"])
+    # #374/#382: the L3-specific experiments stay on the named record only -- checked over
+    # the WHOLE config, not just det_res. The first version asserted this on det_res alone,
+    # which was the one place the fix had touched, and four L3 citations survived in
+    # extra_edges with the test green and a node description claiming they were gone.
+    def _all_refs(cfg):
+        refs = {d["reference"] for d in cfg["det_res"]}
+        refs |= {ev["reference"] for e in cfg["extra_edges"] for ev in e["evidence"]}
+        return refs
+
+    def _all_snippets(cfg):
+        s = [d["snippet"] for d in cfg["det_res"]]
+        s += [ev["snippet"] for e in cfg["extra_edges"] for ev in e["evidence"]]
+        return " ".join(s)
+
+    assert "PMID:12936991" in _all_refs(named)
+    # NOT a reference-level ban: PMID:12936991 also states what the DRUG does ("tiamulin
+    # targets the 50S subunit and interacts at the peptidyl transferase center"), which is
+    # true of any member. The constraint is on SNIPPETS that carry the L3-specific result.
+    assert not re.search(r"\bu?L3\b", _all_snippets(unnamed)), \
+        "no snippet on a record that names no protein may name L3 (#374, #382)"
+    for l3_only in (promote._TIAMULIN_INFERRED, promote._TIAMULIN_FOOTPRINT,
+                    promote._TIAMULIN_MUTANT, promote._TIAMULIN_NOT_RRNA):
+        assert l3_only not in _all_snippets(unnamed)
+    assert re.search(r"\bL3\b", _all_snippets(named))
     # the catch-all must be LAST, or it shadows the specific one
     assert named.get("precondition") is not None
     assert unnamed.get("precondition") is None
@@ -3084,6 +3105,11 @@ def test_ul3_binding_state_is_defined_by_both_constituents():
         assert {e["object"] for e in halves} == {"drug0", "ptc"}
         # both guarded, or neither -- an asymmetric guard is what emits a half-defined state
         assert len({repr(e.get("requires")) for e in halves}) == 1
+        # #386: and EVERY edge touching the node, or it can be emitted with no parts at all
+        touching = [e for e in cfg["extra_edges"]
+                    if "drug_binding" in (e["subject"], e["object"])]
+        assert len(touching) >= 4
+        assert all(e.get("requires") == {"drug0": "ARO:3000670"} for e in touching)
     seen = 0
     for pth in promote.ARO_DIR.glob("*.yaml"):
         text = pth.read_text(encoding="utf-8")

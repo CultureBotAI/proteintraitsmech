@@ -74,9 +74,11 @@ causal_graphs:
   - node_id: altered_conformation
     label: altered local 23S rRNA conformation at the active site
     node_type: STATE
-    description: What the substitution produces. A STATE, because RO:0002212 requires a PROCESS object
-      and a DECREASE, and CARD claims neither -- it says the conformation is INTERFERED WITH, and resistant
-      ribosomes still translate (#377).
+    description: 'What the substitution produces. A STATE because the object of the causal edge should
+      be the CONFORMATION, not the molecule: ''interferes with the rRNA conformation'' does not say the
+      rRNA''s function is decreased, and resistant ribosomes still translate (#377). NOT because a STATE
+      object is disallowed -- round 121''s ARO:3003395 points RO:0002212 at a STATE, and so does this
+      graph, twice (#385).'
   - node_id: drug_binding
     label: tiamulin-ribosome binding
     node_type: STATE
@@ -139,20 +141,6 @@ causal_graphs:
         A-tRNA binding site.
       notes: '''the peptidyl transferase center (PTC) OF THE 50S RIBOSOMAL SUBUNIT''. NOT asserted: the
         PTC''s composition, which this sentence does not give.'
-  - subject: rrna23s
-    predicate: part of (the 23S rRNA of the 50S subunit)
-    predicate_id: BFO:0000050
-    object: subunit50s
-    evidence:
-    - reference: PMID:15554968
-      snippet: The 3.5 A structure of the 50S ribosomal subunit from Deinococcus radiodurans in complex
-        with tiamulin provides for the first time a detailed picture of its interactions with the 23S
-        rRNA, thus explaining the molecular mechanism of the antimicrobial activity of the pleuromutilin
-        class of antibiotics.
-      notes: '''the 50S ribosomal subunit ... its interactions with the 23S rRNA'' -- both named in one
-        sentence, from a source that is not about L3. Citing Pfam:PF00297 here would put the L3 abstract
-        on a record that names no protein (#374), which this edge did until its own test caught it. The
-        PTC-composition claim is still NOT asserted (#373).'
   - subject: drug0
     predicate: molecularly interacts with (binds the peptidyl transferase centre)
     predicate_id: RO:0002436
@@ -177,8 +165,10 @@ causal_graphs:
       not one.'
     evidence:
     - reference: PMID:12936991
-      snippet: Chemical footprinting experiments show a reduced binding of tiamulin to mutant ribosomes.
-      notes: '''binding of tiamulin to ... ribosomes'' -- the drug half.'
+      snippet: The antibiotic tiamulin targets the 50S subunit of the bacterial ribosome and interacts
+        at the peptidyl transferase center.
+      notes: '''tiamulin ... INTERACTS AT the peptidyl transferase center'' -- the drug half, from a sentence
+        about the DRUG rather than about the L3 mutant, whose experiment belongs to ARO:3005081 (#382).'
   - subject: drug_binding
     predicate: has part (the site it binds)
     predicate_id: BFO:0000051
@@ -202,8 +192,8 @@ causal_graphs:
       notes: CARD's own words -- 'interfering with local rRNA conformation' / 'interfere with the rRNA
         conformation at the active site'.
   - subject: altered_conformation
-    predicate: part of (a conformation of the 23S rRNA)
-    predicate_id: BFO:0000050
+    predicate: characteristic of (a conformation of the 23S rRNA)
+    predicate_id: RO:0000052
     object: rrna23s
     description: Which molecule's conformation it is -- the fact that made this an IN-TRANS mechanism.
     evidence:
@@ -216,27 +206,21 @@ causal_graphs:
     predicate_id: RO:0002212
     object: drug_binding
     evidence:
-    - reference: PMID:12936991
-      snippet: It is inferred that the L3 mutation, which points into the peptidyl transferase cleft,
-        causes tiamulin resistance by alteration of the drug-binding site.
-      notes: '''causes tiamulin resistance by ALTERATION OF THE DRUG-BINDING SITE'' -- quoted with its
-        ''It is inferred'' hedge intact.'
+    - reference: ARO:3005082
+      snippet: Ribosomal protein mutations that interfere with the rRNA conformation at the active site
+        thus conferring antibiotic resistance.
+      notes: CARD's own sentence. The L3-specific mechanism sentence belongs to ARO:3005081 (#382).
   - subject: determinant
     predicate: negatively regulates (mutation reduces drug binding)
     predicate_id: RO:0002212
     object: drug_binding
-    description: The causal core, and the one step this family has a direct measurement for. Guarded because
-      its evidence is tiamulin-specific footprinting (#378).
+    description: The causal core.
     evidence:
-    - reference: PMID:12936991
-      snippet: Chemical footprinting experiments show a reduced binding of tiamulin to mutant ribosomes.
-      notes: 'Measured, not inferred: chemical footprinting.'
-    - reference: PMID:12936991
-      snippet: It is inferred that the L3 mutation, which points into the peptidyl transferase cleft,
-        causes tiamulin resistance by alteration of the drug-binding site.
-      notes: The mechanism sentence, and the paper hedges the INFERENCE itself -- 'It is INFERRED that
-        the L3 mutation ... causes tiamulin resistance by alteration of the drug-binding site.' Quoted
-        with the hedge rather than around it.
+    - reference: ARO:3005082
+      snippet: Ribosomal protein mutations that interfere with the rRNA conformation at the active site
+        thus conferring antibiotic resistance.
+      notes: 'CARD''s own sentence, which is all this record has: it names no protein, so Bosling 2003''s
+        L3 experiments are the child term ARO:3005081''s evidence and are not cited here (#374, #382).'
   - subject: drug_binding
     predicate: negatively regulates (bound drug blocks peptide bond formation)
     predicate_id: RO:0002212
