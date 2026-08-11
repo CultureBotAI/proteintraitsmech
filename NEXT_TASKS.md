@@ -23,14 +23,14 @@ Measured directly against the corpus (classify each draft by its own `definition
 | **565** label-only efflux/regulator | **27** | 16 efflux + 11 regulator |
 | van set "last ~30 operon-level" | **33** cluster/operon | the only claim that held |
 
-**7,262 curated · 188 drafts remaining**, in these buckets:
+**7,211 curated · 188 drafts remaining**, in these buckets:
 
 | n | bucket | decision or effort? |
 |--:|---|---|
 | 63 | short definition (<120 chars) | **effort** — `_minimal_enzyme_config` shape (rounds 66, 104, 105, 120) |
 | 49 | other, long definition | **effort** |
 | 33 | cluster / operon | **decision** — #309 |
-| 15 | prodrug activation | **effort** (17 before round 123 took nat) |
+| 15 | prodrug activation | **effort** — 17 before round 123 took `nat` |
 | 16 | efflux | effort |
 | 11 | regulator | effort |
 | 1 | van, non-cluster | effort |
@@ -46,6 +46,11 @@ Measured directly against the corpus (classify each draft by its own `definition
 | **#204** | needs a `CurationEvent` schema slot | **confirmed open and genuinely decision-bound.** No fingerprint machinery exists; `is_ours` is purely structural. #381 was a live near-miss. |
 
 **Decision-bound: #204, and #309's 33 cluster/operon drafts. That is all of it.**
+
+The curated count was **re-measured at the merge tip**: 7,452 ARO files = 7,211 curated +
+188 drafts + 53 carrying no causal graph at all. #392 said 7,262, which counted those 53 as
+curated and used a mid-stack draft number — the one figure in this correction that had not
+itself been re-measured (#407).
 
 Full survey and reasoning: **#392**. Per-issue measurements are commented on #196, #203, #204.
 
