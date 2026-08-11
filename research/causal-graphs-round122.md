@@ -126,8 +126,8 @@ fourth record now held that way, after kasA (#220), the ESX-5 term (#229) and ms
 * records touched: **3** (2 uL3 + 1 rpsL) · SEEDED → REVIEWED · 1 held
 * `just lint`: **all checks passed**
 * `just test`: **745 passed** (+6), **run before the push**
-* corpus after: **39,647 records · 40,115 graphs · 350,254 nodes · 372,559 edges ·
-  0 errors · 372,559/372,559 edges snippet-cited**
+* corpus after: **39,647 records · 40,115 graphs · 350,259 nodes · 372,565 edges ·
+  0 errors · 372,565/372,565 edges snippet-cited**
 * `just validate` on all 3 individually: **0 failures**
 * `--verify`: the split confirmed before any write — the named-L3 config **skips
   ARO:3005082 with its reason**, the generic config takes it, 0 problems on both
@@ -149,3 +149,70 @@ fourth record now held that way, after kasA (#220), the ESX-5 term (#229) and ms
 * **#371 changed a modelling decision two hours after being filed.** Worth asking which
   other open findings would change work in progress if they were read at the top of a round
   rather than at review time.
+
+## What the review found: nine findings, and the headline claim was not in the deliverable
+
+All nine filed (#373–#381), all nine fixed. Three matter beyond their instance.
+
+**1. The round's headline finding was in the report and in no record (#375).** This report's
+own table calls PMID:12936991's negative result — *"No mutations in the rRNA were selected as
+resistance determinants"* — *"a negative result that settles the shape … established
+experimentally rather than inferred"*, and the commit message opened with it.
+
+**The constant was defined and never referenced.** `_TIAMULIN_NOT_RRNA` and
+`_TIAMULIN_MUTANT` appeared in no edge on any of the three records. Nothing catches an unused
+module-level constant — ruff does not flag them, and #367 filed exactly this failure one
+round earlier, on a different constant, for a different reason.
+
+So: **twice in two rounds, the sentence a round was built around went missing from the round's
+output, and both times only a reviewer reading the artifact found it.** That is not a slip; it
+is what happens when the report is written from the config and the config is not read back.
+
+**2. The split withheld the node and not the evidence (#374).** The two-config split existed
+to keep uL3's identity off a record that names no protein — #371, applied prospectively and
+described above as this round's best move. It withheld `Pfam:PF00297` and then handed the
+generic record Bøsling's **L3 Asn149Asp footprinting result** as the sole support for its
+causal core.
+
+The rule was satisfied for one node type and violated for the evidence. And when the fix was
+written, the *same defect reappeared one edge over* — the new `rrna23s part_of subunit50s`
+edge cited `Pfam:PF00297`'s abstract on both configs, and it was **the test written for #374
+that caught it**, not another review round.
+
+**3. `RO:0002212` was pointed at molecules on three records (#377).** The predicate requires a
+**process** object and a **decrease**: *"p decreases the rate or magnitude of execution of q"*.
+CARD says the mutations *"interfere with the rRNA conformation"* — altering a shape is not
+decreasing an execution, and the rRNA's function is emphatically not reduced, since resistant
+ribosomes still translate. That is the mechanism.
+
+**This regressed from round 121**, which pointed the same predicate at a STATE and never at a
+molecule. Both records now route through an explicit `altered_conformation` /
+`altered_structure` STATE node, which is also more honest: the altered conformation is a thing
+the graph can say the drug binds less well.
+
+Also fixed: a `part of` edge whose snippet located the *drug*, not the PTC's composition
+(#373); a `peptide_bond` node grounded to `translational elongation` two lines below a comment
+invoking the rule against exactly that (#376); an asymmetric `requires` guard that could emit
+a one-sided binding state with #370's own test still green (#378); held-record tests that pass
+for any nonexistent ARO id (#379); a weak edge that asserted and declined the same relation
+from the same sentence (#380); and a config key the promoter silently ignored, which recorded
+the limitation nowhere — `determinant_note` is now real (#380).
+
+**4. `--repromote` would have silently downgraded round 121's work (#381).** `ARO:3003395` is
+a descendant of `ARO:3003419`, and this round's generic config is **by design strictly weaker**
+than round 121's drug-specific one. A routine `--family ARO:3003419 --repromote --apply` would
+have replaced the streptomycin graph with the drug-free one, and **#280's blast-radius guard
+cannot fire**: it refuses above `max(25, 5 × n_draft)`, and this family has two records.
+
+235 ancestor/descendant config pairs exist in this codebase. This is the first where the
+ancestor is deliberately weaker, which turns a rewrite into data loss. The precondition now
+refuses ARO:3003395 by name, with the reason.
+
+## Provenance after review
+
+* review findings: **9** · filed: **9** (#373–#381) · fixed in this PR: **9**
+* `just lint`: passed · `just test`: **745 passed**, run before the push and after the fixes
+* corpus after: **350,259 nodes · 372,565 edges · 0 errors · 372,565/372,565 snippet-cited**
+* `--verify` after the fixes: both refusals fire with their reasons — the named-L3 config
+  skips ARO:3005082 (#371), and the generic rpsL config skips ARO:3003395 (#381)
+* records re-promoted from clean drafts after every config change, never patched in place

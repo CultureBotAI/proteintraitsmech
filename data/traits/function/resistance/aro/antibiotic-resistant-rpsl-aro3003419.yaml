@@ -53,6 +53,10 @@ causal_graphs:
     label: 16S rRNA pseudoknot structure
     node_type: STATE
     description: 'Ungrounded: SO:0005836, recalled as pseudoknot, is `regulatory_region` (#346).'
+  - node_id: altered_structure
+    label: altered higher-order structure of the 16S rRNA
+    node_type: STATE
+    description: What the substitution produces, as a STATE rather than the molecule itself (#377).
   - node_id: resistance
     label: antibiotic resistance phenotype
     node_type: PHENOTYPE
@@ -123,6 +127,16 @@ causal_graphs:
       snippet: The 16S rRNA region mutated perturbs a pseudoknot structure in a region which has been
         linked to ribosomal S12 protein.
       notes: '''a pseudoknot structure in a region'' of the 16S rRNA.'
+  - subject: altered_structure
+    predicate: part of (a structure of the 16S rRNA)
+    predicate_id: BFO:0000050
+    object: rrna16s
+    evidence:
+    - reference: ARO:3003419
+      snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S
+        rRNA. Amino acid substitutions in RpsL affect the higher-order structure of 16S rRNA and confer
+        antibiotic resistance.
+      notes: '''the higher-order structure OF 16S rRNA''.'
   - subject: determinant
     predicate: correlated with (linked to the pseudoknot region)
     predicate_id: RO:0002610
@@ -140,11 +154,12 @@ causal_graphs:
         antibiotic resistance.
       notes: CARD's stronger 'stabilizes', recorded so the gap is on the edge.
   - subject: determinant
-    predicate: negatively regulates (substitution alters the higher-order structure)
-    predicate_id: RO:0002212
-    object: rrna16s
-    description: The furthest this record's own definition goes. ARO:3003395 continues to the drug interaction;
-      this one does not, and no drug-binding node is written.
+    predicate: causally upstream of (substitution alters the higher-order structure)
+    predicate_id: RO:0002411
+    object: altered_structure
+    description: 'The furthest this record''s own definition goes. ARO:3003395 continues to the drug interaction;
+      this one does not, and no drug-binding node is written. A STATE object, not the molecule: RO:0002212
+      needs a PROCESS and a DECREASE, and ''affects the higher-order structure'' is neither (#377).'
     evidence:
     - reference: ARO:3003419
       snippet: Ribosomal protein S12 stabilizes the highly conserved pseudoknot structure formed by 16S

@@ -57,6 +57,13 @@ causal_graphs:
     description: 'Ungrounded. GO:0000048 is `peptidyltransferase activity`, the FUNCTION, and this node
       is the structural site the drug occupies -- not the same thing, so it is not reused (#346''s rule:
       a live CURIE that means something else is worse than none).'
+  - node_id: subunit50s
+    label: large ribosomal subunit (50S)
+    node_type: CELLULAR_LOCALIZATION
+    grounding: GO:0015934
+    description: What the snippet actually locates the PTC in. The earlier `ptc part of rrna23s` edge
+      asserted the PTC's COMPOSITION, which no snippet on this record states -- and PF00297's own hedge
+      (L3 'may participate in the formation of the PTC') says the PTC is not wholly 23S rRNA anyway (#373).
   - node_id: rrna23s
     label: 23S ribosomal RNA
     node_type: NUCLEIC_ACID
@@ -65,9 +72,16 @@ causal_graphs:
   - node_id: peptide_bond
     label: peptide bond formation
     node_type: BIOLOGICAL_PROCESS
-    grounding: GO:0006414
-    description: Grounded to `translational elongation`, the process peptide bond formation is a step
-      of. The narrower term is the ACTIVITY (GO:0000048), not the process.
+    description: 'UNGROUNDED. GO:0006414 is `translational elongation` and GO:0000048 is `peptidyltransferase
+      activity` -- a broader process and an activity. Neither IS peptide bond formation, and #346''s rule
+      says a live CURIE that means something else is worse than none. It was grounded to GO:0006414 until
+      review caught the config applying that rule to the node above and breaking it here (#376).'
+  - node_id: altered_conformation
+    label: altered local 23S rRNA conformation at the active site
+    node_type: STATE
+    description: What the substitution produces. A STATE, because RO:0002212 requires a PROCESS object
+      and a DECREASE, and CARD claims neither -- it says the conformation is INTERFERED WITH, and resistant
+      ribosomes still translate (#377).
   - node_id: drug_binding
     label: tiamulin-ribosome binding
     node_type: STATE
@@ -111,9 +125,13 @@ causal_graphs:
         thus conferring resistance.
       notes: CARD states the causation -- 'thus conferring resistance'.
     - reference: PMID:12936991
+      snippet: Selection in a strain with all seven chromosomal rRNA operons yielded a mutant with an
+        A445G mutation in the gene coding for ribosomal protein L3, resulting in an Asn149Asp alteration.
+      notes: Bosling 2003, the substitution itself -- Asn149Asp in L3. Cited only where the record names
+        L3 (#374).
+    - reference: PMID:12936991
       snippet: Chemical footprinting experiments show a reduced binding of tiamulin to mutant ribosomes.
-      notes: 'Bosling 2003, the measurement: REDUCED BINDING to mutant ribosomes. This is what resistance
-        is, physically.'
+      notes: 'The measurement: REDUCED BINDING to mutant ribosomes. This is what resistance is, physically.'
   - subject: determinant
     predicate: confers resistance to (drug class)
     predicate_id: ARO:2000001
@@ -138,18 +156,31 @@ causal_graphs:
         PARTICIPATE in the formation of the peptidyltransferase centre'' -- which is quoted with the hedge,
         not around it.'
   - subject: ptc
-    predicate: part of (the PTC is built from 23S rRNA)
+    predicate: part of (the PTC of the 50S subunit)
     predicate_id: BFO:0000050
-    object: rrna23s
-    description: Why a PROTEIN mutation can alter a site made of RNA -- the whole point of the in-trans
-      shape.
+    object: subunit50s
+    description: Exactly what the snippet locates, and no more (#373).
     evidence:
     - reference: PMID:15554968
       snippet: Our results show that tiamulin is located within the peptidyl transferase center (PTC)
         of the 50S ribosomal subunit with its tricyclic mutilin core positioned in a tight pocket at the
         A-tRNA binding site.
-      notes: Schlunzen 2004 solved the 50S with tiamulin bound and reports its interactions with the 23S
-        rRNA.
+      notes: '''the peptidyl transferase center (PTC) OF THE 50S RIBOSOMAL SUBUNIT''. NOT asserted: the
+        PTC''s composition, which this sentence does not give.'
+  - subject: rrna23s
+    predicate: part of (the 23S rRNA of the 50S subunit)
+    predicate_id: BFO:0000050
+    object: subunit50s
+    evidence:
+    - reference: PMID:15554968
+      snippet: The 3.5 A structure of the 50S ribosomal subunit from Deinococcus radiodurans in complex
+        with tiamulin provides for the first time a detailed picture of its interactions with the 23S
+        rRNA, thus explaining the molecular mechanism of the antimicrobial activity of the pleuromutilin
+        class of antibiotics.
+      notes: '''the 50S ribosomal subunit ... its interactions with the 23S rRNA'' -- both named in one
+        sentence, from a source that is not about L3. Citing Pfam:PF00297 here would put the L3 abstract
+        on a record that names no protein (#374), which this edge did until its own test caught it. The
+        PTC-composition claim is still NOT asserted (#373).'
   - subject: drug0
     predicate: molecularly interacts with (binds the peptidyl transferase centre)
     predicate_id: RO:0002436
@@ -187,9 +218,9 @@ causal_graphs:
         A-tRNA binding site.
       notes: The site half of the same binding state.
   - subject: determinant
-    predicate: negatively regulates (mutation alters the local rRNA conformation)
-    predicate_id: RO:0002212
-    object: rrna23s
+    predicate: causally upstream of (the substitution alters the conformation)
+    predicate_id: RO:0002411
+    object: altered_conformation
     description: 'The in-trans step: a protein substitution changes the shape of the RNA that forms the
       drug''s site.'
     evidence:
@@ -199,11 +230,39 @@ causal_graphs:
         thus conferring resistance.
       notes: CARD's own words -- 'interfering with local rRNA conformation' / 'interfere with the rRNA
         conformation at the active site'.
+    - reference: PMID:12936991
+      snippet: No mutations in the rRNA were selected as resistance determinants using a strain expressing
+        only a plasmid-encoded rRNA operon.
+      notes: 'The negative result that makes this IN TRANS rather than a plain target alteration: rRNA
+        mutations were NOT selected, so the protein is the determinant even though the drug binds the
+        RNA.'
+  - subject: altered_conformation
+    predicate: part of (a conformation of the 23S rRNA)
+    predicate_id: BFO:0000050
+    object: rrna23s
+    description: Which molecule's conformation it is -- the fact that made this an IN-TRANS mechanism.
+    evidence:
+    - reference: ARO:3005081
+      snippet: Thermus thermophilus ribosomal protein uL3 containing various mutations conferring resistance
+        to tiamulin. Mutations in the ribosomal protein of uL3 acts by interfering with local rRNA conformation
+        thus conferring resistance.
+      notes: '''the rRNA conformation''.'
+  - subject: altered_conformation
+    predicate: negatively regulates (the altered site binds the drug less well)
+    predicate_id: RO:0002212
+    object: drug_binding
+    evidence:
+    - reference: PMID:12936991
+      snippet: It is inferred that the L3 mutation, which points into the peptidyl transferase cleft,
+        causes tiamulin resistance by alteration of the drug-binding site.
+      notes: '''causes tiamulin resistance by ALTERATION OF THE DRUG-BINDING SITE'' -- quoted with its
+        ''It is inferred'' hedge intact.'
   - subject: determinant
     predicate: negatively regulates (mutation reduces drug binding)
     predicate_id: RO:0002212
     object: drug_binding
-    description: The causal core, and the one step this family has a direct measurement for.
+    description: The causal core, and the one step this family has a direct measurement for. Guarded because
+      its evidence is tiamulin-specific footprinting (#378).
     evidence:
     - reference: PMID:12936991
       snippet: Chemical footprinting experiments show a reduced binding of tiamulin to mutant ribosomes.

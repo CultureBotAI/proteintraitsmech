@@ -3011,7 +3011,21 @@ def test_ul3_family_splits_because_only_one_record_names_the_protein():
     assert "protein_traits" in named
     assert named["protein_traits"]["family"][0] == "Pfam:PF00297"
     assert "protein_traits" not in unnamed
-    assert "PF00297" not in repr(unnamed)
+    # groundings and references, NOT prose -- a comment explaining WHY PF00297 is absent
+    # legitimately names it, and the first version of this assertion failed on that.
+    assert not any(n.get("grounding") == "Pfam:PF00297" for n in unnamed["extra_nodes"])
+    refs = {ev["reference"] for e in unnamed["extra_edges"] for ev in e["evidence"]}
+    refs |= {d["reference"] for d in unnamed["det_res"]}
+    assert "Pfam:PF00297" not in refs, "the L3 abstract must not be cited on a record that names no protein (#374)"
+    # #380: the limitation is recorded on the determinant NODE, not as a second weaker edge
+    # on a pair that already has a strong one. `determinant_note` must be a key the promoter
+    # actually reads -- a config key it ignores records nothing.
+    assert "#371" in unnamed["determinant_note"]
+    assert not any(e["predicate_id"] == "RO:0002610" and e["subject"] == "determinant"
+                   and e["object"] == "rrna23s" for e in unnamed["extra_edges"])
+    # #374: the L3-specific experiments stay on the named record only
+    assert "PMID:12936991" in repr(named["det_res"])
+    assert "PMID:12936991" not in repr(unnamed["det_res"])
     # the catch-all must be LAST, or it shadows the specific one
     assert named.get("precondition") is not None
     assert unnamed.get("precondition") is None
@@ -3056,11 +3070,32 @@ def test_ul3_quotes_both_of_its_sources_hedges_rather_than_around_them():
 
 
 def test_ul3_binding_state_is_defined_by_both_constituents():
-    """#370, applied prospectively rather than after review found it."""
+    """#370, applied prospectively rather than after review found it.
+
+    #378: the config-level version could not fail for the reason it claimed -- emission
+    silently drops edges whose `requires` is unmet, so a member with a different first drug
+    class would get the drug half dropped, the site half kept, and exactly the one-sided
+    binding state #370 is about. Both halves now carry the same guard, and this reads the
+    emitted records.
+    """
     for cfg in promote.family_configs("ARO:3005082"):
-        parts = {e["object"] for e in cfg["extra_edges"]
+        halves = [e for e in cfg["extra_edges"]
+                  if e["subject"] == "drug_binding" and e["predicate_id"] == "BFO:0000051"]
+        assert {e["object"] for e in halves} == {"drug0", "ptc"}
+        # both guarded, or neither -- an asymmetric guard is what emits a half-defined state
+        assert len({repr(e.get("requires")) for e in halves}) == 1
+    seen = 0
+    for pth in promote.ARO_DIR.glob("*.yaml"):
+        text = pth.read_text(encoding="utf-8")
+        if not re.search(r'^identifier:\s*"?(ARO:3005081|ARO:3005082)"?\s*$', text, re.M):
+            continue
+        seen += 1
+        graph = [g for g in yaml.safe_load(text)["causal_graphs"]
+                 if g["graph_id"] == "resistance"][0]
+        parts = {e["object"] for e in graph["edges"]
                  if e["subject"] == "drug_binding" and e["predicate_id"] == "BFO:0000051"}
-        assert parts == {"drug0", "ptc"}
+        assert parts == {"drug0", "ptc"}, f"{pth.name} has a half-defined binding state"
+    assert seen == 2
 
 
 def test_the_two_rpsl_records_differ_by_the_clause_that_names_the_drug_interaction():
@@ -3086,7 +3121,25 @@ def test_the_two_rpsl_records_differ_by_the_clause_that_names_the_drug_interacti
         assert len(pk) == 1 and pk[0]["predicate_id"] == "RO:0002610"
 
 
+def _assert_deliberately_held(aro_id):
+    """`family_configs(x) == []` is true of every id that does not exist (#379).
+
+    A held-record test has to distinguish "deliberately held" from "never noticed", so it
+    must also show the term is real and still has an unpromoted draft.
+    """
+    assert promote.family_configs(aro_id) == [], f"{aro_id} is configured after all"
+    drafts, found = 0, False
+    for pth in promote.ARO_DIR.glob("*.yaml"):
+        text = pth.read_text(encoding="utf-8")
+        if re.search(rf'^identifier:\s*"?{re.escape(aro_id)}"?\s*$', text, re.M):
+            found = True
+            if "graph_id: resistance-draft" in text:
+                drafts += 1
+    assert found, f"{aro_id} names no record -- a typo passes the config check silently"
+    assert drafts, f"{aro_id} has no draft left, so it is not being held"
+
+
 def test_the_vanl_cluster_term_is_not_curated_pending_309():
     """ARO:3000260 is a gene CLUSTER. Whether a cluster should carry a protein-trait causal
     graph is #309's modelling question, and curating it would answer that by fiat."""
-    assert promote.family_configs("ARO:3000260") == []
+    _assert_deliberately_held("ARO:3000260")
