@@ -3295,9 +3295,11 @@ def test_nat_mech_edge_cites_the_mechanism_terms_own_definition():
     examples, so an overexpression route is IN SCOPE for it rather than a mismatch with it.
     """
     for cfg in promote.family_configs("ARO:3004910"):
-        assert set(cfg["mech"].values()) == {promote._MECH_MUTATION}
-        assert "increased expression" in promote._MECH_MUTATION
-        assert "Point mutations" in promote._MECH_MUTATION
+        # list form since #400 -- the reference travels with the snippet
+        snippets = {i["snippet"] for v in cfg["mech"].values() for i in v}
+        assert snippets == {promote._MECH_MUTATION}
+    assert "increased expression" in promote._MECH_MUTATION
+    assert "Point mutations" in promote._MECH_MUTATION
 
 
 def test_nat_grounds_the_exact_activity_term_that_is_already_a_kb_record():
@@ -3306,3 +3308,50 @@ def test_nat_grounds_the_exact_activity_term_that_is_already_a_kb_record():
     for cfg in promote.family_configs("ARO:3004910"):
         node = [n for n in cfg["extra_nodes"] if n["node_id"] == "acetylation"][0]
         assert node["grounding"] == "GO:0004060"
+
+
+def test_nat_mech_snippet_travels_with_its_own_reference():
+    """#400: giving `mech`/`mech_res` a bare string makes the promoter stamp
+    `cfg["reference"]` on it, which put ARO:3000212's definition under
+    `reference: ARO:3004910`. The snippet moved; the attribution did not.
+
+    Third round running in which a fix produced the defect it was fixing.
+    """
+    for cfg in promote.family_configs("ARO:3004910"):
+        for value in list(cfg["mech"].values()) + [cfg["mech_res"]]:
+            assert isinstance(value, list), "bare strings inherit cfg['reference'] (#400)"
+            for item in value:
+                assert item["reference"] == "ARO:3000212"
+                assert item["snippet"] == promote._MECH_MUTATION
+
+
+def test_every_nat_evidence_reference_actually_contains_its_snippet():
+    """#402: no test in the suite pinned an evidence `reference` -- which is the blind spot
+    #400, #382 and #348 all slipped through.
+
+    For every evidence item citing an ARO/Pfam/GO CURIE, check the snippet really is in that
+    record's own definition on disk.
+    """
+    import yaml as _yaml
+    defs = {}
+    for pth in list(promote.TRAITS_ROOT.rglob("*.yaml")):
+        head = pth.read_text(encoding="utf-8")[:4000]
+        m = re.search(r'^identifier:\s*"?(\S+?)"?\s*$', head, re.M)
+        if m and m.group(1).startswith(("Pfam:", "GO:")):
+            defs[m.group(1)] = " ".join(head.split())
+    checked = 0
+    for pth in promote.ARO_DIR.glob("*.yaml"):
+        text = pth.read_text(encoding="utf-8")
+        if not re.search(r'^identifier:\s*"?(ARO:3004910|ARO:3004930)"?\s*$', text, re.M):
+            continue
+        graph = [g for g in _yaml.safe_load(text)["causal_graphs"]
+                 if g["graph_id"] == "resistance"][0]
+        for e in graph["edges"]:
+            for ev in e["evidence"]:
+                body = defs.get(ev["reference"])
+                if body is None:
+                    continue
+                checked += 1
+                assert " ".join(ev["snippet"].split()) in body, (
+                    f"{ev['reference']} does not contain its snippet on {pth.name}")
+    assert checked, "the check found nothing to check"

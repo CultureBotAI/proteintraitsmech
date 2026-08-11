@@ -90,5 +90,48 @@ The reviewer's verdict on the first version was **not mergeable**, and it was ri
   exact term, **already a KB record**, and whose definition literally states the
   `has input acetyl-CoA` claim the graph made separately.
 
-**Only one review round ran**, against five in rounds 121–122. Given rounds 121 and 122 each
-found new defect classes in rounds 2, 3 and 4, this round should be assumed under-reviewed.
+## Review round 2: the fix for #398 introduced the defect #398 was about
+
+Verdict on the round-1 output was **not mergeable**, on one finding.
+
+**#400.** The #398 fix gave `mech` and `mech_res` the corrected *snippet* —
+`ARO:3000212`'s own definition — and left the *attribution* alone. `promoted_graph_dict`
+stamps `cfg["reference"]` on a bare-string snippet, so **4 evidence items shipped citing
+ARO:3000212's definition under `reference: ARO:3004910` / `ARO:3004930`**, records whose own
+definitions contain none of that text.
+
+A corpus scan for that definition under a *self*-reference returns **exactly the 2 records
+this round touched**; nothing else in 9,738 ARO resistance graphs does it. The base branch
+was self-consistent. It is a regression, and it contradicts the fix's own stated rationale —
+*"the mech edge is about ARO:3000212, so it carries ARO:3000212's own definition."* The
+snippet moved; the attribution did not.
+
+**That is the third round running in which a fix produced the defect it was fixing** —
+#374→#382, #382→#387, #398→#400. Each time the fix was aimed at the finding's instance and
+landed there; each time the *shape* re-emerged one field over.
+
+**#401**: the two configs were not mutually exclusive. `ARO:3004930` passed **both**
+preconditions and was selected only because the joined config came first in the list —
+reordering would silently strip its `determinant → overexpression` edge with every gate
+green. They now refuse each other's record **by name**.
+
+**#402 is the one that matters beyond this round.** No test in the 755 pinned an evidence
+`reference` — mutation-proven: flipping one leaves the suite green. **That is the blind spot
+#348, #382 and #400 all slipped through, three attribution defects in three rounds.** There
+is now a test that loads the emitted records and checks every ARO/Pfam/GO-cited snippet
+against that record's own definition on disk. It is the config-scoped version of #365's
+corpus-wide check.
+
+## Two review rounds
+
+| round | findings | filed | fixed |
+|---|--:|--:|--:|
+| 1 | 6 | 5 (#395–#399) + #393 closed invalid | 6 |
+| 2 | 9 | 3 (#400–#402) | 3 |
+
+Round 2 left six non-blocking findings filed or noted, including that
+`test_nat_asserts_no_drug_edge_at_all` overclaims — both records **do** carry the promoter's
+fixed `confers resistance to (drug class)` edge, and the test scans only `extra_edges`.
+
+**Two rounds ran, against five in rounds 121–122**, which each found new defect classes as
+late as round 4. This round should still be assumed under-reviewed.

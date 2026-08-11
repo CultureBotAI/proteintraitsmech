@@ -9257,11 +9257,18 @@ def _nat_config(card_ref, card_snippet, joins_mutation):
     cfg = {
         "curated": "2026-08-10T00:00:00Z",
         "reference": card_ref,
-        # #398: the mech edge is about ARO:3000212, so it carries ARO:3000212's own
-        # definition -- which states BOTH point mutations and increased expression. The
-        # first draft cited nat's definition here, a sentence with no mutation claim at all.
-        "mech": {"ARO:3000212": _MECH_MUTATION},
-        "mech_res": _MECH_MUTATION,
+        # #400: the LIST form, so the reference travels with the snippet. Giving `mech`
+        # a bare string makes the promoter stamp cfg["reference"] on it -- which put
+        # ARO:3000212's definition under `reference: ARO:3004910` in the first fix for
+        # #398. The snippet moved; the attribution did not.
+        "mech": {"ARO:3000212": [
+            {"reference": "ARO:3000212", "snippet": _MECH_MUTATION,
+             "notes": "The mechanism term's own definition, which names both point mutations "
+                      "and 'increased expression' among its examples (#393, corrected)."}]},
+        "mech_res": [
+            {"reference": "ARO:3000212", "snippet": _MECH_MUTATION,
+             "notes": "ARO:3000212's own definition states that such mutations 'may result in "
+                      "antibiotic resistance'."}],
         "det_res": [
             {"reference": card_ref, "snippet": card_snippet,
              "notes": ("Quoted whole because the qualifications are part of the claim."
@@ -9342,7 +9349,7 @@ def _nat_config(card_ref, card_snippet, joins_mutation):
                        "on THIS record, so the graph does too. NOT asserted: that isoniazid is "
                        "the enzyme's substrate; CARD names no substrate here at all.")
     else:
-        cfg["precondition"] = _requires_mech("ARO:3000212", "mutation")
+        cfg["precondition"] = _nat_does_not_join
         cfg["determinant_note"] = (
             "CARD names the chemistry and the resistance separately on this record and never "
             "joins them. The mutation->overexpression link belongs to ARO:3004930, whose own "
@@ -9354,6 +9361,19 @@ def _nat_config(card_ref, card_snippet, joins_mutation):
                        "it. The Pfam record makes the link for HUMAN NAT, which is not "
                        "evidence about this organism and carries no edge of its own (#396).")
     return cfg
+
+
+def _nat_does_not_join(ident, label, text):
+    """The complement of `_nat_joins_mutation`, so the two configs are DISJOINT (#401).
+
+    Before this, ARO:3004930 passed both preconditions and was selected only because the
+    joined config happened to be first in the list -- reordering silently stripped its
+    `determinant -> overexpression` edge with every gate green.
+    """
+    if "through overexpression" in _own_definition(text).lower():
+        return ("own definition joins the mutation to the overexpression, so the joined "
+                "config serves this record (#401)")
+    return _requires_mech("ARO:3000212", "mutation")(ident, label, text)
 
 
 def _nat_joins_mutation(ident, label, text):
