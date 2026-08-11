@@ -3237,3 +3237,43 @@ def test_the_vanl_cluster_term_is_not_curated_pending_309():
     """ARO:3000260 is a gene CLUSTER. Whether a cluster should carry a protein-trait causal
     graph is #309's modelling question, and curating it would answer that by fiat."""
     _assert_deliberately_held("ARO:3000260")
+
+
+# ---------------------------------------------------------------------------------------
+# Round 123 — nat.
+
+def test_nat_never_makes_isoniazid_the_enzymes_substrate():
+    """CARD names "arylamines and hydrazines" and, separately, that overexpression may
+    confer isoniazid resistance. It never joins them.
+
+    Isoniazid IS a hydrazine, so the inference is easy and tempting -- and it is the
+    reader's, not the source's. Round 120's FrxA/nfsB distinction.
+    """
+    cfg = promote.family_configs("ARO:3004910")[0]
+    to_drug = [e for e in cfg["extra_edges"] if e["object"].startswith("drug")]
+    assert len(to_drug) == 1
+    # the one drug edge is CONTEXT from the Pfam record, and correlational, not `has input`
+    assert to_drug[0]["predicate_id"] == "RO:0002610"
+    assert to_drug[0]["evidence"][0]["reference"] == "Pfam:PF00797"
+    assert "in humans" in to_drug[0]["evidence"][0]["snippet"]
+    # nothing may make the drug an input or output of the enzyme's activity
+    for e in cfg["extra_edges"]:
+        if e["predicate_id"] in ("RO:0002233", "RO:0002234"):
+            assert not e["object"].startswith("drug")
+
+
+def test_nat_records_the_route_its_definition_names_not_the_one_its_relation_asserts():
+    """The record carries ARO:3000212 ("mutation conferring antibiotic resistance") and its
+    definition says OVEREXPRESSION. The graph says overexpression, and #393 records the
+    mismatch rather than the graph quietly following the relation.
+    """
+    cfg = promote.family_configs("ARO:3004910")[0]
+    assert any(n["node_id"] == "overexpression" for n in cfg["extra_nodes"])
+    res = [e for e in cfg["extra_edges"]
+           if e["subject"] == "overexpression" and e["object"] == "resistance"]
+    assert len(res) == 1
+    # attributed AND hedged, so the predicate is correlational
+    assert res[0]["predicate_id"] == "RO:0002610"
+    snippet = res[0]["evidence"][0]["snippet"]
+    assert "Reports have shown" in snippet and "may be responsible" in snippet
+    assert "#393" in cfg["note"] or "#393" in repr(cfg["det_res"])

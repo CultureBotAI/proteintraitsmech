@@ -9225,6 +9225,106 @@ FAMILY_SNIPPETS["ARO:3003419"] = {
     ],
 }
 
+
+# ---------------------------------------------------------------------------------------
+# Round 123 — nat (ARO:3004910), and a record whose stated mechanism is not the one its ARO
+# relation asserts.
+#
+# CARD: "Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from
+# acetyl coenzyme A to the free amino group of arylamines and hydrazines. Reports have shown
+# that OVEREXPRESSION of this enzyme MAY BE responsible for increased resistance to
+# isoniazid."
+#
+# Three things are true of that sentence and none of them is obvious:
+#   1. the resistance route CARD names is OVEREXPRESSION, while the record's ARO relation is
+#      ARO:3000212, "MUTATION conferring antibiotic resistance". The graph says overexpression
+#      because that is what the definition says, and records the mismatch rather than
+#      silently following the relation (#393).
+#   2. "Reports have shown" -- attribution (round 97's shape);
+#   3. "may be responsible" -- and a hedge on top of it. Both are quoted, not smoothed.
+#
+# CARD never says isoniazid is the enzyme's substrate. It says the enzyme acts on "arylamines
+# and hydrazines", and separately that overexpression may confer isoniazid resistance. Joining
+# those is the reader's inference, not the source's -- round 120's FrxA/nfsB distinction.
+# The KB Pfam record DOES make the link, and it is cited for that with its scope intact.
+_CARD_NAT = "Arylamine N-acetyltransferase catalyzes the transfer of the acetyl group from acetyl coenzyme A to the free amino group of arylamines and hydrazines. Reports have shown that overexpression of this enzyme may be responsible for increased resistance to isoniazid."
+_NAT_PFAM = "Arylamine N-acetyltransferase (NAT) facilitates the transfer of an acetyl group from acetyl coenzyme A on to a wide range of arylamine, N-hydroxyarylamines and hydrazines. Acetylation of these compounds generally results in inactivation."
+_NAT_INH_HUMAN = "NAT is also responsible for the inactivation of Isoniazid (a drug used to treat tuberculosis) in humans."
+
+FAMILY_SNIPPETS["ARO:3004910"] = {
+    "curated": "2026-08-10T00:00:00Z",
+    "precondition": _requires_mech("ARO:3000212", "mutation"),
+    "reference": "ARO:3004910",
+    "mech": {"ARO:3000212": _CARD_NAT},
+    "mech_res": _CARD_NAT,
+    "det_res": [
+        {"reference": "ARO:3004910", "snippet": _CARD_NAT,
+         "notes": "Quoted whole because BOTH qualifications matter: 'REPORTS HAVE SHOWN' "
+                  "attributes the claim, and 'MAY BE responsible' hedges it. The route named "
+                  "is OVEREXPRESSION, not mutation, although the record's ARO relation is "
+                  "ARO:3000212 (#393)."},
+    ],
+    "res_drug": _CARD_NAT,
+    "note": ("nat -- an acetyltransferase whose resistance route CARD gives as OVEREXPRESSION "
+             "while the record's ARO relation says mutation. NOT asserted: that isoniazid is "
+             "this enzyme's substrate. CARD names 'arylamines and hydrazines' and never joins "
+             "them to the drug; the KB Pfam record does, for HUMAN NAT, and is cited with "
+             "that scope on its own edge."),
+    "protein_traits": {
+        "primary_key": "family",
+        "family": ("Pfam:PF00797", "N-acetyltransferase", "DOMAIN", _NAT_PFAM),
+        "part_pred": "part of (the N-acetyltransferase family assignment)",
+        "part_note": "KB trait: the NAT family. Its abstract names arylamine "
+                     "N-acetyltransferase itself (#196).",
+    },
+    "extra_nodes": [
+        {"node_id": "acetylation", "label": "N-acetyltransferase activity",
+         "node_type": "MOLECULAR_FUNCTION", "grounding": "GO:0008080"},
+        {"node_id": "acetyl_coa", "label": "acetyl-CoA", "node_type": "CHEMICAL",
+         "grounding": "CHEBI:15351"},
+        {"node_id": "overexpression", "label": "overexpression of the enzyme",
+         "node_type": "STATE",
+         "description": "The route CARD actually names. Recorded as its own node because the "
+                        "record's ARO relation says MUTATION and its definition says "
+                        "OVEREXPRESSION, and the graph should not quietly pick one (#393)."},
+    ],
+    "extra_edges": [
+        {"subject": "determinant", "object": "acetylation",
+         "predicate": "enables (N-acetyltransferase activity)", "predicate_id": "RO:0002327",
+         "evidence": [{"reference": "ARO:3004910", "snippet": _CARD_NAT,
+                       "notes": "'catalyzes the transfer of the acetyl group'."}]},
+        {"subject": "acetylation", "object": "acetyl_coa",
+         "predicate": "has input (the acetyl donor)", "predicate_id": "RO:0002233",
+         "evidence": [{"reference": "ARO:3004910", "snippet": _CARD_NAT,
+                       "notes": "'from acetyl coenzyme A'."}]},
+        {"subject": "overexpression", "object": "determinant",
+         "predicate": "positively regulates (more enzyme)", "predicate_id": "RO:0002213",
+         "evidence": [{"reference": "ARO:3004910", "snippet": _CARD_NAT,
+                       "notes": "'OVEREXPRESSION of this enzyme'."}]},
+        {"subject": "overexpression", "object": "resistance",
+         "predicate": "correlated with (reported, and hedged)", "predicate_id": "RO:0002610",
+         "description": "Deliberately weak, and twice over: the claim is ATTRIBUTED ('Reports "
+                        "have shown') and then HEDGED ('may be responsible').",
+         "evidence": [{"reference": "ARO:3004910", "snippet": _CARD_NAT,
+                       "notes": "Both qualifications are in the quoted sentence rather than "
+                                "paraphrased away."}]},
+        {"subject": "acetylation", "object": "drug0",
+         "predicate": "correlated with (human NAT inactivates isoniazid)",
+         "predicate_id": "RO:0002610",
+         "requires": {"drug0": "ARO:3007152"},
+         "description": "CONTEXT, and scoped. CARD never says isoniazid is this enzyme's "
+                        "substrate -- it names 'arylamines and hydrazines' and stops. The KB "
+                        "Pfam record makes the link, for HUMAN NAT, and the edge says so "
+                        "rather than letting it read as a claim about the mycobacterial "
+                        "enzyme this record is about.",
+         "evidence": [{"reference": "Pfam:PF00797", "snippet": _NAT_INH_HUMAN,
+                       "notes": "'NAT is also responsible for the inactivation of Isoniazid "
+                                "... IN HUMANS.' The organism scope is the point; this record "
+                                "is M. tuberculosis nat. A causal predicate would assert the "
+                                "transfer across organisms, which nothing here supports."}]},
+    ],
+}
+
 _check_config_order()
 
 
