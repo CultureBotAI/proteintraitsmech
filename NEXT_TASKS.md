@@ -6,9 +6,48 @@ convention:** update an item when work on it starts or ships (mark
 section with enough context to pick it up cold; keep absolute dates. Reconcile
 against merged PRs + `git log` before trusting it.
 
-_Last reconciled: 2026-08-04, against `main` at `a84da67d869`. Every checkable claim
-re-measured; the **Broken gates** section was entirely obsolete and is removed, and
-fourteen PRs merged since the previous reconcile are recorded below._
+_Last reconciled: **2026-08-10**, against `feat/aro-batch-123`. The ARO draft figures below
+were re-measured and **every one of them was stale**; see the block immediately following.
+The previous reconcile note (2026-08-04, `a84da67d869`) stands for everything else._
+
+## ⚠️ ARO draft backlog — measured 2026-08-10, superseding the figures further down
+
+Rounds 121–123 kept being handed a summary of "what is left" whose every number was wrong.
+Measured directly against the corpus (classify each draft by its own `definition` via
+`_own_definition`, plus its label):
+
+| the old note says | measured | |
+|---|--:|---|
+| katG/ahpC/fabG1/ethA **~40** | **17** | fabG1 was curated in round 51 |
+| 16S/23S rRNA **~22** (elsewhere "105") | **0** | no draft matches an rRNA pattern |
+| **565** label-only efflux/regulator | **27** | 16 efflux + 11 regulator |
+| van set "last ~30 operon-level" | **33** cluster/operon | the only claim that held |
+
+**7,262 curated · 188 drafts remaining**, in these buckets:
+
+| n | bucket | decision or effort? |
+|--:|---|---|
+| 63 | short definition (<120 chars) | **effort** — `_minimal_enzyme_config` shape (rounds 66, 104, 105, 120) |
+| 49 | other, long definition | **effort** |
+| 33 | cluster / operon | **decision** — #309 |
+| 15 | prodrug activation | **effort** (17 before round 123 took nat) |
+| 16 | efflux | effort |
+| 11 | regulator | effort |
+| 1 | van, non-cluster | effort |
+
+**~150 of 188 are effort, not decision** — the opposite of the standing framing.
+
+### The three issues named as decision-blockers, measured
+
+| issue | claimed | measured |
+|---|---|---|
+| **#203** | 1,044-record backlog | **0** — cleared by routine re-promotions after #201 closed the code path. No migration was ever run. |
+| **#196** | backlog wanting a policy | **1**, and arguably a pass. Wants a `just audit-part-of` recipe, not a policy. |
+| **#204** | needs a `CurationEvent` schema slot | **confirmed open and genuinely decision-bound.** No fingerprint machinery exists; `is_ours` is purely structural. #381 was a live near-miss. |
+
+**Decision-bound: #204, and #309's 33 cluster/operon drafts. That is all of it.**
+
+Full survey and reasoning: **#392**. Per-issue measurements are commented on #196, #203, #204.
 
 _**Loop-ready work now lives in `NEXT_TASKS_LOOP.md`**, which ranks the open issues an
 unattended `/goal` run can finish and says which need a human first. This file remains the
@@ -145,17 +184,17 @@ cleared._
    - **kasA (#220)** — PMID:12406221 specifically found kasA overexpression confers NO
      isoniazid resistance, contradicting a draft record. The corpus has no way to represent
      a contested claim, which may be a schema question.
-   - **the other ~40 isoniazid-related genes** are 1–2 record chains (ndh, nudC, mshA/B/C,
+   - **the other isoniazid-related genes** (**measured 17 on 2026-08-10**, 15 after round 123 took `nat`; #392) are 1–2 record chains (ndh, nudC, mshA/B/C,
      nat, furA, sigI, iniA, mymA, Rv0565c, inbR, kasA, mmaA3, Rv1258c). Several have thin
      or contested evidence; for some the honest outcome is staying drafts.
-   - **rRNA target alteration — 105 drafts, not ~22.** ~~16S/aminoglycoside (45)~~
+   - ~~**rRNA target alteration — 105 drafts, not ~22.**~~ **measured 0 on 2026-08-10** (#392). ~~16S/aminoglycoside (45)~~
      **DONE (round 29)**; 23S/macrolide (26) is next by size, then linezolid,
      pleuromutilin, oxazolidinone and tetracycline families. ~~**23S is filed as #217**~~ **DONE (round 50)** — the paper was found by searching for a
      BINDING-measurement rather than a substitution-construction: PMID:7689111.
      **Settle #215 first:** these determinants are RNA, the KB is of protein traits, and
      their graphs cannot route through any protein-trait record because the corpus holds
      no rRNA trait records. Round 29 curated them as they are and said so.
-   - **565 with no gene symbol** — per-record triage, genuinely not a family PR.
+   - ~~**565 with no gene symbol**~~ — **measured 27 on 2026-08-10** (16 efflux + 11 regulator); see the block at the top of this file and #392.
 
    Tracker: `grep -rl "graph_id: resistance-draft" data/traits/function/resistance/aro/`.
    Skill: `edison-causal-graphs`; promoter: `promote_family_drafts.py`
