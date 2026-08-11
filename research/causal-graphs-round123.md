@@ -128,10 +128,25 @@ corpus-wide check.
 |---|--:|--:|--:|
 | 1 | 6 | 5 (#395–#399) + #393 closed invalid | 6 |
 | 2 | 9 | 3 (#400–#402) | 3 |
+| 3 | 5 | 1 (#403) | 3 |
 
 Round 2 left six non-blocking findings filed or noted, including that
 `test_nat_asserts_no_drug_edge_at_all` overclaims — both records **do** carry the promoter's
 fixed `confers resistance to (drug class)` edge, and the test scans only `extra_edges`.
 
-**Two rounds ran, against five in rounds 121–122**, which each found new defect classes as
-late as round 4. This round should still be assumed under-reviewed.
+Round 3's verdict was **not mergeable**, on **#403**: the #402 test — *the round's one
+durable deliverable* — indexed only `Pfam:`/`GO:` identifiers, so it checked 5 of 19 items
+and **none of the ARO→ARO class it existed for**. Reintroducing #400 left it green.
+
+That is the fourth consecutive round in which a fix left the shape it was aimed at, and this
+time it was the test written *because of* that pattern. It now resolves every cited reference,
+**asserts each one resolves** rather than skipping silently, requires ≥18 items, and is
+verified to fail on the #400 mutation — and runs in 3s rather than 60.
+
+Round 3 also confirmed the data itself is clean: **19/19 evidence items verbatim and
+correctly attributed**, configs mutually exclusive under **both** list orderings, graphs
+byte-reproducible from the configs, every provenance figure exact.
+
+**Three rounds ran, against five in rounds 121–122.** The pattern across all three is one
+finding: *a fix lands on the finding's instance, and the shape re-emerges one field over.*
+Four times in a row now, which makes it the most reliable thing this round learned.

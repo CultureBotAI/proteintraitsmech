@@ -3242,12 +3242,16 @@ def test_the_vanl_cluster_term_is_not_curated_pending_309():
 # ---------------------------------------------------------------------------------------
 # Round 123 — nat.
 
-def test_nat_asserts_no_drug_edge_at_all():
+def test_nat_asserts_no_extra_drug_edge():
     """CARD names "arylamines and hydrazines" and, separately, that overexpression may
     confer isoniazid resistance. It never joins them, and isoniazid IS a hydrazine -- so the
     inference is one step of chemistry away, which is what makes it easy to supply.
 
-    #396: the first version DID supply it, as an `acetylation --> drug0` edge whose SOLE
+    Scope: `extra_edges` only. Both records DO carry the promoter's fixed
+    `determinant --confers resistance to (drug class)--> drug0` edge, which is CARD's own
+    assertion; the earlier name claimed the graph had no drug edge at all, which is false.
+
+    #396: the first version DID supply one, as an `acetylation --> drug0` edge whose SOLE
     evidence was Pfam's sentence about HUMAN NAT -- inverting round 121's rule that
     out-of-scope context may ride on an edge CARD supports but may never be an edge's only
     evidence. And the test pinned that wrong shape. No config may carry a drug edge.
@@ -3326,32 +3330,54 @@ def test_nat_mech_snippet_travels_with_its_own_reference():
 
 
 def test_every_nat_evidence_reference_actually_contains_its_snippet():
-    """#402: no test in the suite pinned an evidence `reference` -- which is the blind spot
-    #400, #382 and #348 all slipped through.
+    """#402: no test in the suite pinned an evidence `reference` -- the blind spot #348,
+    #382 and #400 all slipped through.
 
-    For every evidence item citing an ARO/Pfam/GO CURIE, check the snippet really is in that
-    record's own definition on disk.
+    The FIRST version of this test indexed only `Pfam:`/`GO:` identifiers, so every `ARO:`
+    reference fell through its `continue` -- it checked 5 of 19 items and **none of the
+    class it was written for**. Reproducing #400 against it left it green. Fourth
+    consecutive round in which a fix left the shape it was aimed at.
+
+    It now resolves references it actually sees: ARO ids from `aro.obo`, KB CURIEs from
+    their record. Collect-then-look-up, not index-everything -- the naive fix would read
+    429,271 files.
     """
     import yaml as _yaml
-    defs = {}
-    for pth in list(promote.TRAITS_ROOT.rglob("*.yaml")):
-        head = pth.read_text(encoding="utf-8")[:4000]
-        m = re.search(r'^identifier:\s*"?(\S+?)"?\s*$', head, re.M)
-        if m and m.group(1).startswith(("Pfam:", "GO:")):
-            defs[m.group(1)] = " ".join(head.split())
-    checked = 0
+    records, cited = {}, set()
     for pth in promote.ARO_DIR.glob("*.yaml"):
         text = pth.read_text(encoding="utf-8")
         if not re.search(r'^identifier:\s*"?(ARO:3004910|ARO:3004930)"?\s*$', text, re.M):
             continue
         graph = [g for g in _yaml.safe_load(text)["causal_graphs"]
                  if g["graph_id"] == "resistance"][0]
+        records[pth.name] = graph
+        cited |= {ev["reference"] for e in graph["edges"] for ev in e["evidence"]}
+    assert records, "the two nat records were not found"
+
+    bodies = {}
+    obo = promote.E.OBO.read_text(encoding="utf-8")
+    for ref in cited:
+        if ref.startswith("ARO:"):
+            m = re.search(rf'^id: {re.escape(ref)}$(.*?)(?=^\[|\Z)', obo, re.M | re.S)
+            if m:
+                bodies[ref] = " ".join(m.group(1).split())
+        else:
+            hit = [q for q in promote.TRAITS_ROOT.rglob("*.yaml")
+                   if q.stem.endswith(ref.split(":")[1].lower())]
+            for q in hit:
+                head = q.read_text(encoding="utf-8")[:6000]
+                if re.search(rf'^identifier:\s*"?{re.escape(ref)}"?\s*$', head, re.M):
+                    bodies[ref] = " ".join(head.split())
+                    break
+    # every reference must RESOLVE -- an unresolved one silently skipped is how the first
+    # version passed while checking a quarter of the items.
+    assert set(bodies) == cited, f"unresolved references: {cited - set(bodies)}"
+
+    checked = 0
+    for name, graph in records.items():
         for e in graph["edges"]:
             for ev in e["evidence"]:
-                body = defs.get(ev["reference"])
-                if body is None:
-                    continue
                 checked += 1
-                assert " ".join(ev["snippet"].split()) in body, (
-                    f"{ev['reference']} does not contain its snippet on {pth.name}")
-    assert checked, "the check found nothing to check"
+                assert " ".join(ev["snippet"].split()) in bodies[ev["reference"]], (
+                    f"{ev['reference']} does not contain its snippet on {name}")
+    assert checked >= 18, f"only {checked} evidence items checked"
