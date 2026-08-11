@@ -8885,7 +8885,6 @@ _TIAMULIN_FOOTPRINT = "Chemical footprinting experiments show a reduced binding 
 _TIAMULIN_INFERRED = "It is inferred that the L3 mutation, which points into the peptidyl transferase cleft, causes tiamulin resistance by alteration of the drug-binding site."
 # A negative result that settles WHICH molecule is the determinant.
 _TIAMULIN_NOT_RRNA = "No mutations in the rRNA were selected as resistance determinants using a strain expressing only a plasmid-encoded rRNA operon."
-_PLEURO_23S = "The 3.5 A structure of the 50S ribosomal subunit from Deinococcus radiodurans in complex with tiamulin provides for the first time a detailed picture of its interactions with the 23S rRNA, thus explaining the molecular mechanism of the antimicrobial activity of the pleuromutilin class of antibiotics."
 _PLEURO_SITE = "Our results show that tiamulin is located within the peptidyl transferase center (PTC) of the 50S ribosomal subunit with its tricyclic mutilin core positioned in a tight pocket at the A-tRNA binding site."
 _PLEURO_INHIBITS = "Thereby, tiamulin directly inhibits peptide bond formation."
 _L3_HEDGE = "Ribosomal protein L3 (also known as uL3) is one of the proteins from the large ribosomal subunit. In Escherichia coli, L3 is known to bind to the 23S rRNA and may participate in the formation of the peptidyltransferase centre of the ribosome."
@@ -9016,13 +9015,10 @@ def _ul3_shared(card_snippet, card_ref, names_l3):
              "predicate": "negatively regulates (the altered site binds the drug less well)",
              "predicate_id": "RO:0002212",
              "requires": {"drug0": "ARO:3000670"},   # #386: guard everything touching this node
-             "evidence": ([{"reference": "PMID:12936991", "snippet": _TIAMULIN_INFERRED,
-                            "notes": "'causes tiamulin resistance by ALTERATION OF THE "
-                                     "DRUG-BINDING SITE' -- quoted with its 'It is inferred' "
-                                     "hedge intact."}] if names_l3 else
-                          [{"reference": card_ref, "snippet": card_snippet,
-                            "notes": "CARD's own sentence. The L3-specific mechanism sentence "
-                                     "belongs to ARO:3005081 (#382)."}])},
+             "evidence": [{"reference": "PMID:12936991", "snippet": _TIAMULIN_INFERRED,
+                           "notes": "'causes tiamulin resistance by ALTERATION OF THE "
+                                    "DRUG-BINDING SITE' -- quoted with its 'It is inferred' "
+                                    "hedge intact."}]},
             {"subject": "determinant", "object": "drug_binding",
              "predicate": "negatively regulates (mutation reduces drug binding)",
              "predicate_id": "RO:0002212",
@@ -9031,7 +9027,7 @@ def _ul3_shared(card_snippet, card_ref, names_l3):
              # #382: BOTH Bosling sentences name L3, so on a record that names no protein
              # they are the child term's evidence. The first fix removed one of five uses,
              # from det_res only, and a node description was added claiming all were gone.
-             "evidence": ([
+             "evidence": [
                  {"reference": "PMID:12936991", "snippet": _TIAMULIN_FOOTPRINT,
                   "notes": "Measured, not inferred: chemical footprinting."},
                  {"reference": "PMID:12936991", "snippet": _TIAMULIN_INFERRED,
@@ -9039,12 +9035,7 @@ def _ul3_shared(card_snippet, card_ref, names_l3):
                            "-- 'It is INFERRED that the L3 mutation ... causes tiamulin "
                            "resistance by alteration of the drug-binding site.' Quoted with "
                            "the hedge rather than around it."},
-             ] if names_l3 else [
-                 {"reference": card_ref, "snippet": card_snippet,
-                  "notes": "CARD's own sentence, which is all this record has: it names no "
-                           "protein, so Bosling 2003's L3 experiments are the child term "
-                           "ARO:3005081's evidence and are not cited here (#374, #382)."},
-             ])},
+             ]},
             {"subject": "drug_binding", "object": "peptide_bond",
              "predicate": "negatively regulates (bound drug blocks peptide bond formation)",
              "predicate_id": "RO:0002212",
@@ -9093,6 +9084,17 @@ def _ul3_unnamed():
     specificity for a parent that does not state it -- #371 exactly.
     """
     cfg = _ul3_shared(_CARD_RPMUT, "ARO:3005082", names_l3=False)
+    # #387: #382 correctly withheld Bosling's L3 result from this record and left the two
+    # edges that rested on it, so they fell back to CARD's sentence -- which says nothing
+    # about the drug, about binding, or about any decrease. The edges go, not their evidence.
+    # ARO:3003419 in this same round gets exactly this treatment from a definition of the
+    # same shape ("...affect the higher-order structure of 16S rRNA and confer antibiotic
+    # resistance"): no drug-binding arm, because the record names no drug interaction.
+    cfg["extra_edges"] = [e for e in cfg["extra_edges"] if e["object"] != "drug_binding"]
+    # and then the node itself, which would otherwise be emitted with only outgoing edges
+    # while nothing establishes the mutation ever touches it (#391's orphan shape).
+    kept = {x for e in cfg["extra_edges"] for x in (e["subject"], e["object"])}
+    cfg["extra_nodes"] = [n for n in cfg["extra_nodes"] if n["node_id"] in kept]
     cfg["note"] = ("Ribosomal protein mutation (generic) -- target alteration IN TRANS. NO "
                    "protein-trait node: CARD names no protein here, and taking uL3 from the "
                    "child term ARO:3005081 would be #371's borrowed specificity.")
@@ -9209,9 +9211,12 @@ FAMILY_SNIPPETS["ARO:3003419"] = {
          "predicate_id": "RO:0002411",
          "description": "The furthest this record's own definition goes. ARO:3003395 continues "
                         "to the drug interaction; this one does not, and no drug-binding node "
-                        "is written. A STATE object, not the molecule: RO:0002212 needs a "
-                        "PROCESS and a DECREASE, and 'affects the higher-order structure' is "
-                        "neither (#377).",
+                        "is written. The object is the CONFORMATION, not the molecule: "
+                        "'affects the higher-order structure' does not say the rRNA's function "
+                        "is decreased (#377). A STATE object is fine -- round 121's ARO:3003395 "
+                        "uses one. That is a CORPUS convention, not something RO licenses: "
+                        "RO:0002212 reads 'decreases the rate or magnitude of EXECUTION of q' "
+                        "(#385, #388).",
          "evidence": [{"reference": "ARO:3003419", "snippet": _CARD_RPSL_GENERIC,
                        "notes": "'substitutions in RpsL AFFECT THE HIGHER-ORDER STRUCTURE of "
                                 "16S rRNA and confer antibiotic resistance'. NOT asserted: any "

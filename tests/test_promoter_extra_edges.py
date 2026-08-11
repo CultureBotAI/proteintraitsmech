@@ -3108,7 +3108,10 @@ def test_ul3_binding_state_is_defined_by_both_constituents():
         # #386: and EVERY edge touching the node, or it can be emitted with no parts at all
         touching = [e for e in cfg["extra_edges"]
                     if "drug_binding" in (e["subject"], e["object"])]
-        assert len(touching) >= 4
+        # NOT a count: the two configs legitimately differ here, because #387 removed the
+        # generic record's two mechanism edges into this node. The property is that every
+        # SURVIVING edge carries the same guard, or the node can be emitted with no parts.
+        assert touching
         assert all(e.get("requires") == {"drug0": "ARO:3000670"} for e in touching)
     seen = 0
     for pth in promote.ARO_DIR.glob("*.yaml"):
@@ -3163,6 +3166,71 @@ def _assert_deliberately_held(aro_id):
                 drafts += 1
     assert found, f"{aro_id} names no record -- a typo passes the config check silently"
     assert drafts, f"{aro_id} has no draft left, so it is not being held"
+
+
+def test_the_generic_ul3_record_has_no_mechanism_edge_into_drug_binding():
+    """#387: #382 withheld Bosling's L3 result from the record that names no protein and
+    left the two edges that rested on it, so they fell back to CARD's sentence -- which
+    mentions neither the drug nor binding.
+
+    ARO:3003419 in the same round gets no drug-binding arm from a definition of the same
+    shape. This record gets the same treatment.
+    """
+    named = [c for c in promote.family_configs("ARO:3005082") if "protein_traits" in c][0]
+    unnamed = [c for c in promote.family_configs("ARO:3005082") if "protein_traits" not in c][0]
+    assert any(e["object"] == "drug_binding" for e in named["extra_edges"])
+    assert not any(e["object"] == "drug_binding" for e in unnamed["extra_edges"])
+    # and no node is left with nothing pointing at it
+    for cfg in (named, unnamed):
+        used = {x for e in cfg["extra_edges"] for x in (e["subject"], e["object"])}
+        assert all(n["node_id"] in used for n in cfg["extra_nodes"])
+
+
+def test_conformation_nodes_use_characteristic_of_not_part_of():
+    """#384 shipped with no test: reverting RO:0000052 to BFO:0000050 on both families left
+    the suite green (#389).
+
+    A conformation INHERES IN a molecule; it is not a mereological part of one.
+    """
+    seen = 0
+    for fam, state, mol in (("ARO:3005082", "altered_conformation", "rrna23s"),
+                            ("ARO:3003419", "altered_structure", "rrna16s")):
+        for cfg in promote.family_configs(fam):
+            edges = [e for e in cfg["extra_edges"]
+                     if e["subject"] == state and e["object"] == mol]
+            for e in edges:
+                seen += 1
+                assert e["predicate_id"] == "RO:0000052"
+                assert "characteristic of" in e["predicate"]
+    assert seen >= 3
+
+
+def test_no_edge_asserts_the_23s_rrna_is_part_of_the_50s_subunit():
+    """#383 shipped with no test: re-adding the deleted edge left the suite green (#389).
+
+    The snippet that edge cited says the structure gives "a detailed picture of ITS
+    interactions with the 23S rRNA" -- "its" is tiamulin's. Co-mention is not part-hood.
+    """
+    for cfg in promote.family_configs("ARO:3005082"):
+        assert not any(e["subject"] == "rrna23s" and e["object"] == "subunit50s"
+                       for e in cfg["extra_edges"])
+
+
+def test_every_snippet_constant_is_actually_used():
+    """#390, and #375 and #367 before it -- three rounds, three dead snippet constants,
+    each found only by a reviewer reading the artifact. Ruff does not flag them.
+
+    Scoped to the round 121/122 constants rather than the whole module, so it states a
+    claim it can actually keep.
+    """
+    src = pathlib.Path(promote.__file__).read_text(encoding="utf-8")
+    for name in ("_TIAMULIN_TARGET", "_TIAMULIN_MUTANT", "_TIAMULIN_FOOTPRINT",
+                 "_TIAMULIN_INFERRED", "_TIAMULIN_NOT_RRNA", "_PLEURO_SITE",
+                 "_PLEURO_INHIBITS", "_L3_HEDGE", "_CARD_UL3", "_CARD_RPMUT",
+                 "_CARD_RPSL_GENERIC", "_RPSL_SOURCE_ASSOC", "_RPSL_MUTATIONS",
+                 "_RPSL_PSEUDOKNOT", "_RPSL_ASSOC", "_CARD_RPSL"):
+        # one definition plus at least one use
+        assert src.count(name) >= 2, f"{name} is defined and never used (#390)"
 
 
 def test_the_vanl_cluster_term_is_not_curated_pending_309():

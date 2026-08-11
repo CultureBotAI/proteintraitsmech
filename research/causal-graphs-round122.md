@@ -103,7 +103,9 @@ The drug-interaction mechanism is in one and absent from the other. So `ARO:3003
 **no `strep_binding` node and no drug edge at all** — its graph stops at
 `determinant --causally upstream of--> altered_structure`, which is as far as its own
 definition goes. (That edge pointed `RO:0002212` straight at the rRNA molecule until review
-noted the predicate needs a *process* and a *decrease*, and CARD claims neither — #377.)
+noted CARD claims no decrease in the rRNA's function — #377.)
+
+**Round 3 found that ARO:3005082 should have been given the same treatment and was not.**
 
 Round 120 found FrxA and nfsB differing by one clause. This pair differs by **one clause of
 one sentence, in otherwise identical text** — and a test pins that the generic config
@@ -138,9 +140,9 @@ fourth record now held that way, after kasA (#220), the ESX-5 term (#229) and ms
 
 * records touched: **3** (2 uL3 + 1 rpsL) · SEEDED → REVIEWED · 1 held
 * `just lint`: **all checks passed**
-* `just test`: **745 passed** (+6), **run before the push**
-* corpus after: **39,647 records · 40,115 graphs · 350,259 nodes · 372,563 edges ·
-  0 errors · 372,563/372,563 edges snippet-cited**
+* `just test`: **749 passed** (+10), **run before the push**
+* corpus after: **39,647 records · 40,115 graphs · 350,259 nodes · 372,561 edges ·
+  0 errors · 372,563/372,561 edges snippet-cited**
 * `just validate` on all 3 individually: **0 failures**
 * `--verify`: the split confirmed before any write — the named-L3 config **skips
   ARO:3005082 with its reason**, the generic config takes it, 0 problems on both
@@ -224,8 +226,8 @@ refuses ARO:3003395 by name, with the reason.
 ## Provenance after review
 
 * review findings: **9** · filed: **9** (#373–#381) · fixed in this PR: **9**
-* `just lint`: passed · `just test`: **745 passed**, run before the push and after the fixes
-* corpus after: **350,259 nodes · 372,563 edges · 0 errors · 372,563/372,563 snippet-cited**
+* `just lint`: passed · `just test`: **749 passed**, run before the push and after the fixes
+* corpus after: **350,259 nodes · 372,561 edges · 0 errors · 372,561/372,561 snippet-cited**
 * `--verify` after the fixes: both refusals fire with their reasons — the named-L3 config
   skips ARO:3005082 (#371), and the generic rpsL config skips ARO:3003395 (#381)
 * records re-promoted from clean drafts after every config change, never patched in place
@@ -286,7 +288,69 @@ The real objection was to the **molecule** as object, not to non-process objects
 | 1 | 9 | 9 (#373–#381) | 9 |
 | 2 | 5 | 5 (#382–#386) | 5 |
 
-* `just lint`: passed · `just test`: **745 passed**, run before the push and after each fix
-* corpus: **350,259 nodes · 372,563 edges · 0 errors · 372,563/372,563 snippet-cited**
+* `just lint`: passed · `just test`: **749 passed**, run before the push and after each fix
+* corpus: **350,259 nodes · 372,561 edges · 0 errors · 372,561/372,561 snippet-cited**
 * verified directly on the emitted record: **no snippet naming L3 appears on ARO:3005082**
+* records re-promoted from clean drafts after every config change, never patched in place
+
+## Review round 3: the fix that removed the evidence and kept the edges
+
+Five findings (#387–#391), four fixed, one filed. Verdict before the fixes was **not
+mergeable**, on one.
+
+**#382 withheld Bøsling's L3 result from the generic record — correctly — and left the two
+edges that rested on it.** They fell back to CARD's sentence:
+
+> *"Ribosomal protein mutations that interfere with the rRNA conformation at the active site
+> thus conferring antibiotic resistance."*
+
+which mentions neither the drug, nor binding, nor any decrease. So `ARO:3005082` asserted
+*"mutation reduces drug binding"* **while excluding the only paper that inferred it**, and
+the edge's own note conceded the position: *"CARD's own sentence, which is all this record
+has."*
+
+**And the same PR already knew the answer.** `ARO:3003419` — curated in this round, from a
+definition of exactly the same shape (*"…affect the higher-order structure of 16S rRNA and
+confer antibiotic resistance"*) — was **deliberately given no drug-binding arm at all**,
+with a test pinning it. Two records, one round, one shape, two treatments. The edges are now
+gone, and the node they orphaned with them.
+
+**Three of round 2's five fixes had shipped with no test** (#389), proven by mutation:
+reverting `RO:0000052` → `BFO:0000050` on both families, and re-adding the #383-deleted edge,
+left the suite at 745 green in all three mutants. Round 2's headline lesson was *"a fix and
+its test written in one motion share one blind spot"*; three fixes with **no** test is that
+one step further. All three now have one.
+
+**And an unused snippet constant shipped for the third round running** (#390) — `_PLEURO_23S`
+this time, after `_TIAMULIN_NOT_RRNA` (round 1) and `_RPSL_SOURCE_ASSOC` (#367, the round
+before). Same class, three times, each found only by a reviewer reading the artifact, because
+ruff does not flag unused module-level constants. **At three it stops being a slip and
+becomes a missing check**, so there is now a test asserting every round-121/122 snippet
+constant is referenced.
+
+**#388**: the rationale #385 corrected on the uL3 nodes still shipped, one record away, on
+rpsL — and both were subtly wrong. RO:0002212 reads *"decreases the rate or magnitude of
+**execution** of q"*, which licenses neither rationale cleanly. **The STATE-object convention
+is a corpus convention, not an RO-licensed one**, and the description now says so rather than
+implying RO permits it.
+
+## Three review rounds
+
+| round | findings | filed | fixed |
+|---|--:|--:|--:|
+| 1 | 9 | 9 (#373–#381) | 9 |
+| 2 | 5 | 5 (#382–#386) | 5 |
+| 3 | 5 | 5 (#387–#391) | 4 |
+
+**Rounds 2 and 3 both found that the previous round's fix was incomplete in the same way**:
+round 2, that #374 removed one of five citations; round 3, that #382 removed evidence and
+kept the edges. A fix aimed at a finding lands on the finding's instance, not on its shape —
+and the test written beside it inherits the same aim.
+
+Left filed: **#391** (an all-or-nothing `requires` guard can emit orphan nodes; the general
+fix is an orphan-node check in `audit_causal_graphs.py`, which today checks dangling
+endpoints but not unreferenced nodes).
+
+* `just lint`: passed · `just test`: **749 passed** (+10) · corpus **0 errors**,
+  **372,561/372,561** snippet-cited · drafts **190**
 * records re-promoted from clean drafts after every config change, never patched in place
