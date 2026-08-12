@@ -7727,6 +7727,17 @@ def skip_reason_contradicted(reason: str, text: str) -> str:
     return ""
 
 
+_VERIFY_NAMES = None
+
+
+def _verify_names() -> dict:
+    """OBO id -> name, read once. `verify` is called per config, ~150 times."""
+    global _VERIFY_NAMES
+    if _VERIFY_NAMES is None:
+        _VERIFY_NAMES = D.obo_names(D.OBO)
+    return _VERIFY_NAMES
+
+
 def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
     """Report what a config claims that its records do not support.
 
@@ -7842,9 +7853,44 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
             if reason:
                 print(f"  would skip  {ident} ({label}): {reason}")
                 skips += 1
+    # #414: BUILD a graph, do not just inspect the config. `verify()` used to validate
+    # what a config CLAIMS and never what the promoter EMITS, so #413 shipped an
+    # `AttributeError` that made this script unrunnable for ARO:3004910 while this very
+    # function printed "0 problem(s)" for that family. Every other gate was green too --
+    # the crash was reachable only by running a real promote.
+    # B1: the build needs the obo for names, and data/raw is gitignored. Calling it
+    # inside the try turned a missing file into "BUILD FAILED ... FileNotFoundError" --
+    # a promoter defect that is really an absent input. It broke two existing tests in
+    # CI, which is exactly where this was supposed to help (#417 review).
+    built = 0
+    if not D.OBO.exists():
+        print(f"  build check skipped: {D.OBO.name} absent (data/raw is gitignored); "
+              f"run `just fetch-aro` to exercise the emit path")
+        candidates = []
+    for ident, label, text in candidates:
+        if pre and pre(ident, label, text):
+            continue
+        mech, drug = D.parse_relations(text)
+        try:
+            graph = promoted_graph_dict(ident, label, mech, drug, _verify_names(), cfg, terms)
+        except UncoveredMechanism:
+            # B2: `break` here left 6 configs building NOTHING while printing
+            # "0 graph built, 0 problem(s)" -- indistinguishable from verified, and the
+            # same green-means-unchecked shape the NO CANDIDATES check above exists to
+            # prevent. A later candidate often does build (#417 review).
+            continue
+        except Exception as exc:      # noqa: BLE001 -- any failure here is the finding
+            print(f"  BUILD FAILED  {ident}: {type(exc).__name__}: {exc}")
+            problems += 1
+            break
+        if not graph.get("edges"):
+            print(f"  EMPTY GRAPH   {ident} builds with no edges")
+            problems += 1
+        built = 1
+        break                         # one record exercises the emit path for this config
     print(f"verify {family}: {len(curies)} KB CURIEs checked, {len(candidates)} candidate "
           f"records, {skips} precondition skip(s), {uncovered_records} uncovered-mechanism "
-          f"record(s), {thin_partof} thin part-of, {problems} problem(s)")
+          f"record(s), {thin_partof} thin part-of, {built} graph built, {problems} problem(s)")
     return problems
 
 
