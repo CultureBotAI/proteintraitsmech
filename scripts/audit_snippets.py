@@ -156,6 +156,23 @@ def iter_evidence(paths):
                                edge.get("object"), ref, snip)
 
 
+def baseline_key(rel_path: str, graph_id, subject, obj, reference: str, snippet: str) -> str:
+    """One key per EVIDENCE ITEM. Keyed on the edge, not on (record, reference, snippet):
+    that collapsed 174 items into 71 and let a record gain a duplicate bad edge unseen."""
+    return f"{rel_path}|{graph_id}|{subject}->{obj}|{reference}|{_norm(snippet)}"
+
+
+def diff_baseline(current: dict[str, int], known: dict[str, int]) -> tuple[list, list]:
+    """(fixed, new) by COUNT, so a duplicated bad edge is new even at the same key.
+
+    Extracted so the swap proof is a fixture test rather than a second full-corpus walk --
+    the two corpus tests cost 127s and both skip in CI, where data/raw is gitignored (#416).
+    """
+    new = sorted(k for k in current if current[k] > known.get(k, 0))
+    fixed = sorted(k for k in known if current.get(k, 0) < known[k])
+    return fixed, new
+
+
 def _load_baseline(path: Path) -> dict[str, int]:
     """Baseline as {key: count}, tolerating the earlier list-of-keys form."""
     if not path.exists():
@@ -285,15 +302,14 @@ def main() -> int:
         # has five such edges, so a sixth is a routine promoter change (#411 review).
         counts: dict[str, int] = defaultdict(int)
         for p_, g, su, o, r, s, _w in bad:
-            counts[f"{p_.relative_to(ROOT)}|{g}|{su}->{o}|{r}|{_norm(s)}"] += 1
+            counts[baseline_key(str(p_.relative_to(ROOT)), g, su, o, r, s)] += 1
         current = dict(sorted(counts.items()))
         if args.update_baseline:
             # Report BEFORE writing. The first version wrote and returned 0 immediately,
             # so `--update-baseline` rewrote the record of what is known AND short-circuited
             # --max in one command, printing nothing about what changed (#411 review).
             was = _load_baseline(bpath)
-            gone = sorted(k for k in was if current.get(k, 0) < was[k])
-            added = sorted(k for k in current if current[k] > was.get(k, 0))
+            gone, added = diff_baseline(current, was)
             print(f"\nbaseline update: {len(was):,} -> {len(current):,}  "
                   f"({len(gone):,} FIXED, {len(added):,} NEW)")
             for k in added[:args.show]:
@@ -318,8 +334,7 @@ def main() -> int:
         # COUNTS, not a set. A record already carrying a known-bad edge could gain another
         # identical one and a set-keyed baseline would not see it -- demonstrated by cloning
         # an edge on basr-aro3003582 (#411 review).
-        new = sorted(k for k in current if current[k] > known.get(k, 0))
-        fixed = sorted(k for k in known if current.get(k, 0) < known[k])
+        fixed, new = diff_baseline(current, known)
         print(f"\nbaseline: {sum(known.values()):,} known · {len(fixed):,} FIXED · "
               f"{len(new):,} NEW")
         for k in fixed[:args.show]:

@@ -3536,44 +3536,62 @@ def test_true_source_is_a_no_op_off_table_and_total():
     assert promote._true_source("  ".join(known.split()), "ARO:0000001") == promote.SNIPPET_SOURCE[known]
 
 
-def test_the_snippet_baseline_catches_a_swap_that_the_count_ceiling_misses():
-    """#411: a scalar ceiling passes fix-one-break-one. Demonstrated, not argued.
+def test_diff_baseline_catches_a_swap_and_a_duplicate():
+    """#411, proved on the helper instead of the corpus (#416).
 
-    This repo produced "a fix introduced the defect it was fixing" four rounds running
-    (#374->#382, #382->#387, #398->#400, #402->#403), so a gate blind to exactly that
-    trade is the wrong shape.
+    The previous version of this test walked all 7.4k ARO records to prove one property,
+    cost 63s, and SKIPPED in CI -- where data/raw is gitignored -- so it never guarded a
+    PR. The identity comparison is pure arithmetic; it does not need the corpus.
 
-    Runs the audit against a DOCTORED baseline rather than doctoring the corpus: dropping
-    one known entry makes that mismatch look new, which is the same signal a swap gives.
+    Two properties a scalar ceiling cannot see:
+      * a SWAP -- one fixed, one introduced, same total;
+      * a DUPLICATE -- an existing bad edge cloned, so the key is unchanged but the count
+        rises. Keying on a set missed this; keying on counts does not.
     """
-    root = pathlib.Path(promote.__file__).resolve().parent.parent
-    real = root / "audit" / "snippet-mismatch-baseline.json"
-    if not (root / "data" / "raw" / "aro" / "aro.obo").exists():
-        pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
-    known = json.loads(real.read_text(encoding="utf-8"))
-    assert isinstance(known, dict), "baseline must be {key: count} so a duplicated edge counts"
-    assert len(known) >= 50, "baseline is suspiciously small; is it being written at all?"
-    # #411 review: one key per ITEM, not per (record, reference, snippet) triple. The
-    # first version collapsed 174 items into 71, so a record already carrying a known-bad
-    # triple could gain another edge with the same one and both gates stayed green.
-    assert len({k.split("|", 1)[0] for k in known}) < len(known), "keys are not per-edge"
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import audit_snippets as audit
 
-    import subprocess
-    import tempfile
-    with tempfile.TemporaryDirectory() as tmp:
-        doctored = pathlib.Path(tmp) / "baseline.json"
-        trimmed = dict(known)
-        trimmed.pop(next(iter(trimmed)))                                # one entry removed
-        doctored.write_text(json.dumps(trimmed), encoding="utf-8")
-        out = subprocess.run(
-            [sys.executable, str(root / "scripts" / "audit_snippets.py"),
-             "--path", "function/resistance/aro", "--baseline", str(doctored)],
-            capture_output=True, text=True, cwd=root)
-        # the COUNT is unchanged -- only the identity gate can see this. Read the number
-        # rather than hardcoding it, or this breaks the moment anyone follows the audit's
-        # own advice and re-runs --update-baseline (#411 review).
-        before = re.search(r"^MISMATCHED:\s+([\d,]+)", out.stdout, re.M)
-        assert before, out.stdout[-600:]
-        assert int(before.group(1).replace(",", "")) == sum(known.values())
-        assert out.returncode == 1, f"identity gate missed a new mismatch:\n{out.stdout[-800:]}"
-        assert "1 NEW" in out.stdout
+    known = {"rec_a|g|d->m|ARO:1|snip one": 1,
+             "rec_b|g|d->m|ARO:2|snip two": 1}
+
+    # unchanged
+    assert audit.diff_baseline(dict(known), known) == ([], [])
+
+    # SWAP: rec_a fixed, rec_c introduced -- total still 2, and a ceiling passes it
+    swap = {"rec_b|g|d->m|ARO:2|snip two": 1, "rec_c|g|d->m|ARO:3|snip three": 1}
+    fixed, new = audit.diff_baseline(swap, known)
+    assert sum(swap.values()) == sum(known.values())          # the ceiling sees nothing
+    assert fixed == ["rec_a|g|d->m|ARO:1|snip one"]
+    assert new == ["rec_c|g|d->m|ARO:3|snip three"]
+
+    # DUPLICATE: same key, count 1 -> 2
+    dup = dict(known)
+    dup["rec_a|g|d->m|ARO:1|snip one"] = 2
+    fixed, new = audit.diff_baseline(dup, known)
+    assert new == ["rec_a|g|d->m|ARO:1|snip one"] and fixed == []
+
+    # progress alone is not a failure
+    fixed, new = audit.diff_baseline({"rec_b|g|d->m|ARO:2|snip two": 1}, known)
+    assert new == [] and len(fixed) == 1
+
+    # and the key really is per-edge: two edges of one record are distinct keys
+    a = audit.baseline_key("rec", "resistance", "determinant", "mech0", "ARO:1", "s")
+    b = audit.baseline_key("rec", "resistance", "determinant", "drug0", "ARO:1", "s")
+    assert a != b
+    # whitespace-insensitive on the snippet, so a reflow is not a false NEW
+    assert audit.baseline_key("r", "g", "x", "y", "ARO:1", "a  b") == \
+        audit.baseline_key("r", "g", "x", "y", "ARO:1", "a b")
+
+
+def test_the_committed_baseline_matches_the_key_shape_the_audit_writes():
+    """Cheap structural check that survives without data/raw, so CI sees something."""
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    known = json.loads((root / "audit" / "snippet-mismatch-baseline.json").read_text())
+    assert isinstance(known, dict) and known, "baseline must be {key: count}"
+    assert all(isinstance(v, int) and v >= 1 for v in known.values())
+    for k in known:
+        parts = k.split("|")
+        assert len(parts) == 5, f"key shape changed: {k[:80]}"
+        assert parts[0].startswith("data/traits/"), parts[0]
+        assert "->" in parts[2]
+    assert len({k.split("|", 1)[0] for k in known}) < len(known), "keys are not per-edge"
