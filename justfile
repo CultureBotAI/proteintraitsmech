@@ -890,3 +890,13 @@ audit-fit:
 # Which drafts would a config accept, and which does a configured family refuse (#316)
 audit-drafts:
     uv run python scripts/audit_refused_drafts.py
+
+# Does every cited snippet actually appear in the source it names? (#365)
+# Pinned at the known ARO backlog so it fails on GROWTH, not on the existing 287.
+#
+# LOCAL ONLY -- needs `data/raw/aro/aro.obo`, and data/raw is gitignored, so without it
+# every ARO reference is unverifiable and this reports 11 instead of 287. It says so
+# loudly; pass --require-aro to make that a failure instead of a note. The pytest
+# regression SKIPS when the obo is absent rather than passing a ceiling on nothing.
+audit-snippets *args:
+    uv run python scripts/audit_snippets.py --path function/resistance/aro --max 287 {{args}}

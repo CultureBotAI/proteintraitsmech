@@ -3428,3 +3428,40 @@ def test_the_generic_ul3_drug_binding_node_does_not_claim_the_mutation_affects_i
     assert "the interaction the mutation reduces" in named_node["description"].lower()
     assert any(e["object"] == "drug_binding" for e in named["extra_edges"])
     assert not any(e["object"] == "drug_binding" for e in unnamed["extra_edges"])
+
+
+def test_no_new_snippet_misattributions_in_the_aro_corpus():
+    """#365: pins the known snippet-vs-source backlog so it cannot grow.
+
+    Scope, narrowly: this catches #400's class -- a snippet under the wrong ARO/KB CURIE.
+    NOT #348 or #382, which are PMID-attributed and unverifiable offline.
+
+    **It asserts the probe FIRED.** `data/raw/aro/aro.obo` is gitignored, so in CI every
+    ARO reference becomes unverifiable and the audit reports 11 instead of 287 -- passing
+    a ceiling of 287 while checking almost nothing. That is round 68's failure mode, which
+    this repo already shipped once (`hydrolyz\b` reported 0 while structurally broken).
+    Without the obo the test SKIPS, honestly, rather than going green on nothing.
+    """
+    import subprocess
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    obo = root / "data" / "raw" / "aro" / "aro.obo"
+    if not obo.exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`. "
+                    "Skipping honestly beats passing a ceiling while checking nothing.")
+    result = subprocess.run(
+        [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+         "--path", "function/resistance/aro", "--max", "287", "--require-aro"],
+        capture_output=True, text=True, cwd=root)
+    assert result.returncode == 0, (
+        "snippet misattributions grew past the pinned backlog of 287:\n"
+        + result.stdout[-2000:])
+
+    def _num(label):
+        m = re.search(rf"^\s*{label}:\s+([\d,]+)", result.stdout, re.M)
+        assert m, f"audit output changed shape ({label} missing):\n{result.stdout[:600]}"
+        return int(m.group(1).replace(",", ""))
+
+    # the probe fired: nearly 30k items really were compared against the obo
+    assert _num("checked against disk") >= 29_000
+    assert _num(r"not on disk \(not a fail\)") == 0
+    assert _num("MISMATCHED") <= 287
