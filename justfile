@@ -896,7 +896,7 @@ audit-drafts:
 # Was 287; the 113 mechanical repoints are fixed and the pin was tightened with them.
 #
 # LOCAL ONLY -- needs `data/raw/aro/aro.obo`, and data/raw is gitignored, so without it
-# every ARO reference is unverifiable and this reports 11 instead of 287. It says so
+# every ARO reference is unverifiable and this reports 11 instead of 174. It says so
 # loudly; pass --require-aro to make that a failure instead of a note. The pytest
 # regression SKIPS when the obo is absent rather than passing a ceiling on nothing.
 audit-snippets *args:

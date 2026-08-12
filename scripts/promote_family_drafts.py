@@ -7347,12 +7347,20 @@ SNIPPET_SOURCE = {
 }
 
 
-def _true_source(snippet: str, fallback: str) -> str:
+def _true_source(snippet, fallback: str) -> str:
     """The reference a snippet actually comes from (#365).
 
     `fallback` is the config's own `reference`, which is correct for everything not in
     SNIPPET_SOURCE. Verified by `just audit-snippets`, which is what found these.
+
+    TOTAL on purpose. `cfg["mech"]` values may be the #400 LIST form, whose items carry
+    their own reference and need no correction -- and the first version of this crashed
+    the promoter for ARO:3004910 (the only list-form family, and the one #400-#404
+    hardened) with `'list' object has no attribute 'split'`. Every gate stayed green:
+    `verify()` never calls `promoted_graph_dict`, so nothing exercised the code path.
     """
+    if not isinstance(snippet, str):
+        return fallback
     return SNIPPET_SOURCE.get(" ".join(snippet.split()), fallback)
 
 
@@ -7469,7 +7477,8 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
         em = pt.get("enables_mech")
         if em in mech:
             edges.append(_edge(pkey, pt.get("enable_pred", "enables (catalysis)"), "RO:0002327",
-                               f"mech{mech.index(em)}", ref, cfg["mech"][em],
+                               f"mech{mech.index(em)}", _true_source(cfg["mech"][em], ref),
+                               cfg["mech"][em],
                                pt.get("enable_note", "The active site carries out the serine "
                                                      "beta-lactam hydrolysis mechanism.")))
     # Family-specific mechanism edges. The fixed determinant->mechanism->resistance shape
