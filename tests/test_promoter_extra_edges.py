@@ -17,6 +17,7 @@ would, and only after the record was written.
 from __future__ import annotations
 
 import importlib
+import json
 import pathlib
 import re
 import sys
@@ -3450,7 +3451,8 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
                     "Skipping honestly beats passing a ceiling while checking nothing.")
     result = subprocess.run(
         [sys.executable, str(root / "scripts" / "audit_snippets.py"),
-         "--path", "function/resistance/aro", "--max", "174", "--require-aro"],
+         "--path", "function/resistance/aro", "--max", "174", "--require-aro",
+         "--baseline", str(root / "audit" / "snippet-mismatch-baseline.json")],
         capture_output=True, text=True, cwd=root)
     assert result.returncode == 0, (
         "snippet misattributions grew past the pinned backlog of 174:\n"
@@ -3465,6 +3467,11 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
     assert _num("checked against disk") >= 29_000
     assert _num(r"not on disk \(not a fail\)") == 0
     assert _num("MISMATCHED") <= 174
+    # #411: the identity gate must have run and found nothing new. A count ceiling passes
+    # a swap -- fix one, break one -- which is the shape this repo produced four times.
+    m = re.search(r"^baseline: ([\d,]+) known .* ([\d,]+) NEW", result.stdout, re.M)
+    assert m, f"baseline gate did not run:\n{result.stdout[-800:]}"
+    assert int(m.group(2).replace(",", "")) == 0
 
 
 def test_promoted_graph_dict_runs_for_every_configured_family():
@@ -3527,3 +3534,35 @@ def test_true_source_is_a_no_op_off_table_and_total():
     assert promote._true_source(known, "ARO:0000001") == promote.SNIPPET_SOURCE[known]
     # whitespace-insensitive, so a reflowed literal still matches
     assert promote._true_source("  ".join(known.split()), "ARO:0000001") == promote.SNIPPET_SOURCE[known]
+
+
+def test_the_snippet_baseline_catches_a_swap_that_the_count_ceiling_misses():
+    """#411: a scalar ceiling passes fix-one-break-one. Demonstrated, not argued.
+
+    This repo produced "a fix introduced the defect it was fixing" four rounds running
+    (#374->#382, #382->#387, #398->#400, #402->#403), so a gate blind to exactly that
+    trade is the wrong shape.
+
+    Runs the audit against a DOCTORED baseline rather than doctoring the corpus: dropping
+    one known entry makes that mismatch look new, which is the same signal a swap gives.
+    """
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    real = root / "audit" / "snippet-mismatch-baseline.json"
+    if not (root / "data" / "raw" / "aro" / "aro.obo").exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
+    known = json.loads(real.read_text(encoding="utf-8"))
+    assert len(known) >= 50, "baseline is suspiciously small; is it being written at all?"
+
+    import subprocess
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        doctored = pathlib.Path(tmp) / "baseline.json"
+        doctored.write_text(json.dumps(known[1:]), encoding="utf-8")   # one entry removed
+        out = subprocess.run(
+            [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+             "--path", "function/resistance/aro", "--baseline", str(doctored)],
+            capture_output=True, text=True, cwd=root)
+        # the COUNT is unchanged -- only the identity gate can see this
+        assert re.search(r"^MISMATCHED:\s+174", out.stdout, re.M), out.stdout[-600:]
+        assert out.returncode == 1, f"identity gate missed a new mismatch:\n{out.stdout[-800:]}"
+        assert "1 NEW" in out.stdout

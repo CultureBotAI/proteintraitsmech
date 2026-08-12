@@ -28,13 +28,24 @@ as failures would drown the real signal (7,119 of 7,211 promoted ARO records car
 An ARO snippet may legitimately come from the term's `def:` OR from one of its
 `relationship:` lines -- `_drug_assertion` quotes the latter -- so both are searched.
 
-Exit code is 0 unless --strict, or --max N is exceeded. The backlog is large and known;
-the useful gate is "it did not get worse", which is what --max pins.
+Exit code is 0 unless --strict, or a gate is breached.
+
+TWO gates, because a scalar count is not enough. `--max N` pins a ceiling, and a ceiling
+masks a SWAP: #411 demonstrated fixing one pre-existing mismatch while reintroducing #400
+in the same tree, leaving the total unchanged and the gate green. In a repo whose recorded
+pathology is four rounds of "a fix produced the defect it was fixing", that is the wrong
+shape.
+
+`--baseline FILE` pins the IDENTITY of every known mismatch -- (record, reference,
+snippet) -- so a new one fails even when an old one is fixed in the same change. Write it
+with --update-baseline, and read the diff it prints: FIXED lines are progress, NEW lines
+are the thing this exists to catch.
 """
 
 from __future__ import annotations
 
 import argparse
+import json
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -152,6 +163,11 @@ def main() -> int:
     ap.add_argument("--max", type=int, default=None,
                     help="exit 1 if mismatches exceed N (pins a known backlog)")
     ap.add_argument("--show", type=int, default=12, help="how many examples to print")
+    ap.add_argument("--baseline", default="",
+                    help="JSON of known mismatches; fails on any NEW one even if the total "
+                         "is unchanged (#411). A ceiling cannot see a swap.")
+    ap.add_argument("--update-baseline", action="store_true",
+                    help="rewrite --baseline from the current state")
     ap.add_argument("--require-aro", action="store_true",
                     help="exit 1 if aro.obo is absent, instead of reporting a meaningless "
                          "small number (#365)")
@@ -249,6 +265,36 @@ def main() -> int:
             print(f"  {rel}")
             print(f"    {gid}: {subj} -> {obj}  cites {ref} ({why})")
             print(f"    snippet: {_norm(snip)[:110]}")
+
+    # --- identity gate (#411) -------------------------------------------------------
+    if args.baseline:
+        bpath = Path(args.baseline)
+        current = sorted({f"{p.relative_to(ROOT)}|{r}|{_norm(s)}"
+                          for p, _g, _su, _o, r, s, _w in bad})
+        if args.update_baseline:
+            bpath.parent.mkdir(parents=True, exist_ok=True)
+            bpath.write_text(json.dumps(current, indent=1) + "\n", encoding="utf-8")
+            print(f"\nbaseline written: {len(current):,} known mismatches -> {bpath}")
+            return 0
+        if not bpath.exists():
+            print(f"\nFAIL: --baseline {bpath} does not exist; run --update-baseline")
+            return 1
+        known = set(json.loads(bpath.read_text(encoding="utf-8")))
+        new = [k for k in current if k not in known]
+        fixed = [k for k in known if k not in set(current)]
+        print(f"\nbaseline: {len(known):,} known · {len(fixed):,} FIXED · {len(new):,} NEW")
+        for k in fixed[:args.show]:
+            rec, ref, snip = k.split("|", 2)
+            print(f"  FIXED  {rec.rsplit('/', 1)[-1]}  {ref}")
+        for k in new[:args.show]:
+            rec, ref, snip = k.split("|", 2)
+            print(f"  NEW    {rec.rsplit('/', 1)[-1]}  {ref}\n         {snip[:100]}")
+        if new:
+            print(f"\nFAIL: {len(new)} snippet(s) cite a source that does not contain them. "
+                  f"If they are intentional, re-run with --update-baseline.")
+            return 1
+        if fixed:
+            print("Progress: re-run with --update-baseline to lock it in.")
 
     if args.strict and bad:
         return 1

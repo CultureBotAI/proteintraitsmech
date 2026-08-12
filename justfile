@@ -892,12 +892,15 @@ audit-drafts:
     uv run python scripts/audit_refused_drafts.py
 
 # Does every cited snippet actually appear in the source it names? (#365)
-# Pinned at the known ARO backlog so it fails on GROWTH, not on the remaining 174.
-# Was 287; the 113 mechanical repoints are fixed and the pin was tightened with them.
+# TWO gates. --max pins the COUNT (174 after the 113 repoints; was 287). --baseline pins
+# the IDENTITY of each known mismatch, because a ceiling masks a SWAP: fixing one while
+# introducing another leaves the total unchanged and a count gate green (#411, demonstrated).
+# After fixing some, re-run with --update-baseline to lock the progress in.
 #
 # LOCAL ONLY -- needs `data/raw/aro/aro.obo`, and data/raw is gitignored, so without it
 # every ARO reference is unverifiable and this reports 11 instead of 174. It says so
 # loudly; pass --require-aro to make that a failure instead of a note. The pytest
 # regression SKIPS when the obo is absent rather than passing a ceiling on nothing.
 audit-snippets *args:
-    uv run python scripts/audit_snippets.py --path function/resistance/aro --max 174 {{args}}
+    uv run python scripts/audit_snippets.py --path function/resistance/aro \
+        --max 174 --baseline audit/snippet-mismatch-baseline.json {{args}}
