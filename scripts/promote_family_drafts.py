@@ -9091,10 +9091,24 @@ def _ul3_unnamed():
     # same shape ("...affect the higher-order structure of 16S rRNA and confer antibiotic
     # resistance"): no drug-binding arm, because the record names no drug interaction.
     cfg["extra_edges"] = [e for e in cfg["extra_edges"] if e["object"] != "drug_binding"]
-    # and then the node itself, which would otherwise be emitted with only outgoing edges
-    # while nothing establishes the mutation ever touches it (#391's orphan shape).
-    kept = {x for e in cfg["extra_edges"] for x in (e["subject"], e["object"])}
-    cfg["extra_nodes"] = [n for n in cfg["extra_nodes"] if n["node_id"] in kept]
+    # `drug_binding` KEEPS its outgoing edges -- the drug-action arm is drug-class-general
+    # and CARD-independent -- so it is not pruned. What must change is its DESCRIPTION,
+    # which `_ul3_shared` writes as "the interaction the mutation reduces": a claim this
+    # record refuses, since #387 removed both edges that said so.
+    #
+    # The first version pruned on subjects UNION objects, which is a no-op for a node that
+    # survives as a subject (#406). Prune on INCOMING edges, which is the orphan shape.
+    for n in cfg["extra_nodes"]:
+        if n["node_id"] == "drug_binding":
+            n["description"] = (
+                "The drug-ribosome interaction. On THIS record nothing connects the "
+                "substitution to it: CARD names no drug interaction here, so #387 removed "
+                "both edges that asserted the mutation affected it. The uL3 record "
+                "ARO:3005081 keeps those edges and the stronger wording (#406).")
+    incoming = {e["object"] for e in cfg["extra_edges"]}
+    outgoing = {e["subject"] for e in cfg["extra_edges"]}
+    cfg["extra_nodes"] = [n for n in cfg["extra_nodes"]
+                          if n["node_id"] in incoming or n["node_id"] in outgoing]
     cfg["note"] = ("Ribosomal protein mutation (generic) -- target alteration IN TRANS. NO "
                    "protein-trait node: CARD names no protein here, and taking uL3 from the "
                    "child term ARO:3005081 would be #371's borrowed specificity.")

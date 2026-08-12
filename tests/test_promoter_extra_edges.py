@@ -3405,3 +3405,26 @@ def test_the_two_nat_configs_are_disjoint_so_list_order_is_not_load_bearing():
         accepting = [c for c in cfgs
                      if c["precondition"](ident, "", text) is None]
         assert len(accepting) == 1, f"{ident} is accepted by {len(accepting)} configs"
+
+
+def test_the_generic_ul3_drug_binding_node_does_not_claim_the_mutation_affects_it():
+    """#406: the node prune was a no-op -- it built its keep-set from subjects UNION
+    objects, and `drug_binding` survives as a SUBJECT of three edges. So the node shipped
+    with `_ul3_shared`'s description, "The interaction the mutation reduces", on the record
+    where #387 removed both edges that said so.
+
+    #380/#371's shape, in the round that filed #380, missed by all five gates and by the
+    object-side test written for #387. Found only by reviewing the combined stack -- and
+    then LOST before merge, because the docs branch had been cut before the fix commit.
+    """
+    unnamed = [c for c in promote.family_configs("ARO:3005082")
+               if "protein_traits" not in c][0]
+    named = [c for c in promote.family_configs("ARO:3005082")
+             if "protein_traits" in c][0]
+    node = [n for n in unnamed["extra_nodes"] if n["node_id"] == "drug_binding"][0]
+    assert "the interaction the mutation reduces" not in node["description"].lower()
+    assert "#406" in node["description"]
+    named_node = [n for n in named["extra_nodes"] if n["node_id"] == "drug_binding"][0]
+    assert "the interaction the mutation reduces" in named_node["description"].lower()
+    assert any(e["object"] == "drug_binding" for e in named["extra_edges"])
+    assert not any(e["object"] == "drug_binding" for e in unnamed["extra_edges"])
