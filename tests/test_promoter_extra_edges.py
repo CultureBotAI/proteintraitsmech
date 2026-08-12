@@ -3450,10 +3450,10 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
                     "Skipping honestly beats passing a ceiling while checking nothing.")
     result = subprocess.run(
         [sys.executable, str(root / "scripts" / "audit_snippets.py"),
-         "--path", "function/resistance/aro", "--max", "287", "--require-aro"],
+         "--path", "function/resistance/aro", "--max", "174", "--require-aro"],
         capture_output=True, text=True, cwd=root)
     assert result.returncode == 0, (
-        "snippet misattributions grew past the pinned backlog of 287:\n"
+        "snippet misattributions grew past the pinned backlog of 174:\n"
         + result.stdout[-2000:])
 
     def _num(label):
@@ -3464,4 +3464,66 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
     # the probe fired: nearly 30k items really were compared against the obo
     assert _num("checked against disk") >= 29_000
     assert _num(r"not on disk \(not a fail\)") == 0
-    assert _num("MISMATCHED") <= 287
+    assert _num("MISMATCHED") <= 174
+
+
+def test_promoted_graph_dict_runs_for_every_configured_family():
+    """#365's first version crashed `promote_family_drafts.py` for ARO:3004910 with
+    `'list' object has no attribute 'split'` -- the only list-form `mech` family, and the
+    one #400-#404 hardened.
+
+    ALL SEVEN GATES STAYED GREEN. `--verify-all` prints "0 problem(s)" for that family
+    because `verify()` never calls `promoted_graph_dict`; lint, 758 tests, audit-graphs
+    and audit-snippets never execute the promoter's emit path either. It was reachable
+    only by actually running a promote.
+
+    So: build a graph for one record of every configured family. Slow-ish, and the only
+    thing standing between a config change and an unrunnable promoter.
+    """
+    if not promote.E.OBO.exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
+    terms = promote.E.parse_obo(promote.E.OBO)
+    names = promote.D.obo_names(promote.D.OBO)
+    built = 0
+    for family in promote.FAMILY_SNIPPETS:
+        for ident, label, text in promote._candidates(family, terms):
+            cfg = promote.config_for(family, ident, label, text)
+            if cfg is None:
+                continue
+            mech, drug = promote.D.parse_relations(text)
+            try:
+                graph = promote.promoted_graph_dict(ident, label, mech, drug, names, cfg, terms)
+            except promote.UncoveredMechanism:
+                break            # a reported skip, not a crash
+            assert graph["nodes"] and graph["edges"]
+            built += 1
+            break                # one record per family is enough to exercise the path
+    assert built >= 100, f"only built {built} graphs; the sweep is not covering families"
+
+
+def test_snippet_source_entries_each_name_exactly_one_aro_term():
+    """#365: the table can only be safe if each snippet is one term's text. If a snippet
+    appeared in two terms the mapping would be a guess, and `_true_source` would override
+    correct citations rather than fix wrong ones.
+    """
+    if not promote.E.OBO.exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import audit_snippets
+
+    obo = audit_snippets.load_obo_stanzas()
+    for snippet, owner in promote.SNIPPET_SOURCE.items():
+        owners = [t for t, body in obo.items() if snippet in body]
+        assert owners == [owner], f"{snippet[:50]!r} -> {owners}, table says {owner}"
+
+
+def test_true_source_is_a_no_op_off_table_and_total():
+    """It must not touch a reference it has no opinion about, and must survive the
+    list-form values #400 introduced."""
+    assert promote._true_source("some sentence nobody curated", "ARO:1234567") == "ARO:1234567"
+    assert promote._true_source([{"reference": "ARO:3000212"}], "ARO:3004910") == "ARO:3004910"
+    assert promote._true_source(None, "ARO:9") == "ARO:9"
+    known = next(iter(promote.SNIPPET_SOURCE))
+    assert promote._true_source(known, "ARO:0000001") == promote.SNIPPET_SOURCE[known]
+    # whitespace-insensitive, so a reflowed literal still matches
+    assert promote._true_source("  ".join(known.split()), "ARO:0000001") == promote.SNIPPET_SOURCE[known]

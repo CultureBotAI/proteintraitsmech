@@ -4091,7 +4091,7 @@ FAMILY_SNIPPETS = {
              "predicate": "causally upstream of (removes the drug from the cell)",
              "predicate_id": "RO:0002411",
              "description": "The causal core.",
-             "evidence": [{"reference": "ARO:3000112", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
+             "evidence": [{"reference": "ARO:0010000", "snippet": "Antibiotic resistance via the transport of antibiotics out of the cell.",
                            "notes": "'via the transport of antibiotics out of the cell'."}]},
         ],
     },
@@ -7323,6 +7323,47 @@ def _evidence_items(spec, ref: str, note: str) -> list[dict]:
              "notes": i.get("notes", note)} for i in spec]
 
 
+# ---------------------------------------------------------------------------------------
+# Snippets whose true source is NOT the config's own `reference` (#365).
+#
+# `promoted_graph_dict` stamps `cfg["reference"]` on any bare-string snippet, which is
+# right when the text is that family's own. For these four it is not: they are the shared
+# PARENT mechanism definitions, quoted on child families. 113 evidence items across 153
+# records cited e.g. ARO:3000557's definition under ARO:3000105 -- real CARD prose under
+# an attribution that does not contain it.
+#
+# This is #400's shape at scale. #400 was fixed by converting one config to the list form;
+# doing that here would mean editing 21 sites across 7 families and re-promoting 40,487
+# records, of which family ARO:3000557 alone is 5,750 -- exactly the blast radius #280
+# refuses and round 70 caused. A lookup keyed by the snippet fixes every site at once and
+# re-promotes nothing.
+#
+# Keyed on whitespace-normalised text so a reflowed literal still matches.
+SNIPPET_SOURCE = {
+    "Antibiotic resistance via the transport of antibiotics out of the cell.": "ARO:0010000",
+    "Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation includes chemical modification, destruction, etc.": "ARO:3000557",
+    "Enzymes that inactivate rifampin antibiotics by chemical modification.": "ARO:3000576",
+    "Point mutations in the Mycobacterium tuberculosis ndh gene shown clinically to confer resistance to isoniazid.": "ARO:3003461",
+}
+
+
+def _true_source(snippet, fallback: str) -> str:
+    """The reference a snippet actually comes from (#365).
+
+    `fallback` is the config's own `reference`, which is correct for everything not in
+    SNIPPET_SOURCE. Verified by `just audit-snippets`, which is what found these.
+
+    TOTAL on purpose. `cfg["mech"]` values may be the #400 LIST form, whose items carry
+    their own reference and need no correction -- and the first version of this crashed
+    the promoter for ARO:3004910 (the only list-form family, and the one #400-#404
+    hardened) with `'list' object has no attribute 'split'`. Every gate stayed green:
+    `verify()` never calls `promoted_graph_dict`, so nothing exercised the code path.
+    """
+    if not isinstance(snippet, str):
+        return fallback
+    return SNIPPET_SOURCE.get(" ".join(snippet.split()), fallback)
+
+
 def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: dict,
                         cfg: dict, terms: dict | None = None) -> dict:
     """Build the curated graph as data, then let PyYAML lay it out (#194).
@@ -7393,12 +7434,17 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
             raise UncoveredMechanism(mid)
         snip = cfg["mech"][mid]
         edges.append(_edge("determinant", "participates in (resistance mechanism)",
-                           "RO:0000056", f"mech{i}", ref, snip, f"Family mechanism {mid}."))
+                           "RO:0000056", f"mech{i}", _true_source(snip, ref), snip,
+                           f"Family mechanism {mid}."))
         edges.append(_edge(f"mech{i}", "causally upstream of", "RO:0002411", "resistance",
-                           ref, cfg["mech_res"], f"Mechanism {mid} \u2192 resistance."))
+                           _true_source(cfg["mech_res"], ref) if isinstance(cfg["mech_res"], str)
+                           else ref,
+                           cfg["mech_res"], f"Mechanism {mid} \u2192 resistance."))
     edges.append(_edge("determinant", "causally upstream of (confers resistance)",
-                       "RO:0002411", "resistance", ref, cfg["det_res"],
-                       "Determinant \u2192 resistance phenotype."))
+                       "RO:0002411", "resistance",
+                       _true_source(cfg["det_res"], ref) if isinstance(cfg["det_res"], str)
+                       else ref,
+                       cfg["det_res"], "Determinant \u2192 resistance phenotype."))
     for i, did in enumerate(drug[:D.MAX_DRUGS]):
         # `determinant -> drug`, carrying ARO's own confers_resistance_to_drug_class, is
         # the shape BOTH the auto-draft and the 6,180 records promoted before round 18
@@ -7408,8 +7454,9 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
         # the edge says "CARD asserts this" — regenerated from the obo so it matches what
         # the older records carry rather than overwriting it with a hydrolysis quote.
         assertion = _drug_assertion(ident, did, terms) if terms else None
-        d_ref, d_snip, d_note = assertion or (ref, cfg["res_drug"],
-                                              f"Resistance to {names.get(did, did)}.")
+        d_ref, d_snip, d_note = assertion or (
+            _true_source(cfg["res_drug"], ref) if isinstance(cfg["res_drug"], str) else ref,
+            cfg["res_drug"], f"Resistance to {names.get(did, did)}.")
         edges.append(_edge("determinant", "confers resistance to (drug class)",
                            "ARO:2000001", f"drug{i}", d_ref, d_snip, d_note,
                            description=(f"CARD asserts that this determinant confers resistance "
@@ -7430,7 +7477,8 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
         em = pt.get("enables_mech")
         if em in mech:
             edges.append(_edge(pkey, pt.get("enable_pred", "enables (catalysis)"), "RO:0002327",
-                               f"mech{mech.index(em)}", ref, cfg["mech"][em],
+                               f"mech{mech.index(em)}", _true_source(cfg["mech"][em], ref),
+                               cfg["mech"][em],
                                pt.get("enable_note", "The active site carries out the serine "
                                                      "beta-lactam hydrolysis mechanism.")))
     # Family-specific mechanism edges. The fixed determinant->mechanism->resistance shape
@@ -7465,7 +7513,11 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
                 "predicate_id": e["predicate_id"], "object": e["object"]}
         if e.get("description"):
             edge["description"] = e["description"]
-        edge["evidence"] = [{"reference": i["reference"], "snippet": i["snippet"],
+        # #365: an explicit evidence dict gets the same correction as a bare-string
+        # snippet. Fixing only the stamping path left 10 records citing ARO:3000112 for
+        # ARO:0010000's definition, and a --repromote put them straight back.
+        edge["evidence"] = [{"reference": _true_source(i["snippet"], i["reference"]),
+                             "snippet": i["snippet"],
                              "notes": i.get("notes", "")} for i in e["evidence"]]
         edges.append(edge)
     # A dropped edge used to be invisible: the promoter reports records, not edges, so a
