@@ -2,16 +2,23 @@
 r"""Does every cited snippet actually appear in the source it names? (#365)
 
 Every `EvidenceItem` claims a `snippet` is verbatim from its `reference`. Nothing checked
-that, and three separate defects of this shape shipped in a single session -- #348 (a
-sentence attributed to the paper beside the one containing it), #382 (a fix that moved a
-snippet but not its attribution), #400 (the same, one field over). Each was caught by a
-human reading the artifact, never by a gate, because:
+that. This checks the part that CAN be checked offline.
+
+SCOPE, stated plainly because the first version of this docstring overclaimed it: this
+catches **#400's class** -- a snippet under the wrong ARO/KB CURIE. It does NOT catch #348
+(a sentence attributed to the wrong PMID) or #382 (evidence that survived a removal),
+because both are PMID-attributed and PMIDs cannot be verified offline. 40,270 of 69,749
+ARO evidence items -- 58% -- are PMIDs or DOIs this tool never checks, and 7,119 of 7,211
+promoted ARO records carry one. **The dominant citation vector in this corpus sits outside
+this gate.**
+
+What no gate did before this, and still does not for PMIDs:
 
   * `--verify` (#201) checks that a cited CURIE RESOLVES to a record;
   * `audit-graphs` checks that a snippet is PRESENT on the edge;
   * `validate` treats snippets as opaque strings.
 
-None of them compares the snippet to its source. This does.
+None of them compares a snippet to its source. This does, for on-disk sources.
 
 Only references that are resolvable ON DISK are checked -- ARO ids against
 `data/raw/aro/aro.obo`, KB CURIEs against their own record's definition. PMIDs and DOIs are
@@ -85,8 +92,16 @@ def load_obo_stanzas() -> dict[str, str]:
     return out
 
 
+KB_HEAD_BYTES = 8000
+
+
 def load_kb_definitions(wanted: set[str]) -> dict[str, str]:
-    """KB CURIE -> that record's own text, for the CURIEs actually cited.
+    """KB CURIE -> the first KB_HEAD_BYTES of that record's RAW YAML, normalised.
+
+    NOT just its `definition:` -- `label:`, `description:` and `notes:` are in range too,
+    so the KB side of this check is laxer than the ARO side. Measured: 5,901 of 12,544
+    KB-side passes match outside the definition block, mostly the `label:` line. Stated
+    because the first version's docstring said "definition" and did not do that.
 
     Collect-then-resolve: indexing all 429k records' heads to answer a few hundred
     lookups reads ~1.7 GB. This walks once and keeps only what was asked for.
@@ -96,10 +111,13 @@ def load_kb_definitions(wanted: set[str]) -> dict[str, str]:
     out: dict[str, str] = {}
     ident = re.compile(r'^identifier:\s*"?(\S+?)"?\s*$', re.M)
     for path in TRAITS.rglob("*.yaml"):
-        head = path.read_text(encoding="utf-8")[:8000]
+        raw = path.read_text(encoding="utf-8")
+        head = raw[:KB_HEAD_BYTES]
         m = ident.search(head)
         if m and m.group(1) in wanted and m.group(1) not in out:
-            out[m.group(1)] = _norm(head)
+            # A record longer than the cut would silently turn real quotes into
+            # "mismatches". Read the whole file for those rather than guess.
+            out[m.group(1)] = _norm(raw if len(raw) > KB_HEAD_BYTES else head)
             if len(out) == len(wanted):
                 break
     return out
@@ -134,8 +152,14 @@ def main() -> int:
     ap.add_argument("--max", type=int, default=None,
                     help="exit 1 if mismatches exceed N (pins a known backlog)")
     ap.add_argument("--show", type=int, default=12, help="how many examples to print")
+    ap.add_argument("--require-aro", action="store_true",
+                    help="exit 1 if aro.obo is absent, instead of reporting a meaningless "
+                         "small number (#365)")
     args = ap.parse_args()
 
+    if args.require_aro and not OBO.exists():
+        print(f"FAIL: --require-aro and {OBO.relative_to(ROOT)} is absent; run `just fetch-aro`")
+        return 1
     root = TRAITS / args.path if args.path else TRAITS
     paths = sorted(root.rglob("*.yaml"))
     items = list(iter_evidence(paths))
@@ -143,6 +167,10 @@ def main() -> int:
     wanted = {ref for *_, ref, _ in items
               if ref.split(":")[0] in ON_DISK_PREFIXES and not ref.startswith("ARO:")}
     obo = load_obo_stanzas()
+    if not obo:
+        print(f"NOTE: {OBO.relative_to(ROOT)} is absent (data/raw is gitignored), so every "
+              f"ARO reference is unverifiable here. Run `just fetch-aro` first -- otherwise "
+              f"this reports a small number and means nothing (#365).")
     kb = load_kb_definitions(wanted)
 
     checked = unresolved = skipped = 0
