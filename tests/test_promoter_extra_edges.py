@@ -3428,3 +3428,30 @@ def test_the_generic_ul3_drug_binding_node_does_not_claim_the_mutation_affects_i
     assert "the interaction the mutation reduces" in named_node["description"].lower()
     assert any(e["object"] == "drug_binding" for e in named["extra_edges"])
     assert not any(e["object"] == "drug_binding" for e in unnamed["extra_edges"])
+
+
+def test_no_new_snippet_misattributions_in_the_aro_corpus():
+    """#365: three attribution defects shipped in one session -- #348, #382, #400 -- each
+    caught by a human reading the artifact, never by a gate.
+
+    `--verify` checks a CURIE RESOLVES; `audit-graphs` checks a snippet is PRESENT;
+    `validate` treats snippets as opaque. None compares the snippet to its source.
+
+    This pins the KNOWN backlog so the number cannot grow. It is deliberately a ceiling
+    and not zero: 287 pre-existing mismatches are real and fixing them is separate work.
+    """
+    import subprocess
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    result = subprocess.run(
+        [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+         "--path", "function/resistance/aro", "--max", "287"],
+        capture_output=True, text=True, cwd=root)
+    assert result.returncode == 0, (
+        "snippet misattributions grew past the pinned backlog of 287:\n"
+        + result.stdout[-2000:])
+    m = re.search(r"^MISMATCHED:\s+([\d,]+)", result.stdout, re.M)
+    assert m, f"audit output changed shape:\n{result.stdout[:600]}"
+    count = int(m.group(1).replace(",", ""))
+    assert count <= 287
+    # and the classifier must still split them -- a repoint and a rewrite are different work
+    assert "misattributed" in result.stdout and "needs reading" in result.stdout

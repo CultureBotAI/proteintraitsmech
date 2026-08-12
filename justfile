@@ -890,3 +890,8 @@ audit-fit:
 # Which drafts would a config accept, and which does a configured family refuse (#316)
 audit-drafts:
     uv run python scripts/audit_refused_drafts.py
+
+# Does every cited snippet actually appear in the source it names? (#365)
+# Pinned at the known ARO backlog so it fails on GROWTH, not on the existing 287.
+audit-snippets *args:
+    uv run python scripts/audit_snippets.py --path function/resistance/aro --max 287 {{args}}
