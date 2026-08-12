@@ -3450,10 +3450,10 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
                     "Skipping honestly beats passing a ceiling while checking nothing.")
     result = subprocess.run(
         [sys.executable, str(root / "scripts" / "audit_snippets.py"),
-         "--path", "function/resistance/aro", "--max", "287", "--require-aro"],
+         "--path", "function/resistance/aro", "--max", "174", "--require-aro"],
         capture_output=True, text=True, cwd=root)
     assert result.returncode == 0, (
-        "snippet misattributions grew past the pinned backlog of 287:\n"
+        "snippet misattributions grew past the pinned backlog of 174:\n"
         + result.stdout[-2000:])
 
     def _num(label):
@@ -3464,4 +3464,4 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
     # the probe fired: nearly 30k items really were compared against the obo
     assert _num("checked against disk") >= 29_000
     assert _num(r"not on disk \(not a fail\)") == 0
-    assert _num("MISMATCHED") <= 287
+    assert _num("MISMATCHED") <= 174
