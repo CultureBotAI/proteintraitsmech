@@ -145,8 +145,8 @@ predicate — and it carries **both** references, so the disagreement is visible
 rather than only in this report. A test pins the predicate and the two-reference set.
 
 **The stance is per-claim, not per-record, and review round 4 was right that the first
-draft of this section overstated it.** After #363, six of the rpsL graph's ten edges cite
-CARD — including all three conferral edges, because CARD is the *only* source that says
+draft of this section overstated it.** After #363, **eight of the rpsL graph's ten edges cite
+CARD** (seven of them ARO:3003395 itself) — including all three conferral edges, because CARD is the *only* source that says
 "confer", and refusing it there would leave the record asserting a mechanism with nobody
 claiming the outcome. **Exactly one edge** is curated below CARD's strength: the
 `determinant → pseudoknot` edge, which is the one claim the two sources actually disagree
