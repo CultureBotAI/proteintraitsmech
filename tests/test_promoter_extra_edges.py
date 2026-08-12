@@ -3589,9 +3589,50 @@ def test_the_committed_baseline_matches_the_key_shape_the_audit_writes():
     known = json.loads((root / "audit" / "snippet-mismatch-baseline.json").read_text())
     assert isinstance(known, dict) and known, "baseline must be {key: count}"
     assert all(isinstance(v, int) and v >= 1 for v in known.values())
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import audit_snippets as audit
+    # #417 review: the first version never called baseline_key, so dropping a field from
+    # the key passed this test whose own message says "key shape changed".
+    probe = audit.baseline_key("data/traits/x.yaml", "resistance", "determinant", "mech0",
+                               "ARO:1", "s")
+    assert len(probe.split("|")) == 5, f"baseline_key shape changed: {probe}"
     for k in known:
         parts = k.split("|")
         assert len(parts) == 5, f"key shape changed: {k[:80]}"
         assert parts[0].startswith("data/traits/"), parts[0]
         assert "->" in parts[2]
     assert len({k.split("|", 1)[0] for k in known}) < len(known), "keys are not per-edge"
+
+
+def test_verify_reports_a_promoter_crash_as_a_problem():
+    """#414: `verify()` used to validate what a config CLAIMS and never what the promoter
+    EMITS, so #413's AttributeError made the script unrunnable for ARO:3004910 while
+    `--verify-all` printed "0 problem(s)" for that family.
+
+    #417 review: the feature shipped with nothing exercising it but the two tests it
+    broke. This pins it -- and it needs no obo, so it guards CI.
+    """
+    calls = {"n": 0}
+
+    def _boom(*a, **kw):
+        calls["n"] += 1
+        raise AttributeError("'list' object has no attribute 'split'")
+
+    cfg = {"reference": "ARO:1", "mech": {"ARO:1": "s"}, "mech_res": "s",
+           "det_res": "s", "res_drug": "s"}
+    cands = [("ARO:9999998", "a record", "identifier: ARO:9999998\n")]
+    real_build, real_names = promote.promoted_graph_dict, promote._verify_names
+    real_rel, real_obo = promote.D.parse_relations, promote.D.OBO
+    try:
+        promote.promoted_graph_dict = _boom
+        promote._verify_names = lambda: {}
+        promote.D.parse_relations = lambda text: (["ARO:1"], [])
+        # the build check is guarded on the obo existing (it is gitignored); point it at
+        # any real file so this stays hermetic and runs in CI, which is the whole point.
+        promote.D.OBO = pathlib.Path(promote.__file__)
+        problems = promote.verify("ARO:1", cfg, {}, cands)
+    finally:
+        promote.promoted_graph_dict, promote._verify_names = real_build, real_names
+        promote.D.parse_relations, promote.D.OBO = real_rel, real_obo
+    assert calls["n"] == 1, "verify() never called the promoter"
+    assert problems >= 1, "a promoter crash was not reported as a problem"

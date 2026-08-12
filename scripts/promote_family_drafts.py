@@ -7858,7 +7858,15 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
     # `AttributeError` that made this script unrunnable for ARO:3004910 while this very
     # function printed "0 problem(s)" for that family. Every other gate was green too --
     # the crash was reachable only by running a real promote.
+    # B1: the build needs the obo for names, and data/raw is gitignored. Calling it
+    # inside the try turned a missing file into "BUILD FAILED ... FileNotFoundError" --
+    # a promoter defect that is really an absent input. It broke two existing tests in
+    # CI, which is exactly where this was supposed to help (#417 review).
     built = 0
+    if not D.OBO.exists():
+        print(f"  build check skipped: {D.OBO.name} absent (data/raw is gitignored); "
+              f"run `just fetch-aro` to exercise the emit path")
+        candidates = []
     for ident, label, text in candidates:
         if pre and pre(ident, label, text):
             continue
@@ -7866,7 +7874,11 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
         try:
             graph = promoted_graph_dict(ident, label, mech, drug, _verify_names(), cfg, terms)
         except UncoveredMechanism:
-            break                     # a reported skip above, not a crash
+            # B2: `break` here left 6 configs building NOTHING while printing
+            # "0 graph built, 0 problem(s)" -- indistinguishable from verified, and the
+            # same green-means-unchecked shape the NO CANDIDATES check above exists to
+            # prevent. A later candidate often does build (#417 review).
+            continue
         except Exception as exc:      # noqa: BLE001 -- any failure here is the finding
             print(f"  BUILD FAILED  {ident}: {type(exc).__name__}: {exc}")
             problems += 1
