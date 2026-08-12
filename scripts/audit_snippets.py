@@ -36,8 +36,9 @@ in the same tree, leaving the total unchanged and the gate green. In a repo whos
 pathology is four rounds of "a fix produced the defect it was fixing", that is the wrong
 shape.
 
-`--baseline FILE` pins the IDENTITY of every known mismatch -- (record, reference,
-snippet) -- so a new one fails even when an old one is fixed in the same change. Write it
+`--baseline FILE` pins the IDENTITY of every known mismatch -- (record, graph, edge,
+reference, snippet), one key per item -- so a new one fails even when an old one is fixed
+in the same change. Write it
 with --update-baseline, and read the diff it prints: FIXED lines are progress, NEW lines
 are the thing this exists to catch.
 """
@@ -155,6 +156,14 @@ def iter_evidence(paths):
                                edge.get("object"), ref, snip)
 
 
+def _load_baseline(path: Path) -> dict[str, int]:
+    """Baseline as {key: count}, tolerating the earlier list-of-keys form."""
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return {k: 1 for k in data} if isinstance(data, list) else data
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -269,26 +278,56 @@ def main() -> int:
     # --- identity gate (#411) -------------------------------------------------------
     if args.baseline:
         bpath = Path(args.baseline)
-        current = sorted({f"{p.relative_to(ROOT)}|{r}|{_norm(s)}"
-                          for p, _g, _su, _o, r, s, _w in bad})
+        # Keyed on the EDGE, not just (record, reference, snippet). The first version
+        # collapsed 174 items into 71 triples, leaving 103 (59%) unpinned -- and a record
+        # that already carries a known-bad triple could gain ANOTHER edge with the same
+        # one and both gates stayed green. Demonstrated on basr-aro3003582, which already
+        # has five such edges, so a sixth is a routine promoter change (#411 review).
+        counts: dict[str, int] = defaultdict(int)
+        for p_, g, su, o, r, s, _w in bad:
+            counts[f"{p_.relative_to(ROOT)}|{g}|{su}->{o}|{r}|{_norm(s)}"] += 1
+        current = dict(sorted(counts.items()))
         if args.update_baseline:
+            # Report BEFORE writing. The first version wrote and returned 0 immediately,
+            # so `--update-baseline` rewrote the record of what is known AND short-circuited
+            # --max in one command, printing nothing about what changed (#411 review).
+            was = _load_baseline(bpath)
+            gone = sorted(k for k in was if current.get(k, 0) < was[k])
+            added = sorted(k for k in current if current[k] > was.get(k, 0))
+            print(f"\nbaseline update: {len(was):,} -> {len(current):,}  "
+                  f"({len(gone):,} FIXED, {len(added):,} NEW)")
+            for k in added[:args.show]:
+                print(f"  NEW    {k.split('|')[0].rsplit('/', 1)[-1]}  {k.split('|')[3]}")
             bpath.parent.mkdir(parents=True, exist_ok=True)
             bpath.write_text(json.dumps(current, indent=1) + "\n", encoding="utf-8")
-            print(f"\nbaseline written: {len(current):,} known mismatches -> {bpath}")
+            print(f"baseline written -> {bpath}")
+            if added:
+                print("NOTE: newly-blessed mismatches above. `git diff` the baseline before "
+                      "committing -- this command can launder a regression.")
+            # --max/--strict still decide the exit code; updating is not a bypass.
+            if args.strict and bad:
+                return 1
+            if args.max is not None and len(bad) > args.max:
+                print(f"FAIL: {len(bad)} mismatches exceeds --max {args.max}")
+                return 1
             return 0
         if not bpath.exists():
             print(f"\nFAIL: --baseline {bpath} does not exist; run --update-baseline")
             return 1
-        known = set(json.loads(bpath.read_text(encoding="utf-8")))
-        new = [k for k in current if k not in known]
-        fixed = [k for k in known if k not in set(current)]
-        print(f"\nbaseline: {len(known):,} known · {len(fixed):,} FIXED · {len(new):,} NEW")
+        known = _load_baseline(bpath)
+        # COUNTS, not a set. A record already carrying a known-bad edge could gain another
+        # identical one and a set-keyed baseline would not see it -- demonstrated by cloning
+        # an edge on basr-aro3003582 (#411 review).
+        new = sorted(k for k in current if current[k] > known.get(k, 0))
+        fixed = sorted(k for k in known if current.get(k, 0) < known[k])
+        print(f"\nbaseline: {sum(known.values()):,} known · {len(fixed):,} FIXED · "
+              f"{len(new):,} NEW")
         for k in fixed[:args.show]:
-            rec, ref, snip = k.split("|", 2)
-            print(f"  FIXED  {rec.rsplit('/', 1)[-1]}  {ref}")
+            rec, _g, edge, ref, _s = k.split("|", 4)
+            print(f"  FIXED  {rec.rsplit('/', 1)[-1]}  {edge}  {ref}")
         for k in new[:args.show]:
-            rec, ref, snip = k.split("|", 2)
-            print(f"  NEW    {rec.rsplit('/', 1)[-1]}  {ref}\n         {snip[:100]}")
+            rec, _g, edge, ref, snip = k.split("|", 4)
+            print(f"  NEW    {rec.rsplit('/', 1)[-1]}  {edge}  {ref}\n         {snip[:100]}")
         if new:
             print(f"\nFAIL: {len(new)} snippet(s) cite a source that does not contain them. "
                   f"If they are intentional, re-run with --update-baseline.")

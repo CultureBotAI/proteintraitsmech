@@ -3551,18 +3551,29 @@ def test_the_snippet_baseline_catches_a_swap_that_the_count_ceiling_misses():
     if not (root / "data" / "raw" / "aro" / "aro.obo").exists():
         pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
     known = json.loads(real.read_text(encoding="utf-8"))
+    assert isinstance(known, dict), "baseline must be {key: count} so a duplicated edge counts"
     assert len(known) >= 50, "baseline is suspiciously small; is it being written at all?"
+    # #411 review: one key per ITEM, not per (record, reference, snippet) triple. The
+    # first version collapsed 174 items into 71, so a record already carrying a known-bad
+    # triple could gain another edge with the same one and both gates stayed green.
+    assert len({k.split("|", 1)[0] for k in known}) < len(known), "keys are not per-edge"
 
     import subprocess
     import tempfile
     with tempfile.TemporaryDirectory() as tmp:
         doctored = pathlib.Path(tmp) / "baseline.json"
-        doctored.write_text(json.dumps(known[1:]), encoding="utf-8")   # one entry removed
+        trimmed = dict(known)
+        trimmed.pop(next(iter(trimmed)))                                # one entry removed
+        doctored.write_text(json.dumps(trimmed), encoding="utf-8")
         out = subprocess.run(
             [sys.executable, str(root / "scripts" / "audit_snippets.py"),
              "--path", "function/resistance/aro", "--baseline", str(doctored)],
             capture_output=True, text=True, cwd=root)
-        # the COUNT is unchanged -- only the identity gate can see this
-        assert re.search(r"^MISMATCHED:\s+174", out.stdout, re.M), out.stdout[-600:]
+        # the COUNT is unchanged -- only the identity gate can see this. Read the number
+        # rather than hardcoding it, or this breaks the moment anyone follows the audit's
+        # own advice and re-runs --update-baseline (#411 review).
+        before = re.search(r"^MISMATCHED:\s+([\d,]+)", out.stdout, re.M)
+        assert before, out.stdout[-600:]
+        assert int(before.group(1).replace(",", "")) == sum(known.values())
         assert out.returncode == 1, f"identity gate missed a new mismatch:\n{out.stdout[-800:]}"
         assert "1 NEW" in out.stdout
