@@ -7365,7 +7365,8 @@ def _true_source(snippet, fallback: str) -> str:
 
 
 def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: dict,
-                        cfg: dict, terms: dict | None = None) -> dict:
+                        cfg: dict, terms: dict | None = None,
+                        skipped_out: list | None = None) -> dict:
     """Build the curated graph as data, then let PyYAML lay it out (#194).
 
     This used to concatenate indented strings by hand, which drifted from the layout the
@@ -7524,6 +7525,12 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
     # family author could reasonably believe all their edges were written (#188).
     for subj, obj, why in skipped:
         print(f"    edge skipped on {ident}: {subj} -> {obj} ({why})")
+    # #420 review: verify() needs the exact count, not a heuristic over emitted edges.
+    # Its first version excluded a hard-coded "fixed shape" and so both miscounted
+    # (drug1, protein_traits edges read as extra) and misfired (an extra edge touching
+    # mech0 read as dropped) -- 13 of 155 configs could never trip it.
+    if skipped_out is not None:
+        skipped_out.extend(skipped)
 
     graph = {
         "graph_id": "resistance",
@@ -7727,6 +7734,11 @@ def skip_reason_contradicted(reason: str, text: str) -> str:
     return ""
 
 
+# How many DISTINCT relation signatures to build per config. The whole candidate list is
+# too slow for families of 4,688 records; this bounds it while still reaching the shapes
+# that decide which `requires` guards fire.
+MAX_VERIFY_SIGNATURES = 6
+
 _VERIFY_NAMES = None
 
 
@@ -7863,6 +7875,7 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
     # a promoter defect that is really an absent input. It broke two existing tests in
     # CI, which is exactly where this was supposed to help (#417 review).
     built = 0
+    seen_signatures: set = set()
     if not D.OBO.exists():
         print(f"  build check skipped: {D.OBO.name} absent (data/raw is gitignored); "
               f"run `just fetch-aro` to exercise the emit path")
@@ -7871,8 +7884,12 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
         if pre and pre(ident, label, text):
             continue
         mech, drug = D.parse_relations(text)
+        if (tuple(mech), tuple(drug)) in seen_signatures:
+            continue
+        dropped: list = []
         try:
-            graph = promoted_graph_dict(ident, label, mech, drug, _verify_names(), cfg, terms)
+            promoted_graph_dict(ident, label, mech, drug, _verify_names(), cfg,
+                                terms, skipped_out=dropped)
         except UncoveredMechanism:
             # B2: `break` here left 6 configs building NOTHING while printing
             # "0 graph built, 0 problem(s)" -- indistinguishable from verified, and the
@@ -7883,14 +7900,30 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
             print(f"  BUILD FAILED  {ident}: {type(exc).__name__}: {exc}")
             problems += 1
             break
-        if not graph.get("edges"):
-            print(f"  EMPTY GRAPH   {ident} builds with no edges")
+        # `graph["edges"]` is never empty -- promoted_graph_dict unconditionally appends
+        # determinant->resistance -- so the old EMPTY GRAPH check was dead code, 0 hits
+        # across 183 configs (#419). Check what can actually be false: did this config's
+        # own extra_edges reach the record, or were they ALL dropped as dangling/`requires`
+        # mismatches? A config whose every extra edge is skipped is silently a no-op.
+        wanted = len(cfg.get("extra_edges", ()))
+        if wanted and len(dropped) == wanted:
+            print(f"  NO EXTRA EDGES  {ident}: all {wanted} of this config's extra edges "
+                  f"were dropped; the config is a no-op on this record")
             problems += 1
-        built = 1
-        break                         # one record exercises the emit path for this config
+        built += 1
+        # #419: build a record per DISTINCT relation signature, not just the first. 38% of
+        # configs have candidates whose parse_relations differ, and those are what change
+        # which `requires` guards fire and which edges are emitted.
+        # #420 review: this used to BREAK on the first repeated signature, so 101 of 183
+        # configs stopped at two builds and the biggest families reached 1 of 14 distinct
+        # signatures. Skip duplicates; break only at the cap.
+        sig = (tuple(mech), tuple(drug))
+        seen_signatures.add(sig)
+        if len(seen_signatures) >= MAX_VERIFY_SIGNATURES:
+            break
     print(f"verify {family}: {len(curies)} KB CURIEs checked, {len(candidates)} candidate "
           f"records, {skips} precondition skip(s), {uncovered_records} uncovered-mechanism "
-          f"record(s), {thin_partof} thin part-of, {built} graph built, {problems} problem(s)")
+          f"record(s), {thin_partof} thin part-of, {built} graph(s) built, {problems} problem(s)")
     return problems
 
 

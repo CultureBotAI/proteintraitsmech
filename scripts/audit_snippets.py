@@ -156,6 +156,19 @@ def iter_evidence(paths):
                                edge.get("object"), ref, snip)
 
 
+def _rel(path: Path) -> str:
+    """Repo-relative where possible, absolute otherwise.
+
+    `relative_to(ROOT)` raised for any corpus outside the repo, which made the audit
+    uncrashable-in-practice but untestable -- the first fixture test hit it immediately
+    (#418).
+    """
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
+
 def baseline_key(rel_path: str, graph_id, subject, obj, reference: str, snippet: str) -> str:
     """One key per EVIDENCE ITEM. Keyed on the edge, not on (record, reference, snippet):
     that collapsed 174 items into 71 and let a record gain a duplicate bad edge unseen."""
@@ -185,6 +198,9 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--path", default="", help="restrict to a subtree of data/traits")
+    ap.add_argument("--traits-root", default="",
+                    help="override data/traits (for testing against a fixture corpus, #418)")
+    ap.add_argument("--obo", default="", help="override data/raw/aro/aro.obo (#418)")
     ap.add_argument("--strict", action="store_true", help="exit 1 if any snippet mismatches")
     ap.add_argument("--max", type=int, default=None,
                     help="exit 1 if mismatches exceed N (pins a known backlog)")
@@ -199,8 +215,26 @@ def main() -> int:
                          "small number (#365)")
     args = ap.parse_args()
 
+    # #418: the identity gate's EXIT CODE had no test -- changing `return 1` to `return 0`
+    # passed the whole suite. It could not be tested because the corpus paths were module
+    # constants; overriding them makes a fixture-corpus CLI test possible.
+    global TRAITS, OBO
+    if args.traits_root:
+        TRAITS = Path(args.traits_root).resolve()
+        if not TRAITS.is_dir():
+            print(f"FAIL: --traits-root {TRAITS} is not a directory. A typo here reports "
+                  f"'0 evidence items, MISMATCHED: 0' and exits 0 -- a silent bypass of a "
+                  f"merge gate, since the recipe forwards {{args}}.")
+            return 1
+        if args.update_baseline:
+            print("FAIL: refusing --update-baseline with --traits-root. It would replace "
+                  "the committed baseline with keys from the override corpus, including "
+                  "absolute paths from outside the repo.")
+            return 1
+    if args.obo:
+        OBO = Path(args.obo).resolve()
     if args.require_aro and not OBO.exists():
-        print(f"FAIL: --require-aro and {OBO.relative_to(ROOT)} is absent; run `just fetch-aro`")
+        print(f"FAIL: --require-aro and {_rel(OBO)} is absent; run `just fetch-aro`")
         return 1
     root = TRAITS / args.path if args.path else TRAITS
     paths = sorted(root.rglob("*.yaml"))
@@ -210,7 +244,7 @@ def main() -> int:
               if ref.split(":")[0] in ON_DISK_PREFIXES and not ref.startswith("ARO:")}
     obo = load_obo_stanzas()
     if not obo:
-        print(f"NOTE: {OBO.relative_to(ROOT)} is absent (data/raw is gitignored), so every "
+        print(f"NOTE: {_rel(OBO)} is absent (data/raw is gitignored), so every "
               f"ARO reference is unverifiable here. Run `just fetch-aro` first -- otherwise "
               f"this reports a small number and means nothing (#365).")
     kb = load_kb_definitions(wanted)
@@ -287,7 +321,7 @@ def main() -> int:
             print(f"  {n:>5}  {ref}")
         print("\nexamples:")
         for path, gid, subj, obj, ref, snip, why in bad[:args.show]:
-            rel = path.relative_to(ROOT)
+            rel = _rel(path)
             print(f"  {rel}")
             print(f"    {gid}: {subj} -> {obj}  cites {ref} ({why})")
             print(f"    snippet: {_norm(snip)[:110]}")
@@ -302,7 +336,7 @@ def main() -> int:
         # has five such edges, so a sixth is a routine promoter change (#411 review).
         counts: dict[str, int] = defaultdict(int)
         for p_, g, su, o, r, s, _w in bad:
-            counts[baseline_key(str(p_.relative_to(ROOT)), g, su, o, r, s)] += 1
+            counts[baseline_key(_rel(p_), g, su, o, r, s)] += 1
         current = dict(sorted(counts.items()))
         if args.update_baseline:
             # Report BEFORE writing. The first version wrote and returned 0 immediately,
