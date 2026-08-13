@@ -48,6 +48,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import sys
 from collections import defaultdict
 from pathlib import Path
 
@@ -194,6 +195,74 @@ def _load_baseline(path: Path) -> dict[str, int]:
     return {k: 1 for k in data} if isinstance(data, list) else data
 
 
+def iter_config_snippets():
+    """(family, field, reference, snippet) for every literal in FAMILY_SNIPPETS.
+
+    The data-side check above reads RECORDS. Nothing read the CONFIGS, which is how #423
+    shipped two corrupt literals -- a spliced class-D snippet and a `mas` one duplicated by
+    Python's implicit string concatenation -- past lint, 768 tests, audit-graphs,
+    --verify-all and this audit's own data side. Both were latent only because the promoter
+    skips existing records; the next new record would have written them as evidence (#424).
+    """
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    import promote_family_drafts as promote
+
+    def _items(value, fallback):
+        """A field is a bare string, a list of evidence dicts, or a dict of them."""
+        if isinstance(value, str):
+            yield promote._true_source(value, fallback), value
+        elif isinstance(value, dict):
+            for v in value.values():
+                yield from _items(v, fallback)
+        elif isinstance(value, (list, tuple)):
+            for v in value:
+                if isinstance(v, dict) and "snippet" in v:
+                    yield v.get("reference", fallback), v["snippet"]
+                else:
+                    yield from _items(v, fallback)
+
+    for family, entry in promote.FAMILY_SNIPPETS.items():
+        for cfg in (entry if isinstance(entry, list) else [entry]):
+            fallback = cfg.get("reference", "")
+            for field in ("mech", "mech_res", "det_res", "res_drug"):
+                for ref, snip in _items(cfg.get(field), fallback):
+                    if ref and snip:
+                        yield family, field, ref, snip
+            for edge in cfg.get("extra_edges", ()):
+                for ev in edge.get("evidence", ()):
+                    if ev.get("reference") and ev.get("snippet"):
+                        yield family, "extra_edges", ev["reference"], ev["snippet"]
+            pt = cfg.get("protein_traits") or {}
+            for key, val in pt.items():
+                if isinstance(val, tuple) and len(val) == 4:
+                    yield family, f"protein_traits[{key}]", val[0], val[3]
+
+
+def audit_configs(show: int) -> int:
+    """Every config literal must be verbatim in the source it names. Returns the failures."""
+    items = list(iter_config_snippets())
+    wanted = {r for _f, _k, r, _s in items if r.split(":")[0] in ON_DISK_PREFIXES
+              and not r.startswith("ARO:")}
+    obo, kb = load_obo_stanzas(), load_kb_definitions(wanted)
+    checked, bad = 0, []
+    for family, field, ref, snip in items:
+        if ref.split(":")[0] not in ON_DISK_PREFIXES:
+            continue
+        body = obo.get(ref) if ref.startswith("ARO:") else kb.get(ref)
+        if body is None:
+            continue
+        checked += 1
+        if _norm(snip) not in body:
+            bad.append((family, field, ref, snip))
+    print(f"\nconfig literals:           {len(items):,}")
+    print(f"  checked against disk:    {checked:,}")
+    print(f"  NOT VERBATIM:            {len(bad):,}")
+    for family, field, ref, snip in bad[:show]:
+        print(f"  {family}  {field}  cites {ref}")
+        print(f"    {_norm(snip)[:110]}")
+    return len(bad)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -205,6 +274,10 @@ def main() -> int:
     ap.add_argument("--max", type=int, default=None,
                     help="exit 1 if mismatches exceed N (pins a known backlog)")
     ap.add_argument("--show", type=int, default=12, help="how many examples to print")
+    ap.add_argument("--configs", action="store_true",
+                    help="also check FAMILY_SNIPPETS literals against their cited source (#424)")
+    ap.add_argument("--max-configs", type=int, default=None,
+                    help="exit 1 if config-literal failures exceed N")
     ap.add_argument("--baseline", default="",
                     help="JSON of known mismatches; fails on any NEW one even if the total "
                          "is unchanged (#411). A ceiling cannot see a swap.")
@@ -242,6 +315,7 @@ def main() -> int:
     if args.require_aro and not OBO.exists():
         print(f"FAIL: --require-aro and {_rel(OBO)} is absent; run `just fetch-aro`")
         return 1
+    rc = 0
     root = TRAITS / args.path if args.path else TRAITS
     paths = sorted(root.rglob("*.yaml"))
     items = list(iter_evidence(paths))
@@ -389,6 +463,21 @@ def main() -> int:
             return 1
         if fixed:
             print("Progress: re-run with --update-baseline to lock it in.")
+
+    if args.configs:
+        n_cfg = audit_configs(args.show)
+        if args.max_configs is not None and n_cfg > args.max_configs:
+            print(f"FAIL: {n_cfg} config literals are not verbatim in the source they name, "
+                  f"exceeding --max-configs {args.max_configs}")
+            rc = 1
+        elif args.strict and n_cfg:
+            rc = 1
+    # AFTER the block that sets it. The first version checked `rc` before --configs ran,
+    # and before that returned it from inside the --baseline branch -- so --max-configs
+    # was ignored twice over, exiting 0 on 13 failures against a ceiling of 12. Both
+    # caught by testing the boundary, which is the only reason a gate is a gate.
+    if rc:
+        return rc
 
     if args.strict and bad:
         return 1

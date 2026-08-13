@@ -3786,3 +3786,50 @@ def test_verify_builds_one_record_per_distinct_relation_signature():
          promote._verify_names) = real
     assert len(seen) == promote.MAX_VERIFY_SIGNATURES, f"built {len(seen)}, cap is {promote.MAX_VERIFY_SIGNATURES}"
     assert len(set(seen)) == len(seen), "a duplicate signature was built"
+
+
+def test_no_new_config_literal_cites_a_source_that_does_not_contain_it():
+    """#424: nothing compared a FAMILY_SNIPPETS literal to its cited source, which is how
+    #423 shipped two corrupt snippets -- a spliced class-D sentence and a `mas` one
+    duplicated by Python's implicit string concatenation -- past lint, 768 tests,
+    audit-graphs, --verify-all and the data side of this very audit.
+
+    Both were latent only because the promoter skips existing records. The next new record
+    would have written them as EvidenceItem snippets.
+
+    Pinned at the known 13, so it fails on growth. Mutation-verified: reintroducing #423's
+    `mas` duplication takes it to 18 and fails.
+    """
+    if not (pathlib.Path(promote.__file__).resolve().parent.parent
+            / "data" / "raw" / "aro" / "aro.obo").exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import audit_snippets as audit
+
+    items = list(audit.iter_config_snippets())
+    assert len(items) > 1000, f"only walked {len(items)} literals; the sweep is not covering"
+    # every field kind must be reached, or a whole class of literal is unchecked
+    fields = {f for _fam, f, _r, _s in items}
+    assert {"mech", "mech_res", "det_res", "res_drug", "extra_edges"} <= fields, fields
+    assert any(f.startswith("protein_traits[") for f in fields), fields
+
+    obo = audit.load_obo_stanzas()
+    bad = [(fam, f, r) for fam, f, r, s in items
+           if r.startswith("ARO:") and r in obo and audit._norm(s) not in obo[r]]
+    assert len(bad) <= 13, f"config literals not verbatim in their source grew to {len(bad)}: {bad[:5]}"
+
+    # and the GATE must actually fail. --max-configs was ignored twice over in the first
+    # version -- checked before the block that sets it, and returned from inside the
+    # --baseline branch -- exiting 0 on 13 failures against a ceiling of 12.
+    import subprocess
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    def _rc(*extra):
+        return subprocess.run(
+            [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+             "--path", "function/resistance/aro", "--configs", *extra],
+            capture_output=True, text=True, cwd=root).returncode
+    assert _rc("--max-configs", str(len(bad))) == 0
+    assert _rc("--max-configs", str(len(bad) - 1)) == 1, "--max-configs does not gate"
+    # ...including alongside the baseline, which is how the recipe invokes it
+    assert _rc("--max-configs", str(len(bad) - 1),
+               "--baseline", str(root / "audit" / "snippet-mismatch-baseline.json")) == 1
