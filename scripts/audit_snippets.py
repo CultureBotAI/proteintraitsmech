@@ -123,11 +123,27 @@ def load_kb_definitions(wanted: set[str]) -> dict[str, str]:
         return {}
     out: dict[str, str] = {}
     ident = re.compile(r'^identifier:\s*"?(\S+?)"?\s*$', re.M)
+    # Most KB CURIEs encode their own filename (Pfam:PF00297 -> ...-pf00297.yaml), so try
+    # a targeted glob before falling back to the 429k-record walk. The walk was ~60s per
+    # invocation and made the #424 boundary test 8.7 minutes.
+    remaining = set(wanted)
+    for ref in sorted(wanted):
+        suffix = ref.split(":", 1)[1].lower()
+        for cand in TRAITS.rglob(f"*{suffix}.yaml"):
+            head = cand.read_text(encoding="utf-8")[:KB_HEAD_BYTES]
+            m = ident.search(head)
+            if m and m.group(1) == ref:
+                raw = cand.read_text(encoding="utf-8")
+                out[ref] = _norm(raw if len(raw) > KB_HEAD_BYTES else head)
+                remaining.discard(ref)
+                break
+    if not remaining:
+        return out
     for path in TRAITS.rglob("*.yaml"):
         raw = path.read_text(encoding="utf-8")
         head = raw[:KB_HEAD_BYTES]
         m = ident.search(head)
-        if m and m.group(1) in wanted and m.group(1) not in out:
+        if m and m.group(1) in remaining and m.group(1) not in out:
             # A record longer than the cut would silently turn real quotes into
             # "mismatches". Read the whole file for those rather than guess.
             out[m.group(1)] = _norm(raw if len(raw) > KB_HEAD_BYTES else head)

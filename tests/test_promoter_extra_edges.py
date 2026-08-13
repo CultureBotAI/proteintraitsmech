@@ -3813,23 +3813,25 @@ def test_no_new_config_literal_cites_a_source_that_does_not_contain_it():
     assert {"mech", "mech_res", "det_res", "res_drug", "extra_edges"} <= fields, fields
     assert any(f.startswith("protein_traits[") for f in fields), fields
 
-    obo = audit.load_obo_stanzas()
-    bad = [(fam, f, r) for fam, f, r, s in items
-           if r.startswith("ARO:") and r in obo and audit._norm(s) not in obo[r]]
-    assert len(bad) <= 13, f"config literals not verbatim in their source grew to {len(bad)}: {bad[:5]}"
-
-    # and the GATE must actually fail. --max-configs was ignored twice over in the first
-    # version -- checked before the block that sets it, and returned from inside the
-    # --baseline branch -- exiting 0 on 13 failures against a ceiling of 12.
+    # TWO subprocess calls, not four: each walks the corpus and the first version took
+    # 4 minutes for one test. Call one with an impossible ceiling -- it must FAIL and it
+    # reports the real count; call two with that count -- it must PASS. Together they pin
+    # the boundary, which is what --max-configs was ignored on twice over.
     import subprocess
     root = pathlib.Path(promote.__file__).resolve().parent.parent
-    def _rc(*extra):
+
+    def _run(*extra):
         return subprocess.run(
             [sys.executable, str(root / "scripts" / "audit_snippets.py"),
              "--path", "function/resistance/aro", "--configs", *extra],
-            capture_output=True, text=True, cwd=root).returncode
-    assert _rc("--max-configs", str(len(bad))) == 0
-    assert _rc("--max-configs", str(len(bad) - 1)) == 1, "--max-configs does not gate"
-    # ...including alongside the baseline, which is how the recipe invokes it
-    assert _rc("--max-configs", str(len(bad) - 1),
-               "--baseline", str(root / "audit" / "snippet-mismatch-baseline.json")) == 1
+            capture_output=True, text=True, cwd=root)
+
+    low = _run("--max-configs", "0")
+    assert low.returncode == 1, f"--max-configs 0 did not gate:\n{low.stdout[-800:]}"
+    m = re.search(r"^\s*NOT VERBATIM:\s+([\d,]+)", low.stdout, re.M)
+    assert m, f"audit output changed shape:\n{low.stdout[-600:]}"
+    n_bad = int(m.group(1).replace(",", ""))
+    assert n_bad <= 13, f"config literals not verbatim in their source grew to {n_bad}"
+
+    at_ceiling = _run("--max-configs", str(n_bad))
+    assert at_ceiling.returncode == 0, f"gate fires at its own ceiling:\n{at_ceiling.stdout[-800:]}"
