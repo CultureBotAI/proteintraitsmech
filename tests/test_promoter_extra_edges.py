@@ -3786,3 +3786,52 @@ def test_verify_builds_one_record_per_distinct_relation_signature():
          promote._verify_names) = real
     assert len(seen) == promote.MAX_VERIFY_SIGNATURES, f"built {len(seen)}, cap is {promote.MAX_VERIFY_SIGNATURES}"
     assert len(set(seen)) == len(seen), "a duplicate signature was built"
+
+
+def test_no_new_config_literal_cites_a_source_that_does_not_contain_it():
+    """#424: nothing compared a FAMILY_SNIPPETS literal to its cited source, which is how
+    #423 shipped two corrupt snippets -- a spliced class-D sentence and a `mas` one
+    duplicated by Python's implicit string concatenation -- past lint, 768 tests,
+    audit-graphs, --verify-all and the data side of this very audit.
+
+    Both were latent only because the promoter skips existing records. The next new record
+    would have written them as EvidenceItem snippets.
+
+    Pinned at the known 13, so it fails on growth. Mutation-verified: reintroducing #423's
+    `mas` duplication takes it to 18 and fails.
+    """
+    if not (pathlib.Path(promote.__file__).resolve().parent.parent
+            / "data" / "raw" / "aro" / "aro.obo").exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import audit_snippets as audit
+
+    items = list(audit.iter_config_snippets())
+    assert len(items) > 1000, f"only walked {len(items)} literals; the sweep is not covering"
+    # every field kind must be reached, or a whole class of literal is unchecked
+    fields = {f for _fam, f, _r, _s in items}
+    assert {"mech", "mech_res", "det_res", "res_drug", "extra_edges"} <= fields, fields
+    assert any(f.startswith("protein_traits[") for f in fields), fields
+
+    # TWO subprocess calls, not four: each walks the corpus and the first version took
+    # 4 minutes for one test. Call one with an impossible ceiling -- it must FAIL and it
+    # reports the real count; call two with that count -- it must PASS. Together they pin
+    # the boundary, which is what --max-configs was ignored on twice over.
+    import subprocess
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+
+    def _run(*extra):
+        return subprocess.run(
+            [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+             "--path", "function/resistance/aro", "--configs", *extra],
+            capture_output=True, text=True, cwd=root)
+
+    low = _run("--max-configs", "0")
+    assert low.returncode == 1, f"--max-configs 0 did not gate:\n{low.stdout[-800:]}"
+    m = re.search(r"^\s*NOT VERBATIM:\s+([\d,]+)", low.stdout, re.M)
+    assert m, f"audit output changed shape:\n{low.stdout[-600:]}"
+    n_bad = int(m.group(1).replace(",", ""))
+    assert n_bad <= 13, f"config literals not verbatim in their source grew to {n_bad}"
+
+    at_ceiling = _run("--max-configs", str(n_bad))
+    assert at_ceiling.returncode == 0, f"gate fires at its own ceiling:\n{at_ceiling.stdout[-800:]}"
