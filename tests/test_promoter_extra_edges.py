@@ -3726,3 +3726,63 @@ def test_audit_snippets_passes_a_corpus_whose_citations_are_correct():
         assert out.returncode == 0, out.stdout
         assert re.search(r"^MISMATCHED:\s+0", out.stdout, re.M), out.stdout
         assert re.search(r"checked against disk:\s+1", out.stdout), out.stdout
+
+
+def test_verify_flags_a_config_whose_extra_edges_are_all_dropped():
+    """#419: the first `EMPTY GRAPH` check was dead code -- promoted_graph_dict always
+    appends determinant->resistance. Its replacement counted emitted edges against a
+    hard-coded "fixed shape", which both miscounted (drug1 and protein_traits edges read
+    as extra) and misfired (an extra edge touching mech0 read as dropped): 13 of 155
+    configs could never trip it.
+
+    It now uses the skip list the promoter already computes, so this is exact.
+    """
+    cfg = {"reference": "ARO:1", "mech": {"ARO:1": "s"}, "mech_res": "s",
+           "det_res": "s", "res_drug": "s",
+           # both endpoints are nodes no record has -> both dropped as dangling
+           "extra_edges": [{"subject": "ghost", "object": "phantom", "predicate": "p",
+                            "predicate_id": "RO:1", "evidence": [
+                                {"reference": "ARO:1", "snippet": "s"}]}]}
+    cands = [("ARO:9999997", "a record", "identifier: ARO:9999997\n")]
+    real_rel, real_obo, real_names = (promote.D.parse_relations, promote.D.OBO,
+                                      promote._verify_names)
+    try:
+        promote.D.parse_relations = lambda text: (["ARO:1"], [])
+        promote.D.OBO = pathlib.Path(promote.__file__)
+        promote._verify_names = lambda: {}
+        problems = promote.verify("ARO:1", cfg, {}, cands)
+    finally:
+        promote.D.parse_relations, promote.D.OBO = real_rel, real_obo
+        promote._verify_names = real_names
+    assert problems >= 1, "a config whose every extra edge was dropped was not reported"
+
+
+def test_verify_builds_one_record_per_distinct_relation_signature():
+    """#419: the build used to stop at the first candidate, then at the first REPEATED
+    signature -- so 101 of 183 configs stopped at two builds and the biggest families
+    reached 1 of 14 distinct signatures. Duplicates are skipped; only the cap breaks.
+    """
+    seen = []
+
+    def _spy(ident, label, mech, drug, names, cfg, terms=None, skipped_out=None):
+        seen.append((tuple(mech), tuple(drug)))
+        return {"nodes": [1], "edges": [{"subject": "determinant", "object": "resistance"}]}
+
+    sigs = {f"ARO:900{i}": ([f"ARO:{i}"], []) for i in range(9)}     # 9 distinct
+    sigs["ARO:9009"] = (["ARO:0"], [])                               # a duplicate of #0
+    cands = [(k, "r", f"identifier: {k}\n") for k in sigs]
+    cfg = {"reference": "ARO:1", "mech": {f"ARO:{i}": "s" for i in range(9)},
+           "mech_res": "s", "det_res": "s", "res_drug": "s"}
+    real = (promote.promoted_graph_dict, promote.D.parse_relations, promote.D.OBO,
+            promote._verify_names)
+    try:
+        promote.promoted_graph_dict = _spy
+        promote.D.parse_relations = lambda text: sigs[re.search(r"ARO:\d+", text).group(0)]
+        promote.D.OBO = pathlib.Path(promote.__file__)
+        promote._verify_names = lambda: {}
+        promote.verify("ARO:1", cfg, {}, cands)
+    finally:
+        (promote.promoted_graph_dict, promote.D.parse_relations, promote.D.OBO,
+         promote._verify_names) = real
+    assert len(seen) == promote.MAX_VERIFY_SIGNATURES, f"built {len(seen)}, cap is {promote.MAX_VERIFY_SIGNATURES}"
+    assert len(set(seen)) == len(seen), "a duplicate signature was built"

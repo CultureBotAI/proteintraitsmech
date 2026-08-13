@@ -221,6 +221,16 @@ def main() -> int:
     global TRAITS, OBO
     if args.traits_root:
         TRAITS = Path(args.traits_root).resolve()
+        if not TRAITS.is_dir():
+            print(f"FAIL: --traits-root {TRAITS} is not a directory. A typo here reports "
+                  f"'0 evidence items, MISMATCHED: 0' and exits 0 -- a silent bypass of a "
+                  f"merge gate, since the recipe forwards {{args}}.")
+            return 1
+        if args.update_baseline:
+            print("FAIL: refusing --update-baseline with --traits-root. It would replace "
+                  "the committed baseline with keys from the override corpus, including "
+                  "absolute paths from outside the repo.")
+            return 1
     if args.obo:
         OBO = Path(args.obo).resolve()
     if args.require_aro and not OBO.exists():
