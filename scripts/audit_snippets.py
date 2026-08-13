@@ -226,11 +226,17 @@ def main() -> int:
                   f"'0 evidence items, MISMATCHED: 0' and exits 0 -- a silent bypass of a "
                   f"merge gate, since the recipe forwards {{args}}.")
             return 1
-        if args.update_baseline:
-            print("FAIL: refusing --update-baseline with --traits-root. It would replace "
-                  "the committed baseline with keys from the override corpus, including "
-                  "absolute paths from outside the repo.")
-            return 1
+        # Refuse only when the target is a baseline INSIDE the repo -- that is the one an
+        # override would corrupt with absolute keys. A scratch baseline beside a fixture
+        # corpus is exactly what testing needs, and the first version of this guard banned
+        # it, breaking the test written one commit earlier.
+        if args.update_baseline and args.baseline:
+            target = Path(args.baseline).resolve()
+            if target.is_relative_to(ROOT):
+                print(f"FAIL: refusing --update-baseline on {_rel(target)} while "
+                      f"--traits-root is set. It would replace a committed baseline with "
+                      f"keys from the override corpus, including absolute paths.")
+                return 1
     if args.obo:
         OBO = Path(args.obo).resolve()
     if args.require_aro and not OBO.exists():
