@@ -3740,14 +3740,14 @@ FAMILY_SNIPPETS = {
         "precondition": _requires_lipid_a_aminoacylation,
         "reference": "ARO:3003588",
         "mech": {"ARO:3003588": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface."},
-        "mech_res": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+        "mech_res": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane surface.",
         "det_res": [
-            {"reference": "ARO:3004363", "snippet": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+            {"reference": "ARO:3004363", "snippet": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane surface.",
              "notes": "Route, consequence and drug class in one sentence, stated causally ('confer resistance ... thereby decreasing the negative charge')."},
             {"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
              "notes": "The shared causal sentence for every route on this family."},
         ],
-        "res_drug": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+        "res_drug": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane surface.",
         "note": "Charge alteration by aminoacylation of LPS; the fifth route on this family.",
         "extra_nodes": [
             {"node_id": "aminoacylation", "label": "aminoacylation of lipopolysaccharide",
@@ -3759,12 +3759,12 @@ FAMILY_SNIPPETS = {
         "extra_edges": [
             {"subject": "determinant", "object": "aminoacylation",
              "predicate": "enables (aminoacylates LPS)", "predicate_id": "RO:0002327",
-             "evidence": [{"reference": "ARO:3004363", "snippet": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+             "evidence": [{"reference": "ARO:3004363", "snippet": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane surface.",
                            "notes": "'through the aminoacylation of lipopolysaccharide'."}]},
             {"subject": "aminoacylation", "object": "charge",
              "predicate": "causally upstream of (decreases negative charge)",
              "predicate_id": "RO:0002411",
-             "evidence": [{"reference": "ARO:3004363", "snippet": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane.",
+             "evidence": [{"reference": "ARO:3004363", "snippet": "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane surface.",
                            "notes": "'thereby decreasing the negative charge of the outer membrane'."}]},
             {"subject": "charge", "object": "drug0",
              "predicate": "negatively regulates (impedes drug binding)",
@@ -4536,17 +4536,17 @@ FAMILY_SNIPPETS = {
         "precondition": _requires_class_d,
         "reference": "PROSITE:PS00337",
         "mech": {
-            "ARO:0001004": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
-            "ARO:3000187": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+            "ARO:0001004": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
+            "ARO:3000187": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
         },
-        "mech_res": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+        "mech_res": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
         "det_res": [
             {"reference": "PROSITE:PS00337", "snippet": "Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases.",
              "notes": "PROSITE names class D as a SERINE hydrolase -- which is why the serine mechanism applies to these records and the class B zinc mechanism does not."},
-            {"reference": "PROSITE:PS00337", "snippet": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+            {"reference": "PROSITE:PS00337", "snippet": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
              "notes": "And the reaction itself."},
         ],
-        "res_drug": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+        "res_drug": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
         "note": ("Serine hydrolysis. Deliberately NOT the carbamylated-lysine general-base "
                  "chemistry specific to class D -- no source read this round states it."),
         "protein_traits": {
@@ -4565,7 +4565,7 @@ FAMILY_SNIPPETS = {
             {"subject": "mech0", "object": "amide",
              "predicate": "has input (the beta-lactam amide bond)", "predicate_id": "RO:0002233",
              "description": "What the hydrolysis acts on -- the bond whose cleavage destroys the drug.",
-             "evidence": [{"reference": "PROSITE:PS00337", "snippet": "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+             "evidence": [{"reference": "PROSITE:PS00337", "snippet": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
                            "notes": "'catalyze the hydrolysis of an amide bond in the beta-lactam ring'."}]},
         ],
     },
@@ -5353,7 +5353,7 @@ FAMILY_SNIPPETS = {
         "det_res": [
             {"reference": "PMID:14665678", "snippet": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
              "notes": "Nikaido 2003. The outer membrane is a permeability barrier by default; channels are what let a drug across it, so losing a channel raises the barrier."},
-            {"reference": "ARO:3003808", "snippet": "carO is a transmembrane beta-barrel involved in the influx of carbapenems.",
+            {"reference": "ARO:3003808", "snippet": "carO is a transmembrane beta-barrel involved in the influx of carbapenem antibiotics in Acinetobacter baumannii. Disruption of the carO gene by distinct insertion elements results in a loss of carO expression causing resistance to carbapenem antibiotics. Homologs of carO have been identified in genera Acinetobacter, Moraxella and Psychrobacter.",
              "notes": "CARD's definition of carO, the archetype: a beta-barrel through which carbapenems enter. Each record's own definition names the channel and the drug class IT admits."},
         ],
         "res_drug": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
@@ -5370,7 +5370,7 @@ FAMILY_SNIPPETS = {
             {"subject": "determinant", "object": "influx",
              "predicate": "enables (admits the drug across the membrane)", "predicate_id": "RO:0002327",
              "description": "The wild-type function. Resistance is its loss or down-regulation, which is why these records are channels rather than resistance enzymes.",
-             "evidence": [{"reference": "ARO:3003808", "snippet": "carO is a transmembrane beta-barrel involved in the influx of carbapenems.",
+             "evidence": [{"reference": "ARO:3003808", "snippet": "carO is a transmembrane beta-barrel involved in the influx of carbapenem antibiotics in Acinetobacter baumannii. Disruption of the carO gene by distinct insertion elements results in a loss of carO expression causing resistance to carbapenem antibiotics. Homologs of carO have been identified in genera Acinetobacter, Moraxella and Psychrobacter.",
                            "notes": "CARD's carO definition; each record names its own channel and drug."}]},
             {"subject": "barrier", "object": "influx",
              "predicate": "negatively regulates (the membrane excludes what has no channel)",
@@ -5470,12 +5470,12 @@ FAMILY_SNIPPETS = {
             "curated": "2026-08-07T00:00:00Z",
             "precondition": _requires_lps_regulator,
             "reference": "ARO:3003582",
-            "mech": {"ARO:0010000": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.", "ARO:3000212": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
-                     "ARO:0001002": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.", "ARO:3003588": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
-                     "ARO:0010001": "Response regulator for Lipid A modification genes; two-component regulatory system with basS."},
-            "mech_res": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
-            "det_res": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
-            "res_drug": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+            "mech": {"ARO:0010000": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).", "ARO:3000212": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
+                     "ARO:0001002": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).", "ARO:3003588": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
+                     "ARO:0010001": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+)."},
+            "mech_res": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
+            "det_res": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
+            "res_drug": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
             "note": "Not efflux despite the family term: these induce lipid A modification, reaching round 32's electrostatic repulsion by a regulatory route.",
             "extra_nodes": [
                 {"node_id": "lipid_a_mod", "label": "lipid A modification gene expression",
@@ -5489,12 +5489,12 @@ FAMILY_SNIPPETS = {
                 {"subject": "determinant", "object": "lipid_a_mod",
                  "predicate": "positively regulates (induces the modification genes)",
                  "predicate_id": "RO:0002213",
-                 "evidence": [{"reference": "ARO:3003582", "snippet": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+                 "evidence": [{"reference": "ARO:3003582", "snippet": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
                                "notes": "CARD's definition of BasR, the archetype. Each record's own definition names the operon IT induces."}]},
                 {"subject": "lipid_a_mod", "object": "surface_charge",
                  "predicate": "causally upstream of (adds positive charge to the envelope)",
                  "predicate_id": "RO:0002411",
-                 "evidence": [{"reference": "ARO:3003582", "snippet": "Response regulator for Lipid A modification genes; two-component regulatory system with basS.",
+                 "evidence": [{"reference": "ARO:3003582", "snippet": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
                                "notes": "Lipid A modification is what the induced genes do."}]},
                 {"subject": "surface_charge", "object": "drug0",
                  "predicate": "negatively regulates (repels the cationic peptide)",
@@ -7344,6 +7344,10 @@ SNIPPET_SOURCE = {
     "Enzyme that catalyzes the inactivation of an antibiotic resulting in resistance. Inactivation includes chemical modification, destruction, etc.": "ARO:3000557",
     "Enzymes that inactivate rifampin antibiotics by chemical modification.": "ARO:3000576",
     "Point mutations in the Mycobacterium tuberculosis ndh gene shown clinically to confer resistance to isoniazid.": "ARO:3003461",
+    # ARO:3003588's config quotes ARO:3004363's definition. Once the truncation was
+    # repaired the text became exactly ARO:3004363's, so this is the same repoint class
+    # the table already handles (#365).
+    "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane surface.": "ARO:3004363",
 }
 
 
@@ -8225,7 +8229,7 @@ for _fam, _snip, _act, _note in [
     ("ARO:3004882",
      "Mas is a multifunctional mycocerosic acid synthase membrane-associated mas. It "
      "catalyzes the elongation of N-fatty acyl-CoA with methylamalonyl-CoA as the "
-     "elongating agent to form mycocerosyl fatty acids.",
+     "elongating agent to form mycocerosyl fatty acids present in mycobacterium.",
      "mycocerosic acid synthase activity",
      "CARD names substrate, co-substrate and product -- more chemistry than most records "
      "here -- and no drug."),
@@ -8518,7 +8522,7 @@ FAMILY_SNIPPETS["ARO:3000000"] = [
         "det_res": [
             {"reference": "ARO:3007424", "snippet": "Resistance via uptake of host nutrients to bypass antibiotic mechanism.",
              "notes": "The mechanism: uptake of a HOST nutrient bypasses the step the drug blocks."},
-            {"reference": "ARO:3007427", "snippet": "ThfT is an ECF transporter S component that expands the substrate profile of endogenous ECF transporters to include folate.",
+            {"reference": "ARO:3007427", "snippet": "ThfT is an ECF transporter S component that expands the substrate profile of endogenous ECF transporters to include folate biosynthesis end products. It confers resistance to the folate synthesis inhibitor sulfamethoxazole by allowing uptake of host folate.",
              "notes": "The worked case. SCOPE: ThfT and folate specifically -- the mechanism term does not name a nutrient, and the other two records are the generic family and the transporter component."},
         ],
         "res_drug": "Resistance via uptake of host nutrients to bypass antibiotic mechanism.",

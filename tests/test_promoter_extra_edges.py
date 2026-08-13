@@ -3451,11 +3451,11 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
                     "Skipping honestly beats passing a ceiling while checking nothing.")
     result = subprocess.run(
         [sys.executable, str(root / "scripts" / "audit_snippets.py"),
-         "--path", "function/resistance/aro", "--max", "174", "--require-aro",
+         "--path", "function/resistance/aro", "--max", "41", "--require-aro",
          "--baseline", str(root / "audit" / "snippet-mismatch-baseline.json")],
         capture_output=True, text=True, cwd=root)
     assert result.returncode == 0, (
-        "snippet misattributions grew past the pinned backlog of 174:\n"
+        "snippet misattributions grew past the pinned backlog of 41:\n"
         + result.stdout[-2000:])
 
     def _num(label):
@@ -3466,7 +3466,7 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
     # the probe fired: nearly 30k items really were compared against the obo
     assert _num("checked against disk") >= 29_000
     assert _num(r"not on disk \(not a fail\)") == 0
-    assert _num("MISMATCHED") <= 174
+    assert _num("MISMATCHED") <= 41
     # #411: the identity gate must have run and found nothing new. A count ceiling passes
     # a swap -- fix one, break one -- which is the shape this repo produced four times.
     m = re.search(r"^baseline: ([\d,]+) known .* ([\d,]+) NEW", result.stdout, re.M)
