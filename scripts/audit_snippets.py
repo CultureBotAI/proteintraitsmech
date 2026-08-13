@@ -376,6 +376,15 @@ def main() -> int:
     rc = 0
     if args.configs_only:
         args.configs = True
+        # B1: with the record walk skipped, `bad` is empty -- so the data-side identity
+        # gate reported "41 FIXED" and printed "re-run with --update-baseline to lock it
+        # in", which zeroed the committed baseline and exited 0. The tool recommended its
+        # own self-destruct. The data-side gates are off when their input is (#429 review).
+        if args.baseline or args.update_baseline or args.max is not None or args.strict:
+            print("NOTE: --configs-only skips the record walk, so --baseline/--max/--strict "
+                  "have no data to judge and are ignored. Run without it to gate the data "
+                  "side.")
+        args.baseline, args.max, args.strict = "", None, False
     root = TRAITS / args.path if args.path else TRAITS
     paths = [] if args.configs_only else sorted(root.rglob("*.yaml"))
     items = list(iter_evidence(paths))
@@ -493,7 +502,9 @@ def main() -> int:
         if args.config_baseline:
             cb = Path(args.config_baseline)
             if args.update_baseline:
-                if cb.is_relative_to(ROOT) and args.traits_root:
+                # B2: `cb` was not resolved, and `Path("audit/...").is_relative_to(ROOT)`
+                # is False -- the relative form the justfile passes. The guard was dead.
+                if cb.resolve().is_relative_to(ROOT) and args.traits_root:
                     print("FAIL: refusing --update-baseline on an in-repo config baseline "
                           "while --traits-root is set.")
                     return 1
@@ -501,9 +512,15 @@ def main() -> int:
                 gone, added = diff_baseline(cfg_counts, was)
                 print(f"\nconfig baseline: {sum(was.values()):,} -> {sum(cfg_counts.values()):,}"
                       f"  ({len(gone):,} FIXED, {len(added):,} NEW)")
+                for k in added[:args.show]:
+                    fam, field, ref, snip = k.split("|", 3)
+                    print(f"  NEW    {fam}  {field}  cites {ref}\n         {snip[:100]}")
                 cb.parent.mkdir(parents=True, exist_ok=True)
                 cb.write_text(json.dumps(cfg_counts, indent=1) + "\n", encoding="utf-8")
                 print(f"config baseline written -> {cb}")
+                if added:
+                    print("NOTE: newly-blessed config literals above. `git diff` the baseline "
+                          "before committing -- this command can launder a regression.")
             elif not cb.exists():
                 print(f"\nFAIL: --config-baseline {cb} does not exist; run --update-baseline")
                 rc = 1
