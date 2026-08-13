@@ -3636,3 +3636,93 @@ def test_verify_reports_a_promoter_crash_as_a_problem():
         promote.D.parse_relations, promote.D.OBO = real_rel, real_obo
     assert calls["n"] == 1, "verify() never called the promoter"
     assert problems >= 1, "a promoter crash was not reported as a problem"
+
+
+def _fixture_corpus(tmp: pathlib.Path, snippet: str, reference: str) -> tuple:
+    """A two-file corpus and a stub obo, so the audit's CLI can be driven end to end."""
+    traits = tmp / "traits" / "sub"
+    traits.mkdir(parents=True)
+    (traits / "rec.yaml").write_text(
+        "identifier: ARO:9000001\n"
+        "causal_graphs:\n"
+        "- graph_id: resistance\n"
+        "  edges:\n"
+        "  - subject: determinant\n"
+        "    object: mech0\n"
+        "    evidence:\n"
+        f"    - reference: {reference}\n"
+        f"      snippet: {snippet}\n", encoding="utf-8")
+    obo = tmp / "aro.obo"
+    obo.write_text(
+        "[Term]\nid: ARO:9000002\nname: right\n"
+        'def: "the snippet lives here." []\n\n'
+        "[Term]\nid: ARO:9000003\nname: wrong\n"
+        'def: "something else entirely." []\n', encoding="utf-8")
+    return tmp / "traits", obo
+
+
+def _run_audit(root, obo, *extra):
+    import subprocess
+    repo = pathlib.Path(promote.__file__).resolve().parent.parent
+    return subprocess.run(
+        [sys.executable, str(repo / "scripts" / "audit_snippets.py"),
+         "--traits-root", str(root), "--obo", str(obo), *extra],
+        capture_output=True, text=True, cwd=repo)
+
+
+def test_audit_snippets_exit_code_is_actually_1_on_a_new_mismatch():
+    """#418: nothing tested `main()`'s exit code. Mutation-proven at the time: changing
+    `if new: ... return 1` to `return 0` passed all 764 tests.
+
+    It could not be tested because the corpus paths were module constants. They are now
+    overridable, so this drives the real CLI over a two-file fixture -- in milliseconds,
+    and without data/raw, so it guards CI.
+    """
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        tmp = pathlib.Path(d)
+        # snippet is ARO:9000002's text, cited against ARO:9000003 -> a mismatch
+        root, obo = _fixture_corpus(tmp, "the snippet lives here.", "ARO:9000003")
+        base = tmp / "baseline.json"
+
+        # no baseline yet -> the gate demands one
+        out = _run_audit(root, obo, "--baseline", str(base))
+        assert out.returncode == 1 and "does not exist" in out.stdout
+
+        # bless it, then a clean run passes
+        out = _run_audit(root, obo, "--baseline", str(base), "--update-baseline")
+        assert out.returncode == 0, out.stdout
+        assert json.loads(base.read_text()), "baseline written empty"
+        out = _run_audit(root, obo, "--baseline", str(base))
+        assert out.returncode == 0, out.stdout
+        assert "0 NEW" in out.stdout
+
+        # now introduce a SECOND bad item -- the exit code must become 1
+        (root / "sub" / "rec2.yaml").write_text(
+            (root / "sub" / "rec.yaml").read_text().replace("ARO:9000001", "ARO:9000004"),
+            encoding="utf-8")
+        out = _run_audit(root, obo, "--baseline", str(base))
+        assert out.returncode == 1, f"identity gate did not fail on a NEW mismatch:\n{out.stdout}"
+        assert "1 NEW" in out.stdout
+
+    # and --max is enforced independently of the baseline
+    with tempfile.TemporaryDirectory() as d:
+        tmp = pathlib.Path(d)
+        root, obo = _fixture_corpus(tmp, "the snippet lives here.", "ARO:9000003")
+        assert _run_audit(root, obo, "--max", "0").returncode == 1
+        assert _run_audit(root, obo, "--max", "1").returncode == 0
+        assert _run_audit(root, obo, "--strict").returncode == 1
+
+
+def test_audit_snippets_passes_a_corpus_whose_citations_are_correct():
+    """The non-firing case. A detector that only ever reports problems is indistinguishable
+    from one that is broken -- round 68's `hydrolyz\\b` reported 0 while structurally broken.
+    """
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        tmp = pathlib.Path(d)
+        root, obo = _fixture_corpus(tmp, "the snippet lives here.", "ARO:9000002")
+        out = _run_audit(root, obo, "--strict")
+        assert out.returncode == 0, out.stdout
+        assert re.search(r"^MISMATCHED:\s+0", out.stdout, re.M), out.stdout
+        assert re.search(r"checked against disk:\s+1", out.stdout), out.stdout

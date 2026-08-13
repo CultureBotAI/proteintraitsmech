@@ -7863,6 +7863,7 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
     # a promoter defect that is really an absent input. It broke two existing tests in
     # CI, which is exactly where this was supposed to help (#417 review).
     built = 0
+    seen_signatures: set = set()
     if not D.OBO.exists():
         print(f"  build check skipped: {D.OBO.name} absent (data/raw is gitignored); "
               f"run `just fetch-aro` to exercise the emit path")
@@ -7883,14 +7884,33 @@ def verify(family: str, cfg: dict, terms: dict, candidates: list) -> int:
             print(f"  BUILD FAILED  {ident}: {type(exc).__name__}: {exc}")
             problems += 1
             break
-        if not graph.get("edges"):
-            print(f"  EMPTY GRAPH   {ident} builds with no edges")
-            problems += 1
-        built = 1
-        break                         # one record exercises the emit path for this config
+        # `graph["edges"]` is never empty -- promoted_graph_dict unconditionally appends
+        # determinant->resistance -- so the old EMPTY GRAPH check was dead code, 0 hits
+        # across 183 configs (#419). Check what can actually be false: did this config's
+        # own extra_edges reach the record, or were they ALL dropped as dangling/`requires`
+        # mismatches? A config whose every extra edge is skipped is silently a no-op.
+        wanted = len(cfg.get("extra_edges", ()))
+        if wanted:
+            fixed_shape = {("determinant", "resistance"), ("determinant", "drug0")}
+            emitted = sum(1 for e in graph["edges"]
+                          if (e["subject"], e["object"]) not in fixed_shape
+                          and not e["subject"].startswith("mech")
+                          and not e["object"].startswith("mech"))
+            if emitted == 0:
+                print(f"  NO EXTRA EDGES  {ident}: all {wanted} of this config's extra "
+                      f"edges were dropped; the config is a no-op on this record")
+                problems += 1
+        built += 1
+        # #419: build a record per DISTINCT relation signature, not just the first. 38% of
+        # configs have candidates whose parse_relations differ, and those are what change
+        # which `requires` guards fire and which edges are emitted.
+        sig = (tuple(mech), tuple(drug))
+        if sig in seen_signatures or len(seen_signatures) >= 6:
+            break
+        seen_signatures.add(sig)
     print(f"verify {family}: {len(curies)} KB CURIEs checked, {len(candidates)} candidate "
           f"records, {skips} precondition skip(s), {uncovered_records} uncovered-mechanism "
-          f"record(s), {thin_partof} thin part-of, {built} graph built, {problems} problem(s)")
+          f"record(s), {thin_partof} thin part-of, {built} graph(s) built, {problems} problem(s)")
     return problems
 
 
