@@ -126,16 +126,29 @@ def load_kb_definitions(wanted: set[str]) -> dict[str, str]:
     # Most KB CURIEs encode their own filename (Pfam:PF00297 -> ...-pf00297.yaml), so try
     # a targeted glob before falling back to the 429k-record walk. The walk was ~60s per
     # invocation and made the #424 boundary test 8.7 minutes.
+    # ONE filename index, not one rglob per reference. The per-ref glob resolved only
+    # 34 of 50 -- all 14 CATH and 2 PROSITE refs miss, because their filenames do not end
+    # in the CURIE local part -- so `remaining` never emptied and the 429k-file fallback
+    # ran anyway. The glob phase cost 21s to shorten a 56s walk; the index costs ~1s
+    # (#428).
     remaining = set(wanted)
+    index: dict[str, list[Path]] = defaultdict(list)
+    for path in TRAITS.rglob("*.yaml"):
+        index[path.stem.lower()].append(path)
     for ref in sorted(wanted):
-        suffix = ref.split(":", 1)[1].lower()
-        for cand in TRAITS.rglob(f"*{suffix}.yaml"):
-            head = cand.read_text(encoding="utf-8")[:KB_HEAD_BYTES]
-            m = ident.search(head)
-            if m and m.group(1) == ref:
-                raw = cand.read_text(encoding="utf-8")
-                out[ref] = _norm(raw if len(raw) > KB_HEAD_BYTES else head)
-                remaining.discard(ref)
+        local = ref.split(":", 1)[-1].lower()
+        for stem, paths in index.items():
+            if not stem.endswith(local):
+                continue
+            for cand in paths:
+                head = cand.read_text(encoding="utf-8")[:KB_HEAD_BYTES]
+                m = ident.search(head)
+                if m and m.group(1) == ref:
+                    raw = cand.read_text(encoding="utf-8")
+                    out[ref] = _norm(raw if len(raw) > KB_HEAD_BYTES else head)
+                    remaining.discard(ref)
+                    break
+            if ref in out:
                 break
     if not remaining:
         return out
@@ -254,29 +267,51 @@ def iter_config_snippets():
                     yield family, f"protein_traits[{key}]", val[0], val[3]
 
 
-def audit_configs(show: int) -> int:
-    """Every config literal must be verbatim in the source it names. Returns the failures."""
+def config_key(family: str, field: str, reference: str, snippet: str) -> str:
+    """One key per config literal, so the config gate gets #411's identity pin too.
+
+    It shipped ceiling-only, which is the argument #411 makes against a bare count -- and
+    verified: fixing Pfam:PF04563 while introducing a new corrupt literal leaves 13 and a
+    ceiling passes it (#428).
+    """
+    return f"{family}|{field}|{reference}|{_norm(snippet)}"
+
+
+def audit_configs(show: int, obo=None, kb=None) -> tuple[int, dict[str, int]]:
+    """Every config literal must be verbatim in the source it names.
+
+    Returns (failures, {key: count}). `obo`/`kb` are passed in by main() so the two sides
+    share one resolution pass: the config `wanted` set is 50 refs and the data side's is
+    53, overlapping 50, and re-resolving cost 26s of the 60s recipe (#428).
+    """
     items = list(iter_config_snippets())
-    wanted = {r for _f, _k, r, _s in items if r.split(":")[0] in ON_DISK_PREFIXES
-              and not r.startswith("ARO:")}
-    obo, kb = load_obo_stanzas(), load_kb_definitions(wanted)
-    checked, bad = 0, []
+    if obo is None or kb is None:
+        wanted = {r for _f, _k, r, _s in items if r.split(":")[0] in ON_DISK_PREFIXES
+                  and not r.startswith("ARO:")}
+        obo, kb = load_obo_stanzas(), load_kb_definitions(wanted)
+    checked = unresolved = skipped = 0
+    bad, counts = [], defaultdict(int)
     for family, field, ref, snip in items:
         if ref.split(":")[0] not in ON_DISK_PREFIXES:
+            skipped += 1
             continue
         body = obo.get(ref) if ref.startswith("ARO:") else kb.get(ref)
         if body is None:
+            unresolved += 1
             continue
         checked += 1
         if _norm(snip) not in body:
             bad.append((family, field, ref, snip))
+            counts[config_key(family, field, ref, snip)] += 1
     print(f"\nconfig literals:           {len(items):,}")
     print(f"  checked against disk:    {checked:,}")
+    print(f"  skipped (PMID/DOI/URL):  {skipped:,}  -- valid, not verifiable offline")
+    print(f"  not on disk (not a fail): {unresolved:,}")
     print(f"  NOT VERBATIM:            {len(bad):,}")
     for family, field, ref, snip in bad[:show]:
         print(f"  {family}  {field}  cites {ref}")
         print(f"    {_norm(snip)[:110]}")
-    return len(bad)
+    return len(bad), dict(sorted(counts.items()))
 
 
 def main() -> int:
@@ -290,10 +325,17 @@ def main() -> int:
     ap.add_argument("--max", type=int, default=None,
                     help="exit 1 if mismatches exceed N (pins a known backlog)")
     ap.add_argument("--show", type=int, default=12, help="how many examples to print")
+    ap.add_argument("--configs-only", action="store_true",
+                    help="skip the record walk entirely; check only config literals. The "
+                         "config tests do not assert on the data side and paid ~50s a call "
+                         "for it (#428).")
     ap.add_argument("--configs", action="store_true",
                     help="also check FAMILY_SNIPPETS literals against their cited source (#424)")
     ap.add_argument("--max-configs", type=int, default=None,
-                    help="exit 1 if config-literal failures exceed N")
+                    help="exit 1 if config-literal failures exceed N (a CEILING)")
+    ap.add_argument("--config-baseline", default="",
+                    help="pin the IDENTITY of each known config-literal failure, so a swap "
+                         "fails even at an unchanged count (#411's argument, #428)")
     ap.add_argument("--baseline", default="",
                     help="JSON of known mismatches; fails on any NEW one even if the total "
                          "is unchanged (#411). A ceiling cannot see a swap.")
@@ -332,12 +374,28 @@ def main() -> int:
         print(f"FAIL: --require-aro and {_rel(OBO)} is absent; run `just fetch-aro`")
         return 1
     rc = 0
+    if args.configs_only:
+        args.configs = True
+        # B1: with the record walk skipped, `bad` is empty -- so the data-side identity
+        # gate reported "41 FIXED" and printed "re-run with --update-baseline to lock it
+        # in", which zeroed the committed baseline and exited 0. The tool recommended its
+        # own self-destruct. The data-side gates are off when their input is (#429 review).
+        if args.baseline or args.update_baseline or args.max is not None or args.strict:
+            print("NOTE: --configs-only skips the record walk, so --baseline/--max/--strict "
+                  "have no data to judge and are ignored. Run without it to gate the data "
+                  "side.")
+        args.baseline, args.max, args.strict = "", None, False
     root = TRAITS / args.path if args.path else TRAITS
-    paths = sorted(root.rglob("*.yaml"))
+    paths = [] if args.configs_only else sorted(root.rglob("*.yaml"))
     items = list(iter_evidence(paths))
 
     wanted = {ref for *_, ref, _ in items
               if ref.split(":")[0] in ON_DISK_PREFIXES and not ref.startswith("ARO:")}
+    if args.configs:
+        # ONE resolution pass for both sides: the config `wanted` is 50 refs, the data
+        # side's 53, overlapping 50 -- resolving twice cost 26s of the 60s recipe (#428).
+        wanted |= {r for _f, _k, r, _s in iter_config_snippets()
+                   if r.split(":")[0] in ON_DISK_PREFIXES and not r.startswith("ARO:")}
     obo = load_obo_stanzas()
     if not obo:
         print(f"NOTE: {_rel(OBO)} is absent (data/raw is gitignored), so every "
@@ -368,13 +426,17 @@ def main() -> int:
             by_ref[ref] += 1
 
     records = {b[0] for b in bad}
-    print(f"evidence items:            {len(items):,}")
-    print(f"  checked against disk:    {checked:,}")
-    print(f"  skipped (PMID/DOI/URL):  {skipped:,}  -- valid, not verifiable offline")
-    print(f"  not on disk (not a fail): {unresolved:,}"
-          f"{'  e.g. ' + ', '.join(sorted(by_ref_unresolved)[:3]) if by_ref_unresolved else ''}")
-    print(f"MISMATCHED:                {len(bad):,}  across {len(records):,} records, "
-          f"{len(by_ref):,} distinct references")
+    if args.configs_only:
+        print("record walk skipped (--configs-only)")
+    else:
+        print(f"evidence items:            {len(items):,}")
+    if not args.configs_only:
+        print(f"  checked against disk:    {checked:,}")
+        print(f"  skipped (PMID/DOI/URL):  {skipped:,}  -- valid, not verifiable offline")
+        print(f"  not on disk (not a fail): {unresolved:,}"
+              f"{'  e.g. ' + ', '.join(sorted(by_ref_unresolved)[:3]) if by_ref_unresolved else ''}")
+        print(f"MISMATCHED:                {len(bad):,}  across {len(records):,} records, "
+              f"{len(by_ref):,} distinct references")
 
     # Classify: is the snippet verbatim in some OTHER term? Then the text is real CARD
     # prose under the wrong attribution -- a mechanical repoint. If it is nowhere on disk,
@@ -428,13 +490,52 @@ def main() -> int:
     # against 13 real failures exited 0. That is the SAME defect this commit claims to
     # have fixed twice, a third time, in the branch it was fixed in (#424 review).
     if args.configs:
-        n_cfg = audit_configs(args.show)
+        n_cfg, cfg_counts = audit_configs(args.show, obo, kb)
         if args.max_configs is not None and n_cfg > args.max_configs:
             print(f"FAIL: {n_cfg} config literals are not verbatim in the source they name, "
                   f"exceeding --max-configs {args.max_configs}")
             rc = 1
         elif args.strict and n_cfg:
             rc = 1
+        # A ceiling masks a swap here exactly as it does on the data side: fixing
+        # Pfam:PF04563 while introducing a new corrupt literal leaves 13 (#428).
+        if args.config_baseline:
+            cb = Path(args.config_baseline)
+            if args.update_baseline:
+                # B2: `cb` was not resolved, and `Path("audit/...").is_relative_to(ROOT)`
+                # is False -- the relative form the justfile passes. The guard was dead.
+                if cb.resolve().is_relative_to(ROOT) and args.traits_root:
+                    print("FAIL: refusing --update-baseline on an in-repo config baseline "
+                          "while --traits-root is set.")
+                    return 1
+                was = _load_baseline(cb)
+                gone, added = diff_baseline(cfg_counts, was)
+                print(f"\nconfig baseline: {sum(was.values()):,} -> {sum(cfg_counts.values()):,}"
+                      f"  ({len(gone):,} FIXED, {len(added):,} NEW)")
+                for k in added[:args.show]:
+                    fam, field, ref, snip = k.split("|", 3)
+                    print(f"  NEW    {fam}  {field}  cites {ref}\n         {snip[:100]}")
+                cb.parent.mkdir(parents=True, exist_ok=True)
+                cb.write_text(json.dumps(cfg_counts, indent=1) + "\n", encoding="utf-8")
+                print(f"config baseline written -> {cb}")
+                if added:
+                    print("NOTE: newly-blessed config literals above. `git diff` the baseline "
+                          "before committing -- this command can launder a regression.")
+            elif not cb.exists():
+                print(f"\nFAIL: --config-baseline {cb} does not exist; run --update-baseline")
+                rc = 1
+            else:
+                known = _load_baseline(cb)
+                fixed, new = diff_baseline(cfg_counts, known)
+                print(f"\nconfig baseline: {sum(known.values()):,} known · "
+                      f"{len(fixed):,} FIXED · {len(new):,} NEW")
+                for k in new[:args.show]:
+                    fam, field, ref, snip = k.split("|", 3)
+                    print(f"  NEW    {fam}  {field}  cites {ref}\n         {snip[:100]}")
+                if new:
+                    print(f"FAIL: {len(new)} config literal(s) newly cite a source that does "
+                          f"not contain them.")
+                    rc = 1
 
     # --- identity gate (#411) -------------------------------------------------------
     if args.baseline:

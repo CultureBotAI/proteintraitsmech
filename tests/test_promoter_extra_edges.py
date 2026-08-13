@@ -3823,7 +3823,7 @@ def test_no_new_config_literal_cites_a_source_that_does_not_contain_it():
     def _run(*extra):
         return subprocess.run(
             [sys.executable, str(root / "scripts" / "audit_snippets.py"),
-             "--path", "function/resistance/aro", "--configs", *extra],
+             "--configs-only", *extra],
             capture_output=True, text=True, cwd=root)
 
     low = _run("--max-configs", "0")
@@ -3835,3 +3835,38 @@ def test_no_new_config_literal_cites_a_source_that_does_not_contain_it():
 
     at_ceiling = _run("--max-configs", str(n_bad))
     assert at_ceiling.returncode == 0, f"gate fires at its own ceiling:\n{at_ceiling.stdout[-800:]}"
+
+
+def test_the_config_baseline_catches_a_swap_the_ceiling_misses():
+    """#428: the config gate shipped ceiling-only, which is exactly what #411 argues
+    against for the data side. Verified at filing: fixing one literal while introducing
+    another leaves 13 and `--max-configs 13` passes.
+
+    Proved by doctoring the BASELINE rather than the configs -- removing one known entry
+    makes that literal look new, the same signal a swap gives, without editing 183 configs.
+    """
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    real = root / "audit" / "config-literal-baseline.json"
+    if not (root / "data" / "raw" / "aro" / "aro.obo").exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
+    known = json.loads(real.read_text(encoding="utf-8"))
+    assert isinstance(known, dict) and known, "config baseline must be {key: count}"
+    for k in known:
+        assert len(k.split("|")) == 4, f"config key shape changed: {k[:80]}"
+
+    import subprocess
+    import tempfile
+    with tempfile.TemporaryDirectory() as d:
+        doctored = pathlib.Path(d) / "cb.json"
+        trimmed = dict(known)
+        trimmed.pop(next(iter(trimmed)))
+        doctored.write_text(json.dumps(trimmed), encoding="utf-8")
+        out = subprocess.run(
+            [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+             "--configs-only",                          # the data side is not asserted here
+             "--max-configs", "999",                     # the CEILING must not fire
+             "--config-baseline", str(doctored)],
+            capture_output=True, text=True, cwd=root)
+        assert "NOT VERBATIM:            13" in out.stdout, out.stdout[-500:]
+        assert out.returncode == 1, f"identity gate missed a new literal:\n{out.stdout[-800:]}"
+        assert "1 NEW" in out.stdout
