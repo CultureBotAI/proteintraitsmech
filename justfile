@@ -897,7 +897,8 @@ audit-drafts:
 # introducing another leaves the total unchanged and a count gate green (#411, demonstrated).
 # After fixing some, re-run with --update-baseline to lock the progress in.
 # --configs checks the FAMILY_SNIPPETS literals too: nothing did, which is how #423
-# shipped two corrupt snippets past every other gate (#424).
+# shipped two corrupt snippets past every other gate (#424). It gets BOTH gates for
+# the same reason the data side does -- a ceiling masks a swap (#411, #428).
 #
 # LOCAL ONLY -- needs `data/raw/aro/aro.obo`, and data/raw is gitignored, so without it
 # every ARO reference is unverifiable and this reports 11 instead of 174. It says so
@@ -906,4 +907,5 @@ audit-drafts:
 audit-snippets *args:
     uv run python scripts/audit_snippets.py --path function/resistance/aro \
         --max 41 --baseline audit/snippet-mismatch-baseline.json \
-        --configs --max-configs 13 {{args}}
+        --configs --max-configs 13 \
+        --config-baseline audit/config-literal-baseline.json {{args}}
