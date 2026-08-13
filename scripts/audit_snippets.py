@@ -71,7 +71,7 @@ OBO = ROOT / "data" / "raw" / "aro" / "aro.obo"
 # the first run report 127,286 "unresolvable" references as failures, which was the audit's
 # bug and not the corpus's.
 ON_DISK_PREFIXES = ("ARO", "Pfam", "GO", "CATH", "PROSITE", "NCBIfam", "InterPro",
-                    "PANTHER", "HAMAP", "SFLD", "TED")
+                    "PANTHER", "HAMAP", "SFLD", "TED", "ECOD")
 
 
 def _norm(text: str) -> str:
@@ -422,6 +422,20 @@ def main() -> int:
             print(f"    {gid}: {subj} -> {obj}  cites {ref} ({why})")
             print(f"    snippet: {_norm(snip)[:110]}")
 
+    # The config gate runs BEFORE every early return. It sat after them, so
+    # `--update-baseline` -- which the justfile documents as the normal follow-up
+    # workflow and which forwards {{args}} -- skipped it entirely: --max-configs 0
+    # against 13 real failures exited 0. That is the SAME defect this commit claims to
+    # have fixed twice, a third time, in the branch it was fixed in (#424 review).
+    if args.configs:
+        n_cfg = audit_configs(args.show)
+        if args.max_configs is not None and n_cfg > args.max_configs:
+            print(f"FAIL: {n_cfg} config literals are not verbatim in the source they name, "
+                  f"exceeding --max-configs {args.max_configs}")
+            rc = 1
+        elif args.strict and n_cfg:
+            rc = 1
+
     # --- identity gate (#411) -------------------------------------------------------
     if args.baseline:
         bpath = Path(args.baseline)
@@ -456,7 +470,7 @@ def main() -> int:
             if args.max is not None and len(bad) > args.max:
                 print(f"FAIL: {len(bad)} mismatches exceeds --max {args.max}")
                 return 1
-            return 0
+            return rc
         if not bpath.exists():
             print(f"\nFAIL: --baseline {bpath} does not exist; run --update-baseline")
             return 1
@@ -480,27 +494,13 @@ def main() -> int:
         if fixed:
             print("Progress: re-run with --update-baseline to lock it in.")
 
-    if args.configs:
-        n_cfg = audit_configs(args.show)
-        if args.max_configs is not None and n_cfg > args.max_configs:
-            print(f"FAIL: {n_cfg} config literals are not verbatim in the source they name, "
-                  f"exceeding --max-configs {args.max_configs}")
-            rc = 1
-        elif args.strict and n_cfg:
-            rc = 1
-    # AFTER the block that sets it. The first version checked `rc` before --configs ran,
-    # and before that returned it from inside the --baseline branch -- so --max-configs
-    # was ignored twice over, exiting 0 on 13 failures against a ceiling of 12. Both
-    # caught by testing the boundary, which is the only reason a gate is a gate.
-    if rc:
-        return rc
 
     if args.strict and bad:
         return 1
     if args.max is not None and len(bad) > args.max:
         print(f"\nFAIL: {len(bad)} mismatches exceeds --max {args.max}")
         return 1
-    return 0
+    return rc
 
 
 if __name__ == "__main__":
