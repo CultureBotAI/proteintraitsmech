@@ -4536,17 +4536,17 @@ FAMILY_SNIPPETS = {
         "precondition": _requires_class_d,
         "reference": "PROSITE:PS00337",
         "mech": {
-            "ARO:0001004": "Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent hydrolysis renders the beta-lactam inactive. in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
-            "ARO:3000187": "Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent hydrolysis renders the beta-lactam inactive. in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+            "ARO:0001004": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
+            "ARO:3000187": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
         },
-        "mech_res": "Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent hydrolysis renders the beta-lactam inactive. in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+        "mech_res": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
         "det_res": [
             {"reference": "PROSITE:PS00337", "snippet": "Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases.",
              "notes": "PROSITE names class D as a SERINE hydrolase -- which is why the serine mechanism applies to these records and the class B zinc mechanism does not."},
-            {"reference": "PROSITE:PS00337", "snippet": "Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent hydrolysis renders the beta-lactam inactive. in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+            {"reference": "PROSITE:PS00337", "snippet": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
              "notes": "And the reaction itself."},
         ],
-        "res_drug": "Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent hydrolysis renders the beta-lactam inactive. in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+        "res_drug": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
         "note": ("Serine hydrolysis. Deliberately NOT the carbamylated-lysine general-base "
                  "chemistry specific to class D -- no source read this round states it."),
         "protein_traits": {
@@ -4565,7 +4565,7 @@ FAMILY_SNIPPETS = {
             {"subject": "mech0", "object": "amide",
              "predicate": "has input (the beta-lactam amide bond)", "predicate_id": "RO:0002233",
              "description": "What the hydrolysis acts on -- the bond whose cleavage destroys the drug.",
-             "evidence": [{"reference": "PROSITE:PS00337", "snippet": "Mechanism of enzymatic degradation common to Ambler Class A, C and D beta-lactamases. A serine residue located in the active site is used to form an acyl-enzyme intermediate and subsequent hydrolysis renders the beta-lactam inactive. in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family.",
+             "evidence": [{"reference": "PROSITE:PS00337", "snippet": "Beta-lactamases classes -A, -C, and -D active site. Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an amide bond in the beta-lactam ring of antibiotics belonging to the penicillin/cephalosporin family. Four kinds of beta-lactamase have been identified. Class-B enzymes are zinc containing proteins whilst class -A, C and D enzymes are serine hydrolases. The three classes of serine beta- lactamases are evolutionary related and belong to a superfamily that also includes DD-peptidases and a variety of other penicillin-binding proteins (PBP's). All these proteins contain a Ser-x-x-Lys motif, where the serine is the active site residue.",
                            "notes": "'catalyze the hydrolysis of an amide bond in the beta-lactam ring'."}]},
         ],
     },
@@ -8227,9 +8227,9 @@ for _fam, _snip, _act, _note in [
      "given, so unlike round 86's efflux subunits there is no complex-to-process edge to "
      "write either."),
     ("ARO:3004882",
-     "Mas is a multifunctional mycocerosic acid synthase membrane-associated mas. It catalyzes the elongation of N-fatty acyl-CoA with methylamalonyl-CoA as the elongating agent to form mycocerosyl fatty acids present in mycobacterium."
+     "Mas is a multifunctional mycocerosic acid synthase membrane-associated mas. It "
      "catalyzes the elongation of N-fatty acyl-CoA with methylamalonyl-CoA as the "
-     "elongating agent to form mycocerosyl fatty acids.",
+     "elongating agent to form mycocerosyl fatty acids present in mycobacterium.",
      "mycocerosic acid synthase activity",
      "CARD names substrate, co-substrate and product -- more chemistry than most records "
      "here -- and no drug."),
