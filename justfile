@@ -887,6 +887,25 @@ analyze-merges *args:
 audit-roles:
     uv run python scripts/audit_role_mismatch.py
 
+# Fetch the abstracts interpro.xml.gz omits but the InterPro API has (#445).
+# 209 of the release's 54,190 entries ship no <abstract>; every one of them has a
+# curator-written description in the API, 811-5,326 chars. That gap left 45 Pfam records
+# and 60 InterPro records defining themselves by their own name.
+# NETWORK. ~209 calls at 0.35s apart, ~2 minutes. Writes data/raw/ (gitignored), so the
+# enrichers below stay offline and reproducible like every other definition here.
+# Canary it: `--limit 1` fetches one, prints the provenance flags, and refuses to write.
+fetch-interpro-missing-abstracts *args:
+    uv run python scripts/fetch_interpro_missing_abstracts.py {{args}}
+
+# Promote those descriptions onto the records that have no definition without them (#445).
+# Two scripts because two owners: enrich_pfam_definitions owns Pfam definitions and would
+# fight a second writer for the same field, so the Pfam half lives inside it.
+# Neither promotes an LLM-generated description (#92) or touches a curated record (#175).
+# Both dry-run by default.
+enrich-missing-abstracts *args:
+    uv run python scripts/enrich_pfam_definitions.py {{args}}
+    uv run python scripts/enrich_interpro_missing_abstracts.py {{args}}
+
 # Do the records agree with the equivalence overlay they were built from? (#447)
 # cross_source.tsv and a record's mapped_xrefs say the same thing in two places, both
 # derived from interpro.xml's member_list, and nothing compared them -- so the committed

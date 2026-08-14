@@ -213,3 +213,75 @@ def load_member_integration(xml_gz, db: str = "PFAM") -> dict[str, str]:
             f"'the entry that integrates it' is not well defined: "
             + ", ".join(f"{k} in {a} and {b}" for k, a, b in clashes[:5]))
     return out
+
+
+# ---------------------------------------------------------------------------------------
+# The API's description format, which is NOT the release's abstract format (#445)
+# ---------------------------------------------------------------------------------------
+
+# A citation GROUP: `[[cite:PUB00012956], [cite:PUB00079463], [cite:PUB00079464]]`. The
+# first version matched each `[cite:X]` on its own and left the separators behind, which
+# turned one ferrochelatase sentence into "...at the C terminus,,,,,,,,,,,." -- #448's
+# damage class, written by the fix for it.
+#
+# TWO defences, and either alone handles the observed shape (verified by removing each):
+# this one takes the group structurally, `_API_ORPHAN_PUNCT` below sweeps a separator left
+# by any citation form this does not anticipate. The test pins the OUTCOME rather than
+# either mechanism, so replacing one with something better does not fail it.
+_API_CITE_GROUP = re.compile(r"\[\[cite:[^\]]*\](?:\s*,\s*\[cite:[^\]]*\])*\]")
+_API_CITE = re.compile(r"\[?\[cite:[^\]]*\]\]?")
+# `[interpro:IPR000001]`, `[ec:1.2.4.1]`, `[cazy:GH25]`. THE MARKER IS THE CONTENT, exactly
+# as this module's top docstring says of `db_xref`: 64 accessions and EC numbers across
+# these entries, which a bracket sweep would delete.
+_API_XREF = re.compile(r"\[(\w+):([^\]\s]+)\]")
+_API_LI = re.compile(r"</li>\s*", re.I)
+_API_BLOCK_END = re.compile(r"</(?:p|ul|ol|reaction)>\s*", re.I)
+# `<sup>`/`<sub>` carry chemistry -- `NAD<sup>+</sup>`, `H<sub>2</sub>O` -- so they close up
+# with no space. EVERY OTHER TAG needs one: InterPro writes `of<i>Bacillus subtilis</i>and`
+# with no spaces around the italics, so stripping those to nothing gives
+# "ofBacillus subtilisand". The release cleaner uses a space for this exact reason; the
+# first version of this one did not, and produced that string.
+_API_TIGHT_TAG = re.compile(r"</?(?:sup|sub)>", re.I)
+# Punctuation left stranded once a citation group is gone: " ,", ",,", " ." and so on.
+_API_ORPHAN_PUNCT = re.compile(r"\s*,(?=\s*[,.;:])")
+
+
+def clean_api_description(blocks) -> str:
+    """InterPro API `description` blocks -> prose, cross-references preserved as CURIEs.
+
+    A SECOND cleaner, deliberately, rather than a branch inside `clean_abstract`. The two
+    formats share nothing but intent: the release ships XML elements
+    (`<db_xref db=... dbkey=.../>`, `<cite idref=.../>`), the API ships HTML with square
+    -bracket markers. Running either text through the other's cleaner leaves markup in the
+    corpus, which is how the `({swissprot:D4GXU1])` in #448 got there.
+
+    What the corpus would lose to a naive strip, measured over the 209 entries this exists
+    for: 64 `[interpro:]`/`[ec:]`/`[cazy:]` accessions deleted, and every `[2Fe-2S]`,
+    `[Fe<sup>4+</sup>=O]` and `[(L-alanin-3-ylcarbamoyl)methyl]` mangled -- those are
+    chemistry, not markup, and they are left exactly as they are.
+
+    `</li>` and `</p>` become separators before the tag strip: without that, list items run
+    their last word into the next item's first.
+    """
+    parts = []
+    for block in blocks:
+        raw = block.get("text", "") if isinstance(block, dict) else str(block)
+        if not raw:
+            continue
+        txt = _API_CITE_GROUP.sub("", raw)
+        txt = _API_CITE.sub("", txt)
+        txt = _API_XREF.sub(
+            lambda m: (render_xref(m.group(1), m.group(2))
+                       if m.group(1).upper() in DB_PREFIX else m.group(0)), txt)
+        txt = _API_LI.sub("; ", txt)
+        txt = _API_BLOCK_END.sub(" ", txt)
+        txt = _API_TIGHT_TAG.sub("", txt)       # chemistry closes up
+        txt = _TAG.sub(" ", txt)                # everything else needs the space
+        txt = html.unescape(txt)
+        txt = _EMPTY_BRACKETS.sub("", txt)
+        txt = _API_ORPHAN_PUNCT.sub("", txt)
+        txt = _SPACE_BEFORE_PUNCT.sub(r"\1", txt)
+        parts.append(" ".join(txt.split()))
+    out = " ".join(p for p in parts if p)
+    # `<li>foo</li>` at the end of a list leaves "; " before the closing punctuation.
+    return re.sub(r";\s*(?=[.;]|$)", "", out).strip()

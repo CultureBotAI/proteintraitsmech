@@ -354,7 +354,9 @@ def test_enrich_returns_nonzero_when_it_strands_a_record(monkeypatch, tmp_path):
     monkeypatch.setattr(E, "TRAITS", tmp_path / "traits")
     monkeypatch.setattr(E, "XML_GZ", tmp_path)                  # exists() -> True
     monkeypatch.setattr(E, "load_pf2ipr", lambda: {"PF00575": "IPR003029"})
-    monkeypatch.setattr(E, "load_ipr_abstracts", lambda wanted: {})
+    # returns (abstracts, from_api) since #445 -- the second element records
+    # which came from the API and must be cited as a description, not an abstract
+    monkeypatch.setattr(E, "load_ipr_abstracts", lambda wanted: ({}, set()))
     monkeypatch.setattr(E, "_PFAM_META", {})                    # nothing rebuildable
     monkeypatch.setattr(sys, "argv", ["enrich_pfam_definitions.py"])
 
@@ -378,7 +380,8 @@ def test_enrich_returns_zero_when_it_strands_nothing(monkeypatch, tmp_path):
     monkeypatch.setattr(E, "TRAITS", tmp_path / "traits")
     monkeypatch.setattr(E, "XML_GZ", tmp_path)
     monkeypatch.setattr(E, "load_pf2ipr", lambda: {"PF00575": "IPR003029"})
-    monkeypatch.setattr(E, "load_ipr_abstracts",
-                        lambda wanted: {"IPR003029": "The S1 domain binds RNA, at length."})
+    monkeypatch.setattr(
+        E, "load_ipr_abstracts",
+        lambda wanted: ({"IPR003029": "The S1 domain binds RNA, at length."}, set()))
     monkeypatch.setattr(sys, "argv", ["enrich_pfam_definitions.py"])
     assert E.main() == 0

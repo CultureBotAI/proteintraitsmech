@@ -50,7 +50,13 @@ TRAITS = ROOT / "data" / "traits"
 XML_GZ = ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 
 IDENT = re.compile(r"^identifier: Pfam:(PF\d{5})$", re.M)
-DEF_SRC = re.compile(r'^definition_source: "InterPro:(IPR\d+) abstract', re.M)
+# `abstract` OR `description`: #445 added a second provenance for the 209 entries the
+# release ships without an abstract, and their text comes from the API instead. Matching
+# only "abstract" made all 45 of those records INVISIBLE to this gate the moment they were
+# written -- a check silently narrowing as the corpus grows, which is the failure this file
+# was created to prevent, one release later.
+DEF_SRC = re.compile(
+    r'^definition_source: "InterPro:(IPR\d+) (?:abstract|description)', re.M)
 # `predicate:` is OPTIONAL between the two (MappedXref has the slot), so it must be
 # tolerated here. No `pfam2interpro` xref uses the 3-key shape today -- but 127 xrefs in
 # this very field already do (the Pfam->InterPro->CAZY ones), so it is one curation step

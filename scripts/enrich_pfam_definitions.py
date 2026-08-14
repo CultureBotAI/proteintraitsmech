@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import gzip
+import json
 import re
 import sys
 import xml.etree.ElementTree as ET
@@ -27,10 +28,12 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 XML_GZ = REPO_ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
+MISSING = REPO_ROOT / "data" / "raw" / "interpro" / "missing_abstracts.json"
 ID_RE = re.compile(r"^identifier:\s*(Pfam:PF\d+)", re.M)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import is_curated  # noqa: E402
-from interpro_text import clean_abstract_element, load_member_integration  # noqa: E402
+from interpro_text import (  # noqa: E402
+    clean_abstract_element, clean_api_description, load_member_integration)
 
 DEF_CAP = 1800
 
@@ -70,7 +73,22 @@ def load_pf2ipr() -> dict[str, str]:
     return load_member_integration(XML_GZ)
 
 
-def load_ipr_abstracts(wanted: set[str]) -> dict[str, str]:
+def load_ipr_abstracts(wanted: set[str]) -> tuple[dict[str, str], set[str]]:
+    """(InterPro id -> abstract, the subset that came from the API rather than the release).
+
+    209 of the release's 54,190 entries ship no `<abstract>` element while the API has a
+    curator-written description for every one of them -- 811 to 5,326 characters (#445).
+    That gap cost 45 Pfam records a real definition: `hlh-pf00010` carried 75 characters of
+    Pfam boilerplate where InterPro has 4,893.
+
+    Read from `missing_abstracts.json` (written by `fetch_interpro_missing_abstracts.py`)
+    rather than fetched here, so re-deriving a definition stays offline and reproducible
+    like every other definition in this corpus.
+
+    The two provenances are returned SEPARATELY because they must be cited differently. A
+    record whose text came from the API but says "InterPro:IPR011598 abstract" claims to
+    quote a release that does not contain it -- which is #344's defect, in a new place.
+    """
     out = {}
     with gzip.open(XML_GZ, "rt", encoding="utf-8", errors="replace") as fh:
         for _ev, el in ET.iterparse(fh, events=("end",)):
@@ -82,10 +100,28 @@ def load_ipr_abstracts(wanted: set[str]) -> dict[str, str]:
                 if len(ab) >= 40:                        # skip empty/near-empty
                     out[ipr] = ab
             el.clear()
-    return out
+
+    from_api: set[str] = set()
+    if not MISSING.exists():
+        return out, from_api
+    for ipr, rec in json.loads(MISSING.read_text(encoding="utf-8")).items():
+        if ipr not in wanted or ipr in out:
+            continue
+        blocks = rec.get("description") or []
+        # #92: InterPro serves machine-written descriptions too. Promoting one under
+        # `definition_source: InterPro` launders its provenance so nobody downstream can
+        # tell a curator never saw it. None of the 209 is LLM-written today; this is what
+        # keeps that true if the next fetch differs.
+        if any(b.get("llm") for b in blocks):
+            continue
+        text = clean_api_description(blocks)
+        if len(text) >= 40:
+            out[ipr] = text[:DEF_CAP - 1].rstrip() + "…" if len(text) > DEF_CAP else text
+            from_api.add(ipr)
+    return out, from_api
 
 
-def borrowed_source(ipr: str, pf: str) -> str:
+def borrowed_source(ipr: str, pf: str, from_api: bool = False) -> str:
     """What `definition_source` must say once the definition is InterPro's prose.
 
     This script replaces a Pfam record's definition with the ABSTRACT OF THE
@@ -120,6 +156,13 @@ def borrowed_source(ipr: str, pf: str) -> str:
     # SUPERSET, verified -- it contains the correct member_list entry for 29,105 of
     # 29,105 signatures, alongside the prose mentions that made it ambiguous. So the
     # sentence stays true for every record, including the repaired ones.
+    if from_api:
+        # NOT "abstract": the release has none for this entry, and saying otherwise would
+        # cite a document that does not contain the text -- #344's defect wearing a
+        # different hat. Name what was actually read.
+        return (f'"InterPro:{ipr} description (InterPro API; this entry ships no abstract '
+                f'in the interpro.xml release. Pfam {pf} maps to this entry via '
+                f'pfam2interpro)"')
     return (f'"InterPro:{ipr} abstract '
             f'(Pfam {pf} maps to this entry via pfam2interpro)"')
 
@@ -149,14 +192,15 @@ def set_definition(text: str, new_def: str, new_src: str | None = None) -> str:
     return text
 
 
-def enrich_record(text: str, ipr: str, pf: str, abstract: str) -> str:
+def enrich_record(text: str, ipr: str, pf: str, abstract: str,
+                  from_api: bool = False) -> str:
     """One record's new content: the abstract AND the source that names it.
 
     Extracted so the wiring is testable. Mutation testing found that tests
     calling `set_definition` directly could not catch the main loop dropping the
     source argument -- which is the original defect, restored.
     """
-    return set_definition(text, abstract, borrowed_source(ipr, pf))
+    return set_definition(text, abstract, borrowed_source(ipr, pf, from_api))
 
 
 
@@ -273,8 +317,10 @@ def main() -> int:
 
     wanted = {pf2ipr[pf] for _, pf in records if pf in pf2ipr}
     print(f"{len(records):,} Pfam records; {len(wanted):,} distinct InterPro targets — reading abstracts…")
-    abstracts = load_ipr_abstracts(wanted)
-    print(f"{len(abstracts):,} InterPro entries have a usable abstract")
+    abstracts, from_api = load_ipr_abstracts(wanted)
+    print(f"{len(abstracts):,} InterPro entries have a usable abstract"
+          + (f"  ({len(from_api):,} of them from the API, absent from the "
+             f"release -- #445)" if from_api else ""))
 
     updated = relabelled = curated = reverted = stranded = 0
     for path, pf in records:
@@ -320,7 +366,7 @@ def main() -> int:
         if not should_enrich(text):
             curated += 1
             continue
-        new = enrich_record(text, ipr, pf, ab)
+        new = enrich_record(text, ipr, pf, ab, ipr in from_api)
         if new != text:
             # A record whose definition was already ours and only the SOURCE
             # moves is the #173 backfill; one whose text changes too is the
