@@ -25,6 +25,9 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from interpro_text import load_member_integration  # noqa: E402
+
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
 RAW = REPO_ROOT / "data" / "raw"
@@ -67,14 +70,23 @@ def load_pfam2go() -> dict[str, set[str]]:
 
 
 def load_pfam2interpro() -> dict[str, set[str]]:
-    m: dict[str, set[str]] = {}
-    for line in _lines(PFAM2IPR):
-        parts = re.split(r"[\t ]+", line.strip())
-        pf = next((p for p in parts if p.startswith("PF")), None)
-        ipr = next((p for p in parts if p.startswith("IPR")), None)
-        if pf and ipr:
-            m.setdefault(pf, set()).add(f"InterPro:{ipr}")
-    return m
+    """Pfam -> {the entry that INTEGRATES it}, from interpro.xml's member_list (#344).
+
+    This took EVERY row of `pfam2interpro.tsv`, which is the union of two different
+    relations: "PF is a member signature of IPR" and "IPR's abstract happens to mention
+    PF". The second is prose, not a mapping, and adding it to `mapped_xrefs` asserts a
+    signature-to-entry relationship InterPro does not make. A set made it worse than the
+    last-wins readers: those picked one wrong entry, this added it alongside the right one.
+
+    Now at most one entry per signature, and none for the 31 unintegrated families.
+    """
+    xml = RAW / "interpro" / "interpro.xml.gz"
+    if not xml.exists():
+        print(f"WARNING: {xml} absent; no InterPro xrefs will be proposed. The TSV is not "
+              f"a safe substitute (#344).", file=sys.stderr)
+        return {}
+    return {pf: {f"InterPro:{ipr}"}
+            for pf, ipr in load_member_integration(xml).items()}
 
 
 def load_ec2go() -> dict[str, set[str]]:

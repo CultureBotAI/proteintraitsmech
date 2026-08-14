@@ -191,6 +191,11 @@ def parent_predicate(rec_id: str, parent: str) -> str:
 
 _MX_PRED = {
     "pfam2interpro": "biolink:close_match",
+    # The SAME relation -- a member signature and the entry that integrates it -- written
+    # by seed_interpro_members and seed_panther under their own label. Without this line it
+    # fell through to biolink:related_to, so identical facts left the KB with two different
+    # predicates depending on which seeder wrote the record (#344 review).
+    "interpro-member-list": "biolink:close_match",
     "rhea2ec": "biolink:close_match",
     "interpro2go": "biolink:related_to",
     "pfam2go": "biolink:related_to",
