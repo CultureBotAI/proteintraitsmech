@@ -71,9 +71,14 @@ def test_it_refuses_when_nothing_is_comparable(tmp_path):
 def test_it_reports_what_it_could_not_check(tmp_path):
     """The overlay only holds a pair when BOTH records exist, so most record xrefs have
     nothing to compare against. A gate silently covering a fraction of its subject is how
-    '0 failures' comes to mean nothing."""
-    extra = _rec("IPR003029") + (
-        "---\n")
+    '0 failures' comes to mean nothing.
+
+    (An earlier version built an unused `extra` string ending in a YAML `---` and asserted
+    it was non-empty -- a tautology, and the residue of a multi-document case that was
+    never written. That case is a real latent gap: `IDENT.search` takes the FIRST match,
+    so a multi-doc record would attribute every xref to the first document's identifier.
+    0 such records exist, so it is noted rather than tested.)
+    """
     traits = tmp_path / "traits" / "sequence" / "domain" / "pfam"
     traits.mkdir(parents=True)
     (traits / "a.yaml").write_text(_rec("IPR003029"), encoding="utf-8")
@@ -87,8 +92,8 @@ def test_it_reports_what_it_could_not_check(tmp_path):
         [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"),
          "--tsv", str(t)], capture_output=True, text=True, cwd=REPO)
     assert out.returncode == 0, out.stdout
-    assert "not comparable (no overlay row): 1" in out.stdout, out.stdout
-    assert extra  # keep the linter quiet about the unused fixture string
+    assert "record asserts an xref, no overlay row" in out.stdout, out.stdout
+    assert "  1  record asserts an xref" in out.stdout, out.stdout
 
 
 def test_it_sees_an_xref_carrying_a_predicate(tmp_path):
@@ -116,6 +121,87 @@ def test_the_committed_corpus_agrees_with_the_committed_overlay():
                          cwd=REPO)
     assert out.returncode == 0, out.stdout[-1500:]
     import re
-    m = re.search(r"^comparable \(in both\):\s+([\d,]+)", out.stdout, re.M)
-    assert m, out.stdout[:600]
-    assert int(m.group(1).replace(",", "")) >= 17_000, out.stdout
+    def _n(label):
+        m = re.search(rf"^{label}:\s+([\d,]+)", out.stdout, re.M)
+        assert m, f"{label} missing from output:\n{out.stdout[:800]}"
+        return int(m.group(1).replace(",", ""))
+
+    # Pin BOTH SIDES, not just the comparable count. A change that silently dropped every
+    # non-Pfam subject would leave `COMPARABLE` untouched and go green, which is the shape
+    # of narrowing this file is written against.
+    assert _n(r"COMPARABLE \(in both\)") >= 17_000, out.stdout
+    assert _n("overlay subjects") >= 24_000, out.stdout
+    assert _n("records asserting an xref") >= 43_000, out.stdout
+    # and the two uncovered directions are REPORTED, not just computed
+    assert "source outside the overlay's vocabulary" in out.stdout
+    assert "overlay row, record asserts no xref" in out.stdout
+
+
+# ---------------------------------------------------------------------------------------
+# Review follow-ups (#451 review): the regex fails OPEN on any shape it was not written
+# for, and a pool worker's exception was undiagnosable.
+# ---------------------------------------------------------------------------------------
+
+def test_an_unreadable_xref_shape_fails_loud_instead_of_silently_counting_zero(tmp_path):
+    """`XREF` is a regex over YAML text. For `mapping_source` before `object`, a quoted
+    object, CRLF or flow style it matches nothing -- and "matches nothing" is
+    indistinguishable from "no xrefs here", which turns the gate's entire output ("0
+    disagreements") into a lie.
+
+    Nothing in the corpus uses those shapes today. The counter exists so that the day one
+    does, the run says so rather than absorbing it.
+    """
+    traits = tmp_path / "traits" / "sequence" / "domain" / "pfam"
+    traits.mkdir(parents=True)
+    (traits / "r.yaml").write_text(
+        "identifier: Pfam:PF00575\n"
+        "mapped_xrefs:\n"
+        "- mapping_source: pfam2interpro\n"          # key order reversed
+        "  object: InterPro:IPR003029\n", encoding="utf-8")
+    t = tmp_path / "cs.tsv"
+    t.write_text(TSV, encoding="utf-8")
+    out = subprocess.run(
+        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"),
+         "--tsv", str(t)], capture_output=True, text=True, cwd=REPO)
+    assert out.returncode == 1, out.stdout
+    assert "not matched by XREF" in out.stderr, out.stderr[-600:]
+    assert "do not raise the threshold" in out.stderr
+
+
+def test_a_read_error_names_the_file(tmp_path):
+    """Unhandled, a pool worker gives a traceback whose deepest frame is inside
+    `concurrent.futures`, and CI cannot tell it from a real disagreement."""
+    traits = tmp_path / "traits" / "sequence" / "domain" / "pfam"
+    traits.mkdir(parents=True)
+    (traits / "x.yaml").mkdir()                      # a directory where a file is expected
+    t = tmp_path / "cs.tsv"
+    t.write_text(TSV, encoding="utf-8")
+    out = subprocess.run(
+        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"),
+         "--tsv", str(t)], capture_output=True, text=True, cwd=REPO)
+    assert out.returncode == 1
+    assert "could not read" in out.stderr and "x.yaml" in out.stderr, out.stderr[-400:]
+
+
+def test_the_coverage_report_names_both_uncovered_directions(tmp_path):
+    """The first version printed one gap and framed the other away: a denominator padded
+    with 14,949 subjects that can never be comparable, and total silence about the 6,329
+    overlay rows no record asserts. Both must be named, with counts."""
+    traits = tmp_path / "traits" / "sequence" / "domain" / "pfam"
+    traits.mkdir(parents=True)
+    # one comparable, one whose source the overlay cannot represent
+    (traits / "a.yaml").write_text(_rec("IPR003029"), encoding="utf-8")
+    (traits / "b.yaml").write_text(
+        "identifier: PANTHER:PTHR10000\n"
+        "mapped_xrefs:\n- object: InterPro:IPR000001\n"
+        "  mapping_source: interpro-member-list\n", encoding="utf-8")
+    t = tmp_path / "cs.tsv"
+    t.write_text(TSV, encoding="utf-8")
+    out = subprocess.run(
+        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"),
+         "--tsv", str(t)], capture_output=True, text=True, cwd=REPO)
+    assert out.returncode == 0, out.stdout
+    assert "source outside the overlay's vocabulary (PANTHER 1)" in out.stdout, out.stdout
+    assert "overlay row, record asserts no xref (Pfam 1)" in out.stdout, out.stdout
+    # and the percentage is over what it COULD compare, not over a padded denominator
+    assert "of the 1 this check COULD compare, it compares 100.0%" in out.stdout, out.stdout
