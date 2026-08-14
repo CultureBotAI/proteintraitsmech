@@ -136,6 +136,38 @@ def clean_abstract_element(el) -> str:
 # WHICH InterPro entry integrates a member signature (#344)
 # ---------------------------------------------------------------------------------------
 
+def iter_member_signatures(xml_gz):
+    """Yield `(db, dbkey, interpro_id)` for every signature in every `member_list`.
+
+    THE SINGLE PARSER. Five places in this repo had independently written this walk --
+    `seed_pfam`, `enrich_pfam_definitions`, `migrate_mapped_xrefs`, `build_equivalence`
+    and the `pfam2interpro.tsv` generator -- and the last of those got it wrong, taking
+    every `db_xref db="PFAM"` in the release including the ones inside OTHER entries'
+    abstract prose. That is #344: 407 records received a neighbouring domain's abstract as
+    their own definition. This module's top docstring counts six earlier instances of one
+    fix landing in one copy and not its twin.
+
+    `member_list` is the only place the release states integration. An abstract's
+    `db_xref` is CONTENT -- the accession a sentence is about -- which is exactly what the
+    rest of this module exists to preserve, one level down.
+    """
+    import gzip
+    import xml.etree.ElementTree as ET
+
+    with gzip.open(xml_gz, "rb") as fh:
+        for _ev, el in ET.iterparse(fh, events=("end",)):
+            if el.tag != "interpro":
+                continue
+            ipr = el.get("id") or ""
+            members = el.find("member_list")
+            if ipr and members is not None:
+                for xref in members.findall("db_xref"):
+                    db, key = xref.get("db", ""), xref.get("dbkey", "")
+                    if db and key:
+                        yield db, key, ipr
+            el.clear()
+
+
 def load_member_integration(xml_gz, db: str = "PFAM") -> dict[str, str]:
     """member accession -> the InterPro entry whose `member_list` contains it.
 
@@ -150,7 +182,7 @@ def load_member_integration(xml_gz, db: str = "PFAM") -> dict[str, str]:
           ... associated with <db_xref db="PFAM" dbkey="PF00575"/> ...
         </abstract>                 <- IPR059328 merely MENTIONS PF00575 in prose
 
-    `data/raw/mappings/pfam2interpro.tsv` was derived by taking both, so 467 Pfam
+    `data/raw/mappings/pfam2interpro.tsv` was derived by taking both, so 465 Pfam
     accessions map to more than one entry there and nothing says which is real. Three
     scripts read that file, two of them last-wins -- and last-wins picked the prose mention
     for 407 records, which then received a definition describing a DIFFERENT domain.
@@ -158,41 +190,23 @@ def load_member_integration(xml_gz, db: str = "PFAM") -> dict[str, str]:
     C-terminal to the M14 carboxypeptidase catalytic domain (Pfam:PF00246)" -- the very
     sentence that created the false mapping.
 
-    `member_list` is unambiguous by construction, and measured to be so: across the
-    release, 0 of 29,105 Pfam signatures appear in two entries' member lists. Verified
-    against the live InterPro API on an 8-accession sample -- every one agreed with
-    `member_list` and none with what the record cited.
-
     So this is the only mapping any caller should use for "which entry's abstract describes
     this signature". Nothing here reads the TSV; it cannot, because the TSV is the defect.
     """
-    import gzip
-    import xml.etree.ElementTree as ET
-
     out: dict[str, str] = {}
     clashes: list[tuple[str, str, str]] = []
-    with gzip.open(xml_gz, "rt", encoding="utf-8", errors="replace") as fh:
-        for _ev, el in ET.iterparse(fh, events=("end",)):
-            if el.tag != "interpro":
-                continue
-            ipr = el.get("id", "")
-            members = el.find("member_list")
-            if ipr and members is not None:
-                for xref in members.findall("db_xref"):
-                    if xref.get("db", "").upper() == db.upper():
-                        key = xref.get("dbkey", "")
-                        if not key:
-                            continue
-                        if key in out and out[key] != ipr:
-                            clashes.append((key, out[key], ipr))
-                        out[key] = ipr
-            el.clear()
+    for xdb, key, ipr in iter_member_signatures(xml_gz):
+        if xdb.upper() != db.upper():
+            continue
+        if key in out and out[key] != ipr:
+            clashes.append((key, out[key], ipr))
+        out[key] = ipr
     # ONE ENTRY PER SIGNATURE is the invariant every caller relies on -- the repair
     # rewrites a record's definition to whatever this returns, so a signature in two
     # member lists would be rewritten to a coin flip. Measured true across the release
     # (0 of 29,105), which is exactly why it must be checked rather than assumed: an
     # invariant that holds today and is enforced nowhere is a silent failure tomorrow,
-    # and the last-wins dict below would hide it perfectly.
+    # and the last-wins dict above would hide it perfectly.
     if clashes:
         raise ValueError(
             f"{len(clashes)} {db} signature(s) appear in more than one member_list, so "
