@@ -892,13 +892,26 @@ audit-drafts:
     uv run python scripts/audit_refused_drafts.py
 
 # Does every cited snippet actually appear in the source it names? (#365)
-# TWO gates. --max pins the COUNT (41; was 287, then 174 after the repoints). --baseline pins
-# the IDENTITY of each known mismatch, because a ceiling masks a SWAP: fixing one while
-# introducing another leaves the total unchanged and a count gate green (#411, demonstrated).
+# TWO gates. --max pins the COUNT (0; was 287, then 174 after the repoints, then 41 after
+# #423's truncation repair, then 0 once #422 resolved the last two misattributions).
+# --baseline pins the IDENTITY of each known mismatch, because a ceiling masks a SWAP:
+# fixing one while introducing another leaves the total unchanged and a count gate green
+# (#411, demonstrated). Both baselines are now EMPTY, which makes the ceiling and the
+# identity gate agree: any mismatch at all is new, and fails.
 # After fixing some, re-run with --update-baseline to lock the progress in.
 # --configs checks the FAMILY_SNIPPETS literals too: nothing did, which is how #423
 # shipped two corrupt snippets past every other gate (#424). It gets BOTH gates for
 # the same reason the data side does -- a ceiling masks a swap (#411, #428).
+#
+# --archetypes is a THIRD, different question (#425): the snippet is verbatim in the term
+# it cites and still wrong for the record, because that term is one gene in one organism
+# and this record is neither. No quote-checker can see that, which is why carO's
+# definition sat on 42 records -- 2 of them carO -- until #423 restored the clause naming
+# Acinetobacter baumannii and made it visible.
+# Pinned at 323 (was 414 before carO and the basR/basS role split), NOT at 0: unlike the
+# other two, a hit here is not automatically a defect. An efflux repressor citing the pump
+# it represses is citing the edge's own object. The 323 are a REVIEW QUEUE, triaged in the
+# issue this pin was set from; the gate's job is that the queue cannot silently grow.
 #
 # LOCAL ONLY -- needs `data/raw/aro/aro.obo`, and data/raw is gitignored, so without it
 # every ARO reference is unverifiable and this reports 11 instead of 174. It says so
@@ -906,6 +919,8 @@ audit-drafts:
 # regression SKIPS when the obo is absent rather than passing a ceiling on nothing.
 audit-snippets *args:
     uv run python scripts/audit_snippets.py --path function/resistance/aro \
-        --max 41 --baseline audit/snippet-mismatch-baseline.json \
-        --configs --max-configs 13 \
-        --config-baseline audit/config-literal-baseline.json {{args}}
+        --max 0 --baseline audit/snippet-mismatch-baseline.json \
+        --configs --max-configs 0 \
+        --config-baseline audit/config-literal-baseline.json \
+        --archetypes --max-archetypes 323 \
+        --archetype-baseline audit/archetype-baseline.json {{args}}

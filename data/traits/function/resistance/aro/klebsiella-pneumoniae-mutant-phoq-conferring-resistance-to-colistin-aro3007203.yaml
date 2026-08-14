@@ -27,8 +27,9 @@ causal_graphs:
     (curated from ARO relations + literature)
   description: 'Curated resistance-causation graph (promoted from the ARO auto-draft). Determinant → inherited
     mechanism → resistance phenotype → drug classes; edges carry the family''s verbatim literature evidence
-    (ARO:3003582). Not efflux despite the family term: these induce lipid A modification, reaching round
-    32''s electrostatic repulsion by a regulatory route.'
+    (ARO:3003583). Not efflux despite the family term: these induce lipid A modification, reaching round
+    32''s electrostatic repulsion by a regulatory route. This config covers the sensor kinase, which phosphorylates
+    the response regulator.'
   nodes:
   - node_id: determinant
     label: Klebsiella pneumoniae mutant PhoQ conferring resistance to colistin
@@ -60,47 +61,49 @@ causal_graphs:
     predicate_id: RO:0000056
     object: mech0
     evidence:
-    - reference: ARO:3003582
-      snippet: Response regulator for Lipid A modification genes; two-component system involved in
-        polymyxin resistance that senses high extracellular Fe(2+).
+    - reference: ARO:3003583
+      snippet: Histidine protein kinase sensor Lipid A modification gene; part of a two-component system
+        involved in polymyxin resistance
       notes: Family mechanism ARO:0010000.
   - subject: mech0
     predicate: causally upstream of
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3003582
-      snippet: Response regulator for Lipid A modification genes; two-component system involved in
-        polymyxin resistance that senses high extracellular Fe(2+).
+    - reference: ARO:3003583
+      snippet: Histidine protein kinase sensor Lipid A modification gene; part of a two-component system
+        involved in polymyxin resistance
       notes: Mechanism ARO:0010000 → resistance.
   - subject: determinant
     predicate: causally upstream of (confers resistance)
     predicate_id: RO:0002411
     object: resistance
     evidence:
-    - reference: ARO:3003582
-      snippet: Response regulator for Lipid A modification genes; two-component system involved in
-        polymyxin resistance that senses high extracellular Fe(2+).
+    - reference: ARO:3003583
+      snippet: Histidine protein kinase sensor Lipid A modification gene; part of a two-component system
+        involved in polymyxin resistance
       notes: Determinant → resistance phenotype.
   - subject: determinant
     predicate: positively regulates (induces the modification genes)
     predicate_id: RO:0002213
     object: lipid_a_mod
     evidence:
-    - reference: ARO:3003582
-      snippet: Response regulator for Lipid A modification genes; two-component system involved in
-        polymyxin resistance that senses high extracellular Fe(2+).
-      notes: CARD's definition of BasR, the archetype. Each record's own definition names the operon IT
-        induces.
+    - reference: ARO:3003583
+      snippet: Histidine protein kinase sensor Lipid A modification gene; part of a two-component system
+        involved in polymyxin resistance
+      notes: CARD's definition of BasS, the archetype for the sensor kinase, which phosphorylates the
+        response regulator. Each record's own definition names the operon IT induces.
   - subject: lipid_a_mod
     predicate: causally upstream of (adds positive charge to the envelope)
     predicate_id: RO:0002411
     object: surface_charge
     evidence:
-    - reference: ARO:3003582
-      snippet: Response regulator for Lipid A modification genes; two-component system involved in
-        polymyxin resistance that senses high extracellular Fe(2+).
-      notes: Lipid A modification is what the induced genes do.
+    - reference: ARO:3003588
+      snippet: The loss or reduction of the net negative charge within the cell wall of gram negative
+        bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative
+        charge for binding to the surface.
+      notes: CARD's charge-alteration mechanism term, which is what the induced genes bring about. Lipid
+        A modification is the route; the reduced net negative charge is the result.
 curation_history:
 - timestamp: '2026-08-07T00:00:00Z'
   curator: edison-causal-graphs
