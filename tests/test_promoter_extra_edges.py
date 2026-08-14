@@ -1037,15 +1037,67 @@ def test_the_activator_list_is_conservative_and_says_so():
 
 def test_the_lps_regulator_config_is_not_an_efflux_one():
     """Despite sitting under the efflux-modulator family term, basR/basS induce lipid A
-    modification — round 32's electrostatic repulsion reached by a regulatory route."""
+    modification — round 32's electrostatic repulsion reached by a regulatory route.
+
+    TWO configs since #425, not one: a response-regulator half quoting basR and a
+    sensor-kinase half quoting basS. Both are asserted here, because the split is what
+    stops basR's "Response regulator ... senses high extracellular Fe(2+)" from sitting on
+    three histidine kinases.
+    """
     cfgs = promote.family_configs("ARO:3000451")
     lps = [c for c in cfgs if any(n["node_id"] == "lipid_a_mod" for n in c["extra_nodes"])]
-    assert len(lps) == 1
+    assert len(lps) == 2
     assert len(promote._LPS_REGULATORS) == 6      # basR/basS + 4 PhoP/PhoQ in r42
-    core = [e for e in lps[0]["extra_edges"] if e["object"] == "drug0"][0]
-    # the charge-to-resistance sentence is mprF's; the notes must say the transfer
-    assert core["evidence"][0]["reference"] == "PMID:11342591"
-    assert "transfer" in core["evidence"][0]["notes"]
+    assert {c["reference"] for c in lps} == {"ARO:3003582", "ARO:3003583"}
+    for cfg in lps:
+        core = [e for e in cfg["extra_edges"] if e["object"] == "drug0"][0]
+        # the charge-to-resistance sentence is mprF's; the notes must say the transfer
+        assert core["evidence"][0]["reference"] == "PMID:11342591"
+        assert "transfer" in core["evidence"][0]["notes"]
+
+
+def test_neither_lps_config_asserts_the_iron_signal_or_the_wrong_role():
+    """#425. basR's definition ends "that senses high extracellular Fe(2+)" — BasSR's
+    signal, not PhoQ's, which is Mg2+ and low pH. It sat on four PhoP/PhoQ records, and on
+    three of them ALSO called a histidine kinase a "Response regulator".
+
+    Both halves are pinned: the clause is gone from every literal, and each config's
+    snippet describes the role its precondition selects for. Asserted on the CONFIG rather
+    than the records because the config is what writes the next one.
+    """
+    lps = [c for c in promote.family_configs("ARO:3000451")
+           if any(n["node_id"] == "lipid_a_mod" for n in c["extra_nodes"])]
+    by_ref = {c["reference"]: c for c in lps}
+
+    def _literals(cfg):
+        out = list(cfg["mech"].values()) + [cfg["mech_res"], cfg["det_res"], cfg["res_drug"]]
+        out += [ev["snippet"] for e in cfg["extra_edges"] for ev in e["evidence"]]
+        return out
+
+    for cfg in lps:
+        for lit in _literals(cfg):
+            assert "Fe(2+)" not in lit, f"the iron clause survives in {cfg['reference']}"
+
+    # #439: this filtered the literals with `if s.startswith(("Response", "Histidine"))`
+    # and asserted `all(...)` over what survived -- so rewording the archetype to start
+    # with anything else ("BasR is a response regulator...") emptied the generator, and
+    # `all([])` passed while asserting nothing. Assert on the ARCHETYPE literal directly:
+    # it is the config's own `det_res`, there is exactly one, and it cannot filter itself
+    # out of existence.
+    assert by_ref["ARO:3003582"]["det_res"].startswith("Response regulator")
+    assert by_ref["ARO:3003583"]["det_res"].startswith("Histidine protein kinase")
+    # and the wrong half's role word appears in NEITHER config, anywhere
+    for word, wrong in (("ARO:3003582", "Histidine protein kinase"),
+                        ("ARO:3003583", "Response regulator")):
+        for lit in _literals(by_ref[word]):
+            assert wrong not in lit, f"{word} asserts the other half's role: {lit[:60]}"
+    # and the two preconditions PARTITION the six, so no record falls through or gets both
+    assert (promote._LPS_RESPONSE_REGULATORS | promote._LPS_SENSOR_KINASES
+            == promote._LPS_REGULATORS)
+    assert not (promote._LPS_RESPONSE_REGULATORS & promote._LPS_SENSOR_KINASES)
+    for ident in promote._LPS_REGULATORS:
+        picked = [c for c in lps if c["precondition"](ident, "", "") is None]
+        assert len(picked) == 1, f"{ident} matched {len(picked)} lps configs, want exactly 1"
 
 
 def test_armr_is_excluded_from_every_regulator_list():
@@ -3451,11 +3503,11 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
                     "Skipping honestly beats passing a ceiling while checking nothing.")
     result = subprocess.run(
         [sys.executable, str(root / "scripts" / "audit_snippets.py"),
-         "--path", "function/resistance/aro", "--max", "41", "--require-aro",
+         "--path", "function/resistance/aro", "--max", "0", "--require-aro",
          "--baseline", str(root / "audit" / "snippet-mismatch-baseline.json")],
         capture_output=True, text=True, cwd=root)
     assert result.returncode == 0, (
-        "snippet misattributions grew past the pinned backlog of 41:\n"
+        "a snippet cites a source that does not contain it; the backlog is 0 since #422:\n"
         + result.stdout[-2000:])
 
     def _num(label):
@@ -3466,7 +3518,7 @@ def test_no_new_snippet_misattributions_in_the_aro_corpus():
     # the probe fired: nearly 30k items really were compared against the obo
     assert _num("checked against disk") >= 29_000
     assert _num(r"not on disk \(not a fail\)") == 0
-    assert _num("MISMATCHED") <= 41
+    assert _num("MISMATCHED") == 0
     # #411: the identity gate must have run and found nothing new. A count ceiling passes
     # a swap -- fix one, break one -- which is the shape this repo produced four times.
     m = re.search(r"^baseline: ([\d,]+) known .* ([\d,]+) NEW", result.stdout, re.M)
@@ -3512,6 +3564,13 @@ def test_snippet_source_entries_each_name_exactly_one_aro_term():
     """#365: the table can only be safe if each snippet is one term's text. If a snippet
     appeared in two terms the mapping would be a guess, and `_true_source` would override
     correct citations rather than fix wrong ones.
+
+    #426 added a NON-ARO target: the PBP 2' affinity measurement is a quote from
+    PMID:3499861 and is in no ARO term at all. That entry cannot be checked the same way
+    -- a PMID is not offline-resolvable, which is the whole reason the audit skips PMIDs
+    -- so it is held to the other half of the invariant instead: it must be in NO ARO
+    term. If it were in one, the table would be pointing a correct ARO citation AWAY from
+    its real source, which is the opposite of what this table is for.
     """
     if not promote.E.OBO.exists():
         pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
@@ -3519,9 +3578,19 @@ def test_snippet_source_entries_each_name_exactly_one_aro_term():
     import audit_snippets
 
     obo = audit_snippets.load_obo_stanzas()
+    non_aro = 0
     for snippet, owner in promote.SNIPPET_SOURCE.items():
         owners = [t for t, body in obo.items() if snippet in body]
-        assert owners == [owner], f"{snippet[:50]!r} -> {owners}, table says {owner}"
+        if owner.startswith("ARO:"):
+            assert owners == [owner], f"{snippet[:50]!r} -> {owners}, table says {owner}"
+        else:
+            non_aro += 1
+            assert owners == [], (
+                f"{snippet[:50]!r} is verbatim in {owners}, but the table repoints it to "
+                f"{owner} -- that would move a correct ARO citation off its source")
+    # the non-ARO branch is REACHED. Without this the branch could be deleted and the test
+    # would still pass, which is how a guard becomes decoration.
+    assert non_aro >= 1, "no non-ARO entry exercised the second branch"
 
 
 def test_true_source_is_a_no_op_off_table_and_total():
@@ -3584,23 +3653,56 @@ def test_diff_baseline_catches_a_swap_and_a_duplicate():
 
 
 def test_the_committed_baseline_matches_the_key_shape_the_audit_writes():
-    """Cheap structural check that survives without data/raw, so CI sees something."""
+    """Cheap structural check that survives without data/raw, so CI sees something.
+
+    The snippet and config baselines are EMPTY since #422/#426 -- the backlog they pinned
+    is gone -- so the shape check moved to the archetype baseline, which still has entries.
+    The empty two are still asserted to be the right TYPE: a baseline that becomes a list,
+    or an int, would silently change what `_load_baseline` returns.
+    """
     root = pathlib.Path(promote.__file__).resolve().parent.parent
-    known = json.loads((root / "audit" / "snippet-mismatch-baseline.json").read_text())
+    for name in ("snippet-mismatch-baseline.json", "config-literal-baseline.json"):
+        empty = json.loads((root / "audit" / name).read_text())
+        assert empty == {}, (
+            f"{name} is no longer empty. Nothing should be added to it: it pinned a "
+            f"backlog that #422/#426 closed, and a new entry is a regression being "
+            f"blessed, not a backlog being tracked.")
+    known = json.loads((root / "audit" / "archetype-baseline.json").read_text())
     assert isinstance(known, dict) and known, "baseline must be {key: count}"
     assert all(isinstance(v, int) and v >= 1 for v in known.values())
+
     sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
     import audit_snippets as audit
-    # #417 review: the first version never called baseline_key, so dropping a field from
-    # the key passed this test whose own message says "key shape changed".
+    # #417 review: the first version never called the key builders, so dropping a field
+    # from a key passed this test whose own message says "key shape changed". Both are
+    # called here, because they have different arities and only one is still exercised by
+    # a committed baseline.
     probe = audit.baseline_key("data/traits/x.yaml", "resistance", "determinant", "mech0",
                                "ARO:1", "s")
     assert len(probe.split("|")) == 5, f"baseline_key shape changed: {probe}"
+    aprobe = audit.archetype_key("data/traits/x.yaml", "resistance", "determinant", "mech0",
+                                 "ARO:1", "s")
+    assert len(aprobe.split("|")) == 5, f"archetype_key shape changed: {aprobe}"
+    # per-edge, per-reference AND per-snippet. The last is #434: without it, swapping one
+    # real quote from a term for a different real quote from the SAME term left the count
+    # at that key unchanged and both gates green.
+    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1", "s") != \
+        audit.archetype_key("r", "g", "d", "m1", "ARO:1", "s")
+    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1", "s") != \
+        audit.archetype_key("r", "g", "d", "m0", "ARO:2", "s")
+    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1", "quote one") != \
+        audit.archetype_key("r", "g", "d", "m0", "ARO:1", "quote two")
+    # ...but a reflow of the same quote is not a new finding
+    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1", "a  b") == \
+        audit.archetype_key("r", "g", "d", "m0", "ARO:1", "a b")
+
     for k in known:
         parts = k.split("|")
-        assert len(parts) == 5, f"key shape changed: {k[:80]}"
+        assert len(parts) == 5, f"archetype key shape changed: {k[:80]}"
         assert parts[0].startswith("data/traits/"), parts[0]
-        assert "->" in parts[2]
+        assert "->" in parts[2], parts[2]
+        assert parts[3].startswith("ARO:"), parts[3]
+        assert parts[4], f"empty snippet in key: {k[:80]}"
     assert len({k.split("|", 1)[0] for k in known}) < len(known), "keys are not per-edge"
 
 
@@ -3797,8 +3899,8 @@ def test_no_new_config_literal_cites_a_source_that_does_not_contain_it():
     Both were latent only because the promoter skips existing records. The next new record
     would have written them as EvidenceItem snippets.
 
-    Pinned at the known 13, so it fails on growth. Mutation-verified: reintroducing #423's
-    `mas` duplication takes it to 18 and fails.
+    Pinned at 0 since #426 repointed the last 13. Mutation-verified: reintroducing #423's
+    `mas` duplication takes it to 5 and fails.
     """
     if not (pathlib.Path(promote.__file__).resolve().parent.parent
             / "data" / "raw" / "aro" / "aro.obo").exists():
@@ -3814,9 +3916,14 @@ def test_no_new_config_literal_cites_a_source_that_does_not_contain_it():
     assert any(f.startswith("protein_traits[") for f in fields), fields
 
     # TWO subprocess calls, not four: each walks the corpus and the first version took
-    # 4 minutes for one test. Call one with an impossible ceiling -- it must FAIL and it
+    # 4 minutes for one test. Call one with an IMPOSSIBLE ceiling -- it must FAIL and it
     # reports the real count; call two with that count -- it must PASS. Together they pin
     # the boundary, which is what --max-configs was ignored on twice over.
+    #
+    # The impossible ceiling is now -1 rather than 0. With 13 known failures, 0 was below
+    # the count and proved the flag was read; at 0 failures, 0 is AT the count and passes,
+    # so keeping it would have quietly turned this half of the boundary test into a second
+    # copy of the other half. -1 is the same idiom shifted by the fix.
     import subprocess
     root = pathlib.Path(promote.__file__).resolve().parent.parent
 
@@ -3826,12 +3933,14 @@ def test_no_new_config_literal_cites_a_source_that_does_not_contain_it():
              "--configs-only", *extra],
             capture_output=True, text=True, cwd=root)
 
-    low = _run("--max-configs", "0")
-    assert low.returncode == 1, f"--max-configs 0 did not gate:\n{low.stdout[-800:]}"
+    low = _run("--max-configs", "-1")
+    assert low.returncode == 1, f"--max-configs -1 did not gate:\n{low.stdout[-800:]}"
     m = re.search(r"^\s*NOT VERBATIM:\s+([\d,]+)", low.stdout, re.M)
     assert m, f"audit output changed shape:\n{low.stdout[-600:]}"
     n_bad = int(m.group(1).replace(",", ""))
-    assert n_bad <= 13, f"config literals not verbatim in their source grew to {n_bad}"
+    assert n_bad == 0, (
+        f"{n_bad} config literal(s) cite a source that does not contain them; #426 took "
+        f"this to 0 and the recipe pins --max-configs 0")
 
     at_ceiling = _run("--max-configs", str(n_bad))
     assert at_ceiling.returncode == 0, f"gate fires at its own ceiling:\n{at_ceiling.stdout[-800:]}"
@@ -3840,33 +3949,349 @@ def test_no_new_config_literal_cites_a_source_that_does_not_contain_it():
 def test_the_config_baseline_catches_a_swap_the_ceiling_misses():
     """#428: the config gate shipped ceiling-only, which is exactly what #411 argues
     against for the data side. Verified at filing: fixing one literal while introducing
-    another leaves 13 and `--max-configs 13` passes.
+    another left 13 and `--max-configs 13` passed.
 
-    Proved by doctoring the BASELINE rather than the configs -- removing one known entry
-    makes that literal look new, the same signal a swap gives, without editing 183 configs.
+    REWRITTEN for #426. The old version doctored the committed baseline -- popping one of
+    its 13 entries made that literal look new. The baseline is now EMPTY, so there is
+    nothing to pop, and a test that "passes" by iterating an empty dict is a test that has
+    stopped testing. That is the failure mode this file has hit before (`hydrolyz\\b`
+    reporting 0 while structurally broken), so the proof moves to where the signal still
+    exists: a real bad literal INJECTED into the config table, in-process.
+
+    This is a strictly stronger proof than the old one. Doctoring the baseline only showed
+    that `diff_baseline` reports a key the baseline lacks. Injecting shows the whole chain
+    -- that `iter_config_snippets` reaches the literal, `audit_configs` finds it is not in
+    its source, and the counts it returns make a swap visible at an unchanged total.
     """
     root = pathlib.Path(promote.__file__).resolve().parent.parent
-    real = root / "audit" / "config-literal-baseline.json"
     if not (root / "data" / "raw" / "aro" / "aro.obo").exists():
         pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
-    known = json.loads(real.read_text(encoding="utf-8"))
-    assert isinstance(known, dict) and known, "config baseline must be {key: count}"
-    for k in known:
-        assert len(k.split("|")) == 4, f"config key shape changed: {k[:80]}"
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import audit_snippets as audit
 
+    # A literal that is real prose from ARO:3000187 -- attributed to a term that does not
+    # contain it. #400's exact shape, and #426's.
+    victim = "ARO:3000557"
+    injected = {"curated": "x", "precondition": lambda *a: None,
+                "reference": "ARO:3000617",
+                "mech": {}, "mech_res": "",
+                "det_res": "Mechanism of enzymatic degradation common to Ambler Class A, "
+                           "C and D beta-lactamases.",
+                "res_drug": "", "note": "", "extra_nodes": [], "extra_edges": []}
+    real = promote.FAMILY_SNIPPETS[victim]
+    try:
+        promote.FAMILY_SNIPPETS[victim] = list(real) + [injected]
+        obo = audit.load_obo_stanzas()
+        n_bad, counts = audit.audit_configs(show=0, obo=obo, kb={})
+    finally:
+        promote.FAMILY_SNIPPETS[victim] = real
+
+    assert n_bad == 1, f"the injected literal was not detected ({n_bad} found)"
+    assert sum(counts.values()) == 1
+
+    # THE SWAP: a baseline of the same SIZE holding a different key. The ceiling sees
+    # 1 == 1 and passes; the identity gate must report 1 FIXED and 1 NEW.
+    other = {"ARO:9999999|det_res|ARO:9999998|some other bad literal": 1}
+    fixed, new = audit.diff_baseline(counts, other)
+    assert len(new) == 1 and len(fixed) == 1, (fixed, new)
+    assert sum(counts.values()) == sum(other.values()), "not a swap if the total moved"
+
+    # and with the injection removed the table is clean, so the 1 above is the injection
+    # and not a pre-existing failure this test would have reported either way
+    n_clean, clean = audit.audit_configs(show=0, obo=audit.load_obo_stanzas(), kb={})
+    assert n_clean == 0 and clean == {}, f"config table is not clean: {n_clean}"
+
+
+# ---------------------------------------------------------------------------------------
+# #425: the archetype gate, and the --only selector the repair needed
+# ---------------------------------------------------------------------------------------
+
+def test_ancestors_is_a_transitive_closure_over_a_dag():
+    """ARO is a DAG, not a tree -- several terms have two `is_a` parents -- and the first
+    sketch of this walked recursively per path, revisiting the shared upper levels once
+    per route. Cycles are not supposed to exist in an obo, which is exactly why nothing
+    would notice if one appeared; the `seen` guard makes that a non-event rather than a
+    RecursionError in a merge gate.
+    """
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import audit_snippets as audit
+
+    parents = {"a": {"b", "c"}, "b": {"d"}, "c": {"d"}, "d": {"e"}, "e": set()}
+    assert audit.ancestors("a", parents) == {"b", "c", "d", "e"}
+    assert audit.ancestors("e", parents) == set()
+    assert audit.ancestors("zz", parents) == set()          # unknown id, not a KeyError
+    assert audit.ancestors("a", {"a": {"b"}, "b": {"a"}}) == {"a", "b"}   # cycle terminates
+
+
+def test_the_archetype_check_ignores_a_records_own_term_and_its_ancestors():
+    """The check is "cites a gene-level term that is not this record's own and not one it
+    inherits from". Both exemptions matter and both are easy to drop:
+
+      * without the SELF exemption, carO's record citing carO's definition -- the one place
+        the sentence is unambiguously right -- reads as the defect;
+      * without the ANCESTOR exemption, every variant record quoting its family's mechanism
+        claim is flagged, which is thousands of items and the normal shape of this corpus.
+
+    Fixture-driven so it needs no obo, and so each exemption is exercised on its own.
+    """
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import audit_snippets as audit
+
+    # ARO:1 is a gene-level term (CARD_Short_Name); ARO:2 is a mechanism term; ARO:3 is a
+    # gene-level ancestor of the record.
+    obo = {
+        "ARO:1": 'name: geneA def: "..." synonym: "geneA" EXACT CARD_Short_Name',
+        "ARO:2": 'name: a mechanism def: "..."',
+        "ARO:3": 'name: geneC def: "..." synonym: "geneC" EXACT CARD_Short_Name',
+        "ARO:9": 'name: the record def: "..." is_a: ARO:3 synonym: "rec" EXACT CARD_Short_Name',
+    }
+    p = pathlib.Path("data/traits/function/resistance/aro/rec.yaml")
+
+    def _item(ref):
+        return (p, "resistance", "determinant", "resistance", ref, "snip", "ARO:9")
+
+    n, counts = audit.audit_archetypes(
+        [_item("ARO:1"),        # gene-level, unrelated          -> FLAGGED
+         _item("ARO:2"),        # not gene-level                 -> exempt
+         _item("ARO:3"),        # gene-level but an ancestor     -> exempt
+         _item("ARO:9"),        # the record's own term          -> exempt
+         _item("PMID:1")],      # not an ARO term at all         -> exempt
+        obo, show=0)
+    assert n == 1, f"expected only the unrelated gene-level term, got {n}: {counts}"
+    assert list(counts) == [
+        audit.archetype_key(str(p), "resistance", "determinant", "resistance", "ARO:1",
+                            "snip")]
+
+
+def test_the_committed_archetype_baseline_blesses_no_caro_and_no_iron_clause():
+    """#425's two named cases must be GONE, not merely pinned. A baseline entry is a
+    promise that a finding is known and accepted; carO on 40 records it has nothing to do
+    with is neither, and re-blessing it here is precisely how `--update-baseline` launders
+    a regression -- which the tool warns about and no test checked.
+
+    #438: the earlier name said "no iron signal entry" while the assertions could not check
+    for one -- the key held no snippet text. #434 put the snippet back in the key, so the
+    clause IS checkable here now, and the name is no longer a promise the body does not
+    keep. The config side is pinned separately by
+    `test_neither_lps_config_asserts_the_iron_signal_or_the_wrong_role`.
+    """
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    known = json.loads((root / "audit" / "archetype-baseline.json").read_text())
+    caro = [k for k in known if "|ARO:3003808|" in k]
+    assert caro == [], f"carO is still cited as an archetype on {len(caro)} edge(s)"
+    # the clause itself, wherever it appears and whatever term it is attributed to
+    iron = [k for k in known if "Fe(2+)" in k]
+    assert iron == [], f"the BasSR iron clause is blessed on {len(iron)} edge(s)"
+    # basR may still be cited -- on the two PhoP records, where "response regulator" is
+    # true -- but never on a sensor kinase.
+    kinases = {"aro3003583", "aro3003896", "aro3007203"}
+    for k in known:
+        if "|ARO:3003582|" not in k:
+            continue
+        rec = k.split("|", 1)[0]
+        assert not any(g in rec for g in kinases), (
+            f"basR's definition is still on a sensor kinase: {rec}")
+    # and the snippet really is in the key, or all three checks above are vacuous
+    assert all(len(k.split("|")) == 5 and k.split("|")[4] for k in known)
+
+
+def test_only_refuses_an_id_outside_the_family():
+    """--only is a blast-radius control, so a typo in it must not read as "nothing to do".
+
+    Both refusals are asserted because they are different mistakes with the same symptom:
+    an id that is not under the family at all, and one that is but which no config accepts.
+    Neither writes anything, and before this both would have printed "0 records written"
+    and exited 0.
+    """
     import subprocess
-    import tempfile
-    with tempfile.TemporaryDirectory() as d:
-        doctored = pathlib.Path(d) / "cb.json"
-        trimmed = dict(known)
-        trimmed.pop(next(iter(trimmed)))
-        doctored.write_text(json.dumps(trimmed), encoding="utf-8")
-        out = subprocess.run(
-            [sys.executable, str(root / "scripts" / "audit_snippets.py"),
-             "--configs-only",                          # the data side is not asserted here
-             "--max-configs", "999",                     # the CEILING must not fire
-             "--config-baseline", str(doctored)],
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    if not (root / "data" / "raw" / "aro" / "aro.obo").exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); run `just fetch-aro`")
+
+    def _run(only):
+        return subprocess.run(
+            [sys.executable, str(root / "scripts" / "promote_family_drafts.py"),
+             "--family", "ARO:3000451", "--repromote", "--only", only],
             capture_output=True, text=True, cwd=root)
-        assert "NOT VERBATIM:            13" in out.stdout, out.stdout[-500:]
-        assert out.returncode == 1, f"identity gate missed a new literal:\n{out.stdout[-800:]}"
-        assert "1 NEW" in out.stdout
+
+    outside = _run("ARO:3000187")            # a mechanism term, not under this family
+    assert outside.returncode == 1, outside.stdout[-600:]
+    assert "not under ARO:3000451" in outside.stdout
+
+    unreached = _run("ARO:3003066")          # under the family; no config accepts it
+    assert unreached.returncode == 1, unreached.stdout[-600:]
+    assert "were not written" in unreached.stdout
+
+    ok = _run("ARO:3003583")                 # basS: under the family and accepted
+    assert ok.returncode == 0, ok.stdout[-600:]
+    assert "1 records written" in ok.stdout
+
+
+def test_the_archetype_gate_and_the_config_baseline_really_exit_1(tmp_path):
+    """#433. Neither gate had an EXIT-CODE test: flipping `rc = 1` to `rc = 0` on the
+    config-baseline-NEW branch, the --max-archetypes branch or the archetype-baseline-NEW
+    branch left all 775 tests green. That is the #418 mutation verbatim, in a file whose
+    own comment says "changing `return 1` to `return 0` passed the whole suite".
+
+    #431 made it worse before this: it rewrote the config swap test as an in-process call,
+    which is a better DETECTOR proof and touches no exit code at all.
+
+    Driven through a subprocess against a fixture corpus, so it needs no data/raw and runs
+    in milliseconds.
+    """
+    import subprocess
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+
+    # A fixture obo with one gene-level term and one mechanism term, and one record citing
+    # the gene-level one -- an archetype hit by construction.
+    obo = tmp_path / "aro.obo"
+    obo.write_text(
+        "[Term]\nid: ARO:1000001\nname: geneA\n"
+        'def: "geneA does a thing in Organism x."\n'
+        'synonym: "geneA" EXACT CARD_Short_Name []\n\n'
+        "[Term]\nid: ARO:1000002\nname: the record\n"
+        'def: "a record."\nis_a: ARO:1000003\n\n', encoding="utf-8")
+    corpus = tmp_path / "traits"
+    corpus.mkdir()
+    (corpus / "rec.yaml").write_text(
+        "identifier: ARO:1000002\n"
+        "causal_graphs:\n"
+        "- graph_id: resistance\n"
+        "  edges:\n"
+        "  - subject: determinant\n"
+        "    object: resistance\n"
+        "    evidence:\n"
+        "    - reference: ARO:1000001\n"
+        "      snippet: geneA does a thing in Organism x.\n", encoding="utf-8")
+
+    def _run(*extra):
+        return subprocess.run(
+            [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+             "--traits-root", str(corpus), "--obo", str(obo), "--archetypes", *extra],
+            capture_output=True, text=True, cwd=root)
+
+    # the probe FIRES -- without this every assertion below passes on an empty result set
+    found = _run("--max-archetypes", "99")
+    assert found.returncode == 0, found.stdout[-800:]
+    assert "archetype reuse (#425):    1 evidence item" in found.stdout, found.stdout[-800:]
+
+    # 1. the CEILING exits 1
+    assert _run("--max-archetypes", "0").returncode == 1
+
+    # 2. a MISSING baseline exits 1 rather than being treated as empty
+    absent = tmp_path / "nope.json"
+    assert _run("--archetype-baseline", str(absent)).returncode == 1
+
+    # 3. the IDENTITY gate exits 1 on a new item the ceiling would pass
+    empty = tmp_path / "ab.json"
+    empty.write_text("{}", encoding="utf-8")
+    swap = _run("--max-archetypes", "99", "--archetype-baseline", str(empty))
+    assert swap.returncode == 1, f"identity gate missed a new item:\n{swap.stdout[-800:]}"
+    assert "1 NEW" in swap.stdout
+
+    # 4. and it exits 0 once that item is blessed
+    blessed = tmp_path / "ab2.json"
+    m = re.search(r"^\s*NEW\s+\S+\s+(\S+)\s+(ARO:\d+)", swap.stdout, re.M)
+    assert m, swap.stdout[-800:]
+    sys.path.insert(0, str(root / "scripts"))
+    import audit_snippets as audit
+    key = audit.archetype_key(str(corpus / "rec.yaml"), "resistance", "determinant",
+                              "resistance", "ARO:1000001",
+                              "geneA does a thing in Organism x.")
+    blessed.write_text(json.dumps({key: 1}), encoding="utf-8")
+    ok = _run("--max-archetypes", "99", "--archetype-baseline", str(blessed))
+    assert ok.returncode == 0, f"gate fires on a blessed item:\n{ok.stdout[-800:]}"
+
+
+def test_the_archetype_gate_turns_itself_off_rather_than_zeroing_its_baseline(tmp_path):
+    """#432. Without the obo the archetype check has NO input -- gene-level-ness and
+    ancestry both come from it -- so it reported 0 items, the identity gate printed
+    "323 FIXED", and `--update-baseline` (which the recipe documents as the normal
+    follow-up and forwards {{args}} to) wrote `{}` over the committed baseline and exited
+    0. The whole #425 review queue, blessed away by a command that reads as progress.
+
+    Asserts the committed baseline is UNTOUCHED, which is the consequence that matters and
+    the one a message-only assertion would miss.
+    """
+    import subprocess
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    real = root / "audit" / "archetype-baseline.json"
+    before = real.read_text(encoding="utf-8")
+    assert json.loads(before), "fixture precondition: the baseline must be non-empty"
+
+    corpus = tmp_path / "traits"
+    corpus.mkdir()
+    (corpus / "rec.yaml").write_text("identifier: ARO:1\n", encoding="utf-8")
+    out = subprocess.run(
+        [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+         "--traits-root", str(corpus), "--obo", str(tmp_path / "absent.obo"),
+         "--archetypes", "--max-archetypes", "0",
+         "--archetype-baseline", str(real)],
+        capture_output=True, text=True, cwd=root)
+    assert "--archetypes needs the obo" in out.stdout, out.stdout[-800:]
+    assert "archetype reuse" not in out.stdout, "the check ran on no input"
+    assert real.read_text(encoding="utf-8") == before, "THE BASELINE WAS OVERWRITTEN"
+    # the ceiling of 0 must not fire either -- 0 items is not 0 findings here
+    assert out.returncode == 0, out.stdout[-800:]
+
+
+def test_the_repair_scripts_two_refusals_actually_refuse(tmp_path):
+    """#440: the script is shaped entirely around two guards and neither was tested.
+
+    Both are checked by MUTATION -- a repair whose replacement is not in its source, and a
+    block whose re-dump changes content -- because a guard is only worth what it rejects.
+    """
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import repair_misattributed_snippets as R
+
+    # 1. verbatim-in-source: a replacement that is not in the term it will cite
+    obo = {"ARO:1": "def: the real sentence."}
+    good = [{"ref_to": "ARO:1", "ref_from": "ARO:1", "old": "x", "new": "the real sentence."}]
+    bad = [{"ref_to": "ARO:1", "ref_from": "ARO:1", "old": "x", "new": "an invented one."}]
+    real = R.REPAIRS
+    try:
+        R.REPAIRS = good
+        assert R.check_repairs(obo, {}) == []
+        R.REPAIRS = bad
+        assert any("NOT verbatim" in p for p in R.check_repairs(obo, {}))
+    finally:
+        R.REPAIRS = real
+
+    # 2. ambiguity: two entries matching the same (ref, snippet) without distinct on_edge
+    try:
+        R.REPAIRS = [
+            {"ref_to": "ARO:1", "ref_from": "ARO:2", "old": "q", "new": "the real sentence."},
+            {"ref_to": "ARO:1", "ref_from": "ARO:2", "old": "q", "new": "the real sentence."},
+        ]
+        assert any("list order would" in p for p in R.check_repairs(obo, {}))
+        # separated by on_edge -> allowed
+        R.REPAIRS[0]["on_edge"] = ("a", "b")
+        R.REPAIRS[1]["on_edge"] = ("a", "c")
+        assert R.check_repairs(obo, {}) == []
+    finally:
+        R.REPAIRS = real
+
+    # 3. re-dump guard: a block whose content (not just wrapping) would change is refused
+    block = ("causal_graphs:\n"
+             "- graph_id: resistance\n"
+             "  edges:\n"
+             "  - subject: determinant\n"
+             "    object: resistance\n"
+             "    evidence:\n"
+             "    - reference: ARO:3000187\n"
+             "      snippet: %s\n" % R.REPAIRS[0]["old"])
+    out, reason, n = R.repair_record(block)
+    assert out is not None and n == 1, reason           # a clean block IS repaired
+    # a comment does not survive a re-dump, so it must be refused rather than dropped
+    out2, reason2, n2 = R.repair_record(block.replace("  edges:\n", "  edges:  # note\n"))
+    assert out2 is None and "re-dump would change content" in reason2, reason2
+    assert n2 == 1, "a refused block must still report the repair it is stranding"
+
+    # LAST, and the only part needing data/raw: the committed table passes its own check,
+    # or a real run refuses to start. Resolved through _resolve_sources because one entry
+    # cites a Pfam KB record rather than an ARO term, and an empty `kb` would report it as
+    # unresolvable -- the guard working, not the table failing. Placed after parts 1-3 so
+    # a missing obo skips only this assertion and not the three that need no corpus.
+    if not R.A.OBO.exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); the guards above all ran")
+    assert R.check_repairs(*R._resolve_sources()) == []

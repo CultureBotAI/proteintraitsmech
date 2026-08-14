@@ -319,12 +319,44 @@ _EFFLUX_ACTIVATORS = frozenset(['ARO:3000504', 'ARO:3000508', 'ARO:3000524', 'AR
 # wanted the phrase 'lipid A' and the definition names the sugar instead.
 _LPS_REGULATORS = frozenset(['ARO:3003582', 'ARO:3003583', 'ARO:3003585', 'ARO:3003895', 'ARO:3003896', 'ARO:3007203'])
 
+# #425: SPLIT BY ROLE. One config served all six and quoted basR's definition on every
+# one, which asserted "Response regulator" on three HISTIDINE KINASES (basS, and the two
+# PhoQ mutants) -- the opposite half of the two-component system -- and, until #423
+# repaired the truncation that had hidden it, "senses high extracellular Fe(2+)" as well.
+# Fe(2+) is BasSR/PmrAB's signal; PhoQ senses Mg2+ and low pH, so the snippet contradicted
+# the record it sat on.
+#
+# The two roles are not a subtlety here, they are the whole mechanism: one senses, the
+# other binds DNA. So each gets the archetype from its OWN half -- basR for the response
+# regulators, basS for the sensor kinases -- and basS's record stops citing basR's
+# definition for all five of its edges, which was the only place its own subject was named.
+_LPS_RESPONSE_REGULATORS = frozenset(['ARO:3003582', 'ARO:3003585', 'ARO:3003895'])
+_LPS_SENSOR_KINASES = frozenset(['ARO:3003583', 'ARO:3003896', 'ARO:3007203'])
+assert _LPS_RESPONSE_REGULATORS | _LPS_SENSOR_KINASES == _LPS_REGULATORS, \
+    "the role split must partition _LPS_REGULATORS -- a record in neither gets no config"
+assert not (_LPS_RESPONSE_REGULATORS & _LPS_SENSOR_KINASES), \
+    "the role split must be disjoint -- an overlap makes list order load-bearing"
+
 
 def _requires_lps_regulator(ident: str, label: str, text: str):
     if ident in _LPS_REGULATORS:
         return None
     return ("not on the verified lipid-A-regulator list: this config's mechanism is "
             "induction of envelope charge modification, not efflux")
+
+
+def _requires_lps_response_regulator(ident: str, label: str, text: str):
+    if ident in _LPS_RESPONSE_REGULATORS:
+        return None
+    return ("not a verified lipid-A RESPONSE REGULATOR: this config quotes basR, and a "
+            "sensor kinase is the other half of the two-component system (#425)")
+
+
+def _requires_lps_sensor_kinase(ident: str, label: str, text: str):
+    if ident in _LPS_SENSOR_KINASES:
+        return None
+    return ("not a verified lipid-A SENSOR KINASE: this config quotes basS, and a response "
+            "regulator is the other half of the two-component system (#425)")
 
 
 def _requires_efflux_activator(ident: str, label: str, text: str):
@@ -834,6 +866,68 @@ def _rifampin_modification_config(mech_id: str, human: str, snippet: str,
              "description": "The causal core.",
              "evidence": [{"reference": mech_id, "snippet": snippet,
                            "notes": "CARD names the chemistry and the inactivation together."}]},
+        ],
+    }
+
+
+def _lps_regulator_config(precondition, reference: str, gene: str, snippet: str,
+                          role: str) -> dict:
+    """One HALF of a lipid-A-modification two-component system (#425).
+
+    Was one config quoting basR on all six records. `snippet` is now the archetype for
+    THIS role only, and it is a verbatim PREFIX of that gene's CARD definition -- the
+    trailing "that senses high extracellular Fe(2+)" is dropped from both. Fe(2+) is
+    BasSR/PmrAB's signal specifically; PhoQ senses Mg2+ and low pH, so on the four PhoP/PhoQ
+    records the clause asserted the wrong signal outright. Dropping it costs nothing here:
+    what this config's graph claims is the induction and the charge change, not the input
+    the system reads.
+
+    The prefix must stay a prefix -- `just audit-snippets` checks every literal against
+    aro.obo, so a paraphrase fails the gate rather than shipping.
+    """
+    return {
+        "curated": "2026-08-07T00:00:00Z",
+        "precondition": precondition,
+        "reference": reference,
+        "mech": {m: snippet for m in ("ARO:0010000", "ARO:3000212", "ARO:0001002",
+                                      "ARO:3003588", "ARO:0010001")},
+        "mech_res": snippet,
+        "det_res": snippet,
+        "res_drug": snippet,
+        "note": ("Not efflux despite the family term: these induce lipid A modification, "
+                 "reaching round 32's electrostatic repulsion by a regulatory route. This "
+                 "config covers " + role + "."),
+        "extra_nodes": [
+            {"node_id": "lipid_a_mod", "label": "lipid A modification gene expression",
+             "node_type": "BIOLOGICAL_PROCESS",
+             "description": "The pmrHFIJKLM / arn operon and relatives. Ungrounded: which operon differs per organism."},
+            {"node_id": "surface_charge", "label": "reduced net negative charge of the envelope",
+             "node_type": "QUALITY",
+             "description": "The same property mprF produces by lysinylating phosphatidylglycerol (round 32). Ungrounded: no ontology term for envelope net charge."},
+        ],
+        "extra_edges": [
+            {"subject": "determinant", "object": "lipid_a_mod",
+             "predicate": "positively regulates (induces the modification genes)",
+             "predicate_id": "RO:0002213",
+             "evidence": [{"reference": reference, "snippet": snippet,
+                           "notes": ("CARD's definition of " + gene + ", the archetype for "
+                                     + role + ". Each record's own definition names the "
+                                     "operon IT induces.")}]},
+            {"subject": "lipid_a_mod", "object": "surface_charge",
+             "predicate": "causally upstream of (adds positive charge to the envelope)",
+             "predicate_id": "RO:0002411",
+             # NOT the gene archetype: this edge is about what the induced operon does,
+             # which is a property of lipid A modification and not of either half of the
+             # regulatory system. ARO:3003588 is the mechanism term every one of these
+             # records participates in, and it states the charge consequence directly.
+             "evidence": [{"reference": "ARO:3003588", "snippet": "The loss or reduction of the net negative charge within the cell wall of gram negative bacteria is a mechanism of resistance for cationic antimicrobials that depend on the negative charge for binding to the surface.",
+                           "notes": "CARD's charge-alteration mechanism term, which is what the induced genes bring about. Lipid A modification is the route; the reduced net negative charge is the result."}]},
+            {"subject": "surface_charge", "object": "drug0",
+             "predicate": "negatively regulates (repels the cationic peptide)",
+             "predicate_id": "RO:0002212",
+             "description": "The causal core, shared with mprF (round 32) and reached here by induction rather than by the determinant doing the chemistry itself.",
+             "evidence": [{"reference": "PMID:11342591", "snippet": "As this unusual modification leads to a reduced negative charge of the membrane surface, MprF-mediated peptide resistance",
+                           "notes": "Peschel et al. 2001 state the charge-to-resistance direction. They studied mprF's lysinylation; the charge logic is the same for lipid A modification, and the notes say the transfer rather than implying the paper covered it."}]},
         ],
     }
 
@@ -5353,8 +5447,20 @@ FAMILY_SNIPPETS = {
         "det_res": [
             {"reference": "PMID:14665678", "snippet": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
              "notes": "Nikaido 2003. The outer membrane is a permeability barrier by default; channels are what let a drug across it, so losing a channel raises the barrier."},
-            {"reference": "ARO:3003808", "snippet": "carO is a transmembrane beta-barrel involved in the influx of carbapenem antibiotics in Acinetobacter baumannii. Disruption of the carO gene by distinct insertion elements results in a loss of carO expression causing resistance to carbapenem antibiotics. Homologs of carO have been identified in genera Acinetobacter, Moraxella and Psychrobacter.",
-             "notes": "CARD's definition of carO, the archetype: a beta-barrel through which carbapenems enter. Each record's own definition names the channel and the drug class IT admits."},
+            # #425. This was carO's own definition, used as an "archetype" on all 42
+            # records this config promotes -- 2 of which are carO. Truncated at "influx of
+            # carbapenems" it read as generic and nobody noticed; #423 restored the rest of
+            # the sentence, which names Acinetobacter baumannii, the carO gene and three
+            # genera, and put that on two fungal permeases, a fungal nucleobase
+            # transporter, MarA and a Ser/Thr kinase. The truncation had been doing
+            # curation work by accident.
+            #
+            # Replaced by the definition of the FAMILY TERM this config is for, which is an
+            # is_a ancestor of every record it promotes and names no gene and no organism.
+            # Nothing is lost: the carO sentence was an illustration, and the general claim
+            # it illustrated is Nikaido above.
+            {"reference": "ARO:3000270", "snippet": "Enzymes or other proteins either directly or indirectly reducing overall permeability to antibiotics.",
+             "notes": "CARD's definition of the family term these records sit under -- the claim at exactly the level this config makes it. Each record's own definition names the channel and the drug class IT admits."},
         ],
         "res_drug": "Although outer membrane components often play important roles in the interaction of symbiotic or pathogenic bacteria with their host organisms, the major role of this membrane must usually be to serve as a permeability barrier to prevent the entry of noxious compounds and at the same time to allow the influx of nutrient molecules.",
         "note": "The mirror of efflux: the drug never gets in, rather than being pumped out.",
@@ -5370,8 +5476,13 @@ FAMILY_SNIPPETS = {
             {"subject": "determinant", "object": "influx",
              "predicate": "enables (admits the drug across the membrane)", "predicate_id": "RO:0002327",
              "description": "The wild-type function. Resistance is its loss or down-regulation, which is why these records are channels rather than resistance enzymes.",
-             "evidence": [{"reference": "ARO:3003808", "snippet": "carO is a transmembrane beta-barrel involved in the influx of carbapenem antibiotics in Acinetobacter baumannii. Disruption of the carO gene by distinct insertion elements results in a loss of carO expression causing resistance to carbapenem antibiotics. Homologs of carO have been identified in genera Acinetobacter, Moraxella and Psychrobacter.",
-                           "notes": "CARD's carO definition; each record names its own channel and drug."}]},
+             # #425, the second of the two carO sites, and the one that carried the ONLY
+             # evidence on this edge. ARO:3000244 is the mechanism term these records
+             # participate in; its definition states the inverse of this edge -- that
+             # permeability falls when porin production does -- which is precisely the
+             # claim, since the edge exists to be negated by the channel's loss.
+             "evidence": [{"reference": "ARO:3000244", "snippet": "Reduction in permeability to antibiotic, generally through reduced production of porins, can provide resistance.",
+                           "notes": "CARD's mechanism term, stated as the loss: permeability falls when the channel does, which is this edge read backwards. General to every record here; each names its own channel and drug."}]},
             {"subject": "barrier", "object": "influx",
              "predicate": "negatively regulates (the membrane excludes what has no channel)",
              "predicate_id": "RO:0002212",
@@ -5466,44 +5577,16 @@ FAMILY_SNIPPETS = {
                                "notes": "The pump's own mechanism is curated on its record; this edge carries only the consequence of making more of it."}]},
             ],
         },
-        {
-            "curated": "2026-08-07T00:00:00Z",
-            "precondition": _requires_lps_regulator,
-            "reference": "ARO:3003582",
-            "mech": {"ARO:0010000": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).", "ARO:3000212": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
-                     "ARO:0001002": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).", "ARO:3003588": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
-                     "ARO:0010001": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+)."},
-            "mech_res": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
-            "det_res": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
-            "res_drug": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
-            "note": "Not efflux despite the family term: these induce lipid A modification, reaching round 32's electrostatic repulsion by a regulatory route.",
-            "extra_nodes": [
-                {"node_id": "lipid_a_mod", "label": "lipid A modification gene expression",
-                 "node_type": "BIOLOGICAL_PROCESS",
-                 "description": "The pmrHFIJKLM / arn operon and relatives. Ungrounded: which operon differs per organism."},
-                {"node_id": "surface_charge", "label": "reduced net negative charge of the envelope",
-                 "node_type": "QUALITY",
-                 "description": "The same property mprF produces by lysinylating phosphatidylglycerol (round 32). Ungrounded: no ontology term for envelope net charge."},
-            ],
-            "extra_edges": [
-                {"subject": "determinant", "object": "lipid_a_mod",
-                 "predicate": "positively regulates (induces the modification genes)",
-                 "predicate_id": "RO:0002213",
-                 "evidence": [{"reference": "ARO:3003582", "snippet": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
-                               "notes": "CARD's definition of BasR, the archetype. Each record's own definition names the operon IT induces."}]},
-                {"subject": "lipid_a_mod", "object": "surface_charge",
-                 "predicate": "causally upstream of (adds positive charge to the envelope)",
-                 "predicate_id": "RO:0002411",
-                 "evidence": [{"reference": "ARO:3003582", "snippet": "Response regulator for Lipid A modification genes; two-component system involved in polymyxin resistance that senses high extracellular Fe(2+).",
-                               "notes": "Lipid A modification is what the induced genes do."}]},
-                {"subject": "surface_charge", "object": "drug0",
-                 "predicate": "negatively regulates (repels the cationic peptide)",
-                 "predicate_id": "RO:0002212",
-                 "description": "The causal core, shared with mprF (round 32) and reached here by induction rather than by the determinant doing the chemistry itself.",
-                 "evidence": [{"reference": "PMID:11342591", "snippet": "As this unusual modification leads to a reduced negative charge of the membrane surface, MprF-mediated peptide resistance",
-                               "notes": "Peschel et al. 2001 state the charge-to-resistance direction. They studied mprF's lysinylation; the charge logic is the same for lipid A modification, and the notes say the transfer rather than implying the paper covered it."}]},
-            ],
-        },
+        _lps_regulator_config(
+            _requires_lps_response_regulator, "ARO:3003582", "BasR",
+            "Response regulator for Lipid A modification genes; two-component system "
+            "involved in polymyxin resistance",
+            "the response regulator, which binds the modification operon's promoter"),
+        _lps_regulator_config(
+            _requires_lps_sensor_kinase, "ARO:3003583", "BasS",
+            "Histidine protein kinase sensor Lipid A modification gene; part of a "
+            "two-component system involved in polymyxin resistance",
+            "the sensor kinase, which phosphorylates the response regulator"),
     ],
     # ---------------------------------------------------------------------------------
     # ABC efflux subunits (ARO:3000748, ABC complexes only). Same family term as round 33's
@@ -6184,7 +6267,11 @@ FAMILY_SNIPPETS = {
         "note": "Target alteration: rifamycins bind a pocket in the RNA polymerase beta subunit, and substitutions in a 23-residue region of rpoB confer high-level resistance in one step.",
         "protein_traits": {
             "primary_key": "domain",
-            "domain": ("Pfam:PF04563", "RNA polymerase beta subunit domain", "DOMAIN", "RNA polymerases catalyse the DNA dependent polymerisation of RNA. Prokaryotes contain a single RNA polymerase compared to three in eukaryotes. This domain forms one of the two distinctive lobes of the Rpb2 structure."),
+            # #422: the parenthetical was dropped mid-quote, which is an ELISION rather
+            # than the truncation #423's guard was written for -- the source contains the
+            # cited prefix and then diverges, so that repair declined it. Restored
+            # verbatim from the KB record; the claim is unchanged either way.
+            "domain": ("Pfam:PF04563", "RNA polymerase beta subunit domain", "DOMAIN", "RNA polymerases catalyse the DNA dependent polymerisation of RNA. Prokaryotes contain a single RNA polymerase compared to three in eukaryotes (not including mitochondrial and chloroplast polymerases). This domain forms one of the two distinctive lobes of the Rpb2 structure."),
             "part_pred": "part of (the beta-subunit domain of this determinant)",
             "part_note": "KB trait record Pfam:PF04563; snippet is the InterPro:IPR007644 abstract that record's definition is taken from. Rpb2 is the structural name for the beta subunit, which is what makes this the right domain for an rpoB determinant.",
         },
@@ -7348,6 +7435,25 @@ SNIPPET_SOURCE = {
     # repaired the text became exactly ARO:3004363's, so this is the same repoint class
     # the table already handles (#365).
     "Lipid A acyltransferase genes confer resistance to certain types of peptide antibiotics such as polymyxins through the aminoacylation of lipopolysaccharide, thereby decreasing the negative charge of the outer membrane surface.": "ARO:3004363",
+    # --- #426 -----------------------------------------------------------------------
+    # Six more of the same shape, found by --configs (#424) rather than by the data side,
+    # because `res_drug` is normally OVERRIDDEN by `_drug_assertion` and these literals
+    # therefore reach almost no record today. That is what made them a trap and not a
+    # visible defect: any path that falls back to `cfg["res_drug"]` writes them.
+    #
+    # Every one of these was already attributed CORRECTLY in the SAME config's `det_res`
+    # list -- the bare `res_drug` copy is the only place the reference was lost -- so the
+    # repoint target is not a judgement call, it is the neighbouring literal.
+    "embB gene encodes for an arabinosyl transferase in the arabinogalactan synthesis pathway. It is inhibited by ethambutol. Mutations within the ERDR region of embB confers resistance to ethambutol.": "ARO:3000235",
+    "Sequence variants of elongation factor Tu that confer resistance to elfamycin antibiotics.": "ARO:3001312",
+    "arnA modifies lipid A with 4-amino-4-deoxy-L-arabinose (Ara4N) which allows gram-negative bacteria to resist the antimicrobial activity of cationic antimicrobial peptides and antibiotics such as polymyxin.": "ARO:3002985",
+    "The almEFG operon is responsible for glycylation of lipid A as a mechanism of colistin resistance in Vibrio cholerae.": "ARO:3007434",
+    "This family of phosphoethanolamine transferase catalyze the addition of 4-amino-4-deoxy-L-arabinose (L-Ara4N) and phosphoethanolamine to lipid A, which impedes the binding of colistin to the cell membrane.": "ARO:3004269",
+    # Not an ARO term at all: a 1987 measurement quoted from the paper. ARO:3000617
+    # (mecA) is the config's `reference` and says nothing about affinity. A PMID is
+    # unverifiable offline and so leaves the audit rather than passing it -- which is the
+    # honest outcome, not a bypass: the claim now names the source that can be checked.
+    "All strains produced penicillin-binding protein 2' (PBP 2'), which has been associated with methicillin resistance and which has very low affinity for beta-lactam antibiotics.": "PMID:3499861",
 }
 
 
@@ -8097,11 +8203,22 @@ FAMILY_SNIPPETS["ARO:3000557"] = [
 # transferring a group onto it, and each of their mechanism-term definitions is specific
 # with no donor hedge -- so each gets its own snippet and none needs a donor node at all.
 FAMILY_SNIPPETS["ARO:3000557"] = FAMILY_SNIPPETS["ARO:3000557"] + [
+    # #422/#426. This carried PROSITE's prose ("Beta-lactamases (EC 3.5.2.6) are enzymes
+    # which catalyze the hydrolysis of an amide bond in the beta-lactam ring...") under
+    # ARO:3000187, which does not contain a word of it -- the text is the shared preamble
+    # of PROSITE:PS00146/PS00336/PS00337/PS00743, and every other snippet in this helper is
+    # the mechanism term's OWN definition. A repoint was not available at config level:
+    # which PROSITE record a record should cite depends on ITS Ambler class, and this
+    # config spans A, C and D. ARO:3000187's own definition is general over exactly those
+    # three classes, is what the surrounding `notes` already claim to be quoting ("CARD's
+    # definition of beta-lactam hydrolysis"), and is the more precise mechanism statement
+    # of the two -- it names the acyl-enzyme intermediate the edges assert.
     _inactivation_transfer_config(
         "ARO:3000187", "beta-lactam hydrolysis",
-        "Beta-lactamases (EC 3.5.2.6) are enzymes which catalyze the hydrolysis of an "
-        "amide bond in the beta-lactam ring of antibiotics belonging to the "
-        "penicillin/cephalosporin family.",
+        "Mechanism of enzymatic degradation common to Ambler Class A, C and D "
+        "beta-lactamases. A serine residue located in the active site is used to form an "
+        "acyl-enzyme intermediate and subsequent hydrolysis renders the beta-lactam "
+        "inactive.",
         "beta-lactam hydrolase activity", hedged_donor=False),
     _inactivation_transfer_config(
         "ARO:3004140", "fusidic acid lactonisation",
@@ -8310,6 +8427,12 @@ def main() -> int:
                          "(needed after a config change). Off by default: rewriting a "
                          "graph a curator may have improved is destructive, and the safe "
                          "behaviour should not depend on remembering a flag (#204)")
+    ap.add_argument("--only", default="",
+                    help="comma-separated ARO ids: re-promote ONLY these, still under "
+                         "--family and still through their own config. The narrow answer "
+                         "to #280 -- a config change that affects 6 records of a family's "
+                         "65 currently has two options, rewrite all 65 or hand-edit the 6, "
+                         "and both are how a repair introduces a defect (#425)")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--verify", action="store_true",
                     help="check the config's claims against the records it would promote "
@@ -8348,6 +8471,18 @@ def main() -> int:
     # configs, whose class A active-site wiring the generic config overwrote. Nothing was
     # committed and all 5,036 were restored, but nothing warned either.
     #
+    # --only is checked HERE, against the family, rather than trusted from the command
+    # line. A typo'd or out-of-family id would otherwise select nothing, and the run would
+    # report "0 records written" and exit 0 -- indistinguishable from "already up to date",
+    # which is the same silent-bypass shape --traits-root grew a guard for in #418.
+    only = {s.strip() for s in args.only.split(",") if s.strip()}
+    if only:
+        stray = {i for i in only if args.family not in E.ancestry(terms, i)}
+        if stray:
+            print(f"FAIL: --only names {len(stray)} id(s) that are not under "
+                  f"{args.family}: {', '.join(sorted(stray))}")
+            return 1
+
     # A pre-pass, because the guard is useless after the first write.
     if args.repromote and args.apply and not args.force_repromote:
         n_draft = n_repromote = 0
@@ -8356,6 +8491,8 @@ def main() -> int:
             im = re.search(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', text, re.M)
             if not im or args.family not in E.ancestry(terms, im.group(1)):
                 continue
+            if only and im.group(1) not in only:
+                continue                # --only shrinks the blast radius the guard measures
             lm = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M)
             if config_for(args.family, im.group(1), lm.group(1) if lm else "", text) is None:
                 continue
@@ -8376,12 +8513,15 @@ def main() -> int:
 
     promoted = repromoted = skip_done = skip_nodraft = skip_excluded = 0
     skip_unreadable = 0
+    reached: set[str] = set()
     for pth in sorted(ARO_DIR.glob("*.yaml")):
         text = pth.read_text(encoding="utf-8")
         ident_m = re.search(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', text, re.M)
         if not ident_m:
             continue
         if args.family not in E.ancestry(terms, ident_m.group(1)):
+            continue
+        if only and ident_m.group(1) not in only:
             continue
         label_for_cfg = re.search(r'^label:\s*"?(.+?)"?\s*$', text, re.M)
         label_text = label_for_cfg.group(1) if label_for_cfg else ""
@@ -8486,6 +8626,7 @@ def main() -> int:
             pth.write_text(new, encoding="utf-8")
         promoted += 1
         repromoted += 0 if is_draft else 1
+        reached.add(ident_m.group(1))
         if args.limit and promoted >= args.limit:
             break
 
@@ -8500,6 +8641,31 @@ def main() -> int:
     print(f"  skipped (already curated): {skip_done:,} | skipped (no draft): {skip_nodraft:,}"
           f" | skipped (excluded by config): {skip_excluded:,}"
           f" | skipped (unreadable): {skip_unreadable:,}")
+
+    # Every --only id must have been WRITTEN, not merely be in the family. One that was
+    # excluded by its config, or has no draft and no --repromote, silently contributes
+    # nothing -- and "6 requested, 4 written" is the difference between a finished repair
+    # and one that left two records asserting the thing it was fixing.
+    #
+    # AFTER the summary, not before it (#435): the first version returned 1 here, so the
+    # one run that most needs its counts read printed none of them.
+    if only:
+        missed = sorted(only - reached)
+        if missed and args.limit and promoted >= args.limit:
+            # #435: this check used to be skipped outright whenever --limit was set, so
+            # `--only A,B,C --limit 2` dropped C, printed "2 records written" and exited 0.
+            # --limit is a deliberate early stop, so it is not a failure -- but it is also
+            # not the success the exit code alone would report.
+            print(f"NOTE: --limit {args.limit} stopped the run before {len(missed)} of the "
+                  f"--only record(s) were reached: {', '.join(missed)}. Nothing is wrong "
+                  f"with them; they were simply not attempted. Re-run without --limit.")
+        elif missed:
+            print(f"FAIL: --only named {len(only)} record(s) but {len(missed)} were not "
+                  f"written: {', '.join(missed)}")
+            print("  Each was skipped by its config's precondition, its exclude list, or "
+                  "for being already curated without --repromote. Re-read the skip lines "
+                  "above; nothing was written for these.")
+            return 1
     print("APPLIED." if args.apply else "Dry-run — pass --apply to write.")
     return 0
 

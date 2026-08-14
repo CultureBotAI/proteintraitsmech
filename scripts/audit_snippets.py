@@ -41,6 +41,16 @@ reference, snippet), one key per item -- so a new one fails even when an old one
 in the same change. Write it
 with --update-baseline, and read the diff it prints: FIXED lines are progress, NEW lines
 are the thing this exists to catch.
+
+`--archetypes` (#425) asks a DIFFERENT question, and it is the one everything above is
+blind to by construction. Those gates ask "is this quote real?". This one asks "is it
+about this record?" -- because a snippet can be verbatim in the term it cites and still be
+wrong, when that term is one gene in one organism and the record is neither. carO's
+definition sat on 42 permeability records, 2 of them carO, and passed every gate here: it
+was a truncation that made it read as generic, and repairing the truncation (#423) is what
+exposed it. Reported against a baseline rather than zeroed, because some of these are
+legitimate -- an efflux repressor citing the pump it represses is citing the edge's own
+object, not misattributing anything.
 """
 
 from __future__ import annotations
@@ -105,6 +115,39 @@ def load_obo_stanzas() -> dict[str, str]:
     return out
 
 
+_SHORT_NAME = re.compile(r'synonym: "[^"]*" EXACT CARD_Short_Name')
+_IS_A = re.compile(r"is_a: (ARO:\d+)")
+
+
+def load_obo_facts(obo: dict[str, str]) -> tuple[set[str], dict[str, set[str]]]:
+    """(gene-level term ids, id -> direct is_a parents), from the stanzas already loaded.
+
+    "Gene-level" means the term carries a `CARD_Short_Name` synonym. That is CARD's own
+    marker for "this term is a named gene or a named organism-specific variant" as opposed
+    to a mechanism, family or drug class -- exactly the line #425 is drawn on. Deriving it
+    from the release beats a hand-list: the list would go stale on the next `fetch-aro`
+    and nothing would say so.
+    """
+    gene_level = {tid for tid, body in obo.items() if _SHORT_NAME.search(body)}
+    parents = {tid: set(_IS_A.findall(body)) for tid, body in obo.items()}
+    return gene_level, parents
+
+
+def ancestors(tid: str, parents: dict[str, set[str]]) -> set[str]:
+    """Transitive is_a closure. Iterative and `seen`-guarded: ARO is a DAG, several terms
+    have two parents, and a recursive walk over it revisits the shared upper levels once
+    per path."""
+    out: set[str] = set()
+    stack = list(parents.get(tid, ()))
+    while stack:
+        p = stack.pop()
+        if p in out:
+            continue
+        out.add(p)
+        stack.extend(parents.get(p, ()))
+    return out
+
+
 KB_HEAD_BYTES = 8000
 
 
@@ -166,7 +209,17 @@ def load_kb_definitions(wanted: set[str]) -> dict[str, str]:
 
 
 def iter_evidence(paths):
-    """(record path, graph_id, subject, object, reference, snippet) for every item."""
+    """(path, graph_id, subject, object, reference, snippet, record identifier) per item.
+
+    The identifier is there for the archetype check (#425), the only question that needs
+    to know whose record a snippet is sitting on.
+
+    #436: this said the identifier was placed LAST "so the six-field unpacking every
+    existing caller does keeps working". It does not -- appending a seventh element raises
+    `too many values to unpack`, and every caller in this module was in fact changed. Note
+    also that `bad` in `main()` is a seven-tuple too, whose last field is `why` rather than
+    an identifier; the two shapes are not interchangeable.
+    """
     for path in paths:
         text = path.read_text(encoding="utf-8")
         if "causal_graphs:" not in text:
@@ -177,13 +230,14 @@ def iter_evidence(paths):
             continue
         if not isinstance(doc, dict):
             continue
+        ident = doc.get("identifier")
         for graph in doc.get("causal_graphs") or []:
             for edge in graph.get("edges") or []:
                 for ev in edge.get("evidence") or []:
                     ref, snip = ev.get("reference"), ev.get("snippet")
                     if ref and snip:
                         yield (path, graph.get("graph_id"), edge.get("subject"),
-                               edge.get("object"), ref, snip)
+                               edge.get("object"), ref, snip, ident)
 
 
 def _rel(path: Path) -> str:
@@ -314,6 +368,72 @@ def audit_configs(show: int, obo=None, kb=None) -> tuple[int, dict[str, int]]:
     return len(bad), dict(sorted(counts.items()))
 
 
+def archetype_key(rel_path: str, graph_id, subject, obj, reference: str,
+                  snippet: str) -> str:
+    """One key per evidence item, snippet included -- like the other two baselines.
+
+    #434: it shipped WITHOUT the snippet, on the reasoning that the quote here is already
+    verbatim so including it would make every rewording read as a new finding. That
+    reasoning applies just as well to the other two baselines, which include it anyway,
+    and it left a hole of exactly the shape this module exists to close (#411):
+
+      an edge in the baseline cites gene-level ARO:3003808 quoting a sentence that is
+      legitimately about it; swap that for a DIFFERENT sentence from the same term, about
+      Acinetobacter and Moraxella, and the count at the key is unchanged, so the identity
+      gate reports 0 NEW -- while the data-side gate stays green, because the new sentence
+      is also verbatim in ARO:3003808.
+
+    The cost is the one anticipated: rewording a blessed snippet shows as 1 FIXED + 1 NEW.
+    That is diff noise a human reads, which is the trade the other two already make.
+    """
+    return f"{rel_path}|{graph_id}|{subject}->{obj}|{reference}|{_norm(snippet)}"
+
+
+def audit_archetypes(items, obo: dict[str, str], show: int) -> tuple[int, dict[str, int]]:
+    """Evidence citing a GENE-LEVEL ARO term that is neither this record's own term nor
+    one of its ancestors (#425).
+
+    Not a quote check -- every one of these snippets IS verbatim in the term it names,
+    which is why `--max 0` on the data side says nothing about them. The question is
+    relevance: carO's definition names *Acinetobacter baumannii* and the carO gene, and
+    sat on 42 permeability records of which 2 are carO. #423 did not cause that; it
+    *revealed* it, by restoring the clause the truncation had removed.
+
+    ANCESTORS ARE NOT FLAGGED, deliberately. Quoting a parent term on a child is the
+    normal, correct shape for this corpus -- a variant record inheriting its family's
+    mechanism claim -- and flagging it would bury the real signal under thousands of items.
+
+    Returns (failures, {key: count}). Reports rather than judges: some of these are fine
+    (an efflux repressor citing the pump it represses is citing the edge's own object),
+    which is why this gets a BASELINE and not a hard zero.
+    """
+    gene_level, parents = load_obo_facts(obo)
+    bad, counts = [], defaultdict(int)
+    anc_cache: dict[str, set[str]] = {}
+    for path, gid, subj, obj, ref, snip, ident in items:
+        if not ref.startswith("ARO:") or ref == ident or ref not in gene_level:
+            continue
+        if not isinstance(ident, str) or not ident.startswith("ARO:"):
+            continue
+        if ident not in anc_cache:
+            anc_cache[ident] = ancestors(ident, parents)
+        if ref in anc_cache[ident]:
+            continue
+        bad.append((path, gid, subj, obj, ref, snip, ident))
+        counts[archetype_key(_rel(path), gid, subj, obj, ref, snip)] += 1
+
+    by_ref: dict[str, int] = defaultdict(int)
+    recs: dict[str, set] = defaultdict(set)
+    for path, _g, _s, _o, ref, _sn, _i in bad:
+        by_ref[ref] += 1
+        recs[ref].add(path)
+    print(f"\narchetype reuse (#425):    {len(bad):,} evidence item(s) across "
+          f"{len({b[0] for b in bad}):,} records, {len(by_ref):,} cited gene-level terms")
+    for ref, n in sorted(by_ref.items(), key=lambda kv: -kv[1])[:show]:
+        print(f"  {n:>5}  {ref}  on {len(recs[ref]):,} record(s)")
+    return len(bad), dict(sorted(counts.items()))
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -336,6 +456,16 @@ def main() -> int:
     ap.add_argument("--config-baseline", default="",
                     help="pin the IDENTITY of each known config-literal failure, so a swap "
                          "fails even at an unchanged count (#411's argument, #428)")
+    ap.add_argument("--archetypes", action="store_true",
+                    help="also report evidence citing a GENE-LEVEL ARO term that is not "
+                         "this record's own term or an ancestor of it (#425). A different "
+                         "question from the rest of this script: those snippets ARE "
+                         "verbatim in the term they name.")
+    ap.add_argument("--max-archetypes", type=int, default=None,
+                    help="exit 1 if archetype-reuse items exceed N (a CEILING)")
+    ap.add_argument("--archetype-baseline", default="",
+                    help="pin the IDENTITY of each known archetype reuse, so a swap fails "
+                         "at an unchanged count (#411's argument again)")
     ap.add_argument("--baseline", default="",
                     help="JSON of known mismatches; fails on any NEW one even if the total "
                          "is unchanged (#411). A ceiling cannot see a swap.")
@@ -380,17 +510,25 @@ def main() -> int:
         # gate reported "41 FIXED" and printed "re-run with --update-baseline to lock it
         # in", which zeroed the committed baseline and exited 0. The tool recommended its
         # own self-destruct. The data-side gates are off when their input is (#429 review).
-        if args.baseline or args.update_baseline or args.max is not None or args.strict:
+        # The archetype gate reads RECORDS and nothing else, so --configs-only starves it
+        # exactly as it starves the data side. Left on, it would report "0 items" against
+        # a 100-entry baseline, print "100 FIXED", and -- with --update-baseline, which
+        # the recipe forwards -- overwrite the baseline with `{}`. Same self-destruct B1
+        # found for --baseline; same fix.
+        if (args.baseline or args.update_baseline or args.max is not None or args.strict
+                or args.archetypes or args.max_archetypes is not None
+                or args.archetype_baseline):
             print("NOTE: --configs-only skips the record walk, so --baseline/--max/--strict "
-                  "have no data to judge and are ignored. Run without it to gate the data "
-                  "side.")
+                  "and the --archetypes gates have no data to judge and are ignored. Run "
+                  "without it to gate the data side.")
         args.baseline, args.max, args.strict = "", None, False
+        args.archetypes, args.max_archetypes, args.archetype_baseline = False, None, ""
     root = TRAITS / args.path if args.path else TRAITS
     paths = [] if args.configs_only else sorted(root.rglob("*.yaml"))
     items = list(iter_evidence(paths))
 
-    wanted = {ref for *_, ref, _ in items
-              if ref.split(":")[0] in ON_DISK_PREFIXES and not ref.startswith("ARO:")}
+    wanted = {it[4] for it in items
+              if it[4].split(":")[0] in ON_DISK_PREFIXES and not it[4].startswith("ARO:")}
     if args.configs:
         # ONE resolution pass for both sides: the config `wanted` is 50 refs, the data
         # side's 53, overlapping 50 -- resolving twice cost 26s of the 60s recipe (#428).
@@ -401,13 +539,30 @@ def main() -> int:
         print(f"NOTE: {_rel(OBO)} is absent (data/raw is gitignored), so every "
               f"ARO reference is unverifiable here. Run `just fetch-aro` first -- otherwise "
               f"this reports a small number and means nothing (#365).")
+        # #432: the archetype gate reads NOTHING BUT the obo -- "is this term gene-level"
+        # and "is it an ancestor" both come from it -- so without it the check reports 0
+        # items, the identity gate prints "323 FIXED", and `--update-baseline`, which the
+        # recipe documents as the normal follow-up and forwards {{args}} to, writes `{}`
+        # over the committed baseline and exits 0. The entire review queue would be
+        # blessed away by a command that reads as progress.
+        #
+        # This is the same starvation B1 found for --configs-only, reached by a different
+        # route: there the RECORDS are missing, here the OBO is. The data-side and config
+        # gates survive it -- unresolvable is not a failure for them, and both baselines
+        # are empty -- but the archetype gate cannot tell "no findings" from "no input".
+        if args.archetypes:
+            print("NOTE: --archetypes needs the obo for both of its questions, so it is "
+                  "OFF here rather than reporting 0 of everything. Its gates and its "
+                  "baseline are untouched.")
+            args.archetypes = False
+            args.max_archetypes, args.archetype_baseline = None, ""
     kb = load_kb_definitions(wanted)
 
     checked = unresolved = skipped = 0
     bad: list[tuple] = []
     by_ref: dict[str, int] = defaultdict(int)
     by_ref_unresolved: dict[str, int] = defaultdict(int)
-    for path, gid, subj, obj, ref, snip in items:
+    for path, gid, subj, obj, ref, snip, _ident in items:
         prefix = ref.split(":")[0]
         if prefix not in ON_DISK_PREFIXES:
             skipped += 1                      # PMID / DOI / URL -- valid, not verifiable here
@@ -535,6 +690,56 @@ def main() -> int:
                 if new:
                     print(f"FAIL: {len(new)} config literal(s) newly cite a source that does "
                           f"not contain them.")
+                    rc = 1
+
+    # --- archetype gate (#425) ------------------------------------------------------
+    # BEFORE the data-side identity gate, for the reason the config gate is: that block
+    # returns, and `--update-baseline` is the documented follow-up workflow. A gate placed
+    # after a `return` is a gate that is off exactly when someone is changing things.
+    if args.archetypes:
+        n_arch, arch_counts = audit_archetypes(items, obo, args.show)
+        if args.max_archetypes is not None and n_arch > args.max_archetypes:
+            print(f"FAIL: {n_arch} archetype-reuse item(s), exceeding --max-archetypes "
+                  f"{args.max_archetypes}")
+            rc = 1
+        if args.archetype_baseline:
+            abp = Path(args.archetype_baseline)
+            if args.update_baseline:
+                if abp.resolve().is_relative_to(ROOT) and args.traits_root:
+                    print("FAIL: refusing --update-baseline on an in-repo archetype "
+                          "baseline while --traits-root is set.")
+                    return 1
+                was = _load_baseline(abp)
+                gone, added = diff_baseline(arch_counts, was)
+                print(f"\narchetype baseline: {sum(was.values()):,} -> "
+                      f"{sum(arch_counts.values()):,}  ({len(gone):,} FIXED, "
+                      f"{len(added):,} NEW)")
+                for k in added[:args.show]:
+                    rec, _g, edge, ref, snip = k.split("|", 4)
+                    print(f"  NEW    {rec.rsplit('/', 1)[-1]}  {edge}  {ref}\n"
+                          f"         {snip[:100]}")
+                abp.parent.mkdir(parents=True, exist_ok=True)
+                abp.write_text(json.dumps(arch_counts, indent=1) + "\n", encoding="utf-8")
+                print(f"archetype baseline written -> {abp}")
+                if added:
+                    print("NOTE: newly-blessed archetype reuse above. `git diff` the "
+                          "baseline before committing -- this command can launder one.")
+            elif not abp.exists():
+                print(f"\nFAIL: --archetype-baseline {abp} does not exist; run "
+                      f"--update-baseline")
+                rc = 1
+            else:
+                known = _load_baseline(abp)
+                fixed, new = diff_baseline(arch_counts, known)
+                print(f"\narchetype baseline: {sum(known.values()):,} known · "
+                      f"{len(fixed):,} FIXED · {len(new):,} NEW")
+                for k in new[:args.show]:
+                    rec, _g, edge, ref, snip = k.split("|", 4)
+                    print(f"  NEW    {rec.rsplit('/', 1)[-1]}  {edge}  {ref}\n"
+                          f"         {snip[:100]}")
+                if new:
+                    print(f"FAIL: {len(new)} evidence item(s) newly cite a gene-level term "
+                          f"that is neither the record's own nor an ancestor of it.")
                     rc = 1
 
     # --- identity gate (#411) -------------------------------------------------------
