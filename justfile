@@ -675,6 +675,10 @@ fetch-pfam:
     gzcat data/raw/pfam/Pfam-A.hmm.dat.gz | awk '/^#=GF AC/{ac=$3; sub(/\\..*/,"",ac)} /^#=GF TP/{print ac"\\t"$3}' > data/raw/pfam/pfam_types.tsv
     curl -sSLf --max-time 120 -o data/raw/mappings/pfam2go https://current.geneontology.org/ontology/external2go/pfam2go
     @echo 'pfam2interpro.tsv is derived from data/raw/interpro/interpro.xml.gz (run fetch-interpro)'
+    @echo 'NOTE (#344): that TSV is AMBIGUOUS — it mixes "PF is a member signature of IPR"'
+    @echo '  with "IPR abstract mentions PF", and 467 accessions carry both. Nothing reads'
+    @echo '  it for that question any more; seed-pfam, enrich_pfam_definitions and'
+    @echo '  migrate_mapped_xrefs all take member_list straight from interpro.xml.gz.'
 
 # Seed Pfam-A families (Domain/Family/Repeat/Coiled-coil/Disordered/Motif),
 # GO- + InterPro-grounded. Requires `just fetch-pfam`. Dry-run by default.
@@ -882,6 +886,25 @@ analyze-merges *args:
 # Shortlist records whose own definition names a role their curated graph contradicts
 audit-roles:
     uv run python scripts/audit_role_mismatch.py
+
+# Does each Pfam record cite the InterPro entry that INTEGRATES it? (#344)
+# `pfam2interpro.tsv` mixes "PF is a member of IPR" with "IPR's abstract mentions PF", and
+# the readers took the last row -- so 407 records carried a neighbouring domain's abstract
+# as their definition. Fluent, on-topic, self-consistent and about something else, which is
+# why validate-all, audit-prose and every link check passed it.
+# No baseline and no ceiling: unlike #425's archetypes there are no legitimate instances.
+# LOCAL ONLY -- needs data/raw/interpro/interpro.xml.gz; without it this FAILS rather than
+# reporting 0 against a reference it does not have (#432's lesson).
+audit-pfam-interpro *args:
+    uv run python scripts/audit_pfam_interpro.py {{args}}
+
+# Repair what audit-pfam-interpro finds (#344). Definitions FIRST: the xref repair reads
+# the same member_list and the two must agree, and running them the other way round leaves
+# a record whose definition and xref name different entries until the second finishes.
+# Both are dry-run by default.
+repair-pfam-interpro *args:
+    uv run python scripts/enrich_pfam_definitions.py {{args}}
+    uv run python scripts/repair_pfam_interpro_xrefs.py {{args}}
 
 # Which already-curated records would no config accept today (#267)
 audit-fit:

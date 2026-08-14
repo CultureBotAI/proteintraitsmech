@@ -130,3 +130,57 @@ def clean_abstract_element(el) -> str:
         return ""
     import xml.etree.ElementTree as ET
     return clean_abstract(ET.tostring(el, encoding="unicode"))
+
+
+# ---------------------------------------------------------------------------------------
+# WHICH InterPro entry integrates a member signature (#344)
+# ---------------------------------------------------------------------------------------
+
+def load_member_integration(xml_gz, db: str = "PFAM") -> dict[str, str]:
+    """member accession -> the InterPro entry whose `member_list` contains it.
+
+    THE SAME TRAP THIS MODULE ALREADY DOCUMENTS, ONE LEVEL UP. `db_xref` appears in two
+    completely different places in `interpro.xml`, and they mean opposite things:
+
+        <member_list>
+          <db_xref protein_count="112789" db="PFAM" dbkey="PF00575" name="S1"/>
+        </member_list>              <- IPR003029 IS the integration of PF00575
+
+        <abstract>
+          ... associated with <db_xref db="PFAM" dbkey="PF00575"/> ...
+        </abstract>                 <- IPR059328 merely MENTIONS PF00575 in prose
+
+    `data/raw/mappings/pfam2interpro.tsv` was derived by taking both, so 467 Pfam
+    accessions map to more than one entry there and nothing says which is real. Three
+    scripts read that file, two of them last-wins -- and last-wins picked the prose mention
+    for 407 records, which then received a definition describing a DIFFERENT domain.
+    `Pfam:PF00246` ("Zinc carboxypeptidase") got an abstract about a Big domain "found
+    C-terminal to the M14 carboxypeptidase catalytic domain (Pfam:PF00246)" -- the very
+    sentence that created the false mapping.
+
+    `member_list` is unambiguous by construction, and measured to be so: across the
+    release, 0 of 29,105 Pfam signatures appear in two entries' member lists. Verified
+    against the live InterPro API on an 8-accession sample -- every one agreed with
+    `member_list` and none with what the record cited.
+
+    So this is the only mapping any caller should use for "which entry's abstract describes
+    this signature". Nothing here reads the TSV; it cannot, because the TSV is the defect.
+    """
+    import gzip
+    import xml.etree.ElementTree as ET
+
+    out: dict[str, str] = {}
+    with gzip.open(xml_gz, "rt", encoding="utf-8", errors="replace") as fh:
+        for _ev, el in ET.iterparse(fh, events=("end",)):
+            if el.tag != "interpro":
+                continue
+            ipr = el.get("id", "")
+            members = el.find("member_list")
+            if ipr and members is not None:
+                for xref in members.findall("db_xref"):
+                    if xref.get("db", "").upper() == db.upper():
+                        key = xref.get("dbkey", "")
+                        if key:
+                            out[key] = ipr
+            el.clear()
+    return out

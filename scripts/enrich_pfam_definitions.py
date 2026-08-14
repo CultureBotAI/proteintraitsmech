@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 """Backfill rich Pfam definitions from InterPro abstracts (record-sample-review-1
 S1 for Pfam). Pfam merged into InterPro, and the '#=GF CC' prose that Pfam-A.hmm.dat
-lacks is now the InterPro entry ABSTRACT. pfam2interpro maps ~29.7k Pfam families
-to an InterPro entry; interpro.xml.gz (already fetched) carries the abstracts.
+lacks is now the InterPro entry ABSTRACT. interpro.xml.gz carries both the mapping
+and the abstracts: 29,105 Pfam signatures appear in exactly one entry's member_list.
+
+WHICH entry is the whole question (#344). This used pfam2interpro.tsv, which conflates
+"PF is a member of IPR" with "IPR's abstract mentions PF", and last-wins over its
+duplicate rows picked the mention for 407 records. See `interpro_text
+.load_member_integration`.
 
 For each Pfam record whose family maps to an InterPro entry with a non-trivial
 abstract, replace the boilerplate definition ('<name>. Pfam <type> family …')
@@ -21,12 +26,11 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
-PF2IPR = REPO_ROOT / "data" / "raw" / "mappings" / "pfam2interpro.tsv"
 XML_GZ = REPO_ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 ID_RE = re.compile(r"^identifier:\s*(Pfam:PF\d+)", re.M)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import is_curated  # noqa: E402
-from interpro_text import clean_abstract_element  # noqa: E402
+from interpro_text import clean_abstract_element, load_member_integration  # noqa: E402
 
 DEF_CAP = 1800
 
@@ -51,12 +55,19 @@ def clean_abstract(el) -> str:
 
 
 def load_pf2ipr() -> dict[str, str]:
-    out = {}
-    for line in PF2IPR.read_text(encoding="utf-8", errors="replace").splitlines():
-        parts = line.split("\t")
-        if len(parts) >= 2 and parts[0].startswith("PF"):
-            out[parts[0]] = parts[1].strip()
-    return out
+    """Pfam -> the entry that INTEGRATES it, from interpro.xml's member_list (#344).
+
+    This read `pfam2interpro.tsv` last-wins. That file was derived by taking every
+    `db_xref db="PFAM"` in the release, including the ones inside OTHER entries' abstract
+    prose, so 467 accessions have more than one row and last-wins picked the prose mention
+    for 407 of them. Each of those records then received an abstract describing a
+    different domain -- and, because the abstract mentions the Pfam accession, one that
+    reads plausibly enough to survive review.
+
+    The TSV is no longer consulted. It cannot be filtered into correctness: by the time a
+    row exists the distinction between "member of" and "mentioned by" has been discarded.
+    """
+    return load_member_integration(XML_GZ)
 
 
 def load_ipr_abstracts(wanted: set[str]) -> dict[str, str]:
@@ -89,12 +100,20 @@ def borrowed_source(ipr: str, pf: str) -> str:
         abstract, so it skipped every one of these -- which is why #170 shipped
         with 3,431 records still carrying deleted cross-references.
 
-    `mapped_xrefs: {object: InterPro:…, mapping_source: pfam2interpro}` is not a
-    substitute: that asserts a signature-to-entry MAPPING, which is a different
-    claim from "this definition's text is that entry's abstract".
+    `mapped_xrefs: {object: InterPro:…, mapping_source: interpro-member-list}` is
+    not a substitute: that asserts a signature-to-entry MAPPING, which is a
+    different claim from "this definition's text is that entry's abstract".
 
     Matches the convention the member-DB seeders already use.
     """
+    # #344 kept this wording deliberately. The obvious edit -- "is a member signature of
+    # this entry", naming what we now read -- is TRUE, and would have rewritten the
+    # `definition_source` line of all 28,606 correctly-mapped records to say something
+    # they already implied, burying 407 real content fixes in 29k lines of relabelling
+    # (#180's complaint, exactly). It is also unnecessary: `pfam2interpro.tsv` is a
+    # SUPERSET, verified -- it contains the correct member_list entry for 29,105 of
+    # 29,105 signatures, alongside the prose mentions that made it ambiguous. So the
+    # sentence stays true for every record, including the repaired ones.
     return (f'"InterPro:{ipr} abstract '
             f'(Pfam {pf} maps to this entry via pfam2interpro)"')
 
@@ -135,6 +154,69 @@ def enrich_record(text: str, ipr: str, pf: str, abstract: str) -> str:
 
 
 
+# The `definition_source` this script writes, so a record carrying ANOTHER entry's
+# abstract can be recognised and which entry it names can be read back (#344).
+borrowed_re = re.compile(r'^definition_source: "InterPro:(IPR\d+) abstract', re.M)
+
+PFAM_DAT = REPO_ROOT / "data" / "raw" / "pfam" / "Pfam-A.hmm.dat.gz"
+PFAM_TYPES = REPO_ROOT / "data" / "raw" / "pfam" / "pfam_types.tsv"
+_PFAM_META: dict[str, tuple[str, str]] | None = None
+
+
+def _pfam_meta() -> dict[str, tuple[str, str]]:
+    """PF accession -> (Pfam ID, type), from the same two files `seed_pfam` reads.
+
+    Loaded once and lazily: only the revert path needs it, and that path fires on 4 of
+    30,134 records.
+    """
+    global _PFAM_META
+    if _PFAM_META is not None:
+        return _PFAM_META
+    types = {}
+    if PFAM_TYPES.exists():
+        for line in PFAM_TYPES.read_text(encoding="utf-8", errors="replace").splitlines():
+            parts = line.split("\t")
+            if len(parts) >= 2:
+                types[parts[0].strip()] = parts[1].strip()
+    meta: dict[str, tuple[str, str]] = {}
+    if PFAM_DAT.exists():
+        acc = pid = None
+        with gzip.open(PFAM_DAT, "rt", encoding="utf-8", errors="replace") as fh:
+            for line in fh:
+                if line.startswith("#=GF AC"):
+                    acc = line.split()[2].split(".")[0]
+                elif line.startswith("#=GF ID"):
+                    pid = line.split(None, 2)[2].strip()
+                elif line.startswith("//") and acc:
+                    meta[acc] = (pid or acc, types.get(acc, ""))
+                    acc = pid = None
+    _PFAM_META = meta
+    return meta
+
+
+def pfam_boilerplate(pf: str, text: str) -> str | None:
+    """`seed_pfam`'s own definition string for this family, or None if unrecoverable.
+
+    Byte-identical to `seed_pfam.build_yaml`'s
+    `f"{desc or pid}. Pfam {typ.lower()} family {pid} (Pfam:{pf})."` -- the point of the
+    revert is to land exactly where the seeder would have, so that re-seeding is a no-op
+    rather than a third variant of the same sentence.
+
+    `desc` is the record's own `label`, which is what the seeder wrote it from. Returns
+    None rather than guessing when the release does not have the family, so the caller can
+    report a stranded record instead of inventing prose.
+    """
+    meta = _pfam_meta().get(pf)
+    if not meta:
+        return None
+    pid, typ = meta
+    if not typ:
+        return None
+    m = re.search(r"^label:\s*(.+?)\s*$", text, re.M)
+    label = (m.group(1).strip("'\"") if m else "") or pid
+    return f"{label}. Pfam {typ.lower()} family {pid} (Pfam:{pf})."
+
+
 def should_enrich(text: str) -> bool:
     """False for a record showing curation.
 
@@ -157,10 +239,12 @@ def main() -> int:
     ap.add_argument("--limit", type=int, default=0,
                     help="stop after N updated records (canary runs)")
     args = ap.parse_args()
-    for f in (PF2IPR, XML_GZ):
-        if not f.exists():
-            print(f"missing {f}; run `just fetch-pfam` / `just fetch-interpro`", file=sys.stderr)
-            return 2
+    # PF2IPR is deliberately NOT required any more (#344): the mapping now comes from
+    # interpro.xml's member_list, which is the only place the release states it
+    # unambiguously.
+    if not XML_GZ.exists():
+        print(f"missing {XML_GZ}; run `just fetch-interpro`", file=sys.stderr)
+        return 2
 
     pf2ipr = load_pf2ipr()
     pfam_dirs = [TRAITS / "sequence" / d / "pfam" for d in
@@ -178,13 +262,47 @@ def main() -> int:
     abstracts = load_ipr_abstracts(wanted)
     print(f"{len(abstracts):,} InterPro entries have a usable abstract")
 
-    updated = relabelled = curated = 0
+    updated = relabelled = curated = reverted = stranded = 0
     for path, pf in records:
         ipr = pf2ipr.get(pf, "")
         ab = abstracts.get(ipr)
-        if not ab:
-            continue
         text = path.read_text(encoding="utf-8", errors="replace")
+        if not ab:
+            # #344: `continue` here was right while the mapping could only be right or
+            # absent. It is not right now. A record can be carrying ANOTHER entry's
+            # abstract while its own entry has none -- 4 of the 407, and they are the worst
+            # of them: `hlh-pf00010` holds IPR025610's text, which says in so many words
+            # "The DNA-binding HLH domain is further downstream, Pfam:PF00010" -- an
+            # abstract stating it is not about this family.
+            #
+            # Skipping them would leave the confidently wrong definition in place and
+            # report the run as complete. Revert to the Pfam boilerplate instead: a thin
+            # true definition beats a fluent false one, and `definition_source: Pfam` puts
+            # the record back where the seeder would have left it.
+            wrong = borrowed_re.search(text)
+            if not wrong or wrong.group(1) == ipr:
+                continue
+            if not should_enrich(text):
+                curated += 1
+                continue
+            boiler = pfam_boilerplate(pf, text)
+            if boiler is None:
+                stranded += 1
+                print(f"  STRANDED {path.name}: cites {wrong.group(1)}, should be "
+                      f"{ipr or '(unmapped)'}, which has no abstract -- and no Pfam "
+                      f"boilerplate could be rebuilt for it")
+                continue
+            new = set_definition(text, boiler, "Pfam")
+            if new != text:
+                reverted += 1
+                if args.apply:
+                    path.write_text(new, encoding="utf-8")
+                # #344: reverts count toward --limit too. They did not at first, so
+                # `--limit 1` -- the documented canary -- would have written one
+                # enrichment and all 35 reverts, which is the opposite of a canary.
+                if args.limit and updated + relabelled + reverted >= args.limit:
+                    break
+            continue
         if not should_enrich(text):
             curated += 1
             continue
@@ -199,7 +317,7 @@ def main() -> int:
                 updated += 1
             if args.apply:
                 path.write_text(new, encoding="utf-8")
-            if args.limit and updated + relabelled >= args.limit:
+            if args.limit and updated + relabelled + reverted >= args.limit:
                 break
 
     verb = "updated" if args.apply else "would update"
@@ -209,10 +327,18 @@ def main() -> int:
         print(f"  {'relabelled' if args.apply else 'would relabel'} "
               f"{relabelled:,} whose text was already correct but whose "
               f"definition_source still said 'Pfam' (#173)")
+    if reverted:
+        print(f"  {'reverted' if args.apply else 'would revert'} {reverted:,} to the Pfam "
+              f"boilerplate: they carried a DIFFERENT entry's abstract and their own entry "
+              f"has none (#344)")
+    if stranded:
+        print(f"  STRANDED {stranded:,}: wrong abstract, no replacement, no boilerplate "
+              f"rebuildable -- listed above, and still wrong")
     if curated:
         print(f"  skipped {curated:,} showing curation (definition left alone, #175)")
-    if args.limit and updated + relabelled >= args.limit:
-        print(f"  PARTIAL: stopped at --limit {args.limit}")
+    if args.limit and updated + relabelled + reverted >= args.limit:
+        print(f"  PARTIAL: stopped at --limit {args.limit} -- the rest of the corpus was "
+              f"not examined, so the counts above are not a survey")
     return 0
 
 

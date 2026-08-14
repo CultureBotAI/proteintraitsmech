@@ -44,6 +44,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from record_io import write_record  # noqa: E402
 from yaml_emit import folded, slugify as _slugify, yaml_escape  # noqa: E402
+from interpro_text import load_member_integration  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 RAW = REPO_ROOT / "data" / "raw"
@@ -51,6 +52,7 @@ CLANS = RAW / "pfam" / "Pfam-A.clans.tsv.gz"
 TYPES = RAW / "pfam" / "pfam_types.tsv"
 PFAM2GO = RAW / "mappings" / "pfam2go"
 PFAM2IPR = RAW / "mappings" / "pfam2interpro.tsv"
+XML_GZ = RAW / "interpro" / "interpro.xml.gz"
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 LICENSE = "public domain (Pfam / InterPro)"
 
@@ -96,6 +98,23 @@ def load_pfam2go() -> dict[str, list[str]]:
 
 
 def load_pfam2ipr() -> dict[str, str]:
+    """Pfam -> the entry that INTEGRATES it, from interpro.xml's member_list (#344).
+
+    Was `pfam2interpro.tsv`, last-wins over duplicate rows. That file mixes "PF is a member
+    signature of IPR" with "IPR's abstract mentions PF", and the mention won 407 times --
+    writing `mapped_xrefs: {object: InterPro:..., mapping_source: pfam2interpro}` asserting
+    a mapping InterPro does not make. 31 of the affected families are not integrated into
+    ANY entry, so the correct xref for them is none at all.
+
+    Falls back to the TSV only when the XML is absent, and says so: this is a seeder, and
+    silently emitting no InterPro xref for 29k records would be a worse failure than a
+    noisy one.
+    """
+    if XML_GZ.exists():
+        return load_member_integration(XML_GZ)
+    print(f"WARNING: {XML_GZ} absent; falling back to {PFAM2IPR.name}, which is ambiguous "
+          f"for 467 accessions (#344). Run `just fetch-interpro` for correct xrefs.",
+          file=sys.stderr)
     out = {}
     if PFAM2IPR.exists():
         for line in PFAM2IPR.read_text(encoding="utf-8", errors="replace").splitlines():
