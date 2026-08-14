@@ -73,8 +73,9 @@ def main() -> int:
 
     # #447: this was the FIFTH independent member_list walk in the repo, and the one that
     # had been right all along -- `cross_source.tsv` held the correct Pfam->InterPro pairs
-    # while 407 records disagreed with it, for the whole life of #344, with nothing
-    # comparing them. Sharing the parser is half the fix; `audit_equivalence_consistency`
+    # while 335 records disagreed with it, for the whole life of #344, with nothing
+    # comparing them. (335, not #344's 407: that is how many of the 407 have an overlay
+    # row at all. The other 72 name an InterPro entry this corpus does not seed.) Sharing the parser is half the fix; `audit_equivalence_consistency`
     # is the other half.
     edges: list[tuple[str, str, str]] = []
     from_db: dict[str, int] = {}

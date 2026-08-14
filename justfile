@@ -892,9 +892,15 @@ audit-roles:
 # derived from interpro.xml's member_list, and nothing compared them -- so the committed
 # TSV held the right Pfam->InterPro pairs while 335 records asserted a different entry,
 # for the whole life of #344.
-# Reads ONLY committed files, so unlike audit-pfam-interpro it runs in CI (data/raw is
-# gitignored). It is the cheap gate: a CONSISTENCY check, not a correctness one -- if both
-# artefacts were regenerated from a bad parse it would pass. Run both locally.
+# Reads ONLY committed files, so unlike audit-pfam-interpro it CAN run in CI (data/raw is
+# gitignored). It does so via pytest, not this recipe: checks.yml runs `just lint` and
+# `just test`, and tests/test_equivalence_consistency.py shells out to the script. This
+# recipe is for running it by hand.
+# It is the cheap gate: a CONSISTENCY check, not a correctness one -- if both artefacts
+# were regenerated from the same bad parse it would pass. Run both locally.
+# It compares 17,970 of the 29,105 pairs it COULD compare and prints what it did not,
+# in both directions -- including 6,329 overlay rows no record asserts, which nothing
+# covers (#450).
 audit-equivalence-consistency *args:
     uv run python scripts/audit_equivalence_consistency.py {{args}}
 
