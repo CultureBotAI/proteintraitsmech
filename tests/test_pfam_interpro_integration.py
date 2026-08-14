@@ -213,3 +213,172 @@ def test_the_repair_refuses_to_change_anything_outside_mapped_xrefs():
                   "license: cc0\n")
     without = "identifier: Pfam:PF1\nlicense: cc0\n"
     assert R._mask(with_xrefs) == R._mask(without) == without
+
+
+# ---------------------------------------------------------------------------------------
+# Review follow-ups (#344 review): the branches most likely to be wrong were the untested
+# ones, and two gates could report a false clean.
+# ---------------------------------------------------------------------------------------
+
+def test_one_entry_per_signature_is_ENFORCED_not_merely_true(tmp_path):
+    """The whole repair rests on this: `load_member_integration` is a last-wins dict, so a
+    signature in two member lists would be rewritten to whichever entry the parser saw
+    last -- a coin flip, applied to a record's definition.
+
+    It was measured true across the release (0 of 29,105) and enforced nowhere, and the
+    test that checked it SKIPS in CI because it needs data/raw. So the check moved into
+    the loader, where it runs on every call, and this pins it on a fixture that needs
+    nothing.
+    """
+    import pytest
+    xml = tmp_path / "dupe.xml.gz"
+    with gzip.open(xml, "wt", encoding="utf-8") as fh:
+        fh.write("""<?xml version="1.0"?>
+<interprodb>
+<interpro id="IPR000001" short_name="A" type="Domain">
+  <member_list><db_xref db="PFAM" dbkey="PF00001" name="a"/></member_list>
+</interpro>
+<interpro id="IPR000002" short_name="B" type="Domain">
+  <member_list><db_xref db="PFAM" dbkey="PF00001" name="a"/></member_list>
+</interpro>
+</interprodb>
+""")
+    with pytest.raises(ValueError, match="more than one member_list"):
+        load_member_integration(xml)
+
+
+def test_the_gates_see_an_xref_that_carries_a_predicate():
+    """`MappedXref` has an optional `predicate` slot and 127 xrefs in this very field
+    already use the 3-key shape (the Pfam->InterPro->CAZY ones). Both regexes required
+    `mapping_source:` to follow `- object:` IMMEDIATELY, so one curation step would have
+    made a wrong record invisible -- the audit printing 0 and exiting 0.
+
+    A trailing space did the same thing to the audit, whose `$` under re.M is exact.
+    """
+    import audit_pfam_interpro as A
+    import repair_pfam_interpro_xrefs as R
+
+    three_key = ("identifier: Pfam:PF00575\n"
+                 "mapped_xrefs:\n"
+                 "- object: InterPro:IPR059328\n"
+                 "  predicate: skos:relatedMatch\n"
+                 "  mapping_source: pfam2interpro\n"
+                 "license: cc0\n")
+    assert [m.group("ipr") for m in A.XREF.finditer(three_key)] == ["IPR059328"]
+    out, reason = R.repair_text(three_key, "IPR003029")
+    assert reason == "repaired" and "InterPro:IPR003029" in out
+    assert "predicate: skos:relatedMatch" in out, "the predicate line was dropped"
+
+    trailing = three_key.replace("mapping_source: pfam2interpro\n",
+                                 "mapping_source: pfam2interpro \n")
+    assert [m.group("ipr") for m in A.XREF.finditer(trailing)] == ["IPR059328"]
+
+
+def test_the_audit_refuses_a_traits_root_holding_no_pfam_records(tmp_path):
+    """#418's silent bypass, one axis over. `is_dir()` was ported and "0 records examined"
+    was not, so a REAL directory with no Pfam records printed "0 examined, 0 wrong" and
+    exited 0 -- and the recipe forwards {{args}}."""
+    empty = tmp_path / "traits"
+    (empty / "function").mkdir(parents=True)
+    (empty / "function" / "x.yaml").write_text("identifier: ARO:1\n", encoding="utf-8")
+    out = subprocess.run(
+        [sys.executable, str(REPO / "scripts" / "audit_pfam_interpro.py"),
+         "--traits-root", str(empty), "--xml", str(_xml(tmp_path))],
+        capture_output=True, text=True, cwd=REPO)
+    assert out.returncode == 1, out.stdout
+    assert "examined nothing" in out.stdout
+
+
+def test_the_boilerplate_comes_from_the_release_not_from_a_quoted_yaml_label():
+    """The revert path reproduces `seed_pfam.build_yaml`. Recovering the description by
+    stripping quotes off the record's `label:` line is not a YAML parse: 1,276 Pfam labels
+    are quoted and PF00313's -- whose description really contains single quotes -- decodes
+    wrong, leaving a doubled quote in the middle of the sentence.
+    """
+    import pytest
+    import enrich_pfam_definitions as E
+    if not E.PFAM_CLANS.exists():
+        pytest.skip("data/raw/pfam/Pfam-A.clans.tsv.gz absent; run `just fetch-pfam`")
+    got = E.pfam_boilerplate("PF00313")
+    assert got == "'Cold-shock' DNA-binding domain. Pfam domain family CSD (Pfam:PF00313)."
+    assert "''" not in got, "a YAML-escaped quote leaked into the definition"
+    # signature takes the accession only -- passing record text invited reading it back
+    assert E.pfam_boilerplate("PF99999999") is None
+
+
+def test_repair_text_handles_a_duplicate_and_an_already_correct_neighbour():
+    """Two branches the first pass left unexercised, both plausible to get wrong."""
+    import repair_pfam_interpro_xrefs as R
+
+    # the correct entry is ALREADY present alongside a wrong one -> drop the wrong one,
+    # do not add a second copy of the right one
+    both = ("identifier: Pfam:PF00575\n"
+            "mapped_xrefs:\n"
+            "- object: InterPro:IPR003029\n"
+            "  mapping_source: pfam2interpro\n"
+            "- object: InterPro:IPR059328\n"
+            "  mapping_source: pfam2interpro\n"
+            "license: cc0\n")
+    out, _ = R.repair_text(both, "IPR003029")
+    assert out.count("InterPro:IPR003029") == 1
+    assert "IPR059328" not in out
+
+    # TWO wrong ones and no right one -> exactly one becomes the right one, the other goes
+    two_wrong = both.replace("- object: InterPro:IPR003029", "- object: InterPro:IPR000111")
+    out2, _ = R.repair_text(two_wrong, "IPR003029")
+    assert out2.count("InterPro:IPR003029") == 1
+    assert "IPR000111" not in out2 and "IPR059328" not in out2
+
+
+def test_enrich_returns_nonzero_when_it_strands_a_record(monkeypatch, tmp_path):
+    """It printed the record and returned 0, so `just repair-pfam-interpro` would have
+    exited clean while announcing a record it knowingly left wrong.
+
+    Driven through `main()` with the release readers stubbed, rather than by grepping the
+    source for `return 1` -- a test that reads the code it is testing proves only that the
+    string is present.
+    """
+    import enrich_pfam_definitions as E
+
+    traits = tmp_path / "traits" / "sequence" / "domain" / "pfam"
+    traits.mkdir(parents=True)
+    # cites IPR059328; its real entry is IPR003029, whose abstract is absent here; and
+    # the Pfam release knows nothing about it, so no boilerplate can be rebuilt
+    (traits / "x-pf00575.yaml").write_text(
+        "identifier: Pfam:PF00575\n"
+        "label: S1\n"
+        "definition: >-\n  something borrowed\n"
+        'definition_source: "InterPro:IPR059328 abstract (Pfam PF00575 maps to this entry '
+        'via pfam2interpro)"\n', encoding="utf-8")
+
+    monkeypatch.setattr(E, "TRAITS", tmp_path / "traits")
+    monkeypatch.setattr(E, "XML_GZ", tmp_path)                  # exists() -> True
+    monkeypatch.setattr(E, "load_pf2ipr", lambda: {"PF00575": "IPR003029"})
+    monkeypatch.setattr(E, "load_ipr_abstracts", lambda wanted: {})
+    monkeypatch.setattr(E, "_PFAM_META", {})                    # nothing rebuildable
+    monkeypatch.setattr(sys, "argv", ["enrich_pfam_definitions.py"])
+
+    rc = E.main()
+    assert rc == 1, "a run that stranded a record reported success"
+
+
+def test_enrich_returns_zero_when_it_strands_nothing(monkeypatch, tmp_path):
+    """The other half, so the test above cannot pass by the script always failing."""
+    import enrich_pfam_definitions as E
+
+    traits = tmp_path / "traits" / "sequence" / "domain" / "pfam"
+    traits.mkdir(parents=True)
+    (traits / "x-pf00575.yaml").write_text(
+        "identifier: Pfam:PF00575\n"
+        "label: S1\n"
+        "definition: >-\n  something borrowed\n"
+        'definition_source: "InterPro:IPR059328 abstract (Pfam PF00575 maps to this entry '
+        'via pfam2interpro)"\n', encoding="utf-8")
+
+    monkeypatch.setattr(E, "TRAITS", tmp_path / "traits")
+    monkeypatch.setattr(E, "XML_GZ", tmp_path)
+    monkeypatch.setattr(E, "load_pf2ipr", lambda: {"PF00575": "IPR003029"})
+    monkeypatch.setattr(E, "load_ipr_abstracts",
+                        lambda wanted: {"IPR003029": "The S1 domain binds RNA, at length."})
+    monkeypatch.setattr(sys, "argv", ["enrich_pfam_definitions.py"])
+    assert E.main() == 0

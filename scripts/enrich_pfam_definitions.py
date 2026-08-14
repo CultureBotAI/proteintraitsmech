@@ -100,9 +100,15 @@ def borrowed_source(ipr: str, pf: str) -> str:
         abstract, so it skipped every one of these -- which is why #170 shipped
         with 3,431 records still carrying deleted cross-references.
 
-    `mapped_xrefs: {object: InterPro:…, mapping_source: interpro-member-list}` is
-    not a substitute: that asserts a signature-to-entry MAPPING, which is a
-    different claim from "this definition's text is that entry's abstract".
+    `mapped_xrefs: {object: InterPro:…, mapping_source: pfam2interpro}` is not a
+    substitute: that asserts a signature-to-entry MAPPING, which is a different
+    claim from "this definition's text is that entry's abstract".
+
+    (That `mapping_source` VALUE is now stale -- the mapping comes from member_list,
+    and `seed_interpro_members`/`seed_panther` already write the accurate
+    `interpro-member-list` for the same relation. Renaming it rewrites 29k records,
+    so it is filed rather than done here; `build_docs_index` maps both labels to
+    `biolink:close_match` so the export does not diverge in the meantime.)
 
     Matches the convention the member-DB seeders already use.
     """
@@ -158,16 +164,29 @@ def enrich_record(text: str, ipr: str, pf: str, abstract: str) -> str:
 # abstract can be recognised and which entry it names can be read back (#344).
 borrowed_re = re.compile(r'^definition_source: "InterPro:(IPR\d+) abstract', re.M)
 
-PFAM_DAT = REPO_ROOT / "data" / "raw" / "pfam" / "Pfam-A.hmm.dat.gz"
+PFAM_CLANS = REPO_ROOT / "data" / "raw" / "pfam" / "Pfam-A.clans.tsv.gz"
 PFAM_TYPES = REPO_ROOT / "data" / "raw" / "pfam" / "pfam_types.tsv"
-_PFAM_META: dict[str, tuple[str, str]] | None = None
+_PFAM_META: dict[str, tuple[str, str, str]] | None = None
 
 
-def _pfam_meta() -> dict[str, tuple[str, str]]:
-    """PF accession -> (Pfam ID, type), from the same two files `seed_pfam` reads.
+def _pfam_meta() -> dict[str, tuple[str, str, str]]:
+    """PF accession -> (Pfam ID, description, type), from the files `seed_pfam` reads.
 
-    Loaded once and lazily: only the revert path needs it, and that path fires on 4 of
-    30,134 records.
+    Loaded once and lazily: only the revert path needs it, and that path fired on 35 of
+    30,134 records -- 4 whose correct entry has an empty abstract, 31 integrated into no
+    entry at all.
+
+    THE SAME SOURCE THE SEEDER USES, on purpose. The first version recovered the
+    description by reading the record's own `label:` line and calling `.strip()` with a
+    quote set, which is not a YAML parse. 1,276 Pfam labels are quoted and two decode
+    wrong under it: PF00313's description really is
+
+        'Cold-shock' DNA-binding domain
+
+    which YAML writes with the single quotes DOUBLED -- that is how YAML escapes one --
+    so stripping quote characters off the ends leaves a stray doubled quote in the middle.
+    A description legitimately ending in a quote loses that character outright. Reading the
+    release makes "byte-identical to build_yaml" true instead of nearly true.
     """
     global _PFAM_META
     if _PFAM_META is not None:
@@ -178,43 +197,38 @@ def _pfam_meta() -> dict[str, tuple[str, str]]:
             parts = line.split("\t")
             if len(parts) >= 2:
                 types[parts[0].strip()] = parts[1].strip()
-    meta: dict[str, tuple[str, str]] = {}
-    if PFAM_DAT.exists():
-        acc = pid = None
-        with gzip.open(PFAM_DAT, "rt", encoding="utf-8", errors="replace") as fh:
+    meta: dict[str, tuple[str, str, str]] = {}
+    if PFAM_CLANS.exists():
+        with gzip.open(PFAM_CLANS, "rt", encoding="utf-8", errors="replace") as fh:
             for line in fh:
-                if line.startswith("#=GF AC"):
-                    acc = line.split()[2].split(".")[0]
-                elif line.startswith("#=GF ID"):
-                    pid = line.split(None, 2)[2].strip()
-                elif line.startswith("//") and acc:
-                    meta[acc] = (pid or acc, types.get(acc, ""))
-                    acc = pid = None
+                cols = line.rstrip("\n").split("\t")
+                if len(cols) < 5:
+                    continue
+                meta[cols[0]] = (cols[3], cols[4], types.get(cols[0], "Family"))
     _PFAM_META = meta
     return meta
 
 
-def pfam_boilerplate(pf: str, text: str) -> str | None:
+def pfam_boilerplate(pf: str) -> str | None:
     """`seed_pfam`'s own definition string for this family, or None if unrecoverable.
 
-    Byte-identical to `seed_pfam.build_yaml`'s
+    The same expression as `seed_pfam.build_yaml`:
     `f"{desc or pid}. Pfam {typ.lower()} family {pid} (Pfam:{pf})."` -- the point of the
-    revert is to land exactly where the seeder would have, so that re-seeding is a no-op
-    rather than a third variant of the same sentence.
+    revert is to land exactly where the seeder would have, so a re-seed is a no-op rather
+    than a third variant of the same sentence. (`set_definition` collapses whitespace on
+    the way out, exactly as `folded()` does for the seeder, so descriptions carrying
+    trailing spaces in the release -- there are some -- match too.)
 
-    `desc` is the record's own `label`, which is what the seeder wrote it from. Returns
-    None rather than guessing when the release does not have the family, so the caller can
-    report a stranded record instead of inventing prose.
+    Returns None rather than guessing when the release does not have the family, so the
+    caller can report a stranded record instead of inventing prose.
     """
     meta = _pfam_meta().get(pf)
     if not meta:
         return None
-    pid, typ = meta
+    pid, desc, typ = meta
     if not typ:
         return None
-    m = re.search(r"^label:\s*(.+?)\s*$", text, re.M)
-    label = (m.group(1).strip("'\"") if m else "") or pid
-    return f"{label}. Pfam {typ.lower()} family {pid} (Pfam:{pf})."
+    return f"{desc or pid}. Pfam {typ.lower()} family {pid} (Pfam:{pf})."
 
 
 def should_enrich(text: str) -> bool:
@@ -285,7 +299,7 @@ def main() -> int:
             if not should_enrich(text):
                 curated += 1
                 continue
-            boiler = pfam_boilerplate(pf, text)
+            boiler = pfam_boilerplate(pf)
             if boiler is None:
                 stranded += 1
                 print(f"  STRANDED {path.name}: cites {wrong.group(1)}, should be "
@@ -339,7 +353,10 @@ def main() -> int:
     if args.limit and updated + relabelled + reverted >= args.limit:
         print(f"  PARTIAL: stopped at --limit {args.limit} -- the rest of the corpus was "
               f"not examined, so the counts above are not a survey")
-    return 0
+    # A run that knowingly leaves a record wrong is not a success. It printed the record
+    # and then returned 0, so `just repair-pfam-interpro` would have exited clean while
+    # announcing its own failure.
+    return 1 if stranded else 0
 
 
 if __name__ == "__main__":

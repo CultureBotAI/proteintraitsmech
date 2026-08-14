@@ -102,26 +102,23 @@ def load_pfam2ipr() -> dict[str, str]:
 
     Was `pfam2interpro.tsv`, last-wins over duplicate rows. That file mixes "PF is a member
     signature of IPR" with "IPR's abstract mentions PF", and the mention won 407 times --
-    writing `mapped_xrefs: {object: InterPro:..., mapping_source: pfam2interpro}` asserting
-    a mapping InterPro does not make. 31 of the affected families are not integrated into
-    ANY entry, so the correct xref for them is none at all.
+    writing an InterPro xref asserting a mapping InterPro does not make. 31 of the affected
+    families are integrated into NO entry, so the correct xref for them is none at all.
 
-    Falls back to the TSV only when the XML is absent, and says so: this is a seeder, and
-    silently emitting no InterPro xref for 29k records would be a worse failure than a
-    noisy one.
+    REFUSES rather than degrading when the release is absent. The first version fell back
+    to the TSV, on the reasoning that emitting no InterPro xref for 29k records would be a
+    worse failure than a noisy one. That reasoning was sound and the code did not implement
+    it: nothing in this repo PRODUCES the TSV -- no recipe, no script, `fetch-pfam` only
+    echoes about it -- so on a fresh clone the fallback found no file, returned {}, and
+    delivered exactly the silent zero-xref outcome it was written to prevent.
     """
-    if XML_GZ.exists():
-        return load_member_integration(XML_GZ)
-    print(f"WARNING: {XML_GZ} absent; falling back to {PFAM2IPR.name}, which is ambiguous "
-          f"for 467 accessions (#344). Run `just fetch-interpro` for correct xrefs.",
-          file=sys.stderr)
-    out = {}
-    if PFAM2IPR.exists():
-        for line in PFAM2IPR.read_text(encoding="utf-8", errors="replace").splitlines():
-            if "\t" in line:
-                pf, ipr = line.split("\t", 1)
-                out[pf.strip()] = ipr.strip()
-    return out
+    if not XML_GZ.exists():
+        raise SystemExit(
+            f"{XML_GZ} is absent, so no Pfam->InterPro mapping can be built. Run "
+            f"`just fetch-interpro`.\n"
+            f"  {PFAM2IPR.name} is NOT a fallback: it conflates member_list with abstract "
+            f"mentions and is ambiguous for 465 accessions (#344).")
+    return load_member_integration(XML_GZ)
 
 
 def build_yaml(pf, pid, desc, clan, typ, axis, category, go, ipr) -> str:

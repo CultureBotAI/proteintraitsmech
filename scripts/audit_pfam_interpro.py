@@ -51,8 +51,15 @@ XML_GZ = ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 
 IDENT = re.compile(r"^identifier: Pfam:(PF\d{5})$", re.M)
 DEF_SRC = re.compile(r'^definition_source: "InterPro:(IPR\d+) abstract', re.M)
-XREF = re.compile(r"^[ ]*- object: InterPro:(IPR\d+)\n[ ]*  mapping_source: pfam2interpro$",
-                  re.M)
+# `predicate:` is OPTIONAL between the two (MappedXref has the slot), so it must be
+# tolerated here. No `pfam2interpro` xref uses the 3-key shape today -- but 127 xrefs in
+# this very field already do (the Pfam->InterPro->CAZY ones), so it is one curation step
+# away, and the failure is silent: the audit would print 0 and exit 0 while the record
+# stayed wrong. `[ \t]*$` for the same reason -- a trailing space must not hide a record.
+XREF = re.compile(
+    r"^(?P<indent>[ ]*)- object: InterPro:(?P<ipr>IPR\d+)[ \t]*\n"
+    r"(?:(?P=indent)  predicate: .*\n)?"
+    r"(?P=indent)  mapping_source: pfam2interpro[ \t]*$", re.M)
 
 
 def audit(traits: Path, member_of: dict[str, str]):
@@ -70,8 +77,8 @@ def audit(traits: Path, member_of: dict[str, str]):
         if ds and ds.group(1) != real:
             bad_def.append((path, pf, ds.group(1), real))
         for x in XREF.finditer(text):
-            if x.group(1) != real:
-                bad_xref.append((path, pf, x.group(1), real))
+            if x.group("ipr") != real:
+                bad_xref.append((path, pf, x.group("ipr"), real))
     return bad_def, bad_xref, seen
 
 
@@ -99,6 +106,14 @@ def main() -> int:
     member_of = load_member_integration(xml)
     bad_def, bad_xref, seen = audit(traits, member_of)
     print(f"Pfam records examined:        {seen:,}")
+    if not seen:
+        # #418's silent bypass, one axis over: `is_dir()` was ported but "0 records" was
+        # not, so `--traits-root data/traits/function` -- a real directory with no Pfam
+        # records -- printed "0 examined, 0 wrong" and exited 0. The recipe forwards
+        # {{args}}, which makes that a one-flag pass through a merge gate.
+        print(f"FAIL: no Pfam records found under {traits}. A check that examined nothing "
+              f"must not report a clean corpus.")
+        return 1
     print(f"InterPro entries with a Pfam member: {len(member_of):,}")
     print(f"definition_source names a non-integrating entry: {len(bad_def):,}")
     print(f"mapped_xrefs assert a non-integrating entry:     {len(bad_xref):,}")

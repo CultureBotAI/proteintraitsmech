@@ -170,6 +170,7 @@ def load_member_integration(xml_gz, db: str = "PFAM") -> dict[str, str]:
     import xml.etree.ElementTree as ET
 
     out: dict[str, str] = {}
+    clashes: list[tuple[str, str, str]] = []
     with gzip.open(xml_gz, "rt", encoding="utf-8", errors="replace") as fh:
         for _ev, el in ET.iterparse(fh, events=("end",)):
             if el.tag != "interpro":
@@ -180,7 +181,21 @@ def load_member_integration(xml_gz, db: str = "PFAM") -> dict[str, str]:
                 for xref in members.findall("db_xref"):
                     if xref.get("db", "").upper() == db.upper():
                         key = xref.get("dbkey", "")
-                        if key:
-                            out[key] = ipr
+                        if not key:
+                            continue
+                        if key in out and out[key] != ipr:
+                            clashes.append((key, out[key], ipr))
+                        out[key] = ipr
             el.clear()
+    # ONE ENTRY PER SIGNATURE is the invariant every caller relies on -- the repair
+    # rewrites a record's definition to whatever this returns, so a signature in two
+    # member lists would be rewritten to a coin flip. Measured true across the release
+    # (0 of 29,105), which is exactly why it must be checked rather than assumed: an
+    # invariant that holds today and is enforced nowhere is a silent failure tomorrow,
+    # and the last-wins dict below would hide it perfectly.
+    if clashes:
+        raise ValueError(
+            f"{len(clashes)} {db} signature(s) appear in more than one member_list, so "
+            f"'the entry that integrates it' is not well defined: "
+            + ", ".join(f"{k} in {a} and {b}" for k, a, b in clashes[:5]))
     return out
