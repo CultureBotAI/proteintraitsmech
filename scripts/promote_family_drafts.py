@@ -8630,20 +8630,6 @@ def main() -> int:
         if args.limit and promoted >= args.limit:
             break
 
-    # Every --only id must have been WRITTEN, not merely be in the family. One that was
-    # excluded by its config, or has no draft and no --repromote, silently contributes
-    # nothing -- and "6 requested, 4 written" is the difference between a finished repair
-    # and one that left two records asserting the thing it was fixing.
-    if only and not args.limit:
-        missed = sorted(only - reached)
-        if missed:
-            print(f"FAIL: --only named {len(only)} record(s) but {len(missed)} were not "
-                  f"written: {', '.join(missed)}")
-            print("  Each was skipped by its config's precondition, its exclude list, or "
-                  "for being already curated without --repromote. Re-read the skip lines "
-                  "above; nothing was written for these.")
-            return 1
-
     fam_name = terms.get(args.family, {}).get("name", args.family)
     # `promoted` counts fresh drafts AND re-promotions of this promoter's own output, and
     # reporting both as "drafts promoted" is how a re-run of an already-curated family
@@ -8655,6 +8641,31 @@ def main() -> int:
     print(f"  skipped (already curated): {skip_done:,} | skipped (no draft): {skip_nodraft:,}"
           f" | skipped (excluded by config): {skip_excluded:,}"
           f" | skipped (unreadable): {skip_unreadable:,}")
+
+    # Every --only id must have been WRITTEN, not merely be in the family. One that was
+    # excluded by its config, or has no draft and no --repromote, silently contributes
+    # nothing -- and "6 requested, 4 written" is the difference between a finished repair
+    # and one that left two records asserting the thing it was fixing.
+    #
+    # AFTER the summary, not before it (#435): the first version returned 1 here, so the
+    # one run that most needs its counts read printed none of them.
+    if only:
+        missed = sorted(only - reached)
+        if missed and args.limit and promoted >= args.limit:
+            # #435: this check used to be skipped outright whenever --limit was set, so
+            # `--only A,B,C --limit 2` dropped C, printed "2 records written" and exited 0.
+            # --limit is a deliberate early stop, so it is not a failure -- but it is also
+            # not the success the exit code alone would report.
+            print(f"NOTE: --limit {args.limit} stopped the run before {len(missed)} of the "
+                  f"--only record(s) were reached: {', '.join(missed)}. Nothing is wrong "
+                  f"with them; they were simply not attempted. Re-run without --limit.")
+        elif missed:
+            print(f"FAIL: --only named {len(only)} record(s) but {len(missed)} were not "
+                  f"written: {', '.join(missed)}")
+            print("  Each was skipped by its config's precondition, its exclude list, or "
+                  "for being already curated without --repromote. Re-read the skip lines "
+                  "above; nothing was written for these.")
+            return 1
     print("APPLIED." if args.apply else "Dry-run — pass --apply to write.")
     return 0
 

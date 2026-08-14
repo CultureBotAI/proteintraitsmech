@@ -18,18 +18,21 @@ where a repair produces the defect it repairs (the repo's recorded pathology, fo
 of it):
 
 1. **Re-dump is a pure re-wrap.** Every `causal_graphs:` block this touches was emitted by
-   `promote_family_drafts._dump`, so re-dumping it should give back what is on disk. 54 of
-   the corpus's 7,399 blocks do NOT come back byte-identical -- and the first version of
-   this guard refused all of them, which would have stranded every record #425 is about.
+   `promote_family_drafts._dump`, so re-dumping it should give back what is on disk. At the
+   time this was written 54 of the corpus's 7,399 blocks did NOT come back byte-identical
+   -- and the first version of this guard refused all of them, which would have stranded
+   every record #425 is about. (Those counts are a MEASUREMENT AT A MOMENT, not an
+   invariant: this script's own run re-dumped 48 of the 54, so the number is 6 now and will
+   move again. Re-measure before quoting it.)
 
-   Measured rather than assumed: all 54 differ in ONE way, the column a folded `snippet:`
-   wraps at, and all 54 are snippets #423 rewrote with a hand-rolled folder rather than
+   Measured rather than assumed: all 54 differed in ONE way, the column a folded `snippet:`
+   wraps at, and all 54 were snippets #423 rewrote with a hand-rolled folder rather than
    PyYAML's. So the guard is not "was this hand-formatted" (none of them were) but "does
    the re-dump change anything a reader would call content". That is checkable exactly:
    **the disk block and its re-dump must be identical after collapsing whitespace.** A
    fold moved inside a folded scalar survives that; a reordered key, a changed quoting
-   style, a dropped comment or an altered value does not. Over all 7,399 blocks, 54 differ
-   byte-wise and 0 differ under it.
+   style, a dropped comment or an altered value does not. Across all 7,399 blocks, 0 differ
+   under it -- that part IS the invariant, and it is what the guard tests.
 
    A block that fails THAT is skipped and reported, never rewritten.
 
@@ -320,10 +323,12 @@ def main() -> int:
     print(f"{len(REPAIRS)} repair(s), each verified verbatim in its source.\n")
 
     root = Path(args.path)
+    paths = sorted(root.rglob("*.yaml"))
     repaired = skipped_handformatted = 0
     total_snippets = 0
+    limited = False
     stranded: list[tuple[str, int]] = []
-    for path in sorted(root.rglob("*.yaml")):
+    for i, path in enumerate(paths):
         text = path.read_text(encoding="utf-8")
         if "causal_graphs:" not in text:
             continue
@@ -340,7 +345,14 @@ def main() -> int:
         if args.apply:
             path.write_text(out, encoding="utf-8")
         if args.limit and repaired >= args.limit:
-            print(f"\n--limit {args.limit} reached; stopping.")
+            # #441: the rest of the corpus is now UNSCANNED, so the stranded check below
+            # would run on a partial sweep and `return 0` on an empty list -- reporting
+            # "1 repaired, nothing stranded" when record 400 might be stranded and unseen.
+            # A canary that certifies the corpus is worse than one that certifies nothing.
+            print(f"\n--limit {args.limit} reached; stopping. {len(paths) - i - 1:,} "
+                  f"record(s) were NOT examined, so the stranded-record check below covers "
+                  f"only what was scanned. Re-run without --limit before believing it.")
+            limited = True
             break
 
     print(f"\nrecords repaired: {repaired:,}   snippets rewritten: {total_snippets:,}")
@@ -356,6 +368,9 @@ def main() -> int:
         for name, n in stranded:
             print(f"  {n} snippet(s)  {name}")
         return 1
+    if limited:
+        print("\nNOTE: the sweep stopped early, so \"0 stranded\" above means \"none in what "
+              "was scanned\". This exit code certifies nothing about the rest of the corpus.")
     if not args.apply:
         print("\ndry run -- nothing written. Re-run with --apply.")
     return 0

@@ -1077,10 +1077,20 @@ def test_neither_lps_config_asserts_the_iron_signal_or_the_wrong_role():
     for cfg in lps:
         for lit in _literals(cfg):
             assert "Fe(2+)" not in lit, f"the iron clause survives in {cfg['reference']}"
-    assert all("Response regulator" in s for s in _literals(by_ref["ARO:3003582"])
-               if s.startswith(("Response", "Histidine")))
-    assert all("Histidine protein kinase" in s for s in _literals(by_ref["ARO:3003583"])
-               if s.startswith(("Response", "Histidine")))
+
+    # #439: this filtered the literals with `if s.startswith(("Response", "Histidine"))`
+    # and asserted `all(...)` over what survived -- so rewording the archetype to start
+    # with anything else ("BasR is a response regulator...") emptied the generator, and
+    # `all([])` passed while asserting nothing. Assert on the ARCHETYPE literal directly:
+    # it is the config's own `det_res`, there is exactly one, and it cannot filter itself
+    # out of existence.
+    assert by_ref["ARO:3003582"]["det_res"].startswith("Response regulator")
+    assert by_ref["ARO:3003583"]["det_res"].startswith("Histidine protein kinase")
+    # and the wrong half's role word appears in NEITHER config, anywhere
+    for word, wrong in (("ARO:3003582", "Histidine protein kinase"),
+                        ("ARO:3003583", "Response regulator")):
+        for lit in _literals(by_ref[word]):
+            assert wrong not in lit, f"{word} asserts the other half's role: {lit[:60]}"
     # and the two preconditions PARTITION the six, so no record falls through or gets both
     assert (promote._LPS_RESPONSE_REGULATORS | promote._LPS_SENSOR_KINASES
             == promote._LPS_REGULATORS)
@@ -3671,20 +3681,28 @@ def test_the_committed_baseline_matches_the_key_shape_the_audit_writes():
                                "ARO:1", "s")
     assert len(probe.split("|")) == 5, f"baseline_key shape changed: {probe}"
     aprobe = audit.archetype_key("data/traits/x.yaml", "resistance", "determinant", "mech0",
-                                 "ARO:1")
-    assert len(aprobe.split("|")) == 4, f"archetype_key shape changed: {aprobe}"
-    # per-edge and per-reference, like the other two
-    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1") != \
-        audit.archetype_key("r", "g", "d", "m1", "ARO:1")
-    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1") != \
-        audit.archetype_key("r", "g", "d", "m0", "ARO:2")
+                                 "ARO:1", "s")
+    assert len(aprobe.split("|")) == 5, f"archetype_key shape changed: {aprobe}"
+    # per-edge, per-reference AND per-snippet. The last is #434: without it, swapping one
+    # real quote from a term for a different real quote from the SAME term left the count
+    # at that key unchanged and both gates green.
+    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1", "s") != \
+        audit.archetype_key("r", "g", "d", "m1", "ARO:1", "s")
+    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1", "s") != \
+        audit.archetype_key("r", "g", "d", "m0", "ARO:2", "s")
+    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1", "quote one") != \
+        audit.archetype_key("r", "g", "d", "m0", "ARO:1", "quote two")
+    # ...but a reflow of the same quote is not a new finding
+    assert audit.archetype_key("r", "g", "d", "m0", "ARO:1", "a  b") == \
+        audit.archetype_key("r", "g", "d", "m0", "ARO:1", "a b")
 
     for k in known:
         parts = k.split("|")
-        assert len(parts) == 4, f"archetype key shape changed: {k[:80]}"
+        assert len(parts) == 5, f"archetype key shape changed: {k[:80]}"
         assert parts[0].startswith("data/traits/"), parts[0]
         assert "->" in parts[2], parts[2]
         assert parts[3].startswith("ARO:"), parts[3]
+        assert parts[4], f"empty snippet in key: {k[:80]}"
     assert len({k.split("|", 1)[0] for k in known}) < len(known), "keys are not per-edge"
 
 
@@ -4041,28 +4059,40 @@ def test_the_archetype_check_ignores_a_records_own_term_and_its_ancestors():
         obo, show=0)
     assert n == 1, f"expected only the unrelated gene-level term, got {n}: {counts}"
     assert list(counts) == [
-        audit.archetype_key(str(p), "resistance", "determinant", "resistance", "ARO:1")]
+        audit.archetype_key(str(p), "resistance", "determinant", "resistance", "ARO:1",
+                            "snip")]
 
 
-def test_the_committed_archetype_baseline_holds_no_caro_or_iron_signal_entry():
+def test_the_committed_archetype_baseline_blesses_no_caro_and_no_iron_clause():
     """#425's two named cases must be GONE, not merely pinned. A baseline entry is a
     promise that a finding is known and accepted; carO on 40 records it has nothing to do
     with is neither, and re-blessing it here is precisely how `--update-baseline` launders
     a regression -- which the tool warns about and no test checked.
+
+    #438: the earlier name said "no iron signal entry" while the assertions could not check
+    for one -- the key held no snippet text. #434 put the snippet back in the key, so the
+    clause IS checkable here now, and the name is no longer a promise the body does not
+    keep. The config side is pinned separately by
+    `test_neither_lps_config_asserts_the_iron_signal_or_the_wrong_role`.
     """
     root = pathlib.Path(promote.__file__).resolve().parent.parent
     known = json.loads((root / "audit" / "archetype-baseline.json").read_text())
-    caro = [k for k in known if k.endswith("|ARO:3003808")]
+    caro = [k for k in known if "|ARO:3003808|" in k]
     assert caro == [], f"carO is still cited as an archetype on {len(caro)} edge(s)"
+    # the clause itself, wherever it appears and whatever term it is attributed to
+    iron = [k for k in known if "Fe(2+)" in k]
+    assert iron == [], f"the BasSR iron clause is blessed on {len(iron)} edge(s)"
     # basR may still be cited -- on the two PhoP records, where "response regulator" is
-    # true -- but never on a sensor kinase, and never with the iron clause anywhere.
+    # true -- but never on a sensor kinase.
     kinases = {"aro3003583", "aro3003896", "aro3007203"}
     for k in known:
-        if not k.endswith("|ARO:3003582"):
+        if "|ARO:3003582|" not in k:
             continue
         rec = k.split("|", 1)[0]
         assert not any(g in rec for g in kinases), (
             f"basR's definition is still on a sensor kinase: {rec}")
+    # and the snippet really is in the key, or all three checks above are vacuous
+    assert all(len(k.split("|")) == 5 and k.split("|")[4] for k in known)
 
 
 def test_only_refuses_an_id_outside_the_family():
@@ -4095,3 +4125,173 @@ def test_only_refuses_an_id_outside_the_family():
     ok = _run("ARO:3003583")                 # basS: under the family and accepted
     assert ok.returncode == 0, ok.stdout[-600:]
     assert "1 records written" in ok.stdout
+
+
+def test_the_archetype_gate_and_the_config_baseline_really_exit_1(tmp_path):
+    """#433. Neither gate had an EXIT-CODE test: flipping `rc = 1` to `rc = 0` on the
+    config-baseline-NEW branch, the --max-archetypes branch or the archetype-baseline-NEW
+    branch left all 775 tests green. That is the #418 mutation verbatim, in a file whose
+    own comment says "changing `return 1` to `return 0` passed the whole suite".
+
+    #431 made it worse before this: it rewrote the config swap test as an in-process call,
+    which is a better DETECTOR proof and touches no exit code at all.
+
+    Driven through a subprocess against a fixture corpus, so it needs no data/raw and runs
+    in milliseconds.
+    """
+    import subprocess
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+
+    # A fixture obo with one gene-level term and one mechanism term, and one record citing
+    # the gene-level one -- an archetype hit by construction.
+    obo = tmp_path / "aro.obo"
+    obo.write_text(
+        "[Term]\nid: ARO:1000001\nname: geneA\n"
+        'def: "geneA does a thing in Organism x."\n'
+        'synonym: "geneA" EXACT CARD_Short_Name []\n\n'
+        "[Term]\nid: ARO:1000002\nname: the record\n"
+        'def: "a record."\nis_a: ARO:1000003\n\n', encoding="utf-8")
+    corpus = tmp_path / "traits"
+    corpus.mkdir()
+    (corpus / "rec.yaml").write_text(
+        "identifier: ARO:1000002\n"
+        "causal_graphs:\n"
+        "- graph_id: resistance\n"
+        "  edges:\n"
+        "  - subject: determinant\n"
+        "    object: resistance\n"
+        "    evidence:\n"
+        "    - reference: ARO:1000001\n"
+        "      snippet: geneA does a thing in Organism x.\n", encoding="utf-8")
+
+    def _run(*extra):
+        return subprocess.run(
+            [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+             "--traits-root", str(corpus), "--obo", str(obo), "--archetypes", *extra],
+            capture_output=True, text=True, cwd=root)
+
+    # the probe FIRES -- without this every assertion below passes on an empty result set
+    found = _run("--max-archetypes", "99")
+    assert found.returncode == 0, found.stdout[-800:]
+    assert "archetype reuse (#425):    1 evidence item" in found.stdout, found.stdout[-800:]
+
+    # 1. the CEILING exits 1
+    assert _run("--max-archetypes", "0").returncode == 1
+
+    # 2. a MISSING baseline exits 1 rather than being treated as empty
+    absent = tmp_path / "nope.json"
+    assert _run("--archetype-baseline", str(absent)).returncode == 1
+
+    # 3. the IDENTITY gate exits 1 on a new item the ceiling would pass
+    empty = tmp_path / "ab.json"
+    empty.write_text("{}", encoding="utf-8")
+    swap = _run("--max-archetypes", "99", "--archetype-baseline", str(empty))
+    assert swap.returncode == 1, f"identity gate missed a new item:\n{swap.stdout[-800:]}"
+    assert "1 NEW" in swap.stdout
+
+    # 4. and it exits 0 once that item is blessed
+    blessed = tmp_path / "ab2.json"
+    m = re.search(r"^\s*NEW\s+\S+\s+(\S+)\s+(ARO:\d+)", swap.stdout, re.M)
+    assert m, swap.stdout[-800:]
+    sys.path.insert(0, str(root / "scripts"))
+    import audit_snippets as audit
+    key = audit.archetype_key(str(corpus / "rec.yaml"), "resistance", "determinant",
+                              "resistance", "ARO:1000001",
+                              "geneA does a thing in Organism x.")
+    blessed.write_text(json.dumps({key: 1}), encoding="utf-8")
+    ok = _run("--max-archetypes", "99", "--archetype-baseline", str(blessed))
+    assert ok.returncode == 0, f"gate fires on a blessed item:\n{ok.stdout[-800:]}"
+
+
+def test_the_archetype_gate_turns_itself_off_rather_than_zeroing_its_baseline(tmp_path):
+    """#432. Without the obo the archetype check has NO input -- gene-level-ness and
+    ancestry both come from it -- so it reported 0 items, the identity gate printed
+    "323 FIXED", and `--update-baseline` (which the recipe documents as the normal
+    follow-up and forwards {{args}} to) wrote `{}` over the committed baseline and exited
+    0. The whole #425 review queue, blessed away by a command that reads as progress.
+
+    Asserts the committed baseline is UNTOUCHED, which is the consequence that matters and
+    the one a message-only assertion would miss.
+    """
+    import subprocess
+    root = pathlib.Path(promote.__file__).resolve().parent.parent
+    real = root / "audit" / "archetype-baseline.json"
+    before = real.read_text(encoding="utf-8")
+    assert json.loads(before), "fixture precondition: the baseline must be non-empty"
+
+    corpus = tmp_path / "traits"
+    corpus.mkdir()
+    (corpus / "rec.yaml").write_text("identifier: ARO:1\n", encoding="utf-8")
+    out = subprocess.run(
+        [sys.executable, str(root / "scripts" / "audit_snippets.py"),
+         "--traits-root", str(corpus), "--obo", str(tmp_path / "absent.obo"),
+         "--archetypes", "--max-archetypes", "0",
+         "--archetype-baseline", str(real)],
+        capture_output=True, text=True, cwd=root)
+    assert "--archetypes needs the obo" in out.stdout, out.stdout[-800:]
+    assert "archetype reuse" not in out.stdout, "the check ran on no input"
+    assert real.read_text(encoding="utf-8") == before, "THE BASELINE WAS OVERWRITTEN"
+    # the ceiling of 0 must not fire either -- 0 items is not 0 findings here
+    assert out.returncode == 0, out.stdout[-800:]
+
+
+def test_the_repair_scripts_two_refusals_actually_refuse(tmp_path):
+    """#440: the script is shaped entirely around two guards and neither was tested.
+
+    Both are checked by MUTATION -- a repair whose replacement is not in its source, and a
+    block whose re-dump changes content -- because a guard is only worth what it rejects.
+    """
+    sys.path.insert(0, str(pathlib.Path(promote.__file__).resolve().parent))
+    import repair_misattributed_snippets as R
+
+    # 1. verbatim-in-source: a replacement that is not in the term it will cite
+    obo = {"ARO:1": "def: the real sentence."}
+    good = [{"ref_to": "ARO:1", "ref_from": "ARO:1", "old": "x", "new": "the real sentence."}]
+    bad = [{"ref_to": "ARO:1", "ref_from": "ARO:1", "old": "x", "new": "an invented one."}]
+    real = R.REPAIRS
+    try:
+        R.REPAIRS = good
+        assert R.check_repairs(obo, {}) == []
+        R.REPAIRS = bad
+        assert any("NOT verbatim" in p for p in R.check_repairs(obo, {}))
+    finally:
+        R.REPAIRS = real
+
+    # 2. ambiguity: two entries matching the same (ref, snippet) without distinct on_edge
+    try:
+        R.REPAIRS = [
+            {"ref_to": "ARO:1", "ref_from": "ARO:2", "old": "q", "new": "the real sentence."},
+            {"ref_to": "ARO:1", "ref_from": "ARO:2", "old": "q", "new": "the real sentence."},
+        ]
+        assert any("list order would" in p for p in R.check_repairs(obo, {}))
+        # separated by on_edge -> allowed
+        R.REPAIRS[0]["on_edge"] = ("a", "b")
+        R.REPAIRS[1]["on_edge"] = ("a", "c")
+        assert R.check_repairs(obo, {}) == []
+    finally:
+        R.REPAIRS = real
+
+    # 3. re-dump guard: a block whose content (not just wrapping) would change is refused
+    block = ("causal_graphs:\n"
+             "- graph_id: resistance\n"
+             "  edges:\n"
+             "  - subject: determinant\n"
+             "    object: resistance\n"
+             "    evidence:\n"
+             "    - reference: ARO:3000187\n"
+             "      snippet: %s\n" % R.REPAIRS[0]["old"])
+    out, reason, n = R.repair_record(block)
+    assert out is not None and n == 1, reason           # a clean block IS repaired
+    # a comment does not survive a re-dump, so it must be refused rather than dropped
+    out2, reason2, n2 = R.repair_record(block.replace("  edges:\n", "  edges:  # note\n"))
+    assert out2 is None and "re-dump would change content" in reason2, reason2
+    assert n2 == 1, "a refused block must still report the repair it is stranding"
+
+    # LAST, and the only part needing data/raw: the committed table passes its own check,
+    # or a real run refuses to start. Resolved through _resolve_sources because one entry
+    # cites a Pfam KB record rather than an ARO term, and an empty `kb` would report it as
+    # unresolvable -- the guard working, not the table failing. Placed after parts 1-3 so
+    # a missing obo skips only this assertion and not the three that need no corpus.
+    if not R.A.OBO.exists():
+        pytest.skip("data/raw/aro/aro.obo absent (gitignored); the guards above all ran")
+    assert R.check_repairs(*R._resolve_sources()) == []

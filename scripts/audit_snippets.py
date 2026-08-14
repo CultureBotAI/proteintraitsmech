@@ -211,9 +211,14 @@ def load_kb_definitions(wanted: set[str]) -> dict[str, str]:
 def iter_evidence(paths):
     """(path, graph_id, subject, object, reference, snippet, record identifier) per item.
 
-    The identifier is LAST so the six-field unpacking every existing caller does keeps
-    working under a rename; it is there for the archetype check (#425), which is the only
-    question that needs to know whose record the snippet is sitting on.
+    The identifier is there for the archetype check (#425), the only question that needs
+    to know whose record a snippet is sitting on.
+
+    #436: this said the identifier was placed LAST "so the six-field unpacking every
+    existing caller does keeps working". It does not -- appending a seventh element raises
+    `too many values to unpack`, and every caller in this module was in fact changed. Note
+    also that `bad` in `main()` is a seven-tuple too, whose last field is `why` rather than
+    an identifier; the two shapes are not interchangeable.
     """
     for path in paths:
         text = path.read_text(encoding="utf-8")
@@ -363,15 +368,25 @@ def audit_configs(show: int, obo=None, kb=None) -> tuple[int, dict[str, int]]:
     return len(bad), dict(sorted(counts.items()))
 
 
-def archetype_key(rel_path: str, graph_id, subject, obj, reference: str) -> str:
-    """One key per evidence item, WITHOUT the snippet.
+def archetype_key(rel_path: str, graph_id, subject, obj, reference: str,
+                  snippet: str) -> str:
+    """One key per evidence item, snippet included -- like the other two baselines.
 
-    The other two baselines pin the snippet text because a changed quote is the defect
-    they track. Here the quote is already verbatim -- the defect is WHO it is about -- so
-    including the text would make every rewording look like a new finding and every fix
-    that shortens a quote look like progress. The edge and the reference are the identity.
+    #434: it shipped WITHOUT the snippet, on the reasoning that the quote here is already
+    verbatim so including it would make every rewording read as a new finding. That
+    reasoning applies just as well to the other two baselines, which include it anyway,
+    and it left a hole of exactly the shape this module exists to close (#411):
+
+      an edge in the baseline cites gene-level ARO:3003808 quoting a sentence that is
+      legitimately about it; swap that for a DIFFERENT sentence from the same term, about
+      Acinetobacter and Moraxella, and the count at the key is unchanged, so the identity
+      gate reports 0 NEW -- while the data-side gate stays green, because the new sentence
+      is also verbatim in ARO:3003808.
+
+    The cost is the one anticipated: rewording a blessed snippet shows as 1 FIXED + 1 NEW.
+    That is diff noise a human reads, which is the trade the other two already make.
     """
-    return f"{rel_path}|{graph_id}|{subject}->{obj}|{reference}"
+    return f"{rel_path}|{graph_id}|{subject}->{obj}|{reference}|{_norm(snippet)}"
 
 
 def audit_archetypes(items, obo: dict[str, str], show: int) -> tuple[int, dict[str, int]]:
@@ -405,7 +420,7 @@ def audit_archetypes(items, obo: dict[str, str], show: int) -> tuple[int, dict[s
         if ref in anc_cache[ident]:
             continue
         bad.append((path, gid, subj, obj, ref, snip, ident))
-        counts[archetype_key(_rel(path), gid, subj, obj, ref)] += 1
+        counts[archetype_key(_rel(path), gid, subj, obj, ref, snip)] += 1
 
     by_ref: dict[str, int] = defaultdict(int)
     recs: dict[str, set] = defaultdict(set)
@@ -524,6 +539,23 @@ def main() -> int:
         print(f"NOTE: {_rel(OBO)} is absent (data/raw is gitignored), so every "
               f"ARO reference is unverifiable here. Run `just fetch-aro` first -- otherwise "
               f"this reports a small number and means nothing (#365).")
+        # #432: the archetype gate reads NOTHING BUT the obo -- "is this term gene-level"
+        # and "is it an ancestor" both come from it -- so without it the check reports 0
+        # items, the identity gate prints "323 FIXED", and `--update-baseline`, which the
+        # recipe documents as the normal follow-up and forwards {{args}} to, writes `{}`
+        # over the committed baseline and exits 0. The entire review queue would be
+        # blessed away by a command that reads as progress.
+        #
+        # This is the same starvation B1 found for --configs-only, reached by a different
+        # route: there the RECORDS are missing, here the OBO is. The data-side and config
+        # gates survive it -- unresolvable is not a failure for them, and both baselines
+        # are empty -- but the archetype gate cannot tell "no findings" from "no input".
+        if args.archetypes:
+            print("NOTE: --archetypes needs the obo for both of its questions, so it is "
+                  "OFF here rather than reporting 0 of everything. Its gates and its "
+                  "baseline are untouched.")
+            args.archetypes = False
+            args.max_archetypes, args.archetype_baseline = None, ""
     kb = load_kb_definitions(wanted)
 
     checked = unresolved = skipped = 0
@@ -683,8 +715,9 @@ def main() -> int:
                       f"{sum(arch_counts.values()):,}  ({len(gone):,} FIXED, "
                       f"{len(added):,} NEW)")
                 for k in added[:args.show]:
-                    rec, _g, edge, ref = k.split("|", 3)
-                    print(f"  NEW    {rec.rsplit('/', 1)[-1]}  {edge}  {ref}")
+                    rec, _g, edge, ref, snip = k.split("|", 4)
+                    print(f"  NEW    {rec.rsplit('/', 1)[-1]}  {edge}  {ref}\n"
+                          f"         {snip[:100]}")
                 abp.parent.mkdir(parents=True, exist_ok=True)
                 abp.write_text(json.dumps(arch_counts, indent=1) + "\n", encoding="utf-8")
                 print(f"archetype baseline written -> {abp}")
@@ -701,8 +734,9 @@ def main() -> int:
                 print(f"\narchetype baseline: {sum(known.values()):,} known · "
                       f"{len(fixed):,} FIXED · {len(new):,} NEW")
                 for k in new[:args.show]:
-                    rec, _g, edge, ref = k.split("|", 3)
-                    print(f"  NEW    {rec.rsplit('/', 1)[-1]}  {edge}  {ref}")
+                    rec, _g, edge, ref, snip = k.split("|", 4)
+                    print(f"  NEW    {rec.rsplit('/', 1)[-1]}  {edge}  {ref}\n"
+                          f"         {snip[:100]}")
                 if new:
                     print(f"FAIL: {len(new)} evidence item(s) newly cite a gene-level term "
                           f"that is neither the record's own nor an ancestor of it.")

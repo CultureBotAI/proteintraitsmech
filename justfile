@@ -914,9 +914,11 @@ audit-drafts:
 # issue this pin was set from; the gate's job is that the queue cannot silently grow.
 #
 # LOCAL ONLY -- needs `data/raw/aro/aro.obo`, and data/raw is gitignored, so without it
-# every ARO reference is unverifiable and this reports 11 instead of 174. It says so
-# loudly; pass --require-aro to make that a failure instead of a note. The pytest
-# regression SKIPS when the obo is absent rather than passing a ceiling on nothing.
+# every ARO reference is unverifiable and this reports 0 mismatches against 29,590 items it
+# never compared. It says so loudly; pass --require-aro to make that a failure instead of a
+# note. The pytest regression SKIPS when the obo is absent rather than passing a ceiling on
+# nothing, and --archetypes turns ITSELF off rather than reporting an empty queue as
+# progress (#432).
 audit-snippets *args:
     uv run python scripts/audit_snippets.py --path function/resistance/aro \
         --max 0 --baseline audit/snippet-mismatch-baseline.json \
