@@ -887,6 +887,17 @@ analyze-merges *args:
 audit-roles:
     uv run python scripts/audit_role_mismatch.py
 
+# Do the records agree with the equivalence overlay they were built from? (#447)
+# cross_source.tsv and a record's mapped_xrefs say the same thing in two places, both
+# derived from interpro.xml's member_list, and nothing compared them -- so the committed
+# TSV held the right Pfam->InterPro pairs while 335 records asserted a different entry,
+# for the whole life of #344.
+# Reads ONLY committed files, so unlike audit-pfam-interpro it runs in CI (data/raw is
+# gitignored). It is the cheap gate: a CONSISTENCY check, not a correctness one -- if both
+# artefacts were regenerated from a bad parse it would pass. Run both locally.
+audit-equivalence-consistency *args:
+    uv run python scripts/audit_equivalence_consistency.py {{args}}
+
 # Does each Pfam record cite the InterPro entry that INTEGRATES it? (#344)
 # `pfam2interpro.tsv` mixes "PF is a member of IPR" with "IPR's abstract mentions PF", and
 # the readers took the last row -- so 407 records carried a neighbouring domain's abstract

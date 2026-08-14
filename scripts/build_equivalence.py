@@ -20,17 +20,18 @@ Idempotent; writes the TSV. Stdlib-only.
 from __future__ import annotations
 
 import glob
-import gzip
 import json
 import re
 import sys
-import xml.etree.ElementTree as ET
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 XML = REPO_ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 SHARDS = REPO_ROOT / "docs" / "data"
 OUT = REPO_ROOT / "data" / "equivalence" / "cross_source.tsv"
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from interpro_text import iter_member_signatures  # noqa: E402
 
 
 def member_curie(db: str, dbkey: str) -> str | None:
@@ -70,21 +71,21 @@ def main() -> int:
         return 2
     print(f"{len(ids):,} record ids loaded")
 
+    # #447: this was the FIFTH independent member_list walk in the repo, and the one that
+    # had been right all along -- `cross_source.tsv` held the correct Pfam->InterPro pairs
+    # while 407 records disagreed with it, for the whole life of #344, with nothing
+    # comparing them. Sharing the parser is half the fix; `audit_equivalence_consistency`
+    # is the other half.
     edges: list[tuple[str, str, str]] = []
     from_db: dict[str, int] = {}
-    with gzip.open(XML, "rb") as fh:
-        for _ev, el in ET.iterparse(fh, events=("end",)):
-            if el.tag != "interpro":
-                continue
-            ipr = "InterPro:" + (el.get("id") or "")
-            ml = el.find("member_list")
-            if ipr in ids and ml is not None:
-                for x in ml.findall("db_xref"):
-                    cur = member_curie(x.get("db", ""), x.get("dbkey", ""))
-                    if cur and cur in ids and cur != ipr:
-                        edges.append((cur, ipr, x.get("db")))
-                        from_db[x.get("db")] = from_db.get(x.get("db"), 0) + 1
-            el.clear()
+    for db, dbkey, iid in iter_member_signatures(XML):
+        ipr = "InterPro:" + iid
+        if ipr not in ids:
+            continue
+        cur = member_curie(db, dbkey)
+        if cur and cur in ids and cur != ipr:
+            edges.append((cur, ipr, db))
+            from_db[db] = from_db.get(db, 0) + 1
 
     # de-dup
     seen = set()
