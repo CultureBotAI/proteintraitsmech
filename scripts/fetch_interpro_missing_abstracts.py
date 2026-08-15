@@ -25,8 +25,21 @@ launders provenance so nobody downstream can tell a curator never saw the text. 
 records the flags verbatim and refuses to decide; `enrich_pfam_definitions` promotes only
 the unflagged ones.
 
-Idempotent: re-running refetches and overwrites. Output is gitignored with the rest of
-`data/raw/`.
+CACHED, PER ACCESSION, AND GITIGNORED. `data/raw/` is not committed -- the corpus is
+rebuilt from sources, never from checked-in copies of them -- and that applies to 209 REST
+calls exactly as it does to a release tarball. The cache is what makes the second kind as
+cheap to re-materialise as the first: a re-run costs nothing for what it already has, and
+a run killed halfway costs only what it had not reached.
+
+It also fixes the guard below. Refusing to write on ANY failure is right -- a partial
+artefact silently under-enriches -- but without a cache one timeout at call 208 threw away
+207 good responses. Now the successes are already on disk and the retry fetches only the
+gap. Transient failures are never cached, so a flaky minute cannot become a permanent
+"absent" (see `http_cache.Http`).
+
+A cache is not a provenance record. It is a copy of what a service said once, and the
+service can change its mind; what makes these definitions auditable is the
+`definition_source` written INTO each record, not the cache still being on disk.
 """
 
 from __future__ import annotations
@@ -35,19 +48,18 @@ import argparse
 import gzip
 import json
 import sys
-import time
-import urllib.error
-import urllib.request
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
+from http_cache import Http, TransientHttpError  # noqa: E402
 from interpro_text import clean_abstract_element  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 XML_GZ = ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 OUT = ROOT / "data" / "raw" / "interpro" / "missing_abstracts.json"
+CACHE = ROOT / "data" / "raw" / "interpro" / "api_cache.json"
 API = "https://www.ebi.ac.uk/interpro/api/entry/interpro/{}"
 MIN_ABSTRACT = 40           # the same threshold enrich_pfam_definitions uses
 
@@ -65,15 +77,16 @@ def entries_without_abstract(xml_gz: Path) -> list[str]:
     return [a for a in out if a]
 
 
-def fetch(acc: str, timeout: int = 30) -> dict | None:
-    """The entry's description blocks and their provenance flags, or None on 404."""
-    try:
-        with urllib.request.urlopen(API.format(acc), timeout=timeout) as resp:
-            meta = json.load(resp)["metadata"]
-    except urllib.error.HTTPError as exc:
-        if exc.code == 404:
-            return None
-        raise
+def fetch(acc: str, http: Http) -> dict | None:
+    """The entry's description blocks and their provenance flags, or None on 404.
+
+    `strict=True`: a timeout or 5xx raises rather than reading as "no such entry", so the
+    caller can refuse to write an artefact with a hole in it.
+    """
+    payload = http.get(API.format(acc), strict=True)
+    if payload is None:
+        return None
+    meta = payload.get("metadata") or {}
     blocks = meta.get("description") or []
     return {
         "accession": acc,
@@ -97,6 +110,9 @@ def main() -> int:
     ap.add_argument("--sleep", type=float, default=0.35,
                     help="pause between calls; be a good citizen of a public API")
     ap.add_argument("--out", default=str(OUT))
+    ap.add_argument("--cache", default=str(CACHE),
+                    help="per-accession response cache; gitignored with the rest of "
+                         "data/raw, and safe to delete (it is re-fetchable by construction)")
     args = ap.parse_args()
     if not XML_GZ.exists():
         print(f"missing {XML_GZ}; run `just fetch-interpro`", file=sys.stderr)
@@ -108,20 +124,28 @@ def main() -> int:
         accs = accs[:args.limit]
         print(f"--limit {args.limit}: fetching {len(accs)}")
 
+    http = Http(Path(args.cache), sleep=args.sleep,
+                user_agent="ProteinTraitsMech-interpro-abstracts/1.0")
     got, missing, failed = {}, [], []
-    for i, acc in enumerate(accs, 1):
-        try:
-            rec = fetch(acc)
-        except Exception as exc:                       # network, timeout, 5xx
-            failed.append((acc, f"{type(exc).__name__}: {exc}"))
-            continue
-        if rec is None:
-            missing.append(acc)
-        else:
-            got[acc] = rec
-        if i % 25 == 0:
-            print(f"  {i}/{len(accs)}…")
-        time.sleep(args.sleep)
+    try:
+        for i, acc in enumerate(accs, 1):
+            try:
+                rec = fetch(acc, http)
+            except TransientHttpError as exc:
+                failed.append((acc, str(exc)))
+                continue
+            if rec is None:
+                missing.append(acc)
+            else:
+                got[acc] = rec
+            if i % 25 == 0:
+                print(f"  {i}/{len(accs)}…  ({http.hits:,} cached, {http.misses:,} fetched)")
+                http.flush()
+    finally:
+        # Flush on the way out however we leave -- a cache that only survives a clean run
+        # is not much of a cache, and the run this protects is the one that gets killed.
+        http.flush()
+    print(f"cache: {http.hits:,} hit(s), {http.misses:,} fetched, {http.errors:,} error(s)")
 
     n_curated = sum(1 for r in got.values()
                     if r["description"] and not any(b["llm"] for b in r["description"]))
