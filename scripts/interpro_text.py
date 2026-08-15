@@ -213,3 +213,186 @@ def load_member_integration(xml_gz, db: str = "PFAM") -> dict[str, str]:
             f"'the entry that integrates it' is not well defined: "
             + ", ".join(f"{k} in {a} and {b}" for k, a, b in clashes[:5]))
     return out
+
+
+# ---------------------------------------------------------------------------------------
+# The API's description format, which is NOT the release's abstract format (#445)
+# ---------------------------------------------------------------------------------------
+
+# A citation GROUP: `[[cite:PUB00012956], [cite:PUB00079463], [cite:PUB00079464]]`. The
+# first version matched each `[cite:X]` on its own and left the separators behind, which
+# turned one ferrochelatase sentence into "...at the C terminus,,,,,,,,,,,." -- #448's
+# damage class, written by the fix for it.
+#
+# TWO defences, and either alone handles the observed shape (verified by removing each):
+# this one takes the group structurally, `_API_ORPHAN_PUNCT` below sweeps a separator left
+# by any citation form this does not anticipate. The test pins the OUTCOME rather than
+# either mechanism, so replacing one with something better does not fail it.
+_API_CITE_GROUP = re.compile(r"\[\[cite:[^\]]*\](?:\s*,\s*\[cite:[^\]]*\])*\]")
+_API_CITE = re.compile(r"\[?\[cite:[^\]]*\]\]?")
+# `[interpro:IPR000001]`, `[ec:1.2.4.1]`, `[cazy:GH25]`. THE MARKER IS THE CONTENT, exactly
+# as this module's top docstring says of `db_xref`: 64 accessions and EC numbers across
+# these entries, which a bracket sweep would delete.
+_API_XREF = re.compile(r"\[(\w+):([^\]\s]+)\]")
+# Paragraph boundaries. BOTH the opening and closing tag: InterPro opens a second `<p>`
+# without closing the first in 5 of the 209, so a closing-tag-only split fuses two
+# sentences with no punctuation between them.
+_API_PARA = re.compile(r"</?(?:p|ul|ol|reaction)>", re.I)
+_API_LI_END = re.compile(r"</li>", re.I)
+_API_LI_OPEN = re.compile(r"<li>", re.I)
+# `Synonym(s): Penicillinase, Cephalosporinase` is metadata InterPro renders above the
+# prose. Concatenated into a definition it reads as one -- 9 entries opened with it, and
+# `imp-dehydrogenase` opened with two stacked. Dropped, not merged.
+_API_SYNONYMS = re.compile(r"^\s*Synonym\(s\):", re.I)
+# `<sup>`/`<sub>` carry chemistry, so they normally close up: `H<sub>2</sub>O` -> `H2O`,
+# and 22 of the 61 occurrences are followed by a capital that continues a formula. But 18
+# are followed by a LOWERCASE letter that starts an English word -- `H<sub>2</sub>O<sub>2
+# </sub>to give`, `Mn<sup>2+</sup>serves`, `NADP<sup>+</sup>reductases` -- where closing up
+# welds the formula to the next word. Split on the case of what follows.
+# The case-insensitive flag is SCOPED to the tag. `re.I` on the whole pattern makes the
+# `[a-z]` in the lookahead match capitals too, so `H<sub>2</sub>O` -- the commonest case --
+# took the spaced branch and became "H2 O".
+_API_TIGHT_TAG = re.compile(r"(?i:</?(?:sup|sub)>)(?![a-z])")
+_API_SPACED_TAG = re.compile(r"</?(?:sup|sub)>", re.I)
+# Punctuation left stranded once a citation group is gone: " ,", ",,", " ." and so on.
+_API_ORPHAN_PUNCT = re.compile(r"\s*,(?=\s*[,.;:])")
+
+
+def _clean_api_paragraph(raw: str) -> str:
+    """One paragraph of API HTML -> prose."""
+    txt = _API_CITE_GROUP.sub("", raw)
+    txt = _API_CITE.sub("", txt)
+    txt = _API_XREF.sub(
+        lambda m: (render_xref(m.group(1), m.group(2))
+                   if m.group(1).upper() in DB_PREFIX else m.group(0)), txt)
+    txt = _API_TIGHT_TAG.sub("", txt)       # chemistry closes up...
+    txt = _API_SPACED_TAG.sub(" ", txt)     # ...unless a word follows
+    txt = _TAG.sub(" ", txt)                # every other tag needs the space
+    txt = html.unescape(txt)
+    txt = _EMPTY_BRACKETS.sub("", txt)
+    txt = _API_ORPHAN_PUNCT.sub("", txt)
+    txt = _SPACE_BEFORE_PUNCT.sub(r"\1", txt)
+    return " ".join(txt.split())
+
+
+def clean_api_paragraphs(blocks) -> list[str]:
+    """The API description as cleaned paragraphs, in order, metadata dropped.
+
+    Paragraph-level because the CAP has to be: InterPro puts the general subject matter
+    first and the sentence that is actually about THIS entry last -- "This entry represents
+    an active site found in a number of peroxidases." A head-truncation at 1,800 characters
+    therefore deletes the only part that distinguishes the entry, and it did: IPR019794
+    (active site) and IPR019793 (haem-binding site) came out byte-identical, as did two
+    other pairs, none of them mentioning its own trait.
+    """
+    out = []
+    for block in blocks:
+        raw = block.get("text", "") if isinstance(block, dict) else str(block)
+        if not raw:
+            continue
+        # `<li>` items are paragraphs for splitting, but rejoin with "; " below, so a list
+        # reads as one sentence rather than as N fragments.
+        for para in _API_PARA.split(raw):
+            if not para.strip():
+                continue
+            items = [_clean_api_paragraph(x) for x in _API_LI_END.split(para)]
+            items = [_API_LI_OPEN.sub("", x).strip() for x in items if x.strip()]
+            if not items:
+                continue
+            # "; " ONLY where the item does not already end in punctuation. InterPro's list
+            # items mostly end in a full stop, and appending unconditionally wrote 125
+            # `".;"` sequences into 32 records -- against 9 in the entire 429k-record corpus
+            # before this.
+            joined = items[0]
+            for item in items[1:]:
+                joined += ("" if joined.endswith((".", ";", ":", ",")) else ";") + " " + item
+            cleaned = _clean_api_paragraph(joined)
+            if cleaned and not _API_SYNONYMS.match(cleaned):
+                out.append(cleaned)
+    return out
+
+
+# The paragraph that says what the ENTRY is, as opposed to the subject-matter preamble
+# before it and the member catalogue after it. InterPro is consistent about the wording and
+# not at all consistent about the position: it is paragraph 0 for IPR011598, paragraph 1
+# for IPR002515, and the last of nine for IPR019794.
+_API_DEFINING = re.compile(
+    r"^This (?:entry|domain|family|group|superfamily|protein|section)\b", re.I)
+
+
+def _cut_on_a_word(text: str, budget: int) -> str:
+    """`text` shortened to at most `budget`, never mid-word."""
+    if budget <= 0 or not text:
+        return ""
+    if len(text) <= budget:
+        return text
+    cut = text[:budget]
+    return (cut.rsplit(" ", 1)[0] if " " in cut else cut).rstrip()
+
+
+def clean_api_description(blocks, cap: int | None = None) -> str:
+    """InterPro API `description` blocks -> prose, cross-references preserved as CURIEs.
+
+    A SECOND cleaner, deliberately, rather than a branch inside `clean_abstract`. The two
+    formats share nothing but intent: the release ships XML elements
+    (`<db_xref db=... dbkey=.../>`, `<cite idref=.../>`), the API ships HTML with square
+    -bracket markers. Running either text through the other's cleaner leaves markup in the
+    corpus, which is how the `({swissprot:D4GXU1])` in #448 got there.
+
+    What the corpus would lose to a naive strip, measured over the 209 entries this exists
+    for: 64 `[interpro:]`/`[ec:]`/`[cazy:]` accessions deleted, and every `[2Fe-2S]`,
+    `[Fe<sup>4+</sup>=O]` and `[(L-alanin-3-ylcarbamoyl)methyl]` mangled -- those are
+    chemistry, not markup, and they are left exactly as they are.
+
+    `cap` KEEPS THE DEFINING PARAGRAPH, wherever it sits, and elides around it.
+
+    Two wrong versions of this shipped before the right one, both by assuming a position:
+
+      * head-truncation (commit 1) cut the tail off, and for entries whose defining
+        sentence is last -- "This entry represents an active site found in a number of
+        peroxidases." -- that deleted the only part naming the trait. IPR019794 (an active
+        site) and IPR019793 (a haem-binding site) came out byte-identical.
+      * keeping the LAST paragraph instead (commit 2) broke the opposite shape, and broke
+        it worse: InterPro often ENDS with a member catalogue. IPR011598's defining text is
+        paragraph 0; its last paragraph is 3,426 characters of myc-family members, so five
+        records -- including `bhlh-hif1a`, whose label is "Hypoxia-inducible factor 1-alpha
+        bHLH domain" -- were given a myc catalogue that mentions neither HIF1A nor bHLH.
+
+    So the anchor is found by CONTENT, not position, and the preamble before it is what
+    gets elided.
+    """
+    paras = clean_api_paragraphs(blocks)
+    full = " ".join(paras)
+    if cap is None or len(full) <= cap or not paras:
+        return full
+
+    anchor_i = next((i for i in range(len(paras) - 1, -1, -1)
+                     if _API_DEFINING.match(paras[i])), len(paras) - 1)
+    anchor = paras[anchor_i]
+    if len(anchor) >= cap:            # one enormous paragraph: nothing to preserve around
+        return _cut_on_a_word(anchor, cap - 1) + "\u2026"
+
+    if anchor_i == 0:
+        # The definition leads. Keep it whole and fill forward with what follows, rather
+        # than eliding backwards into nothing.
+        out = anchor
+        for para in paras[1:]:
+            if len(out) + 1 + len(para) > cap:
+                trimmed = _cut_on_a_word(para, cap - len(out) - 4)
+                if trimmed:
+                    out += " " + trimmed + " \u2026"
+                break
+            out += " " + para
+        return out
+
+    # A defining paragraph of cap-1 or cap-2 characters makes this budget NEGATIVE, and a
+    # bare `head[:-2]` slices from the END -- returning nearly the whole preamble and
+    # blowing the cap by thousands of characters. No entry lands in that window today; the
+    # next release is not obliged to be so kind.
+    #
+    # Guarded TWICE, and either alone is sufficient (verified by mutating each: only
+    # removing both fails the test). `max(0, ...)` here, and `budget <= 0` inside
+    # `_cut_on_a_word` for every other caller of it. The test pins the OUTCOME -- output
+    # never exceeds the cap -- rather than either mechanism.
+    head = _cut_on_a_word(" ".join(paras[:anchor_i]), max(0, cap - len(anchor) - 3))
+    return f"{head} \u2026 {anchor}" if head else anchor

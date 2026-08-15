@@ -887,6 +887,31 @@ analyze-merges *args:
 audit-roles:
     uv run python scripts/audit_role_mismatch.py
 
+# Fetch the abstracts interpro.xml.gz omits but the InterPro API has (#445).
+# 209 of the release's 54,190 entries ship no <abstract>; every one of them has a
+# curator-written description in the API, 811-5,326 chars. That gap left 45 Pfam records
+# and 60 InterPro records defining themselves by their own name.
+# NETWORK, and CACHED. ~209 calls at 0.35s apart, ~2 minutes cold, seconds warm. Writes
+# data/raw/ (gitignored) like every other source here: nothing fetched is committed, the
+# corpus is rebuilt from sources rather than from checked-in copies of them, and that holds
+# for 209 REST calls exactly as for a release tarball. `api_cache.json` is what makes the
+# second kind as cheap to re-materialise as the first, and is safe to delete.
+# Transient failures are never cached, so a flaky minute cannot become a permanent
+# "absent"; a run that fails refuses to overwrite a good artefact, and the retry fetches
+# only the gap.
+# Canary it: `--limit 1` fetches one, prints the provenance flags, and refuses to write.
+fetch-interpro-missing-abstracts *args:
+    uv run python scripts/fetch_interpro_missing_abstracts.py {{args}}
+
+# Promote those descriptions onto the records that have no definition without them (#445).
+# Two scripts because two owners: enrich_pfam_definitions owns Pfam definitions and would
+# fight a second writer for the same field, so the Pfam half lives inside it.
+# Neither promotes an LLM-generated description (#92) or touches a curated record (#175).
+# Both dry-run by default.
+enrich-missing-abstracts *args:
+    uv run python scripts/enrich_pfam_definitions.py {{args}}
+    uv run python scripts/enrich_interpro_missing_abstracts.py {{args}}
+
 # Do the records agree with the equivalence overlay they were built from? (#447)
 # cross_source.tsv and a record's mapped_xrefs say the same thing in two places, both
 # derived from interpro.xml's member_list, and nothing compared them -- so the committed

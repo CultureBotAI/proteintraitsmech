@@ -49,6 +49,11 @@ EDITORS = [
     "enrich_ncbifam_definitions",
     "enrich_cdd_ortholog_definitions",
     "enrich_prosite_definitions",
+    # #445. Added because `test_no_unguarded_inplace_definition_editor_exists` refused it
+    # on the first run -- it had an inline `is_curated(text)` and no `should_enrich`. That
+    # is this file working exactly as its docstring intends, on a script written three
+    # months after it.
+    "enrich_interpro_missing_abstracts",
 ]
 
 SEEDED = """identifier: Pfam:PF00001

@@ -71,13 +71,13 @@ import argparse
 import json
 import re
 import sys
-import time
-import urllib.error
-import urllib.request
 from collections import Counter
 from pathlib import Path
 
 import yaml
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from http_cache import Http  # noqa: E402  (was a class here until #445 needed it too)
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
@@ -166,52 +166,6 @@ FUNC_SITE_CATS = {
 SITE_CATS = FUNC_SITE_CATS - {"SEQ_CLEAVAGE_SITE"}
 REGION_MIN_RECIPROCAL = 0.80   # region×region: strong reciprocal overlap …
 REGION_MIN_JACCARD = 0.20      # … or this Jaccard floor
-
-
-class Http:
-    """Tiny cached GET-JSON client for the InterPro + PDBe SIFTS providers.
-    Caches per-URL to a JSON file so re-runs (and partial runs) don't re-query;
-    misses/404s are cached as null so absent mappings aren't re-fetched."""
-
-    def __init__(self, cache_path: Path, sleep: float = 0.2):
-        self.cache_path = cache_path
-        self.sleep = sleep
-        self.cache: dict = {}
-        self.dirty = self.hits = self.misses = 0
-        if cache_path.exists():
-            try:
-                self.cache = json.loads(cache_path.read_text(encoding="utf-8"))
-            except (ValueError, OSError):
-                self.cache = {}
-
-    def get(self, url: str):
-        if url in self.cache:
-            self.hits += 1
-            return self.cache[url]
-        self.misses += 1
-        val = None
-        try:
-            req = urllib.request.Request(
-                url, headers={"Accept": "application/json",
-                              "User-Agent": "ProteinTraitsMech-align/1.0"})
-            with urllib.request.urlopen(req, timeout=30) as r:
-                val = json.loads(r.read().decode("utf-8"))
-        except urllib.error.HTTPError as e:
-            if e.code != 404:
-                print(f"  http {e.code}: {url}", file=sys.stderr)
-        except (urllib.error.URLError, ValueError, TimeoutError, OSError) as e:
-            print(f"  http err: {url} ({e})", file=sys.stderr)
-        self.cache[url] = val
-        self.dirty += 1
-        if self.sleep:
-            time.sleep(self.sleep)
-        return val
-
-    def flush(self):
-        if self.dirty:
-            self.cache_path.parent.mkdir(parents=True, exist_ok=True)
-            self.cache_path.write_text(json.dumps(self.cache), encoding="utf-8")
-            self.dirty = 0
 
 
 def _up_acc(uniprot: str) -> str:
@@ -585,7 +539,13 @@ def main() -> int:
         return 2
     http = None
     if {"interpro", "sifts", "biolip"} & set(providers):
-        http = Http(CACHE_DIR / "align_http_cache.json")
+        http = Http(CACHE_DIR / "align_http_cache.json",
+                    # Kept explicitly: the embedded class hardcoded this, and the
+                    # shared one defaults to a generic name, so extracting it
+                    # silently changed how these requests identify themselves to
+                    # InterPro and PDBe. Neither gates on UA, but their logs lose
+                    # per-client attribution (#454 review).
+                    user_agent="ProteinTraitsMech-align/1.0")
 
     # interpro is scoped: an interpro call only matters if the exemplar protein is
     # already localized by another record (only then can a pair form). So localize
