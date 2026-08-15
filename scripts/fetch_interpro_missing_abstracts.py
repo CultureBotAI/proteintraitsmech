@@ -166,6 +166,26 @@ def main() -> int:
         return 1 if failed else 0
 
     out = Path(args.out)
+    # A 404 STORM IS NOT A SUCCESS. `strict=True` separates transient from absent and the
+    # guard below covers transient -- but a 404 lands in `missing`, and 404s ARE cached. So
+    # if the API path ever changes shape, every accession 404s, 209 nulls go into the cache,
+    # `got` is empty, `{}` overwrites the good artefact, and the run exits 0. Every later
+    # run then serves the poisoned nulls from cache at no cost and reports the same clean
+    # success; recovery needs someone to know to delete api_cache.json by hand.
+    #
+    # That is the exact poisoning `http_cache` exists to prevent, reached by a failure it
+    # does not classify. The release says these entries exist, so a large absent fraction
+    # means the request is wrong, not the entries.
+    if accs and len(missing) > len(accs) // 2:
+        print(f"\nREFUSING to write {out}: {len(missing):,} of {len(accs):,} accessions "
+              f"404ed. The release says these entries exist, so this is the request being "
+              f"wrong, not the entries -- writing would replace a good artefact with an "
+              f"empty one, and the 404s are now cached. Delete {args.cache} and re-run "
+              f"once the URL is right.")
+        return 1
+    if not got:
+        print(f"\nREFUSING to write {out}: nothing was fetched.")
+        return 1
     if failed:
         # The --limit branch refuses to write because "a partial fetch must not overwrite a
         # complete one", and the FAILURE path had no such guard -- 200 timeouts and 9

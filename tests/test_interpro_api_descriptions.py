@@ -160,29 +160,74 @@ def test_records_sourced_from_the_api_say_so_and_not_abstract():
 # three damage shapes reached 105 committed records before anyone read one end to end.
 # ---------------------------------------------------------------------------------------
 
-def test_the_cap_keeps_the_LAST_paragraph_because_that_is_the_entry_specific_one():
-    """InterPro writes the general subject matter first and "This entry represents ..."
-    last. A head-truncation at 1,800 characters therefore deletes the only sentence that
-    distinguishes one entry from another -- and did: IPR019794 (an active site) and
-    IPR019793 (a haem-binding site) came out BYTE-IDENTICAL, as did two other pairs, none
-    of them mentioning its own trait.
-    """
-    blocks = [{"text": "<p>" + "general background. " * 200 + "</p>"
-                       "<p>This entry represents the thing itself.</p>", "llm": False}]
-    got = clean_api_description(blocks, cap=1800)
-    assert len(got) <= 1800
-    assert got.endswith("This entry represents the thing itself."), got[-80:]
-    assert "…" in got, "the elision is not marked"
-    # and two entries sharing a long preamble stay distinguishable
-    other = [{"text": "<p>" + "general background. " * 200 + "</p>"
-                      "<p>This entry represents something else entirely.</p>", "llm": False}]
-    assert clean_api_description(other, cap=1800) != got
+def test_the_cap_anchors_on_the_DEFINING_paragraph_wherever_it_sits():
+    """Two wrong versions of this shipped before the right one, both by assuming a position.
 
-    # uncapped is unchanged, and a single over-long paragraph still truncates rather than
-    # returning nothing
-    assert clean_api_description(blocks) == clean_api_description(blocks, cap=None)
-    huge = [{"text": "<p>" + "x " * 2000 + "</p>", "llm": False}]
-    assert len(clean_api_description(huge, cap=1800)) <= 1800
+      * head-truncation kept the front, and for entries whose defining sentence is LAST --
+        "This entry represents an active site found in a number of peroxidases." -- deleted
+        the only part naming the trait. IPR019794 (an active site) and IPR019793 (a
+        haem-binding site) came out BYTE-IDENTICAL.
+      * keeping the last paragraph instead broke the opposite shape, and worse: InterPro
+        often ENDS with a member catalogue. IPR011598's defining text is paragraph 0 and its
+        last paragraph is 3,426 characters of myc-family members, so `bhlh-hif1a` -- label
+        "Hypoxia-inducible factor 1-alpha bHLH domain" -- was given a myc catalogue
+        mentioning neither HIF1A nor bHLH.
+
+    All three real positions are covered here: defining paragraph first, in the middle, and
+    last. A fixture that only exercised one is how the second version passed.
+    """
+    filler = "general background. " * 120                       # ~2,400 chars
+
+    # LAST -- the IPR019794 shape
+    last = [{"text": f"<p>{filler}</p><p>This entry represents the active site.</p>"}]
+    got = clean_api_description(last, cap=1800)
+    assert got.endswith("This entry represents the active site."), got[-60:]
+
+    # FIRST, with a huge catalogue after it -- the IPR011598 shape that regressed
+    first = [{"text": f"<p>This domain is found in eukaryotes and does a thing.</p>"
+                      f"<p>Proteins containing it include:</p><p>{filler}</p>"}]
+    got = clean_api_description(first, cap=1800)
+    assert got.startswith("This domain is found in eukaryotes"), got[:60]
+
+    # MIDDLE -- the IPR002515 shape
+    mid = [{"text": f"<p>{filler}</p><p>This entry represents the CCHHC zinc finger.</p>"
+                    f"<p>{filler}</p>"}]
+    got = clean_api_description(mid, cap=1800)
+    assert "This entry represents the CCHHC zinc finger." in got, got[-90:]
+
+    for blocks in (last, first, mid):
+        out = clean_api_description(blocks, cap=1800)
+        assert len(out) <= 1800, len(out)
+        assert "…" in out, "the elision is not marked"
+
+    # two entries sharing a preamble stay distinguishable
+    other = [{"text": f"<p>{filler}</p><p>This entry represents something else.</p>"}]
+    assert clean_api_description(other, cap=1800) != clean_api_description(last, cap=1800)
+    # uncapped is untouched
+    assert clean_api_description(last) == clean_api_description(last, cap=None)
+
+
+def test_the_cap_is_never_exceeded_by_a_defining_paragraph_near_its_size():
+    """`budget = cap - len(anchor) - 3` went NEGATIVE for an anchor of cap-1 or cap-2
+    characters, and `head[:-2]` slices from the END -- returning nearly the whole preamble
+    and blowing the cap by thousands of characters. No entry lands in that window today;
+    the next InterPro release is not obliged to be so kind.
+    """
+    for anchor_len in (97, 98, 99, 100, 101):
+        anchor = "This entry represents " + "x" * (anchor_len - 22)
+        blocks = [{"text": f"<p>{'preamble ' * 60}</p><p>{anchor}</p>"}]
+        out = clean_api_description(blocks, cap=100)
+        assert len(out) <= 100, f"anchor {anchor_len}: produced {len(out)} against cap 100"
+
+
+def test_an_elision_never_cuts_mid_word():
+    """25 of the 105 definitions elided mid-word before this -- `...as ortholo`,
+    `...translocate t`, `...degradation of lignin. In M`."""
+    blocks = [{"text": "<p>" + "alpha bravo charlie delta echo " * 40 + "</p>"
+                       "<p>This entry represents the thing.</p>"}]
+    got = clean_api_description(blocks, cap=400)
+    head = got.split(" … ")[0]
+    assert head.endswith(("alpha", "bravo", "charlie", "delta", "echo")), repr(head[-25:])
 
 
 def test_a_list_item_that_already_ends_in_a_stop_does_not_gain_a_semicolon():

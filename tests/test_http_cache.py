@@ -137,3 +137,32 @@ def test_both_callers_use_the_shared_class():
     assert fetch.Http.__module__ == "http_cache"
     src = (REPO / "scripts" / "build_sequence_structure_alignment.py").read_text()
     assert "class Http" not in src, "the embedded copy came back"
+
+
+def test_a_404_storm_refuses_to_overwrite_a_good_artefact(monkeypatch, tmp_path):
+    """The failure `http_cache` does NOT classify, reached through the fetch script.
+
+    `strict=True` separates transient from absent and the fetch guard covers transient. A
+    404 lands in `missing` instead -- and 404s ARE cached. So if the API path ever changes
+    shape, every accession 404s, the nulls go into the cache, `got` is empty, `{}`
+    overwrites the 209-entry artefact, and the run exits 0. Every later run then serves the
+    poisoned nulls at no cost and reports the same clean success.
+    """
+    import fetch_interpro_missing_abstracts as F
+
+    artefact = tmp_path / "missing_abstracts.json"
+    artefact.write_text('{"IPR000001": {"description": []}}', encoding="utf-8")
+    before = artefact.read_text(encoding="utf-8")
+
+    gone = urllib.error.HTTPError("http://x/a", 404, "Not Found", {}, None)
+    monkeypatch.setattr("http_cache.urllib.request.urlopen",
+                        lambda req, timeout=30: (_ for _ in ()).throw(gone))
+    monkeypatch.setattr(F, "entries_without_abstract",
+                        lambda xml: ["IPR000001", "IPR000002", "IPR000003"])
+    monkeypatch.setattr(F.XML_GZ.__class__, "exists", lambda self: True, raising=False)
+    monkeypatch.setattr(sys, "argv", [
+        "fetch", "--sleep", "0", "--out", str(artefact),
+        "--cache", str(tmp_path / "cache.json")])
+
+    assert F.main() == 1, "a 404 storm reported success"
+    assert artefact.read_text(encoding="utf-8") == before, "THE ARTEFACT WAS OVERWRITTEN"

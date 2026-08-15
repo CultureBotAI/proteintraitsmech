@@ -312,6 +312,24 @@ def clean_api_paragraphs(blocks) -> list[str]:
     return out
 
 
+# The paragraph that says what the ENTRY is, as opposed to the subject-matter preamble
+# before it and the member catalogue after it. InterPro is consistent about the wording and
+# not at all consistent about the position: it is paragraph 0 for IPR011598, paragraph 1
+# for IPR002515, and the last of nine for IPR019794.
+_API_DEFINING = re.compile(
+    r"^This (?:entry|domain|family|group|superfamily|protein|section)\b", re.I)
+
+
+def _cut_on_a_word(text: str, budget: int) -> str:
+    """`text` shortened to at most `budget`, never mid-word."""
+    if budget <= 0 or not text:
+        return ""
+    if len(text) <= budget:
+        return text
+    cut = text[:budget]
+    return (cut.rsplit(" ", 1)[0] if " " in cut else cut).rstrip()
+
+
 def clean_api_description(blocks, cap: int | None = None) -> str:
     """InterPro API `description` blocks -> prose, cross-references preserved as CURIEs.
 
@@ -326,17 +344,55 @@ def clean_api_description(blocks, cap: int | None = None) -> str:
     `[Fe<sup>4+</sup>=O]` and `[(L-alanin-3-ylcarbamoyl)methyl]` mangled -- those are
     chemistry, not markup, and they are left exactly as they are.
 
-    `cap` KEEPS THE LAST PARAGRAPH WHOLE and elides from the middle, because that is where
-    InterPro puts the entry-specific sentence. Truncating the tail instead produced three
-    pairs of byte-identical definitions for genuinely different entries.
+    `cap` KEEPS THE DEFINING PARAGRAPH, wherever it sits, and elides around it.
+
+    Two wrong versions of this shipped before the right one, both by assuming a position:
+
+      * head-truncation (commit 1) cut the tail off, and for entries whose defining
+        sentence is last -- "This entry represents an active site found in a number of
+        peroxidases." -- that deleted the only part naming the trait. IPR019794 (an active
+        site) and IPR019793 (a haem-binding site) came out byte-identical.
+      * keeping the LAST paragraph instead (commit 2) broke the opposite shape, and broke
+        it worse: InterPro often ENDS with a member catalogue. IPR011598's defining text is
+        paragraph 0; its last paragraph is 3,426 characters of myc-family members, so five
+        records -- including `bhlh-hif1a`, whose label is "Hypoxia-inducible factor 1-alpha
+        bHLH domain" -- were given a myc catalogue that mentions neither HIF1A nor bHLH.
+
+    So the anchor is found by CONTENT, not position, and the preamble before it is what
+    gets elided.
     """
     paras = clean_api_paragraphs(blocks)
     full = " ".join(paras)
     if cap is None or len(full) <= cap or not paras:
         return full
-    tail = paras[-1]
-    if len(tail) >= cap:                       # one enormous paragraph: nothing to preserve
-        return tail[:cap - 1].rstrip() + "\u2026"
-    head = " ".join(paras[:-1])
-    budget = cap - len(tail) - 3               # " … "
-    return head[:budget].rstrip() + " \u2026 " + tail
+
+    anchor_i = next((i for i in range(len(paras) - 1, -1, -1)
+                     if _API_DEFINING.match(paras[i])), len(paras) - 1)
+    anchor = paras[anchor_i]
+    if len(anchor) >= cap:            # one enormous paragraph: nothing to preserve around
+        return _cut_on_a_word(anchor, cap - 1) + "\u2026"
+
+    if anchor_i == 0:
+        # The definition leads. Keep it whole and fill forward with what follows, rather
+        # than eliding backwards into nothing.
+        out = anchor
+        for para in paras[1:]:
+            if len(out) + 1 + len(para) > cap:
+                trimmed = _cut_on_a_word(para, cap - len(out) - 4)
+                if trimmed:
+                    out += " " + trimmed + " \u2026"
+                break
+            out += " " + para
+        return out
+
+    # A defining paragraph of cap-1 or cap-2 characters makes this budget NEGATIVE, and a
+    # bare `head[:-2]` slices from the END -- returning nearly the whole preamble and
+    # blowing the cap by thousands of characters. No entry lands in that window today; the
+    # next release is not obliged to be so kind.
+    #
+    # Guarded TWICE, and either alone is sufficient (verified by mutating each: only
+    # removing both fails the test). `max(0, ...)` here, and `budget <= 0` inside
+    # `_cut_on_a_word` for every other caller of it. The test pins the OUTCOME -- output
+    # never exceeds the cap -- rather than either mechanism.
+    head = _cut_on_a_word(" ".join(paras[:anchor_i]), max(0, cap - len(anchor) - 3))
+    return f"{head} \u2026 {anchor}" if head else anchor

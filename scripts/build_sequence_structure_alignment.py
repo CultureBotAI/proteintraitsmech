@@ -539,7 +539,13 @@ def main() -> int:
         return 2
     http = None
     if {"interpro", "sifts", "biolip"} & set(providers):
-        http = Http(CACHE_DIR / "align_http_cache.json")
+        http = Http(CACHE_DIR / "align_http_cache.json",
+                    # Kept explicitly: the embedded class hardcoded this, and the
+                    # shared one defaults to a generic name, so extracting it
+                    # silently changed how these requests identify themselves to
+                    # InterPro and PDBe. Neither gates on UA, but their logs lose
+                    # per-client attribution (#454 review).
+                    user_agent="ProteinTraitsMech-align/1.0")
 
     # interpro is scoped: an interpro call only matters if the exemplar protein is
     # already localized by another record (only then can a pair form). So localize
