@@ -128,7 +128,6 @@ def test_the_artefact_records_the_llm_flags_it_must_not_decide():
         assert "is_llm" in rec and "is_reviewed_llm" in rec, acc
 
 
-@pytest.mark.skipif(not MISSING.exists(), reason="artefact absent")
 def test_records_sourced_from_the_api_say_so_and_not_abstract():
     """A record whose text came from the API but cites "IPR011598 abstract" claims to quote
     a release that does not contain it -- #344's defect in a new place, and #344 cost 407
@@ -136,6 +135,10 @@ def test_records_sourced_from_the_api_say_so_and_not_abstract():
 
     Also asserts the #344 gate SEES them: its regex matched only "abstract", so all 45
     became invisible to it the moment they were written.
+
+    NO SKIP GUARD, deliberately. This reads `data/traits` only -- all committed -- and the
+    first version was gated on `missing_abstracts.json`, which is gitignored. It therefore
+    skipped on every CI run, silently, while guarding 105 committed records (#454 review).
     """
     import audit_pfam_interpro as A
     n_api = 0
@@ -150,3 +153,106 @@ def test_records_sourced_from_the_api_say_so_and_not_abstract():
         if "/pfam/" in str(path):
             assert A.DEF_SRC.search(text), f"{path.name} is invisible to audit-pfam-interpro"
     assert n_api >= 100, f"only {n_api} records carry the API provenance"
+
+
+# ---------------------------------------------------------------------------------------
+# Review follow-ups (#454 review): the cap deleted the only entry-specific sentence, and
+# three damage shapes reached 105 committed records before anyone read one end to end.
+# ---------------------------------------------------------------------------------------
+
+def test_the_cap_keeps_the_LAST_paragraph_because_that_is_the_entry_specific_one():
+    """InterPro writes the general subject matter first and "This entry represents ..."
+    last. A head-truncation at 1,800 characters therefore deletes the only sentence that
+    distinguishes one entry from another -- and did: IPR019794 (an active site) and
+    IPR019793 (a haem-binding site) came out BYTE-IDENTICAL, as did two other pairs, none
+    of them mentioning its own trait.
+    """
+    blocks = [{"text": "<p>" + "general background. " * 200 + "</p>"
+                       "<p>This entry represents the thing itself.</p>", "llm": False}]
+    got = clean_api_description(blocks, cap=1800)
+    assert len(got) <= 1800
+    assert got.endswith("This entry represents the thing itself."), got[-80:]
+    assert "…" in got, "the elision is not marked"
+    # and two entries sharing a long preamble stay distinguishable
+    other = [{"text": "<p>" + "general background. " * 200 + "</p>"
+                      "<p>This entry represents something else entirely.</p>", "llm": False}]
+    assert clean_api_description(other, cap=1800) != got
+
+    # uncapped is unchanged, and a single over-long paragraph still truncates rather than
+    # returning nothing
+    assert clean_api_description(blocks) == clean_api_description(blocks, cap=None)
+    huge = [{"text": "<p>" + "x " * 2000 + "</p>", "llm": False}]
+    assert len(clean_api_description(huge, cap=1800)) <= 1800
+
+
+def test_a_list_item_that_already_ends_in_a_stop_does_not_gain_a_semicolon():
+    """`</li>` became "; " unconditionally, and InterPro's items mostly end in a full stop,
+    so 125 `".;"` sequences reached 32 records -- against 9 in the entire 429k-record
+    corpus before this PR."""
+    ends_in_stop = [{"text": "<ul><li>alcohol dehydrogenases.</li>"
+                             "<li>Insect-type reductases.</li></ul>", "llm": False}]
+    got = clean_api_description(ends_in_stop)
+    assert ".;" not in got, got
+    assert "dehydrogenases. Insect-type" in got, got
+    # ...but an item WITHOUT punctuation still gets its separator, or the list runs together
+    no_stop = [{"text": "<ul><li>alpha chain</li><li>beta chain</li></ul>", "llm": False}]
+    assert "alpha chain; beta chain" in clean_api_description(no_stop)
+
+
+def test_a_leading_synonym_list_is_dropped_not_concatenated():
+    """`Synonym(s): Penicillinase, Cephalosporinase` is metadata InterPro renders above the
+    prose. Merged into a definition it reads as one, and 9 entries opened with it --
+    `imp-dehydrogenase` with two stacked."""
+    blocks = [{"text": "<p>Synonym(s): Protohaem ferro-lyase, Iron chelatase, etc. "
+                       "<p>Ferrochelatase is the terminal enzyme of the pathway.</p>",
+               "llm": False}]
+    got = clean_api_description(blocks)
+    assert got.startswith("Ferrochelatase is the terminal enzyme"), got
+    assert "Synonym" not in got
+
+
+def test_an_unclosed_paragraph_still_separates_two_sentences():
+    """InterPro opens a second `<p>` without closing the first in 5 of the 209. Splitting on
+    the closing tag alone fused the sentences with no punctuation between them."""
+    got = clean_api_description([{"text": "<p>First sentence ends here.<p>Second begins.",
+                                  "llm": False}])
+    assert "here. Second" in got, got
+
+
+def test_sup_and_sub_close_up_for_chemistry_but_not_before_a_word():
+    """22 of the 61 occurrences are followed by a capital continuing a formula
+    (`H<sub>2</sub>O`); 18 by a lowercase letter starting a word
+    (`H<sub>2</sub>O<sub>2</sub>to give`, `Mn<sup>2+</sup>serves`). Opposite treatments.
+
+    The first version got this backwards for the commonest case, because `re.I` on the
+    whole pattern made the lookahead's `[a-z]` match capitals too -- so `H<sub>2</sub>O`
+    became "H2 O". The flag is scoped to the tag now.
+    """
+    got = clean_api_description([{"text": "<p>NAD<sup>+</sup>+ H<sub>2</sub>O and "
+                                          "H<sub>2</sub>O<sub>2</sub>to give "
+                                          "Mn<sup>2+</sup>serves.</p>", "llm": False}])
+    assert "H2O and" in got, got
+    assert "H2O2 to give" in got, got
+    assert "Mn2+ serves" in got, got
+
+
+def test_no_dot_semicolon_or_weld_reaches_any_of_the_209():
+    """The corpus-wide sweep the earlier version of this file should have included. Every
+    shape below reached committed records once."""
+    if not MISSING.exists():
+        pytest.skip("artefact absent; run `just fetch-interpro-missing-abstracts`")
+    data = json.loads(MISSING.read_text(encoding="utf-8"))
+    problems = []
+    for acc, rec in data.items():
+        text = clean_api_description(rec["description"], cap=1800)
+        if not text:
+            continue
+        for pattern, name in ((r"\.\s*;", "dot-semicolon"),
+                              (r"^\s*Synonym\(s\)", "synonym opener"),
+                              (r"\b[A-Z][a-z]?\d\+?[a-z]{2,}\b", "formula welded to a word"),
+                              (r"\.\s*[A-Z][a-z]+\s+\.", "stranded fragment")):
+            m = re.search(pattern, text)
+            if m:
+                problems.append(f"{acc}: {name} at {text[max(0, m.start()-40):m.start()+45]!r}")
+                break
+    assert problems == [], "\n".join(problems[:8])

@@ -136,6 +136,25 @@
   source: interpro
   status: seeded
   note: attaches GO xrefs to InterPro records. Other InterPro mappings (member-DB signatures, PDBe/AlphaFold) live inside interpro.xml.gz; match_complete.xml.gz / protein2ipr.dat.gz / sites.xml.gz (52G+) are NOT used.
+-
+  url: https://www.ebi.ac.uk/interpro/api/entry/interpro/{accession}
+  local_name: interpro/missing_abstracts.json
+  name: InterPro entry descriptions (REST API; only the entries the release omits)
+  source: interpro
+  license: public domain
+  license_url: https://www.ebi.ac.uk/licencing/
+  status: seeded
+  trait_categories: [SEQ_DOMAIN, SEQ_HOMOLOGOUS_SUPERFAMILY, SEQ_REPEAT, SEQ_CONSERVATION, SEQ_ACTIVE_SITE, SEQ_BINDING_SITE, SEQ_PTM_SITE, SEQ_FAMILY]
+  seeder: fetch_interpro_missing_abstracts.py
+  note: >-
+    NOT a bulk download and not kghub-downloader-shaped -- a per-accession REST call, ~209
+    of them, for the entries whose interpro.xml.gz record ships no <abstract> (#445). The
+    release omits them; the API has a curator-written description for every one, 811-5,326
+    chars. Fetched into a release-shaped artefact so the two enrichers that consume it
+    (enrich_pfam_definitions, enrich_interpro_missing_abstracts) stay offline and
+    reproducible. Recorded here because this manifest is the authority for everything in
+    data/raw/, and a fetch_* script with an unmanifested URL is invisible to check_sources
+    -- which cross-checks seed_* only (#454 review).
 
 # Pfam-A families (public domain; Pfam ⊂ InterPro, each linked via InterPro xref)
 -

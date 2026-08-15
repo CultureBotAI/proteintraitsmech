@@ -114,9 +114,12 @@ def load_ipr_abstracts(wanted: set[str]) -> tuple[dict[str, str], set[str]]:
         # keeps that true if the next fetch differs.
         if any(b.get("llm") for b in blocks):
             continue
-        text = clean_api_description(blocks)
+        # The cap is passed IN so it can keep the last paragraph whole: InterPro puts
+        # the entry-specific sentence there, and a head-truncation deletes exactly the
+        # part that distinguishes one entry from another (#454 review).
+        text = clean_api_description(blocks, DEF_CAP)
         if len(text) >= 40:
-            out[ipr] = text[:DEF_CAP - 1].rstrip() + "…" if len(text) > DEF_CAP else text
+            out[ipr] = text
             from_api.add(ipr)
     return out, from_api
 
@@ -206,7 +209,13 @@ def enrich_record(text: str, ipr: str, pf: str, abstract: str,
 
 # The `definition_source` this script writes, so a record carrying ANOTHER entry's
 # abstract can be recognised and which entry it names can be read back (#344).
-borrowed_re = re.compile(r'^definition_source: "InterPro:(IPR\d+) abstract', re.M)
+#
+# `abstract` OR `description`: #445 added the second form for entries the release ships
+# without an abstract. `audit_pfam_interpro.DEF_SRC` was widened for it and THIS was not,
+# which left the repair blind exactly where the audit fails -- a gate with no fixer
+# (#454 review).
+borrowed_re = re.compile(
+    r'^definition_source: "InterPro:(IPR\d+) (?:abstract|description)', re.M)
 
 PFAM_CLANS = REPO_ROOT / "data" / "raw" / "pfam" / "Pfam-A.clans.tsv.gz"
 PFAM_TYPES = REPO_ROOT / "data" / "raw" / "pfam" / "pfam_types.tsv"

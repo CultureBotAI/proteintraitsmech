@@ -142,10 +142,19 @@ def main() -> int:
         return 1 if failed else 0
 
     out = Path(args.out)
+    if failed:
+        # The --limit branch refuses to write because "a partial fetch must not overwrite a
+        # complete one", and the FAILURE path had no such guard -- 200 timeouts and 9
+        # successes would have replaced a 209-entry artefact with a 9-entry one, and the
+        # enrichers would then have quietly under-enriched (#454 review). Same rule, same
+        # reason.
+        print(f"\n{len(failed)} fetch(es) failed; NOT writing {out}. The existing artefact "
+              f"is left as it was. Re-run when the API is reachable.")
+        return 1
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(got, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(f"\nwrote {out}")
-    return 1 if failed else 0
+    return 0
 
 
 if __name__ == "__main__":

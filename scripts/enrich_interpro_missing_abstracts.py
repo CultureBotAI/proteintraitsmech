@@ -72,12 +72,15 @@ def load_descriptions() -> dict[str, str]:
         blocks = rec.get("description") or []
         if any(b.get("llm") for b in blocks):        # #92
             continue
-        text = clean_api_description(blocks)
+        # The cap is passed IN so it keeps the last paragraph whole -- InterPro puts the
+        # entry-specific sentence there, and a head-truncation made IPR019794 (active site)
+        # and IPR019793 (haem-binding site) byte-identical (#454 review).
+        text = clean_api_description(blocks, DEF_CAP)
         if len(text) < MIN_LEN:
             # 87 of the 209 are this short -- "DUF2252 has no known function." -- and are
             # no better than what the record already says. Left alone rather than churned.
             continue
-        out[ipr] = text[:DEF_CAP - 1].rstrip() + "…" if len(text) > DEF_CAP else text
+        out[ipr] = text
     return out
 
 

@@ -234,19 +234,85 @@ _API_CITE = re.compile(r"\[?\[cite:[^\]]*\]\]?")
 # as this module's top docstring says of `db_xref`: 64 accessions and EC numbers across
 # these entries, which a bracket sweep would delete.
 _API_XREF = re.compile(r"\[(\w+):([^\]\s]+)\]")
-_API_LI = re.compile(r"</li>\s*", re.I)
-_API_BLOCK_END = re.compile(r"</(?:p|ul|ol|reaction)>\s*", re.I)
-# `<sup>`/`<sub>` carry chemistry -- `NAD<sup>+</sup>`, `H<sub>2</sub>O` -- so they close up
-# with no space. EVERY OTHER TAG needs one: InterPro writes `of<i>Bacillus subtilis</i>and`
-# with no spaces around the italics, so stripping those to nothing gives
-# "ofBacillus subtilisand". The release cleaner uses a space for this exact reason; the
-# first version of this one did not, and produced that string.
-_API_TIGHT_TAG = re.compile(r"</?(?:sup|sub)>", re.I)
+# Paragraph boundaries. BOTH the opening and closing tag: InterPro opens a second `<p>`
+# without closing the first in 5 of the 209, so a closing-tag-only split fuses two
+# sentences with no punctuation between them.
+_API_PARA = re.compile(r"</?(?:p|ul|ol|reaction)>", re.I)
+_API_LI_END = re.compile(r"</li>", re.I)
+_API_LI_OPEN = re.compile(r"<li>", re.I)
+# `Synonym(s): Penicillinase, Cephalosporinase` is metadata InterPro renders above the
+# prose. Concatenated into a definition it reads as one -- 9 entries opened with it, and
+# `imp-dehydrogenase` opened with two stacked. Dropped, not merged.
+_API_SYNONYMS = re.compile(r"^\s*Synonym\(s\):", re.I)
+# `<sup>`/`<sub>` carry chemistry, so they normally close up: `H<sub>2</sub>O` -> `H2O`,
+# and 22 of the 61 occurrences are followed by a capital that continues a formula. But 18
+# are followed by a LOWERCASE letter that starts an English word -- `H<sub>2</sub>O<sub>2
+# </sub>to give`, `Mn<sup>2+</sup>serves`, `NADP<sup>+</sup>reductases` -- where closing up
+# welds the formula to the next word. Split on the case of what follows.
+# The case-insensitive flag is SCOPED to the tag. `re.I` on the whole pattern makes the
+# `[a-z]` in the lookahead match capitals too, so `H<sub>2</sub>O` -- the commonest case --
+# took the spaced branch and became "H2 O".
+_API_TIGHT_TAG = re.compile(r"(?i:</?(?:sup|sub)>)(?![a-z])")
+_API_SPACED_TAG = re.compile(r"</?(?:sup|sub)>", re.I)
 # Punctuation left stranded once a citation group is gone: " ,", ",,", " ." and so on.
 _API_ORPHAN_PUNCT = re.compile(r"\s*,(?=\s*[,.;:])")
 
 
-def clean_api_description(blocks) -> str:
+def _clean_api_paragraph(raw: str) -> str:
+    """One paragraph of API HTML -> prose."""
+    txt = _API_CITE_GROUP.sub("", raw)
+    txt = _API_CITE.sub("", txt)
+    txt = _API_XREF.sub(
+        lambda m: (render_xref(m.group(1), m.group(2))
+                   if m.group(1).upper() in DB_PREFIX else m.group(0)), txt)
+    txt = _API_TIGHT_TAG.sub("", txt)       # chemistry closes up...
+    txt = _API_SPACED_TAG.sub(" ", txt)     # ...unless a word follows
+    txt = _TAG.sub(" ", txt)                # every other tag needs the space
+    txt = html.unescape(txt)
+    txt = _EMPTY_BRACKETS.sub("", txt)
+    txt = _API_ORPHAN_PUNCT.sub("", txt)
+    txt = _SPACE_BEFORE_PUNCT.sub(r"\1", txt)
+    return " ".join(txt.split())
+
+
+def clean_api_paragraphs(blocks) -> list[str]:
+    """The API description as cleaned paragraphs, in order, metadata dropped.
+
+    Paragraph-level because the CAP has to be: InterPro puts the general subject matter
+    first and the sentence that is actually about THIS entry last -- "This entry represents
+    an active site found in a number of peroxidases." A head-truncation at 1,800 characters
+    therefore deletes the only part that distinguishes the entry, and it did: IPR019794
+    (active site) and IPR019793 (haem-binding site) came out byte-identical, as did two
+    other pairs, none of them mentioning its own trait.
+    """
+    out = []
+    for block in blocks:
+        raw = block.get("text", "") if isinstance(block, dict) else str(block)
+        if not raw:
+            continue
+        # `<li>` items are paragraphs for splitting, but rejoin with "; " below, so a list
+        # reads as one sentence rather than as N fragments.
+        for para in _API_PARA.split(raw):
+            if not para.strip():
+                continue
+            items = [_clean_api_paragraph(x) for x in _API_LI_END.split(para)]
+            items = [_API_LI_OPEN.sub("", x).strip() for x in items if x.strip()]
+            if not items:
+                continue
+            # "; " ONLY where the item does not already end in punctuation. InterPro's list
+            # items mostly end in a full stop, and appending unconditionally wrote 125
+            # `".;"` sequences into 32 records -- against 9 in the entire 429k-record corpus
+            # before this.
+            joined = items[0]
+            for item in items[1:]:
+                joined += ("" if joined.endswith((".", ";", ":", ",")) else ";") + " " + item
+            cleaned = _clean_api_paragraph(joined)
+            if cleaned and not _API_SYNONYMS.match(cleaned):
+                out.append(cleaned)
+    return out
+
+
+def clean_api_description(blocks, cap: int | None = None) -> str:
     """InterPro API `description` blocks -> prose, cross-references preserved as CURIEs.
 
     A SECOND cleaner, deliberately, rather than a branch inside `clean_abstract`. The two
@@ -260,28 +326,17 @@ def clean_api_description(blocks) -> str:
     `[Fe<sup>4+</sup>=O]` and `[(L-alanin-3-ylcarbamoyl)methyl]` mangled -- those are
     chemistry, not markup, and they are left exactly as they are.
 
-    `</li>` and `</p>` become separators before the tag strip: without that, list items run
-    their last word into the next item's first.
+    `cap` KEEPS THE LAST PARAGRAPH WHOLE and elides from the middle, because that is where
+    InterPro puts the entry-specific sentence. Truncating the tail instead produced three
+    pairs of byte-identical definitions for genuinely different entries.
     """
-    parts = []
-    for block in blocks:
-        raw = block.get("text", "") if isinstance(block, dict) else str(block)
-        if not raw:
-            continue
-        txt = _API_CITE_GROUP.sub("", raw)
-        txt = _API_CITE.sub("", txt)
-        txt = _API_XREF.sub(
-            lambda m: (render_xref(m.group(1), m.group(2))
-                       if m.group(1).upper() in DB_PREFIX else m.group(0)), txt)
-        txt = _API_LI.sub("; ", txt)
-        txt = _API_BLOCK_END.sub(" ", txt)
-        txt = _API_TIGHT_TAG.sub("", txt)       # chemistry closes up
-        txt = _TAG.sub(" ", txt)                # everything else needs the space
-        txt = html.unescape(txt)
-        txt = _EMPTY_BRACKETS.sub("", txt)
-        txt = _API_ORPHAN_PUNCT.sub("", txt)
-        txt = _SPACE_BEFORE_PUNCT.sub(r"\1", txt)
-        parts.append(" ".join(txt.split()))
-    out = " ".join(p for p in parts if p)
-    # `<li>foo</li>` at the end of a list leaves "; " before the closing punctuation.
-    return re.sub(r";\s*(?=[.;]|$)", "", out).strip()
+    paras = clean_api_paragraphs(blocks)
+    full = " ".join(paras)
+    if cap is None or len(full) <= cap or not paras:
+        return full
+    tail = paras[-1]
+    if len(tail) >= cap:                       # one enormous paragraph: nothing to preserve
+        return tail[:cap - 1].rstrip() + "\u2026"
+    head = " ".join(paras[:-1])
+    budget = cap - len(tail) - 3               # " … "
+    return head[:budget].rstrip() + " \u2026 " + tail

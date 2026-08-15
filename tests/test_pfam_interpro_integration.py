@@ -385,3 +385,32 @@ def test_enrich_returns_zero_when_it_strands_nothing(monkeypatch, tmp_path):
         lambda wanted: ({"IPR003029": "The S1 domain binds RNA, at length."}, set()))
     monkeypatch.setattr(sys, "argv", ["enrich_pfam_definitions.py"])
     assert E.main() == 0
+
+
+def test_borrowed_re_and_the_audit_regex_recognise_BOTH_provenance_forms():
+    """#445 added `description (InterPro API; ...)` alongside `abstract (...)`. Two regexes
+    key on that line, in two files, and widening one and not the other leaves the repair
+    blind exactly where the audit fails -- a gate with no fixer.
+
+    `audit_pfam_interpro.DEF_SRC` was widened; `enrich_pfam_definitions.borrowed_re` was
+    not, and nothing caught it: reaching that branch needs a record whose entry has neither
+    a release abstract nor an API description, which no record has today. Pinned directly
+    instead of waiting for the next InterPro release to produce one.
+    """
+    import audit_pfam_interpro as A
+    import enrich_pfam_definitions as E
+
+    old = ('definition_source: "InterPro:IPR000834 abstract '
+           '(Pfam PF00246 maps to this entry via pfam2interpro)"\n')
+    new = ('definition_source: "InterPro:IPR011598 description (InterPro API; this entry '
+           'ships no abstract in the interpro.xml release. Pfam PF00010 maps to this entry '
+           'via pfam2interpro)"\n')
+    for pattern, name in ((E.borrowed_re, "enrich_pfam_definitions.borrowed_re"),
+                          (A.DEF_SRC, "audit_pfam_interpro.DEF_SRC")):
+        assert pattern.search(old), f"{name} lost the original abstract form"
+        assert pattern.search(old).group(1) == "IPR000834"
+        assert pattern.search(new), f"{name} does not see the #445 description form"
+        assert pattern.search(new).group(1) == "IPR011598"
+    # and neither matches a record with no borrowed text at all
+    assert not E.borrowed_re.search("definition_source: Pfam\n")
+    assert not A.DEF_SRC.search("definition_source: InterPro\n")
