@@ -8045,14 +8045,35 @@ def _drug_assertion(ident: str, did: str, terms: dict):
     class ancestor — so this walks `is_a` from the record upward and returns the first term
     that asserts it. Returns None if nothing in the ancestry does, in which case the caller
     falls back to the family's literature snippet.
+
+    THE RECORD ITSELF IS FIRST IN THE WALK, and that is deliberate: a term that asserts the
+    relation directly must not be described as inheriting it. But the note said "an is_a
+    ancestor of this record's ARO:3004574" whichever branch matched, so every direct
+    assertion claimed the record was its own ancestor (#364). A term is not its own `is_a`
+    ancestor; `aro.obo` gives ARO:3004574 `is_a ARO:0000031` and nothing else.
+
+    215 such notes were on disk across 190 records. `fix_resistance_drug_edges` has written
+    the correct form for a while -- 593 records carry it -- but this function was never
+    changed, so the promoter re-created the defect on every run and re-promoting a repaired
+    record silently undid the repair. That is why #408 could not simply re-promote its
+    drifted records: 74 of them differ from their config for exactly this reason, with the
+    RECORD right and the CONFIG wrong.
+
+    The wording of both branches is copied from `fix_resistance_drug_edges` so the two
+    writers agree byte for byte; `test_the_two_writers_agree_on_both_note_forms` pins that.
     """
     for anc in [ident] + [a for a in E.ancestry(terms, ident) if a != ident]:
         for rel in terms.get(anc, {}).get("rel", []):
             if rel.startswith("confers_resistance_to_drug_class") and did in rel:
-                return (anc, f"relationship: {rel}",
-                        f"Asserted on {anc} ({terms[anc].get('name', anc)}), an is_a ancestor "
-                        f"of this record's {ident}; inherited by this variant. CARD/ARO "
-                        f"release in data/raw/aro/aro.obo.")
+                name = terms[anc].get("name", anc)
+                if anc == ident:
+                    note = (f"Asserted directly on {anc} ({name}) in the CARD/ARO release "
+                            f"in data/raw/aro/aro.obo.")
+                else:
+                    note = (f"Asserted on {anc} ({name}), an is_a ancestor of this "
+                            f"record's {ident}; inherited by this variant. CARD/ARO "
+                            f"release in data/raw/aro/aro.obo.")
+                return (anc, f"relationship: {rel}", note)
     return None
 
 
