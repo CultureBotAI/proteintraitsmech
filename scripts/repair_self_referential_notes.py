@@ -160,8 +160,17 @@ def main() -> int:
     limited = False
     for i, path in enumerate(paths):
         text = path.read_text(encoding="utf-8")
-        if "an is_a ancestor of this record" not in text:
-            continue
+        # NO SUBSTRING PREFILTER. There was one -- `"an is_a ancestor of this record" not
+        # in text` -- and PyYAML folds that very phrase across a line break, so it was
+        # absent from the raw text of 28 records that contained the note. They were skipped
+        # before anything looked at them, and the verification scan used the SAME prefilter,
+        # so both agreed on "0 remain" while 31 notes survived.
+        #
+        # That is the third form of one mistake in this file: `[^)]*` in the rewrite, the
+        # rewrite doubling as the detector, and now the prefilter. All three are the same
+        # error -- reasoning about folded YAML as flat text -- and all three were invisible
+        # because the check shared the blind spot (#462). Parse every record; the walk is
+        # 7.4k files and costs seconds.
         out, reason, n = repair_record(text)
         if out is None:
             if n:

@@ -147,8 +147,10 @@ def test_no_self_referential_note_remains_in_the_corpus():
     bad = []
     for path in ARO_DIR.glob("*.yaml"):
         text = path.read_text(encoding="utf-8")
-        if "an is_a ancestor of this record" not in text:
-            continue
+        # NO substring prefilter. The repair had one and so did this test, and PyYAML folds
+        # "an is_a ancestor of this record" across a line break -- so 28 records containing
+        # the note did not contain the STRING, and tool and test agreed on "0 remain" while
+        # 31 survived. A check that shares the tool's blind spot is not a check.
         span = repair._graph_block(text)
         if span is None:
             continue
