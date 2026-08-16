@@ -8052,7 +8052,7 @@ def _drug_assertion(ident: str, did: str, terms: dict):
     assertion claimed the record was its own ancestor (#364). A term is not its own `is_a`
     ancestor; `aro.obo` gives ARO:3004574 `is_a ARO:0000031` and nothing else.
 
-    184 such notes were on disk across 162 records. `fix_resistance_drug_edges` has written
+    215 such notes were on disk across 190 records. `fix_resistance_drug_edges` has written
     the correct form for a while -- 593 records carry it -- but this function was never
     changed, so the promoter re-created the defect on every run and re-promoting a repaired
     record silently undid the repair. That is why #408 could not simply re-promote its

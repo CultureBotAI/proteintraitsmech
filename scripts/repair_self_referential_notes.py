@@ -8,8 +8,8 @@ RECORD ITSELF first, and wrote the same note whichever step matched:
     record's ARO:3004574; inherited by this variant.
 
 A term is not its own `is_a` ancestor — `aro.obo` gives ARO:3004574 `is_a ARO:0000031` and
-nothing else — and the relation is asserted ON the record, not inherited by it. 184 such
-notes were on disk across 162 records.
+nothing else — and the relation is asserted ON the record, not inherited by it. 215 such
+notes were on disk across 190 records.
 
 WHY THIS AND NOT `fix_resistance_drug_edges`. That script owns the corrected wording and
 has written it for 593 records, but it only selects edges whose subject is `resistance` and
@@ -54,10 +54,22 @@ ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 # "records repaired: 0" -- a miss indistinguishable from nothing to do, which is the #431
 # lesson this file's docstring invokes and then reproduced.
 #
-# Greedy `.*` is safe because the tail is FIXED and anchored by fullmatch: the only way to
-# satisfy it is for the name to end at the last `), an is_a ancestor of this record's`.
+# NON-GREEDY, and both patterns reject a note carrying more than one assertion.
+#
+# Greedy `.*` is safe for `SELF_REF` -- `fullmatch` plus a fixed tail leaves only one
+# parse -- but NOT for `LOOKS_SELF_REF`, which has no trailing anchor and uses `.search`.
+# On a note holding two assertions, leftmost-first plus greedy pairs the FIRST id with the
+# LAST tail:
+#
+#   "Asserted on ARO:1 (A), ... record's ARO:2; ...  Asserted on ARO:3 (B), ... record's ARO:3; ..."
+#    detection pairs ARO:1 with ARO:3 -> not equal -> skipped, and the second assertion IS
+#    self-referential. And where both share an id, the name group swallows the first note
+#    whole and the rewrite CORRUPTS it.
+#
+# 0 of the corpus's 12,581 assertion notes hold more than one, so there is no data impact;
+# this is the same class the detector/rewriter split exists to prevent, one level in.
 SELF_REF = re.compile(
-    r"Asserted on (?P<a>ARO:\d+) \((?P<name>.*)\), an is_a ancestor of this record's "
+    r"Asserted on (?P<a>ARO:\d+) \((?P<name>.*?)\), an is_a ancestor of this record's "
     r"(?P<b>ARO:\d+); inherited by this variant\. "
     r"CARD/ARO release in data/raw/aro/aro\.obo\.")
 
@@ -67,12 +79,26 @@ SELF_REF = re.compile(
 # was blind to exactly the notes that survived. One pattern must not be both the finder and
 # the fixer.
 LOOKS_SELF_REF = re.compile(
-    r"Asserted on (ARO:\d+) \(.*\), an is_a ancestor of this record's (ARO:\d+);")
+    r"Asserted on (ARO:\d+) \(.*?\), an is_a ancestor of this record's (ARO:\d+);")
+
+
+def _single_assertion(note: str) -> str | None:
+    """The note, collapsed, if it holds exactly one assertion -- else None.
+
+    Two assertions in one string make both patterns ambiguous (see above). None today;
+    refused rather than guessed at, so the day one appears it is stranded and reported
+    instead of silently skipped or corrupted.
+    """
+    flat = " ".join((note or "").split())
+    return flat if flat.count("Asserted on") + flat.count("Asserted directly on") <= 1 else None
 
 
 def looks_self_referential(note: str) -> bool:
     """True if this note calls a record its own ancestor, however it is worded."""
-    m = LOOKS_SELF_REF.search(" ".join((note or "").split()))
+    flat = _single_assertion(note)
+    if flat is None:
+        return True          # ambiguous: surface it as a hit so the rewrite strands it
+    m = LOOKS_SELF_REF.search(flat)
     return bool(m and m.group(1) == m.group(2))
 
 
@@ -84,7 +110,10 @@ def corrected(term: str, name: str) -> str:
 
 def fix_note(note: str) -> str | None:
     """The corrected note, or None if this one is not self-referential."""
-    m = SELF_REF.fullmatch(" ".join((note or "").split()))
+    flat = _single_assertion(note)
+    if flat is None:
+        return None
+    m = SELF_REF.fullmatch(flat)
     if not m or m.group("a") != m.group("b"):
         return None
     return corrected(m.group("a"), m.group("name"))

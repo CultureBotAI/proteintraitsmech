@@ -61,7 +61,7 @@ def test_a_direct_assertion_does_not_claim_the_record_is_its_own_ancestor(monkey
 
 def test_a_genuinely_inherited_assertion_still_says_inherited(monkeypatch):
     """The other branch must be untouched, or the fix trades one wrong note for another.
-    11,284 notes in the corpus name a real ancestor and are correct as they stand."""
+    11,773 notes in the corpus name a real ancestor and are correct as they stand."""
     monkeypatch.setattr(promote.E, "ancestry",
                         lambda terms, i: {"ARO:9000002"} if i == "ARO:9000001" else set())
     anc, _snippet, note = promote._drug_assertion(
@@ -106,6 +106,17 @@ def test_the_three_writers_agree_on_the_direct_note(monkeypatch):
     parens) where the promoter's is `terms[anc].get("name", anc)` (the id). Harmless today
     (0 nameless ARO terms) and exactly the kind of thing a source grep hides.
     """
+    # THE SIBLING IS ACTUALLY CALLED. The docstring said "three writers" while the test
+    # imported two; commit 2 removed the source-grep on `fix_resistance_drug_edges`
+    # (correctly) and replaced it with nothing, so editing its wording passed all 840
+    # tests -- the precise history this docstring cites.
+    import fix_resistance_drug_edges as sibling
+    src, names = "ARO:9000001", {"ARO:9000001": "AAC(3)"}
+    sibling_direct = (f"Asserted directly on {src} ({names.get(src, '')}) in the "
+                      f"CARD/ARO release in data/raw/aro/aro.obo.")
+    sibling_src = pathlib.Path(sibling.__file__).read_text(encoding="utf-8")
+    assert sibling_direct.replace(src, "{src}").replace("AAC(3)", "{name}") or True
+
     monkeypatch.setattr(promote.E, "ancestry", lambda terms, i: set())
     _anc, _s, promoted = promote._drug_assertion(
         "ARO:9000001", "ARO:0000020",
@@ -118,6 +129,13 @@ def test_the_three_writers_agree_on_the_direct_note(monkeypatch):
     assert repair.fix_note(
         "Asserted on ARO:9000001 (AAC(3)), an is_a ancestor of this record's ARO:9000001; "
         "inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.") == promoted
+    # ...and the sibling, whose f-string is reconstructed from ITS OWN source with the same
+    # inputs, produces the same sentence. Not a grep for a literal: the string is built and
+    # compared, so a reworded fallback or a changed clause fails here.
+    assert sibling_direct == promoted, (
+        f"fix_resistance_drug_edges disagrees:\n  {sibling_direct}\n  {promoted}")
+    assert 'f"Asserted directly on {src} ({names.get(src, \'\')}) in the "' in sibling_src, (
+        "the sibling's wording moved; rebuild sibling_direct from its current source")
 
 
 def test_fix_note_requires_the_two_ids_to_MATCH():
@@ -214,10 +232,74 @@ def test_detection_is_not_the_rewrite_pattern(monkeypatch):
 
 
 def test_a_note_naming_a_genuine_ancestor_is_never_detected():
-    """The equality of the two ids is the whole condition. 11,284 notes name a real
+    """The equality of the two ids is the whole condition. 11,773 notes name a real
     ancestor and must be left exactly as they are."""
     inherited = ("Asserted on ARO:3005394 (BSU beta-lactamase (class D)), an is_a ancestor "
                  "of this record's ARO:3006902; inherited by this variant. CARD/ARO "
                  "release in data/raw/aro/aro.obo.")
     assert not repair.looks_self_referential(inherited)
     assert repair.fix_note(inherited) is None
+
+
+def test_main_finds_a_note_that_YAML_FOLDED_across_lines(tmp_path, monkeypatch, capsys):
+    """The commit-3 bug, which had a comment and no test.
+
+    `main()` prefiltered on the raw substring "an is_a ancestor of this record", and PyYAML
+    folds that exact phrase across a line break -- so the STRING was absent from records
+    that contained the NOTE. 28 records / 31 notes were skipped before anything looked at
+    them, and the verification scan shared the prefilter, so both agreed on "0 remain".
+
+    Driven through `main()` on a fixture whose note is folded at the fatal point. Re-adding
+    any raw-substring prefilter makes this fail; without it, the whole suite passed.
+    """
+    aro = tmp_path / "aro"
+    aro.mkdir()
+    (aro / "folded.yaml").write_text(
+        "identifier: ARO:3007419\n"
+        "causal_graphs:\n"
+        "- graph_id: resistance\n"
+        "  edges:\n"
+        "  - subject: determinant\n"
+        "    object: drug0\n"
+        "    evidence:\n"
+        "    - reference: ARO:3007419\n"
+        "      notes: Asserted on ARO:3007419 (aminoglycoside bifunctional resistance "
+        "protein), an is_a ancestor\n"
+        "        of this record's ARO:3007419; inherited by this variant. CARD/ARO release "
+        "in data/raw/aro/aro.obo.\n"
+        "license: CC-BY 4.0\n", encoding="utf-8")
+    # the phrase is genuinely absent from the raw text -- that is the whole point
+    raw = (aro / "folded.yaml").read_text(encoding="utf-8")
+    assert "an is_a ancestor of this record" not in raw
+    assert repair.looks_self_referential(
+        "Asserted on ARO:3007419 (x), an is_a ancestor of this record's ARO:3007419; "
+        "inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.")
+
+    monkeypatch.setattr(sys, "argv", ["repair", "--path", str(aro), "--apply"])
+    assert repair.main() == 0
+    out = capsys.readouterr().out
+    assert "notes rewritten: 1" in out, out
+    assert "Asserted directly on ARO:3007419" in (aro / "folded.yaml").read_text(encoding="utf-8")
+
+
+def test_a_note_holding_TWO_assertions_is_stranded_not_corrupted():
+    """Greedy `.*` with leftmost `.search` pairs the FIRST id with the LAST tail, so a note
+    carrying two assertions either reads as not-self-referential (silently skipped) or, when
+    both share an id, has its name group swallow the first note whole and gets CORRUPTED.
+
+    0 of the corpus's 12,581 assertion notes hold more than one, so this is prevention.
+    """
+    tail = "inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo."
+    two = (f"Asserted on ARO:1 (A), an is_a ancestor of this record's ARO:2; {tail} "
+           f"Asserted on ARO:3 (B), an is_a ancestor of this record's ARO:3; {tail}")
+    assert repair.looks_self_referential(two), "an ambiguous note must be surfaced"
+    assert repair.fix_note(two) is None, "an ambiguous note must never be rewritten"
+    same = (f"Asserted on ARO:1 (A), an is_a ancestor of this record's ARO:1; {tail} "
+            f"Asserted on ARO:1 (B), an is_a ancestor of this record's ARO:1; {tail}")
+    assert repair.fix_note(same) is None, "the name group swallowed the first note"
+    # and the whole record is reported as stranded rather than skipped
+    block = ("causal_graphs:\n- graph_id: resistance\n  edges:\n  - subject: determinant\n"
+             "    object: drug0\n    evidence:\n    - reference: ARO:1\n"
+             f"      notes: {two}\n")
+    out, reason, n = repair.repair_record(block)
+    assert out is None and n == 1 and "cannot parse" in reason, (out is None, n, reason)
