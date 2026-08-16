@@ -948,6 +948,16 @@ repair-pfam-interpro *args:
     uv run python scripts/enrich_pfam_definitions.py {{args}}
     uv run python scripts/repair_pfam_interpro_xrefs.py {{args}}
 
+# Rewrite the notes that call a record its own is_a ancestor (#364).
+# `_drug_assertion` walks is_a from the record UPWARD with the record itself first, and
+# used one wording for both branches -- so every direct assertion claimed the record was
+# its own ancestor. The promoter is fixed; this repairs the 173 notes already on disk.
+# Not `fix_resistance_drug_edges`: that owns the same wording but selects only
+# `resistance -> drug*` edges, and these sit on `determinant -> drug0`.
+# Dry-run by default.
+repair-self-referential-notes *args:
+    uv run python scripts/repair_self_referential_notes.py {{args}}
+
 # Which already-curated records would no config accept today (#267)
 audit-fit:
     uv run python scripts/audit_config_fit.py
