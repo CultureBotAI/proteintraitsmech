@@ -61,7 +61,7 @@ def test_a_direct_assertion_does_not_claim_the_record_is_its_own_ancestor(monkey
 
 def test_a_genuinely_inherited_assertion_still_says_inherited(monkeypatch):
     """The other branch must be untouched, or the fix trades one wrong note for another.
-    605 notes in the corpus name a real ancestor and are correct as they stand."""
+    11,284 notes in the corpus name a real ancestor and are correct as they stand."""
     monkeypatch.setattr(promote.E, "ancestry",
                         lambda terms, i: {"ARO:9000002"} if i == "ARO:9000001" else set())
     anc, _snippet, note = promote._drug_assertion(
@@ -72,34 +72,52 @@ def test_a_genuinely_inherited_assertion_still_says_inherited(monkeypatch):
                     "in data/raw/aro/aro.obo.")
 
 
-def test_the_walks_FIRST_element_is_what_makes_the_defect_reachable(monkeypatch):
-    """`[ident] + [a for a in ancestry if a != ident]` is the whole mechanism: without the
-    record leading the walk there is no self-referential case to get wrong. A test that
-    only exercised the inherited branch would have passed against the buggy code."""
-    seen = []
+def test_the_record_is_preferred_over_an_ancestor_that_also_asserts_it(monkeypatch):
+    """`[ident] + [...]` is the whole mechanism: without the record leading the walk there
+    is no self-referential case to get wrong, and a test exercising only the inherited
+    branch passes against the buggy code.
 
-    def _spy(terms, i):
-        seen.append(i)
-        return {"ARO:9000002"}
+    Asserted as BEHAVIOUR -- when BOTH the record and its parent carry the relation, the
+    record must win and the note must say "directly". The first version of this test
+    grepped the source line instead, which passes if the function returns garbage and
+    fails if anyone reflows the line.
+    """
+    both = _terms(direct=True)
+    both["ARO:9000002"]["rel"] = ["confers_resistance_to_drug_class ARO:0000020 ! carbapenem"]
+    monkeypatch.setattr(promote.E, "ancestry",
+                        lambda terms, i: {"ARO:9000002"} if i == "ARO:9000001" else set())
+    anc, _s, note = promote._drug_assertion("ARO:9000001", "ARO:0000020", both)
+    assert anc == "ARO:9000001", "an ancestor won over the record's own assertion"
+    assert note.startswith("Asserted directly on ARO:9000001")
+    # and with ONLY the ancestor asserting it, the same call takes the other branch
+    anc2, _s2, note2 = promote._drug_assertion(
+        "ARO:9000001", "ARO:0000020", _terms(direct=False))
+    assert anc2 == "ARO:9000002" and "an is_a ancestor" in note2
 
-    monkeypatch.setattr(promote.E, "ancestry", _spy)
-    promote._drug_assertion("ARO:9000001", "ARO:0000020", _terms(direct=True))
-    src = pathlib.Path(promote.__file__).read_text(encoding="utf-8")
-    assert "for anc in [ident] + [a for a in E.ancestry(terms, ident) if a != ident]" in src
 
+def test_the_three_writers_agree_on_the_direct_note(monkeypatch):
+    """Three places now produce this sentence -- `_drug_assertion`, the repairer, and
+    `fix_resistance_drug_edges`. They drifted once already: one was fixed and the other was
+    not, and the corpus carried both forms for months.
 
-def test_the_two_writers_agree_on_both_note_forms():
-    """`fix_resistance_drug_edges` and `_drug_assertion` both write this note. They drifted
-    once already -- one was fixed and the other was not -- and the corpus carried both
-    forms for months. Pinned against the sibling's source so a change to either fails."""
-    sibling = (REPO / "scripts" / "fix_resistance_drug_edges.py").read_text(encoding="utf-8")
-    assert 'f"Asserted directly on {src} ({names.get(src, \'\')}) in the "' in sibling
-    assert 'f"CARD/ARO release in data/raw/aro/aro.obo.")' in sibling
-    assert 'f"Asserted on {src} ({names.get(src, \'\')}), an is_a ancestor "' in sibling
-    # and the repairer reproduces the direct form exactly
-    assert repair.corrected("ARO:1", "a name") == (
-        "Asserted directly on ARO:1 (a name) in the CARD/ARO release in "
-        "data/raw/aro/aro.obo.")
+    Compared as OUTPUT rather than as source fragments. The first version grepped three
+    f-string literals out of the sibling, which cannot catch behavioural divergence -- and
+    there is some: the sibling's missing-name fallback is `names.get(src, "")` (empty
+    parens) where the promoter's is `terms[anc].get("name", anc)` (the id). Harmless today
+    (0 nameless ARO terms) and exactly the kind of thing a source grep hides.
+    """
+    monkeypatch.setattr(promote.E, "ancestry", lambda terms, i: set())
+    _anc, _s, promoted = promote._drug_assertion(
+        "ARO:9000001", "ARO:0000020",
+        {"ARO:9000001": {"name": "AAC(3)", "is_a": [],
+                         "rel": ["confers_resistance_to_drug_class ARO:0000020 ! x"]}})
+    repaired = repair.corrected("ARO:9000001", "AAC(3)")
+    assert promoted == repaired, f"writers disagree:\n  {promoted}\n  {repaired}"
+    # a name containing a close-paren is the case that broke the repairer's pattern
+    assert "AAC(3)" in promoted
+    assert repair.fix_note(
+        "Asserted on ARO:9000001 (AAC(3)), an is_a ancestor of this record's ARO:9000001; "
+        "inherited by this variant. CARD/ARO release in data/raw/aro/aro.obo.") == promoted
 
 
 def test_fix_note_requires_the_two_ids_to_MATCH():
@@ -138,7 +156,11 @@ def test_no_self_referential_note_remains_in_the_corpus():
         for graph in (yaml.safe_load(block) or {}).get("causal_graphs") or []:
             for edge in graph.get("edges") or []:
                 for ev in edge.get("evidence") or []:
-                    if repair.fix_note(ev.get("notes")):
+                    # DETECTED independently of the rewrite pattern. The first version
+                    # used `fix_note` as its oracle, so the gate was blind to exactly the
+                    # notes that pattern could not parse -- 11 across 7 records, whose
+                    # term names contain a close-paren -- and passed while they survived.
+                    if repair.looks_self_referential(ev.get("notes")):
                         bad.append(f"{path.name}: {ev['notes'][:70]}")
     assert bad == [], f"{len(bad)} self-referential note(s) remain:\n" + "\n".join(bad[:5])
 
@@ -151,3 +173,49 @@ def test_the_corrected_form_is_actually_present_so_the_check_above_is_not_vacuou
                            p.read_text(encoding="utf-8")))
             for p in ARO_DIR.glob("*.yaml"))
     assert n >= 700, f"only {n} corrected notes; the repair may have removed rather than fixed"
+
+
+def test_a_close_paren_in_the_term_name_does_not_hide_the_note(monkeypatch):
+    """#461 review, and the reason the first pass reported "records repaired: 0" while 11
+    notes survived.
+
+    415 of aro.obo's 8,601 names contain a close-paren -- "Outer Membrane Porin (Opr)",
+    "16S rRNA methyltransferase (A1408)", "AAC(3)". Against `\\([^)]*\\)` the name group
+    stops at the inner paren, the fixed tail cannot match, and `fullmatch` fails. Because
+    detection and rewrite were the SAME pattern, the record was reported as needing nothing.
+    """
+    note = ("Asserted on ARO:3004278 (Outer Membrane Porin (Opr)), an is_a ancestor of "
+            "this record's ARO:3004278; inherited by this variant. CARD/ARO release in "
+            "data/raw/aro/aro.obo.")
+    assert repair.looks_self_referential(note), "detection missed a paren-containing name"
+    assert repair.fix_note(note) == (
+        "Asserted directly on ARO:3004278 (Outer Membrane Porin (Opr)) in the CARD/ARO "
+        "release in data/raw/aro/aro.obo.")
+    # the nested parens survive intact rather than being truncated at the inner one
+    assert "(Outer Membrane Porin (Opr))" in repair.fix_note(note)
+
+
+def test_detection_is_not_the_rewrite_pattern(monkeypatch):
+    """A note the rewrite cannot parse must be reported as STRANDED, never silently
+    skipped. The two patterns are separate precisely so a miss is loud."""
+    weird = ("Asserted on ARO:1 (a name), an is_a ancestor of this record's ARO:1; "
+             "inherited by this variant. SOME OTHER TAIL.")
+    assert repair.looks_self_referential(weird), "detection is too narrow"
+    assert repair.fix_note(weird) is None, "the rewrite pattern is too loose"
+
+    block = ("causal_graphs:\n- graph_id: resistance\n  edges:\n  - subject: determinant\n"
+             "    object: drug0\n    evidence:\n    - reference: ARO:1\n"
+             f"      notes: {weird}\n")
+    out, reason, n = repair.repair_record(block)
+    assert out is None and n == 1, (out is None, n)
+    assert "cannot parse" in reason, reason
+
+
+def test_a_note_naming_a_genuine_ancestor_is_never_detected():
+    """The equality of the two ids is the whole condition. 11,284 notes name a real
+    ancestor and must be left exactly as they are."""
+    inherited = ("Asserted on ARO:3005394 (BSU beta-lactamase (class D)), an is_a ancestor "
+                 "of this record's ARO:3006902; inherited by this variant. CARD/ARO "
+                 "release in data/raw/aro/aro.obo.")
+    assert not repair.looks_self_referential(inherited)
+    assert repair.fix_note(inherited) is None

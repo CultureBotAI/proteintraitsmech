@@ -8,8 +8,8 @@ RECORD ITSELF first, and wrote the same note whichever step matched:
     record's ARO:3004574; inherited by this variant.
 
 A term is not its own `is_a` ancestor — `aro.obo` gives ARO:3004574 `is_a ARO:0000031` and
-nothing else — and the relation is asserted ON the record, not inherited by it. 98 such
-notes are on disk across 90 records.
+nothing else — and the relation is asserted ON the record, not inherited by it. 184 such
+notes were on disk across 162 records.
 
 WHY THIS AND NOT `fix_resistance_drug_edges`. That script owns the corrected wording and
 has written it for 593 records, but it only selects edges whose subject is `resistance` and
@@ -46,10 +46,34 @@ ARO_DIR = ROOT / "data" / "traits" / "function" / "resistance" / "aro"
 
 # The self-referential form, with the two ids captured so the equality is the CONDITION
 # rather than an assumption. A note naming a genuine ancestor is left alone.
+#
+# `(?P<name>.*)` AND NOT `[^)]*`: 415 of aro.obo's 8,601 names contain a close-paren --
+# "Outer Membrane Porin (Opr)", "16S rRNA methyltransferase (A1408)", "AAC(3)". Against
+# `[^)]*` the name group stops at the inner paren, the fixed tail can no longer match, and
+# `fullmatch` fails. That silently skipped 11 notes across 7 records while the tool printed
+# "records repaired: 0" -- a miss indistinguishable from nothing to do, which is the #431
+# lesson this file's docstring invokes and then reproduced.
+#
+# Greedy `.*` is safe because the tail is FIXED and anchored by fullmatch: the only way to
+# satisfy it is for the name to end at the last `), an is_a ancestor of this record's`.
 SELF_REF = re.compile(
-    r"Asserted on (?P<a>ARO:\d+) \((?P<name>[^)]*)\), an is_a ancestor of this record's "
+    r"Asserted on (?P<a>ARO:\d+) \((?P<name>.*)\), an is_a ancestor of this record's "
     r"(?P<b>ARO:\d+); inherited by this variant\. "
     r"CARD/ARO release in data/raw/aro/aro\.obo\.")
+
+# DETECTION, independent of the rewrite pattern. `repair_record` used `fix_note` for both,
+# so a note the rewrite could not parse was reported as "no self-referential note" rather
+# than as stranded -- and the corpus test used `fix_note` as its oracle too, so the gate
+# was blind to exactly the notes that survived. One pattern must not be both the finder and
+# the fixer.
+LOOKS_SELF_REF = re.compile(
+    r"Asserted on (ARO:\d+) \(.*\), an is_a ancestor of this record's (ARO:\d+);")
+
+
+def looks_self_referential(note: str) -> bool:
+    """True if this note calls a record its own ancestor, however it is worded."""
+    m = LOOKS_SELF_REF.search(" ".join((note or "").split()))
+    return bool(m and m.group(1) == m.group(2))
 
 
 def corrected(term: str, name: str) -> str:
@@ -99,12 +123,18 @@ def repair_record(text: str) -> tuple[str | None, str, int]:
     except Exception as exc:                                    # pragma: no cover
         return None, f"unparseable: {exc}", 0
 
+    # Found with the INDEPENDENT pattern, rewritten with the strict one. A note this
+    # detects and cannot rewrite is stranded and said so, rather than silently skipped.
     hits = [ev for g in doc.get("causal_graphs") or []
             for e in g.get("edges") or []
             for ev in e.get("evidence") or []
-            if fix_note(ev.get("notes"))]
+            if looks_self_referential(ev.get("notes"))]
     if not hits:
         return None, "no self-referential note", 0
+    unfixable = [ev for ev in hits if not fix_note(ev.get("notes"))]
+    if unfixable:
+        return None, (f"{len(unfixable)} self-referential note(s) the rewrite pattern "
+                      f"cannot parse"), len(unfixable)
     # Whitespace-collapsed, not byte-for-byte: the corpus holds blocks re-wrapped by an
     # earlier repair with a hand-rolled folder, and byte equality would refuse those --
     # the mistake #454's first version made, which stranded every record it was for.
