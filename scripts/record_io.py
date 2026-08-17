@@ -335,6 +335,13 @@ def held_definitions() -> int:
     return _held_definitions
 
 
+def reset_held_definitions() -> None:
+    """Zero the counter. For tests: a process-global that only ever grows makes any
+    assertion on it depend on which tests ran first."""
+    global _held_definitions
+    _held_definitions = 0
+
+
 def _report_held() -> None:                                     # pragma: no cover
     if _held_definitions:
         print(f"\nrecord_io: kept the existing definition on {_held_definitions:,} record"
@@ -508,7 +515,31 @@ def merge_on_reseed(existing: str, fresh: str) -> str:
             out = replace_block(out, key, block)
     old_defs = extract_block(existing, "definitions")
     new_defs = extract_block(fresh, "definitions")
-    if old_defs and new_defs:
+    if enriched and old_defs:
+        # HOLD THE WHOLE DEFINITION STORY, not just the scalar -- and this is the second
+        # review's correction, because the first fix did not do what its own comment said.
+        #
+        # Sharing rule 2's block was supposed to stop `definition` and `definitions[]`
+        # disagreeing. It does not on its own: `_merge_definitions` APPENDS a fresh entry
+        # whose text and source are both unseen, and "the sources disagree" is precisely
+        # the condition that got us into this branch. So the merge appended, and the
+        # record ended up saying in `definition` that no curated abstract is available
+        # while carrying that abstract in `definitions[]` with `method: SOURCED` -- the
+        # exact contradiction, still there, one layer down.
+        #
+        # On this path the seeder's account of the definition has already lost. Keeping
+        # its `definitions[]` entries anyway is keeping the losing half of an argument.
+        # A curated record still merges, because there a curator can see both and the
+        # catalogue is theirs to hold.
+        #
+        # `enriched and not old_defs` is left to the branches below: the only two seeders
+        # that emit `definitions[]` are seed_interpro_members and seed_panther, and every
+        # record they own already carries the key, so a fresh block arriving where the
+        # record has none does not occur. If that changes, the record would carry a held
+        # scalar beside a refreshed catalogue -- worth revisiting rather than guessing at
+        # now.
+        out = replace_block(out, "definitions", old_defs)
+    elif old_defs and new_defs:
         merged = _merge_definitions(old_defs, new_defs)
         if merged:
             out = replace_block(out, "definitions", merged)
@@ -568,7 +599,10 @@ def _merge_definitions(old_block: str, new_block: str) -> str | None:
     SOURCE, even though the text differs (#148). Two entries citing one source with
     two different texts is not two definitions, it is one definition and a stale copy,
     and this function is only reached for a curated record — where rule 2 has already
-    decided the record's own version wins. Without this, the same source restating
+    decided the record's own version wins. That stayed true through #455 only because the
+    enriched path holds `definitions[]` wholesale instead of merging: routing it here
+    would append the seeder's entry beside the held one, since its text and source are
+    both unseen by construction on that path. Without this, the same source restating
     itself appended silently:
 
       * a re-seed against a new release whose abstract text changed, and
@@ -622,7 +656,7 @@ def write_record(path, text: str, encoding: str = "utf-8", *, merge: bool = True
         **Since #455 that also applies to an UNCURATED record whose `definition_source`
         differs from the seeder's** -- which is exactly what an in-place definition
         editor produces, so the #148 failure mode is now reachable on SEEDED records
-        too. The five in-place editors bypass this function today and
+        too. The six in-place editors bypass this function today and
         `tests/test_inplace_editor_guards.py` keeps them honest; this note is for the
         sixth;
       * a changed `definitions[]` entry no longer matches by text, so it is appended

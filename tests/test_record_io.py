@@ -9,6 +9,7 @@ Run with `just test` (or `uv run pytest tests/`).
 
 from __future__ import annotations
 
+import importlib
 import pathlib
 import re
 import sys
@@ -1352,14 +1353,25 @@ def test_the_seeders_still_emit_their_enrichers_source_strings_verbatim():
     This asserts that reconciliation directly. If it breaks, a seeder and its enricher
     have drifted apart and a whole family of records has become re-seed-visible -- which
     is worth knowing regardless of which comparison this module uses.
+
+    ASSERTING THE STRINGS ARE EQUAL, not that an import line exists. The first version
+    checked `"SOURCE as" in src`; a review edited a seeder to emit a hard-coded drifted
+    source while leaving the import untouched, and the test still passed. It could not
+    detect the drift it claimed to pin -- the same "the check shares the blind spot"
+    failure as #462, inside the test written to stop me repeating a different one.
     """
     scripts = pathlib.Path(__file__).resolve().parent.parent / "scripts"
-    for seeder, enricher in (("seed_ncbifam.py", "enrich_ncbifam_definitions.py"),
-                             ("seed_cdd.py", "enrich_cdd_ortholog_definitions.py")):
-        src = (scripts / seeder).read_text(encoding="utf-8")
-        assert "SOURCE as" in src, (
-            f"{seeder} no longer imports {enricher}'s SOURCE; if it now composes its own "
-            f"string, check whether it still matches and re-measure #455")
+    sys.path.insert(0, str(scripts))
+    for seeder_mod, enricher_mod, attr in (
+            ("seed_ncbifam", "enrich_ncbifam_definitions", "DEF_SOURCE"),
+            ("seed_cdd", "enrich_cdd_ortholog_definitions", "KOG_SOURCE")):
+        seeder = importlib.import_module(seeder_mod)
+        enricher = importlib.import_module(enricher_mod)
+        assert getattr(seeder, attr) == enricher.SOURCE, (
+            f"{seeder_mod}.{attr} has drifted from {enricher_mod}.SOURCE:\n"
+            f"  seeder:   {getattr(seeder, attr)!r}\n"
+            f"  enricher: {enricher.SOURCE!r}\n"
+            f"Every record of that family is now re-seed-visible; re-measure #455.")
 
 
 def test_definition_and_definitions_move_together_when_the_rule_fires():
@@ -1386,9 +1398,32 @@ license: CC0
     out = yaml.safe_load(merge_on_reseed(existing, fresh))
     assert "This domain is found N-terminal" in out["definition"]
     texts = [d["text"] for d in out["definitions"]]
-    assert "the enriched text" in texts, (
-        "the scalar was held but definitions[] refreshed -- the record now contradicts "
-        f"itself: {texts}")
+    # BOTH SIDES. The first version asserted only that the enriched entry survived, which
+    # it did -- beside the seeder's, appended by `_merge_definitions` because its text and
+    # source were both unseen, which is exactly the condition that fires this branch. So
+    # the test passed while the contradiction it was written to forbid was still there.
+    assert texts == ["the enriched text"], (
+        "the scalar was held but the seeder's definitions[] entry came with it -- the "
+        f"record now argues with itself: {texts}")
+
+
+def test_a_curated_record_still_MERGES_its_definitions():
+    """The held-wholesale rule is for the enriched path only. A curator can see both
+    entries and the catalogue is theirs, so a genuinely new one must still arrive."""
+    existing = CURATED.replace("license: CC0\n", """definitions:
+  - text: the curated text
+    source: "SRC abstract (curated)"
+    method: SOURCED
+license: CC0
+""")
+    fresh = SEEDED.replace("license: CC0\n", """definitions:
+  - text: a brand new entry
+    source: "SRC (new release)"
+    method: COMPOSED
+license: CC0
+""")
+    texts = [d["text"] for d in yaml.safe_load(merge_on_reseed(existing, fresh))["definitions"]]
+    assert texts == ["the curated text", "a brand new entry"], texts
 
 
 def test_the_escape_hatch_turns_the_rule_off(monkeypatch):
