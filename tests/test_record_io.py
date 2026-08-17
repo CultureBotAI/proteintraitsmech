@@ -9,6 +9,8 @@ Run with `just test` (or `uv run pytest tests/`).
 
 from __future__ import annotations
 
+import importlib
+import pathlib
 import re
 import sys
 from pathlib import Path
@@ -1279,3 +1281,187 @@ def test_merge_defaults_to_true_so_no_seeder_changes_behaviour(tmp_path):
     fresh = WITH_DEFS.replace("PROPOSED", "SEEDED")
     write_record(p, fresh)
     assert "mapping_status: PROPOSED" in p.read_text(encoding="utf-8")
+
+
+# --- rule 3: enriched definitions on records that look pristine (#455) -------------
+
+from record_io import _definition_was_enriched, definition_source  # noqa: E402
+
+# A record an enricher rewrote: real prose, a definition_source naming the derivation,
+# and -- the whole difficulty -- still SEEDED with no curation_history, because no curator
+# was involved and saying otherwise is the laundering #92 forbids.
+ENRICHED = """identifier: Pfam:PF06248
+label: "Centromere/kinetochore Zw10 N-terminal"
+definition: >-
+  This domain is found N-terminal in homologues of Centromere/kinetochore protein ZW10.
+  Zeste white 10 was initially identified as a mitotic checkpoint protein.
+definition_source: "InterPro:IPR009361 abstract (Pfam PF06248 maps to this entry via pfam2interpro)"
+mapping_status: SEEDED
+license: CC0
+"""
+
+# What seed_pfam.py emits for the same entry.
+PFAM_FRESH = """identifier: Pfam:PF06248
+label: "Centromere/kinetochore Zw10 N-terminal"
+definition: >-
+  Centromere/kinetochore Zw10 N-terminal. Pfam repeat family Zw10_N (Pfam:PF06248).
+definition_source: Pfam
+mapping_status: SEEDED
+license: CC0
+"""
+
+
+def test_a_force_reseed_no_longer_reverts_an_enriched_definition():
+    """The measured defect: seed_pfam.py --force shortened 27,784 definitions, e.g.
+    atrophin-1 from 1,043 characters of InterPro abstract to a 68-character stub."""
+    out = yaml.safe_load(merge_on_reseed(ENRICHED, PFAM_FRESH))
+    assert "This domain is found N-terminal" in out["definition"]
+    assert out["definition_source"].startswith("InterPro:IPR009361")
+
+
+def test_the_definition_and_its_source_are_kept_TOGETHER():
+    """Keeping one without the other is worse than keeping neither: the record would then
+    carry InterPro's prose labelled `Pfam`, which is precisely the provenance laundering
+    #173 and #344 were filed for."""
+    out = yaml.safe_load(merge_on_reseed(ENRICHED, PFAM_FRESH))
+    # asserted as two positives, not as an equality: `False == False` is also "together",
+    # so the equality form passes when the rule is switched off entirely -- which it did,
+    # under mutation, while the sibling test caught the regression.
+    assert "InterPro" in out["definition_source"]
+    assert "This domain" in out["definition"]
+
+
+def test_a_genuinely_pristine_record_still_refreshes():
+    """Rule 3 must not freeze the corpus. Same source on both sides -> the seeder owns it,
+    and --force does what it says."""
+    fresh = SEEDED.replace("the stub", "a fresher stub")
+    assert merge_on_reseed(SEEDED, fresh) == fresh
+    assert not _definition_was_enriched(SEEDED, fresh)
+
+
+def test_the_seeders_still_emit_their_enrichers_source_strings_verbatim():
+    """Why the leading-token comparison is not chosen, stated as a fact about the tree
+    rather than an invented one.
+
+    The first version of this test asserted that "composed" enrichers extend a seeder's
+    source string, so a leading-token rule would miss them -- and built its inputs with
+    `.replace()` on synthetic strings, so it passed while describing a world that does not
+    exist. A review checked the three named cases and all three were wrong: the seeders
+    IMPORT the enricher's SOURCE constant and emit it verbatim, so those sources never
+    disagree at all.
+
+    This asserts that reconciliation directly. If it breaks, a seeder and its enricher
+    have drifted apart and a whole family of records has become re-seed-visible -- which
+    is worth knowing regardless of which comparison this module uses.
+
+    ASSERTING THE STRINGS ARE EQUAL, not that an import line exists. The first version
+    checked `"SOURCE as" in src`; a review edited a seeder to emit a hard-coded drifted
+    source while leaving the import untouched, and the test still passed. It could not
+    detect the drift it claimed to pin -- the same "the check shares the blind spot"
+    failure as #462, inside the test written to stop me repeating a different one.
+    """
+    scripts = pathlib.Path(__file__).resolve().parent.parent / "scripts"
+    sys.path.insert(0, str(scripts))
+    for seeder_mod, enricher_mod, attr in (
+            ("seed_ncbifam", "enrich_ncbifam_definitions", "DEF_SOURCE"),
+            ("seed_cdd", "enrich_cdd_ortholog_definitions", "KOG_SOURCE")):
+        seeder = importlib.import_module(seeder_mod)
+        enricher = importlib.import_module(enricher_mod)
+        assert getattr(seeder, attr) == enricher.SOURCE, (
+            f"{seeder_mod}.{attr} has drifted from {enricher_mod}.SOURCE:\n"
+            f"  seeder:   {getattr(seeder, attr)!r}\n"
+            f"  enricher: {enricher.SOURCE!r}\n"
+            f"Every record of that family is now re-seed-visible; re-measure #455.")
+
+
+def test_definition_and_definitions_move_together_when_the_rule_fires():
+    """The correction a review forced. The first draft was a separate rule that restored
+    `definition`/`definition_source` and returned early, leaving `definitions[]` to
+    refresh from the seeder -- so a record could assert in `definition` that no abstract
+    exists while carrying that abstract in `definitions[]` with `method: SOURCED`.
+
+    That is the same self-contradiction the together-test forbids, one key over. Sharing
+    rule 2's block is what makes them move as one.
+    """
+    existing = ENRICHED.replace("license: CC0\n", """definitions:
+  - text: the enriched text
+    source: "InterPro:IPR009361 abstract (Pfam PF06248 maps to this entry via pfam2interpro)"
+    method: SOURCED
+license: CC0
+""")
+    fresh = PFAM_FRESH.replace("license: CC0\n", """definitions:
+  - text: the seeder stub
+    source: Pfam
+    method: COMPOSED
+license: CC0
+""")
+    out = yaml.safe_load(merge_on_reseed(existing, fresh))
+    assert "This domain is found N-terminal" in out["definition"]
+    texts = [d["text"] for d in out["definitions"]]
+    # BOTH SIDES. The first version asserted only that the enriched entry survived, which
+    # it did -- beside the seeder's, appended by `_merge_definitions` because its text and
+    # source were both unseen, which is exactly the condition that fires this branch. So
+    # the test passed while the contradiction it was written to forbid was still there.
+    assert texts == ["the enriched text"], (
+        "the scalar was held but the seeder's definitions[] entry came with it -- the "
+        f"record now argues with itself: {texts}")
+
+
+def test_a_curated_record_still_MERGES_its_definitions():
+    """The held-wholesale rule is for the enriched path only. A curator can see both
+    entries and the catalogue is theirs, so a genuinely new one must still arrive."""
+    existing = CURATED.replace("license: CC0\n", """definitions:
+  - text: the curated text
+    source: "SRC abstract (curated)"
+    method: SOURCED
+license: CC0
+""")
+    fresh = SEEDED.replace("license: CC0\n", """definitions:
+  - text: a brand new entry
+    source: "SRC (new release)"
+    method: COMPOSED
+license: CC0
+""")
+    texts = [d["text"] for d in yaml.safe_load(merge_on_reseed(existing, fresh))["definitions"]]
+    assert texts == ["the curated text", "a brand new entry"], texts
+
+
+def test_the_escape_hatch_turns_the_rule_off(monkeypatch):
+    """A genuine release bump on a seeder whose definition_source embeds a version is the
+    one case that wants the old behaviour."""
+    monkeypatch.setenv("PTM_RESEED_REFRESH_DEFINITIONS", "1")
+    out = yaml.safe_load(merge_on_reseed(ENRICHED, PFAM_FRESH))
+    assert out["definition_source"] == "Pfam"
+    assert "This domain is found" not in out["definition"]
+
+
+def test_a_curated_record_is_still_handled_by_rule_2():
+    """Rule 3 returns early, so it must not shadow rule 2 -- a curated record has more to
+    protect than the definition (mapping_status, definitions[])."""
+    out = yaml.safe_load(merge_on_reseed(CURATED, SEEDED))
+    assert out["mapping_status"] == "PROPOSED"
+    assert out["definition"].strip() == "a real curated definition"
+    assert out["causal_graphs"] and out["curation_history"]
+
+
+def test_definition_source_is_read_from_a_folded_or_quoted_scalar():
+    """The reader is a line-anchored regex over raw text, for speed. That is exact for
+    every record in the corpus, and this pins the shapes it must handle."""
+    assert definition_source('definition_source: Pfam\n') == "Pfam"
+    assert definition_source('definition_source: "A B (c)"\n') == "A B (c)"
+    assert definition_source("definition_source: 'x'\n") == "x"
+    assert definition_source("definition_source:\n") is None
+    assert definition_source("label: y\n") is None
+    # a definition_source mentioned INSIDE a folded definition must not be picked up
+    assert definition_source("definition: >-\n  see definition_source: bogus\n"
+                             "definition_source: Real\n") == "Real"
+
+
+def test_a_seeder_that_emits_no_definition_source_cannot_claim_one_it_never_wrote():
+    fresh = "identifier: X:1\ndefinition: >-\n  stub\nlicense: CC0\n"
+    assert _definition_was_enriched(ENRICHED, fresh)
+
+
+def test_a_record_with_no_definition_source_refreshes_as_before():
+    existing = "identifier: X:1\ndefinition: >-\n  old\nmapping_status: SEEDED\nlicense: CC0\n"
+    assert not _definition_was_enriched(existing, PFAM_FRESH)

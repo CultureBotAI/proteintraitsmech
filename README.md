@@ -89,6 +89,48 @@ merge these; they answer different questions.
 3. **Add causal graphs** — attach `causal_graphs` when the trait has source-backed mechanism structure (e.g. "this active-site residue coordinates the substrate carbonyl"). Every `CausalEdge` must carry edge-level `evidence`; prefer grounded CURIEs for nodes and predicates (RO for predicates; PR / GO / CHEBI / MOD / HP / MONDO for nodes).
 4. **Validate** — `just validate-all` invokes `linkml-validate` in batches over every record, reporting per-file failures with the reference-CLI diagnostics. Scope to a subset with a path or glob (`just validate-all data/traits/sequence/motif`).
 
+### What `--force` does and does not overwrite
+
+`--force` re-seeds records that already exist. It is **not** a plain overwrite: every
+write goes through `record_io.merge_on_reseed`, which keeps
+
+* any top-level key the seeder does not emit (`causal_graphs`, `curation_history`, …),
+* `xrefs` and `trait_relations`, which are unioned rather than replaced, and
+* `definition`, `definition_source`, `mapping_status` and `definitions[]` on a record
+  that is **curated**, or whose `definition_source` disagrees with what the seeder emits
+  today. On the second of those the whole definition story is held: `definitions[]` is
+  kept as-is rather than merged, so the record cannot end up with a scalar saying one
+  thing and a catalogue entry saying another.
+
+That last clause is #455. Enrichers rewrite definitions in place and leave records
+`mapping_status: SEEDED` — no curator was involved, so claiming otherwise would launder
+the provenance — which made them invisible to the curation check. A measured
+`seed_pfam.py --force` shortened **27,784** definitions before this, e.g. atrophin-1 from
+1,043 characters of InterPro abstract to a 68-character stub.
+
+**The trade-off, and the one case that wants the old behaviour.** A seeder whose
+`definition_source` embeds a release version (`ECOD v295`, `Prosite Release 2026_02 of
+10-Jun-2026`) looks like an enricher to this rule after a version bump, and holds its
+definitions at the old text. When you have genuinely bumped a release and want the new
+prose:
+
+```bash
+PTM_RESEED_REFRESH_DEFINITIONS=1 just seed-ecod --apply --force
+```
+
+Set it **only** for that run. It disables the protection for every record in the sweep,
+including genuinely enriched ones.
+
+Two things to know before you rely on this:
+
+* `definition_source` is held along with the definition, so after a bump a held record's
+  other fields say `v296` while its source still claims `v295`. That is the honest
+  reading — the definition really is the v295 text — but it means the source string is
+  not a reliable indicator of which release the rest of the record came from.
+* The count of held definitions is reported at the end of a run, but **only when records
+  were actually written**. A dry run (without `--apply`) writes nothing and so reports
+  nothing, which is the one moment you would most want to see the number.
+
 ## Enrichment fields
 
 Two slots are populated automatically by the seeders when the source
