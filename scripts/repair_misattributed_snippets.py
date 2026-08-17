@@ -47,6 +47,7 @@ Dry-run by default; `--apply` writes.
 from __future__ import annotations
 
 import argparse
+import difflib
 import sys
 from pathlib import Path
 
@@ -231,6 +232,42 @@ def _match(edge: dict, ev: dict) -> dict | None:
     return None
 
 
+def _near_match(edge: dict, ev: dict) -> dict | None:
+    """A repair this item is ABOUT but whose `old` text it no longer carries, or None.
+
+    DETECTION, and deliberately broader than `_match` (#462). `_match` demands the snippet
+    equal `old` after whitespace collapse. Reword one character of a snippet -- which is
+    what #423, #425 and #426 were all about -- and it returns None, so `repair_record`
+    reports "no matching snippet" and the record is filed with the ones that need nothing.
+    The `matches` counter that exists to catch exactly that was computed with `_match` too,
+    so the finder and the fixer shared a blind spot and the guard agreed with the miss.
+
+    This asks the weaker question: does the item cite a reference this table repairs, on
+    the edge the entry names, carrying text that is RECOGNISABLY the `old` snippet without
+    being it? `difflib` rather than a prefix test, because a reword can land anywhere --
+    #426's was mid-sentence.
+
+    NOT a match when the snippet already equals `new`: that is a repaired record, and
+    re-reporting it every run is how a stranded count becomes noise people learn to skip.
+
+    0 of the corpus's 12,581 evidence items are near-matches today. This exists to make the
+    next reword loud, not to fix a present miss.
+    """
+    snippet = _norm(ev.get("snippet") or "")
+    for rep in REPAIRS:
+        if ev.get("reference") != rep["ref_from"]:
+            continue
+        on_edge = rep.get("on_edge")
+        if on_edge and (edge.get("subject"), edge.get("object")) != tuple(on_edge):
+            continue
+        old, new = _norm(rep["old"]), _norm(rep["new"])
+        if snippet == old or snippet == new:
+            return None                      # exact: the fixer's job, or already done
+        if difflib.SequenceMatcher(None, snippet, old).ratio() >= 0.75:
+            return rep
+    return None
+
+
 def _graph_block(text: str) -> tuple[int, int] | None:
     """(start, end) line indices of the top-level `causal_graphs:` block, or None.
 
@@ -277,6 +314,17 @@ def repair_record(text: str) -> tuple[str | None, str, int]:
                   for edge in graph.get("edges") or []
                   for ev in edge.get("evidence") or []
                   if _match(edge, ev) is not None)
+    # And, with the BROADER pattern, items this table is about but can no longer rewrite
+    # (#462). Counted separately from `matches`: "needs a repair I can make" and "needs a
+    # repair I cannot" are different answers, and collapsing them is the bug.
+    near = [(edge, ev) for graph in doc.get("causal_graphs") or []
+            for edge in graph.get("edges") or []
+            for ev in edge.get("evidence") or []
+            if _near_match(edge, ev) is not None]
+    if near:
+        refs = ", ".join(sorted({str(ev.get("reference")) for _, ev in near}))
+        return None, (f"STRANDED: {len(near)} item(s) cite {refs} with text this table "
+                      f"recognises but cannot rewrite -- the snippet has drifted"), len(near)
     # Whitespace-collapsed, not byte-for-byte: see the module docstring. Byte equality
     # rejects the 54 blocks #423 re-wrapped by hand, which is every record #425 concerns.
     if _norm(_dump(doc)) != _norm(block):

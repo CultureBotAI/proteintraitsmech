@@ -60,9 +60,37 @@ XREF = re.compile(
     r"(?P=indent)  mapping_source: pfam2interpro[ \t]*\n", re.M)
 
 
+# DETECTION, and deliberately looser than XREF (#462).
+#
+# `XREF` was both the finder and the fixer: a record whose xref it could not parse returned
+# "no pfam2interpro InterPro xref" -- the same answer as a record that genuinely has none.
+# A miss was therefore indistinguishable from nothing to do, which is the standing shape
+# this repo keeps rediscovering: #461's `[^)]*` skipped 11 notes while printing "repaired:
+# 0", and the acceptance test used the same function as its oracle so the gate agreed.
+#
+# This asks only "does the record assert a pfam2interpro mapping at all?", which no
+# reasonable layout can hide. If it says yes and `XREF` sees fewer, the record is STRANDED
+# and said so, rather than filed under silence.
+#
+# 0 of the corpus's 29,105 pfam2interpro xrefs are stranded today -- `XREF` handles every
+# shape on disk. That is the point: this exists to make the NEXT shape loud, not to fix a
+# present miss.
+# `[ \t-]*` AND NOT `[ \t]*`: the first draft of this very pattern required the line to
+# begin with whitespace, so it could not see `- mapping_source: pfam2interpro` -- the shape
+# a reordered mapping puts it in, and the exact shape the test injects. A finder written to
+# be broader than the fixer, that was not broad enough to see the first case anyone tried.
+# Caught by its own test rather than in review, which is the argument for writing the test
+# before believing the pattern.
+LOOSE = re.compile(r"^[ \t]*-?[ \t]*mapping_source:[ \t]*pfam2interpro[ \t]*$", re.M)
+
+
 def repair_text(text: str, real: str | None) -> tuple[str | None, str]:
     """(new text or None, reason). `real` is the member_list entry, or None if unintegrated."""
     hits = list(XREF.finditer(text))
+    loose = len(LOOSE.findall(text))
+    if loose > len(hits):
+        return None, (f"STRANDED: asserts {loose} pfam2interpro mapping(s) but the "
+                      f"rewrite pattern parses only {len(hits)}")
     if not hits:
         return None, "no pfam2interpro InterPro xref"
     wrong = [m for m in hits if m.group("ipr") != real]
@@ -137,7 +165,7 @@ def main() -> int:
     print(f"{len(member_of):,} Pfam signatures have an integrating InterPro entry\n")
 
     paths = sorted(p for p in TRAITS.rglob("*.yaml") if "/pfam/" in str(p))
-    repointed = removed = collateral = 0
+    repointed = removed = collateral = stranded = 0
     limited = False
     for i, path in enumerate(paths):
         text = path.read_text(encoding="utf-8")
@@ -147,7 +175,13 @@ def main() -> int:
         real = member_of.get(m.group(1))
         new, reason = repair_text(text, real)
         if new is None:
-            if reason.startswith("more than one mapped_xrefs"):
+            if reason.startswith("STRANDED"):
+                # NOT counted with the collateral skips: that number means "wrong, and I
+                # can see why". This one means "I cannot even read it", which is worse and
+                # must not be averaged into the same line (#462).
+                stranded += 1
+                print(f"  STRANDED {path.name}: {reason}")
+            elif reason.startswith("more than one mapped_xrefs"):
                 collateral += 1
                 print(f"  SKIPPED {path.name}: {reason}")
             continue
@@ -174,9 +208,13 @@ def main() -> int:
     if collateral:
         print(f"SKIPPED {collateral:,} whose rewrite would have touched more than "
               f"mapped_xrefs -- still wrong, and listed above")
+    if stranded:
+        print(f"FAIL: {stranded:,} record(s) assert a pfam2interpro mapping in a shape "
+              f"the rewrite pattern cannot parse. They are unexamined, not clean -- "
+              f"widen XREF or fix them by hand.")
     if not args.apply and not limited:
         print("\ndry run -- nothing written. Re-run with --apply.")
-    return 1 if collateral else 0
+    return 1 if (collateral or stranded) else 0
 
 
 if __name__ == "__main__":
