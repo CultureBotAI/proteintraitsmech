@@ -948,6 +948,23 @@ repair-pfam-interpro *args:
     uv run python scripts/enrich_pfam_definitions.py {{args}}
     uv run python scripts/repair_pfam_interpro_xrefs.py {{args}}
 
+# Does each promoter-owned record still match what its config would emit today? (#408)
+# `--verify-all` checks that a config's CURIEs RESOLVE; nothing checked that the records it
+# OWNS match what it would write, so config edits landed without --repromote and the corpus
+# drifted silently -- 443 of 1,142 at filing.
+# BUCKETS, not a count, and that is the point: 449 records once differed by TEXT while only
+# 78 differed once parsed. A scalar mixes pure YAML layout with real semantic drift, so
+# re-promoting 371 no-ops would have read as progress.
+# `structure` is the bucket that matters -- mdfA and tet(M) are there because a curator
+# added literature the config lacks, so re-promoting them would DESTROY it (#204). This
+# reports; it never repairs.
+# Pinned at 31 with an identity baseline, because a ceiling masks a swap (#411).
+# LOCAL ONLY -- needs data/raw/aro/aro.obo; without it this FAILS rather than reporting 0
+# drift over 0 records (#432).
+audit-reproducible *args:
+    uv run python scripts/audit_reproducible.py \
+        --max-drift 5074 --baseline audit/reproducible-baseline.json {{args}}
+
 # Rewrite the notes that call a record its own is_a ancestor (#364).
 # `_drug_assertion` walks is_a from the record UPWARD with the record itself first, and
 # used one wording for both branches -- so every direct assertion claimed the record was
