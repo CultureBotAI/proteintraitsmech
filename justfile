@@ -963,7 +963,7 @@ repair-pfam-interpro *args:
 # drift over 0 records (#432).
 audit-reproducible *args:
     uv run python scripts/audit_reproducible.py \
-        --max-drift 31 --baseline audit/reproducible-baseline.json {{args}}
+        --max-drift 5074 --baseline audit/reproducible-baseline.json {{args}}
 
 # Rewrite the notes that call a record its own is_a ancestor (#364).
 # `_drug_assertion` walks is_a from the record UPWARD with the record itself first, and

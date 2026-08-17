@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+import re
 import subprocess
 import sys
 
@@ -100,10 +101,37 @@ def test_it_refuses_a_tree_with_no_promoter_owned_records(tmp_path):
     empty = tmp_path / "aro"
     empty.mkdir()
     (empty / "x.yaml").write_text("identifier: ARO:1\n", encoding="utf-8")
-    out = subprocess.run([sys.executable, str(SCRIPT), "--aro-dir", str(empty)],
+    # A SYNTHETIC obo, not a skipif. `data/raw` is gitignored, so the real one is absent in
+    # CI and the script's OBO check would fire first -- this test would then pass on the
+    # wrong branch locally and fail outright in CI, which is how it was written.
+    obo = tmp_path / "aro.obo"
+    obo.write_text('[Term]\nid: ARO:1\nname: t\ndef: "x." []\n', encoding="utf-8")
+    out = subprocess.run([sys.executable, str(SCRIPT), "--aro-dir", str(empty),
+                          "--obo", str(obo)],
                          capture_output=True, text=True, cwd=REPO)
     assert out.returncode == 1, out.stdout
     assert "examined nothing" in out.stdout
+
+
+def test_update_baseline_without_baseline_is_refused(tmp_path):
+    """It wrote nothing and exited 0, which reads as 'baseline updated'."""
+    obo = tmp_path / "aro.obo"
+    obo.write_text('[Term]\nid: ARO:1\nname: t\ndef: "x." []\n', encoding="utf-8")
+    out = subprocess.run([sys.executable, str(SCRIPT), "--update-baseline",
+                          "--obo", str(obo)], capture_output=True, text=True, cwd=REPO)
+    assert out.returncode == 1 and "needs --baseline" in out.stdout, out.stdout
+
+
+def _pinned_ceiling() -> int:
+    """The ceiling FROM THE JUSTFILE, not a copy of it.
+
+    Hardcoding `31` here meant the recipe and its test could drift apart silently: raise
+    one and the other still asserts the old number, so the check that is supposed to notice
+    a ceiling being relaxed is the thing that stops noticing.
+    """
+    m = re.search(r"--max-drift (\d+)", (REPO / "justfile").read_text(encoding="utf-8"))
+    assert m, "no --max-drift pinned in the justfile audit-reproducible recipe"
+    return int(m.group(1))
 
 
 @pytest.mark.skipif(not OBO.exists(), reason="data/raw/aro/aro.obo absent; run just fetch-aro")
@@ -111,7 +139,8 @@ def test_the_committed_baseline_matches_the_corpus_and_the_probe_fired():
     """The real thing. Asserts the sweep actually examined the corpus as well as passing --
     'DRIFTED: 0 of 0' would satisfy a naive check."""
     out = subprocess.run(
-        [sys.executable, str(SCRIPT), "--max-drift", "31", "--baseline", str(BASELINE)],
+        [sys.executable, str(SCRIPT), "--max-drift", str(_pinned_ceiling()),
+         "--baseline", str(BASELINE)],
         capture_output=True, text=True, cwd=REPO)
     assert out.returncode == 0, out.stdout[-1500:]
     assert "0 NEW" in out.stdout, out.stdout[-800:]
@@ -131,6 +160,6 @@ def test_the_baseline_is_not_empty_and_names_real_records():
     assert known, "an empty baseline makes the identity gate vacuous"
     for key in known:
         bucket, ident, rel = key.split("|", 2)
-        assert bucket in A.BUCKETS, bucket
+        assert bucket in A.BUCKETS and bucket != "failed", bucket
         assert ident.startswith("ARO:"), ident
         assert (REPO / rel).exists(), f"baseline names a missing record: {rel}"

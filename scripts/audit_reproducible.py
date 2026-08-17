@@ -20,12 +20,26 @@ drift could hide inside the same total.
 
 So this compares PARSED graphs and reports what differs:
 
-    reproduces          the config would emit exactly this graph
+    reproduces          some claiming config would emit exactly this graph
     description         only the graph-level prose moved (config text evolved)
     evidence            an edge's evidence differs -- a snippet, reference or note
     structure           nodes or edges differ: the graph itself is not the same
-    uncovered           the config has no snippet for this record's mechanism id
-    multi-config        more than one config claims it, so "reproduces" is undefined
+    uncovered           every claiming config declines: no snippet for its mechanism id
+    orphaned            NO config claims it -- a precondition tightened after promotion
+    failed              a claiming config CRASHED. Never expected; gated separately.
+
+BEST BUCKET ACROSS EVERY CLAIMING CONFIG, because 5,433 of 7,211 records are claimed by
+more than one. The first version excluded those as "undefined" and gated 1,142 -- 16% of
+the population -- which sounded tight and measured the wrong slice. #280 says the damage
+concentrates exactly where family terms are deep ancestors, i.e. in the excluded set, and
+it did: 4,664 records carry `serine β-lactam hydrolysis` while the promoter has emitted
+`serine beta-lactam hydrolysis` since #194. A gate reporting "31 drifted (2.7%)" over that
+is not wrong so much as answering a different question.
+
+The rule is "reproduces if ANY claiming config reproduces", which is the right one because
+the promoter runs ONE family at a time: whichever family was last promoted is the one that
+wrote the graph, so agreement with any of them means a re-promotion of that family is a
+no-op.
 
 `structure` is the bucket that matters. `mdfA` and `tet(M)` sit in it because a curator
 added literature the config does not have -- re-promoting them would DESTROY that (#204),
@@ -71,7 +85,9 @@ LABEL = re.compile(r'^label:\s*"?(.+?)"?\s*$', re.M)
 # rather than assumed.
 OWNED = ("graph_id: resistance\n", "curator: edison-causal-graphs")
 
-BUCKETS = ("reproduces", "description", "evidence", "structure", "uncovered", "multi-config")
+BUCKETS = ("reproduces", "description", "evidence", "structure", "uncovered",
+           "orphaned", "failed")
+DRIFT_BUCKETS = ("description", "evidence", "structure", "orphaned")
 
 
 def classify(old: dict, new: dict) -> str:
@@ -90,17 +106,26 @@ def classify(old: dict, new: dict) -> str:
     return "structure"
 
 
+RANK = {"reproduces": 0, "description": 1, "evidence": 2, "structure": 3,
+        "uncovered": 4, "failed": 5, "orphaned": 6}
+
+
 def audit(terms: dict, names: dict, aro_dir: Path):
-    """(rows, counts). One row per examined record: (bucket, identifier, path).
+    """(rows, counts, claims). One row per examined record: (bucket, identifier, path).
 
     `promoted_graph_dict` narrates per record -- "edge skipped ... endpoint not on this
     record" -- which is right when it is WRITING and pure noise when it is being asked a
-    question. 7,452 records of it buried the report, so it is captured and dropped. The
-    exception path still classifies, so nothing is silently swallowed: a record whose
-    rebuild fails lands in `uncovered` and is counted.
+    question. 7,211 records of it buried the report, so it is captured and dropped.
+
+    Only `UncoveredMechanism` is treated as expected. A bare `except Exception` here is a
+    trap with a direction: a config edit that made `promoted_graph_dict` raise would move
+    drifted records into `uncovered`, DROP the drift count, and make the baseline report
+    "27 FIXED" -- a broken promoter reading as a repaired corpus, with the tool suggesting
+    `--update-baseline` to bake it in. Anything else lands in `failed`, which is gated at
+    zero.
     """
     families = list(P.FAMILY_SNIPPETS)
-    rows, counts = [], Counter()
+    rows, counts, claims = [], Counter(), Counter()
     for path in sorted(aro_dir.glob("*.yaml")):
         text = path.read_text(encoding="utf-8")
         if not all(marker in text for marker in OWNED):
@@ -114,33 +139,43 @@ def audit(terms: dict, names: dict, aro_dir: Path):
         ancestry = P.E.ancestry(terms, ident)
         claimed = [f for f in families if f in ancestry
                    and P.config_for(f, ident, label, text) is not None]
-        if len(claimed) != 1:
-            rows.append(("multi-config", ident, path))
-            counts["multi-config"] += 1
-            continue
-        cfg = P.config_for(claimed[0], ident, label, text)
-        try:
-            mech, drug = P.D.parse_relations(text)
-            with contextlib.redirect_stdout(io.StringIO()):
-                new = P.promoted_graph_dict(ident, label, mech, drug, names, cfg, terms)
-        except Exception:
-            # An uncovered mechanism is the config declining to write evidence it does not
-            # have -- the honest outcome, not drift.
-            rows.append(("uncovered", ident, path))
-            counts["uncovered"] += 1
+        claims[len(claimed)] += 1
+        if not claimed:
+            # NOT "multi-config": zero-claim means every config that could own this record
+            # now refuses it, leaving a stale graph with no owner. That is the
+            # highest-signal drift there is, and the first version filed it under a label
+            # saying the opposite.
+            rows.append(("orphaned", ident, path))
+            counts["orphaned"] += 1
             continue
         try:
             doc = yaml.safe_load(text) or {}
             old = next(g for g in (doc.get("causal_graphs") or [])
                        if g.get("graph_id") == "resistance")
         except Exception:
-            rows.append(("uncovered", ident, path))
-            counts["uncovered"] += 1
+            rows.append(("failed", ident, path))
+            counts["failed"] += 1
             continue
-        bucket = classify(old, new)
-        rows.append((bucket, ident, path))
-        counts[bucket] += 1
-    return rows, counts
+        best = None
+        for family in claimed:
+            cfg = P.config_for(family, ident, label, text)
+            try:
+                mech, drug = P.D.parse_relations(text)
+                with contextlib.redirect_stdout(io.StringIO()):
+                    new = P.promoted_graph_dict(ident, label, mech, drug, names, cfg, terms)
+            except P.UncoveredMechanism:
+                bucket = "uncovered"
+            except Exception:
+                bucket = "failed"
+            else:
+                bucket = classify(old, new)
+            if best is None or RANK[bucket] < RANK[best]:
+                best = bucket
+            if best == "reproduces":
+                break
+        rows.append((best, ident, path))
+        counts[best] += 1
+    return rows, counts, claims
 
 
 def baseline_key(bucket: str, ident: str, path: Path) -> str:
@@ -171,12 +206,18 @@ def main() -> int:
     ap.add_argument("--update-baseline", action="store_true")
     ap.add_argument("--show", type=int, default=12)
     ap.add_argument("--aro-dir", default="", help="override (for tests)")
+    ap.add_argument("--obo", default="", help="override the ARO release (for tests)")
     args = ap.parse_args()
 
-    if not P.E.OBO.exists():
+    # Overridable so the empty-tree guard below is REACHABLE IN CI. `data/raw` is
+    # gitignored, so with a hardcoded path the OBO check fires first on every CI run and
+    # the #418/#432 test can only ever assert the OBO message -- the guard it exists for
+    # would be exercised on developer machines and nowhere else.
+    obo = Path(args.obo).resolve() if args.obo else P.E.OBO
+    if not obo.exists():
         # Not a pass: with no release there is nothing to rebuild against, and reporting
         # 0 drift over 0 records is the lie #432 was filed for.
-        print(f"FAIL: {P.E.OBO} is absent (data/raw is gitignored); run `just fetch-aro`. "
+        print(f"FAIL: {obo} is absent (data/raw is gitignored); run `just fetch-aro`. "
               f"Without it there is nothing to rebuild a graph from.")
         return 1
     aro_dir = Path(args.aro_dir).resolve() if args.aro_dir else P.ARO_DIR
@@ -184,9 +225,9 @@ def main() -> int:
         print(f"FAIL: {aro_dir} is not a directory")
         return 1
 
-    terms = P.E.parse_obo(P.E.OBO)
-    names = P.D.obo_names(P.D.OBO)
-    rows, counts = audit(terms, names, aro_dir)
+    terms = P.E.parse_obo(obo)
+    names = P.D.obo_names(obo)
+    rows, counts, claims = audit(terms, names, aro_dir)
 
     examined = sum(counts.values())
     print(f"promoter-owned records examined: {examined:,}")
@@ -197,23 +238,36 @@ def main() -> int:
     for bucket in BUCKETS:
         if counts.get(bucket):
             print(f"  {counts[bucket]:>6}  {bucket}")
+    print("  configs claiming each record: "
+          + ", ".join(f"{n}x{c:,}" for n, c in sorted(claims.items())))
 
-    drift = counts["description"] + counts["evidence"] + counts["structure"]
+    drift = sum(counts[b] for b in DRIFT_BUCKETS)
     comparable = drift + counts["reproduces"]
     print(f"\nDRIFTED: {drift:,} of {comparable:,} comparable "
           f"({100 * drift / comparable:.1f}%)" if comparable else "\nDRIFTED: 0")
-    for bucket in ("structure", "evidence", "description"):
-        shown = [r for r in rows if r[0] == bucket][:args.show]
-        for b, ident, path in shown:
+    for bucket in ("failed", "orphaned", "structure", "evidence", "description"):
+        for b, ident, path in [r for r in rows if r[0] == bucket][:args.show]:
             print(f"  {b:<12} {ident}  {path.name}")
 
     current = {baseline_key(b, i, p): 1 for b, i, p in rows
                if b in ("description", "evidence", "structure")}
     rc = 0
+    if counts["failed"]:
+        # Never expected, and gated apart from the ceiling on purpose: a crash must not be
+        # absorbed into a drift budget, and it moves records OUT of the drift buckets, so
+        # the ceiling would read a broken promoter as an improvement.
+        print(f"\nFAIL: {counts['failed']} record(s) made a claiming config CRASH. That is "
+              f"a promoter defect, not drift, and it lowers the drift count -- do not "
+              f"raise --max-drift to accommodate it.")
+        rc = 1
     if args.max_drift is not None and drift > args.max_drift:
         print(f"\nFAIL: {drift} drifted, exceeding --max-drift {args.max_drift}")
         rc = 1
 
+    if args.update_baseline and not args.baseline:
+        print("\nFAIL: --update-baseline needs --baseline; on its own it writes nothing "
+              "and would exit 0 as though it had.")
+        return 1
     if args.baseline:
         bpath = Path(args.baseline)
         if args.update_baseline:
