@@ -33,6 +33,7 @@ THE THREE MISTAKES THIS EXISTS TO PREVENT
 
 from __future__ import annotations
 
+import atexit
 import os
 import re
 
@@ -319,6 +320,28 @@ def is_curated(text: str) -> bool:
 
 _DEF_SOURCE = re.compile(r"^definition_source:[ \t]*(.*?)[ \t]*$", re.M)
 
+# How many records this process held a definition on. A re-seed that silently declines to
+# update 29,053 definitions looks exactly like one that had nothing to update: the seeder
+# prints "Wrote 30,134" either way, and the only other evidence is a diff that does not
+# contain the change you expected. A curator who has just bumped ECOD would have no thread
+# to pull. Reported once at exit, and only when non-zero, because a library that prints on
+# every run is a library people learn to ignore.
+_held_definitions = 0
+_reporter_registered = False
+
+
+def held_definitions() -> int:
+    """Records whose definition this process kept against a re-seed (#455)."""
+    return _held_definitions
+
+
+def _report_held() -> None:                                     # pragma: no cover
+    if _held_definitions:
+        print(f"\nrecord_io: kept the existing definition on {_held_definitions:,} record"
+              f"(s) whose definition_source disagreed with the seeder's (#455). If you "
+              f"meant to pick up new definitions from a bumped release, re-run with "
+              f"PTM_RESEED_REFRESH_DEFINITIONS=1.")
+
 
 def definition_source(text: str) -> str | None:
     """The `definition_source` scalar, unquoted -- or None if the record has none.
@@ -338,8 +361,36 @@ def definition_source(text: str) -> str | None:
 def _definition_was_enriched(existing: str, fresh: str) -> bool:
     """True if something other than this seeder wrote the existing definition.
 
-    The signal is `definition_source` disagreeing with what the seeder emits today. See
-    rule 3 in `merge_on_reseed` for why this is a full-string comparison and what it costs.
+    The signal is `definition_source` disagreeing with what the seeder emits today (#455).
+
+    FULL-STRING, NOT LEADING-TOKEN, AND THE HONEST REASON
+    ------------------------------------------------------
+    An earlier draft of this docstring justified the full-string comparison by claiming
+    "composed" enrichers extend the seeder's own source string, so a leading-token
+    comparison would miss them, and named three cases. A review checked all three and
+    every one was wrong: `seed_ncbifam.py` does `from ... import SOURCE as DEF_SOURCE` and
+    emits "NCBIfam PGAP (composed from product and EC/GO annotations)" verbatim,
+    `seed_cdd.py` likewise for the KOG source, and "Pfam (clan)" is `seed_pfam_clans.py`'s
+    own constant for identifiers `seed_pfam.py` never writes. The seeders were already
+    reconciled with their enrichers, and the entire population this protects today --
+    29,053 Pfam records reading "InterPro:..." against an emitted "Pfam", plus 60 from
+    #445 -- is separable on the leading token alone.
+
+    So the real reason is narrower, and worth stating as such: full-string is the
+    comparison that needs NO knowledge of a seeder's source vocabulary. A leading-token
+    rule works only while no seeder and enricher ever share a first word, which is a
+    property of today's strings that nothing checks and nobody would notice breaking. The
+    conservative comparison is wrong in the safe direction -- it holds a definition that
+    could have refreshed -- and the unsafe direction destroyed 27,784 of them.
+
+    WHAT IT DOES NOT HANDLE: a seeder that derives `definition_source` PER RECORD, so its
+    own output changes between releases with no version bump anywhere.
+    `seed_interpro_members.py` and `seed_panther.py` both do this -- a signature that
+    gains a curated InterPro abstract moves from "PRINTS signature name (composed; no
+    curated InterPro abstract)" to "InterPro:IPR000742 abstract (...)". This function
+    reads that as enrichment and holds the older, worse text. ~18,476 uncurated records
+    are exposed on the next InterPro release; 0 today. Tracked separately -- fixing it
+    needs the seeder to declare its own source vocabulary, which this function cannot see.
     """
     if os.environ.get("PTM_RESEED_REFRESH_DEFINITIONS") == "1":
         return False
@@ -367,6 +418,8 @@ def merge_on_reseed(existing: str, fresh: str) -> str:
 
     TWO RULES, AND ONLY ONE OF THEM IS A JUDGEMENT CALL
     ---------------------------------------------------
+    (Rule 2 has since grown a second trigger for #455 -- see below and at the block
+    itself. It is the same judgement call applied to a wider set, not a third rule.)
     1. **Any top-level key the fresh record does not contain is restored, always.**
        No heuristic guards this. If the seeder did not emit it, the seeder does not
        own it — that covers causal_graphs and curation_history, which no seeder emits
@@ -407,51 +460,48 @@ def merge_on_reseed(existing: str, fresh: str) -> str:
     # losing a curated mapping is not.
     out = _union_list_keys(existing, fresh, out)
 
-    # rule 3 - ENRICHED DEFINITIONS, on records that look pristine.
+    # rule 2 - for a record that shows curation, OR one whose definition an enricher
+    # rewrote.
     #
-    # Rule 1b's comment already states the principle -- "no re-seed is safe over ENRICHED
-    # records, and enrichment does not announce itself" -- and then applies it only to
-    # list-valued keys. Definitions have exactly the same exposure and had no rule at all:
-    # an enricher rewrites `definition` in place and leaves `mapping_status: SEEDED` with
-    # no `curation_history`, because no curator was involved and saying otherwise is the
-    # provenance laundering #92 forbids. So `is_curated` is False and rule 2 never runs.
+    # THE SECOND TRIGGER IS #455. Rule 1b's comment already states the principle -- "no
+    # re-seed is safe over ENRICHED records, and enrichment does not announce itself" --
+    # and then applies it only to list-valued keys. Definitions had the same exposure and
+    # no rule at all: an enricher rewrites `definition` in place and leaves
+    # `mapping_status: SEEDED` with no `curation_history`, because no curator was involved
+    # and saying otherwise is the provenance laundering #92 forbids. So `is_curated` is
+    # False and this block never ran.
     #
-    # MEASURED, not reasoned about (#455). `seed_pfam.py --force --apply` against a
-    # worktree copy of HEAD rewrote 29,816 records and SHORTENED 27,784 definitions --
-    # atrophin-1 from 1,043 characters of InterPro abstract to a 68-character generated
-    # stub. That is one seeder of 49.
+    # MEASURED, not reasoned about. `seed_pfam.py --force --apply` against a worktree copy
+    # of HEAD rewrote 29,816 records and SHORTENED 27,784 definitions -- atrophin-1 from
+    # 1,043 characters of InterPro abstract to a 68-character generated stub. One seeder
+    # of 49.
     #
-    # But enrichment DOES announce itself, in `definition_source`: an enriched record says
+    # Enrichment does announce itself, in `definition_source`: the record says
     # "InterPro:IPR009361 abstract (Pfam PF06248 maps to this entry via pfam2interpro)"
-    # where the seeder emits "Pfam". The information was on the record all along; only the
-    # gate was wrong.
+    # where `seed_pfam` emits "Pfam". The information was on the record all along; only
+    # the gate was wrong.
     #
-    # FULL-STRING COMPARISON, NOT A LEADING-TOKEN ONE. Comparing source *identities* looks
-    # tidier and silently fails for the composed enrichers, which are the majority case:
-    # `enrich_cdd_ortholog_definitions` writes "NCBI CDD (KOG; composed from name and
-    # functional category)" against the seeder's "NCBI CDD", and `enrich_ncbifam_
-    # definitions` writes "NCBIfam PGAP (composed from product and EC/GO annotations)"
-    # against "NCBIfam". Both share a leading token with the seeder and would have been
-    # left unprotected by the tidier rule.
+    # WIDENING THIS TRIGGER RATHER THAN ADDING A THIRD RULE, and that is the correction a
+    # review made. The first draft was a separate rule that restored `definition` and
+    # `definition_source` and then returned early. It left `definitions[]` to refresh from
+    # the seeder, so a record could end up asserting in `definition` that no abstract
+    # exists while carrying that abstract in `definitions[]` with `method: SOURCED` --
+    # the same self-contradiction the together-test was written to forbid, reintroduced
+    # one key over. Sharing this block means the scalars and `definitions[]` move as one,
+    # which was already the reason this block merges them together.
     #
-    # THE COST, stated rather than hidden: a seeder whose `definition_source` embeds a
-    # release version ("ECOD v295", "SCOPe 2.08-stable", "Prosite Release 2026_02 of
-    # 10-Jun-2026") will, on a version bump, look like an enricher to this rule and hold
-    # its definitions at the old text. Seeders with a constant source ("Pfam", "InterPro",
-    # "CATH") are unaffected and refresh normally. The trade is the one rule 1b already
-    # made and for the same reason: a stale definition is recoverable with one re-run,
-    # 27,784 destroyed ones are not. `PTM_RESEED_REFRESH_DEFINITIONS=1` turns the rule off
-    # for a genuine release bump, which is the only case that wants it.
-    if not is_curated(existing) and _definition_was_enriched(existing, fresh):
-        for key in ("definition", "definition_source"):
-            block = extract_block(existing, key)
-            if block:
-                out = replace_block(out, key, block)
+    # `mapping_status` is in CURATED_SCALARS and is restored here too. On an uncurated
+    # record that is SEEDED on both sides, so it is a no-op -- not a status being frozen.
+    global _held_definitions, _reporter_registered
+    curated = is_curated(existing)
+    enriched = not curated and _definition_was_enriched(existing, fresh)
+    if not (curated or enriched):
         return out
-
-    # rule 2 - only for a record that shows curation
-    if not is_curated(existing):
-        return out
+    if enriched:
+        _held_definitions += 1
+        if not _reporter_registered:
+            atexit.register(_report_held)
+            _reporter_registered = True
     for key in CURATED_SCALARS:
         block = extract_block(existing, key)
         if block:
@@ -568,7 +618,13 @@ def write_record(path, text: str, encoding: str = "utf-8", *, merge: bool = True
     two ways that no gate catches because both outputs are schema-legal:
 
       * `CURATED_SCALARS` (definition, definition_source, mapping_status) are restored
-        from the file on any curated record, so an edit to one of them is REVERTED;
+        from the file on any curated record, so an edit to one of them is REVERTED.
+        **Since #455 that also applies to an UNCURATED record whose `definition_source`
+        differs from the seeder's** -- which is exactly what an in-place definition
+        editor produces, so the #148 failure mode is now reachable on SEEDED records
+        too. The five in-place editors bypass this function today and
+        `tests/test_inplace_editor_guards.py` keeps them honest; this note is for the
+        sixth;
       * a changed `definitions[]` entry no longer matches by text, so it is appended
         beside the entry it was meant to replace rather than replacing it.
 

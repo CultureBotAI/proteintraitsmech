@@ -9,6 +9,7 @@ Run with `just test` (or `uv run pytest tests/`).
 
 from __future__ import annotations
 
+import pathlib
 import re
 import sys
 from pathlib import Path
@@ -1337,21 +1338,57 @@ def test_a_genuinely_pristine_record_still_refreshes():
     assert not _definition_was_enriched(SEEDED, fresh)
 
 
-def test_a_leading_token_comparison_would_not_have_caught_the_composed_enrichers():
-    """The tidier rule -- compare source *identities* -- silently fails for the majority
-    case, because a composed enricher extends the seeder's own source string rather than
-    replacing it. This is the regression test for the design, not just the code."""
-    for enriched_src, seeder_src in (
-            ("NCBI CDD (KOG; composed from name and functional category)", "NCBI CDD"),
-            ("NCBIfam PGAP (composed from product and EC/GO annotations)", "NCBIfam"),
-            ("Pfam (clan)", "Pfam")):
-        existing = ENRICHED.replace(
-            'definition_source: "InterPro:IPR009361 abstract (Pfam PF06248 maps to this '
-            'entry via pfam2interpro)"', f'definition_source: "{enriched_src}"')
-        fresh = PFAM_FRESH.replace("definition_source: Pfam",
-                                   f"definition_source: {seeder_src}")
-        assert enriched_src.split()[0] == seeder_src.split()[0], "not a shared-prefix case"
-        assert _definition_was_enriched(existing, fresh), enriched_src
+def test_the_seeders_still_emit_their_enrichers_source_strings_verbatim():
+    """Why the leading-token comparison is not chosen, stated as a fact about the tree
+    rather than an invented one.
+
+    The first version of this test asserted that "composed" enrichers extend a seeder's
+    source string, so a leading-token rule would miss them -- and built its inputs with
+    `.replace()` on synthetic strings, so it passed while describing a world that does not
+    exist. A review checked the three named cases and all three were wrong: the seeders
+    IMPORT the enricher's SOURCE constant and emit it verbatim, so those sources never
+    disagree at all.
+
+    This asserts that reconciliation directly. If it breaks, a seeder and its enricher
+    have drifted apart and a whole family of records has become re-seed-visible -- which
+    is worth knowing regardless of which comparison this module uses.
+    """
+    scripts = pathlib.Path(__file__).resolve().parent.parent / "scripts"
+    for seeder, enricher in (("seed_ncbifam.py", "enrich_ncbifam_definitions.py"),
+                             ("seed_cdd.py", "enrich_cdd_ortholog_definitions.py")):
+        src = (scripts / seeder).read_text(encoding="utf-8")
+        assert "SOURCE as" in src, (
+            f"{seeder} no longer imports {enricher}'s SOURCE; if it now composes its own "
+            f"string, check whether it still matches and re-measure #455")
+
+
+def test_definition_and_definitions_move_together_when_the_rule_fires():
+    """The correction a review forced. The first draft was a separate rule that restored
+    `definition`/`definition_source` and returned early, leaving `definitions[]` to
+    refresh from the seeder -- so a record could assert in `definition` that no abstract
+    exists while carrying that abstract in `definitions[]` with `method: SOURCED`.
+
+    That is the same self-contradiction the together-test forbids, one key over. Sharing
+    rule 2's block is what makes them move as one.
+    """
+    existing = ENRICHED.replace("license: CC0\n", """definitions:
+  - text: the enriched text
+    source: "InterPro:IPR009361 abstract (Pfam PF06248 maps to this entry via pfam2interpro)"
+    method: SOURCED
+license: CC0
+""")
+    fresh = PFAM_FRESH.replace("license: CC0\n", """definitions:
+  - text: the seeder stub
+    source: Pfam
+    method: COMPOSED
+license: CC0
+""")
+    out = yaml.safe_load(merge_on_reseed(existing, fresh))
+    assert "This domain is found N-terminal" in out["definition"]
+    texts = [d["text"] for d in out["definitions"]]
+    assert "the enriched text" in texts, (
+        "the scalar was held but definitions[] refreshed -- the record now contradicts "
+        f"itself: {texts}")
 
 
 def test_the_escape_hatch_turns_the_rule_off(monkeypatch):

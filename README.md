@@ -89,6 +89,35 @@ merge these; they answer different questions.
 3. **Add causal graphs** — attach `causal_graphs` when the trait has source-backed mechanism structure (e.g. "this active-site residue coordinates the substrate carbonyl"). Every `CausalEdge` must carry edge-level `evidence`; prefer grounded CURIEs for nodes and predicates (RO for predicates; PR / GO / CHEBI / MOD / HP / MONDO for nodes).
 4. **Validate** — `just validate-all` invokes `linkml-validate` in batches over every record, reporting per-file failures with the reference-CLI diagnostics. Scope to a subset with a path or glob (`just validate-all data/traits/sequence/motif`).
 
+### What `--force` does and does not overwrite
+
+`--force` re-seeds records that already exist. It is **not** a plain overwrite: every
+write goes through `record_io.merge_on_reseed`, which keeps
+
+* any top-level key the seeder does not emit (`causal_graphs`, `curation_history`, …),
+* `xrefs` and `trait_relations`, which are unioned rather than replaced, and
+* `definition` / `definition_source` / `definitions[]` on a record that is **curated**,
+  or whose `definition_source` disagrees with what the seeder emits today.
+
+That last clause is #455. Enrichers rewrite definitions in place and leave records
+`mapping_status: SEEDED` — no curator was involved, so claiming otherwise would launder
+the provenance — which made them invisible to the curation check. A measured
+`seed_pfam.py --force` shortened **27,784** definitions before this, e.g. atrophin-1 from
+1,043 characters of InterPro abstract to a 68-character stub.
+
+**The trade-off, and the one case that wants the old behaviour.** A seeder whose
+`definition_source` embeds a release version (`ECOD v295`, `Prosite Release 2026_02 of
+10-Jun-2026`) looks like an enricher to this rule after a version bump, and holds its
+definitions at the old text. When you have genuinely bumped a release and want the new
+prose:
+
+```bash
+PTM_RESEED_REFRESH_DEFINITIONS=1 just seed-ecod --apply --force
+```
+
+Set it **only** for that run. It disables the protection for every record in the sweep,
+including genuinely enriched ones.
+
 ## Enrichment fields
 
 Two slots are populated automatically by the seeders when the source
