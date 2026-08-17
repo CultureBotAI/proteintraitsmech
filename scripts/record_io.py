@@ -33,6 +33,7 @@ THE THREE MISTAKES THIS EXISTS TO PREVENT
 
 from __future__ import annotations
 
+import os
 import re
 
 import yaml
@@ -316,6 +317,46 @@ def is_curated(text: str) -> bool:
     return "\ncuration_history:" in text or text.startswith("curation_history:")
 
 
+_DEF_SOURCE = re.compile(r"^definition_source:[ \t]*(.*?)[ \t]*$", re.M)
+
+
+def definition_source(text: str) -> str | None:
+    """The `definition_source` scalar, unquoted -- or None if the record has none.
+
+    Read from the RAW TEXT rather than a parse, deliberately: this is called on every
+    record of a 49-seeder re-seed and a `yaml.safe_load` per record is minutes. The value
+    is a single-line scalar in every record in the corpus, so the line-anchored read is
+    exact -- but that is a property of the data, not of YAML, which is why the folded-block
+    case is asserted in the tests rather than assumed.
+    """
+    m = _DEF_SOURCE.search(text)
+    if not m:
+        return None
+    return m.group(1).strip().strip('"').strip("'") or None
+
+
+def _definition_was_enriched(existing: str, fresh: str) -> bool:
+    """True if something other than this seeder wrote the existing definition.
+
+    The signal is `definition_source` disagreeing with what the seeder emits today. See
+    rule 3 in `merge_on_reseed` for why this is a full-string comparison and what it costs.
+    """
+    if os.environ.get("PTM_RESEED_REFRESH_DEFINITIONS") == "1":
+        return False
+    old = definition_source(existing)
+    if old is None:
+        # Nothing to compare, so nothing is claimed. A record with no definition_source
+        # has no evidence of enrichment and refreshes as before.
+        return False
+    new = definition_source(fresh)
+    if new is None:
+        # The seeder does not emit one at all, so it cannot be the author of a source the
+        # record already carries. Rule 1 restores the key; without this the definition it
+        # labels would be replaced and the two would disagree.
+        return True
+    return old != new
+
+
 def merge_on_reseed(existing: str, fresh: str) -> str:
     """Fold a freshly seeded record into an existing one without losing curation.
 
@@ -365,6 +406,48 @@ def merge_on_reseed(existing: str, fresh: str) -> str:
     # so a stale entry can persist. Keeping a stale xref is recoverable; silently
     # losing a curated mapping is not.
     out = _union_list_keys(existing, fresh, out)
+
+    # rule 3 - ENRICHED DEFINITIONS, on records that look pristine.
+    #
+    # Rule 1b's comment already states the principle -- "no re-seed is safe over ENRICHED
+    # records, and enrichment does not announce itself" -- and then applies it only to
+    # list-valued keys. Definitions have exactly the same exposure and had no rule at all:
+    # an enricher rewrites `definition` in place and leaves `mapping_status: SEEDED` with
+    # no `curation_history`, because no curator was involved and saying otherwise is the
+    # provenance laundering #92 forbids. So `is_curated` is False and rule 2 never runs.
+    #
+    # MEASURED, not reasoned about (#455). `seed_pfam.py --force --apply` against a
+    # worktree copy of HEAD rewrote 29,816 records and SHORTENED 27,784 definitions --
+    # atrophin-1 from 1,043 characters of InterPro abstract to a 68-character generated
+    # stub. That is one seeder of 49.
+    #
+    # But enrichment DOES announce itself, in `definition_source`: an enriched record says
+    # "InterPro:IPR009361 abstract (Pfam PF06248 maps to this entry via pfam2interpro)"
+    # where the seeder emits "Pfam". The information was on the record all along; only the
+    # gate was wrong.
+    #
+    # FULL-STRING COMPARISON, NOT A LEADING-TOKEN ONE. Comparing source *identities* looks
+    # tidier and silently fails for the composed enrichers, which are the majority case:
+    # `enrich_cdd_ortholog_definitions` writes "NCBI CDD (KOG; composed from name and
+    # functional category)" against the seeder's "NCBI CDD", and `enrich_ncbifam_
+    # definitions` writes "NCBIfam PGAP (composed from product and EC/GO annotations)"
+    # against "NCBIfam". Both share a leading token with the seeder and would have been
+    # left unprotected by the tidier rule.
+    #
+    # THE COST, stated rather than hidden: a seeder whose `definition_source` embeds a
+    # release version ("ECOD v295", "SCOPe 2.08-stable", "Prosite Release 2026_02 of
+    # 10-Jun-2026") will, on a version bump, look like an enricher to this rule and hold
+    # its definitions at the old text. Seeders with a constant source ("Pfam", "InterPro",
+    # "CATH") are unaffected and refresh normally. The trade is the one rule 1b already
+    # made and for the same reason: a stale definition is recoverable with one re-run,
+    # 27,784 destroyed ones are not. `PTM_RESEED_REFRESH_DEFINITIONS=1` turns the rule off
+    # for a genuine release bump, which is the only case that wants it.
+    if not is_curated(existing) and _definition_was_enriched(existing, fresh):
+        for key in ("definition", "definition_source"):
+            block = extract_block(existing, key)
+            if block:
+                out = replace_block(out, key, block)
+        return out
 
     # rule 2 - only for a record that shows curation
     if not is_curated(existing):
