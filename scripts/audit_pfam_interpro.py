@@ -68,9 +68,19 @@ XREF = re.compile(
     r"(?P=indent)  mapping_source: pfam2interpro[ \t]*$", re.M)
 
 
+# DETECTION, looser than XREF (#462). The repair script got this first, which was the wrong
+# order: `repair-pfam-interpro` runs only after THIS fails, so a shape the narrow pattern
+# cannot parse leaves the GATE saying "0 non-integrating entries, exit 0" and the repair is
+# never reached. Fixing the downstream tool and not the gate fixes the half that nobody
+# runs. Kept byte-identical to the repair script's LOOSE on purpose -- two spellings of one
+# detector is how the narrow XREF came to exist in two files in the first place.
+LOOSE = re.compile(r"""mapping_source:[ \t]*['"]?pfam2interpro\b""")
+
+
 def audit(traits: Path, member_of: dict[str, str]):
-    """(definition failures, xref failures, records examined)."""
+    """(definition failures, xref failures, unreadable records, records examined)."""
     bad_def, bad_xref, seen = [], [], 0
+    unreadable = []
     for path in sorted(p for p in traits.rglob("*.yaml") if "/pfam/" in str(p)):
         text = path.read_text(encoding="utf-8")
         m = IDENT.search(text)
@@ -82,10 +92,13 @@ def audit(traits: Path, member_of: dict[str, str]):
         ds = DEF_SRC.search(text)
         if ds and ds.group(1) != real:
             bad_def.append((path, pf, ds.group(1), real))
-        for x in XREF.finditer(text):
+        hits = list(XREF.finditer(text))
+        if len(LOOSE.findall(text)) > len(hits):
+            unreadable.append(path)
+        for x in hits:
             if x.group("ipr") != real:
                 bad_xref.append((path, pf, x.group("ipr"), real))
-    return bad_def, bad_xref, seen
+    return bad_def, bad_xref, unreadable, seen
 
 
 def main() -> int:
@@ -110,7 +123,7 @@ def main() -> int:
         return 1
 
     member_of = load_member_integration(xml)
-    bad_def, bad_xref, seen = audit(traits, member_of)
+    bad_def, bad_xref, unreadable, seen = audit(traits, member_of)
     print(f"Pfam records examined:        {seen:,}")
     if not seen:
         # #418's silent bypass, one axis over: `is_dir()` was ported but "0 records" was
@@ -123,10 +136,16 @@ def main() -> int:
     print(f"InterPro entries with a Pfam member: {len(member_of):,}")
     print(f"definition_source names a non-integrating entry: {len(bad_def):,}")
     print(f"mapped_xrefs assert a non-integrating entry:     {len(bad_xref):,}")
+    if unreadable:
+        print(f"FAIL: {len(unreadable):,} record(s) assert a pfam2interpro mapping in a "
+              f"shape this gate cannot parse. They are UNEXAMINED, not clean -- the count "
+              f"above does not cover them.")
+        for path in unreadable[:args.show]:
+            print(f"  UNREADABLE {path.name}")
     for path, pf, got, real in (bad_def + bad_xref)[:args.show]:
         print(f"  {path.name}  {pf}  cites {got}  but member_list says "
               f"{real or '(no entry integrates it)'}")
-    if bad_def or bad_xref:
+    if bad_def or bad_xref or unreadable:
         print("\nFAIL: run `just repair-pfam-interpro` (definitions and xrefs, in that "
               "order) — both are deterministic from the release.")
         return 1

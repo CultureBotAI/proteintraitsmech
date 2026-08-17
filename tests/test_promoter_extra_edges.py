@@ -4317,10 +4317,12 @@ def test_the_repair_scripts_two_refusals_actually_refuse(tmp_path):
              "    evidence:\n"
              "    - reference: ARO:3000187\n"
              "      snippet: %s\n" % R.REPAIRS[0]["old"])
-    out, reason, n = R.repair_record(block)
-    assert out is not None and n == 1, reason           # a clean block IS repaired
+    # FOUR values since #462: "snippets I changed" and "items I could not touch" are
+    # separate counts, because collapsing them is the defect that issue is about.
+    out, reason, n, drifted = R.repair_record(block)
+    assert out is not None and n == 1 and drifted == 0, reason   # a clean block IS repaired
     # a comment does not survive a re-dump, so it must be refused rather than dropped
-    out2, reason2, n2 = R.repair_record(block.replace("  edges:\n", "  edges:  # note\n"))
+    out2, reason2, n2, _ = R.repair_record(block.replace("  edges:\n", "  edges:  # note\n"))
     assert out2 is None and "re-dump would change content" in reason2, reason2
     assert n2 == 1, "a refused block must still report the repair it is stranding"
 

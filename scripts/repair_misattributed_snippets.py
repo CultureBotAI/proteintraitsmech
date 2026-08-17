@@ -232,6 +232,27 @@ def _match(edge: dict, ev: dict) -> dict | None:
     return None
 
 
+# The similarity a snippet must reach to count as "recognisably this repair's `old` text".
+#
+# DERIVED, not picked. Measured against the real table and the real corpus:
+#
+#   reworded (one word changed)         0.97 - 0.999
+#   #422's elision (a dropped clause)   0.882
+#   ratio(old, new) for the Pfam entry  0.882
+#   highest any UNRELATED corpus snippet reaches against any `old`   0.424
+#
+# so anything in (0.424, 0.882] separates the two populations, and 0.75 sits in the middle
+# of that gap rather than at its edge.
+#
+# WHAT IT DOES NOT CATCH, stated because the number looks safer than it is: a PREFIX
+# truncation of fraction f scores 2f/(1+f), so a quote cut to 60% of its length scores
+# 0.749 and is missed by three thousandths. #423 was a truncation repair. Truncation is not
+# in this table -- #423 handled it and this script exists for the two classes it declined --
+# but if a truncated snippet ever lands here, this will not see it, and the fix is a
+# separate prefix test rather than a lower threshold, which would swallow the 0.424 tail.
+_NEAR = 0.75
+
+
 def _near_match(edge: dict, ev: dict) -> dict | None:
     """A repair this item is ABOUT but whose `old` text it no longer carries, or None.
 
@@ -253,6 +274,14 @@ def _near_match(edge: dict, ev: dict) -> dict | None:
     0 of the corpus's 12,581 evidence items are near-matches today. This exists to make the
     next reword loud, not to fix a present miss.
     """
+    # ASK THE FIXER FIRST, and globally rather than per entry. The first version tested
+    # `snippet == old` inside the loop, so an item that entry #2 could repair EXACTLY was
+    # stranded by entry #1 matching it loosely -- first-hit-wins, which `_match` is allowed
+    # because `check_repairs` refuses two entries with equal `old`, but that guard compares
+    # for EQUALITY and cannot see two entries whose `old` texts are merely similar. The
+    # table already has that shape.
+    if _match(edge, ev) is not None:
+        return None                          # repairable exactly: not this function's business
     snippet = _norm(ev.get("snippet") or "")
     for rep in REPAIRS:
         if ev.get("reference") != rep["ref_from"]:
@@ -260,10 +289,9 @@ def _near_match(edge: dict, ev: dict) -> dict | None:
         on_edge = rep.get("on_edge")
         if on_edge and (edge.get("subject"), edge.get("object")) != tuple(on_edge):
             continue
-        old, new = _norm(rep["old"]), _norm(rep["new"])
-        if snippet == old or snippet == new:
-            return None                      # exact: the fixer's job, or already done
-        if difflib.SequenceMatcher(None, snippet, old).ratio() >= 0.75:
+        if snippet == _norm(rep["new"]):
+            return None                      # already repaired; re-reporting it is noise
+        if difflib.SequenceMatcher(None, snippet, _norm(rep["old"])).ratio() >= _NEAR:
             return rep
     return None
 
@@ -290,21 +318,28 @@ def _dump(obj) -> str:
                           default_flow_style=False)
 
 
-def repair_record(text: str) -> tuple[str | None, str, int]:
-    """(new text or None, reason, number of snippets changed).
+def repair_record(text: str) -> tuple[str | None, str, int, int]:
+    """(new text or None, reason, snippets changed, items STRANDED).
 
     None with a reason means "left alone": either nothing matched, or re-dumping the block
     would change more than where its folded scalars wrap.
+
+    FOUR VALUES, because "what I changed" and "what I could not" are different numbers and
+    collapsing them is the defect this script's own #462 fix is about. The first version
+    returned STRANDED *instead of* the repair, so a record carrying one drifted snippet and
+    one repairable one lost the repair -- a fix for silent misses that introduced a silent
+    miss. They are independent: a record can be repaired AND carry stranded items, and both
+    must reach the caller.
     """
     span = _graph_block(text)
     if span is None:
-        return None, "no causal_graphs block", 0
+        return None, "no causal_graphs block", 0, 0
     lines = text.splitlines(keepends=True)
     block = "".join(lines[span[0]:span[1]])
     try:
         doc = yaml.safe_load(block)
     except Exception as exc:                                   # pragma: no cover
-        return None, f"unparseable causal_graphs block: {exc}", 0
+        return None, f"unparseable causal_graphs block: {exc}", 0, 0
     # Count the matches BEFORE deciding whether the block may be rewritten, so a record
     # that both needs a repair and cannot take one is reported rather than filed under the
     # same silent "skipped" as the 54 that need nothing. A skip that reads as "nothing to
@@ -317,21 +352,21 @@ def repair_record(text: str) -> tuple[str | None, str, int]:
     # And, with the BROADER pattern, items this table is about but can no longer rewrite
     # (#462). Counted separately from `matches`: "needs a repair I can make" and "needs a
     # repair I cannot" are different answers, and collapsing them is the bug.
-    near = [(edge, ev) for graph in doc.get("causal_graphs") or []
+    near = [ev for graph in doc.get("causal_graphs") or []
             for edge in graph.get("edges") or []
             for ev in edge.get("evidence") or []
             if _near_match(edge, ev) is not None]
-    if near:
-        refs = ", ".join(sorted({str(ev.get("reference")) for _, ev in near}))
-        return None, (f"STRANDED: {len(near)} item(s) cite {refs} with text this table "
-                      f"recognises but cannot rewrite -- the snippet has drifted"), len(near)
+    drift = (f" -- AND {len(near)} DRIFTED item(s) citing "
+             + ", ".join(sorted({str(ev.get("reference")) for ev in near}))
+             + " that this table recognises but can no longer rewrite") if near else ""
+
     # Whitespace-collapsed, not byte-for-byte: see the module docstring. Byte equality
     # rejects the 54 blocks #423 re-wrapped by hand, which is every record #425 concerns.
     if _norm(_dump(doc)) != _norm(block):
         reason = "re-dump would change content, not just wrapping"
         if matches:
             reason += f" -- AND CARRIES {matches} MATCHING SNIPPET(S)"
-        return None, reason, matches
+        return None, reason + drift, matches, len(near)
 
     changed = 0
     for graph in doc.get("causal_graphs") or []:
@@ -346,9 +381,9 @@ def repair_record(text: str) -> tuple[str | None, str, int]:
                     ev["notes"] = _norm(rep["notes"])
                 changed += 1
     if not changed:
-        return None, "no matching snippet", 0
+        return None, ("STRANDED" + drift) if near else "no matching snippet", 0, len(near)
     out = "".join(lines[:span[0]]) + _dump(doc) + "".join(lines[span[1]:])
-    return out, "repaired", changed
+    return out, "repaired" + drift, changed, len(near)
 
 
 def main() -> int:
@@ -380,7 +415,15 @@ def main() -> int:
         text = path.read_text(encoding="utf-8")
         if "causal_graphs:" not in text:
             continue
-        out, reason, n = repair_record(text)
+        out, reason, n, drifted = repair_record(text)
+        # KEYED ON THE COUNTS, not on the reason text. The reason string is for a human;
+        # deciding control flow by `reason.startswith(...)` meant a reason nobody had
+        # thought to add to the branch -- like the STRANDED one added for #462 -- was
+        # computed, formatted, and dropped on the floor. `repair_self_referential_notes`
+        # keys on `if n:` and was right.
+        if drifted:
+            stranded.append((path.name, drifted))
+            print(f"  STRANDED {path.name}: {reason}")
         if out is None:
             if reason.startswith("re-dump would change content"):
                 skipped_handformatted += 1

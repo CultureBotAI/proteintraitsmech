@@ -75,13 +75,21 @@ XREF = re.compile(
 # 0 of the corpus's 29,105 pfam2interpro xrefs are stranded today -- `XREF` handles every
 # shape on disk. That is the point: this exists to make the NEXT shape loud, not to fix a
 # present miss.
-# `[ \t-]*` AND NOT `[ \t]*`: the first draft of this very pattern required the line to
-# begin with whitespace, so it could not see `- mapping_source: pfam2interpro` -- the shape
-# a reordered mapping puts it in, and the exact shape the test injects. A finder written to
-# be broader than the fixer, that was not broad enough to see the first case anyone tried.
-# Caught by its own test rather than in review, which is the argument for writing the test
-# before believing the pattern.
-LOOSE = re.compile(r"^[ \t]*-?[ \t]*mapping_source:[ \t]*pfam2interpro[ \t]*$", re.M)
+# THIS PATTERN HAS NOW BEEN TOO NARROW TWICE, which is worth recording because the whole
+# point of it is to be the broad one.
+#
+#   1. `[ \t]*mapping_source:` could not see `- mapping_source: pfam2interpro`, the shape a
+#      reordered mapping puts it in -- the first case its own test tried.
+#   2. It could not see a QUOTED value (`mapping_source: "pfam2interpro"`), which is what
+#      several routine dumper settings emit, nor a flow mapping `- {object: ..., mapping_
+#      source: pfam2interpro}`, nor CRLF line endings. A review found all four.
+#
+# So the second alternative is now just the bare token anywhere in the record. That is
+# maximally loose on purpose: this pattern's only job is to answer "does this record
+# mention a pfam2interpro mapping at all", and every false positive it produces is a record
+# a human then looks at, while every false NEGATIVE is a record nobody ever looks at again.
+# The asymmetry is the entire argument for splitting finder from fixer.
+LOOSE = re.compile(r"""mapping_source:[ \t]*['"]?pfam2interpro\b""")
 
 
 def repair_text(text: str, real: str | None) -> tuple[str | None, str]:
