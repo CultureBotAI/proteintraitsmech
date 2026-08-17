@@ -35,13 +35,32 @@ import yaml
 # party on the critical path of every PR and compare the corpus against an ontology it was
 # not built from. The workflow header already states the rule -- gates that read data/raw
 # stay local -- and these four were violating it, not exempt from it.
-_OBO = pathlib.Path(__file__).resolve().parent.parent / "data" / "raw" / "aro" / "aro.obo"
-needs_obo = pytest.mark.skipif(
-    not _OBO.exists(), reason="data/raw/aro/aro.obo absent (gitignored); run just fetch-aro")
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent / "scripts"))
 
 promote = importlib.import_module("promote_family_drafts")
+
+# `data/raw/` is gitignored, so the ARO release is absent in CI. Four tests below read it
+# unguarded and failed EVERY CI run, on main and on every branch cut from it -- so the
+# checks workflow carried no signal at all and a real regression was indistinguishable
+# from the standing noise (#469).
+#
+# A skip, not a CI fetch. Probing the upstream URL while fixing this returned 9,051 terms
+# against the 8,601 in the release on disk: fetching `master` would put a moving third
+# party on the critical path of every PR and check the corpus against an ontology it was
+# not built from. The workflow header already states the rule -- gates that read data/raw
+# stay local -- and these four were violating it, not exempt from it.
+#
+# `promote.E.OBO` AND NOT A SIXTH SPELLING OF THE PATH. This file already writes that path
+# five different ways, and a skipif keyed to its own copy is the worst of them: move the
+# release and update the real constant, and this one is False forever, so the four tests
+# skip silently ON EVERY MACHINE and the coverage evaporates with no signal at all.
+# tests/test_record_io.py:692 records this repo shipping exactly that -- a test looking for
+# `data/raw/ARO.obo` against a configured `data/raw/aro/aro.obo`, so ARO was never
+# exercised. Keyed to the source of truth, a moved release skips honestly or not at all.
+needs_obo = pytest.mark.skipif(
+    not promote.E.OBO.exists(),
+    reason="data/raw/aro/aro.obo absent (gitignored); run just fetch-aro")
 
 
 def _cfg(**over):

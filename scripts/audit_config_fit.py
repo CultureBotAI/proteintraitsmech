@@ -15,7 +15,10 @@ It earned its place immediately: it found 7 PBP records stranded by round 53's o
 idempotent and never re-checks what it already wrote, so nothing else would have surfaced
 them.
 
-Exit code is always 0 -- a stranded record is a question, not a failure.
+A stranded record is a QUESTION, not a failure: any number of them exits 0. What does not
+exit 0 is a run that could not ask the question -- no release, or no records found. Those
+are the two ways this printed "accepted by NO config: 0" while having examined nothing,
+which reads as a clean corpus and is the norm #418 and #432 exist to enforce.
 
 EVERYTHING BELOW LIVES IN `main()`, and that is the point rather than tidiness. This file
 used to run the whole cross-family sweep AT IMPORT TIME, so `parse_obo` fired the moment
@@ -24,8 +27,20 @@ script in this directory. `data/raw/` is gitignored, so that test raised FileNot
 on EVERY CI run (#469), and on a machine that did have the release it silently ran a 7,211
 file sweep inside the test suite instead of importing a module.
 
-`sys.path` is resolved from THIS FILE, not from the process's cwd. `sys.path.insert(0,
-'scripts')` only worked when the caller happened to be standing in the repo root.
+EVERY PATH IS RESOLVED FROM THE MODULE, not from the process's cwd. The corpus glob was
+the literal string 'data/traits/function/resistance/aro', so running this from anywhere
+but the repo root globbed nothing and printed
+
+    curated records under a known family: 0
+    accepted by NO config of any of their families: 0
+
+and exited 0 -- indistinguishable from a clean sweep, and the failure this file's own
+sibling `audit-reproducible` is gated against one recipe away. It uses `E.ARO_DIR` now,
+which is the same path, absolute, and already the source of truth.
+
+(The `sys.path.insert(0, 'scripts')` it also carried was NOT a real bug -- Python already
+puts a script's own directory on `sys.path[0]`, so the sibling imports resolved from any
+cwd. It is resolved from `__file__` for consistency, not to fix anything.)
 """
 import pathlib
 import re
@@ -46,7 +61,7 @@ def main() -> int:
     orphan = collections.Counter()
     examples = []
     scanned = 0
-    for p in pathlib.Path('data/traits/function/resistance/aro').rglob('*.yaml'):
+    for p in E.ARO_DIR.rglob('*.yaml'):
         text = p.read_text(encoding='utf-8')
         if 'graph_id: resistance\n' not in text:
             continue
@@ -66,6 +81,11 @@ def main() -> int:
         orphan[cands[0]] += 1
         if len(examples) < 6:
             examples.append((ident, label[:44], cands[0]))
+    if not scanned:
+        # A sweep that examined nothing must not print a zero that reads as "all clean".
+        print(f"FAIL: no curated records with a known family under {E.ARO_DIR}. "
+              f"Nothing was examined, so the 0 below would be meaningless.")
+        return 1
     print(f"curated records under a known family: {scanned:,}")
     print(f"accepted by NO config of any of their families: {sum(orphan.values()):,}")
     for f, n in orphan.most_common(6):

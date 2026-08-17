@@ -978,6 +978,8 @@ repair-self-referential-notes *args:
     uv run python scripts/repair_self_referential_notes.py {{args}}
 
 # Which already-curated records would no config accept today (#267)
+# LOCAL ONLY -- reads data/raw/aro/aro.obo, which is gitignored; run `just fetch-aro`
+# first. Exits 1 if it examined nothing, so a 0 here means 0 (#469).
 audit-fit:
     uv run python scripts/audit_config_fit.py
 
