@@ -47,6 +47,7 @@ Dry-run by default; `--apply` writes.
 from __future__ import annotations
 
 import argparse
+import difflib
 import sys
 from pathlib import Path
 
@@ -231,6 +232,70 @@ def _match(edge: dict, ev: dict) -> dict | None:
     return None
 
 
+# The similarity a snippet must reach to count as "recognisably this repair's `old` text".
+#
+# DERIVED, not picked. Measured against the real table and the real corpus:
+#
+#   reworded (one word changed)         0.97 - 0.999
+#   #422's elision (a dropped clause)   0.882
+#   ratio(old, new) for the Pfam entry  0.882
+#   highest any UNRELATED corpus snippet reaches against any `old`   0.424
+#
+# so anything in (0.424, 0.882] separates the two populations, and 0.75 sits in the middle
+# of that gap rather than at its edge.
+#
+# WHAT IT DOES NOT CATCH, stated because the number looks safer than it is: a PREFIX
+# truncation of fraction f scores 2f/(1+f), so a quote cut to 60% of its length scores
+# 0.749 and is missed by three thousandths. #423 was a truncation repair. Truncation is not
+# in this table -- #423 handled it and this script exists for the two classes it declined --
+# but if a truncated snippet ever lands here, this will not see it, and the fix is a
+# separate prefix test rather than a lower threshold, which would swallow the 0.424 tail.
+_NEAR = 0.75
+
+
+def _near_match(edge: dict, ev: dict) -> dict | None:
+    """A repair this item is ABOUT but whose `old` text it no longer carries, or None.
+
+    DETECTION, and deliberately broader than `_match` (#462). `_match` demands the snippet
+    equal `old` after whitespace collapse. Reword one character of a snippet -- which is
+    what #423, #425 and #426 were all about -- and it returns None, so `repair_record`
+    reports "no matching snippet" and the record is filed with the ones that need nothing.
+    The `matches` counter that exists to catch exactly that was computed with `_match` too,
+    so the finder and the fixer shared a blind spot and the guard agreed with the miss.
+
+    This asks the weaker question: does the item cite a reference this table repairs, on
+    the edge the entry names, carrying text that is RECOGNISABLY the `old` snippet without
+    being it? `difflib` rather than a prefix test, because a reword can land anywhere --
+    #426's was mid-sentence.
+
+    NOT a match when the snippet already equals `new`: that is a repaired record, and
+    re-reporting it every run is how a stranded count becomes noise people learn to skip.
+
+    0 of the corpus's 12,581 evidence items are near-matches today. This exists to make the
+    next reword loud, not to fix a present miss.
+    """
+    # ASK THE FIXER FIRST, and globally rather than per entry. The first version tested
+    # `snippet == old` inside the loop, so an item that entry #2 could repair EXACTLY was
+    # stranded by entry #1 matching it loosely -- first-hit-wins, which `_match` is allowed
+    # because `check_repairs` refuses two entries with equal `old`, but that guard compares
+    # for EQUALITY and cannot see two entries whose `old` texts are merely similar. The
+    # table already has that shape.
+    if _match(edge, ev) is not None:
+        return None                          # repairable exactly: not this function's business
+    snippet = _norm(ev.get("snippet") or "")
+    for rep in REPAIRS:
+        if ev.get("reference") != rep["ref_from"]:
+            continue
+        on_edge = rep.get("on_edge")
+        if on_edge and (edge.get("subject"), edge.get("object")) != tuple(on_edge):
+            continue
+        if snippet == _norm(rep["new"]):
+            return None                      # already repaired; re-reporting it is noise
+        if difflib.SequenceMatcher(None, snippet, _norm(rep["old"])).ratio() >= _NEAR:
+            return rep
+    return None
+
+
 def _graph_block(text: str) -> tuple[int, int] | None:
     """(start, end) line indices of the top-level `causal_graphs:` block, or None.
 
@@ -253,21 +318,51 @@ def _dump(obj) -> str:
                           default_flow_style=False)
 
 
-def repair_record(text: str) -> tuple[str | None, str, int]:
-    """(new text or None, reason, number of snippets changed).
+def _causes(**counts: int) -> dict[str, int]:
+    """The non-zero causes only, so `any(...)` and `sum(...)` mean what they read as."""
+    return {k: v for k, v in counts.items() if v}
+
+
+def repair_record(text: str) -> tuple[str | None, str, int, dict[str, int]]:
+    """(new text or None, reason, snippets changed, {cause: count} for what it could NOT do).
 
     None with a reason means "left alone": either nothing matched, or re-dumping the block
     would change more than where its folded scalars wrap.
+
+    FOUR VALUES, because "what I changed" and "what I could not" are different numbers and
+    collapsing them is the defect this script's own #462 fix is about. The first version
+    returned STRANDED *instead of* the repair, so a record carrying one drifted snippet and
+    one repairable one lost the repair -- a fix for silent misses that introduced a silent
+    miss. They are independent: a record can be repaired AND carry stranded items, and both
+    must reach the caller.
+
+    THE FOURTH IS A MAP, NOT A COUNT, and that is a third round's correction. With a single
+    integer `main()` had to enumerate the causes it knew about, so:
+
+      * an UNPARSEABLE block -- the strongest possible "I cannot read this" -- returned 0
+        and was routed to silence, in the function rewritten to stop doing exactly that;
+      * a record that was both hand-formatted and drifted was appended to the report twice,
+        as two identical-looking lines meaning different things;
+      * and the FAIL summary explained every entry as a re-dump problem, sending a curator
+        to look for hand-formatting on a record whose block re-dumps perfectly.
+
+    Causes are values now, so a cause added here reaches the report without `main()` being
+    taught about it. That is the same argument as keying on counts rather than on the
+    reason string, one level further in.
+
+    Causes: `drifted` (the table recognises the text but cannot rewrite it), `unwrappable`
+    (an exact match in a block whose re-dump would change content), `unreadable` (the block
+    does not parse, so the count is unknown and 1 means "this record", not "one item").
     """
     span = _graph_block(text)
     if span is None:
-        return None, "no causal_graphs block", 0
+        return None, "no causal_graphs block", 0, {}
     lines = text.splitlines(keepends=True)
     block = "".join(lines[span[0]:span[1]])
     try:
         doc = yaml.safe_load(block)
     except Exception as exc:                                   # pragma: no cover
-        return None, f"unparseable causal_graphs block: {exc}", 0
+        return None, f"unparseable causal_graphs block: {exc}", 0, {"unreadable": 1}
     # Count the matches BEFORE deciding whether the block may be rewritten, so a record
     # that both needs a repair and cannot take one is reported rather than filed under the
     # same silent "skipped" as the 54 that need nothing. A skip that reads as "nothing to
@@ -277,13 +372,25 @@ def repair_record(text: str) -> tuple[str | None, str, int]:
                   for edge in graph.get("edges") or []
                   for ev in edge.get("evidence") or []
                   if _match(edge, ev) is not None)
+    # And, with the BROADER pattern, items this table is about but can no longer rewrite
+    # (#462). Counted separately from `matches`: "needs a repair I can make" and "needs a
+    # repair I cannot" are different answers, and collapsing them is the bug.
+    near = [ev for graph in doc.get("causal_graphs") or []
+            for edge in graph.get("edges") or []
+            for ev in edge.get("evidence") or []
+            if _near_match(edge, ev) is not None]
+    drift = (f" -- AND {len(near)} DRIFTED item(s) citing "
+             + ", ".join(sorted({str(ev.get("reference")) for ev in near}))
+             + " that this table recognises but can no longer rewrite") if near else ""
+
     # Whitespace-collapsed, not byte-for-byte: see the module docstring. Byte equality
     # rejects the 54 blocks #423 re-wrapped by hand, which is every record #425 concerns.
     if _norm(_dump(doc)) != _norm(block):
         reason = "re-dump would change content, not just wrapping"
         if matches:
             reason += f" -- AND CARRIES {matches} MATCHING SNIPPET(S)"
-        return None, reason, matches
+        return None, reason + drift, matches,\
+            _causes(unwrappable=matches, drifted=len(near))
 
     changed = 0
     for graph in doc.get("causal_graphs") or []:
@@ -298,9 +405,10 @@ def repair_record(text: str) -> tuple[str | None, str, int]:
                     ev["notes"] = _norm(rep["notes"])
                 changed += 1
     if not changed:
-        return None, "no matching snippet", 0
+        return None, ("STRANDED" + drift) if near else "no matching snippet", 0,\
+            _causes(drifted=len(near))
     out = "".join(lines[:span[0]]) + _dump(doc) + "".join(lines[span[1]:])
-    return out, "repaired", changed
+    return out, "repaired" + drift, changed, _causes(drifted=len(near))
 
 
 def main() -> int:
@@ -327,17 +435,23 @@ def main() -> int:
     repaired = skipped_handformatted = 0
     total_snippets = 0
     limited = False
-    stranded: list[tuple[str, int]] = []
+    stranded: list[tuple[str, dict[str, int]]] = []
     for i, path in enumerate(paths):
         text = path.read_text(encoding="utf-8")
         if "causal_graphs:" not in text:
             continue
-        out, reason, n = repair_record(text)
+        out, reason, n, cannot = repair_record(text)
+        # KEYED ON THE COUNTS, not on the reason text, and on the CAUSE MAP rather than a
+        # list of causes this loop knows about. Deciding by `reason.startswith(...)` meant
+        # a reason nobody thought to add here was computed, formatted and dropped -- which
+        # is how the STRANDED reason added for #462 reached a PR doing nothing. Enumerating
+        # causes had the same failure one level in: `unreadable` was returned and ignored.
+        if cannot:
+            stranded.append((path.name, cannot))
+            print(f"  STRANDED {path.name}: {reason}")
+        if reason.startswith("re-dump would change content"):
+            skipped_handformatted += 1
         if out is None:
-            if reason.startswith("re-dump would change content"):
-                skipped_handformatted += 1
-                if n:
-                    stranded.append((path.name, n))
             continue
         repaired += 1
         total_snippets += n
@@ -362,11 +476,28 @@ def main() -> int:
         print(f"skipped, re-dump would change content: {skipped_handformatted:,}  "
               f"(repair these by hand or not at all)")
     if stranded:
-        print(f"\nFAIL: {len(stranded)} record(s) NEED a repair this script cannot make -- "
-              f"re-dumping their block would change more than line wrapping. Fix these "
-              f"by hand; the gate will still see them.")
-        for name, n in stranded:
-            print(f"  {n} snippet(s)  {name}")
+        # ONE LINE PER RECORD, NAMING ITS OWN CAUSE. The previous version explained every
+        # entry as "re-dumping their block would change more than line wrapping", which is
+        # false for a drift-stranded record -- its block re-dumps perfectly and the QUOTE
+        # moved. A curator was sent to look for a hand-formatting problem that does not
+        # exist. Two causes, one explanation, which is the conflation this whole file is
+        # about.
+        totals: dict[str, int] = {}
+        for _, cannot in stranded:
+            for cause, k in cannot.items():
+                totals[cause] = totals.get(cause, 0) + k
+        print(f"\nFAIL: {len(stranded)} record(s) NEED a repair this script cannot make. "
+              f"Fix these by hand; the gate will still see them.")
+        print("  " + ", ".join(f"{k} {c}" for c, k in sorted(totals.items())))
+        print(f"  {'drifted':<12} the table recognises the text but cannot rewrite it -- "
+              f"add or update a REPAIRS entry")
+        print(f"  {'unwrappable':<12} an exact match in a block whose re-dump would change "
+              f"content -- repair by hand")
+        print(f"  {'unreadable':<12} the block does not parse; the record was NOT examined "
+              f"at all")
+        for name, cannot in stranded:
+            detail = ", ".join(f"{k} {c}" for c, k in sorted(cannot.items()))
+            print(f"  {name}: {detail}")
         return 1
     if limited:
         print("\nNOTE: the sweep stopped early, so \"0 stranded\" above means \"none in what "

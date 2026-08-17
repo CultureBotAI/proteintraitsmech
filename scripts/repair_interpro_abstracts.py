@@ -48,6 +48,16 @@ DEF_CAP = 1800
 
 _IPR_IN_SOURCE = re.compile(r"(IPR\d{6})")
 _DEF = re.compile(r"^definition: >-\n  (.*)$", re.M)
+# DETECTION, broader than `_DEF` (#462). `_DEF` captures the FIRST line of a folded scalar
+# and the comparison below tests that capture against the old cleaners' output. A record
+# whose definition wraps across lines therefore compares unequal no matter what it says,
+# and is skipped as "unchanged" -- a miss that reads exactly like nothing to do, which is
+# the shape #461, #431 and #444 each produced.
+#
+# 0 of the 68,900 records this script targets wrap today, because the emitter writes folded
+# scalars on one line. That is a property of the emitter, not of YAML, and it is one
+# `width=` away from changing.
+_DEF_MULTILINE = re.compile(r"^definition: >-\n(?:[ ]{2}.*\n){2,}", re.M)
 _SRC = re.compile(r"^definition_source: (.*)$", re.M)
 _IDENT = re.compile(r"^identifier: (\S+)", re.M)
 
@@ -142,7 +152,7 @@ def main() -> int:
     print(f"InterPro abstracts indexed: {len(abstracts):,}", file=sys.stderr)
 
     repaired = already = unchanged = skipped = 0
-    restored = 0
+    restored = stranded = 0
     for path in sorted(Path(args.path).rglob("*.yaml")):
         text = path.read_text(encoding="utf-8")
         sm, dm = _SRC.search(text), _DEF.search(text)
@@ -162,6 +172,18 @@ def main() -> int:
             ipr_m = _IPR_IN_SOURCE.search(im.group(1)) if im else None
         raw = abstracts.get(ipr_m.group(1)) if ipr_m else None
         if raw is None:
+            continue
+        # PLACED HERE, not with the other pre-filters: only a record this script actually
+        # targets can be stranded BY this script. The first draft checked before the
+        # source and abstract lookups, which would have reported every wrapped definition
+        # in the corpus -- a guard against silence that manufactures noise instead.
+        if _DEF_MULTILINE.search(text):
+            # `_DEF` read one line of several, so every comparison below is against a
+            # fragment. Reported, not skipped: "cannot read it" and "nothing to do" must
+            # never print the same thing (#462).
+            stranded += 1
+            print(f"  STRANDED {path.name}: folded definition wraps across lines; the "
+                  f"pattern reads only the first")
             continue
 
         new = clean_abstract(raw)
@@ -213,9 +235,12 @@ def main() -> int:
         print(f"  skipped (curated or unmatched)  : {skipped:,}")
     if args.limit and repaired >= args.limit:
         print(f"  PARTIAL: stopped at --limit {args.limit}")
+    if stranded:
+        print(f"FAIL: {stranded:,} record(s) have a wrapped definition this cannot read. "
+              f"They are unexamined, not clean.")
     if not args.apply:
         print("dry run -- pass --apply to write")
-    return 0
+    return 1 if stranded else 0
 
 
 if __name__ == "__main__":
