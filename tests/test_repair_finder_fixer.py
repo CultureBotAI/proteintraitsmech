@@ -70,7 +70,7 @@ def test_an_exact_snippet_is_repaired_normally():
     strands everything."""
     rep = _repair_entry()
     out, reason, n, drifted = SNIPPETS.repair_record(_record(rep["ref_from"], rep["old"]))
-    assert reason == "repaired" and n == 1 and drifted == 0, reason
+    assert reason == "repaired" and n == 1 and drifted == {}, reason
     assert SNIPPETS._norm(rep["new"]) in SNIPPETS._norm(out)
 
 
@@ -84,7 +84,7 @@ def test_a_REWORDED_snippet_is_stranded_not_silently_skipped():
     out, reason, n, stranded = SNIPPETS.repair_record(_record(rep["ref_from"], drifted))
     assert out is None
     assert reason.startswith("STRANDED"), reason
-    assert stranded == 1, "a stranded item must be COUNTED, not merely described"
+    assert stranded == {"drifted": 1}, "a stranded item must be COUNTED, and by CAUSE"
 
 
 def test_an_unrelated_snippet_on_the_same_reference_is_left_alone():
@@ -93,7 +93,7 @@ def test_an_unrelated_snippet_on_the_same_reference_is_left_alone():
     the TEXT resembling `old`, not on the reference."""
     out, reason, n, stranded = SNIPPETS.repair_record(
         _record("Pfam:PF04563", "An entirely unrelated sentence about zinc coordination."))
-    assert (out, n, stranded) == (None, 0, 0)
+    assert (out, n, stranded) == (None, 0, {})
     assert "STRANDED" not in reason, reason
 
 
@@ -102,7 +102,7 @@ def test_an_ALREADY_REPAIRED_snippet_is_not_reported_every_run():
     record this script has already fixed -- turning the count into noise."""
     rep = _repair_entry()
     out, reason, n, stranded = SNIPPETS.repair_record(_record(rep["ref_from"], rep["new"]))
-    assert (out, n, stranded) == (None, 0, 0)
+    assert (out, n, stranded) == (None, 0, {})
     assert "STRANDED" not in reason, reason
 
 
@@ -139,8 +139,8 @@ def test_the_corpus_has_no_stranded_snippets_today():
         if not any(ref in text for ref in refs):
             continue
         examined += 1
-        _, reason, _, drifted = SNIPPETS.repair_record(text)
-        if drifted:
+        _, reason, _, cannot = SNIPPETS.repair_record(text)
+        if cannot:
             stranded.append((path.name, reason))
     # #418/#469: a sweep that examined nothing must not certify a clean corpus.
     assert examined, f"no record under {aro} cites any of {sorted(refs)}"
@@ -277,7 +277,7 @@ def test_a_record_with_BOTH_an_exact_and_a_drifted_snippet_is_still_repaired():
     text = _two_edge_record([(rep["ref_from"], rep["old"]), (rep["ref_from"], drifted)])
     out, reason, n, stranded = SNIPPETS.repair_record(text)
     assert out is not None, "the exactly-repairable snippet was lost"
-    assert n == 1 and stranded == 1, (n, stranded)
+    assert n == 1 and stranded == {"drifted": 1}, (n, stranded)
     assert SNIPPETS._norm(rep["new"]) in SNIPPETS._norm(out)
 
 
@@ -358,3 +358,75 @@ def test_the_loose_detector_does_not_fire_on_PROSE_mentioning_pfam2interpro():
     prose = ('definition_source: "InterPro:IPR009361 abstract (Pfam PF06248 maps to this '
              'entry via pfam2interpro)"\n')
     assert not XREFS.LOOSE.search(prose)
+
+
+def test_an_UNPARSEABLE_block_is_stranded_not_skipped():
+    """The strongest possible "I cannot read this", and it was the one reason still routed
+    to silence -- in the function rewritten to stop doing that. Its `# pragma: no cover` is
+    why nobody looked."""
+    broken = ("identifier: ARO:1\ncurator: edison-causal-graphs\n"
+              'causal_graphs:\n- graph_id: "unbalanced\n  edges: []\nlicense: CC0\n')
+    out, reason, n, cannot = SNIPPETS.repair_record(broken)
+    assert out is None and cannot == {"unreadable": 1}, (reason, cannot)
+
+
+def test_a_record_that_is_BOTH_handformatted_and_drifted_is_counted_once_per_cause():
+    """It was appended to the report twice, as two identical-looking `1 snippet(s)` lines
+    that meant different things."""
+    rep = _repair_entry()
+    drifted = rep["old"].replace("Prokaryotes contain", "Prokaryotic cells contain")
+    text = _two_edge_record([(rep["ref_from"], rep["old"]), (rep["ref_from"], drifted)])
+    text = text.replace("  edges:\n", "  edges:  # note\n")   # defeats the re-dump guard
+    out, reason, n, cannot = SNIPPETS.repair_record(text)
+    assert out is None
+    assert cannot == {"unwrappable": 1, "drifted": 1}, cannot
+
+
+def test_the_FAIL_summary_names_each_records_own_cause(tmp_path, capsys, monkeypatch):
+    """Every entry used to be explained as "re-dumping their block would change more than
+    line wrapping" -- false for a drift-stranded record, whose block re-dumps perfectly and
+    whose QUOTE moved. The curator was sent to look for a problem that does not exist."""
+    rep = _repair_entry()
+    drifted = rep["old"].replace("Prokaryotes contain", "Prokaryotic cells contain")
+    (tmp_path / "drift.yaml").write_text(_record(rep["ref_from"], drifted), encoding="utf-8")
+    rc = _run_main(tmp_path, monkeypatch)
+    out = capsys.readouterr().out
+    assert rc == 1
+    assert "drift.yaml: 1 drifted" in out, out
+    assert "re-dumping their block" not in out, "still blames the wrong cause"
+
+
+def test_the_CLI_reports_an_unreadable_record_too(tmp_path, capsys, monkeypatch):
+    """main() must not enumerate the causes it knows about. Keying on `cannot["drifted"]`
+    instead of on the map put `unreadable` straight back into silence -- and the
+    repair_record-level test still passed, because the defect is in the reporting layer.
+    That is this PR's headline shape for the third time; it needs a CLI test, not a
+    stronger unit test."""
+    (tmp_path / "broken.yaml").write_text(
+        "identifier: ARO:1\ncurator: edison-causal-graphs\n"
+        'causal_graphs:\n- graph_id: "unbalanced\n  edges: []\nlicense: CC0\n',
+        encoding="utf-8")
+    rc = _run_main(tmp_path, monkeypatch)
+    out = capsys.readouterr().out
+    assert rc == 1, out
+    assert "broken.yaml: 1 unreadable" in out, out
+
+
+def test_the_CLI_lists_a_two_cause_record_exactly_once(tmp_path, capsys, monkeypatch):
+    """It was appended twice -- once per cause -- as two identical `1 snippet(s)` lines
+    meaning different things, inflating the count in a tool whose thesis is the count."""
+    rep = _repair_entry()
+    drifted = rep["old"].replace("Prokaryotes contain", "Prokaryotic cells contain")
+    text = _two_edge_record([(rep["ref_from"], rep["old"]), (rep["ref_from"], drifted)])
+    (tmp_path / "both.yaml").write_text(text.replace("  edges:\n", "  edges:  # note\n"),
+                                        encoding="utf-8")
+    rc = _run_main(tmp_path, monkeypatch)
+    out = capsys.readouterr().out
+    assert rc == 1
+    # counted on the SUMMARY lines only -- the running "  STRANDED both.yaml: ..." log
+    # line is a different thing and legitimately also mentions the file
+    summary = [ln for ln in out.splitlines() if ln.strip().startswith("both.yaml:")]
+    assert len(summary) == 1, out
+    assert "FAIL: 1 record(s)" in out, out
+    # and that one line names BOTH causes rather than picking one
+    assert summary[0].strip() == "both.yaml: 1 drifted, 1 unwrappable", summary

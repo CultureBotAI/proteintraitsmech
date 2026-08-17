@@ -97,8 +97,21 @@ def repair_text(text: str, real: str | None) -> tuple[str | None, str]:
     hits = list(XREF.finditer(text))
     loose = len(LOOSE.findall(text))
     if loose > len(hits):
+        # REFUSES THE WHOLE RECORD, and unlike the sibling repair that is deliberate.
+        #
+        # `repair_misattributed_snippets` keeps its repairs and its stranded items separate,
+        # because one drifted quote says nothing about whether another quote can be fixed.
+        # Here they are not independent: this rewrite REMOVES and REPOINTS entries in a
+        # list whose other members it cannot see. Repointing the readable assertion to
+        # `real` while an unreadable one still asserts something else can leave the record
+        # holding two contradictory mappings, or a duplicate of the entry just written --
+        # a repair that makes the record worse than it found it.
+        #
+        # So the rule differs because the operation differs: an edit that must reason about
+        # a whole list refuses a list it cannot fully read. Loud (exit 1), never silent.
         return None, (f"STRANDED: asserts {loose} pfam2interpro mapping(s) but the "
-                      f"rewrite pattern parses only {len(hits)}")
+                      f"rewrite pattern parses only {len(hits)}; refusing to edit a list "
+                      f"it cannot fully read")
     if not hits:
         return None, "no pfam2interpro InterPro xref"
     wrong = [m for m in hits if m.group("ipr") != real]

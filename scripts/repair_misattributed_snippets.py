@@ -318,8 +318,13 @@ def _dump(obj) -> str:
                           default_flow_style=False)
 
 
-def repair_record(text: str) -> tuple[str | None, str, int, int]:
-    """(new text or None, reason, snippets changed, items STRANDED).
+def _causes(**counts: int) -> dict[str, int]:
+    """The non-zero causes only, so `any(...)` and `sum(...)` mean what they read as."""
+    return {k: v for k, v in counts.items() if v}
+
+
+def repair_record(text: str) -> tuple[str | None, str, int, dict[str, int]]:
+    """(new text or None, reason, snippets changed, {cause: count} for what it could NOT do).
 
     None with a reason means "left alone": either nothing matched, or re-dumping the block
     would change more than where its folded scalars wrap.
@@ -330,16 +335,34 @@ def repair_record(text: str) -> tuple[str | None, str, int, int]:
     one repairable one lost the repair -- a fix for silent misses that introduced a silent
     miss. They are independent: a record can be repaired AND carry stranded items, and both
     must reach the caller.
+
+    THE FOURTH IS A MAP, NOT A COUNT, and that is a third round's correction. With a single
+    integer `main()` had to enumerate the causes it knew about, so:
+
+      * an UNPARSEABLE block -- the strongest possible "I cannot read this" -- returned 0
+        and was routed to silence, in the function rewritten to stop doing exactly that;
+      * a record that was both hand-formatted and drifted was appended to the report twice,
+        as two identical-looking lines meaning different things;
+      * and the FAIL summary explained every entry as a re-dump problem, sending a curator
+        to look for hand-formatting on a record whose block re-dumps perfectly.
+
+    Causes are values now, so a cause added here reaches the report without `main()` being
+    taught about it. That is the same argument as keying on counts rather than on the
+    reason string, one level further in.
+
+    Causes: `drifted` (the table recognises the text but cannot rewrite it), `unwrappable`
+    (an exact match in a block whose re-dump would change content), `unreadable` (the block
+    does not parse, so the count is unknown and 1 means "this record", not "one item").
     """
     span = _graph_block(text)
     if span is None:
-        return None, "no causal_graphs block", 0, 0
+        return None, "no causal_graphs block", 0, {}
     lines = text.splitlines(keepends=True)
     block = "".join(lines[span[0]:span[1]])
     try:
         doc = yaml.safe_load(block)
     except Exception as exc:                                   # pragma: no cover
-        return None, f"unparseable causal_graphs block: {exc}", 0, 0
+        return None, f"unparseable causal_graphs block: {exc}", 0, {"unreadable": 1}
     # Count the matches BEFORE deciding whether the block may be rewritten, so a record
     # that both needs a repair and cannot take one is reported rather than filed under the
     # same silent "skipped" as the 54 that need nothing. A skip that reads as "nothing to
@@ -366,7 +389,8 @@ def repair_record(text: str) -> tuple[str | None, str, int, int]:
         reason = "re-dump would change content, not just wrapping"
         if matches:
             reason += f" -- AND CARRIES {matches} MATCHING SNIPPET(S)"
-        return None, reason + drift, matches, len(near)
+        return None, reason + drift, matches,\
+            _causes(unwrappable=matches, drifted=len(near))
 
     changed = 0
     for graph in doc.get("causal_graphs") or []:
@@ -381,9 +405,10 @@ def repair_record(text: str) -> tuple[str | None, str, int, int]:
                     ev["notes"] = _norm(rep["notes"])
                 changed += 1
     if not changed:
-        return None, ("STRANDED" + drift) if near else "no matching snippet", 0, len(near)
+        return None, ("STRANDED" + drift) if near else "no matching snippet", 0,\
+            _causes(drifted=len(near))
     out = "".join(lines[:span[0]]) + _dump(doc) + "".join(lines[span[1]:])
-    return out, "repaired" + drift, changed, len(near)
+    return out, "repaired" + drift, changed, _causes(drifted=len(near))
 
 
 def main() -> int:
@@ -410,25 +435,23 @@ def main() -> int:
     repaired = skipped_handformatted = 0
     total_snippets = 0
     limited = False
-    stranded: list[tuple[str, int]] = []
+    stranded: list[tuple[str, dict[str, int]]] = []
     for i, path in enumerate(paths):
         text = path.read_text(encoding="utf-8")
         if "causal_graphs:" not in text:
             continue
-        out, reason, n, drifted = repair_record(text)
-        # KEYED ON THE COUNTS, not on the reason text. The reason string is for a human;
-        # deciding control flow by `reason.startswith(...)` meant a reason nobody had
-        # thought to add to the branch -- like the STRANDED one added for #462 -- was
-        # computed, formatted, and dropped on the floor. `repair_self_referential_notes`
-        # keys on `if n:` and was right.
-        if drifted:
-            stranded.append((path.name, drifted))
+        out, reason, n, cannot = repair_record(text)
+        # KEYED ON THE COUNTS, not on the reason text, and on the CAUSE MAP rather than a
+        # list of causes this loop knows about. Deciding by `reason.startswith(...)` meant
+        # a reason nobody thought to add here was computed, formatted and dropped -- which
+        # is how the STRANDED reason added for #462 reached a PR doing nothing. Enumerating
+        # causes had the same failure one level in: `unreadable` was returned and ignored.
+        if cannot:
+            stranded.append((path.name, cannot))
             print(f"  STRANDED {path.name}: {reason}")
+        if reason.startswith("re-dump would change content"):
+            skipped_handformatted += 1
         if out is None:
-            if reason.startswith("re-dump would change content"):
-                skipped_handformatted += 1
-                if n:
-                    stranded.append((path.name, n))
             continue
         repaired += 1
         total_snippets += n
@@ -453,11 +476,28 @@ def main() -> int:
         print(f"skipped, re-dump would change content: {skipped_handformatted:,}  "
               f"(repair these by hand or not at all)")
     if stranded:
-        print(f"\nFAIL: {len(stranded)} record(s) NEED a repair this script cannot make -- "
-              f"re-dumping their block would change more than line wrapping. Fix these "
-              f"by hand; the gate will still see them.")
-        for name, n in stranded:
-            print(f"  {n} snippet(s)  {name}")
+        # ONE LINE PER RECORD, NAMING ITS OWN CAUSE. The previous version explained every
+        # entry as "re-dumping their block would change more than line wrapping", which is
+        # false for a drift-stranded record -- its block re-dumps perfectly and the QUOTE
+        # moved. A curator was sent to look for a hand-formatting problem that does not
+        # exist. Two causes, one explanation, which is the conflation this whole file is
+        # about.
+        totals: dict[str, int] = {}
+        for _, cannot in stranded:
+            for cause, k in cannot.items():
+                totals[cause] = totals.get(cause, 0) + k
+        print(f"\nFAIL: {len(stranded)} record(s) NEED a repair this script cannot make. "
+              f"Fix these by hand; the gate will still see them.")
+        print("  " + ", ".join(f"{k} {c}" for c, k in sorted(totals.items())))
+        print(f"  {'drifted':<12} the table recognises the text but cannot rewrite it -- "
+              f"add or update a REPAIRS entry")
+        print(f"  {'unwrappable':<12} an exact match in a block whose re-dump would change "
+              f"content -- repair by hand")
+        print(f"  {'unreadable':<12} the block does not parse; the record was NOT examined "
+              f"at all")
+        for name, cannot in stranded:
+            detail = ", ".join(f"{k} {c}" for c, k in sorted(cannot.items()))
+            print(f"  {name}: {detail}")
         return 1
     if limited:
         print("\nNOTE: the sweep stopped early, so \"0 stranded\" above means \"none in what "
