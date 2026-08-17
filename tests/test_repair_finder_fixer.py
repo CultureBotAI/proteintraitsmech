@@ -281,16 +281,27 @@ def test_a_record_with_BOTH_an_exact_and_a_drifted_snippet_is_still_repaired():
     assert SNIPPETS._norm(rep["new"]) in SNIPPETS._norm(out)
 
 
-def _run_main(path) -> int:
-    argv = sys.argv
-    sys.argv = ["repair_misattributed_snippets.py", "--path", str(path)]
-    try:
-        return SNIPPETS.main()
-    finally:
-        sys.argv = argv
+def _run_main(path, monkeypatch) -> int:
+    """Drive `main()` with the verbatim pre-flight stubbed out.
+
+    STUBBED, NOT SKIPPED. `check_repairs` resolves every replacement against
+    `data/raw/aro/aro.obo`, which is gitignored, so a `skipif` would make these two the
+    only tests of `main()` -- the layer the review found broken -- and they would run
+    nowhere but a developer machine. That is #469 exactly, and it is what let this defect
+    reach a PR in the first place.
+
+    The pre-flight has its own coverage in `test_promoter_extra_edges.py`; what is under
+    test here is whether a stranded record survives the trip to stdout and the exit code.
+    """
+    monkeypatch.setattr(SNIPPETS, "check_repairs", lambda *a, **k: [])
+    monkeypatch.setattr(SNIPPETS, "_resolve_sources", lambda *a, **k: ({}, {}),
+                        raising=False)
+    monkeypatch.setattr(sys, "argv",
+                        ["repair_misattributed_snippets.py", "--path", str(path)])
+    return SNIPPETS.main()
 
 
-def test_the_CLI_actually_reports_a_stranded_record(tmp_path, capsys):
+def test_the_CLI_actually_reports_a_stranded_record(tmp_path, capsys, monkeypatch):
     """`main()` decided control flow with `reason.startswith(...)`, so the STRANDED reason
     -- added in this very PR -- was computed, formatted, and dropped on the floor. The unit
     test above passed; the tool printed nothing and exited 0.
@@ -300,17 +311,18 @@ def test_the_CLI_actually_reports_a_stranded_record(tmp_path, capsys):
     drifted = rep["old"].replace("Prokaryotes contain", "Prokaryotic cells contain")
     (tmp_path / "drifted.yaml").write_text(_record(rep["ref_from"], drifted),
                                            encoding="utf-8")
-    rc = _run_main(tmp_path)
+    rc = _run_main(tmp_path, monkeypatch)
     out = capsys.readouterr().out
     assert "STRANDED" in out, out
     assert rc == 1, f"a stranded record must not exit 0\n{out}"
 
 
-def test_the_CLI_exits_0_and_says_nothing_when_there_is_nothing_to_do(tmp_path, capsys):
+def test_the_CLI_exits_0_and_says_nothing_when_there_is_nothing_to_do(
+        tmp_path, capsys, monkeypatch):
     """The control: a guard that fires on everything is not a guard."""
     (tmp_path / "clean.yaml").write_text(
         _record("Pfam:PF04563", "An unrelated sentence about zinc."), encoding="utf-8")
-    rc = _run_main(tmp_path)
+    rc = _run_main(tmp_path, monkeypatch)
     out = capsys.readouterr().out
     assert rc == 0 and "STRANDED" not in out, out
 
