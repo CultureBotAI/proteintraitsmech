@@ -82,7 +82,14 @@ def resolve_record(target: str, traits_dir: Path | None = None) -> Path:
     candidate = Path(target)
     for path in (candidate, REPO_ROOT / candidate):
         if path.is_file():
-            return path.resolve()
+            resolved = path.resolve()
+            if resolved.is_relative_to(traits_dir.resolve()):
+                return resolved
+            raise ValueError(
+                f"{_display_path(resolved)} is a real file but is not under "
+                f"{_display_path(traits_dir)}; --target must name a protein "
+                f"trait record"
+            )
 
     files = sorted(traits_dir.rglob("*.yaml"))
     stem_matches = [path for path in files if path.stem.casefold() == target.casefold()]
@@ -163,8 +170,13 @@ def template_vars(record: dict[str, Any], path: Path) -> dict[str, str]:
 
 
 def canonical_provider(provider: str) -> str:
+    # Order of operations matches deep_research_provider.py's canonical_provider()
+    # exactly — they previously diverged (this version looked aliases up by the
+    # un-normalized casefold instead of the space-to-underscore-normalized key),
+    # which only coincided today because no PROVIDER_ALIASES key contains a
+    # space (proteintraitsmech#487 review).
     key = provider.strip().casefold().replace(" ", "_")
-    return PROVIDER_ALIASES.get(provider.strip().casefold(), key)
+    return PROVIDER_ALIASES.get(key, key)
 
 
 def provider_args(provider: str) -> list[str]:

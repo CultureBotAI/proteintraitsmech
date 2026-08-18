@@ -54,6 +54,19 @@ def test_resolve_record_not_found_raises(tmp_path):
         rpt.resolve_record("proteintraitsmech:NOPE", traits_dir=traits_dir)
 
 
+def test_resolve_record_existing_file_outside_traits_dir_raises_clear_error(tmp_path):
+    """A real, valid-YAML file that just isn't under traits_dir (a plausible
+    typo, or a path staged elsewhere) must get an actionable ValueError, not
+    the raw pathlib traceback main() used to raise from
+    record_path.relative_to(TRAITS_DIR) (proteintraitsmech#487 review)."""
+    traits_dir = tmp_path / "traits"
+    traits_dir.mkdir()
+    outside = tmp_path / "conf.yaml"
+    outside.write_text("not_a_trait_record: true\n")
+    with pytest.raises(ValueError, match="is not under"):
+        rpt.resolve_record(str(outside), traits_dir=traits_dir)
+
+
 def test_resolve_record_by_unique_label(tmp_path):
     """The multi-word-label case: what the justfile quote() fix and the
     grep prefilter both exist to support."""
