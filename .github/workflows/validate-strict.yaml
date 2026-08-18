@@ -1,0 +1,97 @@
+# Closed-schema validation and causal-graph structural audit. Neither reads
+# data/raw — both operate on the committed schema and data/traits/ — so they
+# do not need the exclusion checks.yml used to claim for them (#485).
+#
+# The corpus is ~430K records (~2.1GB), so a full run takes minutes even with
+# a multiprocess pool. PRs that only touch data files are scoped to the files
+# that actually changed; a full corpus run is reserved for schema/validator
+# changes (which can invalidate records the PR never touched) and for push to
+# main, as a fleet-wide safety net.
+name: validate-strict
+
+on:
+  pull_request:
+    paths:
+      - "src/proteintraitsmech/schema/proteintraitsmech.yaml"
+      - "data/traits/**"
+      - "scripts/validate_strict.py"
+      - "scripts/audit_causal_graphs.py"
+      - ".github/workflows/validate-strict.yaml"
+      - "pyproject.toml"
+  push:
+    branches: [main]
+    paths:
+      - "src/proteintraitsmech/schema/proteintraitsmech.yaml"
+      - "data/traits/**"
+      - "scripts/validate_strict.py"
+      - "scripts/audit_causal_graphs.py"
+      - ".github/workflows/validate-strict.yaml"
+      - "pyproject.toml"
+  workflow_dispatch:
+
+jobs:
+  validate-strict:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - name: Install just
+        uses: extractions/setup-just@v2
+
+      - run: uv sync --extra dev
+
+      - name: Determine validation scope
+        id: scope
+        run: |
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "mode=full" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+          CHANGED=$(git diff --name-only "$BASE" "$HEAD")
+          if echo "$CHANGED" | grep -qE '^(src/proteintraitsmech/schema/proteintraitsmech\.yaml|scripts/validate_strict\.py|scripts/audit_causal_graphs\.py)$'; then
+            echo "A schema or validator change can affect records outside this PR's diff — running full corpus."
+            echo "mode=full" >> "$GITHUB_OUTPUT"
+          else
+            echo "$CHANGED" | grep -E '^data/traits/.*\.ya?ml$' > changed_traits.txt || true
+            n=$(wc -l < changed_traits.txt)
+            echo "mode=changed" >> "$GITHUB_OUTPUT"
+            echo "changed_count=$n" >> "$GITHUB_OUTPUT"
+            echo "$n changed trait file(s)"
+          fi
+
+      - name: Strict validation (changed files)
+        if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
+        run: |
+          mapfile -t files < changed_traits.txt
+          uv run python scripts/validate_strict.py "${files[@]}"
+
+      - name: Structural audit (changed files)
+        if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
+        run: |
+          mapfile -t files < changed_traits.txt
+          uv run python scripts/audit_causal_graphs.py "${files[@]}"
+
+      - name: Strict validation (full corpus)
+        if: steps.scope.outputs.mode == 'full'
+        run: uv run python scripts/validate_strict.py
+
+      - name: Structural audit (full corpus)
+        if: steps.scope.outputs.mode == 'full'
+        run: uv run python scripts/audit_causal_graphs.py
+
+      - name: Upload failure TSV
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: instance-validation-failures
+          path: reports/instance_validation_failures.tsv
+          if-no-files-found: ignore

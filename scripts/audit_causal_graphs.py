@@ -147,7 +147,9 @@ def audit_record(rec: dict, rel: str, valid_types: set[str],
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--file", help="audit a single YAML file instead of data/traits/**")
+    ap.add_argument("paths", nargs="*",
+                    help="files or directories to audit (default: data/traits/**)")
+    ap.add_argument("--file", help="[deprecated, use positional args] audit a single YAML file")
     ap.add_argument("--strict", action="store_true",
                     help="treat warnings (ungrounded node, no snippet/predicate_id) as failures")
     ap.add_argument("--quiet", action="store_true", help="summary only")
@@ -158,8 +160,19 @@ def main() -> int:
         print("warning: could not read CausalNodeTypeEnum from schema; "
               "node_type values will not be checked", file=sys.stderr)
 
-    paths = ([Path(args.file)] if args.file
-             else sorted(p for p in TRAITS.rglob("*.yaml")))
+    if args.file:
+        paths = [Path(args.file)]
+    elif args.paths:
+        collected: list[Path] = []
+        for raw in args.paths:
+            p = Path(raw)
+            if p.is_dir():
+                collected.extend(sorted(p.rglob("*.yaml")))
+            else:
+                collected.append(p)
+        paths = sorted(collected)
+    else:
+        paths = sorted(p for p in TRAITS.rglob("*.yaml"))
     errors: list = []
     warns: list = []
     stats = {"records": 0, "graphs": 0, "nodes": 0, "edges": 0,
