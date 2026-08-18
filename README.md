@@ -396,6 +396,12 @@ just research-protein-trait falcon data/traits/structure/cavity/pocket.yaml --ap
 `deep-research-client` command instead of running it. Pass `--apply` to
 actually invoke the provider; that is a live, possibly billed network call.
 
+`deep-research-provider(s)` rank/inspect providers against this Mech's own
+`conf/deep_research_provider.yaml` profile (mechanism / family_grounding
+scoring). `research-provider(s)` (no `deep-` prefix) is the unfiltered
+`deep-research-client providers` passthrough — raw upstream availability and
+parameters, with no Mech-specific scoring applied.
+
 Reports are written below `research/traits/`, preserving the record's directory
 layout. They are evidence proposals only: verify accessions, residue numbering,
 protein/taxon scope, chemical participants, and every proposed causal edge.

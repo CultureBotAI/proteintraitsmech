@@ -64,3 +64,35 @@ def test_unknown_default_focus_is_rejected(tmp_path):
     profile.write_text("default_focus: absent\nfocuses:\n  present:\n    stages: {}\n")
     with pytest.raises(ValueError, match="default_focus"):
         drp.load_config(profile)
+
+
+def test_provider_adjustments_alias_key_is_canonicalized(tmp_path):
+    profile = tmp_path / "aliased.yaml"
+    profile.write_text(
+        "default_focus: f\n"
+        "focuses:\n"
+        "  f:\n"
+        "    stages:\n"
+        "      discovery: {}\n"
+        "    provider_adjustments:\n"
+        "      edison: 3\n"
+        "      Claude Code: 2\n"
+    )
+    config = drp.load_config(profile)
+    adjustments = config["focuses"]["f"]["provider_adjustments"]
+    assert adjustments == {"falcon": 3, "claude_code": 2}
+
+
+def test_provider_adjustments_unknown_key_is_rejected(tmp_path):
+    profile = tmp_path / "typo.yaml"
+    profile.write_text(
+        "default_focus: f\n"
+        "focuses:\n"
+        "  f:\n"
+        "    stages:\n"
+        "      discovery: {}\n"
+        "    provider_adjustments:\n"
+        "      flacon: 3\n"  # typo of "falcon"
+    )
+    with pytest.raises(ValueError, match="unknown provider"):
+        drp.load_config(profile)

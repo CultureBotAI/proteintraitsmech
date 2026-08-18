@@ -54,6 +54,49 @@ def test_resolve_record_not_found_raises(tmp_path):
         rpt.resolve_record("proteintraitsmech:NOPE", traits_dir=traits_dir)
 
 
+def test_resolve_record_by_unique_label(tmp_path):
+    """The multi-word-label case: what the justfile quote() fix and the
+    grep prefilter both exist to support."""
+    traits_dir = tmp_path / "traits"
+    path = _write_record(
+        traits_dir / "structure" / "cavity" / "pocket.yaml",
+        "proteintraitsmech:POCKET", "binding pocket",
+    )
+    assert rpt.resolve_record("binding pocket", traits_dir=traits_dir) == path
+
+
+def test_grep_candidates_missing_grep_returns_none(monkeypatch, tmp_path):
+    def _no_grep(*a, **k):
+        raise FileNotFoundError("grep")
+
+    monkeypatch.setattr(rpt.subprocess, "run", _no_grep)
+    assert rpt._grep_candidates("x", tmp_path) is None
+
+
+def test_grep_candidates_timeout_raises_instead_of_degrading(monkeypatch, tmp_path):
+    """A grep timeout must not silently fall back to the full Python scan it
+    was added to avoid — that fallback is slower than grep, not faster, so
+    degrading into it on failure just trades one slow path for a much
+    slower one (proteintraitsmech#487 review)."""
+    def _timeout(*a, **k):
+        raise rpt.subprocess.TimeoutExpired(cmd="grep", timeout=180)
+
+    monkeypatch.setattr(rpt.subprocess, "run", _timeout)
+    with pytest.raises(RuntimeError, match="timed out"):
+        rpt._grep_candidates("x", tmp_path)
+
+
+def test_grep_candidates_bad_exit_code_raises(monkeypatch, tmp_path):
+    class _Result:
+        returncode = 2
+        stdout = ""
+        stderr = "grep: permission denied"
+
+    monkeypatch.setattr(rpt.subprocess, "run", lambda *a, **k: _Result())
+    with pytest.raises(RuntimeError, match="failed"):
+        rpt._grep_candidates("x", tmp_path)
+
+
 def test_template_vars_capture_protein_trait_context(tmp_path):
     path = _write_record(
         tmp_path / "structure" / "cavity" / "pocket.yaml",

@@ -54,7 +54,7 @@ just seed-uniprot --accession P25888 --apply  # also: --from-file, --input <flat
 just build-docs                               # rebuild docs/data/records.json + facets.json
 ```
 
-Testing: `tests/` is a stub (`.gitkeep` only). There is no pytest suite yet — `just validate-all` is the current gate.
+Testing: `tests/` has a real pytest suite (`just test`); `just lint` and `just validate-all` are the other gates.
 
 ## Architecture
 

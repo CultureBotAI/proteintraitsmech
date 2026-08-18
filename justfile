@@ -10,7 +10,7 @@ templates_dir := "templates"
 # Provider-based research for one protein trait path, slug, identifier, or label.
 research-protein-trait provider target *args="":
     uv run --extra dev python scripts/research_protein_trait.py \
-      --provider "{{provider}}" --target "{{target}}" \
+      --provider {{quote(provider)}} --target {{quote(target)}} \
       --template {{templates_dir}}/protein_trait_mechanism_research.md \
       --research-dir {{research_dir}} {{args}}
 
@@ -20,18 +20,18 @@ research-providers:
 
 # Raw deep-research-client availability/parameter listing for one provider.
 research-provider provider:
-    uv run --extra dev deep-research-client providers --provider "{{provider}}"
+    uv run --extra dev deep-research-client providers --provider {{quote(provider)}}
 
 # Rank providers for mechanism or family-grounding work.
 deep-research-providers focus="mechanism" *args="":
     uv run --extra dev python scripts/deep_research_provider.py \
-      --config conf/deep_research_provider.yaml --focus {{focus}} {{args}}
+      --config conf/deep_research_provider.yaml --focus {{quote(focus)}} {{args}}
 
 # Show one provider's focus-specific fit, capabilities, and availability.
 deep-research-provider provider focus="mechanism" *args="":
     uv run --extra dev python scripts/deep_research_provider.py \
-      --config conf/deep_research_provider.yaml --provider {{provider}} \
-      --focus {{focus}} {{args}}
+      --config conf/deep_research_provider.yaml --provider {{quote(provider)}} \
+      --focus {{quote(focus)}} {{args}}
 
 default:
     @just --list --unsorted

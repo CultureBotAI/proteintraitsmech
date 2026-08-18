@@ -28,21 +28,35 @@ def load_record(path: Path) -> dict[str, Any]:
     return data
 
 
+_GREP_TIMEOUT_S = 180
+
+
 def _grep_candidates(target: str, traits_dir: Path) -> list[Path] | None:
     """Shell out to `grep -rl` to shortlist files that mention `target` at all,
     instead of reading every file's full text in Python — data/traits/ can hold
     hundreds of thousands of records, and a per-file Python read is far slower
     than one grep invocation. Returns None (caller falls back to a full scan)
-    if grep is unavailable or something about the call looks wrong."""
+    only when grep itself is unavailable — that full scan is slower than grep,
+    not faster, so a grep *timeout* or *failure* must not silently degrade into
+    it; that would trade one slow path for a much slower one. Raise instead."""
     try:
         proc = subprocess.run(
             ["grep", "-rl", "-i", "-F", target, str(traits_dir)],
-            capture_output=True, text=True, timeout=120,
+            capture_output=True, text=True, timeout=_GREP_TIMEOUT_S,
         )
-    except (FileNotFoundError, subprocess.TimeoutExpired):
+    except FileNotFoundError:
         return None
+    except subprocess.TimeoutExpired as e:
+        raise RuntimeError(
+            f"grep prefilter timed out after {e.timeout}s searching {traits_dir} "
+            f"for {target!r}. Pass an explicit record path instead of an "
+            f"identifier/label to skip this lookup."
+        ) from e
     if proc.returncode not in (0, 1):  # 1 == no matches, still a clean run
-        return None
+        raise RuntimeError(
+            f"grep prefilter failed (exit {proc.returncode}) searching "
+            f"{traits_dir} for {target!r}: {proc.stderr.strip()}"
+        )
     return sorted(
         Path(line) for line in proc.stdout.splitlines() if line.endswith(".yaml")
     )
