@@ -71,9 +71,11 @@ invoke the provider:
 just research-protein-trait claude_code <target-yaml-path> --apply
 ```
 
-Capture the report and citations paths printed by the runner. Verify that the
-report is non-empty and its key claims are traceable. Do not retry a failed or
-inconclusive run and do not compensate with speculative annotations.
+Capture the report path printed by the runner (no separate citations sidecar
+is requested — the client's regex-based extractor produces malformed output;
+the report's own References section is the citation source of truth). Verify
+that the report is non-empty and its key claims are traceable. Do not retry a
+failed or inconclusive run and do not compensate with speculative annotations.
 
 ## 3. Curate into ProteinTraitRecord YAML
 
@@ -113,7 +115,7 @@ focused diff.
 ## Completion report
 
 Report the selected question and rationale, provider check, the one research
-command, raw report/citations paths, canonical YAML path, accepted and rejected
+command, the raw report path, canonical YAML path, accepted and rejected
 claims, validation outcomes, and remaining family-versus-protein or mechanistic
 uncertainty.
 

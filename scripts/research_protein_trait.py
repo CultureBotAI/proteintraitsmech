@@ -71,7 +71,14 @@ def _display_path(path: Path) -> str:
         return str(path)
 
 
-def resolve_record(target: str, traits_dir: Path = TRAITS_DIR) -> Path:
+def resolve_record(target: str, traits_dir: Path | None = None) -> Path:
+    # traits_dir default is resolved here, not bound as a def-time default —
+    # a def-time `= TRAITS_DIR` freezes the *value* of the module global at
+    # import time, so a test that monkeypatches `rpt.TRAITS_DIR` afterwards
+    # (or a caller like main() that never passes traits_dir=) would silently
+    # keep scanning the real corpus regardless (proteintraitsmech#487 review).
+    if traits_dir is None:
+        traits_dir = TRAITS_DIR
     candidate = Path(target)
     for path in (candidate, REPO_ROOT / candidate):
         if path.is_file():
@@ -164,13 +171,17 @@ def provider_args(provider: str) -> list[str]:
     return ["--use-cborg"] if provider == "cborg" else ["--provider", provider]
 
 
-def research_env() -> dict[str, str]:
+def research_env(provider: str) -> dict[str, str]:
+    """Build subprocess environment, aliasing Edison / Falcon keys to
+    EDISON_API_KEY. FutureHouse Falcon uses its own key, so that fallback is
+    scoped to provider == "falcon" (matching TraitMech's research_trait.py);
+    the Edison platform key alias applies regardless of provider since it's
+    the SDK's own default credential name, not provider-specific."""
     env = os.environ.copy()
-    if not env.get("EDISON_API_KEY"):
-        for alias in ("EDISON_PLATFORM_API_KEY", "FUTUREHOUSE_API_KEY"):
-            if env.get(alias):
-                env["EDISON_API_KEY"] = env[alias]
-                break
+    if not env.get("EDISON_API_KEY") and env.get("EDISON_PLATFORM_API_KEY"):
+        env["EDISON_API_KEY"] = env["EDISON_PLATFORM_API_KEY"]
+    if provider == "falcon" and not env.get("EDISON_API_KEY") and env.get("FUTUREHOUSE_API_KEY"):
+        env["EDISON_API_KEY"] = env["FUTUREHOUSE_API_KEY"]
     return env
 
 
@@ -178,7 +189,6 @@ def build_command(
     provider: str,
     template: Path,
     output: Path,
-    citations: Path,
     variables: dict[str, str],
     passthrough: list[str],
     client_command: str = "deep-research-client",
@@ -193,10 +203,14 @@ def build_command(
     command.extend(provider_args(provider))
     command.extend(
         [
+            # NO --separate-citations: TraitMech found every one of 353
+            # generated sidecars malformed on this same client version
+            # (broken markdown-link tails, stray trailing commas, duplicate
+            # references, #249) and confirmed the report's own References
+            # section is strictly better. See CultureMech#289 for the
+            # fleet-wide citation-contract follow-up.
             "--output",
             str(output.resolve()),
-            "--separate-citations",
-            str(citations.resolve()),
         ]
     )
     command.extend(passthrough)
@@ -233,13 +247,11 @@ def main(argv: list[str] | None = None) -> int:
     relative = record_path.relative_to(TRAITS_DIR)
     output_dir = args.research_dir / "traits" / relative.parent
     output = output_dir / f"{relative.stem}-deep-research-{provider}.md"
-    citations = output.with_suffix(output.suffix + ".citations.md")
     variables = template_vars(record, record_path)
     command = build_command(
         provider,
         args.template,
         output,
-        citations,
         variables,
         args.passthrough,
         args.client_command,
@@ -249,7 +261,7 @@ def main(argv: list[str] | None = None) -> int:
         print(shlex.join(command))
         return 0
     output_dir.mkdir(parents=True, exist_ok=True)
-    subprocess.run(command, check=True, cwd=REPO_ROOT, env=research_env())
+    subprocess.run(command, check=True, cwd=REPO_ROOT, env=research_env(provider))
     return 0
 
 

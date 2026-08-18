@@ -108,12 +108,14 @@ def test_template_vars_capture_protein_trait_context(tmp_path):
     assert variables["record_path"].endswith("structure/cavity/pocket.yaml")
 
 
-def test_build_command_uses_provider_and_citation_sidecar(tmp_path):
+def test_build_command_uses_provider_and_no_citation_sidecar(tmp_path):
+    """No --separate-citations: TraitMech found every one of 353 generated
+    sidecars malformed on this same client version (#249); the report's own
+    References section is the trustworthy artifact. See CultureMech#289."""
     command = rpt.build_command(
         "asta",
         REPO_ROOT / "templates" / "protein_trait_mechanism_research.md",
         tmp_path / "report.md",
-        tmp_path / "report.md.citations.md",
         {"trait_label": "pocket"},
         ["--param", "top_k=10"],
     )
@@ -126,7 +128,7 @@ def test_build_command_uses_provider_and_citation_sidecar(tmp_path):
     assert ["--provider", "asta"] == command[
         command.index("--provider") : command.index("--provider") + 2
     ]
-    assert "--separate-citations" in command
+    assert "--separate-citations" not in command
     assert command[-2:] == ["--param", "top_k=10"]
 
 
@@ -134,7 +136,18 @@ def test_edison_alias_and_platform_key(monkeypatch):
     assert rpt.canonical_provider("Edison") == "falcon"
     monkeypatch.delenv("EDISON_API_KEY", raising=False)
     monkeypatch.setenv("EDISON_PLATFORM_API_KEY", "test-only")
-    assert rpt.research_env()["EDISON_API_KEY"] == "test-only"
+    assert rpt.research_env("asta")["EDISON_API_KEY"] == "test-only"
+
+
+def test_futurehouse_key_only_aliased_for_falcon(monkeypatch):
+    """Matches TraitMech's research_trait.py: the FUTUREHOUSE_API_KEY
+    fallback is scoped to provider == "falcon"; other providers must not
+    pick up an unrelated credential."""
+    monkeypatch.delenv("EDISON_API_KEY", raising=False)
+    monkeypatch.delenv("EDISON_PLATFORM_API_KEY", raising=False)
+    monkeypatch.setenv("FUTUREHOUSE_API_KEY", "test-only")
+    assert rpt.research_env("falcon")["EDISON_API_KEY"] == "test-only"
+    assert "EDISON_API_KEY" not in rpt.research_env("asta")
 
 
 def test_claude_code_alias_and_space_normalization():
@@ -166,4 +179,27 @@ def test_main_dry_run_does_not_invoke_subprocess(monkeypatch, tmp_path, capsys):
 
     monkeypatch.setattr(rpt.subprocess, "run", _boom)
     rc = rpt.main(["--provider", "falcon", "--target", str(path)])
+    assert rc == 0
+
+
+def test_main_resolves_by_label_against_monkeypatched_traits_dir(monkeypatch, tmp_path):
+    """proteintraitsmech#487 review: resolve_record()'s traits_dir default was
+    bound at def time, so main()'s label/slug lookup silently kept scanning
+    the real corpus even with rpt.TRAITS_DIR monkeypatched. This is the exact
+    scenario that was live-reproduced as broken."""
+    _write_record(
+        tmp_path / "traits" / "structure" / "cavity" / "pocket.yaml",
+        "proteintraitsmech:POCKET", "binding pocket",
+    )
+    monkeypatch.setattr(rpt, "TRAITS_DIR", tmp_path / "traits")
+
+    real_run = rpt.subprocess.run
+
+    def _guarded_run(cmd, *a, **k):
+        if cmd[0] != "grep":  # the resolve_record() prefilter may legitimately shell out
+            raise AssertionError("deep-research-client must not be invoked in dry-run mode")
+        return real_run(cmd, *a, **k)
+
+    monkeypatch.setattr(rpt.subprocess, "run", _guarded_run)
+    rc = rpt.main(["--provider", "falcon", "--target", "binding pocket"])
     assert rc == 0
