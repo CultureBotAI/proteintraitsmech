@@ -29,6 +29,9 @@ on:
       - "pyproject.toml"
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   validate-strict:
     runs-on: ubuntu-latest
@@ -57,7 +60,7 @@ jobs:
           BASE="${{ github.event.pull_request.base.sha }}"
           HEAD="${{ github.event.pull_request.head.sha }}"
           CHANGED=$(git diff --name-only "$BASE" "$HEAD")
-          if echo "$CHANGED" | grep -qE '^(src/proteintraitsmech/schema/proteintraitsmech\.yaml|scripts/validate_strict\.py|scripts/audit_causal_graphs\.py)$'; then
+          if echo "$CHANGED" | grep -qE '^(src/proteintraitsmech/schema/proteintraitsmech\.yaml|scripts/validate_strict\.py|scripts/audit_causal_graphs\.py|pyproject\.toml|\.github/workflows/validate-strict\.yaml)$'; then
             echo "A schema or validator change can affect records outside this PR's diff — running full corpus."
             echo "mode=full" >> "$GITHUB_OUTPUT"
           else

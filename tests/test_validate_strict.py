@@ -24,6 +24,7 @@ sys.path.insert(0, str(REPO_ROOT / "scripts"))
 from validate_strict import (  # noqa: E402
     classify,
     iter_yaml_files,
+    main,
     validate_one,
 )
 
@@ -148,3 +149,49 @@ def test_iter_yaml_files_accepts_yml_file_passed_directly(tmp_path):
     names = {p.name for p in out}
     assert "explicit.yml" in names
     assert "explicit.txt" not in names
+
+
+# ---------------------------------------------------------------- main
+
+
+def test_main_writes_tsv_header_and_returns_zero_when_clean(tmp_path):
+    p = tmp_path / "ok.yaml"
+    p.write_text(_VALID_RECORD)
+    out = tmp_path / "out.tsv"
+    rc = main([str(p), "--out", str(out), "--workers", "1", "--quiet"])
+    assert rc == 0
+    assert out.read_text().splitlines()[0] == "file\tcategory\tdetail\tpath\tmessage"
+
+
+def test_main_returns_one_and_writes_error_row_on_failure(tmp_path):
+    p = tmp_path / "bogus.yaml"
+    p.write_text(_VALID_RECORD + "bogus_field: oops\n")
+    out = tmp_path / "out.tsv"
+    rc = main([str(p), "--out", str(out), "--workers", "1", "--quiet"])
+    assert rc == 1
+    rows = out.read_text().splitlines()
+    assert len(rows) == 2  # header + one ERROR row
+    assert "unexpected_field" in rows[1]
+
+
+def test_main_fail_on_never_still_returns_zero_on_failure(tmp_path):
+    p = tmp_path / "bogus.yaml"
+    p.write_text(_VALID_RECORD + "bogus_field: oops\n")
+    out = tmp_path / "out.tsv"
+    rc = main([str(p), "--out", str(out), "--workers", "1", "--quiet", "--fail-on", "never"])
+    assert rc == 0
+
+
+def test_main_returns_two_when_default_scope_has_no_files(tmp_path, monkeypatch):
+    import validate_strict
+    monkeypatch.setattr(validate_strict, "DEFAULT_ROOTS", [tmp_path / "does_not_exist"])
+    assert main([]) == 2
+
+
+def test_main_returns_zero_when_all_supplied_paths_are_missing(tmp_path):
+    """Deletion-only CI diff: paths were supplied but none exist on disk
+    (e.g. every changed data/traits file in the PR was deleted) — this is
+    not an error (proteintraitsmech#488 review)."""
+    missing = tmp_path / "gone.yaml"
+    rc = main([str(missing), "--out", str(tmp_path / "out.tsv")])
+    assert rc == 0

@@ -168,8 +168,10 @@ def main() -> int:
             p = Path(raw)
             if p.is_dir():
                 collected.extend(sorted(p.rglob("*.yaml")))
-            else:
+            elif p.is_file():
                 collected.append(p)
+            else:
+                print(f"Skipping missing path: {p}", file=sys.stderr)
         paths = sorted(collected)
     else:
         paths = sorted(p for p in TRAITS.rglob("*.yaml"))

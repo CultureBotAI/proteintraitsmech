@@ -153,7 +153,7 @@ def iter_yaml_files(paths: Iterable[Path]) -> list[Path]:
     return out
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("paths", nargs="*", type=Path,
                         help="Files or directories. Defaults to data/traits/.")
@@ -167,13 +167,20 @@ def main() -> int:
                         help="Exit non-zero policy. 'error' (default) exits 1 if any ERROR row was emitted.")
     parser.add_argument("--quiet", action="store_true",
                         help="Suppress per-file progress dots.")
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
 
     roots = args.paths or DEFAULT_ROOTS
     files = iter_yaml_files(roots)
     if args.sample:
         files = files[: args.sample]
     if not files:
+        if args.paths:
+            # Explicit paths were given (e.g. a CI diff) but none exist on disk —
+            # a deletion-only change, not an error. iter_yaml_files already
+            # dropped missing paths silently; distinguish that from "no scope".
+            print("All supplied paths were missing (e.g. deleted files) — nothing to validate.",
+                  file=sys.stderr)
+            return 0
         print("No YAML files found.", file=sys.stderr)
         return 2
 
