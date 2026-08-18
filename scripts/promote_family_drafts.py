@@ -7251,6 +7251,16 @@ for _fam, _name in [("ARO:3005459", "ADC"), ("ARO:3000098", "PDC"),
     FAMILY_SNIPPETS[_fam] = _classc(_name)
 
 
+# The default note on a serine-hydrolase `enables` edge. NAMED, because it was an inline
+# default and `repair_beta_lactam_notes.py` has to write exactly what this emits: two
+# copies of one sentence is how the corpus came to hold "serine β-lactam hydrolysis" on
+# 4,664 records while this file said "beta-lactam" (#466). ASCII deliberately -- aro.obo,
+# the source these notes describe, uses "beta-lactam" 11,293 times and the Greek form
+# twice. Verbatim SNIPPETS quoting the literature keep their β; this is our own prose.
+SERINE_HYDROLYSIS_NOTE = ("The active site carries out the serine beta-lactam hydrolysis "
+                          "mechanism.")
+
+
 def _domfam(ref, snip, note, dom, fold, em, enable_pred, part_note, fold_note, enable_note):
     """A domain-primary family config (non-β-lactamase). dom/fold are
     (CURIE, node-label, node-type, snippet) 4-tuples; fold may be None."""
@@ -7590,8 +7600,7 @@ def promoted_graph_dict(ident: str, label: str, mech: list, drug: list, names: d
             edges.append(_edge(pkey, pt.get("enable_pred", "enables (catalysis)"), "RO:0002327",
                                f"mech{mech.index(em)}", _true_source(cfg["mech"][em], ref),
                                cfg["mech"][em],
-                               pt.get("enable_note", "The active site carries out the serine "
-                                                     "beta-lactam hydrolysis mechanism.")))
+                               pt.get("enable_note", SERINE_HYDROLYSIS_NOTE)))
     # Family-specific mechanism edges. The fixed determinant->mechanism->resistance shape
     # above was written for enzymatic INACTIVATION and cannot express other resistance
     # routes -- target alteration, precursor depletion, efflux -- where the causation runs
