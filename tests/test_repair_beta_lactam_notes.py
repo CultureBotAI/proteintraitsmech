@@ -186,3 +186,85 @@ def test_a_record_with_BOTH_notes_rewrites_only_the_drifted_one():
     assert R.SERINE_HYDROLYSIS_NOTE in out
     assert keep in out, "the β-helix note was rewritten -- the fixer is too broad"
     assert "beta-helix" not in out
+
+
+# --- the finder must be a superset of the fixer in SCOPE, not only in parsing -----------
+
+_TOP_LEVEL_EVIDENCE = ("identifier: ARO:1\ncurator: edison-causal-graphs\n"
+                       "evidence:\n  - reference: ARO:3000187\n"
+                       f"    notes: {R.DRIFTED}\n"
+                       "license: CC0\n")
+
+
+def test_a_drifted_note_under_TOP_LEVEL_evidence_is_seen():
+    """`evidence` is a top-level slot as well as an edge-level one -- 78,667 records carry
+    it, holding 170,577 notes. The first finder walked only causal_graphs -> edges ->
+    evidence while the fixer matched ANY `notes:` line, so a note here gave `want == 0` and
+    the record was silently skipped: the finder narrower than the fixer, in a script whose
+    premise is the opposite."""
+    assert R.find_notes(_TOP_LEVEL_EVIDENCE) == 1
+    out, n, cannot = R.repair_record(_TOP_LEVEL_EVIDENCE)
+    assert (n, cannot) == (1, {}), (n, cannot)
+    assert R.SERINE_HYDROLYSIS_NOTE in out
+
+
+def test_a_note_the_fixer_would_reach_but_the_finder_did_not_is_REFUSED():
+    """`can > want` used to pass silently, rewriting a note the finder never vetted."""
+    assert R.repair_record.__doc__
+    both = ("identifier: ARO:1\n"
+            "causal_graphs:\n- graph_id: resistance\n  edges:\n"
+            "  - subject: determinant\n    object: mech0\n    evidence:\n"
+            "    - reference: ARO:3000187\n"
+            f"      notes: {R.DRIFTED}\n"
+            "evidence:\n  - reference: ARO:3000187\n"
+            f"    notes: {R.DRIFTED}\n"
+            "license: CC0\n")
+    # with the corrected finder both are seen, so this repairs rather than refuses
+    assert R.find_notes(both) == 2
+    out, n, cannot = R.repair_record(both)
+    assert (n, cannot) == (2, {}), (n, cannot)
+    assert R.DRIFTED not in out
+
+
+def test_a_malformed_but_PARSEABLE_record_is_stranded_not_a_traceback():
+    """`causal_graphs:` as a scalar parses fine and then raises AttributeError out of the
+    walk. Uncaught, that aborted an --apply sweep mid-way with records already written and
+    no summary; only YAMLError was treated as unreadable."""
+    for bad in ("identifier: ARO:1\ncausal_graphs: just a string\nlicense: CC0\n",
+                "- a\n- b\n",
+                "identifier: ARO:1\ncausal_graphs:\n- graph_id: g\n  edges: nope\n"):
+        # EXACT, not `in ({}, {"unreadable": 1})`. The loose form passed whether or not the
+        # crash was actually prevented, so it certified nothing: none of these records
+        # carries the note, so the correct answer is "nothing to do" WITHOUT an exception.
+        assert R.find_notes(bad) == 0, bad
+        assert R.repair_record(bad) == (None, 0, {}), bad
+
+
+# --- main()'s refusals, which nothing pinned ---------------------------------------------
+
+def _run(path, *extra) -> subprocess.CompletedProcess:
+    return subprocess.run(
+        [sys.executable, str(REPO / "scripts" / "repair_beta_lactam_notes.py"),
+         "--path", str(path), *extra], capture_output=True, text=True, cwd=REPO)
+
+
+def test_the_CLI_refuses_a_sweep_that_examined_nothing(tmp_path):
+    """#418/#432/#469. Deleting this guard passed all 13 tests -- the guard against
+    certifying nothing was itself uncertified."""
+    (tmp_path / "x.yaml").write_text("identifier: ARO:1\nlicense: CC0\n", encoding="utf-8")
+    out = _run(tmp_path)
+    assert out.returncode == 1, out.stdout
+    assert "examined nothing" in out.stdout, out.stdout
+
+
+def test_the_CLI_exits_1_on_a_stranded_record(tmp_path):
+    """Flipping this `return 1` to `return 0` also passed everything."""
+    (tmp_path / "folded.yaml").write_text(
+        "identifier: ARO:1\ncausal_graphs:\n- graph_id: resistance\n  edges:\n"
+        "  - subject: determinant\n    object: mech0\n    evidence:\n"
+        "    - reference: ARO:3000187\n      notes: >-\n"
+        "        The active site carries out the serine β-lactam hydrolysis\n"
+        "        mechanism.\nlicense: CC0\n", encoding="utf-8")
+    out = _run(tmp_path)
+    assert out.returncode == 1, out.stdout
+    assert "unrewritable" in out.stdout, out.stdout

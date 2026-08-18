@@ -17,8 +17,12 @@ Measured, because "which spelling is right" reads like a style preference and is
   * `aro.obo`, the release these notes describe, uses `beta-lactam` **11,293** times and
     `β-lactam` **twice**.
   * The promoter emits ASCII at all four sites that mention the mechanism.
-  * Our own generated notes, EXCLUDING this drift, run 17,236 ASCII to 112 Greek — and the
-    112 are `Qnr/MfpA right-handed β-helix`, a different string where the Greek is right.
+  * Our own generated notes, EXCLUDING this drift, run 17,236 ASCII to 112 Greek. 111 of
+    those are `Qnr/MfpA right-handed β-helix`, where the Greek is simply right. The 112th
+    is worth naming rather than rounding away, because it is a β-LACTAM note this repair
+    deliberately leaves alone: `Determinant → phenotype; GOB-family MBLs confer broad
+    β-lactam resistance.` It is a different sentence, written by a different config, and
+    changing it is a separate curation decision nobody has made.
 
 β looked like the majority only because the drift itself is 4,664 records.
 
@@ -90,22 +94,64 @@ def _collapse(text: str) -> str:
     return " ".join((text or "").split())
 
 
+def _walk_notes(node):
+    """Every `notes` value anywhere in the document, at any depth.
+
+    TOTAL BY CONSTRUCTION: anything that is not a dict or a list is ignored rather than
+    descended into. That is what makes a malformed-but-parseable record safe -- the first
+    version did `doc.get("causal_graphs")` and indexed whatever came back, so
+    `causal_graphs: just a string` raised AttributeError out of `main()` and aborted an
+    `--apply` sweep mid-way with records already written and no summary. The guard is this
+    function's shape, not the `except` below it, which is why the except is unreachable.
+    """
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if key == "notes" and isinstance(value, str):
+                yield value
+            else:
+                yield from _walk_notes(value)
+    elif isinstance(node, list):
+        for item in node:
+            yield from _walk_notes(item)
+
+
 def find_notes(text: str) -> int:
     """How many notes on this record ARE the drifted sentence -- found by PARSING.
 
-    Independent of `FIX`, and broader: a note PyYAML folds across lines is invisible to a
-    line-anchored regex and visible here. `repair_self_referential_notes` learned this the
-    expensive way -- one pattern serving as both finder and fixer reported 11 unfixable
-    notes as "nothing to do".
+    Independent of `FIX`, and broader in BOTH directions, which took a review to get right.
+
+    Broader in PARSING: a note PyYAML folds across lines is invisible to a line-anchored
+    regex and visible here. That much was in the first version.
+
+    Broader in SCOPE, which was not. The first version walked `causal_graphs -> edges ->
+    evidence` while `FIX` matches any `notes:` line in the file -- and `evidence` is ALSO a
+    top-level slot on ProteinTraitRecord, carried by 78,667 records holding 170,577 notes,
+    3,243 of them under this script's own default path. So the "finder" was narrower than
+    the fixer over a 170k-note surface, in a script whose entire premise is the opposite,
+    and it failed in both directions at once:
+
+      * a drifted note under top-level `evidence:` gave `want == 0`, so the record was
+        SILENTLY SKIPPED -- the exact outcome the docstring promises cannot happen;
+      * a record with one under each gave `want=1, can=2`, and `can < want` let the sweep
+        rewrite a note the finder had never seen or vetted.
+
+    And `test_no_drifted_note_remains_in_the_corpus` calls this function, so the corpus
+    certification inherited the blind spot -- #462 and #364's shape, reproduced inside the
+    fix for it. Walking every `notes` key at any depth is the only version that is
+    genuinely a superset of a whole-file regex.
     """
     try:
         doc = yaml.safe_load(text) or {}
     except yaml.YAMLError:
         return -1                       # unreadable; the caller strands it
-    return sum(1 for graph in doc.get("causal_graphs") or []
-               for edge in graph.get("edges") or []
-               for ev in edge.get("evidence") or []
-               if _collapse(ev.get("notes")) == DRIFTED)
+    except Exception:                   # pragma: no cover - not reachable on this corpus
+        return -1
+    try:
+        return sum(1 for note in _walk_notes(doc) if _collapse(note) == DRIFTED)
+    except Exception:                   # pragma: no cover - `_walk_notes` is total
+        # Belt and braces only. If this ever fires, a record shaped in some way the walk
+        # cannot follow is UNREADABLE rather than clean -- never silently 0.
+        return -1
 
 
 def repair_record(text: str) -> tuple[str | None, int, dict[str, int]]:
@@ -121,10 +167,15 @@ def repair_record(text: str) -> tuple[str | None, int, dict[str, int]]:
     can = len(FIX.findall(text))
     if not want:
         return None, 0, {}
-    if can < want:
-        # The finder saw a note the rewrite cannot address -- folded, or on a line shape
-        # this does not match. Reported, never skipped.
-        return None, 0, {"unrewritable": want - can}
+    if can != want:
+        # BOTH directions are a refusal. `can < want` is the finder seeing a note the
+        # rewrite cannot address -- folded, or on a line shape this does not match.
+        # `can > want` is the rewrite seeing one the finder did not, which after the scope
+        # fix should be impossible: the finder walks every `notes` key at any depth and the
+        # fixer matches a subset of those lines. Impossible is not the same as unchecked,
+        # and the version of this script that shipped to review had exactly that hole.
+        cause = "unrewritable" if can < want else "unvetted"
+        return None, 0, {cause: abs(want - can)}
     out = FIX.sub(lambda m: f"{m.group('indent')}notes: {SERINE_HYDROLYSIS_NOTE}", text)
     return out, can, {}
 
@@ -183,7 +234,9 @@ def main() -> int:
         print(f"\nFAIL: {len(stranded):,} record(s) carry the drifted note in a form this "
               f"cannot rewrite. They are unexamined, not clean.")
         print("  unrewritable  the note is folded or otherwise not a single-line scalar")
-        print("  unreadable    the record does not parse at all")
+        print("  unvetted      the rewrite matches more notes than the finder saw")
+        print("  unreadable    the record does not parse, or is shaped so the walk cannot "
+              "follow it")
         return 1
     if not args.apply and not limited:
         print("\ndry run -- nothing written. Re-run with --apply.")
