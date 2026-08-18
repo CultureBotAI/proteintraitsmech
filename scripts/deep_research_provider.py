@@ -304,6 +304,23 @@ def load_config(path: Path) -> dict[str, Any]:
                 raise ValueError(
                     f"Stage {focus_name}.{stage_name}.capabilities must be a mapping"
                 )
+        adjustments = focus.get("provider_adjustments")
+        if adjustments is not None:
+            if not isinstance(adjustments, dict):
+                raise ValueError(
+                    f"Focus {focus_name!r}.provider_adjustments must be a mapping"
+                )
+            canonical = {}
+            for raw_name, value in adjustments.items():
+                name = canonical_provider(str(raw_name))
+                if name not in PROVIDERS:
+                    raise ValueError(
+                        f"Focus {focus_name!r}.provider_adjustments names unknown "
+                        f"provider {raw_name!r} (resolved to {name!r}); "
+                        f"known providers: {', '.join(sorted(PROVIDERS))}"
+                    )
+                canonical[name] = value
+            focus["provider_adjustments"] = canonical
     return data
 
 

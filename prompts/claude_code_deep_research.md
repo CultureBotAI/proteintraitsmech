@@ -1,5 +1,8 @@
 # Claude Code task: one ProteinTraitsMech deep-research curation
 
+**Use:** hand to the Claude Code agent working in this repository to research and
+curate one protein-trait record end to end.
+
 Work from the ProteinTraitsMech repository root. Read `CLAUDE.md`, any applicable
 `AGENTS.md`, the LinkML schema, and the selected protein-trait record before
 editing.
@@ -60,10 +63,12 @@ Run:
 just deep-research-provider claude_code mechanism
 ```
 
-If unavailable, stop; do not switch providers. Otherwise run exactly once:
+If unavailable, stop; do not switch providers. Otherwise run exactly once —
+`research-protein-trait` is dry-run by default, so pass `--apply` to actually
+invoke the provider:
 
 ```bash
-just research-protein-trait claude_code <target-yaml-path>
+just research-protein-trait claude_code <target-yaml-path> --apply
 ```
 
 Capture the report and citations paths printed by the runner. Verify that the

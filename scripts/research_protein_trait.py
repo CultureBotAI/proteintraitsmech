@@ -18,7 +18,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 DEFAULT_TEMPLATE = REPO_ROOT / "templates" / "protein_trait_mechanism_research.md"
 DEFAULT_RESEARCH_DIR = REPO_ROOT / "research"
-PROVIDER_ALIASES = {"edison": "falcon", "futurehouse": "falcon"}
+PROVIDER_ALIASES = {"edison": "falcon", "futurehouse": "falcon", "claude-code": "claude_code"}
 
 
 def load_record(path: Path) -> dict[str, Any]:
@@ -28,30 +28,61 @@ def load_record(path: Path) -> dict[str, Any]:
     return data
 
 
-def resolve_record(target: str) -> Path:
+def _grep_candidates(target: str, traits_dir: Path) -> list[Path] | None:
+    """Shell out to `grep -rl` to shortlist files that mention `target` at all,
+    instead of reading every file's full text in Python — data/traits/ can hold
+    hundreds of thousands of records, and a per-file Python read is far slower
+    than one grep invocation. Returns None (caller falls back to a full scan)
+    if grep is unavailable or something about the call looks wrong."""
+    try:
+        proc = subprocess.run(
+            ["grep", "-rl", "-i", "-F", target, str(traits_dir)],
+            capture_output=True, text=True, timeout=120,
+        )
+    except (FileNotFoundError, subprocess.TimeoutExpired):
+        return None
+    if proc.returncode not in (0, 1):  # 1 == no matches, still a clean run
+        return None
+    return sorted(
+        Path(line) for line in proc.stdout.splitlines() if line.endswith(".yaml")
+    )
+
+
+def _display_path(path: Path) -> str:
+    """Repo-relative path for messages, falling back to the raw path when
+    `path` isn't under REPO_ROOT (e.g. a synthetic traits_dir in a test)."""
+    try:
+        return str(path.relative_to(REPO_ROOT))
+    except ValueError:
+        return str(path)
+
+
+def resolve_record(target: str, traits_dir: Path = TRAITS_DIR) -> Path:
     candidate = Path(target)
     for path in (candidate, REPO_ROOT / candidate):
         if path.is_file():
             return path.resolve()
 
-    files = sorted(TRAITS_DIR.rglob("*.yaml"))
+    files = sorted(traits_dir.rglob("*.yaml"))
     stem_matches = [path for path in files if path.stem.casefold() == target.casefold()]
     if len(stem_matches) == 1:
         return stem_matches[0]
     if len(stem_matches) > 1:
-        choices = ", ".join(
-            str(path.relative_to(REPO_ROOT)) for path in stem_matches[:20]
-        )
+        choices = ", ".join(_display_path(path) for path in stem_matches[:20])
         raise ValueError(
             f"Ambiguous protein trait slug {target!r}: {choices}; pass a path"
         )
 
+    candidates = _grep_candidates(target, traits_dir)
+    if candidates is None:
+        candidates = files
+
     field_matches = []
-    for path in files:
-        text = path.read_text(encoding="utf-8")
-        if target.casefold() not in text.casefold():
+    for path in candidates:
+        try:
+            record = load_record(path)
+        except (yaml.YAMLError, ValueError):
             continue
-        record = load_record(path)
         if any(
             str(record.get(field, "")).casefold() == target.casefold()
             for field in ("identifier", "label")
@@ -60,14 +91,12 @@ def resolve_record(target: str) -> Path:
     if len(field_matches) == 1:
         return field_matches[0]
     if len(field_matches) > 1:
-        choices = ", ".join(
-            str(path.relative_to(REPO_ROOT)) for path in field_matches[:20]
-        )
+        choices = ", ".join(_display_path(path) for path in field_matches[:20])
         raise ValueError(
             f"Ambiguous protein trait target {target!r}: {choices}; pass a path"
         )
     raise FileNotFoundError(
-        f"Protein trait target not found under {TRAITS_DIR}: {target}"
+        f"Protein trait target not found under {traits_dir}: {target}"
     )
 
 
@@ -91,7 +120,7 @@ def template_vars(record: dict[str, Any], path: Path) -> dict[str, str]:
                 f"{len(graph.get('nodes') or [])} nodes, {len(graph.get('edges') or [])} edges"
             )
     return {
-        "record_path": str(path.relative_to(REPO_ROOT)),
+        "record_path": _display_path(path),
         "trait_identifier": str(record.get("identifier", "")),
         "trait_label": str(record.get("label", path.stem)),
         "trait_axis": str(record.get("trait_axis", "")),
@@ -113,8 +142,8 @@ def template_vars(record: dict[str, Any], path: Path) -> dict[str, str]:
 
 
 def canonical_provider(provider: str) -> str:
-    key = provider.casefold()
-    return PROVIDER_ALIASES.get(key, key)
+    key = provider.strip().casefold().replace(" ", "_")
+    return PROVIDER_ALIASES.get(provider.strip().casefold(), key)
 
 
 def provider_args(provider: str) -> list[str]:
@@ -169,7 +198,14 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--template", type=Path, default=DEFAULT_TEMPLATE)
     parser.add_argument("--research-dir", type=Path, default=DEFAULT_RESEARCH_DIR)
     parser.add_argument("--client-command", default="deep-research-client")
-    parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--dry-run", dest="dry_run", action="store_true", default=True,
+        help="Print the command instead of running it (default).",
+    )
+    parser.add_argument(
+        "--apply", dest="dry_run", action="store_false",
+        help="Actually invoke the provider — a live, possibly billed network call.",
+    )
     args, passthrough = parser.parse_known_args(argv)
     args.passthrough = passthrough
     return args

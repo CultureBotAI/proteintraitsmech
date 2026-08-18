@@ -388,8 +388,13 @@ overlap, and mapping-product provenance.
 just deep-research-providers
 just deep-research-providers family_grounding
 just deep-research-provider claude_code mechanism
-just research-protein-trait falcon data/traits/structure/cavity/pocket.yaml --dry-run
+just research-protein-trait falcon data/traits/structure/cavity/pocket.yaml
+just research-protein-trait falcon data/traits/structure/cavity/pocket.yaml --apply
 ```
+
+`research-protein-trait` is **dry-run by default** — it prints the resolved
+`deep-research-client` command instead of running it. Pass `--apply` to
+actually invoke the provider; that is a live, possibly billed network call.
 
 Reports are written below `research/traits/`, preserving the record's directory
 layout. They are evidence proposals only: verify accessions, residue numbering,

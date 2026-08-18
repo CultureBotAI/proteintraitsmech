@@ -10,7 +10,7 @@ templates_dir := "templates"
 # Provider-based research for one protein trait path, slug, identifier, or label.
 research-protein-trait provider target *args="":
     uv run --extra dev python scripts/research_protein_trait.py \
-      --provider {{provider}} --target {{target}} \
+      --provider "{{provider}}" --target "{{target}}" \
       --template {{templates_dir}}/protein_trait_mechanism_research.md \
       --research-dir {{research_dir}} {{args}}
 
@@ -18,8 +18,9 @@ research-protein-trait provider target *args="":
 research-providers:
     uv run --extra dev deep-research-client providers
 
+# Raw deep-research-client availability/parameter listing for one provider.
 research-provider provider:
-    uv run --extra dev deep-research-client providers --provider {{provider}}
+    uv run --extra dev deep-research-client providers --provider "{{provider}}"
 
 # Rank providers for mechanism or family-grounding work.
 deep-research-providers focus="mechanism" *args="":
