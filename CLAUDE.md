@@ -18,6 +18,8 @@ no wrapper, on purpose.
   dependency check, branch, work, gates, PR, adversarial review, issues from that review,
   triage, merge, delete the branch. Feed it to the native `/goal`.
 - **`prompts/schema-review.md`** — schema review pass.
+- **`prompts/claude_code_deep_research.md`** — research and curate one protein-trait
+  record end to end using the `claude_code` deep-research provider.
 - **`prompts/has-graph-hardening.md`** — ✅ **done, do not run** (#131). Kept as a worked
   example of scoping a run across issues that cannot be separate PRs.
 - **`prompts/loop-code-and-docs.md`** — scoped run for #94, #125, #117. Code and docs,
@@ -52,7 +54,7 @@ just seed-uniprot --accession P25888 --apply  # also: --from-file, --input <flat
 just build-docs                               # rebuild docs/data/records.json + facets.json
 ```
 
-Testing: `tests/` is a stub (`.gitkeep` only). There is no pytest suite yet — `just validate-all` is the current gate.
+Testing: `tests/` has a real pytest suite (`just test`); `just lint` and `just validate-all` are the other gates.
 
 ## Architecture
 

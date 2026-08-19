@@ -35,9 +35,15 @@ src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py
 reports/instance_validation_failures.tsv
 
 # Deep-research: track the markdown reports (deliverables), ignore any bulk
-# data artifacts dropped alongside them.
+# data artifacts dropped alongside them. `!research/*.md` only un-ignores
+# direct children of research/ — it cannot reach into an excluded
+# subdirectory (a git limitation: a file under an ignored parent is not
+# re-included by a later negation unless the parent itself is un-ignored
+# too). research/traits/ is where research_protein_trait.py's reports land,
+# nested by record path, so it needs its own explicit un-ignore (#487).
 research/*
 !research/*.md
+!research/traits/
 reports/robot/
 
 # Vendored source releases — regenerable via `just fetch-*` recipes

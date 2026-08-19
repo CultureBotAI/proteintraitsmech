@@ -376,6 +376,36 @@ Each record carries `identifier` → `proteintraitsmech:UNIPROTKB_<ACC>_<TYPE>_<
 
 All seeded records land with `mapping_status: SEEDED`; curator review flips them to `REVIEWED` and adds evidence / causal graphs.
 
+## Deep Research
+
+ProteinTraitsMech now has the same provider-based research surface as public
+DisMech, specialized for sequence/structure/function evidence. `mechanism`
+targets residues, structural features, reaction chemistry, cofactors, exemplar
+proteins, and causal edges; `family_grounding` targets hierarchy, equivalence,
+overlap, and mapping-product provenance.
+
+```bash
+just deep-research-providers
+just deep-research-providers family_grounding
+just deep-research-provider claude_code mechanism
+just research-protein-trait falcon data/traits/structure/cavity/pocket.yaml
+just research-protein-trait falcon data/traits/structure/cavity/pocket.yaml --apply
+```
+
+`research-protein-trait` is **dry-run by default** — it prints the resolved
+`deep-research-client` command instead of running it. Pass `--apply` to
+actually invoke the provider; that is a live, possibly billed network call.
+
+`deep-research-provider(s)` rank/inspect providers against this Mech's own
+`conf/deep_research_provider.yaml` profile (mechanism / family_grounding
+scoring). `research-provider(s)` (no `deep-` prefix) is the unfiltered
+`deep-research-client providers` passthrough — raw upstream availability and
+parameters, with no Mech-specific scoring applied.
+
+Reports are written below `research/traits/`, preserving the record's directory
+layout. They are evidence proposals only: verify accessions, residue numbering,
+protein/taxon scope, chemical participants, and every proposed causal edge.
+
 ## License
 
 CC0-1.0 — Public Domain Dedication.
