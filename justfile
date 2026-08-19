@@ -1,6 +1,13 @@
 # ProteinTraitsMech - protein sequence & structure trait knowledge base
 
 set dotenv-load := true
+# Needed by the shebang recipes that forward user arguments verbatim (new-history).
+# `{{args}}` splices the raw string into the shell, so a summary containing parentheses
+# or quotes is re-parsed as shell syntax -- `--summary "a (b)"` is a syntax error, which
+# is exactly how the first version of new-history failed. `"$@"` preserves argv.
+# Verified safe for the other 156 recipes: none reads a shell positional parameter (the
+# only `$3` in this file is inside a single-quoted awk program).
+set positional-arguments := true
 
 # ============== Deep Research ==============
 
@@ -68,6 +75,73 @@ validate-strict *args:
 # CLI's name directly.
 validate-linkml *args:
     @just validate-strict {{args}}
+
+# ============== Curation history (#484) ==============
+
+claw_src := env_var_or_default("CLAW_SRC", "../culturebotai-claw/src")
+
+# Scaffold an append-only history record. NEVER hand-write one: the filename carries a
+# collision-free shortid, and the skeleton is schema-valid by construction.
+#   just new-history --kind record --slug aak-1-aro3006863 --event EDIT \
+#       --outcome changed --summary "..."
+#
+# Claw's scaffolder is PREFERRED when a checkout is available, so the canonical shape
+# keeps being produced across the fleet; scripts/new_history_record.py is the fallback.
+# Both write against the same vendored schema that validate-history and CI check.
+#
+# Scaffold an append-only curation-history record
+new-history *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ -d "{{claw_src}}/kg_microbe_history" ]; then
+      PYTHONPATH="{{claw_src}}" uv run python -m kg_microbe_history new "$@"
+    else
+      echo "note: no claw checkout at {{claw_src}}; using the local scaffolder." >&2
+      uv run python scripts/new_history_record.py "$@"
+    fi
+
+# Validate history records against the vendored schema. PRESENCE is advisory (see
+# history/README.md); VALIDITY is not -- a record that exists and is malformed fails here
+# and in CI.
+#
+# Validate curation-history records (validity hard, presence advisory)
+validate-history *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    # `"${1:-history}"`, and NOT a just interpolation of a `target` parameter. An
+    # interpolation splices its argument into the shell as raw text, so
+    # `just validate-history 'x"; echo pwned; :"'` executed it, and `his$HOME` silently
+    # expanded. The `new-history` recipe above carries a comment about exactly that
+    # hazard -- and this recipe still had the bug, which is how a lesson gets written
+    # down and not applied one screen later.
+    # (The comment cannot name the old form literally: doubled braces are interpolation
+    # syntax even inside a comment, which is its own small demonstration of the point.)
+    target="${1:-history}"
+    if [ ! -e "$target" ]; then
+      echo "validate-history: '$target' does not exist." >&2
+      exit 2
+    fi
+    if [ -d "$target" ]; then
+      if [ -z "$(find "$target" -name '*.yaml' -print -quit)" ]; then
+        echo "No history records under '$target'."
+        exit 0
+      fi
+      find "$target" -name '*.yaml' -print0 \
+        | xargs -0 uv run linkml-validate \
+            --schema src/proteintraitsmech/schema/history.yaml --target-class HistoryRecord
+    else
+      uv run linkml-validate \
+        --schema src/proteintraitsmech/schema/history.yaml --target-class HistoryRecord "$target"
+    fi
+
+# Drift check for the files vendored BYTE-IDENTICAL from the canonical hub
+# (CultureBotAI/CultureMech at scripts/.vendored_canon_ref). A local edit to any of them
+# fails here -- which is the point: the fleet's shared modules must not fork silently.
+# curl + diff only, so it runs as a fast blocking CI job with no Python dependency.
+#
+# Fail if a byte-identical vendored file has drifted from the hub
+check-vendored-sync:
+    bash scripts/check_vendored_sync.sh
 
 # Programmatic schema-quality probes
 audit-schema:

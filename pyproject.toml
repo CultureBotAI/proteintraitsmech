@@ -62,3 +62,12 @@ packages = ["src/proteintraitsmech"]
 [tool.ruff]
 line-length = 100
 target-version = "py310"
+
+[tool.ruff.lint.per-file-ignores]
+# Vendored BYTE-IDENTICAL from the canonical hub (CultureBotAI/CultureMech) and
+# guarded by `just check-vendored-sync` — any local edit fails that gate. The two
+# E741 `l` findings are upstream's to fix, not ours: linting them here only tempts
+# a drift-inducing edit, which is the one thing the vendoring contract forbids.
+# Scoped to E741 rather than excluding the file, so every other rule still sees it.
+# Same resolution TraitMech reached (#312 there).
+"scripts/validate_id_label_correspondence.py" = ["E741"]

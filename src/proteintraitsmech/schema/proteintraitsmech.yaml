@@ -94,6 +94,12 @@ default_range: string
 
 imports:
   - linkml:types
+  # Shared, byte-identical Mech module: Discussion (knowledge gaps) + Dataset.
+  # Vendored from CultureBotAI/CultureMech at the commit in
+  # `scripts/.vendored_canon_ref` and guarded by `just check-vendored-sync`.
+  # DO NOT EDIT THE LOCAL COPY -- the drift check compares it against the hub and
+  # a local fix is exactly what it exists to catch (#484).
+  - mech_shared
 
 # ================================================================
 # ROOT CLASS — one YAML file per ProteinTraitRecord
@@ -386,6 +392,23 @@ classes:
         multivalued: true
         inlined_as_list: true
         range: CausalGraph
+      discussions:
+        description: >-
+          Open questions, knowledge gaps, controversies and curation todos
+          attached to this trait (shared Discussion supertype). `attaches_to`
+          anchors point into this record's own sections -- e.g.
+          `causal_graphs#<graph_id>` or `evidence#<n>` -- so a gap says WHERE it
+          bites rather than floating at record level.
+        multivalued: true
+        inlined_as_list: true
+        range: Discussion
+      datasets:
+        description: >-
+          Public datasets (omics / sequence / structure / phenotype) relevant to
+          this trait.
+        multivalued: true
+        inlined_as_list: true
+        range: Dataset
 
       license:
         description: >-
