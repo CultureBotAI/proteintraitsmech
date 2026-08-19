@@ -998,6 +998,20 @@ classes:
         range: string
       changes:
         range: string
+      emitted_hash:
+        description: >-
+          sha256 of the content this event emitted, when the event was written by a
+          GENERATOR rather than a person. It answers one question a re-run cannot
+          otherwise answer: is what is on disk still what I wrote, or has someone
+          improved it since? Without it, "the record no longer matches my config"
+          conflates a curator's edit with a change to the config itself, and a
+          re-promotion silently destroys the first while legitimately performing the
+          second (#204).
+
+          Its own slot rather than a marker inside `changes`, because `changes` is prose
+          a curator may write, and a fingerprint that a human edit can overwrite is not a
+          fingerprint.
+        range: string
       llm_assisted:
         range: boolean
 

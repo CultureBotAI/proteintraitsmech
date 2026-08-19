@@ -22,6 +22,7 @@ snippet-complete afterwards. Idempotent (skips records already carrying a
 from __future__ import annotations
 
 import argparse
+import hashlib
 import re
 import sys
 
@@ -8116,18 +8117,47 @@ def _edge(subject: str, predicate: str, predicate_id: str, obj: str, ref: str, s
 LEGACY_PROMOTION = "2026-07-21T00:00:00Z"
 
 
-def curation_entry(cfg: dict) -> dict:
-    return {
+def graph_fingerprint(graph: dict) -> str:
+    """sha256 of a graph, over its canonical dump rather than its repr (#204).
+
+    `_dump` is what actually reaches disk, so hashing it means the fingerprint answers the
+    question the caller has -- "is the file still what I wrote" -- and not a question about
+    Python object identity. Key order is fixed by `sort_keys=False` on a dict this module
+    builds in a fixed order, so the same graph hashes the same across runs.
+    """
+    return hashlib.sha256("\n".join(_dump(graph)).encode("utf-8")).hexdigest()
+
+
+def curation_entry(cfg: dict, graph: dict | None = None) -> dict:
+    entry = {
         "timestamp": cfg.get("curated", LEGACY_PROMOTION),
         "curator": "edison-causal-graphs",
         "action": ("Promoted auto-draft to curated causal_graphs with family verbatim "
                    "snippets; SEEDED -> REVIEWED"),
         "llm_assisted": True,
     }
+    if graph is not None:
+        entry["emitted_hash"] = graph_fingerprint(graph)
+    return entry
 
 
-def curation_event(cfg: dict) -> list[str]:
-    return _dump({"curation_history": [curation_entry(cfg)]})
+def curation_event(cfg: dict, graph: dict | None = None) -> list[str]:
+    return _dump({"curation_history": [curation_entry(cfg, graph)]})
+
+
+def promoter_wrote_this(doc: dict, graph_id: str = "resistance") -> str | None:
+    """The `emitted_hash` this promoter recorded for `graph_id`, or None if it never did.
+
+    None means "cannot tell", NOT "unedited" -- every record promoted before #204 lacks the
+    field, and the caller has to fall back to a weaker test for those rather than assume
+    the permissive answer.
+    """
+    for event in reversed(doc.get("curation_history") or []):
+        if not isinstance(event, dict):
+            continue
+        if event.get("curator") == "edison-causal-graphs" and event.get("emitted_hash"):
+            return str(event["emitted_hash"])
+    return None
 
 
 
@@ -8446,6 +8476,10 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--family", help="family ARO id (must be in FAMILY_SNIPPETS)")
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--repromote-edited", action="store_true",
+                    help="overwrite a promoted graph that has been EDITED since (#204). "
+                         "The default refuses and lists them; this is for a curator who "
+                         "has read the list and decided the config wins.")
     ap.add_argument("--drafts-only", action="store_true",
                     help="accepted for compatibility and now the DEFAULT; see --repromote")
     ap.add_argument("--force-repromote", action="store_true",
@@ -8542,6 +8576,7 @@ def main() -> int:
             return 1
 
     promoted = repromoted = skip_done = skip_nodraft = skip_excluded = 0
+    skip_edited = 0
     skip_unreadable = 0
     reached: set[str] = set()
     for pth in sorted(ARO_DIR.glob("*.yaml")):
@@ -8641,11 +8676,66 @@ def main() -> int:
         # one -- caught in review because the canary had exercised the RE-promote path
         # (where the graph is already `resistance`) and not the primary promote-a-draft
         # path, which is the one that runs 1,133 more times.
+        # DOES THIS RECORD STILL HOLD WHAT WE WROTE? (#204, the half #205 left.)
+        #
+        # #205 stopped re-promotion destroying OTHER graphs and the curation_history by
+        # merging instead of splicing. It did not address the case the issue calls the one
+        # that loses work: an edit to the promoter's OWN `resistance` graph, which is
+        # replaced wholesale on every --repromote.
+        #
+        # `is_ours` cannot see it. It establishes that this promoter once wrote a graph
+        # here, not that the current content is still that graph -- and a curator who
+        # improves a promoted graph leaves both its markers in place.
+        #
+        # TWO TESTS, because a fingerprint only protects records written after it exists:
+        #
+        #   * emitted_hash present -> exact. Still hashes the same: ours, untouched,
+        #     overwriting is safe. Differs: SOMEONE EDITED IT. Refuse.
+        #   * emitted_hash absent (every record promoted before this change) -> fall back
+        #     to "does the graph still equal what this config emits today". If yes, the
+        #     rewrite is a no-op and safe whatever its history. If no, an edit and a config
+        #     change are INDISTINGUISHABLE from the record alone -- which is exactly why
+        #     the issue rejected reproduce-and-compare as a complete answer -- so refuse
+        #     and say so rather than guess.
+        #
+        # THE TRIGGER IS NOT LATENT, and #204 says it is. That issue looked for records
+        # with more than one GRAPH and found none. The real shape is more than one CONFIG
+        # claiming one graph: 5,433 of 7,211 promoter-owned records are claimed by two or
+        # three family configs (#465 measured this), and whichever ran last owns what is
+        # on disk.
+        #
+        # Measured on ARO:3000076 (class C beta-lactamase) alone: a --repromote would have
+        # rewritten 1,599 records, and 1,346 of them hold a graph this config did not
+        # write. Every one of those 1,346 reproduces from a DIFFERENT claiming config --
+        # 0 are in #408's drifted set -- so they are not stale, they belong to a more
+        # specific family, and the broader family was about to overwrite them silently.
+        # That is "destroys what it did not write", at 84% of one family.
+        #
+        # So the fallback refusing them is the point, not collateral. 253 records in that
+        # family still re-promote, which is what the flag is for.
+        if not is_draft:
+            existing = next((g for g in (doc.get("causal_graphs") or [])
+                             if g.get("graph_id") == "resistance"), None)
+            recorded = promoter_wrote_this(doc)
+            if existing is not None:
+                if recorded is not None:
+                    untouched = graph_fingerprint(existing) == recorded
+                    why = "edited since this promoter wrote it"
+                else:
+                    untouched = existing == graph
+                    why = ("no emitted_hash, and its graph is not what this config emits "
+                           "-- an edit and a config change cannot be told apart here")
+                if not untouched and not args.repromote_edited:
+                    print(f"  REFUSED {ident}: {why}. Re-run with --repromote-edited to "
+                          f"overwrite it anyway.")
+                    skip_edited += 1
+                    continue
+
         graphs = [g for g in (doc.get("causal_graphs") or [])
                   if g.get("graph_id") not in OWNED_GRAPH_IDS]
         graphs.append(graph)
         history = list(doc.get("curation_history") or [])
-        event = curation_entry(record_cfg)
+        event = curation_entry(record_cfg, graph)
         if event not in history:
             history.append(event)
         new = RIO.replace_block(text, "causal_graphs", "\n".join(_dump({"causal_graphs": graphs})))
@@ -8668,6 +8758,12 @@ def main() -> int:
     print(f"family {args.family} ({fam_name}): {promoted:,} records written "
           f"({fresh:,} draft{'' if fresh == 1 else 's'} promoted to REVIEWED, "
           f"{repromoted:,} already-curated re-promoted)")
+    if skip_edited:
+        # Its own line, and NOT folded into the skip counts. "Already curated" means there
+        # was nothing to do; this means work would have been DESTROYED. Averaging the two
+        # into one number is the conflation #204 is about.
+        print(f"  REFUSED (edited since promotion, or unverifiable): {skip_edited:,} — "
+              f"listed above. Nothing was written for these.")
     print(f"  skipped (already curated): {skip_done:,} | skipped (no draft): {skip_nodraft:,}"
           f" | skipped (excluded by config): {skip_excluded:,}"
           f" | skipped (unreadable): {skip_unreadable:,}")
