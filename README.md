@@ -87,7 +87,7 @@ merge these; they answer different questions.
 1. **Seed** — import candidate traits from an authoritative resource (Pfam / InterPro / PROSITE / CATH / SCOP / MEROPS). Seeded records land with `mapping_status: SEEDED` and axis + category inferred from the source.
 2. **Curate** — edit `data/traits/<axis>/<category>/<slug>.yaml` directly; set `mapping_status: REVIEWED`, append a `CurationEvent`, attach `EvidenceItem` blocks with PMID / DOI + verbatim snippet.
 3. **Add causal graphs** — attach `causal_graphs` when the trait has source-backed mechanism structure (e.g. "this active-site residue coordinates the substrate carbonyl"). Every `CausalEdge` must carry edge-level `evidence`; prefer grounded CURIEs for nodes and predicates (RO for predicates; PR / GO / CHEBI / MOD / HP / MONDO for nodes).
-4. **Validate** — `just validate-all` invokes `linkml-validate` in batches over every record, reporting per-file failures with the reference-CLI diagnostics. Scope to a subset with a path or glob (`just validate-all data/traits/sequence/motif`).
+4. **Validate** — `just validate-all` runs the in-process closed-mode validator (`scripts/validate_strict.py`) over every record, rejecting unknown top-level and nested fields as well as the usual required/pattern/enum checks, and writes per-file failures to `reports/instance_validation_failures.tsv`. Scope to a subset with a path or glob (`just validate-all data/traits/sequence/motif`).
 
 ### What `--force` does and does not overwrite
 

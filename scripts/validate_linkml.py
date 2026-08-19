@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Validate every ProteinTraitRecord YAML by invoking the
+"""[LEGACY / REFERENCE ONLY] Not the CI gate and not what `just validate-all`
+runs (see scripts/validate_strict.py for that, #485). This is `linkml-validate`
+in its default OPEN mode, which silently accepts unknown top-level and nested
+fields — kept only for anyone who wants the reference-CLI diagnostics.
+
+Validate every ProteinTraitRecord YAML by invoking the
 `linkml-validate` CLI. Files are batched (default 200 per invocation)
 so 18K records finish in ~1-2 minutes instead of ~4h at one subprocess
 per file. When a batch fails, the batch is re-run one file at a time to
