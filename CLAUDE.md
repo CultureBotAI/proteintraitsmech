@@ -52,11 +52,18 @@ just seed-lsf --apply
 just seed-uniprot --accession P25888 --apply  # also: --from-file, --input <flat file>
 
 just build-docs                               # rebuild docs/data/records.json + facets.json
+
+# Shared Mech foundation (#484) — see docs/fleet-parity.md
+just check-vendored-sync                      # byte-identity of vendored files vs the hub
+just new-history --kind record --slug <slug> --event EDIT --outcome changed --summary "…"
+just validate-history                         # validity is HARD; presence is advisory
 ```
 
 Testing: `tests/` has a real pytest suite (`just test`); `just lint` and `just validate-all` are the other gates.
 
 ## Architecture
+
+**Two of the schema files are NOT ours to edit.** `mech_shared.yaml` (Discussion + Dataset) and `history.yaml` are vendored byte-identical from `CultureBotAI/CultureMech` at the commit in `scripts/.vendored_canon_ref`, shared across the Mech fleet. `just check-vendored-sync` diffs them against the hub and CI blocks on it — a local "fix" to one of them is the exact failure that gate exists to catch. Change them upstream and re-vendor. Same for `scripts/validate_id_label_correspondence.py`, `scripts/chem_formula.py` and the three `tests/test_id_label_*.py`.
 
 **Schema-first.** The authoritative artifact is `src/proteintraitsmech/schema/proteintraitsmech.yaml` (LinkML). Everything else — dataclasses, validators, seeders, docs — is derived from or checked against it. When schema and data disagree, the schema wins; update seeders and re-seed rather than hand-patching YAMLs to match new rules.
 

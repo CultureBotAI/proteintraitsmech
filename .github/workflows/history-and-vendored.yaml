@@ -1,0 +1,42 @@
+# Two cheap blocking gates added with the shared Mech foundation (#484).
+#
+# `vendored-sync` is curl + diff only — no Python, no uv — so it finishes in seconds
+# and can fail fast. It exists because the shared LinkML module and the id-label
+# validator are vendored BYTE-IDENTICAL across the fleet: the failure it prevents is a
+# well-meant local fix that silently forks a module four other repos depend on.
+#
+# `validate-history` enforces the split the shared schema documents: a history record
+# that EXISTS must be schema-valid (hard), but a PR that writes none is not blocked.
+# See history/README.md for why presence is advisory — briefly, a provenance gate people
+# route around is worse than no gate.
+name: history-and-vendored
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  vendored-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Fetches the hub copies at the pinned commit and diffs. Deliberately NOT a
+      # self-generated checksum: a pin the repo computes from its own file passes
+      # whatever that file happens to say, which is the blind spot this replaced.
+      - run: bash scripts/check_vendored_sync.sh
+
+  validate-history:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - uses: extractions/setup-just@v2
+      - run: uv sync --extra dev
+      - run: just validate-history
