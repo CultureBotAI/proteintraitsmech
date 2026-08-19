@@ -60,6 +60,43 @@ def test_the_fingerprint_is_over_the_EMITTED_bytes():
     assert promote.graph_fingerprint(GRAPH) == expected
 
 
+# LONG ENOUGH TO WRAP, which the first version of this fixture was not: with a short
+# graph no line reaches the emitter width, so changing `width=100` left the hash identical
+# and the mutation testing this vector passed. A golden vector that cannot detect the
+# parameter it claims to pin is decoration. 3 of its dumped lines exceed 80 columns.
+GOLDEN_GRAPH = {
+    "graph_id": "resistance",
+    "description": "A " + ("long " * 30) + "description that must wrap at the emitter "
+                                           "width so this vector is sensitive to it.",
+    "nodes": [{"node_id": "determinant", "label": "x"}],
+    "edges": [{"subject": "determinant", "object": "resistance",
+               "evidence": [{"reference": "ARO:1",
+                             "snippet": "S " + ("word " * 30) + "end."}]}],
+}
+GOLDEN = "f07281495546801f788b7d441eee40111034302ca3af678ad2590e6f20e3b269"
+
+
+def test_the_fingerprint_matches_a_LITERAL_golden_value():
+    """A hard-coded expectation, because the test above recomputes its own by calling
+    `_dump` -- so it stays green through exactly the change that would break every
+    fingerprint already on disk.
+
+    Change `_dump`'s width, sort_keys or allow_unicode, or take a PyYAML emitter change
+    (pyproject pins only `pyyaml>=6.0`), and every hashed record starts failing its
+    fingerprint at once: the promoter would refuse the entire corpus as "edited" and
+    re-promotion would need --repromote-edited everywhere. That is a corpus-wide outage
+    produced by a one-word change, and only a literal catches it.
+
+    If this test goes red and the change to `_dump` was intended, the fix is not to update
+    this constant quietly -- it is to decide what happens to the fingerprints already
+    written, because they are all now wrong.
+    """
+    assert any(len(line) > 80 for line in promote._dump(GOLDEN_GRAPH)), (
+        "the fixture no longer wraps, so this vector cannot detect a width change")
+    assert promote.graph_fingerprint(GOLDEN_GRAPH) == GOLDEN, (
+        "the emitted bytes changed; every emitted_hash on disk is now stale")
+
+
 def test_the_curation_entry_carries_the_hash_only_when_given_a_graph():
     """A caller that has no graph must not write a field claiming to fingerprint one."""
     assert "emitted_hash" not in promote.curation_entry({})
@@ -72,28 +109,29 @@ def test_promoter_wrote_this_returns_None_when_the_field_is_absent():
     """None means CANNOT TELL, not "unedited". Every record promoted before #204 lacks the
     field, so a caller that reads None as permission would protect nothing that exists."""
     doc = {"curation_history": [{"curator": "edison-causal-graphs", "action": "x"}]}
-    assert promote.promoter_wrote_this(doc) is None
+    assert promote.promoter_wrote_this(doc, "ARO:1") == (None, None)
 
 
 def test_promoter_wrote_this_ignores_another_curators_event():
     doc = {"curation_history": [{"curator": "someone-else", "emitted_hash": "deadbeef"}]}
-    assert promote.promoter_wrote_this(doc) is None
+    assert promote.promoter_wrote_this(doc, "ARO:1") == (None, None)
 
 
 def test_promoter_wrote_this_takes_the_LATEST_of_its_own_events():
     """A record promoted twice carries two events; the current content corresponds to the
     last one. Taking the first would refuse every twice-promoted record forever."""
     doc = {"curation_history": [
-        {"curator": "edison-causal-graphs", "emitted_hash": "old"},
-        {"curator": "edison-causal-graphs", "emitted_hash": "new"},
+        {"curator": "edison-causal-graphs", "emitted_for": "ARO:1", "emitted_hash": "old"},
+        {"curator": "edison-causal-graphs", "emitted_for": "ARO:1", "emitted_hash": "new"},
     ]}
-    assert promote.promoter_wrote_this(doc) == "new"
+    assert promote.promoter_wrote_this(doc, "ARO:1")[0] == "new"
 
 
 def test_promoter_wrote_this_survives_a_malformed_history_entry():
     doc = {"curation_history": ["not a mapping",
-                                {"curator": "edison-causal-graphs", "emitted_hash": "h"}]}
-    assert promote.promoter_wrote_this(doc) == "h"
+                                {"curator": "edison-causal-graphs",
+                                 "emitted_for": "ARO:1", "emitted_hash": "h"}]}
+    assert promote.promoter_wrote_this(doc, "ARO:1")[0] == "h"
 
 
 # --- the guard, end to end through the real CLI -------------------------------------------
@@ -210,8 +248,107 @@ def test_a_written_record_CARRIES_the_hash_of_the_graph_it_got(tmp_path, monkeyp
 
     doc = yaml.safe_load((sandbox / chosen.name).read_text(encoding="utf-8"))
     graph = next(g for g in doc["causal_graphs"] if g["graph_id"] == "resistance")
-    recorded = promote.promoter_wrote_this(doc)
+    # UNPACKED, not `recorded[0]`. The first version compared the whole tuple to a hash
+    # string and went red; the fix that only indexed it left `assert recorded is not None`
+    # in place, which a tuple satisfies unconditionally -- a vacuous assertion guarding the
+    # exact field this test exists for.
+    recorded, owner = promote.promoter_wrote_this(doc, "ARO:3000076")
     assert recorded is not None, "the written record carries no emitted_hash"
+    assert owner == "ARO:3000076", f"the event does not name the writing family: {owner}"
     assert recorded == promote.graph_fingerprint(graph), (
         "the recorded hash does not match the graph actually written -- the fingerprint "
         "would refuse this record on the next re-promotion")
+
+
+def test_another_familys_hash_is_not_read_as_our_own():
+    """A record claimed by three configs carries whichever ran last. Reading only "the
+    latest hash" made the broad family treat a narrower family's work as its own to
+    overwrite -- the whole harm #204 describes, arriving through the fingerprint that was
+    supposed to prevent it."""
+    doc = {"curation_history": [
+        {"curator": "edison-causal-graphs", "emitted_for": "ARO:3000072", "emitted_hash": "act"},
+    ]}
+    mine, owner = promote.promoter_wrote_this(doc, "ARO:3000076")
+    assert mine is None, "another family's hash was returned as ours"
+    assert owner == "ARO:3000072", "the actual owner must be reported, so the run can say why"
+
+
+def test_our_own_hash_is_found_among_several_families():
+    doc = {"curation_history": [
+        {"curator": "edison-causal-graphs", "emitted_for": "ARO:3000072", "emitted_hash": "act"},
+        {"curator": "edison-causal-graphs", "emitted_for": "ARO:3000076", "emitted_hash": "cls"},
+    ]}
+    assert promote.promoter_wrote_this(doc, "ARO:3000072")[0] == "act"
+    assert promote.promoter_wrote_this(doc, "ARO:3000076")[0] == "cls"
+
+
+@pytestmark_obo
+def test_A_then_B_then_A_does_not_refuse_its_own_write(tmp_path, monkeypatch):
+    """The stale-fingerprint bug, end to end on disk.
+
+    `if event not in history: history.append(event)` looked like harmless dedup. Promote
+    with config A, then B, then A again: A's identical event is already present so it is
+    NOT re-appended, leaving B's event last while the disk holds A's graph. The next A run
+    then refuses its own writes as "edited" with nothing edited — a guard against silent
+    overwrites that instead silently blocks legitimate work.
+
+    Three real promotions against a sandboxed copy, then a fourth dry run that must find
+    nothing to refuse.
+    """
+    import re
+    import shutil
+    import yaml
+
+    src = REPO / "data" / "traits" / "function" / "resistance" / "aro"
+    import enrich_aro_resistance as E
+    terms = E.parse_obo(E.OBO)
+    NARROW, BROAD = "ARO:3000072", "ARO:3000076"        # ACT, and class C above it
+    chosen = None
+    for path in sorted(src.glob("*.yaml")):
+        text = path.read_text(encoding="utf-8")
+        m = re.search(r'^identifier:\s*"?(ARO:[^"\s]+)"?\s*$', text, re.M)
+        if not m:
+            continue
+        anc = E.ancestry(terms, m.group(1))
+        if NARROW in anc and BROAD in anc and "graph_id: resistance\n" in text:
+            chosen = path
+            break
+    assert chosen is not None, "no record claimed by both families; the scenario needs one"
+
+    sandbox = tmp_path / "aro"
+    sandbox.mkdir()
+    shutil.copy(chosen, sandbox / chosen.name)
+    monkeypatch.setattr(promote, "ARO_DIR", sandbox)
+
+    def run(family, *extra):
+        monkeypatch.setattr(sys, "argv", ["promote_family_drafts.py", "--family", family,
+                                          "--repromote", "--repromote-edited", "--apply",
+                                          *extra])
+        return promote.main()
+
+    assert run(NARROW) == 0
+    assert run(BROAD) == 0
+    assert run(NARROW) == 0
+
+    doc = yaml.safe_load((sandbox / chosen.name).read_text(encoding="utf-8"))
+    graph = next(g for g in doc["causal_graphs"] if g["graph_id"] == "resistance")
+    mine, owner = promote.promoter_wrote_this(doc, NARROW)
+    assert owner == NARROW, f"last writer should be {NARROW}, history says {owner}"
+    assert mine == promote.graph_fingerprint(graph), (
+        "the recorded hash is stale — the next run would refuse a write this promoter "
+        "itself just made")
+
+    # exactly one event per family, not one per distinct hash
+    events = promote.promoter_events(doc)
+    fams = [e.get("emitted_for") for e in events]
+    assert len(fams) == len(set(fams)), f"duplicate events per family: {fams}"
+
+    # and the proof: a fourth run, WITHOUT the escape hatch, refuses nothing
+    monkeypatch.setattr(sys, "argv", ["promote_family_drafts.py", "--family", NARROW,
+                                      "--repromote"])
+    import contextlib
+    import io
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        promote.main()
+    assert "REFUSED" not in buf.getvalue(), buf.getvalue()[-500:]
