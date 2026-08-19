@@ -31,6 +31,7 @@ FILES=(
 # by this repo's package while the hub's is culturemech. Format "local_glob|hub".
 MAPPED=(
   "src/*/schema/mech_shared.yaml|src/culturemech/schema/mech_shared.yaml"
+  "src/*/schema/history.yaml|src/culturemech/schema/history.yaml"
 )
 
 [ -f "$REF_FILE" ] || { echo "ERROR: $REF_FILE missing (pinned canonical commit)"; exit 2; }

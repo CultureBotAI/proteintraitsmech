@@ -105,10 +105,18 @@ new-history *args:
 # and in CI.
 #
 # Validate curation-history records (validity hard, presence advisory)
-validate-history target="history":
+validate-history *args:
     #!/usr/bin/env bash
     set -euo pipefail
-    target="{{target}}"
+    # `"${1:-history}"`, and NOT a just interpolation of a `target` parameter. An
+    # interpolation splices its argument into the shell as raw text, so
+    # `just validate-history 'x"; echo pwned; :"'` executed it, and `his$HOME` silently
+    # expanded. The `new-history` recipe above carries a comment about exactly that
+    # hazard -- and this recipe still had the bug, which is how a lesson gets written
+    # down and not applied one screen later.
+    # (The comment cannot name the old form literally: doubled braces are interpolation
+    # syntax even inside a comment, which is its own small demonstration of the point.)
+    target="${1:-history}"
     if [ ! -e "$target" ]; then
       echo "validate-history: '$target' does not exist." >&2
       exit 2

@@ -63,7 +63,7 @@ Testing: `tests/` has a real pytest suite (`just test`); `just lint` and `just v
 
 ## Architecture
 
-**Two of the schema files are NOT ours to edit.** `mech_shared.yaml` (Discussion + Dataset) and `history.yaml` are vendored byte-identical from `CultureBotAI/CultureMech` at the commit in `scripts/.vendored_canon_ref`, shared across the Mech fleet. `just check-vendored-sync` diffs them against the hub and CI blocks on it — a local "fix" to one of them is the exact failure that gate exists to catch. Change them upstream and re-vendor. Same for `scripts/validate_id_label_correspondence.py`, `scripts/chem_formula.py` and the three `tests/test_id_label_*.py`.
+**Seven files are NOT ours to edit.** They are vendored byte-identical from `CultureBotAI/CultureMech` at the commit in `scripts/.vendored_canon_ref` and shared across the Mech fleet: `src/proteintraitsmech/schema/mech_shared.yaml` (Discussion + Dataset), `src/proteintraitsmech/schema/history.yaml`, `scripts/validate_id_label_correspondence.py`, `scripts/chem_formula.py`, and the three `tests/test_id_label_*.py`. `just check-vendored-sync` diffs each against the hub and CI blocks on it — a local "fix" is the exact failure that gate exists to catch. Change them upstream, then bump the pin and re-vendor. The authoritative list is the `FILES`/`MAPPED` arrays in `scripts/check_vendored_sync.sh`, and a test asserts that list has not been quietly trimmed.
 
 **Schema-first.** The authoritative artifact is `src/proteintraitsmech/schema/proteintraitsmech.yaml` (LinkML). Everything else — dataclasses, validators, seeders, docs — is derived from or checked against it. When schema and data disagree, the schema wins; update seeders and re-seed rather than hand-patching YAMLs to match new rules.
 

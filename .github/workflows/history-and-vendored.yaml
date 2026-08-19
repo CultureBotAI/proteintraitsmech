@@ -1,14 +1,10 @@
 # Two cheap blocking gates added with the shared Mech foundation (#484).
 #
-# `vendored-sync` is curl + diff only — no Python, no uv — so it finishes in seconds
-# and can fail fast. It exists because the shared LinkML module and the id-label
-# validator are vendored BYTE-IDENTICAL across the fleet: the failure it prevents is a
-# well-meant local fix that silently forks a module four other repos depend on.
-#
-# `validate-history` enforces the split the shared schema documents: a history record
-# that EXISTS must be schema-valid (hard), but a PR that writes none is not blocked.
-# See history/README.md for why presence is advisory — briefly, a provenance gate people
-# route around is worse than no gate.
+# BOTH USE SPARSE CHECKOUT, and that is not premature optimisation: this repo is ~431,000
+# files and ~768 MB, essentially all of it `data/traits/`, and neither job reads a single
+# record. `vendored-sync`'s stated property is that it fails in seconds — a full checkout
+# costs orders of magnitude more than the six curl+diff calls it exists to run, which
+# would have made that claim false on arrival.
 name: history-and-vendored
 
 on:
@@ -21,19 +17,44 @@ permissions:
   contents: read
 
 jobs:
+  # curl + diff only: no uv, no Python, no dependency resolution. It fetches the hub's
+  # copies at the pinned commit and diffs. Deliberately NOT a self-generated checksum —
+  # a pin the repo computes from its own file passes whatever that file happens to say,
+  # which is the blind spot this design replaced.
   vendored-sync:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # Fetches the hub copies at the pinned commit and diffs. Deliberately NOT a
-      # self-generated checksum: a pin the repo computes from its own file passes
-      # whatever that file happens to say, which is the blind spot this replaced.
+        with:
+          sparse-checkout: |
+            scripts
+            src
+            tests
+          sparse-checkout-cone-mode: true
       - run: bash scripts/check_vendored_sync.sh
 
+  # Enforces the split the shared schema documents: a history record that EXISTS must be
+  # schema-valid (hard), while a PR that writes none is not blocked. See history/README.md
+  # for why presence is advisory — briefly, a provenance gate people route around is worse
+  # than no gate.
+  #
+  # Kept as its own job even though `just test` covers the same ground via
+  # test_the_committed_history_records_are_valid: that test is one of 1,000+ behind an
+  # 11-minute suite, and this is the gate a curator writing a history record wants to see
+  # go red in under a minute. Sparse checkout is what makes keeping both cheap.
   validate-history:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            history
+            src
+            scripts
+            justfile
+            pyproject.toml
+            uv.lock
+          sparse-checkout-cone-mode: false
       - uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true

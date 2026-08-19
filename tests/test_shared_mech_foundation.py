@@ -44,6 +44,20 @@ def test_every_governed_file_is_actually_present():
     suite rather than only in CI."""
     script = (REPO / "scripts" / "check_vendored_sync.sh").read_text()
     same_path = re.search(r"^FILES=\(\n(.*?)^\)", script, re.M | re.S).group(1)
+    # THE SET'S MEMBERSHIP, not just "every listed file exists". Emptying `FILES=()`
+    # made this pass while the gate cheerfully reported "OK: all 1 vendored files" --
+    # a test that certifies a contract is only as good as its check that the contract
+    # still has anything in it. Named explicitly so dropping one to "simplify" fails
+    # here rather than silently freeing that file to drift.
+    listed = {ln.strip() for ln in same_path.strip().splitlines()
+              if ln.strip() and not ln.strip().startswith("#")}
+    assert listed == {
+        "scripts/validate_id_label_correspondence.py",
+        "scripts/chem_formula.py",
+        "tests/test_id_label_empty_adapter.py",
+        "tests/test_id_label_unknown_prefix.py",
+        "tests/test_id_label_plausibility.py",
+    }, f"the governed same-path set changed: {sorted(listed)}"
     for line in same_path.strip().splitlines():
         rel = line.strip()
         if not rel or rel.startswith("#"):
@@ -66,7 +80,9 @@ def test_the_vendored_module_is_not_edited_locally_in_the_obvious_way():
     assert "proteintraitsmech" not in text.lower(), (
         "the vendored shared module names this repo -- it has been localised, which the "
         "drift check will fail")
-    assert "Vendored byte-identical" in text
+    # keyed on the module's IDENTITY, not on a sentence of upstream prose -- a legitimate
+    # re-vendor that rewords the description should not turn this red.
+    assert yaml.safe_load(text)["name"] == "mech_shared"
 
 
 # --- the wiring, which is the difference between vendoring and adopting -------------------
@@ -86,9 +102,8 @@ def test_the_record_exposes_the_shared_classes(slot, cls):
 
 
 def test_a_record_carrying_a_discussion_validates():
-    """The import is only real if an instance using it passes the CLOSED-mode validator --
-    which rejects unknown slots, so this would fail if the import were declared but not
-    resolving."""
+    """A valid discussion passes. Paired with the test below, which is the half that
+    actually detects a missing import."""
     rec = {
         "identifier": "Pfam:PF00001", "label": "x",
         "definition": "A trait.", "trait_axis": "SEQUENCE",
@@ -112,6 +127,46 @@ def test_a_record_carrying_a_discussion_validates():
         [sys.executable, str(REPO / "scripts" / "validate_strict.py"), path],
         capture_output=True, text=True, cwd=REPO)
     assert out.returncode == 0, out.stdout + out.stderr
+
+
+def test_a_BOGUS_slot_inside_a_discussion_is_REJECTED(tmp_path):
+    """This is the test that proves the import RESOLVED, and the one above is not.
+
+    A review removed `- mech_shared` from `imports` and the positive test stayed green:
+    with the range unresolved, closed mode simply stops constraining the section, so a
+    valid instance still validates. The degradation is invisible from the passing side --
+    it is only visible from the side that should FAIL. Without the import, both a bogus
+    nested slot and a bogus enum value are accepted with exit 0.
+
+    Same shape as everything else in this repo's recent history: a guarantee stated by a
+    test that only ever exercises the happy path.
+    """
+    rec = tmp_path / "r.yaml"
+    rec.write_text(yaml.safe_dump({
+        "identifier": "Pfam:PF00001", "label": "x", "definition": "A trait.",
+        "trait_axis": "SEQUENCE", "trait_category": "SEQ_DOMAIN", "term_kind": "CLASS",
+        "discussions": [{"discussion_id": "g", "kind": "KNOWLEDGE_GAP", "status": "OPEN",
+                         "prompt": "p", "not_a_real_slot": "x"}],
+    }, sort_keys=False), encoding="utf-8")
+    out = subprocess.run([sys.executable, str(REPO / "scripts" / "validate_strict.py"),
+                          str(rec)], capture_output=True, text=True, cwd=REPO)
+    assert out.returncode != 0, (
+        "closed mode accepted an undeclared slot inside a Discussion -- the shared module "
+        "is imported but not constraining anything\n" + out.stdout)
+
+
+def test_a_BOGUS_enum_value_in_a_discussion_is_REJECTED(tmp_path):
+    """The second half of the same degradation."""
+    rec = tmp_path / "r.yaml"
+    rec.write_text(yaml.safe_dump({
+        "identifier": "Pfam:PF00001", "label": "x", "definition": "A trait.",
+        "trait_axis": "SEQUENCE", "trait_category": "SEQ_DOMAIN", "term_kind": "CLASS",
+        "discussions": [{"discussion_id": "g", "kind": "NOT_A_KIND", "status": "OPEN",
+                         "prompt": "p"}],
+    }, sort_keys=False), encoding="utf-8")
+    out = subprocess.run([sys.executable, str(REPO / "scripts" / "validate_strict.py"),
+                          str(rec)], capture_output=True, text=True, cwd=REPO)
+    assert out.returncode != 0, out.stdout
 
 
 # --- the history layer's split enforcement ------------------------------------------------

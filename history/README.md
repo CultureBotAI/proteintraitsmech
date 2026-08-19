@@ -17,7 +17,7 @@ review deliberately changed nothing.
 
 This repo has a concrete reason to want that beyond the fleet's. Several recent changes
 here were bulk and mechanical — 27,784 definitions held back from a `--force` re-seed
-(#455), 4,664 notes respelled (#466), 190 records' ancestry notes rewritten (#364). Each
+(#455), 4,664 notes respelled (#466), 173 ancestry notes across 155 records rewritten (#364). Each
 was one decision applied by one script to thousands of files, and the commit message is
 currently the only place that decision is written down. A history record puts it where a
 reader of the *data* can find it.
