@@ -998,12 +998,26 @@ repair-pfam-interpro *args:
 # `structure` is the bucket that matters -- mdfA and tet(M) are there because a curator
 # added literature the config lacks, so re-promoting them would DESTROY it (#204). This
 # reports; it never repairs.
-# Pinned at 31 with an identity baseline, because a ceiling masks a swap (#411).
+# A ceiling AND an identity baseline, because a ceiling alone masks a swap (#411): one
+# record repaired and one regressed leaves the total unchanged.
+#
+# THE CEILING IS THE `--max-drift` ON THE LINE BELOW, and this comment deliberately does
+# not restate it. It said "pinned at 31" through the re-pin to 5,074 and again through
+# #466's drop to 410 -- a comment about drift detection that had itself drifted twice, in
+# the one place a reader looks to learn what the number means. The test reads the value
+# from the recipe for the same reason.
 # LOCAL ONLY -- needs data/raw/aro/aro.obo; without it this FAILS rather than reporting 0
 # drift over 0 records (#432).
 audit-reproducible *args:
     uv run python scripts/audit_reproducible.py \
-        --max-drift 5074 --baseline audit/reproducible-baseline.json {{args}}
+        --max-drift 410 --baseline audit/reproducible-baseline.json {{args}}
+
+# Restore the ASCII spelling in the serine-hydrolysis note (#466)
+# LOCAL ONLY -- defaults to data/traits/function/resistance/aro (override with --path).
+# Dry-run by default; pass --apply to write.
+# One sentence on 4,664 records; it was 92% of #408's reported drift.
+repair-beta-lactam-notes *args:
+    uv run python scripts/repair_beta_lactam_notes.py {{args}}
 
 # Rewrite the notes that call a record its own is_a ancestor (#364).
 # `_drug_assertion` walks is_a from the record UPWARD with the record itself first, and
