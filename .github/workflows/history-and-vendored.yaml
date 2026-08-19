@@ -42,6 +42,11 @@ jobs:
   # test_the_committed_history_records_are_valid: that test is one of 1,000+ behind an
   # 11-minute suite, and this is the gate a curator writing a history record wants to see
   # go red in under a minute. Sparse checkout is what makes keeping both cheap.
+  #
+  # README.md is in the sparse list because `uv sync` BUILDS this package and
+  # pyproject declares `readme = "README.md"` -- hatchling raises `Readme file does not
+  # exist` without it. A sparse checkout has to include the build's inputs, not just the
+  # command's, which is exactly what the first version of this job got wrong.
   validate-history:
     runs-on: ubuntu-latest
     steps:
@@ -54,6 +59,7 @@ jobs:
             justfile
             pyproject.toml
             uv.lock
+            README.md
           sparse-checkout-cone-mode: false
       - uses: astral-sh/setup-uv@v5
         with:
