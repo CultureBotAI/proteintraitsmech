@@ -18,16 +18,25 @@ validate file:
     uv run linkml-validate -s src/proteintraitsmech/schema/proteintraitsmech.yaml \
       --target-class ProteinTraitRecord {{file}}
 
-# Validate every YAML under data/traits/ by invoking the `linkml-validate`
-# CLI. Files are batched (default 200) so 18K records finish in ~1-2 min.
+# Validate every YAML under data/traits/. Delegates to validate-strict
+# (closed-mode, rejects unknown top-level and nested fields, exits non-zero
+# on any ERROR). Previous open-mode implementation ran linkml-validate per
+# file via the CLI (scripts/validate_linkml.py, still present for anyone who
+# wants the reference-CLI diagnostics), which silently accepted unknown
+# fields. See #485.
 # Scope to a subset with a path/glob: just validate-all data/traits/sequence/motif
 validate-all *args:
-    uv run python scripts/validate_linkml.py {{args}}
+    @just validate-strict {{args}}
+
+# Strict in-process validation in *closed* mode (rejects unknown fields).
+# Emits reports/instance_validation_failures.tsv and exits 1 on any ERROR.
+validate-strict *args:
+    uv run python scripts/validate_strict.py {{args}}
 
 # Alias — same runner as validate-all; kept for scripts referencing the
 # CLI's name directly.
 validate-linkml *args:
-    uv run python scripts/validate_linkml.py {{args}}
+    @just validate-strict {{args}}
 
 # Programmatic schema-quality probes
 audit-schema:

@@ -5,9 +5,10 @@
 # `just lint` recipe alone would not have fixed that: a gate nobody runs is the thing
 # being complained about. This is what makes it a gate.
 #
-# `validate-all`, `audit-graphs` and `sources-check` are deliberately NOT here. They
-# read data/raw, which is gitignored and multi-gigabyte, so they stay local commands
-# run by whoever changes the data.
+# `validate-all` and `audit-graphs` run in .github/workflows/validate-strict.yaml
+# instead — not because they need data/raw (neither does; that claim was false, #485),
+# but because the ~430K-record corpus makes them too slow to bundle here on every PR.
+# `sources-check` is not yet wired into CI (#485 follow-up).
 name: checks
 
 on:
