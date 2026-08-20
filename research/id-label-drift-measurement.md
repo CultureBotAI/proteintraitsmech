@@ -67,7 +67,7 @@ The first is a grounding that points at a parent class three levels too general.
 
 Configure the causal-node `label` slot as **label-waived**, which is precisely the vendored validator's existing concept and needs no fork.
 
-**GO's semantic mismatches deserve their own issue**, scoped as "a grounding whose label names a different concept", not as label drift. The signal is real; the frame is wrong.
+**GO's semantic mismatches have their own issue — #503**, scoped as "a grounding whose label names a different concept", not as label drift. The signal is real; the frame is wrong.
 
 ## Scope note
 
