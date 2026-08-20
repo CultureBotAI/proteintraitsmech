@@ -520,13 +520,36 @@ def test_re_promotion_preserves_another_builders_graph_and_prior_history():
     assert out["license"] == "CC-BY 4.0"
 
 
-def test_the_same_curation_event_is_not_appended_twice():
-    """Re-promoting repeatedly must not grow the history without bound."""
-    ev = promote.curation_entry({"curated": "2026-08-06T00:00:00Z"})
-    history = [ev]
-    if ev not in history:
-        history.append(ev)
-    assert len(history) == 1
+def test_the_curation_event_is_stable_across_identical_promotions():
+    """Re-promoting repeatedly must not churn the history.
+
+    REWRITTEN. The previous version reimplemented `if ev not in history: append` inside
+    the test body and asserted on its own local list -- it never called the promoter, so
+    it was green whatever the write path did, and it went on asserting a mechanism #204
+    replaced (the write now REPLACES this family's event, keyed on curator + emitted_for,
+    rather than deduping). A test that restates the code it is checking checks nothing.
+
+    What is testable here is that the event is a pure function of its inputs, which is
+    what makes replacement idempotent. The end-to-end invariant -- one event per family,
+    never growing, and never stale -- is asserted against real records in
+    tests/test_repromotion_guard.py::test_A_then_B_then_A_does_not_refuse_its_own_write.
+    """
+    cfg = {"curated": "2026-08-06T00:00:00Z"}
+    graph = {"graph_id": "resistance", "edges": []}
+    assert promote.curation_entry(cfg) == promote.curation_entry(cfg)
+    assert (promote.curation_entry(cfg, graph, "ARO:1")
+            == promote.curation_entry(cfg, graph, "ARO:1"))
+    # and the two identifying fields are actually present, which the old test never checked
+    entry = promote.curation_entry(cfg, graph, "ARO:1")
+    assert entry["emitted_for"] == "ARO:1" and entry["emitted_hash"]
+
+
+def test_a_fingerprinted_event_cannot_be_minted_without_its_owner():
+    """`curation_event` is the only thing that can produce a hash with no `emitted_for` --
+    the one shape the guard cannot read. It refuses rather than trusting callers."""
+    import pytest as _pytest
+    with _pytest.raises(ValueError, match="emitted_for"):
+        promote.curation_event({}, {"graph_id": "resistance"})
 
 
 def test_promoting_a_draft_removes_the_draft_graph():

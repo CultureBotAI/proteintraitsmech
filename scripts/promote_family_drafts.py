@@ -11,7 +11,7 @@ script:
   • regenerates its `resistance-draft` graph as a curated `resistance` graph whose
     edges carry a verbatim `snippet` (chosen by edge role + the mechanism/drug the
     edge points at) and a real PMID `reference`;
-  • flips `mapping_status: SEEDED → REVIEWED` and appends a `curation_history` event.
+  • flips `mapping_status: SEEDED → REVIEWED` and replaces this family's `curation_history` event (#204).
 
 Snippets live in `FAMILY_SNIPPETS` keyed by family ARO id — extend it to promote
 more families. `just audit-graphs --strict` should report the family's records as
@@ -22,6 +22,7 @@ snippet-complete afterwards. Idempotent (skips records already carrying a
 from __future__ import annotations
 
 import argparse
+import hashlib
 import re
 import sys
 
@@ -8116,18 +8117,76 @@ def _edge(subject: str, predicate: str, predicate_id: str, obj: str, ref: str, s
 LEGACY_PROMOTION = "2026-07-21T00:00:00Z"
 
 
-def curation_entry(cfg: dict) -> dict:
-    return {
+def graph_fingerprint(graph: dict) -> str:
+    """sha256 of a graph, over its canonical dump rather than its repr (#204).
+
+    `_dump` is what actually reaches disk, so hashing it means the fingerprint answers the
+    question the caller has -- "is the file still what I wrote" -- and not a question about
+    Python object identity. Key order is fixed by `sort_keys=False` on a dict this module
+    builds in a fixed order, so the same graph hashes the same across runs.
+    """
+    return hashlib.sha256("\n".join(_dump(graph)).encode("utf-8")).hexdigest()
+
+
+def curation_entry(cfg: dict, graph: dict | None = None,
+                   family: str | None = None) -> dict:
+    entry = {
         "timestamp": cfg.get("curated", LEGACY_PROMOTION),
         "curator": "edison-causal-graphs",
         "action": ("Promoted auto-draft to curated causal_graphs with family verbatim "
                    "snippets; SEEDED -> REVIEWED"),
         "llm_assisted": True,
     }
+    if family is not None:
+        entry["emitted_for"] = family
+    if graph is not None:
+        entry["emitted_hash"] = graph_fingerprint(graph)
+    return entry
 
 
-def curation_event(cfg: dict) -> list[str]:
-    return _dump({"curation_history": [curation_entry(cfg)]})
+def curation_event(cfg: dict, graph: dict | None = None,
+                   family: str | None = None) -> list[str]:
+    """The dumped curation event. Test-only today; the write path calls `curation_entry`.
+
+    REFUSES to mint a hash without an owner, because that is the ONE shape the guard
+    cannot read: `last_owner` comes back None, ownership protection silently degrades to
+    comparing content, and the run reports "no emitted_hash" about a record that has one.
+    This function is the only thing in the codebase that could produce it, so the check
+    lives here rather than in a caller's discipline.
+    """
+    if graph is not None and family is None:
+        raise ValueError("a fingerprinted curation event must name the family that "
+                         "produced it; `emitted_hash` without `emitted_for` is the one "
+                         "shape the #204 guard cannot interpret")
+    return _dump({"curation_history": [curation_entry(cfg, graph, family)]})
+
+
+def promoter_events(doc: dict) -> list[dict]:
+    """This promoter's own fingerprinted events, oldest first."""
+    return [e for e in (doc.get("curation_history") or [])
+            if isinstance(e, dict) and e.get("curator") == "edison-causal-graphs"
+            and e.get("emitted_hash")]
+
+
+def promoter_wrote_this(doc: dict, family: str | None = None) -> tuple[str | None, str | None]:
+    """(hash written for `family`, family that last wrote any graph here).
+
+    TWO VALUES, because "did I write this" and "did SOMEONE ELSE write this" are different
+    questions with different answers, and the first version only asked the first. A record
+    claimed by three family configs carries whichever one ran last; reading only the latest
+    hash made the broad family treat the narrow family's work as its own.
+
+    A None hash means CANNOT TELL, not "unedited" -- every record promoted before #204
+    lacks the field, so a caller that reads None as permission protects nothing that
+    exists.
+    """
+    events = promoter_events(doc)
+    if not events:
+        return None, None
+    mine = [e for e in events if family is not None and e.get("emitted_for") == family]
+    last_owner = events[-1].get("emitted_for")
+    return (str(mine[-1]["emitted_hash"]) if mine else None,
+            str(last_owner) if last_owner else None)
 
 
 
@@ -8446,6 +8505,10 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--family", help="family ARO id (must be in FAMILY_SNIPPETS)")
     ap.add_argument("--apply", action="store_true")
+    ap.add_argument("--repromote-edited", action="store_true",
+                    help="overwrite a promoted graph that has been EDITED since (#204). "
+                         "The default refuses and lists them; this is for a curator who "
+                         "has read the list and decided the config wins.")
     ap.add_argument("--drafts-only", action="store_true",
                     help="accepted for compatibility and now the DEFAULT; see --repromote")
     ap.add_argument("--force-repromote", action="store_true",
@@ -8471,6 +8534,14 @@ def main() -> int:
                     help="run --verify for every family in FAMILY_SNIPPETS, in one process "
                          "so the corpus index is built once; writes nothing")
     args = ap.parse_args()
+    if args.repromote_edited and not args.repromote:
+        # Silent no-op otherwise: the flag is only read inside the re-promote guard, so
+        # `--repromote-edited --apply` wrote nothing and exited 0 -- while the REFUSED
+        # line that sends curators here says only "re-run with --repromote-edited". Same
+        # silent-bypass shape --only and --traits-root grew guards for in #418/#435.
+        print("FAIL: --repromote-edited does nothing without --repromote. It lifts the "
+              "#204 guard on a re-promotion; it does not start one.")
+        return 2
     if not args.family and not args.verify_all:
         ap.error("--family is required unless --verify-all is given")
     if args.verify_all:
@@ -8539,9 +8610,18 @@ def main() -> int:
             print("  Family terms are deep ancestors, so this set includes records curated "
                   "by OTHER, more specific configs (#280).")
             print("  If that is genuinely intended, re-run with --force-repromote.")
+            print("  NOTE: that count is what this run REACHES, not what it would write. "
+                  "The #204 guard refuses records whose graph this config did not write, "
+                  "so the actual write set is smaller -- 253 of these 1,599 on "
+                  "ARO:3000076 when measured. Today every one of those refusals comes "
+                  "from the LEGACY test (the record predates `emitted_for` and its graph "
+                  "is not what this config emits); the ownership test fires only once a "
+                  "record has been re-promoted under this code. --force-repromote lifts "
+                  "THIS check only, not the #204 guard.")
             return 1
 
     promoted = repromoted = skip_done = skip_nodraft = skip_excluded = 0
+    skip_edited = 0
     skip_unreadable = 0
     reached: set[str] = set()
     for pth in sorted(ARO_DIR.glob("*.yaml")):
@@ -8641,13 +8721,110 @@ def main() -> int:
         # one -- caught in review because the canary had exercised the RE-promote path
         # (where the graph is already `resistance`) and not the primary promote-a-draft
         # path, which is the one that runs 1,133 more times.
+        # DOES THIS RECORD STILL HOLD WHAT WE WROTE? (#204, the half #205 left.)
+        #
+        # #205 stopped re-promotion destroying OTHER graphs and the curation_history by
+        # merging instead of splicing. It did not address the case the issue calls the one
+        # that loses work: an edit to the promoter's OWN `resistance` graph, which is
+        # replaced wholesale on every --repromote.
+        #
+        # `is_ours` cannot see it. It establishes that this promoter once wrote a graph
+        # here, not that the current content is still that graph -- and a curator who
+        # improves a promoted graph leaves both its markers in place.
+        #
+        # TWO TESTS, because a fingerprint only protects records written after it exists:
+        #
+        #   * emitted_hash present -> exact. Still hashes the same: ours, untouched,
+        #     overwriting is safe. Differs: SOMEONE EDITED IT. Refuse.
+        #   * emitted_hash absent (every record promoted before this change) -> fall back
+        #     to "does the graph still equal what this config emits today". If yes, the
+        #     rewrite is a no-op and safe whatever its history. If no, an edit and a config
+        #     change are INDISTINGUISHABLE from the record alone -- which is exactly why
+        #     the issue rejected reproduce-and-compare as a complete answer -- so refuse
+        #     and say so rather than guess.
+        #
+        # THE TRIGGER IS NOT LATENT, and #204 says it is. That issue looked for records
+        # with more than one GRAPH and found none. The real shape is more than one CONFIG
+        # claiming one graph: 5,433 of 7,211 promoter-owned records are claimed by two or
+        # three family configs (#465 measured this), and whichever ran last owns what is
+        # on disk.
+        #
+        # Measured on ARO:3000076 (class C beta-lactamase): a --repromote reaches 1,599
+        # records and 1,346 hold a graph this config did not write, every one of them
+        # reproducing from a DIFFERENT claiming config (0 are in #408's drifted set).
+        #
+        # WHAT THOSE 1,346 WOULD ACTUALLY LOSE, checked rather than asserted, because the
+        # first version of this comment said "destroys what it did not write, at 84% of
+        # one family" and that overstates it. Nodes, edges, references and snippets are
+        # IDENTICAL in all 1,346. They differ in exactly one key: the graph `description`,
+        # where the narrow family's name is replaced by the broad one's --
+        #
+        #   -PDC is a class C serine beta-lactamase (AmpC cephalosporinase); ...
+        #   +class C beta-lactamase is a class C serine beta-lactamase (AmpC ...); ...
+        #
+        # so the replacement is degenerate prose rather than destroyed evidence. Still
+        # worth refusing -- it is a strictly worse description written by a config that
+        # does not own the record -- but the harm is a sentence, not a graph, and the
+        # comment should say which.
+        #
+        # 253 records in that family still re-promote by default, which is what the flag
+        # is for.
+        existing = next((g for g in (doc.get("causal_graphs") or [])
+                         if g.get("graph_id") == "resistance"), None)
+        recorded, last_owner = promoter_wrote_this(doc, args.family)
+        if existing is not None:
+            # OWNERSHIP FIRST. Testing `recorded` first meant a family that had EVER
+            # written this record was told "edited since this config wrote it" once
+            # another config took it over -- blaming a human edit for what the record
+            # itself says is a change of owner. Direction was safe (it still refused)
+            # and the diagnosis was wrong, which is the failure this redesign existed
+            # to remove.
+            # UNCONDITIONAL, not `if not is_draft`. The merge below filters BOTH owned
+            # graph ids, so a record carrying a `resistance-draft` AND a curated
+            # `resistance` graph had the curated one replaced with no check and no
+            # REFUSED line -- the same bug through the other door. Not reachable today
+            # (188 records carry drafts, none also carries `graph_id: resistance`,
+            # because the drafter skips any record with a causal_graphs block), which
+            # is exactly why it would have sat here unnoticed.
+            if last_owner is not None and last_owner != args.family:
+                untouched = False
+                why = f"written by {last_owner}, a different family config"
+            elif recorded is not None:
+                untouched = graph_fingerprint(existing) == recorded
+                why = "edited since this config wrote it"
+            elif last_owner is not None:
+                # A DIFFERENT family config wrote what is here. Not an edit and not
+                # drift -- it belongs to another config, and re-promoting this family
+                # over it replaces a narrower family's account with a broader one's.
+                untouched = False
+                why = f"written by {last_owner}, a different family config"
+            else:
+                untouched = existing == graph
+                why = ("no emitted_hash, and its graph is not what this config emits "
+                       "-- an edit and a config change cannot be told apart here")
+            if not untouched and not args.repromote_edited:
+                print(f"  REFUSED {ident}: {why}. Re-run with --repromote-edited to "
+                      f"overwrite it anyway.")
+                skip_edited += 1
+                continue
+
         graphs = [g for g in (doc.get("causal_graphs") or [])
                   if g.get("graph_id") not in OWNED_GRAPH_IDS]
         graphs.append(graph)
         history = list(doc.get("curation_history") or [])
-        event = curation_entry(record_cfg)
-        if event not in history:
-            history.append(event)
+        event = curation_entry(record_cfg, graph, args.family)
+        # REPLACE this family's previous event, never dedup-and-skip. `if event not in
+        # history` looked harmless and made the fingerprint go stale: promote with config
+        # A, then B, then A again, and A's identical event is already present so it is not
+        # re-appended -- leaving B's event last while the disk holds A's graph. The next A
+        # run then refuses its own writes as "edited" with nothing edited. Keying on
+        # (curator, emitted_for) also keeps exactly one event per family instead of one per
+        # distinct hash.
+        history = [e for e in history
+                   if not (isinstance(e, dict)
+                           and e.get("curator") == "edison-causal-graphs"
+                           and e.get("emitted_for") == args.family)]
+        history.append(event)
         new = RIO.replace_block(text, "causal_graphs", "\n".join(_dump({"causal_graphs": graphs})))
         new = RIO.replace_block(new, "curation_history",
                                 "\n".join(_dump({"curation_history": history})))
@@ -8668,6 +8845,12 @@ def main() -> int:
     print(f"family {args.family} ({fam_name}): {promoted:,} records written "
           f"({fresh:,} draft{'' if fresh == 1 else 's'} promoted to REVIEWED, "
           f"{repromoted:,} already-curated re-promoted)")
+    if skip_edited:
+        # Its own line, and NOT folded into the skip counts. "Already curated" means there
+        # was nothing to do; this means work would have been DESTROYED. Averaging the two
+        # into one number is the conflation #204 is about.
+        print(f"  REFUSED (edited since promotion, or unverifiable): {skip_edited:,} — "
+              f"listed above. Nothing was written for these.")
     print(f"  skipped (already curated): {skip_done:,} | skipped (no draft): {skip_nodraft:,}"
           f" | skipped (excluded by config): {skip_excluded:,}"
           f" | skipped (unreadable): {skip_unreadable:,}")
@@ -8692,9 +8875,12 @@ def main() -> int:
         elif missed:
             print(f"FAIL: --only named {len(only)} record(s) but {len(missed)} were not "
                   f"written: {', '.join(missed)}")
-            print("  Each was skipped by its config's precondition, its exclude list, or "
-                  "for being already curated without --repromote. Re-read the skip lines "
-                  "above; nothing was written for these.")
+            print("  Each was skipped by its config's precondition, its exclude list, for "
+                  "being already curated without --repromote, or REFUSED by the #204 "
+                  "ownership guard -- that fourth reason was missing here, so a curator "
+                  "was sent to the config three times over when the answer was "
+                  "--repromote-edited. Re-read the skip and REFUSED lines above; nothing "
+                  "was written for these.")
             return 1
     print("APPLIED." if args.apply else "Dry-run — pass --apply to write.")
     return 0
