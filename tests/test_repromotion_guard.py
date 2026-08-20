@@ -352,3 +352,20 @@ def test_A_then_B_then_A_does_not_refuse_its_own_write(tmp_path, monkeypatch):
     with contextlib.redirect_stdout(buf):
         promote.main()
     assert "REFUSED" not in buf.getvalue(), buf.getvalue()[-500:]
+
+
+def test_repromote_edited_alone_is_refused_not_silently_ignored():
+    """The flag is only read inside the re-promote guard, so without `--repromote` it did
+    nothing and the run exited 0 having written nothing — while the REFUSED line that sends
+    a curator here says only "re-run with --repromote-edited". A flag that appears to work
+    and does not is worse than one that errors.
+
+    Same silent-bypass shape `--only` and `--traits-root` grew guards for (#418, #435).
+    """
+    import subprocess
+    out = subprocess.run(
+        [sys.executable, str(REPO / "scripts" / "promote_family_drafts.py"),
+         "--family", "ARO:3000072", "--repromote-edited"],
+        capture_output=True, text=True, cwd=REPO)
+    assert out.returncode == 2, out.stdout[-400:]
+    assert "does nothing without --repromote" in out.stdout, out.stdout[-400:]

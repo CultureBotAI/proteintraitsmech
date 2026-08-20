@@ -11,7 +11,7 @@ script:
   • regenerates its `resistance-draft` graph as a curated `resistance` graph whose
     edges carry a verbatim `snippet` (chosen by edge role + the mechanism/drug the
     edge points at) and a real PMID `reference`;
-  • flips `mapping_status: SEEDED → REVIEWED` and appends a `curation_history` event.
+  • flips `mapping_status: SEEDED → REVIEWED` and replaces this family's `curation_history` event (#204).
 
 Snippets live in `FAMILY_SNIPPETS` keyed by family ARO id — extend it to promote
 more families. `just audit-graphs --strict` should report the family's records as
@@ -8146,9 +8146,18 @@ def curation_entry(cfg: dict, graph: dict | None = None,
 
 def curation_event(cfg: dict, graph: dict | None = None,
                    family: str | None = None) -> list[str]:
-    # `family` forwarded, because a hash WITHOUT `emitted_for` is the one shape the guard
-    # cannot read: `last_owner` comes back None, ownership protection silently degrades to
-    # content equality, and the run reports "no emitted_hash" about a record that has one.
+    """The dumped curation event. Test-only today; the write path calls `curation_entry`.
+
+    REFUSES to mint a hash without an owner, because that is the ONE shape the guard
+    cannot read: `last_owner` comes back None, ownership protection silently degrades to
+    comparing content, and the run reports "no emitted_hash" about a record that has one.
+    This function is the only thing in the codebase that could produce it, so the check
+    lives here rather than in a caller's discipline.
+    """
+    if graph is not None and family is None:
+        raise ValueError("a fingerprinted curation event must name the family that "
+                         "produced it; `emitted_hash` without `emitted_for` is the one "
+                         "shape the #204 guard cannot interpret")
     return _dump({"curation_history": [curation_entry(cfg, graph, family)]})
 
 
@@ -8525,6 +8534,14 @@ def main() -> int:
                     help="run --verify for every family in FAMILY_SNIPPETS, in one process "
                          "so the corpus index is built once; writes nothing")
     args = ap.parse_args()
+    if args.repromote_edited and not args.repromote:
+        # Silent no-op otherwise: the flag is only read inside the re-promote guard, so
+        # `--repromote-edited --apply` wrote nothing and exited 0 -- while the REFUSED
+        # line that sends curators here says only "re-run with --repromote-edited". Same
+        # silent-bypass shape --only and --traits-root grew guards for in #418/#435.
+        print("FAIL: --repromote-edited does nothing without --repromote. It lifts the "
+              "#204 guard on a re-promotion; it does not start one.")
+        return 2
     if not args.family and not args.verify_all:
         ap.error("--family is required unless --verify-all is given")
     if args.verify_all:
@@ -8594,11 +8611,13 @@ def main() -> int:
                   "by OTHER, more specific configs (#280).")
             print("  If that is genuinely intended, re-run with --force-repromote.")
             print("  NOTE: that count is what this run REACHES, not what it would write. "
-                  "The #204 ownership guard refuses records written by another family "
-                  "config, so the actual write set is smaller -- 253 of these 1,599 on "
-                  "ARO:3000076 when this was measured. --force-repromote lifts THIS "
-                  "check only; it does not lift the ownership guard, and the two are "
-                  "independent on purpose.")
+                  "The #204 guard refuses records whose graph this config did not write, "
+                  "so the actual write set is smaller -- 253 of these 1,599 on "
+                  "ARO:3000076 when measured. Today every one of those refusals comes "
+                  "from the LEGACY test (the record predates `emitted_for` and its graph "
+                  "is not what this config emits); the ownership test fires only once a "
+                  "record has been re-promoted under this code. --force-repromote lifts "
+                  "THIS check only, not the #204 guard.")
             return 1
 
     promoted = repromoted = skip_done = skip_nodraft = skip_excluded = 0
