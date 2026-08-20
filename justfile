@@ -143,6 +143,16 @@ validate-history *args:
 check-vendored-sync:
     bash scripts/check_vendored_sync.sh
 
+# How far do node labels drift from the ontology's own? (#493)
+# MEASUREMENT, not a gate. 15.8% of checked (id, label) pairs mismatch. The largest
+# actionable block is corpus-internal: 5,543 of 5,799 `proteintraitsmech:` groundings
+# disagree with the record they point at, and that check needs no data/raw, so it is the
+# one that could run in CI. See research/id-label-drift-measurement.md -- including two
+# corrections where an earlier version of this tool inflated its own headline.
+# LOCAL ONLY -- reads data/raw (aro.obo, go.obo, chebi/*.tsv.gz).
+measure-id-label-drift *args:
+    uv run python scripts/measure_id_label_drift.py {{args}}
+
 # Programmatic schema-quality probes
 audit-schema:
     uv run python scripts/audit_schema.py
