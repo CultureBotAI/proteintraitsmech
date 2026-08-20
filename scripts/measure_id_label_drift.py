@@ -54,7 +54,14 @@ CHEBI_NAMES = ROOT / "data" / "raw" / "chebi" / "names.tsv.gz"
 # Databases, not ontologies: their label is a protein/reaction/domain name no ontology
 # owns. Listed so a typo'd ontology prefix is not quietly swept in with them.
 NOT_ONTOLOGIES = {"UniProtKB", "RHEA", "RHEA-COMP", "EC", "CATH", "PROSITE", "MCSA",
-                  "pdb.ligand", "proteintraitsmech", "Pfam", "InterPro", "PDB", "SCOP"}
+                  "pdb.ligand", "Pfam", "InterPro", "PDB", "SCOP", "NCBIfam", "ECOD"}
+
+# NOT a database: `proteintraitsmech:` groundings point at THIS corpus, so their labels are
+# checkable against the records' own `label:` slots -- with no `data/raw` at all, which
+# makes it the only part of this measurement that could run in CI. The first version filed
+# it under NOT_ONTOLOGIES as "a database", which skipped 5,799 pairs and threw away the one
+# check the doc then complained it did not have.
+SELF_PREFIX = "proteintraitsmech"
 
 
 def _norm(text: str) -> str:
@@ -97,10 +104,39 @@ def load_chebi() -> tuple[dict[str, str], dict[str, set[str]]]:
     if CHEBI_NAMES.exists():
         with gzip.open(CHEBI_NAMES, "rt", encoding="utf-8", errors="replace") as fh:
             for row in csv.DictReader(fh, delimiter="\t"):
-                cid, nm = row.get("compound_id"), row.get("name")
-                if cid and nm:
-                    syns[f"CHEBI:{cid}"].add(nm)
+                cid = row.get("compound_id")
+                if not cid:
+                    continue
+                # BOTH `name` AND `ascii_name`. Reading only `name` inflated the CHEBI
+                # mismatch count by 51,449 -- 78.6% of it -- because ChEBI keeps the
+                # markup form in `name` and the plain form in `ascii_name`, and this
+                # corpus writes the plain one. The flagship example in the first version
+                # of this measurement, `CHEBI:15378 H(+)`, is an `ascii_name` in the very
+                # file already open here: name=`H<small><sup>+</small></sup>`,
+                # ascii_name=`H(+)`. One unread column turned 10,905 findings into 65,447
+                # and produced a "this is all noise" verdict about noise the tool made.
+                for key in ("name", "ascii_name"):
+                    val = row.get(key)
+                    if val:
+                        syns[f"CHEBI:{cid}"].add(val)
     return names, syns
+
+
+def load_corpus_labels(root: Path) -> dict[str, str]:
+    """identifier -> label, for every record. Feeds the `proteintraitsmech:` check.
+
+    Read with a line regex rather than a YAML parse: 429,271 records, and both slots are
+    single-line scalars in every one of them.
+    """
+    ident = re.compile(r"^identifier:\s*\"?(\S+?)\"?\s*$", re.M)
+    lab = re.compile(r"^label:\s*\"?(.+?)\"?\s*$", re.M)
+    out: dict[str, str] = {}
+    for path in root.rglob("*.yaml"):
+        text = path.read_text(encoding="utf-8")
+        i, la = ident.search(text), lab.search(text)
+        if i and la:
+            out[i.group(1)] = la.group(1)
+    return out
 
 
 def classify(curie: str, label: str, names: dict, syns: dict) -> str:
@@ -137,6 +173,18 @@ def main() -> int:
     print("label sources: " + ", ".join(f"{k} ({len(v[0]):,} terms)"
                                         for k, v in sorted(sources.items())))
 
+    corpus_labels = load_corpus_labels(Path(args.path))
+    print(f"corpus records with identifier+label: {len(corpus_labels):,}")
+
+    # OTHER surfaces carrying an id AND a label. The first version of this script asserted
+    # there were none besides causal nodes and called the others "absent"; a review found
+    # canonical_examples carries two, and together they are 2.2x the surface measured here.
+    # Counted and reported rather than checked: `protein_id` is UniProtKB (a database, no
+    # canonical label) and `taxon_id` is NCBITaxon, an ontology this repo has no local dump
+    # of. Naming them is the point -- "we did not measure this" and "there is nothing here"
+    # must not print the same way.
+    other: collections.Counter = collections.Counter()
+
     verdicts: collections.Counter = collections.Counter()
     by_prefix: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
     examples: dict[str, list] = collections.defaultdict(list)
@@ -144,6 +192,19 @@ def main() -> int:
 
     for path in Path(args.path).rglob("*.yaml"):
         text = path.read_text(encoding="utf-8")
+        # THE CENSUS OF OTHER SURFACES RUNS FIRST, before the `grounding:` prefilter.
+        # It used to sit inside it, so it only counted records that also had a causal
+        # graph and reported 24,857 where the real figure is ~409,005 -- a 16x
+        # under-count produced by gating a census on an unrelated condition. That is the
+        # same shape as the prefilter bugs in #364 and #462, in the code written to
+        # measure a surface honestly.
+        for line, key in (("  protein_label:", "canonical_examples.protein_id + "
+                                               "protein_label (UniProtKB, a database)"),
+                          ("  taxon_label:", "canonical_examples.taxon_id + taxon_label "
+                                             "(NCBITaxon, an ontology with no local dump)")):
+            n = text.count(line + " ")
+            if n:
+                other[key] += n
         if "grounding:" not in text:
             continue
         try:
@@ -157,6 +218,17 @@ def main() -> int:
                     continue
                 pairs += 1
                 prefix = str(curie).split(":")[0]
+                if prefix == SELF_PREFIX:
+                    verdict = ("OK_CANONICAL"
+                               if _norm(label) == _norm(corpus_labels.get(str(curie), "\0"))
+                               else ("ID_NOT_FOUND" if str(curie) not in corpus_labels
+                                     else "MISMATCH"))
+                    verdicts[verdict] += 1
+                    by_prefix[prefix][verdict] += 1
+                    if verdict != "OK_CANONICAL" and len(examples[prefix]) < args.show:
+                        examples[prefix].append((path.name, curie, label,
+                                                 corpus_labels.get(str(curie), "—")))
+                    continue
                 if prefix in NOT_ONTOLOGIES:
                     skipped_db += 1
                     continue
@@ -182,6 +254,11 @@ def main() -> int:
         return 1
     for verdict, n in verdicts.most_common():
         print(f"    {n:>7,}  ({100 * n / checked:5.1f}%)  {verdict}")
+
+    if other:
+        print("\nOTHER id+label surfaces (counted, NOT checked here):")
+        for k, v in other.most_common():
+            print(f"  {v:>8,}  {k}")
 
     print("\nby prefix:")
     for prefix in sorted(by_prefix, key=lambda p: -sum(by_prefix[p].values())):
