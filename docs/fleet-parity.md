@@ -22,7 +22,7 @@ siblings' own implementations are the specification used here, primarily
 | 4 | Validated-write helper + writer-safety audit | ✗ | ✗ | Deferred — **#492** |
 | 5 | ID-to-label correspondence validation | ✗ | **partial** | Validator + its 69 tests vendored, governed and passing; adapter deferred — **#493** |
 | 6 | Evidence snippet / reference validation | **✓** | **✓** | Pre-existing: `just audit-snippets` |
-| 7 | Knowledge-gap scan + shared QC dashboard | ✗ | ✗ | Blocked on a claw dependency decision — **#494** |
+| 7 | Knowledge-gap scan + shared QC dashboard | ✗ | ✗ | **Not a gap.** No sibling has this in CI or as a dependency — see below |
 | 8 | Vendored shared-file drift enforcement | ✗ | **✓** | `just check-vendored-sync` over **7** files + blocking CI job |
 
 Capabilities this repo already had, which the issue does not mention:
@@ -79,11 +79,32 @@ this repo's records keep `(id, label)` pairs — `mapped_xrefs`, `parent_traits`
 `grounded nodes 342,631/350,267` says the surface is large. Wiring it without measuring
 that first would produce a gate whose failures nobody can act on. Filed as #493.
 
-**7 — knowledge-gap scan + QC dashboard.** These are `_require-claw` recipes in TraitMech:
-they execute modules from a `culturebotai-claw` checkout (`kg_microbe_kgscan`,
-`kg_microbe_qc`), not local code. Nothing to port; adopting them means declaring that
-dependency and pointing `CLAW_SRC` at it. `just new-history` already prefers claw when a
-checkout is present, so the convention is in place. Filed as #494.
+**7 — knowledge-gap scan + QC dashboard. NOT a dependency decision, and this document
+said it was.** The first version of this row read "blocked on a claw dependency decision".
+Checked against the siblings, there is no such decision to make:
+
+* **No sibling declares `culturebotai-claw` as a dependency.** All three `pyproject.toml`
+  mentions are a *comment* — `matplotlib>=3.7,  # kg_microbe_qc dashboard chart (shared
+  generator in claw)` — explaining why matplotlib is needed, not depending on claw.
+* **No sibling runs these in CI.** TraitMech's `qc.yaml` mentions claw zero times, and
+  neither `gen-qc-dashboard` nor `knowledge-gap-scan` is in the 16-recipe `qc` aggregate
+  that CI actually invokes.
+
+They are developer conveniences, run by a human who happens to have a checkout. Adopting
+them as a dependency would make this repo the only one in the fleet that has one — and
+`culturebotai-claw` is not a published package but a working repo (~60 status markdown
+files at its root), so depending on it means pinning a moving checkout. That is the failure
+the vendoring contract exists to prevent, and the one that already bit this work once when
+a 92-commit-stale pin made `history.yaml` look ungovernable.
+
+The convention is already in place: `just new-history` prefers claw when `CLAW_SRC`
+resolves and falls back otherwise. If the dashboard is ever wanted, add the recipes with
+the same `_require-claw` guard the siblings use — loud when absent, never in CI. That is a
+ten-line change on the day someone wants it.
+
+Note also that the *schema* side of knowledge-gap capture already landed: `Discussion` with
+`kind: KNOWLEDGE_GAP` is on `ProteinTraitRecord`. Only the scanner and dashboard that
+*read* it are absent. #494 closed as won't-fix-by-convention.
 
 ## Verifying
 
