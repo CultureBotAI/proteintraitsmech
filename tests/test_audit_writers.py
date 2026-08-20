@@ -122,3 +122,62 @@ def test_an_UNDECLARED_writer_is_caught(tmp_path):
         ast.parse((scripts / "sneaky_writer.py").read_text(encoding="utf-8"))), (
         "the audit would not see a new in-place writer")
     assert "sneaky_writer" not in mod.BYPASS and "sneaky_writer" not in mod.registered_editors()
+
+
+# --- the ENFORCEMENT path, which nothing covered -----------------------------------------
+
+def test_main_EXITS_1_on_an_undeclared_writer(tmp_path, monkeypatch):
+    """Four mutations survived the first version of this file because no test ever ran
+    `main()` on a failing tree: deleting `return 1`, and disabling the stale-BYPASS, the
+    registry-overlap and the examined-nothing guards all stayed green.
+
+    `test_an_UNDECLARED_writer_is_caught` looked end-to-end and was not -- it called
+    `writes_trait_records` on a synthetic source and asserted registry membership
+    separately, and its `mod.SCRIPTS = scripts` line was assigned and never read.
+    """
+    scripts = tmp_path / "scripts"
+    scripts.mkdir()
+    (scripts / "sneaky_writer.py").write_text(
+        'from pathlib import Path\n'
+        'TRAITS = Path("data") / "traits"\n'
+        'for p in TRAITS.rglob("*.yaml"):\n'
+        '    p.write_text("clobbered")\n', encoding="utf-8")
+    mod = _load()
+    monkeypatch.setattr(mod, "SCRIPTS", scripts)
+    monkeypatch.setattr(sys, "argv", ["audit_writers.py"])
+    assert mod.main() == 1
+
+
+def test_main_EXITS_1_on_a_stale_bypass_entry(tmp_path, monkeypatch):
+    """An allow-list that outlives what it allows silently covers a future script that
+    reuses the name."""
+    scripts = tmp_path / "scripts"
+    scripts.mkdir()
+    (scripts / "harmless.py").write_text("x = 1\n", encoding="utf-8")
+    mod = _load()
+    monkeypatch.setattr(mod, "SCRIPTS", scripts)
+    monkeypatch.setattr(mod, "BYPASS", {"gone_away": "a reason long enough to pass"})
+    monkeypatch.setattr(sys, "argv", ["audit_writers.py"])
+    assert mod.main() == 1
+
+
+def test_main_EXITS_1_WHEN_IT_EXAMINED_NOTHING(tmp_path, monkeypatch):
+    """#418/#432/#469. The guard whose own comment cites those issues was itself
+    uncertified — deleting it left every test green."""
+    empty = tmp_path / "scripts"
+    empty.mkdir()
+    mod = _load()
+    monkeypatch.setattr(mod, "SCRIPTS", empty)
+    monkeypatch.setattr(mod, "BYPASS", {})
+    monkeypatch.setattr(sys, "argv", ["audit_writers.py"])
+    assert mod.main() == 1
+
+
+def test_a_declared_bypass_may_not_name_a_plain_seeder(tmp_path, monkeypatch):
+    """BYPASS means "writes records WITHOUT write_record". Subtracting `seeders` from the
+    stale check meant `BYPASS["seed_prosite"] = "..."` kept the audit green while asserting
+    something false about that script."""
+    mod = _load()
+    monkeypatch.setattr(sys, "argv", ["audit_writers.py"])
+    monkeypatch.setitem(mod.BYPASS, "seed_prosite", "a reason long enough to pass the check")
+    assert mod.main() == 1
