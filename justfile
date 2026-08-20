@@ -143,6 +143,14 @@ validate-history *args:
 check-vendored-sync:
     bash scripts/check_vendored_sync.sh
 
+# How far do node labels drift from the ontology's own? (#493)
+# MEASUREMENT, not a gate: 40.2% "mismatch" is mostly CHEBI notation and deliberate ARO
+# glosses, so turning a canonical-label check on as-is would report 77,122 findings nobody
+# can act on. See research/id-label-drift-measurement.md for the gate that IS worth having.
+# LOCAL ONLY -- reads data/raw (aro.obo, go.obo, chebi/*.tsv.gz).
+measure-id-label-drift *args:
+    uv run python scripts/measure_id_label_drift.py {{args}}
+
 # Programmatic schema-quality probes
 audit-schema:
     uv run python scripts/audit_schema.py
