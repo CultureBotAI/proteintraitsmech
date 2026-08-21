@@ -97,9 +97,10 @@ claims; do not upgrade status merely because a machine generated content.
 | Source registry/fetching | `just sources-check`, license/provenance review, fetcher tests |
 | Vendored foundation | upstream change, re-vendor, then `just check-vendored-sync` |
 
-The browser loads lean record shards lazily by axis and fetches a bucketed detail sidecar
-only when a detail view opens. Rebuild docs after material record changes; do not describe
-the site as loading the entire corpus at startup.
+The browser loads lean record shards lazily from the active axis, category, source, and
+status filters, then fetches a bucketed detail sidecar only when a detail view opens.
+Rebuild docs after material record changes; do not describe the site as loading the entire
+corpus at startup. Run `just audit-pages --site <built-site>` before deployment.
 
 See [README.md](README.md) for the data model and workflows,
 [prompts/README.md](prompts/README.md) for hand-off/review prompts, and run

@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 """Build the sharded JSON indexes used by the client-side trait browser.
 
-The browser fetches lean record shards lazily by selected axis, then fetches a
-bucketed detail sidecar only when a record is opened. Nothing is generated per
-record, which keeps the Pages file count bounded as the corpus changes.
+The browser fetches lean record shards lazily from the active facet filters, then
+fetches a bucketed detail sidecar only when a record is opened. Nothing is
+generated per record, which keeps the Pages file count bounded as the corpus changes.
 
 Run:
   python3 scripts/build_docs_index.py
 
 Output:
-  docs/data/records.<AXIS>.json — records sharded by trait_axis (one file
-                                  per axis; the browser fetches them in
-                                  parallel and merges). Keeps any single
-                                  file well under the 100 MB git limit.
+  docs/data/records.<AXIS>.<CATEGORY>[.NN].json — lean records partitioned by
+                                  axis and category. The shard manifest lists
+                                  filter coverage so the browser can fetch only
+                                  intersecting shards.
   docs/data/detail/NNN.json     — bucketed sidecars holding every field the
                                   list + facet views don't need: the full
                                   definition, path, parent_traits, xrefs,
@@ -21,7 +21,7 @@ Output:
                                   tracks), residue_sequence, and pattern. The
                                   browser fetches a record's bucket only when its
                                   detail view is opened. Records are hashed into
-                                  DETAIL_BUCKETS files (one file per record would
+                                  a dynamically sized set of files (one file per record would
                                   make Pages deployment scale with corpus size). Each
                                   bucket is `{record_id: detail}`; the record
                                   stores its bucket path in `"df"` (e.g.
@@ -29,7 +29,7 @@ Output:
                                   list/facet payload ~5× smaller than inlining
                                   everything.
   docs/data/facets.json         — pre-computed facet counts + a `shards`
-                                  manifest listing the per-axis files.
+                                  manifest listing each shard's filter coverage.
 
 Record shape:
   {
@@ -80,16 +80,23 @@ from typing import Any
 
 import yaml
 
-# Number of detail-sidecar bucket files. Kept moderate: GitHub Pages' Jekyll
-# builder copies every file in docs/, so thousands of one-record files make deploys
-# expensive; but too few buckets makes each detail view fetch a large payload. Size
-# budgets and bucket-count changes are tracked separately from this format description.
-DETAIL_BUCKETS = 256
+# The bucket count is calculated from serialized detail size. This target sits below the
+# post-build 1 MB hard budget so a successful build cannot require a multi-megabyte fetch.
+DETAIL_BUCKET_TARGET_BYTES = 900_000
+MIN_DETAIL_BUCKETS = 256
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
 OUT_DIR = REPO_ROOT / "docs" / "data"
 DEF_TRUNC = 500
+
+
+def display_path(path: Path) -> str:
+    """Repository-relative when possible, absolute for explicit test/build outputs."""
+    try:
+        return path.relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return str(path)
 
 
 def infer_source(identifier: str, path: Path) -> str:
@@ -507,62 +514,107 @@ def split_detail(records: list[dict]) -> list[tuple[dict, dict]]:
     return pairs
 
 
-def write_detail(pairs: list[tuple[dict, dict]]) -> tuple[int, int, float]:
+def detail_bucket_count(
+    pairs: list[tuple[dict, dict]], target_bytes: int = DETAIL_BUCKET_TARGET_BYTES
+) -> int:
+    """Choose a deterministic bucket count whose estimated largest JSON file fits."""
+    if target_bytes < 1:
+        raise ValueError("detail bucket target must be positive")
+    entries: list[tuple[int, int, str]] = []
+    total = 2
+    for rec, detail in pairs:
+        encoded = (
+            json.dumps(rec["id"], ensure_ascii=False)
+            + ":"
+            + json.dumps(detail, separators=(",", ":"), ensure_ascii=False)
+        ).encode("utf-8")
+        size = len(encoded)
+        if size + 2 > target_bytes:
+            raise ValueError(
+                f"detail for {rec['id']} is {size + 2:,} bytes, above the "
+                f"{target_bytes:,}-byte bucket target"
+            )
+        digest = int(hashlib.md5(rec["id"].encode("utf-8")).hexdigest(), 16)
+        entries.append((digest, size, rec["id"]))
+        total += size + 1
+
+    # Start at 75% average occupancy to leave room for hash-distribution variance.
+    bucket_count = max(
+        MIN_DETAIL_BUCKETS,
+        (total * 4 + 3 * target_bytes - 1) // (3 * target_bytes),
+    )
+    while entries:
+        sizes = [2] * bucket_count
+        counts = [0] * bucket_count
+        for digest, size, _identifier in entries:
+            bucket = digest % bucket_count
+            sizes[bucket] += size + int(counts[bucket] > 0)
+            counts[bucket] += 1
+        if max(sizes) <= target_bytes:
+            break
+        bucket_count = (bucket_count * 5 + 3) // 4
+    return bucket_count
+
+
+def write_detail(pairs: list[tuple[dict, dict]]) -> tuple[int, int, float, int]:
     """Write bucketed detail sidecars under docs/data/detail/, clearing stale
-    files first. Each record is hashed (stable md5 of its identifier) into one
-    of DETAIL_BUCKETS files; the record stores its bucket path in `rec["df"]`
-    (e.g. "detail/023.json") and each bucket is `{record_id: detail}`. Heavy
+    files first. Each record is hashed (stable md5 of its identifier) into a
+    dynamically calculated number of files; the record stores its bucket path in
+    `rec["df"]` and each bucket is `{record_id: detail}`. Heavy
     example sequences ride along inside each detail's `ex`, so a detail view is
-    a single lazy fetch. Returns (record_count, file_count, total_MB)."""
+    a single lazy fetch. Returns (record_count, file_count, total_MB, max_bytes)."""
     det_dir = OUT_DIR / "detail"
     if det_dir.exists():
         for old in det_dir.glob("*.json"):
             old.unlink()
     det_dir.mkdir(parents=True, exist_ok=True)
 
+    bucket_count = detail_bucket_count(pairs)
+    width = max(3, len(str(bucket_count - 1)))
     buckets: dict[str, dict[str, dict]] = {}
     for rec, detail in pairs:
         h = int(hashlib.md5(rec["id"].encode("utf-8")).hexdigest(), 16)
-        name = f"detail/{h % DETAIL_BUCKETS:03d}.json"
+        name = f"detail/{h % bucket_count:0{width}d}.json"
         rec["df"] = name
         buckets.setdefault(name, {})[rec["id"]] = detail
 
     total = 0
+    largest = 0
     for name, obj in buckets.items():
         path = OUT_DIR / name
         with path.open("w", encoding="utf-8") as fh:
             json.dump(obj, fh, separators=(",", ":"), ensure_ascii=False)
-        total += path.stat().st_size
-    return len(pairs), len(buckets), total / (1024 * 1024)
+        size = path.stat().st_size
+        total += size
+        largest = max(largest, size)
+    return len(pairs), len(buckets), total / (1024 * 1024), largest
 
 
 def write_shards(records: list[dict]) -> list[dict]:
-    """Write records.<AXIS>.json (one file per trait_axis) and return the
-    shard manifest. Also clears the legacy monolithic records.json and any
-    stale records.*.json shard for an axis that no longer has records, so
-    the build is self-correcting."""
+    """Partition records by axis/category and return filter-aware shard metadata."""
     legacy = OUT_DIR / "records.json"
     if legacy.exists():
         legacy.unlink()
 
-    by_axis: dict[str, list[dict]] = {}
+    grouped: dict[tuple[str, str], list[dict]] = {}
     for rec in records:
-        by_axis.setdefault(rec.get("axis") or "OTHER", []).append(rec)
+        key = (rec.get("axis") or "OTHER", rec.get("cat") or "OTHER")
+        grouped.setdefault(key, []).append(rec)
 
     def axis_key(a: str) -> tuple[int, str]:
         return (AXIS_ORDER.index(a) if a in AXIS_ORDER else 99, a)
 
     manifest: list[dict] = []
     written: set[str] = set()
-    for axis in sorted(by_axis, key=axis_key):
-        recs = sorted(by_axis[axis], key=lambda r: r["id"])
-        # Chunk large axes so no single shard approaches the 50 MB git
-        # warning / 100 MB hard limit.
+    for axis, category in sorted(grouped, key=lambda key: (axis_key(key[0]), key[1])):
+        recs = sorted(grouped[(axis, category)], key=lambda r: r["id"])
+        # Chunk large categories so no single browser fetch approaches the
+        # configured Pages artifact budget.
         chunks = [recs[i:i + MAX_SHARD_RECORDS]
                   for i in range(0, len(recs), MAX_SHARD_RECORDS)] or [[]]
         for idx, chunk in enumerate(chunks):
-            fname = (f"records.{axis}.json" if len(chunks) == 1
-                     else f"records.{axis}.{idx:02d}.json")
+            stem = f"records.{axis}.{category}"
+            fname = f"{stem}.json" if len(chunks) == 1 else f"{stem}.{idx:02d}.json"
             path = OUT_DIR / fname
             with path.open("w", encoding="utf-8") as fh:
                 json.dump(chunk, fh, separators=(",", ":"), ensure_ascii=False)
@@ -570,6 +622,9 @@ def write_shards(records: list[dict]) -> list[dict]:
             manifest.append({
                 "file": fname,
                 "axis": axis,
+                "categories": [category],
+                "sources": sorted({rec.get("src") for rec in chunk if rec.get("src")}),
+                "statuses": sorted({rec.get("sta") for rec in chunk if rec.get("sta")}),
                 "count": len(chunk),
                 "bytes": path.stat().st_size,
             })
@@ -608,23 +663,10 @@ def main() -> int:
         "sta": _tally(records, "sta"),
     }
 
-    # Which axes each source / category / status appears in — lets the browser
-    # lazily load only the axis shards a filter actually needs (a source or
-    # category rarely spans all axes), instead of the whole corpus upfront.
-    def _axes_by(field: str) -> dict[str, list[str]]:
-        m: dict[str, set[str]] = {}
-        for r in records:
-            key, ax = r.get(field), r.get("axis")
-            if key and ax:
-                m.setdefault(key, set()).add(ax)
-        return {k: sorted(v) for k, v in m.items()}
-
-    axes_by = {"src": _axes_by("src"), "cat": _axes_by("cat"), "sta": _axes_by("sta")}
-
     write_labels(records)
 
     pairs = split_detail(records)
-    det_count, det_files, det_mb = write_detail(pairs)
+    det_count, det_files, det_mb, det_max = write_detail(pairs)
     shards = write_shards(records)
 
     facets_path = OUT_DIR / "facets.json"
@@ -633,7 +675,6 @@ def main() -> int:
             {
                 "total": len(records),
                 "counts": facets,
-                "axesBy": axes_by,
                 "shards": shards,
                 "detailDir": "detail",
             },
@@ -641,12 +682,12 @@ def main() -> int:
             indent=2,
         )
 
-    print(f"Wrote {len(records)} records across {len(shards)} axis shard(s):")
+    print(f"Wrote {len(records)} records across {len(shards)} filter-aware shard(s):")
     for s in shards:
         print(f"  {s['file']:34s} {s['count']:>7,}  ({s['bytes'] / (1024 * 1024):.2f} MB)")
     print(f"Wrote {det_count:,} detail sidecars into {det_files} bucket file(s) → "
-          f"docs/data/detail/ ({det_mb:.2f} MB total)")
-    print(f"Wrote facet index → {facets_path.relative_to(REPO_ROOT)}")
+          f"docs/data/detail/ ({det_mb:.2f} MB total; largest {det_max / 1024:.1f} KiB)")
+    print(f"Wrote facet index → {display_path(facets_path)}")
     if skipped:
         print(f"Skipped {skipped} unparseable files")
     return 0
@@ -657,7 +698,7 @@ def write_labels(records: list[dict]) -> Path:
     browser can render every id it shows — xrefs, parent_traits, mapped_xrefs,
     equivalence, geometry refs, semantic neighbours, and the record's own
     identifier — as `<CURIE> — <label>` (curieLink / idLink), independent of
-    which axis shards are lazily loaded. ~4.3 MB gzipped, fetched once on first
+    which filter-aware shards are lazily loaded. ~4.3 MB gzipped, fetched once on first
     detail view and cached.
 
     CHEBI ids are *not* here (they are not corpus record identifiers) — the
@@ -672,7 +713,7 @@ def write_labels(records: list[dict]) -> Path:
         json.dump(labels, fh, ensure_ascii=False, sort_keys=True,
                   separators=(",", ":"))
     print(f"Wrote {len(labels):,} id→label entries → "
-          f"{path.relative_to(REPO_ROOT)} ({path.stat().st_size/(1024*1024):.2f} MB)")
+          f"{display_path(path)} ({path.stat().st_size/(1024*1024):.2f} MB)")
     return path
 
 
