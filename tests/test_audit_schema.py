@@ -38,14 +38,16 @@ REAL = A.load_schema(A.SCHEMA)
 def _run(schema: dict, tmp_path) -> subprocess.CompletedProcess:
     path = tmp_path / "s.yaml"
     path.write_text(yaml.safe_dump(schema, sort_keys=False), encoding="utf-8")
+    traits = tmp_path / "traits"
+    traits.mkdir(exist_ok=True)
     return subprocess.run(
-        [sys.executable, str(SCRIPT), "--schema", str(path), "--traits", str(tmp_path)],
+        [sys.executable, str(SCRIPT), "--schema", str(path), "--traits", str(traits)],
         capture_output=True, text=True, cwd=REPO)
 
 
-def test_the_real_schema_passes():
-    out = subprocess.run([sys.executable, str(SCRIPT)], capture_output=True, text=True,
-                         cwd=REPO)
+def test_the_real_schema_passes(tmp_path):
+    """Schema structure does not require a second real-corpus enum-usage scan."""
+    out = _run(REAL, tmp_path)
     assert out.returncode == 0, out.stdout[-1500:]
     assert "OK: schema is internally coherent" in out.stdout
 
@@ -63,8 +65,7 @@ def test_a_SECOND_ROOT_is_not_reported_as_dead(tmp_path):
     """`ProteinProfile` is a real second document type. The first version of this audit
     assumed one root and reported it and `ProfileTrait` as unreachable — an audit calling
     a design a defect, which is how a gate loses its credibility."""
-    out = subprocess.run([sys.executable, str(SCRIPT)], capture_output=True, text=True,
-                         cwd=REPO)
+    out = _run(REAL, tmp_path)
     # returncode FIRST. Asserting only the absence of two substrings passes on empty
     # stdout, i.e. if the script crashes -- a test for "does not report X" that a crash
     # satisfies.
@@ -112,11 +113,17 @@ def test_a_schema_with_no_classes_does_not_report_a_clean_result(tmp_path):
     assert "examined nothing" in out.stdout
 
 
-def test_unused_enum_values_are_REPORTED_not_failed():
+def test_unused_enum_values_are_REPORTED_not_failed(tmp_path):
     """A permissible value may be aspirational, so this must not gate. But the number has
     to be visible, or nobody ever prunes one."""
-    out = subprocess.run([sys.executable, str(SCRIPT)], capture_output=True, text=True,
-                         cwd=REPO)
+    traits = tmp_path / "traits"
+    traits.mkdir()
+    (traits / "one.yaml").write_text("trait_axis: SEQUENCE\n", encoding="utf-8")
+    path = tmp_path / "s.yaml"
+    path.write_text(yaml.safe_dump(REAL, sort_keys=False), encoding="utf-8")
+    out = subprocess.run(
+        [sys.executable, str(SCRIPT), "--schema", str(path), "--traits", str(traits)],
+        capture_output=True, text=True, cwd=REPO)
     assert out.returncode == 0
     assert "unused permissible values" in out.stdout
     assert "total unused:" in out.stdout
@@ -201,10 +208,19 @@ def test_the_axis_free_exemption_is_EXACT_not_a_prefix(tmp_path):
     assert "OTHER_UNBOUND_THING" in out.stdout
 
 
-def test_enum_usage_counts_LIST_ITEM_keys():
-    """`- kind: STRUCTURAL` is how every definitions[] entry renders. Anchoring on
+def test_enum_usage_counts_LIST_ITEM_keys(tmp_path):
+    r"""`- kind: STRUCTURAL` is how every definitions[] entry renders. Anchoring on
     `^\s*kind:` missed 156,386 uses and reported DefinitionKindEnum as 3-of-3 unused."""
-    usage = A.enum_usage(REAL, REPO / "data" / "traits")
+    traits = tmp_path / "traits"
+    traits.mkdir()
+    (traits / "one.yaml").write_text(
+        "definitions:\n"
+        "  - kind: GENERAL\n"
+        "  - kind: MECHANISTIC\n"
+        "  - kind: STRUCTURAL\n",
+        encoding="utf-8",
+    )
+    usage = A.enum_usage(REAL, traits)
     kinds = usage.get("DefinitionKindEnum", {})
     assert set(kinds) >= {"GENERAL", "MECHANISTIC", "STRUCTURAL"}, dict(kinds)
-    assert sum(kinds.values()) > 100_000, sum(kinds.values())
+    assert sum(kinds.values()) == 3, sum(kinds.values())

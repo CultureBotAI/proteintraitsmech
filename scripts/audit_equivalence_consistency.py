@@ -48,6 +48,8 @@ from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+from record_scope import records_in_source_directories
+
 ROOT = Path(__file__).resolve().parent.parent
 TRAITS = ROOT / "data" / "traits"
 TSV = ROOT / "data" / "equivalence" / "cross_source.tsv"
@@ -72,6 +74,14 @@ XREF = re.compile(r"^[ ]*- object: (InterPro:IPR\d+)[ \t]*\n"
 # since no PANTHER/HAMAP/PRINTS/SFLD subject can appear in the overlay at all today.
 ACCEPTED_SOURCES = frozenset({"pfam2interpro", "interpro-member-list"})
 
+# Every current writer of an ACCEPTED_SOURCES assertion routes to one of these source
+# directories.  This list is intentionally explicit: a CURIE-prefix filter would miss
+# overlay subjects stored elsewhere, while a whole-corpus walk made this gate cost ~32s.
+# Adding a writer for either mapping_source therefore requires adding its output source
+# directory here.  The real-corpus test pins both sides of the coverage report so an
+# accidental narrowing of these directories is visible.
+ASSERTION_SOURCE_DIRECTORIES = frozenset({"hamap", "panther", "pfam", "prints", "sfld"})
+
 
 def load_tsv(path: Path) -> dict[str, set[str]]:
     """subject CURIE -> {InterPro objects} from the committed overlay."""
@@ -86,9 +96,9 @@ def load_tsv(path: Path) -> dict[str, set[str]]:
 def _read(path: Path) -> bytes | None:
     """The file's bytes if it could possibly matter, else None.
 
-    Bytes, and the marker test before any decode: 309,177 of the corpus's 429,271 records
-    mention no InterPro entry at all, and decoding them to throw them away is most of the
-    work.
+    Bytes, and the marker test before any decode: many records in the selected source
+    directories mention no InterPro entry at all, so decoding them just to throw them
+    away is needless work.
 
     Errors are re-raised NAMING THE PATH. Unhandled, a pool worker gives a 20-line
     traceback whose deepest frame is inside `concurrent.futures` -- verified by putting a
@@ -105,23 +115,14 @@ def _read(path: Path) -> bytes | None:
 def load_records(traits: Path, workers: int = 8) -> dict[str, set[str]]:
     """subject CURIE -> {InterPro objects} asserted by that record's mapped_xrefs.
 
-    Threaded because this is pure I/O over 429k small files and #416 is an open complaint
-    about full-corpus tests being slow. Roughly halves it -- 62s to 32s at 8 workers here,
-    nothing past 8 -- though the absolutes move a lot with cache state.
-
-    WHY THE WHOLE CORPUS, stated correctly on the second attempt. The first version said a
-    `*/pfam/`-style filter "would silently stop checking" 2,334 subjects that live outside
-    a directory named after their CURIE prefix. Those 2,334 are all PROSITE, and PROSITE
-    contributes ZERO comparisons today -- every one of the 17,970 comparable subjects is
-    under a `pfam/` directory, so the filter would in fact give the identical result far
-    faster. The honest reason is future-proofing: the moment #450 widens the overlay to
-    PANTHER, or a CDD record starts asserting `mapped_xrefs`, a prefix filter starts
-    hiding real work, and a gate that narrows silently is the failure this file exists to
-    prevent. Walking everything costs ~30s and cannot go stale.
+    Scoped by the source directories of the writers that emit ACCEPTED_SOURCES mappings.
+    This is not a CURIE-prefix shortcut: the scope includes all five current writers,
+    including sources outside the overlay's current vocabulary.  The explicit scope and
+    pinned real-corpus coverage counts make its boundary reviewable.
     """
     out: dict[str, set[str]] = defaultdict(set)
     missed = 0
-    paths = list(traits.rglob("*.yaml"))
+    paths = list(records_in_source_directories(traits, ASSERTION_SOURCE_DIRECTORIES))
     with ThreadPoolExecutor(max_workers=workers) as pool:
         for raw in pool.map(_read, paths, chunksize=256):
             if raw is None:

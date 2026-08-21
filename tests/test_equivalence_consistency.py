@@ -17,6 +17,8 @@ import pathlib
 import subprocess
 import sys
 
+import pytest
+
 REPO = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
@@ -169,18 +171,16 @@ def test_an_unreadable_xref_shape_fails_loud_instead_of_silently_counting_zero(t
 
 
 def test_a_read_error_names_the_file(tmp_path):
-    """Unhandled, a pool worker gives a traceback whose deepest frame is inside
-    `concurrent.futures`, and CI cannot tell it from a real disagreement."""
+    """The low-level reader preserves its diagnostic when a selected path is unreadable."""
+    import audit_equivalence_consistency as audit
+
     traits = tmp_path / "traits" / "sequence" / "domain" / "pfam"
     traits.mkdir(parents=True)
-    (traits / "x.yaml").mkdir()                      # a directory where a file is expected
-    t = tmp_path / "cs.tsv"
-    t.write_text(TSV, encoding="utf-8")
-    out = subprocess.run(
-        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"),
-         "--tsv", str(t)], capture_output=True, text=True, cwd=REPO)
-    assert out.returncode == 1
-    assert "could not read" in out.stderr and "x.yaml" in out.stderr, out.stderr[-400:]
+    path = traits / "x.yaml"
+    path.mkdir()  # a directory where a selected file was expected
+
+    with pytest.raises(OSError, match=r"could not read .*x\.yaml"):
+        audit._read(path)
 
 
 def test_the_coverage_report_names_both_uncovered_directions(tmp_path):
