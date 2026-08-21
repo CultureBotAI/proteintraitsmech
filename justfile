@@ -181,8 +181,8 @@ test *args:
 lint *args:
     uv run ruff check scripts/ tests/ {{args}}
 
-# Cross-checks download.yaml against the seeders; warns on restrictive (NC/ND)
-# licences and orphan seeders.
+# Enforce download.yaml and scripts/source_helpers.yaml as the source/script registry.
+# Restrictive terms require an explicit review state; pending #517 decisions are notices.
 # Validate the data-source registry
 sources-check:
     uv run python scripts/check_sources.py
