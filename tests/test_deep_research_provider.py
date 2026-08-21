@@ -267,6 +267,26 @@ def test_no_paid_keeps_the_medium_cost_provider(monkeypatch):
             assert recommended["cost"] not in drp.PAID_COSTS
 
 
+def test_recommendable_no_paid_actually_excludes_a_high_cost_row():
+    """The test above (and test_cli_allow_and_no_paid_flags_reach_the_json_output
+    below) can pass even with no_paid filtering fully removed: verified by
+    mutation testing that in this repo's ambient test env, the top-ranked
+    *available* provider is already non-paid before any no_paid filtering is
+    applied, so neither test ever puts a paid provider in the winning position
+    and then checks it gets knocked out. This exercises recommendable()
+    directly against a hand-built row set that guarantees a high-cost
+    candidate is in contention, so the filter has something real to
+    exclude."""
+    rows = [
+        {"provider": "cheap", "status": "available", "cost": "low"},
+        {"provider": "pricey", "status": "available", "cost": "very_high"},
+    ]
+    with_paid = drp.recommendable(rows, no_paid=False)
+    without_paid = drp.recommendable(rows, no_paid=True)
+    assert {r["provider"] for r in with_paid} == {"cheap", "pricey"}
+    assert {r["provider"] for r in without_paid} == {"cheap"}
+
+
 def test_an_allowlist_confines_the_recommendation(monkeypatch):
     monkeypatch.setenv("ASTA_API_KEY", "test-only")
     config = drp.load_config(CONFIG_PATH)
