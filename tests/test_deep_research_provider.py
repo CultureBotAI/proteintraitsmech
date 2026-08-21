@@ -360,12 +360,16 @@ def test_an_allowlist_confines_the_recommendation(monkeypatch):
 def test_recommendable_allow_actually_excludes_a_disallowed_row():
     """test_an_allowlist_confines_the_recommendation above can pass even with
     --allow filtering fully removed, if the ambient environment never makes
-    a genuinely disallowed provider available. Mutation-verified: deleting
-    the allow filter line from recommendable() leaves the higher-level test
-    green, since ASTA_API_KEY makes asta — the allowlisted provider — the
-    only genuinely available one anyway. This exercises recommendable()
-    directly against a hand-built row set that guarantees a disallowed
-    candidate is in contention."""
+    a genuinely disallowed provider available. Mutation-verified in this
+    project's actual CI (no `claude` CLI on PATH, so ASTA_API_KEY makes asta
+    the only genuinely available provider): deleting the allow filter line
+    from recommendable() leaves the higher-level test green there. That
+    depends on environment, though — on a machine with the `claude` CLI
+    installed, claude_code's credential_status is also "available"
+    independent of ASTA_API_KEY, and the higher-level test would catch the
+    same mutation too. This test exercises recommendable() directly against
+    a hand-built row set that guarantees a disallowed candidate is in
+    contention regardless of what's on PATH."""
     rows = [
         {"provider": "in_scope", "status": "available", "cost": "low"},
         {"provider": "out_of_scope", "status": "available", "cost": "low"},
@@ -422,6 +426,77 @@ def test_stage_weight_scalar_null_is_rejected(tmp_path):
         "        synthesis_weight: null\n"
     )
     with pytest.raises(ValueError, match="synthesis_weight must be a number"):
+        drp.load_config(profile)
+
+
+def test_provider_adjustments_null_value_is_rejected(tmp_path):
+    """The key-shape validation elsewhere (unknown/duplicate keys) never
+    checked that the VALUE is numeric — a profile with
+    provider_adjustments: {asta: null} loaded cleanly and crashed later in
+    _score's float(adjustments.get(...)) with an uncaught TypeError instead
+    of this ValueError."""
+    profile = tmp_path / "nulladjvalue.yaml"
+    profile.write_text(
+        "default_focus: f\n"
+        "focuses:\n"
+        "  f:\n"
+        "    stages:\n"
+        "      discovery: {}\n"
+        "    provider_adjustments:\n"
+        "      asta: null\n"
+    )
+    with pytest.raises(ValueError, match="must be a number"):
+        drp.load_config(profile)
+
+
+def test_stage_capability_bool_weight_is_rejected(tmp_path):
+    """bool is a subclass of int, so isinstance(cap_weight, (int, float))
+    alone would silently accept a YAML boolean (e.g. an unquoted `yes`) as a
+    1.0/0.0 weight. The explicit `or isinstance(cap_weight, bool)` exclusion
+    guards against that."""
+    profile = tmp_path / "boolcap.yaml"
+    profile.write_text(
+        "default_focus: f\n"
+        "focuses:\n"
+        "  f:\n"
+        "    stages:\n"
+        "      discovery:\n"
+        "        capabilities:\n"
+        "          academic_search: true\n"
+    )
+    with pytest.raises(ValueError, match="must be a number"):
+        drp.load_config(profile)
+
+
+def test_stage_weight_scalar_bool_is_rejected(tmp_path):
+    """Same bool-vs-int gap as the capability weight above, for the
+    stage-level weight scalars."""
+    profile = tmp_path / "boolweight.yaml"
+    profile.write_text(
+        "default_focus: f\n"
+        "focuses:\n"
+        "  f:\n"
+        "    stages:\n"
+        "      discovery:\n"
+        "        speed_weight: true\n"
+    )
+    with pytest.raises(ValueError, match="speed_weight must be a number"):
+        drp.load_config(profile)
+
+
+def test_provider_adjustments_bool_value_is_rejected(tmp_path):
+    """Same bool-vs-int gap, for provider_adjustments values."""
+    profile = tmp_path / "booladj.yaml"
+    profile.write_text(
+        "default_focus: f\n"
+        "focuses:\n"
+        "  f:\n"
+        "    stages:\n"
+        "      discovery: {}\n"
+        "    provider_adjustments:\n"
+        "      asta: true\n"
+    )
+    with pytest.raises(ValueError, match="must be a number"):
         drp.load_config(profile)
 
 
