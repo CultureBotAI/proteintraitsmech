@@ -38,4 +38,14 @@ jobs:
       # `write_record` reached a PR uncalled and undefined in seed_ncbifam (#100).
       - run: just lint
 
+      # Schema-quality probes (#496). In CI on purpose: this recipe existed for the life
+      # of the repo pointing at a script that was never written, and because nothing ran
+      # it, nothing was ever red. A recipe nobody runs is indistinguishable from a passing
+      # one -- which is the same argument this workflow's own header makes about ruff.
+      # Needs no data/raw; it reads the schema and counts enum usage in data/traits.
+      - run: just audit-schema
+
+      # Writer-safety audit (#492). Same reason, same cost: no data/raw, seconds to run.
+      - run: just audit-writers
+
       - run: just test

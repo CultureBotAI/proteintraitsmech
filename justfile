@@ -160,7 +160,10 @@ measure-id-label-drift *args:
 audit-writers *args:
     uv run python scripts/audit_writers.py {{args}}
 
-# Programmatic schema-quality probes
+# Programmatic schema-quality probes (#496): unreachable classes, rules that cannot fire,
+# category prefixes no axis rule covers, and unused enum values (reported, not gated).
+# Runs in CI -- it needs no data/raw. For the life of this repo this recipe pointed at a
+# script that was never written, and nothing was red because nothing ran it.
 audit-schema:
     uv run python scripts/audit_schema.py
 
