@@ -38,7 +38,7 @@ All operational commands are `just` recipes (see `justfile`). Use `uv` for Pytho
 ```bash
 just install                                  # uv sync --extra dev
 just gen-schema                               # regenerate pydantic dataclasses from LinkML
-just validate <file.yaml>                     # linkml-validate one record (targets ProteinTraitRecord)
+just validate <file.yaml>                     # strict closed-mode validation of one record
 just validate-all                             # strict closed-mode validation over every trait YAML
 just audit-schema                             # programmatic schema-quality probes
 just audit-graphs                             # structural-integrity audit of causal graphs

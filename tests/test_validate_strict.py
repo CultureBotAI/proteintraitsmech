@@ -13,6 +13,7 @@ Locks in:
 
 from __future__ import annotations
 
+import subprocess
 import sys
 from pathlib import Path
 
@@ -195,3 +196,31 @@ def test_main_returns_zero_when_all_supplied_paths_are_missing(tmp_path):
     missing = tmp_path / "gone.yaml"
     rc = main([str(missing), "--out", str(tmp_path / "out.tsv")])
     assert rc == 0
+
+
+# ---------------------------------------------------------------- just recipes
+
+
+def _dry_run_just(*args: str) -> str:
+    result = subprocess.run(
+        ["just", "--dry-run", *args],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return result.stdout + result.stderr
+
+
+def test_just_validate_delegates_to_the_closed_validator():
+    command = _dry_run_just("validate", "record with spaces.yaml")
+    assert "scripts/validate_strict.py" in command
+    assert "--workers 1" in command
+    assert "linkml-validate" not in command
+    assert "'record with spaces.yaml'" in command
+
+
+def test_reference_cli_is_explicitly_separate_from_the_gate():
+    command = _dry_run_just("validate-reference", "record.yaml")
+    assert "linkml-validate" in command
+    assert "scripts/validate_strict.py" not in command
