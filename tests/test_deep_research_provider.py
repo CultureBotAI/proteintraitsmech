@@ -341,6 +341,25 @@ def test_an_allowlist_confines_the_recommendation(monkeypatch):
         assert len(stage["ranking"]) == len(drp.PROVIDERS)
 
 
+def test_recommendable_allow_actually_excludes_a_disallowed_row():
+    """test_an_allowlist_confines_the_recommendation above can pass even with
+    --allow filtering fully removed, if the ambient environment never makes
+    a genuinely disallowed provider available. Mutation-verified: deleting
+    the allow filter line from recommendable() leaves the higher-level test
+    green, since ASTA_API_KEY makes asta — the allowlisted provider — the
+    only genuinely available one anyway. This exercises recommendable()
+    directly against a hand-built row set that guarantees a disallowed
+    candidate is in contention."""
+    rows = [
+        {"provider": "in_scope", "status": "available", "cost": "low"},
+        {"provider": "out_of_scope", "status": "available", "cost": "low"},
+    ]
+    unfiltered = drp.recommendable(rows)
+    filtered = drp.recommendable(rows, allow=frozenset({"in_scope"}))
+    assert {r["provider"] for r in unfiltered} == {"in_scope", "out_of_scope"}
+    assert {r["provider"] for r in filtered} == {"in_scope"}
+
+
 def test_an_unknown_provider_in_the_allowlist_is_rejected():
     with pytest.raises(ValueError, match="Unknown provider"):
         drp.main(["--config", str(CONFIG_PATH), "--allow", "not_a_provider"])
