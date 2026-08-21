@@ -47,6 +47,11 @@ default:
 install:
     uv sync --extra dev
 
+# Deterministic machine-readable corpus + generated-site metrics. Does not depend on a
+# current Pages build; missing docs/data artifacts are reported as zero.
+corpus-stats output="-" *args:
+    uv run python scripts/corpus_stats.py --output {{quote(output)}} {{args}}
+
 # Generate Python dataclasses from LinkML schema
 gen-schema:
     uv run gen-pydantic src/proteintraitsmech/schema/proteintraitsmech.yaml > src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py

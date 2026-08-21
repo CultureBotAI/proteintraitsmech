@@ -1,14 +1,8 @@
 """Docs claims that a test can check, checked.
 
-`CLAUDE.md` is loaded into context at the start of every session, so a stale statement
-there is read by every agent working in this repo before it reads anything else. That
-makes it the worst place in the tree for a list to drift.
-
-The prompts list has gone stale **twice in one day**: #130 added
-`prompts/has-graph-hardening.md` without listing it, and #133 added two more the moment
-after. Both times the fix was to notice by hand and patch it, and the second time the
-mitigation proposed was to tell the next runner to re-verify — which is not a gate, it
-is the ambient-red problem #107 existed to remove.
+`CLAUDE.md` is loaded into context at the start of every session, so stale statements
+there shape work before an agent reads code. Mutable metrics live behind
+`just corpus-stats`; stable catalogs and path claims are checked here.
 """
 
 from __future__ import annotations
@@ -19,34 +13,43 @@ import re
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CLAUDE_MD = ROOT / "CLAUDE.md"
 PROMPTS = ROOT / "prompts"
+PROMPTS_README = PROMPTS / "README.md"
 
 
-def _listed_in_claude_md() -> set[str]:
-    return set(re.findall(r"prompts/([A-Za-z0-9._-]+\.md)", CLAUDE_MD.read_text(encoding="utf-8")))
+def _listed_in_prompt_catalog() -> set[str]:
+    return set(
+        re.findall(
+            r"^- `([A-Za-z0-9._-]+\.md)`",
+            PROMPTS_README.read_text(encoding="utf-8"),
+            re.M,
+        )
+    )
 
 
-def test_claude_md_lists_every_prompt():
-    """Every file in prompts/ must appear in CLAUDE.md.
+def test_prompt_catalog_lists_every_prompt():
+    """Every prompt must appear in prompts/README.md.
 
     A prompt nobody can find is a prompt nobody runs — which was the whole point of
     #129, the PR that added the list.
     """
-    on_disk = {p.name for p in PROMPTS.glob("*.md")}
-    missing = on_disk - _listed_in_claude_md()
+    on_disk = {p.name for p in PROMPTS.glob("*.md") if p != PROMPTS_README}
+    missing = on_disk - _listed_in_prompt_catalog()
     assert not missing, (
-        "these prompts exist but CLAUDE.md does not mention them: " + ", ".join(sorted(missing)))
+        "these prompts exist but prompts/README.md does not mention them: "
+        + ", ".join(sorted(missing)))
 
 
-def test_claude_md_lists_no_prompt_that_is_gone():
+def test_prompt_catalog_lists_no_prompt_that_is_gone():
     """The other direction: a rename or deletion must not leave a dangling reference.
 
     #126 renamed `prompts/goal.md` to `prompts/backlog-loop-goal.md`; nothing then
     pointed at the old name, but nothing would have caught it if something had.
     """
-    on_disk = {p.name for p in PROMPTS.glob("*.md")}
-    dangling = _listed_in_claude_md() - on_disk
+    on_disk = {p.name for p in PROMPTS.glob("*.md") if p != PROMPTS_README}
+    dangling = _listed_in_prompt_catalog() - on_disk
     assert not dangling, (
-        "CLAUDE.md points at prompts that do not exist: " + ", ".join(sorted(dangling)))
+        "prompts/README.md points at prompts that do not exist: "
+        + ", ".join(sorted(dangling)))
 
 
 def test_no_prompt_is_wrapped_as_a_skill():
@@ -81,7 +84,7 @@ def test_every_prompt_says_how_it_is_used():
     Gated rather than documented, for the same reason as the list above: the prompts
     list went stale twice while the mitigation was "remember to check".
     """
-    missing = [p.name for p in PROMPTS.glob("*.md")
+    missing = [p.name for p in PROMPTS.glob("*.md") if p != PROMPTS_README
                if not p.read_text(encoding="utf-8").split("\n\n")[1].startswith("**Use:**")]
     assert not missing, (
         "these prompts do not open with a `**Use:**` line: " + ", ".join(sorted(missing)))
@@ -102,6 +105,8 @@ def test_a_spent_prompt_names_the_issues_it_closed():
     import re
     bad = []
     for p in PROMPTS.glob("*.md"):
+        if p == PROMPTS_README:
+            continue
         use = p.read_text(encoding="utf-8").split("\n\n")[1]
         if "spent" in use and not re.search(r"closed #\d+", use):
             bad.append(p.name)
@@ -115,8 +120,57 @@ def test_no_prompt_claims_a_pull_request_number():
     not exist yet — and nothing downstream can tell a wrong number from a right one.
     """
     import re
-    bad = [p.name for p in PROMPTS.glob("*.md")
+    bad = [p.name for p in PROMPTS.glob("*.md") if p != PROMPTS_README
            if re.search(r"Executed as #\d+", p.read_text(encoding="utf-8").split("\n\n")[1])]
     assert not bad, (
         "these cite a PR number in their Use line, which cannot be verified when written: "
         + ", ".join(sorted(bad)))
+
+
+def test_claude_md_routes_every_tracked_skill_exactly_once():
+    skill_root = ROOT / ".claude" / "skills"
+    on_disk = {path.parent.name for path in skill_root.glob("*/SKILL.md")}
+    listed = re.findall(r"\.claude/skills/([a-z0-9-]+)/SKILL\.md", CLAUDE_MD.read_text())
+    assert set(listed) == on_disk
+    assert len(listed) == len(set(listed)), "CLAUDE.md lists a skill more than once"
+
+
+def test_documented_axis_paths_match_the_repository_contract():
+    expected = {"sequence", "structure", "sequence_structure", "function", "evolution"}
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    claude = CLAUDE_MD.read_text(encoding="utf-8")
+    for axis in expected:
+        assert f"data/traits/{axis}/" in claude
+        assert f"{axis}/<category>/<slug>.yaml" in readme
+    assert "mixed/<category>/<slug>.yaml" not in readme
+    assert "gitignored, regenerable upstream downloads" in readme
+
+    # Sparse developer worktrees may omit data/traits. A normal checkout and CI include
+    # it, where this catches a documented axis whose live path disappeared.
+    traits = ROOT / "data" / "traits"
+    if traits.is_dir():
+        missing = {axis for axis in expected if not (traits / axis).is_dir()}
+        assert not missing, f"documented axis paths missing on disk: {sorted(missing)}"
+
+
+def test_startup_guidance_contains_no_point_in_time_corpus_claims():
+    claude = CLAUDE_MD.read_text(encoding="utf-8")
+    skill_text = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in (ROOT / ".claude" / "skills").glob("*/SKILL.md")
+    )
+    assert "just corpus-stats" in claude
+    for stale in ("~200,600", "**0 records**", "currently unpopulated"):
+        assert stale not in claude
+        assert stale not in skill_text
+
+
+def test_browser_guidance_matches_lazy_axis_and_detail_loading():
+    claude = CLAUDE_MD.read_text(encoding="utf-8")
+    builder = (ROOT / "scripts" / "build_docs_index.py").read_text(encoding="utf-8")
+    browser = (ROOT / "docs" / "browse.js").read_text(encoding="utf-8")
+    assert "lazily by axis" in claude
+    assert "bucketed detail sidecar" in claude
+    assert "fetches lean record shards lazily" in builder
+    assert "function loadAxis(axis)" in browser
+    assert "function loadDetail" in browser

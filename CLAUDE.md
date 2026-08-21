@@ -1,94 +1,106 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Operational guidance for agents working in ProteinTraitsMech. Mutable corpus metrics do
+not belong here; run `just corpus-stats` for current machine-readable counts.
 
-## What this repo is
+## Purpose and invariant
 
-A LinkML-schema-governed **knowledge base of protein sequence & structure traits**. Not an application — the deliverable is a large corpus of curated YAML files (one `ProteinTraitRecord` per file) under `data/traits/`, seeded from authoritative sources (PROSITE, TED/CATH, UniProtKB, LinkML LSF) and progressively hand-curated with evidence and causal graphs.
+ProteinTraitsMech is a LinkML-governed knowledge base of protein trait classes. The
+deliverable is one `ProteinTraitRecord` YAML per file under `data/traits/`, with
+provenance, optional evidence, and optional evidence-bearing causal graphs.
 
-Sibling to dismech / TraitMech / CultureMech / MediaIngredientMech — same "one YAML per record + LinkML validation + evidence-backed causal graphs" model.
+The schema at `src/proteintraitsmech/schema/proteintraitsmech.yaml` is authoritative.
+Generated models, validators, writers, records, and documentation must follow it. The
+axis follows the representation used to define a trait, not merely its biology.
 
-## Prompts
+The five paths and axes are:
 
-Hand-over prompts live in `prompts/`. They are **prompts, not slash commands** — feed them to
-a native command, or paste them to another agent or an independent reviewer. No frontmatter,
-no wrapper, on purpose.
+| Path | `trait_axis` | Category prefix |
+| --- | --- | --- |
+| `data/traits/sequence/` | `SEQUENCE` | `SEQ_*` |
+| `data/traits/structure/` | `STRUCTURE` | `STRUCT_*` |
+| `data/traits/sequence_structure/` | `SEQUENCE_STRUCTURE` | `MIXED_*` |
+| `data/traits/function/` | `FUNCTION` | `FUNC_*` |
+| `data/traits/evolution/` | `EVOLUTION` | `EVOL_*` |
 
-- **`prompts/backlog-loop-goal.md`** — triage the open issues and deliver one end to end:
-  dependency check, branch, work, gates, PR, adversarial review, issues from that review,
-  triage, merge, delete the branch. Feed it to the native `/goal`.
-- **`prompts/schema-review.md`** — schema review pass.
-- **`prompts/claude_code_deep_research.md`** — research and curate one protein-trait
-  record end to end using the `claude_code` deep-research provider.
-- **`prompts/has-graph-hardening.md`** — ✅ **done, do not run** (#131). Kept as a worked
-  example of scoping a run across issues that cannot be separate PRs.
-- **`prompts/loop-code-and-docs.md`** — scoped run for #94, #125, #117. Code and docs,
-  touches no records.
-- **`prompts/loop-text-decoding.md`** — scoped run for #103, #123. Text decoded wrong;
-  changes 39 records.
+## Safety rules
 
-⚠️ **Do not wrap these as custom commands.** `.claude/skills/goal/SKILL.md` existed for that
-and was removed: it registered a custom `/goal` that SHADOWED the native one instead of
-feeding it. If such a wrapper reappears, delete it rather than repointing it.
+- Files named by `scripts/check_vendored_sync.sh` are byte-identical fleet assets. Change
+  them in the canonical hub, then bump and re-vendor; do not patch them locally.
+- Record writes must use an audited route: a seeder through `record_io.write_record`, a
+  registered in-place editor, or a declared bypass. Run `just audit-writers` after writer
+  changes.
+- `data/raw/` contains gitignored, regenerable upstream downloads. Never commit fetched
+  releases. Register sources and fetch routes in `download.yaml` and `justfile`.
+- Seeders are dry-run by default and must be idempotent. They may use project dependencies;
+  invoke them through their `just` recipe unless the recipe explicitly uses `python3`.
+- `seed_uniprot.py` is a retired per-protein demonstration, not the supported class-level
+  ingest route. Add real proteins as `canonical_examples` with
+  `fetch_uniprot_examples.py`.
+- Do not assume the root CC0 dedication overrides upstream terms. Preserve per-record
+  provenance/license metadata, treat restrictive or missing terms as a release blocker,
+  and escalate unresolved source dispositions under issue #517.
+- Closed-mode validation rejects unknown fields. Change the schema first, regenerate as
+  needed, then update writers and records.
 
 ## Common commands
 
-All operational commands are `just` recipes (see `justfile`). Use `uv` for Python — seeding scripts are stdlib-only and can also run under `python3` directly.
-
 ```bash
-just install                                  # uv sync --extra dev
-just gen-schema                               # regenerate pydantic dataclasses from LinkML
-just validate <file.yaml>                     # linkml-validate one record (targets ProteinTraitRecord)
-just validate-all                             # strict closed-mode validation over every trait YAML
-just audit-schema                             # programmatic schema-quality probes
-just audit-graphs                             # structural-integrity audit of causal graphs
-just audit-text                               # encoding damage (mojibake / C1 / U+FFFD)
-just audit-prose                              # do definitions read as prose (#149)
-
-# Fetch + seed pipelines (idempotent; dry-run by default, --apply to write)
-just fetch-prosite && just seed-prosite --apply
-just fetch-ted     && just seed-ted --apply
-just seed-lsf --apply
-just seed-uniprot --accession P25888 --apply  # also: --from-file, --input <flat file>
-
-just build-docs                               # rebuild docs/data/records.json + facets.json
-
-# Shared Mech foundation (#484) — see docs/fleet-parity.md
-just check-vendored-sync                      # byte-identity of vendored files vs the hub
-just new-history --kind record --slug <slug> --event EDIT --outcome changed --summary "…"
-just validate-history                         # validity is HARD; presence is advisory
+just install
+just corpus-stats                         # current JSON metrics; no Pages build required
+just validate-all [path-or-glob]          # closed-mode record validation
+just audit-schema
+just audit-graphs [path]
+just audit-text
+just audit-prose
+just audit-writers
+just sources-check
+just test
+just lint
+just build-docs                           # regenerate sharded browser data
+just check-vendored-sync
+just validate-history
 ```
 
-Testing: `tests/` has a real pytest suite (`just test`); `just lint` and `just validate-all` are the other gates.
+`mapping_status` progresses `SEEDED → PROPOSED → REVIEWED → DEPRECATED`. Every
+`CausalEdge` requires edge-level evidence. Prefer grounded CURIEs and source-backed
+claims; do not upgrade status merely because a machine generated content.
 
-## Architecture
+## Task-to-skill router
 
-**Seven files are NOT ours to edit.** They are vendored byte-identical from `CultureBotAI/CultureMech` at the commit in `scripts/.vendored_canon_ref` and shared across the Mech fleet: `src/proteintraitsmech/schema/mech_shared.yaml` (Discussion + Dataset), `src/proteintraitsmech/schema/history.yaml`, `scripts/validate_id_label_correspondence.py`, `scripts/chem_formula.py`, and the three `tests/test_id_label_*.py`. `just check-vendored-sync` diffs each against the hub and CI blocks on it — a local "fix" is the exact failure that gate exists to catch. Change them upstream, then bump the pin and re-vendor. The authoritative list is the `FILES`/`MAPPED` arrays in `scripts/check_vendored_sync.sh`, and a test asserts that list has not been quietly trimmed.
+| Task | Skill |
+| --- | --- |
+| Source registry/catalog work | [data-sources](.claude/skills/data-sources/SKILL.md) |
+| Fetch an upstream release | [fetch-source](.claude/skills/fetch-source/SKILL.md) |
+| Ingest a new source | [ingest-source](.claude/skills/ingest-source/SKILL.md) |
+| Review source/category routing | [review-source-categories](.claude/skills/review-source-categories/SKILL.md) |
+| Sample record quality | [review-record-samples](.claude/skills/review-record-samples/SKILL.md) |
+| Research source candidates | [edison-deep-research](.claude/skills/edison-deep-research/SKILL.md) |
+| Curate definitions | [edison-trait-definitions](.claude/skills/edison-trait-definitions/SKILL.md) |
+| Curate mechanism graphs | [edison-causal-graphs](.claude/skills/edison-causal-graphs/SKILL.md) |
+| Merge duplicates | [merge-traits](.claude/skills/merge-traits/SKILL.md) |
+| Select within-axis equivalence | [merge-within-axis](.claude/skills/merge-within-axis/SKILL.md) |
+| Review schema/hierarchy | [codex-schema-hierarchy-review](.claude/skills/codex-schema-hierarchy-review/SKILL.md) |
+| Audit embedding fields | [embedding-field-audit](.claude/skills/embedding-field-audit/SKILL.md) |
+| Measure Git/Pages scale | [scalability-check](.claude/skills/scalability-check/SKILL.md) |
 
-**Schema-first.** The authoritative artifact is `src/proteintraitsmech/schema/proteintraitsmech.yaml` (LinkML). Everything else — dataclasses, validators, seeders, docs — is derived from or checked against it. When schema and data disagree, the schema wins; update seeders and re-seed rather than hand-patching YAMLs to match new rules.
+## Change-to-gate matrix
 
-**Five trait axes.** Every record has a `trait_axis` ∈ `{SEQUENCE, STRUCTURE, SEQUENCE_STRUCTURE, FUNCTION, EVOLUTION}` and a fine-grained `trait_category` (prefixed `SEQ_*`, `STRUCT_*`, `MIXED_*`, `FUNC_*`, `EVOL_*`). Axis dictates the directory: `data/traits/<axis>/<category-folder>/<slug>.yaml`. `FUNCTION` was added late and covers entry-level traits (enzymatic activity, binding capacity, cofactor, localisation, environmental response, interaction partner) grounded by EC/Rhea/ChEBI/GO/UniProt SubCell — it complements, doesn't replace, the localised sequence/structure records.
+| Change | Required gates |
+| --- | --- |
+| Python/code | `just lint`, focused pytest, `just test`; writers also `just audit-writers` |
+| Schema | `just audit-schema`, `just gen-schema`, focused tests, `just validate-all` |
+| Trait records | scoped `just validate-all`, relevant audits, then full validation before merge |
+| Causal graphs | record validation plus `just audit-graphs` |
+| Documentation/browser | docs consistency tests and `just build-docs`; inspect generated-size impact |
+| History | `just validate-history` |
+| Source registry/fetching | `just sources-check`, license/provenance review, fetcher tests |
+| Vendored foundation | upstream change, re-vendor, then `just check-vendored-sync` |
 
-**The axis follows the representation, not the biology.** Domain/family classifications defined by a *sequence signature* (profile HMM / PSSM / pattern — Pfam, InterPro, CDD, NCBIfam, MEROPS, PROSITE ProRule) are **SEQUENCE**-axis (`SEQ_DOMAIN`, `SEQ_FAMILY`, `SEQ_HOMOLOGOUS_SUPERFAMILY`) — a domain detected by a sequence model is a sequence trait. Only *structure-derived* classifications (CATH, SCOPe, ECOD, TED) use `STRUCT_DOMAIN` / `STRUCT_HOMOLOGOUS_SUPERFAMILY`. Whole-protein families defined by conserved *function* (NCBIfam/TIGRFAM equivalog, subfamily) are `FUNC_PROTEIN_FAMILY`. Migration: `scripts/migrate_domain_families_to_sequence.py`.
+The browser loads lean record shards lazily by axis and fetches a bucketed detail sidecar
+only when a detail view opens. Rebuild docs after material record changes; do not describe
+the site as loading the entire corpus at startup.
 
-**Seeder pattern.** Each `scripts/seed_*.py` is a self-contained importer:
-- reads a source release from `data/raw/` (gitignored — refetch with the matching `just fetch-*`),
-- emits `ProteinTraitRecord` YAMLs stamped `mapping_status: SEEDED`,
-- is idempotent (skips existing files by identifier/path),
-- supports `--apply` to write (default is dry-run).
-
-`seed_uniprot.py` is the most involved: it demultiplexes a single UniProtKB flat file into up to four axes' worth of records — see the FT-type-to-category table in `README.md` for the mapping (e.g. `BINDING` (metal) → `STRUCT_METAL_SITE`, `CC CATALYTIC ACTIVITY` per `Reaction=` → `FUNC_ENZYMATIC_ACTIVITY`). Membrane spans (`TRANSMEM`/`INTRAMEM`) are deliberately skipped — a per-protein TM span is redundant with the general transmembrane trait — so the `SEQUENCE_STRUCTURE` axis is currently unpopulated.
-
-**Identifiers.** Prefer source-anchored CURIEs when possible (`PROSITE:PS00001`, `TED:AF-…-TED03`, `UniProtKB:P25888`). Curator-minted or seeder-generated records use the `proteintraitsmech:` prefix — for UniProt-seeded records the convention is `proteintraitsmech:UNIPROTKB_<ACC>_<TYPE>_<KEY>`.
-
-**Curation lifecycle.** `mapping_status` progresses `SEEDED → PROPOSED → REVIEWED → DEPRECATED`. Seeded records are the raw import; curator review flips to `REVIEWED` and adds `EvidenceItem` blocks (PMID/DOI + verbatim snippet) and optionally inline `causal_graphs`. Every `CausalEdge` must carry at least one edge-level `EvidenceItem` — mechanism claims must cite their support. Prefer grounded CURIEs for nodes (PR/GO/CHEBI/MOD/HP/MONDO) and RO for predicates.
-
-**Docs site.** `docs/` is a GitHub Pages site with a client-side faceted browser (`browse.html` + `browse.js`) driven by two JSON files under `docs/data/` that are regenerated by `scripts/build_docs_index.py`. The browser loads all records at once, so keep the per-record projection lean (see the record shape in that script's docstring). Rebuild after any material change to `data/traits/`.
-
-## Non-obvious gotchas
-
-- `data/raw/` is gitignored — do not commit fetched source releases. Anyone can re-materialize them with the `fetch-*` recipes.
-- Seeders are idempotent by design; re-running should be a no-op. If you're changing what a seeder emits, expect to delete affected records first (or write a migration).
-- `validate-all` runs **closed-mode** validation (unknown slots are errors). Adding a slot to a YAML without adding it to the schema will fail the gate.
-- Not every UniProt FT type is in scope — `seed_uniprot.py` deliberately skips `CHAIN`, `INIT_MET`, `TRANSIT`, `VARIANT`, `VAR_SEQ`, `MUTAGEN`, `CONFLICT`, `UNSURE`, `NON_*`, `PEPTIDE`. See README table for the full skip list.
-- License is CC0-1.0.
+See [README.md](README.md) for the data model and workflows,
+[prompts/README.md](prompts/README.md) for hand-off/review prompts, and run
+`just corpus-stats` for current corpus and generated-artifact measurements.
