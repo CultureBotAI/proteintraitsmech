@@ -242,17 +242,17 @@ def canonical_provider(name: str) -> str:
 
 
 # Providers whose credential is configurable but which do not actually work, with
-# what happened when each was called (#284). A credential check cannot discover
+# what happened when each was called (CultureMech#284). A credential check cannot discover
 # this: "Available" in `deep-research-client providers` means an env var is set,
 # nothing more. Without this table the triage tool recommended `falcon` as the
 # primary route for every stage while the justfile beside it recorded that falcon
-# returns HTTP 402 — the tool contradicting its own documentation (#290).
+# returns HTTP 402 — the tool contradicting its own documentation (CultureMech#290).
 #
 # Remove an entry when the provider is verified working again, rather than
 # editing the reason.
 KNOWN_BLOCKED: dict[str, str] = {
-    "falcon": "HTTP 402 Payment Required (measured #284)",
-    "cyberian": "HTTP 500; wraps an agentapi service that is not running (#284)",
+    "falcon": "HTTP 402 Payment Required (measured CultureMech#284)",
+    "cyberian": "HTTP 500; wraps an agentapi service that is not running (CultureMech#284)",
 }
 
 # Costs that count as "paid" for --no-paid. `medium` is deliberately NOT here:
@@ -450,7 +450,7 @@ def recommendable(rows: list[dict[str, Any]], *, allow: frozenset[str] | None = 
     One place, so the text and JSON paths cannot disagree — the JSON filter used
     to narrow `ranking` while leaving `recommended_available` untouched, so
     `--provider asta --json` recommended `claude_code` out of a document whose
-    only ranked provider was asta (#290).
+    only ranked provider was asta (CultureMech#290).
     """
     out = [row for row in rows
            if row["status"] == "available" and row["provider"] != "mock"]
@@ -603,6 +603,10 @@ def main(argv: list[str] | None = None) -> int:
     allow = (frozenset(canonical_provider(p) for p in args.allow.split(",") if p.strip())
              if args.allow else None)
     if allow is not None:
+        if not allow:
+            raise ValueError(
+                f"--allow {args.allow!r} did not contain any provider names"
+            )
         unknown = allow - set(PROVIDERS)
         if unknown:
             raise ValueError(
@@ -616,7 +620,7 @@ def main(argv: list[str] | None = None) -> int:
                     row for row in stage["ranking"] if row["provider"] == provider_name
                 ]
                 # Recompute from what survived, so the document cannot recommend a
-                # provider absent from its own ranking (#290).
+                # provider absent from its own ranking (CultureMech#290).
                 kept = recommendable(stage["ranking"], allow=allow, no_paid=args.no_paid)
                 stage["recommended_available"] = kept[0] if kept else None
                 stage["fallback_available"] = kept[1] if len(kept) > 1 else None

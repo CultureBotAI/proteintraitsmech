@@ -47,7 +47,7 @@ def test_falcon_platform_key_is_recognized_without_exposing_it():
     """Credential RECOGNITION, asked of `credential_status`.
 
     `provider_status` now reports falcon as blocked whatever the credential says
-    (#290), so this has to ask the lower-level question or adding a provider to
+    (CultureMech#290), so this has to ask the lower-level question or adding a provider to
     KNOWN_BLOCKED would silently drop the check that its env-var aliases are
     spelled right.
     """
@@ -198,13 +198,13 @@ def test_exact_zero_max_score_does_not_divide_by_zero(monkeypatch):
     assert all(row["fit"] == 0 for row in rows)
 
 
-# --- policy and machine-readable consistency (#290) ------------------------
+# --- policy and machine-readable consistency (CultureMech#290) ------------------------
 
 
-def test_a_measured_dead_provider_is_not_recommended():
+def test_a_measured_dead_provider_is_not_recommended(monkeypatch):
     """The tool used to contradict the justfile beside it.
 
-    #284 measured falcon returning HTTP 402 and cyberian HTTP 500, and recorded
+    CultureMech#284 measured falcon returning HTTP 402 and cyberian HTTP 500, and recorded
     both in the provider table. The triage tool still routed every stage to
     falcon, because "available" only ever meant "an env var is set".
     """
@@ -213,9 +213,18 @@ def test_a_measured_dead_provider_is_not_recommended():
     assert "402" in reason
     assert "secret" not in reason
 
+    # Exercise the override end-to-end through rank_stage/build_report, not
+    # just the direct provider_status() call above. With no credentials set
+    # at all (this repo's real CI has none), every provider is "unavailable"
+    # and recommended_available is None for an unrelated reason, making an
+    # assertion against build_report() vacuous unless falcon is actually
+    # made "available"-but-blocked here.
+    monkeypatch.setenv("EDISON_API_KEY", "test-only")
     config = drp.load_config(CONFIG_PATH)
     report = drp.build_report(config, config["default_focus"])
     for stage in report["stages"]:
+        falcon_row = next(row for row in stage["ranking"] if row["provider"] == "falcon")
+        assert falcon_row["status"] == "blocked"
         recommended = stage["recommended_available"]
         assert recommended is None or recommended["provider"] not in drp.KNOWN_BLOCKED
 
@@ -263,3 +272,29 @@ def test_an_allowlist_confines_the_recommendation(monkeypatch):
 def test_an_unknown_provider_in_the_allowlist_is_rejected():
     with pytest.raises(ValueError, match="Unknown provider"):
         drp.main(["--config", str(CONFIG_PATH), "--allow", "not_a_provider"])
+
+
+def test_an_allowlist_that_strips_to_nothing_is_rejected():
+    """A non-empty --allow string that strips to zero tokens (e.g. a bare
+    comma) used to silently become an empty frozenset instead of None,
+    which made every stage's recommendation silently None rather than
+    raising — the exact silent-fallthrough failure this tool exists to
+    close."""
+    with pytest.raises(ValueError, match="did not contain any provider names"):
+        drp.main(["--config", str(CONFIG_PATH), "--allow", ","])
+
+
+def test_cli_allow_and_no_paid_flags_reach_the_json_output(monkeypatch):
+    """The filtering-semantics tests above call build_report() directly,
+    bypassing parse_args() entirely — only the invalid-input path went
+    through main(). This exercises the --allow/--no-paid argv wiring
+    itself: comma-splitting, whitespace, and canonical_provider() alias
+    resolution ("edison" -> "falcon")."""
+    monkeypatch.setenv("ASTA_API_KEY", "test-only")
+    out = _run_json(["--allow", "edison, claude_code", "--no-paid"])
+    for stage in out["stages"]:
+        assert len(stage["ranking"]) == len(drp.PROVIDERS)
+        recommended = stage["recommended_available"]
+        if recommended:
+            assert recommended["provider"] in {"falcon", "claude_code"}
+            assert recommended["cost"] not in drp.PAID_COSTS
