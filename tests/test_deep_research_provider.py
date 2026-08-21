@@ -28,6 +28,17 @@ def _run_json(extra):
     return json.loads(buf.getvalue())
 
 
+def _run_text(extra):
+    """Run main() without --json and return the printed text."""
+    import contextlib
+    import io
+
+    buf = io.StringIO()
+    with contextlib.redirect_stdout(buf):
+        drp.main(["--config", str(CONFIG_PATH), *extra])
+    return buf.getvalue()
+
+
 def test_profile_has_domain_specific_default_and_three_stage_triage():
     config = drp.load_config(CONFIG_PATH)
     focus = config["focuses"][config["default_focus"]]
@@ -282,6 +293,27 @@ def test_an_allowlist_that_strips_to_nothing_is_rejected():
     close."""
     with pytest.raises(ValueError, match="did not contain any provider names"):
         drp.main(["--config", str(CONFIG_PATH), "--allow", ","])
+
+
+def test_an_empty_allowlist_string_is_rejected():
+    """--allow "" (an explicitly empty string, distinct from omitting the flag
+    entirely) used to be indistinguishable from "not passed" because Python
+    treats "" as falsy — `if args.allow` silently fell through to allow=None,
+    bypassing the "did not contain any provider names" check and
+    recommending with no filtering at all."""
+    with pytest.raises(ValueError, match="did not contain any provider names"):
+        drp.main(["--config", str(CONFIG_PATH), "--allow", ""])
+
+
+def test_policy_filtered_empty_recommendation_names_the_actual_cause(monkeypatch):
+    """The fallback "no real provider is currently available; configure a
+    listed credential or CLI" message predates --allow/--no-paid and is wrong
+    when one of those, not missing credentials, emptied the recommendation:
+    real, working providers exist but were excluded by policy, not absence."""
+    monkeypatch.setenv("ASTA_API_KEY", "test-only")
+    out = _run_text(["--allow", "openai"])
+    assert "no provider passes the current --allow/--no-paid filters" in out
+    assert "configure a listed credential or CLI" not in out
 
 
 def test_cli_allow_and_no_paid_flags_reach_the_json_output(monkeypatch):
