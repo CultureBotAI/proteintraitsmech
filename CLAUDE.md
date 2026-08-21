@@ -31,7 +31,9 @@ The five paths and axes are:
   registered in-place editor, or a declared bypass. Run `just audit-writers` after writer
   changes.
 - `data/raw/` contains gitignored, regenerable upstream downloads. Never commit fetched
-  releases. Register sources and fetch routes in `download.yaml` and `justfile`.
+  releases. Register sources and fetch routes in `download.yaml` and `justfile`. Fixed
+  bulk-file recipes must use `scripts/fetch_source.py`, which validates a temporary file,
+  atomically replaces the destination, and records a `.fetch.json` release sidecar.
 - Seeders are dry-run by default and must be idempotent. They may use project dependencies;
   invoke them through their `just` recipe unless the recipe explicitly uses `python3`.
 - `seed_uniprot.py` is a retired per-protein demonstration, not the supported class-level

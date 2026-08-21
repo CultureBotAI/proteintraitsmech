@@ -1,72 +1,58 @@
 ---
 name: fetch-source
-description: Robust curl pattern for `fetch-<source>` justfile recipes that download an external data release into data/raw/. Use whenever writing a new fetch-* recipe, or auditing/fixing an existing one that fails intermittently in CI — a bare `curl -o` with no retry or timeout turns one flaky network blip into a red PR.
+description: Add or harden a fetch-* recipe that downloads an upstream bulk release into data/raw/ with centralized retries, validation, atomic replacement, and release metadata. Use for new release downloads or when an existing recipe is flaky or can leave partial files behind.
 ---
 
 # Fetch a source release
 
-## The pattern
+Route fixed bulk-file downloads through `scripts/fetch_source.py`. Do not add a bare
+`curl -o` to a `fetch-*` recipe: the shared helper owns HTTP failures, redirects,
+retries, connect/total timeouts, temporary files, validation, atomic replacement,
+cleanup, and metadata.
 
-```
-curl -fL \
-  --retry 5 \
-  --retry-delay 20 \
-  --max-time <seconds> \
-  -o <output-path> \
-  "<url>"
-```
+## Recipe contract
 
-- **`-f`** — fail on an HTTP error status (4xx/5xx) instead of writing the
-  error page to disk as if it were data. Without this, a broken URL silently
-  "succeeds," and the failure surfaces later and confusingly, when seeding
-  chokes on malformed content.
-- **`-L`** — follow redirects. Many source hosts (Zenodo, GitLab/GitHub raw,
-  institutional mirrors) redirect at least once.
-- **`--retry 5 --retry-delay 20`** — retry transient network failures (reset
-  connections, 5xx, timeouts) instead of failing the whole `fetch-*` recipe —
-  and therefore the PR — on one bad minute. A `fetch-*` recipe with no retry
-  logic reds every consumer's CI on a single flaky network blip; this is the
-  standard mitigation.
-- **`--max-time <seconds>`** — a hard cap so a hung connection doesn't block
-  CI indefinitely. Size it to the source: tens of seconds for a small file,
-  up to the low thousands for a large bulk release.
-- **`-o <output-path>`** — explicit output path. Don't rely on `-O`/`-J`
-  remote-naming, which breaks silently when a URL has no clean trailing
-  filename component (query strings, percent-encoded path segments).
-- **Quote the URL.** Source URLs frequently contain characters (`%2F`, `?`,
-  `&`) that an unquoted shell argument will word-split or glob-expand.
-
-## Example
-
-```
-curl -fL \
-  --retry 5 \
-  --retry-delay 20 \
-  --max-time 120 \
-  -o data/raw/goldData.xlsx \
-  "https://forge.univ-lyon1.fr/api/v4/projects/p1801153%2FProjet-M2/repository/files/GOLD%2Fdata%2FgoldData.xlsx/raw?ref=main"
+```bash
+python3 scripts/fetch_source.py \
+  "https://example.org/releases/source.tsv.gz" \
+  data/raw/source/source.tsv.gz \
+  --max-time 600 \
+  --min-bytes 1000 \
+  --prefix-hex 1f8b
 ```
 
-## Wiring it into a justfile recipe
+The URL and destination are separate argv values. Quote URLs containing `?`, `&`, or
+other shell metacharacters. Keep the established recipe name and final destination path.
+The helper downloads to a sibling `.part` file and calls `os.replace` only after every
+validation succeeds, so an existing good release survives transfer and validation
+failures.
 
-```
-fetch-<source>:
-    mkdir -p data/raw
-    curl -fL --retry 5 --retry-delay 20 --max-time <seconds> \
-      -o data/raw/<file> \
-      "<url>"
-```
+Every success writes `<destination>.fetch.json` containing the requested and resolved
+URLs, UTC fetch time, byte size, SHA-256, and any ETag, Last-Modified, and Content-Type
+headers exposed by the server. These sidecars live under gitignored `data/raw/`; do not
+commit them.
 
-For a recipe that fetches several files, repeat the full `curl` invocation
-per file rather than looping over a list — each invocation keeps its own
-`--max-time` budget and failure explicit and independently retryable, instead
-of one shared timeout across an unknown number of files.
+## Choose validation deliberately
 
-## When NOT to use this pattern
+- Always set a credible `--min-bytes`; avoid a token value for a known large release.
+- Use `--prefix-hex 1f8b` for gzip and an appropriate magic prefix for other archives.
+- Use `--contains <text>` for a stable header or format marker.
+- Use `--sha256 <hex>` when the publisher supplies an expected digest. Do not calculate
+  an “expected” digest from the same untrusted download.
+- Repeat `--header 'Name: value'` only when the source requires a fixed request header.
 
-An API that requires pagination, auth headers, or JSON-body construction is
-not a `fetch-*` justfile recipe's job — that belongs in the seeding/ingestion
-script itself, in the language the rest of the pipeline is written in, with
-its own retry/backoff appropriate to that API's semantics (rate limits,
-pagination cursors, partial-failure handling). This pattern is for a single
-bulk file (or small fixed set of files) fetched once per release.
+Defaults are four retries with bounded delay, a 15-second connect timeout, and a
+300-second transfer timeout. Override `--max-time` for large releases; do not copy retry
+flags into the justfile. Use `--dry-run` to print the destination, metadata path, and
+validation contract without touching the network or filesystem.
+
+## Scope boundary
+
+The helper handles one fixed URL and one destination. Paginated APIs, authentication,
+dynamic file enumeration, and source-specific post-processing remain in a dedicated
+script, where they need their own checkpoint and partial-failure semantics. Record that
+route in `docs/fetch-migration.md`; do not force it through shell interpolation.
+
+When migrating an existing recipe, run `pytest tests/test_fetch_source.py`, `just --dry-run
+fetch-<source>`, and the source registry gate. Update the migration checklist so every
+`fetch-*` recipe remains accounted for.
