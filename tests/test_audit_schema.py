@@ -65,6 +65,10 @@ def test_a_SECOND_ROOT_is_not_reported_as_dead(tmp_path):
     a design a defect, which is how a gate loses its credibility."""
     out = subprocess.run([sys.executable, str(SCRIPT)], capture_output=True, text=True,
                          cwd=REPO)
+    # returncode FIRST. Asserting only the absence of two substrings passes on empty
+    # stdout, i.e. if the script crashes -- a test for "does not report X" that a crash
+    # satisfies.
+    assert out.returncode == 0, out.stdout[-800:] + out.stderr[-400:]
     assert "ProteinProfile" not in out.stdout and "ProfileTrait" not in out.stdout
 
 
@@ -93,10 +97,10 @@ def test_a_category_prefix_NO_RULE_COVERS_fails(tmp_path):
     assert "ROGUE_" in out.stdout
 
 
-def test_the_documented_axis_free_prefixes_do_NOT_fail():
+def test_the_documented_axis_free_categories_do_NOT_fail():
     """README: "`UPPER` / `OTHER` are administrative and may appear on any axis." The first
     version flagged both, i.e. reported a documented decision as a defect."""
-    assert A.AXIS_FREE_PREFIXES == {"UPPER", "OTHER"}
+    assert A.AXIS_FREE_CATEGORIES == {"UPPER", "OTHER"}
     dead, uncovered = A.rule_coverage(REAL)
     assert not dead and not uncovered
 
@@ -120,6 +124,87 @@ def test_unused_enum_values_are_REPORTED_not_failed():
 
 @pytest.mark.parametrize("missing", ["classes", "enums"])
 def test_it_survives_a_schema_missing_a_top_level_key(missing, tmp_path):
+    """`returncode in (0, 1)` accepted the crash this test is named for -- an uncaught
+    exception also exits 1. It asserts NO TRACEBACK instead."""
     broken = {k: v for k, v in yaml.safe_load(yaml.safe_dump(REAL)).items() if k != missing}
     out = _run(broken, tmp_path)
+    assert "Traceback" not in out.stderr, out.stderr[-600:]
     assert out.returncode in (0, 1), out.stdout + out.stderr
+
+
+def test_a_malformed_class_does_not_crash_it(tmp_path):
+    """`classes: {Broken: "a string"}` raised AttributeError and exited 1 -- which the old
+    assertion accepted as success."""
+    broken = yaml.safe_load(yaml.safe_dump(REAL))
+    broken["classes"]["Broken"] = "a string, not a mapping"
+    out = _run(broken, tmp_path)
+    assert "Traceback" not in out.stderr, out.stderr[-600:]
+
+
+def test_a_rule_binding_the_RIGHT_categories_to_the_WRONG_axis_fails(tmp_path):
+    """The probe read only preconditions, so a rule could match every FUNC_* category and
+    require EVOLUTION -- mis-axising the whole corpus -- while the audit reported
+    "bound to an axis: yes". This is the invariant the PR body calls central."""
+    broken = yaml.safe_load(yaml.safe_dump(REAL))
+    for rule in broken["classes"]["ProteinTraitRecord"]["rules"]:
+        pre = (rule.get("preconditions") or {}).get("slot_conditions") or {}
+        if (pre.get("trait_category") or {}).get("pattern", "").startswith("^FUNC"):
+            rule["postconditions"]["slot_conditions"]["trait_axis"]["equals_string"] = "EVOLUTION"
+    out = _run(broken, tmp_path)
+    assert out.returncode == 1, out.stdout
+    assert "asserts trait_axis" in out.stdout
+
+
+def test_a_precondition_this_probe_cannot_EVALUATE_is_reported(tmp_path):
+    """A rule keyed on `equals_string` was silently skipped, so a whole class of dead rule
+    was unauditable -- and a LIVE one would have made the coverage check emit a false
+    failure, since its categories never entered `covered`."""
+    broken = yaml.safe_load(yaml.safe_dump(REAL))
+    broken["classes"]["ProteinTraitRecord"]["rules"].append({
+        "title": "opaque_rule",
+        "preconditions": {"slot_conditions": {"trait_category": {"equals_string": "SEQ_DOMAIN"}}},
+        "postconditions": {"slot_conditions": {"trait_axis": {"equals_string": "SEQUENCE"}}},
+    })
+    out = _run(broken, tmp_path)
+    assert out.returncode == 1, out.stdout
+    assert "cannot evaluate" in out.stdout
+
+
+def test_a_ROOT_CLASS_the_schema_no_longer_declares_fails(tmp_path):
+    """Additions were asked about; REMOVALS were silent, and that is the direction that
+    turns an exemption into a lie."""
+    broken = yaml.safe_load(yaml.safe_dump(REAL))
+    del broken["classes"]["ProteinProfile"]
+    del broken["classes"]["ProfileTrait"]
+    out = _run(broken, tmp_path)
+    assert out.returncode == 1, out.stdout
+    assert "ROOT_CLASSES names" in out.stdout
+
+
+def test_an_AXIS_FREE_value_the_enum_no_longer_declares_fails(tmp_path):
+    broken = yaml.safe_load(yaml.safe_dump(REAL))
+    del broken["enums"]["ProteinTraitCategoryEnum"]["permissible_values"]["UPPER"]
+    out = _run(broken, tmp_path)
+    assert out.returncode == 1, out.stdout
+    assert "AXIS_FREE_CATEGORIES names" in out.stdout
+
+
+def test_the_axis_free_exemption_is_EXACT_not_a_prefix(tmp_path):
+    """Subtracting `c.split("_")[0]` exempted the whole `OTHER_*` namespace, so a genuinely
+    unbound `OTHER_UNBOUND_THING` passed. `SEQ_OTHER` / `MIXED_OTHER` already exist, so
+    that naming is not hypothetical."""
+    broken = yaml.safe_load(yaml.safe_dump(REAL))
+    broken["enums"]["ProteinTraitCategoryEnum"]["permissible_values"]["OTHER_UNBOUND_THING"] = {
+        "description": "bound to no axis"}
+    out = _run(broken, tmp_path)
+    assert out.returncode == 1, out.stdout
+    assert "OTHER_UNBOUND_THING" in out.stdout
+
+
+def test_enum_usage_counts_LIST_ITEM_keys():
+    """`- kind: STRUCTURAL` is how every definitions[] entry renders. Anchoring on
+    `^\s*kind:` missed 156,386 uses and reported DefinitionKindEnum as 3-of-3 unused."""
+    usage = A.enum_usage(REAL, REPO / "data" / "traits")
+    kinds = usage.get("DefinitionKindEnum", {})
+    assert set(kinds) >= {"GENERAL", "MECHANISTIC", "STRUCTURAL"}, dict(kinds)
+    assert sum(kinds.values()) > 100_000, sum(kinds.values())
