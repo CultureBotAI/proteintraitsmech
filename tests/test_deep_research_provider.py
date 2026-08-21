@@ -164,6 +164,26 @@ def test_stage_capabilities_unknown_key_is_rejected(tmp_path):
         drp.load_config(profile)
 
 
+def test_stage_capabilities_yaml_bool_key_still_raises_value_error(tmp_path):
+    """PyYAML's safe_load (YAML 1.1) parses an unquoted `no:` key as the
+    Python bool False. Mixed into a dict with a genuine unknown string
+    capability, `sorted(unknown_caps)` used to raise TypeError comparing
+    str to bool instead of the intended ValueError."""
+    profile = tmp_path / "boolkey.yaml"
+    profile.write_text(
+        "default_focus: f\n"
+        "focuses:\n"
+        "  f:\n"
+        "    stages:\n"
+        "      discovery:\n"
+        "        capabilities:\n"
+        "          no: 5\n"
+        "          acadmic_search: 3\n"
+    )
+    with pytest.raises(ValueError, match="unknown capability"):
+        drp.load_config(profile)
+
+
 def test_provider_adjustment_actually_changes_rank_order(monkeypatch):
     """Config-loading validation alone doesn't prove the bonus reaches the
     ranking — this proves it does."""
@@ -279,12 +299,13 @@ def test_recommendable_no_paid_actually_excludes_a_high_cost_row():
     exclude."""
     rows = [
         {"provider": "cheap", "status": "available", "cost": "low"},
+        {"provider": "midpriced", "status": "available", "cost": "medium"},
         {"provider": "pricey", "status": "available", "cost": "very_high"},
     ]
     with_paid = drp.recommendable(rows, no_paid=False)
     without_paid = drp.recommendable(rows, no_paid=True)
-    assert {r["provider"] for r in with_paid} == {"cheap", "pricey"}
-    assert {r["provider"] for r in without_paid} == {"cheap"}
+    assert {r["provider"] for r in with_paid} == {"cheap", "midpriced", "pricey"}
+    assert {r["provider"] for r in without_paid} == {"cheap", "midpriced"}
 
 
 def test_an_allowlist_confines_the_recommendation(monkeypatch):

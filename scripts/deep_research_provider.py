@@ -348,12 +348,12 @@ def load_config(path: Path) -> dict[str, Any]:
                 raise ValueError(
                     f"Stage {focus_name}.{stage_name}.capabilities must be a mapping"
                 )
-            unknown_caps = set(capabilities) - _ALL_CAPABILITIES
+            unknown_caps = {str(cap) for cap in capabilities} - _ALL_CAPABILITIES
             if unknown_caps:
                 raise ValueError(
                     f"Stage {focus_name}.{stage_name}.capabilities names unknown "
                     f"capability/ies {sorted(unknown_caps)}; no provider declares "
-                    f"them, so they would silently score 0. Known capabilities: "
+                    f"them, so they would silently score 0. Choose one of: "
                     f"{', '.join(sorted(_ALL_CAPABILITIES))}"
                 )
         adjustments = focus.get("provider_adjustments")
@@ -369,7 +369,7 @@ def load_config(path: Path) -> dict[str, Any]:
                     raise ValueError(
                         f"Focus {focus_name!r}.provider_adjustments names unknown "
                         f"provider {raw_name!r} (resolved to {name!r}); "
-                        f"known providers: {', '.join(sorted(PROVIDERS))}"
+                        f"choose one of: {', '.join(sorted(PROVIDERS))}"
                     )
                 if name in canonical:
                     raise ValueError(
@@ -548,8 +548,7 @@ def print_report(report: Mapping[str, Any], provider_name: str | None = None) ->
             if fallback:
                 message += f"; cross-check/fallback: {fallback['provider']}"
             print(message)
-        elif any(row["status"] == "available" and row["provider"] != "mock"
-                 for row in stage["ranking"]):
+        elif recommendable(stage["ranking"]):
             print(
                 "Route now: no provider passes the current --allow/--no-paid "
                 "filters, though at least one is otherwise available."
