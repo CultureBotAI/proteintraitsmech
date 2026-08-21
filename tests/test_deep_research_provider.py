@@ -266,18 +266,20 @@ def test_a_measured_dead_provider_is_not_recommended(monkeypatch):
 
     # Exercise the override end-to-end through rank_stage/build_report, not
     # just the direct provider_status() call above. With no credentials set
-    # at all (this repo's real CI has none), every provider is "unavailable"
-    # and recommended_available is None for an unrelated reason, making an
-    # assertion against build_report() vacuous unless falcon is actually
-    # made "available"-but-blocked here.
+    # at all (this repo's real CI has none), every OTHER provider is
+    # "unavailable" too, so recommended_available is None regardless of
+    # whether falcon's block is actually enforced — "recommended is None or
+    # ..." would pass vacuously via the None branch alone. Assert against
+    # recommendable() instead: it reports what COULD be recommended from the
+    # full ranking, so falcon's absence from it is meaningful even when
+    # nothing else is available either.
     monkeypatch.setenv("EDISON_API_KEY", "test-only")
     config = drp.load_config(CONFIG_PATH)
     report = drp.build_report(config, config["default_focus"])
     for stage in report["stages"]:
         falcon_row = next(row for row in stage["ranking"] if row["provider"] == "falcon")
         assert falcon_row["status"] == "blocked"
-        recommended = stage["recommended_available"]
-        assert recommended is None or recommended["provider"] not in drp.KNOWN_BLOCKED
+        assert "falcon" not in {row["provider"] for row in drp.recommendable(stage["ranking"])}
 
 
 def test_cyberian_is_blocked_end_to_end_like_falcon():
