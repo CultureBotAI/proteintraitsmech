@@ -280,6 +280,22 @@ def test_a_measured_dead_provider_is_not_recommended(monkeypatch):
         assert recommended is None or recommended["provider"] not in drp.KNOWN_BLOCKED
 
 
+def test_cyberian_is_blocked_end_to_end_like_falcon():
+    """KNOWN_BLOCKED has two entries; only falcon was exercised through
+    rank_stage/build_report above. cyberian's blocking is otherwise asserted
+    nowhere, so a typo or accidental removal of its KNOWN_BLOCKED entry
+    would go undetected."""
+    status, reason = drp.provider_status("cyberian")
+    assert status == "blocked"
+    assert "500" in reason
+
+    config = drp.load_config(CONFIG_PATH)
+    report = drp.build_report(config, config["default_focus"])
+    for stage in report["stages"]:
+        cyberian_row = next(row for row in stage["ranking"] if row["provider"] == "cyberian")
+        assert cyberian_row["status"] == "blocked"
+
+
 def test_provider_filtered_json_never_recommends_a_provider_it_did_not_rank(monkeypatch):
     """`--provider asta --json` recommended claude_code out of a document whose
     only ranked provider was asta. The human path took a different branch, so
