@@ -162,6 +162,16 @@ check-vendored-sync:
 measure-id-label-drift *args:
     uv run python scripts/measure_id_label_drift.py {{args}}
 
+# Fleet id-label adapter over causal nodes and canonical examples. Report-first:
+# requires locally installed OAK sqlite adapters and emits the known drift backlog.
+report-id-labels *args:
+    uv run python scripts/validate_id_label_correspondence.py --report reports/id_label_drift.tsv {{args}}
+
+# Blocking, offline subset: proteintraitsmech: node labels resolve against this corpus.
+# Pins mismatch count AND identity, so an equal-count swap still fails.
+validate-internal-id-labels *args:
+    uv run python scripts/validate_internal_id_labels.py {{args}}
+
 # Who may write a trait record, and by what route? (#492)
 # Three legitimate routes -- a seeder through record_io.write_record, a registered in-place
 # definition editor, or a declared bypass with a reason -- and anything else is a finding.

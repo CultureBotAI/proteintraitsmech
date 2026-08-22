@@ -1,0 +1,45 @@
+# Cross-ontology (id, label) adapter for ProteinTraitRecord YAML (#493).
+#
+# Local/report-first: OAK sqlite adapters must already be installed. The committed
+# CI gate for proteintraitsmech: groundings is validate_internal_id_labels.py and
+# needs no ontology cache. This adapter covers the wider causal-node and canonical
+# example surface when curators have the relevant OAK databases.
+adapters:
+  ARO: sqlite:obo:aro
+  CHEBI: sqlite:obo:chebi
+  GO: sqlite:obo:go
+  HP: sqlite:obo:hp
+  MONDO: sqlite:obo:mondo
+  NCBITaxon: sqlite:obo:ncbitaxon
+  PR: sqlite:obo:pr
+  RO: sqlite:obo:ro
+
+ignored_prefixes:
+  - proteintraitsmech
+  - UniProtKB
+  - RHEA
+  - RHEA-COMP
+  - EC
+  - CATH
+  - PROSITE
+  - MCSA
+  - pdb.ligand
+  - Pfam
+  - InterPro
+  - PDB
+  - SCOP
+  - NCBIfam
+  - ECOD
+
+synonym_scope: exact_related
+
+targets:
+  - name: protein_trait_records
+    kind: yaml
+    glob: "data/traits/**/*.yaml"
+    required: true
+    policy: canonical_or_synonym
+    pairs:
+      - [grounding, label]
+      - [taxon_id, taxon_label]
+      - [protein_id, protein_label]
