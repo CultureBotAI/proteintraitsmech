@@ -7,7 +7,7 @@ description: Use this skill to detect and consolidate equivalent ProteinTraitRec
 
 ## Overview
 
-ProteinTraitsMech is a large seeded catalog (~70k `ProteinTraitRecord` YAMLs)
+ProteinTraitsMech is a large seeded catalog (run `just corpus-stats` for current size)
 drawn from many sources (PROSITE, TED, ECOD, UniProtKB, PSI-MOD, M-CSA,
 DisProt, PSI-MI, PATO, METPO). Seeders are path-idempotent, so exact
 duplicates are rare — but they do occur when one source term is routed to two
@@ -28,7 +28,7 @@ trait and can be merged into one?** It draws a hard line between two tiers:
 
 **Key principle — in this corpus, `xrefs` are associative, not identity
 assertions.** A PROSITE ProRule cross-references the PATTERN it is built on; an
-N-glycosylation pattern cross-references the `MOD:` term it flags; ~2,700 motif
+N-glycosylation pattern cross-references the `MOD:` term it flags; many motif
 records all ground to the generic `SO:0001067` ("polypeptide_region"). So
 "shares an xref" or "same label" does **not** mean "same trait". Only exact
 identity signals qualify for MERGE. This is the analog of MediaIngredientMech's
@@ -87,11 +87,9 @@ The dry run writes `data/analysis/trait_merge_plan.yaml` — one entry per merge
 group (statement, rules, evidence, chosen target, members) and the full review
 list. **Always read the plan before `--apply`.**
 
-Catalog status (2026-07): the initial **4 MERGE groups** (all R1 — PROSITE
-ProRules routed into both a PTM-subtype dir and `prorule/`, plus `PS00654` in
-two dirs) have been **applied** (corpus 69,684 → 69,680), so a fresh run now
-reports 0 MERGE groups. **675 review candidates** (6 C1 + 669 C2) remain, by
-design untouched.
+Do not rely on a candidate total embedded in this skill. Run the analyzer against the
+current shards and inspect its generated plan; applied historical merges belong in
+curation history and Git history.
 
 ---
 

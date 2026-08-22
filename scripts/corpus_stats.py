@@ -47,6 +47,67 @@ def _record_count(traits: Path) -> int:
     )
 
 
+def _metrics_from_rg_lines(lines, records: int) -> dict:
+    """Aggregate ripgrep's contiguous per-file matches with per-record semantics."""
+    axes: collections.Counter[str] = collections.Counter()
+    statuses: collections.Counter[str] = collections.Counter()
+    records_with_graphs = 0
+    graphs = 0
+    current_path: bytes | None = None
+    current_axis: str | None = None
+    current_status: str | None = None
+    current_has_graphs = False
+    current_graphs = 0
+
+    def finish_record() -> None:
+        nonlocal records_with_graphs, graphs
+        if current_path is None:
+            return
+        if current_axis is not None:
+            axes[current_axis] += 1
+        if current_status is not None:
+            statuses[current_status] += 1
+        records_with_graphs += int(current_has_graphs)
+        graphs += current_graphs
+
+    # ripgrep emits all matches for one file contiguously. Keep only the first axis and
+    # status match, like re.search in the Python backend, while graph IDs remain a count.
+    for raw in lines:
+        path, separator, line = raw.partition(b"\0")
+        if not separator:
+            continue
+        if path != current_path:
+            finish_record()
+            current_path = path
+            current_axis = None
+            current_status = None
+            current_has_graphs = False
+            current_graphs = 0
+        if current_axis is None and (match := AXIS.match(line)):
+            current_axis = match.group(1).decode("ascii")
+        elif current_status is None and (match := STATUS.match(line)):
+            current_status = match.group(1).decode("ascii")
+        elif GRAPH_BLOCK.match(line):
+            current_has_graphs = True
+        elif GRAPH_ID.match(line):
+            current_graphs += 1
+    finish_record()
+
+    missing_axes = records - sum(axes.values())
+    missing_statuses = records - sum(statuses.values())
+    if missing_axes > 0:
+        axes["_MISSING"] = missing_axes
+    if missing_statuses > 0:
+        statuses["_MISSING"] = missing_statuses
+    return {
+        "records": records,
+        "by_axis": dict(sorted(axes.items())),
+        "by_mapping_status": dict(sorted(statuses.items())),
+        "records_with_causal_graphs": records_with_graphs,
+        "causal_graphs": graphs,
+    }
+
+
 def _corpus_metrics_rg(traits: Path) -> dict | None:
     """Use one native streaming scan when ripgrep is available.
 
@@ -71,41 +132,13 @@ def _corpus_metrics_rg(traits: Path) -> dict | None:
         ],
         stdout=subprocess.PIPE,
     )
-    axes: collections.Counter[str] = collections.Counter()
-    statuses: collections.Counter[str] = collections.Counter()
-    records_with_graphs = 0
-    graphs = 0
     assert process.stdout is not None
-    for raw in process.stdout:
-        _path, separator, line = raw.partition(b"\0")
-        if not separator:
-            continue
-        if match := AXIS.match(line):
-            axes[match.group(1).decode("ascii")] += 1
-        elif match := STATUS.match(line):
-            statuses[match.group(1).decode("ascii")] += 1
-        elif GRAPH_BLOCK.match(line):
-            records_with_graphs += 1
-        elif GRAPH_ID.match(line):
-            graphs += 1
+    metrics = _metrics_from_rg_lines(process.stdout, _record_count(traits))
     returncode = process.wait()
     if returncode not in (0, 1):
         raise subprocess.CalledProcessError(returncode, process.args)
 
-    records = _record_count(traits)
-    missing_axes = records - sum(axes.values())
-    missing_statuses = records - sum(statuses.values())
-    if missing_axes > 0:
-        axes["_MISSING"] = missing_axes
-    if missing_statuses > 0:
-        statuses["_MISSING"] = missing_statuses
-    return {
-        "records": records,
-        "by_axis": dict(sorted(axes.items())),
-        "by_mapping_status": dict(sorted(statuses.items())),
-        "records_with_causal_graphs": records_with_graphs,
-        "causal_graphs": graphs,
-    }
+    return metrics
 
 
 def _corpus_metrics_python(traits: Path, workers: int | None) -> dict:

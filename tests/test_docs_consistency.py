@@ -160,7 +160,25 @@ def test_startup_guidance_contains_no_point_in_time_corpus_claims():
         for path in (ROOT / ".claude" / "skills").glob("*/SKILL.md")
     )
     assert "just corpus-stats" in claude
-    for stale in ("~200,600", "**0 records**", "currently unpopulated"):
+    for stale in (
+        "~200,600",
+        "**0 records**",
+        "currently unpopulated",
+        "~70k",
+        "~2,700 motif",
+        "~22k",
+        "~7.4k",
+        "~48 records",
+        "~240 records",
+        "~48 cells",
+        "Takes ~1-2 min",
+        "Catalog status (2026-07)",
+        "69,684",
+        "675 review candidates",
+        "25,685 same-label",
+        "0 today",
+        "85% are structural",
+    ):
         assert stale not in claude
         assert stale not in skill_text
 

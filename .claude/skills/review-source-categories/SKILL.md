@@ -22,7 +22,7 @@ just review-categories --show 10           # more example files per flag
 ```
 
 Read-only; scans `data/traits/**` and groups by the same `infer_source` the
-docs build uses. Takes ~1-2 min over the full corpus.
+docs build uses. It scans the full corpus, so budget the run accordingly.
 
 ## What each source report shows
 

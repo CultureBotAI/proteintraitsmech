@@ -82,3 +82,34 @@ def test_cli_writes_machine_readable_json_atomically(tmp_path):
     assert out.returncode == 0, out.stderr
     assert json.loads(destination.read_text(encoding="utf-8"))["schema_version"] == 1
     assert not destination.with_suffix(".json.tmp").exists()
+
+
+def test_streaming_rg_aggregation_matches_python_first_field_semantics(tmp_path):
+    traits = tmp_path / "traits"
+    _write(
+        traits,
+        "duplicate.yaml",
+        "trait_axis: SEQUENCE\ntrait_axis: STRUCTURE\n"
+        "mapping_status: SEEDED\nmapping_status: REVIEWED\n"
+        "causal_graphs:\n  - graph_id: one\ncausal_graphs:\n  - graph_id: two\n",
+    )
+    _write(traits, "missing.yaml", "identifier: Test:missing\n")
+    lines = [
+        b"duplicate.yaml\0trait_axis: SEQUENCE\n",
+        b"duplicate.yaml\0trait_axis: STRUCTURE\n",
+        b"duplicate.yaml\0mapping_status: SEEDED\n",
+        b"duplicate.yaml\0mapping_status: REVIEWED\n",
+        b"duplicate.yaml\0causal_graphs:\n",
+        b"duplicate.yaml\0  - graph_id: one\n",
+        b"duplicate.yaml\0causal_graphs:\n",
+        b"duplicate.yaml\0  - graph_id: two\n",
+    ]
+
+    streamed = STATS._metrics_from_rg_lines(lines, records=2)
+    fallback = STATS._corpus_metrics_python(traits, workers=1)
+
+    assert streamed == fallback
+    assert streamed["by_axis"] == {"SEQUENCE": 1, "_MISSING": 1}
+    assert streamed["by_mapping_status"] == {"SEEDED": 1, "_MISSING": 1}
+    assert streamed["records_with_causal_graphs"] == 1
+    assert streamed["causal_graphs"] == 2

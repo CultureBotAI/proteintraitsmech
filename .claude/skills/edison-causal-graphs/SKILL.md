@@ -101,7 +101,7 @@ graphs share the same domain/fold/site trait nodes.
 | Source | What it gives | Route to a graph |
 |--------|---------------|------------------|
 | **M-CSA** (`data/traits/structure/active_site/mcsa/`) | **explicit stepwise catalytic mechanisms** with residue roles, arrow-pushing, and per-step literature references | the flagship seed — each step = a RESIDUE/LIGAND edge; M-CSA's own reference is the citation |
-| **CARD / ARO** (`…/resistance/aro/`, ~7.4k) | resistance *mechanism* + drug class + determinant | determinant → mechanism → resistant phenotype edges (RO regulates / causally upstream of) |
+| **CARD / ARO** (`…/resistance/aro/`) | resistance *mechanism* + drug class + determinant | determinant → mechanism → resistant phenotype edges (RO regulates / causally upstream of) |
 | **UniProt / BioLiP / MetalPDB active/binding/metal sites** | which residues bind ligand/metal | RESIDUE —molecularly interacts with→ LIGAND, backed by the site's PDB + UniProt evidence |
 | **Rhea / EC / Reactome** | reaction chemistry (substrate → product) | CHEMICAL(substrate) —has input/has output→ MOLECULAR_FUNCTION → CHEMICAL(product) |
 
