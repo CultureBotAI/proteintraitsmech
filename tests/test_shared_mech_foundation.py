@@ -52,11 +52,13 @@ def test_every_governed_file_is_actually_present():
     listed = {ln.strip() for ln in same_path.strip().splitlines()
               if ln.strip() and not ln.strip().startswith("#")}
     assert listed == {
+        "scripts/check_vendored_sync.sh",
         "scripts/validate_id_label_correspondence.py",
         "scripts/chem_formula.py",
         "tests/test_id_label_empty_adapter.py",
         "tests/test_id_label_unknown_prefix.py",
         "tests/test_id_label_plausibility.py",
+        "tests/test_provider_triage_contract.py",
     }, f"the governed same-path set changed: {sorted(listed)}"
     for line in same_path.strip().splitlines():
         rel = line.strip()
