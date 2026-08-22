@@ -19,7 +19,7 @@ siblings' own implementations are the specification used here, primarily
 | 1 | `mech_shared.yaml` with `Discussion` + `Dataset` | ✗ | **✓** | Vendored byte-identical from the hub; `discussions` / `datasets` on `ProteinTraitRecord` |
 | 2 | Append-only history schema + presence gate | ✗ | **✓** | `history.yaml` vendored **and governed**, `history/` tree, CI job. Presence advisory — see below |
 | 3 | `new-history` / `validate-history` recipes | ✗ | **✓** | Claw-preferred, local fallback scaffolder |
-| 4 | Validated-write helper + writer-safety audit | ✗ | ✗ | Deferred — **#492** |
+| 4 | Validated-write helper + writer-safety audit | ✗ | **✓** | Atomic closed-schema helper; registered editors enforced; bulk seeders explicitly retain fast merge path — **#492** |
 | 5 | ID-to-label correspondence validation | ✗ | **✓** | Fleet YAML adapter + offline count-and-identity gate for actionable internal groundings — **#493** |
 | 6 | Evidence snippet / reference validation | **✓** | **✓** | Pre-existing: `just audit-snippets` |
 | 7 | Knowledge-gap scan + shared QC dashboard | ✗ | ✗ | **Not a gap.** No sibling has this in CI or as a dependency — see below |
@@ -66,11 +66,14 @@ forbids. It is carried, unused, on purpose.
 
 ## Deferred, with reasons
 
-**4 — validated-write helper + writer audit.** Real work, and this repo needs it in a
-specific shape: 49 seeders write records, and `record_io.write_record` is already the
-choke point they route through. A writer audit here means proving each of those 49 goes
-through it rather than calling `path.write_text` — which is a different audit from the
-siblings', because the failure mode is different. Filed as #492.
+**4 — validated-write helper + writer audit.** Implemented in the repo-specific
+shape #492 required. `record_io.write_validated_record` writes beside the target,
+runs the same closed-schema validator as `validate-strict`, and atomically replaces
+only a valid candidate. The registered in-place definition editors use that path,
+and `audit-writers` fails if one falls back to a direct write. Bulk seeders retain
+`write_record`'s merge-first fast path: validating roughly 430,000 individual files
+during generation would duplicate the corpus gate and make release builds unusable.
+They remain classified and covered by corpus-wide `validate-strict` in CI.
 
 **5 — the id-label adapter.** Implemented after measurement, rather than guessing.
 `conf/id_label_targets.yaml` maps causal-node `grounding/label` and canonical-example
@@ -118,6 +121,7 @@ just validate-history        # every history record against the vendored schema
 just validate-strict         # closed-schema over the corpus
 just validate-internal-id-labels  # offline internal grounding identity gate
 just report-id-labels         # broad OAK-backed report (local adapters required)
+just audit-writers           # every writer has a classified route
 uv run pytest tests/test_id_label_empty_adapter.py \
               tests/test_id_label_unknown_prefix.py \
               tests/test_id_label_plausibility.py

@@ -24,7 +24,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from record_io import is_curated  # noqa: E402
+from record_io import is_curated, write_validated_record  # noqa: E402
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS = REPO_ROOT / "data" / "traits"
@@ -99,7 +99,7 @@ def main() -> int:
             continue
         done += 1
         if args.apply:
-            p.write_text(new, encoding="utf-8")
+            write_validated_record(p, new, encoding="utf-8")
 
     if curated:
         print(f"  skipped {curated:,} showing curation (definition left alone, #175)")

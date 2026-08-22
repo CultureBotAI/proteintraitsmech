@@ -31,7 +31,7 @@ XML_GZ = REPO_ROOT / "data" / "raw" / "interpro" / "interpro.xml.gz"
 MISSING = REPO_ROOT / "data" / "raw" / "interpro" / "missing_abstracts.json"
 ID_RE = re.compile(r"^identifier:\s*(Pfam:PF\d+)", re.M)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from record_io import is_curated  # noqa: E402
+from record_io import is_curated, write_validated_record  # noqa: E402
 from interpro_text import (  # noqa: E402
     clean_abstract_element, clean_api_description, load_member_integration)
 
@@ -365,7 +365,7 @@ def main() -> int:
             if new != text:
                 reverted += 1
                 if args.apply:
-                    path.write_text(new, encoding="utf-8")
+                    write_validated_record(path, new, encoding="utf-8")
                 # #344: reverts count toward --limit too. They did not at first, so
                 # `--limit 1` -- the documented canary -- would have written one
                 # enrichment and all 35 reverts, which is the opposite of a canary.
@@ -385,7 +385,7 @@ def main() -> int:
             else:
                 updated += 1
             if args.apply:
-                path.write_text(new, encoding="utf-8")
+                write_validated_record(path, new, encoding="utf-8")
             if args.limit and updated + relabelled + reverted >= args.limit:
                 break
 

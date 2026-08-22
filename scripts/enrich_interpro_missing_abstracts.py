@@ -40,7 +40,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from interpro_text import clean_api_description  # noqa: E402
-from record_io import is_curated  # noqa: E402
+from record_io import is_curated, write_validated_record  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 TRAITS = ROOT / "data" / "traits"
@@ -157,7 +157,7 @@ def main() -> int:
         print(f"  {'wrote' if args.apply else 'would write'}  {path.name}  "
               f"({len(' '.join(cur.group(1).split())) if cur else 0} -> {len(new_def)} chars)")
         if args.apply:
-            path.write_text(new, encoding="utf-8")
+            write_validated_record(path, new, encoding="utf-8")
         if args.limit and updated >= args.limit:
             print(f"\n--limit {args.limit} reached; the rest was not examined.")
             break

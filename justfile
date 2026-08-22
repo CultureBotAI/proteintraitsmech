@@ -173,8 +173,9 @@ validate-internal-id-labels *args:
     uv run python scripts/validate_internal_id_labels.py {{args}}
 
 # Who may write a trait record, and by what route? (#492)
-# Three legitimate routes -- a seeder through record_io.write_record, a registered in-place
-# definition editor, or a declared bypass with a reason -- and anything else is a finding.
+# Three legitimate routes -- a bulk seeder through record_io.write_record, a registered
+# in-place editor through atomic write_validated_record, or a declared bypass with a
+# reason -- and anything else is a finding.
 # Needs no data/raw: it reads scripts/ and the guard test. CI-able.
 audit-writers *args:
     uv run python scripts/audit_writers.py {{args}}

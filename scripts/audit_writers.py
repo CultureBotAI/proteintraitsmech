@@ -23,8 +23,9 @@ So there are three legitimate routes and one finding:
 
   * SEEDER          calls `write_record` -- merge on, curation preserved.
   * EDITOR          in `tests/test_inplace_editor_guards.py::EDITORS` -- an in-place
-                    definition editor, must bypass the merge, and that test proves it
-                    carries `should_enrich`.
+                    definition editor, must bypass the merge through
+                    `write_validated_record`, and that test proves it carries
+                    `should_enrich`.
   * DECLARED        a repair, migration or builder listed in `BYPASS` below WITH A REASON.
   * anything else   FINDING. A script writing trait records by a route nobody has thought
                     about is exactly how #455 and #148 happened.
@@ -384,14 +385,27 @@ def main() -> int:
             continue
         examined += 1
         uses_choke_point = "write_record(" in src
+        uses_validated_write = any(
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id == "write_validated_record"
+            for node in ast.walk(tree)
+        )
         in_place = writes_trait_records(tree)
+        if stem in editors:
+            if uses_validated_write and not in_place:
+                registered.append(stem)
+            else:
+                findings.append(
+                    (stem, "registered editor does not use write_validated_record "
+                     "exclusively")
+                )
+            continue
         if not in_place:
             if uses_choke_point:
                 seeders.append(stem)
             continue
-        if stem in editors:
-            registered.append(stem)
-        elif stem in BYPASS:
+        if stem in BYPASS:
             declared.append(stem)
         elif uses_choke_point:
             seeders.append(stem)
@@ -425,12 +439,20 @@ def main() -> int:
               f"route each, or the registry says nothing:")
         for name in overlap:
             print(f"  {name}")
+    missing_editors = sorted(editors - set(registered))
+    if missing_editors:
+        print(
+            f"\nFAIL: {len(missing_editors)} registered editor(s) do not use the "
+            "validated-write route:"
+        )
+        for name in missing_editors:
+            print(f"  {name}")
     if findings:
         print(f"\nFAIL: {len(findings)} script(s) write trait records by an undeclared "
               f"route. Each is a place a re-seed's protections do not reach:")
         for name, why in findings[:args.show]:
             print(f"  {name}: {why}")
-    if findings or stale or overlap:
+    if findings or stale or overlap or missing_editors:
         return 1
     print("\nOK: every writer of a trait record is a seeder, a registered editor, or a "
           "declared bypass.")
