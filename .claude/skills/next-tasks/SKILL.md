@@ -1,10 +1,6 @@
 ---
 name: next-tasks
 description: Assess and maintain the ProteinTraitsMech backlog. Reconciles NEXT_TASKS.md against what actually shipped (merged PRs, git log, open issues/PRs), separates genuinely-pending actionable work from done/stale/upstream-blocked items, surfaces a short prioritized menu with a recommendation, and — when asked — picks one up. Also the maintenance path for NEXT_TASKS.md itself — marking done items, adding new deferrals, bumping the reconcile date, and keeping cross-Mech items in sync. Use whenever the user asks "next tasks", "what's next", "is the backlog current", or after finishing a work thread.
-category: workflow
-requires_database: false
-requires_internet: false
-version: 1.0.0
 ---
 
 # Next Tasks (backlog assessment + maintenance)
@@ -51,11 +47,13 @@ cite things that were later renamed.
 
 ProteinTraitsMech-specific traps when judging "done":
 
-- **Measure, don't trust a stale count.** The corpus is ~430K trait records
-  (`data/traits/`), and prior backlog notes have cited draft/bucket counts that
-  were wrong by 2–20x by the time they were re-read. Recompute the actual
-  number (e.g. via the audit recipe the item names) before reporting progress
-  or declaring a bucket exhausted — do not relay a written figure as current.
+- **Measure, don't trust a stale count.** The corpus is large (run `just
+  corpus-stats` for the current trait-record count under `data/traits/`), and
+  prior backlog notes have cited draft/bucket counts that were wrong by 2–20x
+  by the time they were re-read. Recompute the actual number (e.g. via the
+  audit recipe the item names, or `just corpus-stats`) before reporting
+  progress or declaring a bucket exhausted — do not relay a written figure as
+  current.
 - **Warn-mode / advisory gates hide residue.** Some `audit-*`/`validate-*`
   recipes report counts without failing the build. A green CI run is not
   evidence of zero findings — read the count the recipe prints, not just its
@@ -111,11 +109,14 @@ From `.github/workflows/`:
   causal-graph structural audit (`audit_causal_graphs.py`). Path-filtered to
   schema/`data/traits/**`/validator changes; scoped to changed files on a PR,
   full-corpus on push to `main`.
-- **`history-and-vendored`**: two sparse-checkout, curl+diff-only gates (no
-  `uv`/Python) — `validate-history` and `vendored-sync` (the drift check
-  against `CultureBotAI/CultureMech@<scripts/.vendored_canon_ref>`). Fast by
-  design; the repo is ~431K files and ~768MB, essentially all `data/traits/`,
-  and neither job reads a record.
+- **`history-and-vendored`**: two sparse-checkout gates, differently shaped —
+  `vendored-sync` is curl+diff only (no `uv`/Python; fetches the hub's pinned
+  copies and diffs) checking drift against
+  `CultureBotAI/CultureMech@<scripts/.vendored_canon_ref>`; `validate-history`
+  installs `uv`/`just` and runs `just validate-history` against committed
+  history records. Both use sparse checkout to stay fast — run `just
+  corpus-stats` for the current file/size scale that makes that worthwhile;
+  neither job reads a trait record.
 - **`pages`**: publishes docs; not a correctness gate.
 
 Recipes with no workflow behind them (`audit-*`/`validate-*` variants not
