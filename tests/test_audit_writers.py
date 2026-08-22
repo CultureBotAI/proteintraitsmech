@@ -181,3 +181,24 @@ def test_a_declared_bypass_may_not_name_a_plain_seeder(tmp_path, monkeypatch):
     monkeypatch.setattr(sys, "argv", ["audit_writers.py"])
     monkeypatch.setitem(mod.BYPASS, "seed_prosite", "a reason long enough to pass the check")
     assert mod.main() == 1
+
+
+def test_registered_editor_without_validated_write_fails(tmp_path, monkeypatch):
+    scripts = tmp_path / "scripts"
+    scripts.mkdir()
+    (scripts / "unsafe_editor.py").write_text(
+        'from pathlib import Path\n'
+        'TRAITS = Path("data") / "traits"\n'
+        'for p in TRAITS.rglob("*.yaml"):\n'
+        '    p.write_text("unsafe")\n',
+        encoding="utf-8",
+    )
+    guard = tmp_path / "guard.py"
+    guard.write_text('EDITORS = [\n    "unsafe_editor",\n]\n', encoding="utf-8")
+    mod = _load()
+    monkeypatch.setattr(mod, "SCRIPTS", scripts)
+    monkeypatch.setattr(mod, "GUARD_TEST", guard)
+    monkeypatch.setattr(mod, "BYPASS", {})
+    monkeypatch.setattr(sys, "argv", ["audit_writers.py"])
+
+    assert mod.main() == 1

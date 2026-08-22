@@ -113,6 +113,14 @@ def test_the_main_loop_actually_calls_the_guard(module):
 
 
 @pytest.mark.parametrize("module", EDITORS)
+def test_every_registered_editor_uses_the_validated_write_route(module):
+    """An editor bypasses merge-on-reseed, but may not bypass strict validation."""
+    src = (REPO / "scripts" / f"{module}.py").read_text(encoding="utf-8")
+    assert "write_validated_record(" in src
+    assert ".write_text(" not in src
+
+
+@pytest.mark.parametrize("module", EDITORS)
 def test_the_guard_delegates_rather_than_reimplementing(module):
     """`is_curated` is the one definition of "curated" in this repo (#100). A
     local reimplementation here would drift from it, which is the failure mode
