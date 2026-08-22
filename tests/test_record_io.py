@@ -1465,3 +1465,64 @@ def test_a_seeder_that_emits_no_definition_source_cannot_claim_one_it_never_wrot
 def test_a_record_with_no_definition_source_refreshes_as_before():
     existing = "identifier: X:1\ndefinition: >-\n  old\nmapping_status: SEEDED\nlicense: CC0\n"
     assert not _definition_was_enriched(existing, PFAM_FRESH)
+
+
+# --- atomic validated-write path (#492) -------------------------------------------
+
+import record_io as record_io_module  # noqa: E402
+from record_io import RecordValidationError, write_validated_record  # noqa: E402
+
+
+def test_invalid_candidate_never_replaces_the_existing_record(tmp_path, monkeypatch):
+    target = tmp_path / "record.yaml"
+    target.write_text("original bytes\n", encoding="utf-8")
+    monkeypatch.setattr(
+        record_io_module,
+        "_strict_validation_errors",
+        lambda path: [{"category": "unexpected_field", "message": "bad slot"}],
+    )
+
+    with pytest.raises(RecordValidationError, match="bad slot"):
+        write_validated_record(target, "identifier: X:1\nunknown: true\n")
+
+    assert target.read_text(encoding="utf-8") == "original bytes\n"
+    assert list(tmp_path.glob(".record.yaml.*.tmp")) == []
+
+
+def test_validated_candidate_is_installed_atomically(tmp_path, monkeypatch):
+    target = tmp_path / "record.yaml"
+    target.write_text("old\n", encoding="utf-8")
+    target.chmod(0o640)
+    observed = []
+
+    def validate(candidate):
+        observed.append(candidate.read_text(encoding="utf-8"))
+        assert candidate != target
+        return []
+
+    monkeypatch.setattr(record_io_module, "_strict_validation_errors", validate)
+    write_validated_record(target, "new\n")
+
+    assert observed == ["new\n"]
+    assert target.read_text(encoding="utf-8") == "new\n"
+    assert target.stat().st_mode & 0o777 == 0o640
+
+
+def test_write_record_can_opt_into_validation(tmp_path, monkeypatch):
+    target = tmp_path / "record.yaml"
+    monkeypatch.setattr(record_io_module, "_strict_validation_errors", lambda path: [])
+
+    write_record(target, "new\n", merge=False, validate=True)
+
+    assert target.read_text(encoding="utf-8") == "new\n"
+
+
+def test_validated_write_uses_the_real_closed_schema(tmp_path):
+    target = tmp_path / "record.yaml"
+    valid = "identifier: X:1\nlabel: x\ntrait_axis: FUNCTION\n"
+    write_validated_record(target, valid)
+    assert target.read_text(encoding="utf-8") == valid
+
+    with pytest.raises(RecordValidationError, match="Additional properties"):
+        write_validated_record(target, valid + "invented_slot: true\n")
+    assert target.read_text(encoding="utf-8") == valid
