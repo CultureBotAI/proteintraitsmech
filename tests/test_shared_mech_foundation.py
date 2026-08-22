@@ -57,9 +57,12 @@ def test_every_governed_file_is_actually_present():
         "scripts/chem_formula.py",
         "tests/test_id_label_empty_adapter.py",
         "tests/test_id_label_unknown_prefix.py",
-        "tests/test_id_label_plausibility.py",
-        "tests/test_provider_triage_contract.py",
-    }, f"the governed same-path set changed: {sorted(listed)}"
+            "tests/test_id_label_plausibility.py",
+            "tests/test_provider_triage_contract.py",
+            "tests/test_skill_frontmatter.py",
+            "tests/test_curation_timestamp_schema.py",
+            "prompts/backlog-loop-goal.md",
+        }, f"the governed same-path set changed: {sorted(listed)}"
     for line in same_path.strip().splitlines():
         rel = line.strip()
         if not rel or rel.startswith("#"):
@@ -245,3 +248,12 @@ def test_the_vendored_sync_job_needs_no_python():
                         .read_text())
     steps = wf["jobs"]["vendored-sync"]["steps"]
     assert not any("uv" in str(s).lower() or "python" in str(s).lower() for s in steps), steps
+
+
+def test_vendored_sync_sparse_checkout_carries_every_governed_directory():
+    """A governed file omitted by sparse checkout looks missing only in CI."""
+    wf = yaml.safe_load(
+        (REPO / ".github" / "workflows" / "history-and-vendored.yaml").read_text()
+    )
+    checkout = wf["jobs"]["vendored-sync"]["steps"][0]["with"]["sparse-checkout"]
+    assert set(checkout.split()) >= {"scripts", "src", "tests", "prompts"}
