@@ -52,6 +52,10 @@ install:
 corpus-stats output="-" *args:
     uv run python scripts/corpus_stats.py --output {{quote(output)}} {{args}}
 
+# Audit a built Pages tree against conf/pages_budgets.json.
+audit-pages *args:
+    uv run python scripts/audit_pages_size.py {{args}}
+
 # Generate Python dataclasses from LinkML schema
 gen-schema:
     uv run gen-pydantic src/proteintraitsmech/schema/proteintraitsmech.yaml > src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py

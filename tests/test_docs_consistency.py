@@ -183,12 +183,12 @@ def test_startup_guidance_contains_no_point_in_time_corpus_claims():
         assert stale not in skill_text
 
 
-def test_browser_guidance_matches_lazy_axis_and_detail_loading():
+def test_browser_guidance_matches_filter_aware_shards_and_detail_loading():
     claude = CLAUDE_MD.read_text(encoding="utf-8")
     builder = (ROOT / "scripts" / "build_docs_index.py").read_text(encoding="utf-8")
     browser = (ROOT / "docs" / "browse.js").read_text(encoding="utf-8")
-    assert "lazily by axis" in claude
+    assert "axis, category, source, and" in claude
     assert "bucketed detail sidecar" in claude
     assert "fetches lean record shards lazily" in builder
-    assert "function loadAxis(axis)" in browser
+    assert "function neededShards()" in browser
     assert "function loadDetail" in browser
