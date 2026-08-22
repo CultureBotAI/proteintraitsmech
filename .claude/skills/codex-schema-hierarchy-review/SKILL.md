@@ -41,8 +41,8 @@ do.
 ## Prompt
 
 You are reviewing **ProteinTraitsMech**, a LinkML-governed knowledge base of
-**protein sequence / structure / function traits** — a corpus of ~200,600 YAML
-files (one `ProteinTraitRecord` each) under `data/traits/`. It is a catalogue of
+**protein sequence / structure / function traits** — one `ProteinTraitRecord`
+YAML per trait under `data/traits/` (run `just corpus-stats` for current counts). It is a catalogue of
 trait **classes**, not per-protein annotations.
 
 ### Your task
@@ -76,7 +76,7 @@ standard ontologies (SO, GO, PATO, EDAM, ChEBI); type **edges** with Biolink
 - `CLAUDE.md`, `README.md` (FT-type → category map + seeds table),
   `download.yaml` (per-source declared `trait_categories`),
   `scripts/build_docs_index.py` `infer_source()`.
-- A **representative sample of records per source** (not all 200k):
+- A **representative sample of records per source** (not the full corpus):
   EC leaf + its parent chain (`data/traits/function/enzymatic_activity/ec/*ec1-1-1-2*`),
   CATH class/architecture/topology/homologous_superfamily, TED/ECOD/SCOPe folds
   (`data/traits/structure/fold/{novel,ecod,scope}/`), a Pfam family + its clan

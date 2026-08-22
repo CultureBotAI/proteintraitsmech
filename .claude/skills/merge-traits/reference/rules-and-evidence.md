@@ -72,7 +72,7 @@ same trait record". A curator decides whether the corpus should keep both.
 Both records cite the same **specific** identity-namespace xref, and that xref is
 shared by at most `--anchor-cap` records (default 5). The cap is the crucial
 part: without it, the top "shared xref" is `SO:0001067` ("polypeptide_region"),
-cited by ~2,700 motif records — a generic grounding, not an identity. With the
+cited by many motif records — a generic grounding, not an identity. With the
 cap, C2 surfaces things like PROSITE pattern+profile pairs for one family
 (`PS00171`+`PS51440`, both linked to `PRU10127`). Same underlying signature, two
 detection methods — the repo keeps both intentionally, so this is REVIEW, not
@@ -86,11 +86,10 @@ ground records rather than identify them.
 ### C3 — SAME_LABEL_XSRC
 Identical normalized label (lowercased, punctuation collapsed) across **different
 sources**, same `(axis, category)`. Restricted to cross-source on purpose:
-intra-source label reuse is rampant and meaningless — 25,685 same-label pairs
-exist, and **all** are intra-source, dominated by TED/ECOD folds
-(`STRUCT_FOLD` alone contributes ~22k) that share a generic name while being
-distinct domains. Cross-source label collisions (0 today) are a plausible future
-duplicate worth a human look.
+intra-source label reuse is rampant and usually meaningless, dominated by TED/ECOD folds
+(including a large `STRUCT_FOLD` population) that share a generic name while being
+distinct domains. Cross-source label collisions are plausible duplicates worth a human
+look; run the analyzer for the current candidate count.
 
 ## Why not more aggressive?
 

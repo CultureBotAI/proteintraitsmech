@@ -43,12 +43,13 @@ just validate-all             # validate every ProteinTraitRecord YAML
 ```
 ProteinTraitsMech/
 ├── data/
-│   ├── raw/                                     # vendored source releases (Pfam, InterPro, CATH, SCOP, MEROPS, …)
+│   ├── raw/                                     # gitignored, regenerable upstream downloads
 │   └── traits/
 │       ├── sequence/<category>/<slug>.yaml
 │       ├── structure/<category>/<slug>.yaml
-│       ├── mixed/<category>/<slug>.yaml
-│       └── function/<category>/<slug>.yaml
+│       ├── sequence_structure/<category>/<slug>.yaml
+│       ├── function/<category>/<slug>.yaml
+│       └── evolution/<category>/<slug>.yaml
 ├── src/proteintraitsmech/
 │   └── schema/proteintraitsmech.yaml            # LinkML schema
 ├── scripts/                                     # seed / validate / audit tooling

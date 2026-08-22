@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Build docs/data/records.json — a single JSON index used by
-`docs/browse.html` for client-side faceted browsing over every
-ProteinTraitRecord YAML.
+"""Build the sharded JSON indexes used by the client-side trait browser.
 
-Kept intentionally lean per record so 18K entries stay under ~10 MB
-uncompressed. The browser renders detail pages from this index on the
-fly; nothing else is generated per record.
+The browser fetches lean record shards lazily by selected axis, then fetches a
+bucketed detail sidecar only when a record is opened. Nothing is generated per
+record, which keeps the Pages file count bounded as the corpus changes.
 
 Run:
   python3 scripts/build_docs_index.py
@@ -24,8 +22,7 @@ Output:
                                   browser fetches a record's bucket only when its
                                   detail view is opened. Records are hashed into
                                   DETAIL_BUCKETS files (one file per record would
-                                  be 200k files and blow past the GitHub Pages
-                                  Jekyll build's ~10-min file-copy timeout). Each
+                                  make Pages deployment scale with corpus size). Each
                                   bucket is `{record_id: detail}`; the record
                                   stores its bucket path in `"df"` (e.g.
                                   "detail/023.json"). This keeps the upfront
@@ -39,7 +36,7 @@ Record shape:
     "id": "<identifier>",
     "label": "...",
     "def": "...",                     # truncated to ~500 chars
-    "axis": "SEQUENCE" | "STRUCTURE" | "SEQUENCE_STRUCTURE" | "FUNCTION",
+    "axis": "SEQUENCE" | "STRUCTURE" | "SEQUENCE_STRUCTURE" | "FUNCTION" | "EVOLUTION",
     "cat": "SEQ_MOTIF" | ...,
     "src": "PROSITE" | "TED" | "UniProtKB" | "LinkML LSF" | "manual",
     "sta": "SEEDED" | "REVIEWED" | ...,
@@ -84,10 +81,9 @@ from typing import Any
 import yaml
 
 # Number of detail-sidecar bucket files. Kept moderate: GitHub Pages' Jekyll
-# builder copies every file in docs/ and times out around 10 min, so thousands
-# of one-record files fail the build; but too few makes each bucket a large
-# per-detail-view fetch. 200k records / 256 buckets ≈ 780 records per bucket
-# (~350 KB, one cached fetch per detail view).
+# builder copies every file in docs/, so thousands of one-record files make deploys
+# expensive; but too few buckets makes each detail view fetch a large payload. Size
+# budgets and bucket-count changes are tracked separately from this format description.
 DETAIL_BUCKETS = 256
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -485,7 +481,7 @@ MAX_SHARD_RECORDS = 25000
 
 # Fields the list + facet views never touch — they exist only in the record
 # detail view, so they move to a lazy per-record detail sidecar to keep the
-# upfront payload small (~200k records × everything = ~108 MB → ~21 MB lean).
+# upfront payload small as the corpus changes.
 # `def` is special-cased: the list keeps a short snippet (card preview +
 # search); the full text goes to the sidecar.
 DETAIL_ONLY = ("path", "pt", "xr", "mx", "cp", "ex", "eq", "ss", "geo", "rs", "pat", "ev", "escope", "defs", "syn")
@@ -561,7 +557,7 @@ def write_shards(records: list[dict]) -> list[dict]:
     for axis in sorted(by_axis, key=axis_key):
         recs = sorted(by_axis[axis], key=lambda r: r["id"])
         # Chunk large axes so no single shard approaches the 50 MB git
-        # warning / 100 MB hard limit (STRUCTURE alone is ~90k records).
+        # warning / 100 MB hard limit.
         chunks = [recs[i:i + MAX_SHARD_RECORDS]
                   for i in range(0, len(recs), MAX_SHARD_RECORDS)] or [[]]
         for idx, chunk in enumerate(chunks):
