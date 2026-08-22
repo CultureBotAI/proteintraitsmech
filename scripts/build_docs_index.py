@@ -563,13 +563,14 @@ def write_detail(pairs: list[tuple[dict, dict]]) -> tuple[int, int, float, int]:
     `rec["df"]` and each bucket is `{record_id: detail}`. Heavy
     example sequences ride along inside each detail's `ex`, so a detail view is
     a single lazy fetch. Returns (record_count, file_count, total_MB, max_bytes)."""
+    # Validate and size the new layout before touching the previous usable build.
+    bucket_count = detail_bucket_count(pairs)
     det_dir = OUT_DIR / "detail"
     if det_dir.exists():
         for old in det_dir.glob("*.json"):
             old.unlink()
     det_dir.mkdir(parents=True, exist_ok=True)
 
-    bucket_count = detail_bucket_count(pairs)
     width = max(3, len(str(bucket_count - 1)))
     buckets: dict[str, dict[str, dict]] = {}
     for rec, detail in pairs:

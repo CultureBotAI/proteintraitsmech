@@ -39,5 +39,40 @@
     return manifest.map(shard => shard.file);
   }
 
-  return { allShardFiles, selectShardFiles, shardMatches };
+  function createLoader(fetchFile, acceptRecords) {
+    const loaded = new Set();
+    const pending = new Map();
+
+    function load(file) {
+      if (loaded.has(file)) return Promise.resolve();
+      if (!pending.has(file)) {
+        const request = Promise.resolve()
+          .then(() => fetchFile(file))
+          .then(response => {
+            if (!response || !response.ok) {
+              const status = response && response.status ? `HTTP ${response.status}` : "no response";
+              throw new Error(`${file}: ${status}`);
+            }
+            return response.json();
+          })
+          .then(records => {
+            if (!Array.isArray(records)) throw new Error(`${file}: expected a JSON array`);
+            acceptRecords(records, file);
+            loaded.add(file);
+          });
+        const tracked = request.finally(() => pending.delete(file));
+        pending.set(file, tracked);
+      }
+      return pending.get(file);
+    }
+
+    return {
+      loaded,
+      pending,
+      load,
+      loadMany: files => Promise.all([...files].map(load)),
+    };
+  }
+
+  return { allShardFiles, createLoader, selectShardFiles, shardMatches };
 });

@@ -28,6 +28,21 @@ def test_detail_bucket_planner_rejects_an_impossible_single_record():
         BUILD.detail_bucket_count(pairs, target_bytes=100)
 
 
+def test_detail_validation_failure_preserves_existing_buckets(tmp_path, monkeypatch):
+    monkeypatch.setattr(BUILD, "OUT_DIR", tmp_path)
+    existing = tmp_path / "detail" / "000.json"
+    existing.parent.mkdir()
+    existing.write_text('{"known":"good"}', encoding="utf-8")
+    pairs = [
+        ({"id": "Test:large"}, {"def": "x" * BUILD.DETAIL_BUCKET_TARGET_BYTES})
+    ]
+
+    with pytest.raises(ValueError, match="Test:large"):
+        BUILD.write_detail(pairs)
+
+    assert existing.read_text(encoding="utf-8") == '{"known":"good"}'
+
+
 def test_detail_bucket_files_stay_below_the_builder_target(tmp_path, monkeypatch):
     monkeypatch.setattr(BUILD, "OUT_DIR", tmp_path)
     pairs = [
@@ -101,6 +116,24 @@ assert.deepStrictEqual(shards.selectShardFiles(manifest, {{...empty, sta:new Set
 assert.deepStrictEqual(shards.selectShardFiles(manifest, {{...empty, cat:new Set(['FUNC_RESISTANCE']), src:new Set(['Rhea'])}}, ''), []); // combined empty
 assert.deepStrictEqual(shards.selectShardFiles(manifest, empty, 'kinase'), ['pathway.json','resistance.json','domain.json']); // free text
 assert.deepStrictEqual(shards.allShardFiles(manifest), ['pathway.json','resistance.json','domain.json']); // cold record link
+
+(async () => {{
+  let calls = 0;
+  const accepted = [];
+  const loader = shards.createLoader(
+    async () => (++calls === 1
+      ? {{ok:false, status:503, json:async () => []}}
+      : {{ok:true, status:200, json:async () => [{{id:'RHEA:1'}}]}}),
+    records => accepted.push(...records)
+  );
+  await assert.rejects(loader.load('pathway.json'), /HTTP 503/);
+  assert.strictEqual(loader.loaded.has('pathway.json'), false);
+  assert.strictEqual(loader.pending.size, 0);
+  await loader.load('pathway.json');
+  assert.strictEqual(calls, 2);
+  assert.strictEqual(loader.loaded.has('pathway.json'), true);
+  assert.deepStrictEqual(accepted, [{{id:'RHEA:1'}}]);
+}})().catch(error => {{ console.error(error); process.exitCode = 1; }});
 """
     out = subprocess.run(["node", "-e", program], capture_output=True, text=True)
     assert out.returncode == 0, out.stderr

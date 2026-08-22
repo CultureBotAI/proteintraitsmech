@@ -102,26 +102,17 @@ let FILTERED_CACHE = null;
 // fetch only intersecting shards. A free-text query with no facets still searches all
 // shards; a dedicated search index would be needed to avoid that explicit tradeoff.
 let SHARD_MANIFEST = [];
-const LOADED_SHARDS = new Set();
-const SHARD_FETCH = new Map();
-
-function loadShard(file) {
-  if (LOADED_SHARDS.has(file)) return Promise.resolve();
-  if (!SHARD_FETCH.has(file)) {
-    SHARD_FETCH.set(file,
-      fetch("data/" + file).then(r => (r.ok ? r.json() : [])).catch(() => [])
-        .then(part => {
-          for (const rec of part) {
-            RECORDS.push(rec); ID_INDEX.set(rec.id, rec);
-          }
-          LOADED_SHARDS.add(file);
-          FILTERED_CACHE = null;
-        })
-    );
+const SHARD_LOADER = BrowseShards.createLoader(
+  file => fetch("data/" + file),
+  part => {
+    for (const rec of part) {
+      RECORDS.push(rec); ID_INDEX.set(rec.id, rec);
+    }
+    FILTERED_CACHE = null;
   }
-  return SHARD_FETCH.get(file);
-}
-const loadShards = files => Promise.all([...files].map(loadShard));
+);
+const LOADED_SHARDS = SHARD_LOADER.loaded;
+const loadShards = files => SHARD_LOADER.loadMany(files);
 const loadAllShards = () => loadShards(BrowseShards.allShardFiles(SHARD_MANIFEST));
 
 function neededShards() {
@@ -163,7 +154,11 @@ async function route() {
       // one-time full load, then look it up.
       document.getElementById("results").innerHTML =
         `<div class="empty">Loading record…</div>`;
-      await loadAllShards();
+      try {
+        await loadAllShards();
+      } catch (error) {
+        return renderShardLoadFailure(error);
+      }
       rec = ID_INDEX.get(id);
     }
     if (rec) return renderDetail(rec);
@@ -394,7 +389,11 @@ async function renderList() {
   const missing = need.filter(file => !LOADED_SHARDS.has(file));
   if (missing.length) {
     results.innerHTML = `<div class="empty">Loading ${missing.length} shard${missing.length === 1 ? "" : "s"}…</div>`;
-    await loadShards(need);
+    try {
+      await loadShards(need);
+    } catch (error) {
+      return renderShardLoadFailure(error);
+    }
     refreshFacetCounts();
   }
 
@@ -451,6 +450,15 @@ window._go = function (delta) {
   renderList();
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
+
+function renderShardLoadFailure(error) {
+  const message = error && error.message ? error.message : String(error);
+  document.getElementById("results").innerHTML =
+    `<div class="empty">Failed to load records: ${escapeHTML(message)}. ` +
+    `<button onclick="_retryShardLoad()">Retry</button></div>`;
+}
+
+window._retryShardLoad = function () { route(); };
 
 /* ------------------------------------------------------------------ */
 /* Detail view                                                        */
