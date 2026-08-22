@@ -46,7 +46,8 @@ gh issue list --state open --limit 300 --json number,title,body,labels,createdAt
 Do not truncate silently. If the queue exceeds 300, say so explicitly and
 paginate (`gh issue list ... --json ... -q ...` supports `--limit` up to
 GitHub's cap; beyond that, note the true count via `gh issue list --state open
---json number | jq length` and sample rather than claim full coverage).
+--limit 1000 --json number | jq length` — omitting `--limit` silently caps at
+gh's default of 30 — and sample rather than claim full coverage).
 
 ### Step 2 — Group and dedupe
 
@@ -107,10 +108,12 @@ its own. When the user confirms:
   "<reason>"`, one at a time, with the evidence from Step 3 in the comment.
 - **Maintaining a tracker issue** (the "[P0-P2 tracker]" pattern used
   elsewhere in this org, e.g. CommunityMech#669): if one already exists for
-  this repo, update it in place rather than creating a second one — search
-  first (`gh issue list --search "tracker" --state open`). ProteinTraitsMech
-  has no such tracker as of this writing. If the user wants one, create it
-  with the Step 5 ranking as its body, and link every tracked issue number.
+  this repo, update it in place rather than creating a second one — the
+  search below is authoritative, not this note: `gh issue list --search
+  "tracker" --state open`. As of this skill's authoring, ProteinTraitsMech had
+  no such tracker; re-run the search rather than trusting that stays true. If
+  it comes back empty and the user wants one, create it with the Step 5
+  ranking as its body, and link every tracked issue number.
 
 Never bulk-close without per-item confirmation of the evidence — an agent
 closing a live issue because it *looks* stale is worse than leaving noise in
