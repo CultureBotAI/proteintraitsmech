@@ -5,9 +5,11 @@ import json
 import re
 import shutil
 import socket
+import stat
 import subprocess
 import sys
 import threading
+import time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -45,13 +47,18 @@ class ReleaseHandler(BaseHTTPRequestHandler):
             self.connection.shutdown(socket.SHUT_RDWR)
             self.connection.close()
             return
+        if self.path == "/slow":
+            time.sleep(3)
         self.send_response(200)
         self.send_header("Content-Length", str(len(PAYLOAD)))
         self.send_header("Content-Type", "text/plain")
         self.send_header("ETag", '"release-7"')
         self.send_header("Last-Modified", "Wed, 20 Aug 2025 12:00:00 GMT")
         self.end_headers()
-        self.wfile.write(PAYLOAD)
+        try:
+            self.wfile.write(PAYLOAD)
+        except BrokenPipeError:
+            pass
 
     def log_message(self, _format, *_args):
         pass
@@ -95,7 +102,9 @@ def test_success_records_release_metadata(release_server, tmp_path):
     )
     assert result.returncode == 0, result.stderr
     assert destination.read_bytes() == PAYLOAD
+    assert stat.S_IMODE(destination.stat().st_mode) == 0o644
     metadata = json.loads(Path(f"{destination}.fetch.json").read_text())
+    assert stat.S_IMODE(Path(f"{destination}.fetch.json").stat().st_mode) == 0o644
     assert metadata["sha256"] == digest
     assert metadata["etag"] == '"release-7"'
     assert metadata["last_modified"] == "Wed, 20 Aug 2025 12:00:00 GMT"
@@ -116,6 +125,39 @@ def test_transient_http_failure_is_retried(release_server, tmp_path):
     assert result.returncode == 0, result.stderr
     assert ReleaseHandler.retry_requests == 2
     assert destination.read_bytes() == PAYLOAD
+
+
+def test_total_timeout_bounds_all_retry_attempts(release_server, tmp_path):
+    destination = tmp_path / "release.txt"
+    started = time.monotonic()
+    result = run_fetch(
+        f"{release_server}/slow",
+        destination,
+        "--max-time",
+        "1",
+        "--retries",
+        "4",
+        "--retry-delay",
+        "0",
+    )
+    elapsed = time.monotonic() - started
+    assert result.returncode == 1
+    assert elapsed < 2.5
+    assert "total download timeout" in result.stderr
+    assert not destination.exists()
+    assert list(tmp_path.iterdir()) == []
+
+
+def test_successful_replacement_preserves_existing_mode(release_server, tmp_path):
+    destination = tmp_path / "release.txt"
+    destination.write_text("old", encoding="utf-8")
+    destination.chmod(0o640)
+
+    result = run_fetch(f"{release_server}/success", destination)
+
+    assert result.returncode == 0, result.stderr
+    assert destination.read_bytes() == PAYLOAD
+    assert stat.S_IMODE(destination.stat().st_mode) == 0o640
 
 
 @pytest.mark.parametrize(
@@ -156,6 +198,7 @@ def test_dry_run_does_not_create_or_contact_destination(tmp_path):
     result = run_fetch("http://127.0.0.1:1/unreachable", destination, "--dry-run")
     assert result.returncode == 0
     assert json.loads(result.stdout)["destination"] == str(destination)
+    assert json.loads(result.stdout)["transport"]["max_time"] == 300
     assert not destination.exists()
 
 

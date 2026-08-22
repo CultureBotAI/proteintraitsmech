@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import stat
 import subprocess
 import tempfile
 from datetime import datetime, timezone
@@ -16,6 +17,9 @@ from typing import Sequence
 
 class FetchError(RuntimeError):
     """The transfer or a post-download validation failed."""
+
+
+DEFAULT_FILE_MODE = 0o644
 
 
 def _temporary_path(directory: Path, name: str, suffix: str) -> Path:
@@ -72,7 +76,15 @@ def validate_download(
     return size, digest
 
 
-def _write_json_temp(destination: Path, payload: dict[str, object]) -> Path:
+def _install_mode(path: Path) -> int:
+    """Preserve an existing mode, otherwise use the public raw-release default."""
+    try:
+        return stat.S_IMODE(path.stat().st_mode)
+    except FileNotFoundError:
+        return DEFAULT_FILE_MODE
+
+
+def _write_json_temp(destination: Path, payload: dict[str, object], mode: int) -> Path:
     temp = _temporary_path(destination.parent, destination.name, ".tmp")
     try:
         with temp.open("w", encoding="utf-8") as stream:
@@ -80,6 +92,7 @@ def _write_json_temp(destination: Path, payload: dict[str, object]) -> Path:
             stream.write("\n")
             stream.flush()
             os.fsync(stream.fileno())
+        os.chmod(temp, mode)
         return temp
     except BaseException:
         temp.unlink(missing_ok=True)
@@ -93,7 +106,7 @@ def fetch(
     connect_timeout: int = 15,
     max_time: int = 300,
     retries: int = 4,
-    retry_delay: int = 2,
+    retry_delay: int = 0,
     min_bytes: int = 1,
     expected_sha256: str | None = None,
     contains: Sequence[str] = (),
@@ -105,6 +118,8 @@ def fetch(
     destination.parent.mkdir(parents=True, exist_ok=True)
     metadata_path = metadata_path or Path(f"{destination}.fetch.json")
     metadata_path.parent.mkdir(parents=True, exist_ok=True)
+    destination_mode = _install_mode(destination)
+    metadata_mode = _install_mode(metadata_path)
     download_temp = _temporary_path(destination.parent, destination.name, ".part")
     header_temp = _temporary_path(destination.parent, destination.name, ".headers")
     metadata_temp: Path | None = None
@@ -123,8 +138,6 @@ def fetch(
         str(retries),
         "--retry-delay",
         str(retry_delay),
-        "--retry-max-time",
-        str(max_time * (retries + 1)),
         "--retry-connrefused",
         "--dump-header",
         str(header_temp),
@@ -138,7 +151,16 @@ def fetch(
     command.extend(("--", url))
 
     try:
-        completed = subprocess.run(command, check=False, capture_output=True, text=True)
+        try:
+            completed = subprocess.run(
+                command,
+                check=False,
+                capture_output=True,
+                text=True,
+                timeout=max_time,
+            )
+        except subprocess.TimeoutExpired as exc:
+            raise FetchError(f"total download timeout after {max_time} seconds") from exc
         if completed.returncode:
             detail = completed.stderr.strip() or f"curl exited {completed.returncode}"
             raise FetchError(detail)
@@ -168,9 +190,10 @@ def fetch(
             if value:
                 metadata[output_name] = value
 
-        metadata_temp = _write_json_temp(metadata_path, metadata)
+        metadata_temp = _write_json_temp(metadata_path, metadata, metadata_mode)
         with download_temp.open("rb") as stream:
             os.fsync(stream.fileno())
+        os.chmod(download_temp, destination_mode)
         os.replace(download_temp, destination)
         os.replace(metadata_temp, metadata_path)
         metadata_temp = None
@@ -192,9 +215,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("url", help="source release URL")
     parser.add_argument("destination", type=Path, help="final local path")
     parser.add_argument("--connect-timeout", type=int, default=15)
-    parser.add_argument("--max-time", type=int, default=300)
+    parser.add_argument(
+        "--max-time", type=int, default=300, help="wall-clock limit for all attempts"
+    )
     parser.add_argument("--retries", type=int, default=4)
-    parser.add_argument("--retry-delay", type=int, default=2)
+    parser.add_argument(
+        "--retry-delay",
+        type=int,
+        default=0,
+        help="fixed delay; 0 uses curl's transient-error exponential backoff",
+    )
     parser.add_argument("--min-bytes", type=int, default=1)
     parser.add_argument("--sha256", dest="expected_sha256")
     parser.add_argument("--contains", action="append", default=[])
@@ -232,6 +262,12 @@ def main(argv: Sequence[str] | None = None) -> int:
                     "destination": str(args.destination),
                     "metadata": str(metadata),
                     "requested_url": args.url,
+                    "transport": {
+                        "connect_timeout": args.connect_timeout,
+                        "max_time": args.max_time,
+                        "retries": args.retries,
+                        "retry_delay": args.retry_delay,
+                    },
                     "validation": {
                         "contains": args.contains,
                         "min_bytes": args.min_bytes,

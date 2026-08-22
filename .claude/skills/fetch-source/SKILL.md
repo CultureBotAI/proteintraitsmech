@@ -41,10 +41,15 @@ commit them.
   an “expected” digest from the same untrusted download.
 - Repeat `--header 'Name: value'` only when the source requires a fixed request header.
 
-Defaults are four retries with bounded delay, a 15-second connect timeout, and a
-300-second transfer timeout. Override `--max-time` for large releases; do not copy retry
-flags into the justfile. Use `--dry-run` to print the destination, metadata path, and
-validation contract without touching the network or filesystem.
+Defaults are four retries with curl's transient-error exponential backoff, a 15-second
+connect timeout, and a 300-second wall-clock deadline for the complete curl process,
+including retries and delays. Override `--max-time` for large releases; do not copy retry
+flags into the justfile. Use `--dry-run` to print the transport, destination, metadata,
+and validation contract without touching the network or filesystem.
+
+Existing destination permission bits are preserved during replacement. New public raw
+releases and metadata sidecars use mode `0644`; the temporary files remain private until
+validation succeeds.
 
 ## Scope boundary
 
