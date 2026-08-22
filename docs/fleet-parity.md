@@ -20,7 +20,7 @@ siblings' own implementations are the specification used here, primarily
 | 2 | Append-only history schema + presence gate | ✗ | **✓** | `history.yaml` vendored **and governed**, `history/` tree, CI job. Presence advisory — see below |
 | 3 | `new-history` / `validate-history` recipes | ✗ | **✓** | Claw-preferred, local fallback scaffolder |
 | 4 | Validated-write helper + writer-safety audit | ✗ | ✗ | Deferred — **#492** |
-| 5 | ID-to-label correspondence validation | ✗ | **partial** | Validator + its 69 tests vendored, governed and passing; adapter deferred — **#493** |
+| 5 | ID-to-label correspondence validation | ✗ | **✓** | Fleet YAML adapter + offline count-and-identity gate for actionable internal groundings — **#493** |
 | 6 | Evidence snippet / reference validation | **✓** | **✓** | Pre-existing: `just audit-snippets` |
 | 7 | Knowledge-gap scan + shared QC dashboard | ✗ | ✗ | **Not a gap.** No sibling has this in CI or as a dependency — see below |
 | 8 | Vendored shared-file drift enforcement | ✗ | **✓** | `just check-vendored-sync` over **7** files + blocking CI job |
@@ -72,12 +72,16 @@ choke point they route through. A writer audit here means proving each of those 
 through it rather than calling `path.write_text` — which is a different audit from the
 siblings', because the failure mode is different. Filed as #492.
 
-**5 — the id-label adapter.** The validator is vendored, passing its 69 tests, and
-governed by the drift check. Making it *do* anything requires an adapter describing where
-this repo's records keep `(id, label)` pairs — `mapped_xrefs`, `parent_traits`,
-`trait_relations`, and causal-graph node groundings each have a different shape, and
-`grounded nodes 342,631/350,267` says the surface is large. Wiring it without measuring
-that first would produce a gate whose failures nobody can act on. Filed as #493.
+**5 — the id-label adapter.** Implemented after measurement, rather than guessing.
+`conf/id_label_targets.yaml` maps causal-node `grounding/label` and canonical-example
+identifier/label pairs for the vendored fleet validator. The broad OAK-backed check is
+report-first because its known external-ontology backlog is not yet gateable.
+
+The actionable `proteintraitsmech:` subset is blocking in CI. It resolves entirely
+against committed record labels and pins both the 5,543 mismatch count and a SHA-256 over
+the exact mismatch identities. A fix paired with a new regression therefore fails even
+when the count stays constant. The baseline was computed over 429,271 records and 5,799
+internal grounded nodes; no `data/raw`, network, or ontology download is required.
 
 **7 — knowledge-gap scan + QC dashboard. NOT a dependency decision, and this document
 said it was.** The first version of this row read "blocked on a claw dependency decision".
@@ -112,6 +116,8 @@ Note also that the *schema* side of knowledge-gap capture already landed: `Discu
 just check-vendored-sync     # byte-identity against the hub at scripts/.vendored_canon_ref
 just validate-history        # every history record against the vendored schema
 just validate-strict         # closed-schema over the corpus
+just validate-internal-id-labels  # offline internal grounding identity gate
+just report-id-labels         # broad OAK-backed report (local adapters required)
 uv run pytest tests/test_id_label_empty_adapter.py \
               tests/test_id_label_unknown_prefix.py \
               tests/test_id_label_plausibility.py
