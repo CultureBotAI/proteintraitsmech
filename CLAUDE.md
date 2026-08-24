@@ -18,18 +18,18 @@ the same logic applies to every other kind of claim, not just corpus size.
   a remembered issue list; `git log`/`git blame` over a recalled commit; a
   fresh `Read` over trusting an earlier read of the same file; `just
   corpus-stats`/`just validate-all` over a remembered figure.
-- **This repo's local checkout can lag `origin/main` significantly** (see
-  also the `review-open-issues` skill's note to the same effect). Verify
-  against `gh api` or a fresh `git fetch` against `origin/main`, not the
-  working tree on disk, before asserting what the repo currently contains.
+- This repo's local checkout can lag `origin/main` significantly (see also
+  the `review-open-issues` skill's note to the same effect). Verify against
+  `gh api` or a fresh `git fetch` against `origin/main`, not the working
+  tree on disk, before asserting what the repo currently contains.
 - Re-verify rather than repeat: restating an earlier claim in this same
   conversation without re-checking it is exactly the failure mode this rule
   exists to prevent. `review-open-issues`'s "evidence over vibes" convention
-  is the same principle applied to backlog state specifically. (If
-  `.claude/skills/next-tasks/` exists in this checkout -- it does not as of
-  this writing, pending PR #556 -- its "measure, don't trust a stale count"
-  trap is another instance of the same rule; verify it exists before citing
-  it, per the rule above.)
+  is the same principle applied to backlog state specifically. Skill
+  directories land via separate PRs and may not be present yet — check that
+  `.claude/skills/next-tasks/` exists before citing its "measure, don't trust
+  a stale count" trap, per the rule above, rather than trusting a note about
+  whether it exists written at some earlier point in time.
 - If a claim can't be verified this session, say so ("I did not check X" /
   "I don't know") instead of presenting a plausible guess as fact.
 
