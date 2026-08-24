@@ -8,7 +8,7 @@ not belong here; run `just corpus-stats` for current machine-readable counts.
 Never state a comparison, count, status, or historical claim without having
 verified it in the current conversation via a tool call (`gh`, `git`, `grep`,
 `just`, `Read`, etc.). "I recall," "this is typically the case," or a prior
-summary are not verification -- code, issue/PR state, and the corpus change
+summary are not verification — code, issue/PR state, and the corpus change
 between turns and across concurrent sessions. The corpus-metrics rule above is
 one instance of this broader rule, not a separate concern: `just corpus-stats`
 exists precisely because a remembered or written-down count goes stale, and
