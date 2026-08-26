@@ -55,8 +55,10 @@ The five paths and axes are:
 
 ## Safety rules
 
-- Files named by `scripts/check_vendored_sync.sh` are byte-identical fleet assets. Change
-  them in the canonical hub, then bump and re-vendor; do not patch them locally.
+- Files selected for this repository by claw's vendored-artifact manifest are
+  byte-identical fleet assets. Change them in canonical
+  `CultureBotAI/culturebotai-claw`, then sync and pin that full immutable commit; do not
+  patch them locally.
 - Record writes must use an audited route: a seeder through `record_io.write_record`, a
   registered in-place editor, or a declared bypass. Run `just audit-writers` after writer
   changes.
