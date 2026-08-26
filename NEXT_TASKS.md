@@ -9,7 +9,7 @@ against merged PRs + `git log` before trusting it.
 _Last reconciled: **2026-08-22**, against `main` at `4e6ab83cc62` + PRs #514–#555. The
 2026-08-10 reconcile fixed the ARO figures and left everything else alone; twelve days of
 work then landed in a **different thread entirely** and none of it was logged here. See
-"The infrastructure and gates thread" below — ~25 merged PRs that this file did not know
+"The infrastructure and gates thread" below — 32 merged PRs that this file did not know
 about. The ARO block immediately following was **re-measured today and still holds** (188
 drafts, 7,452 files); the source-coverage table further down did **not** and has been
 corrected._
@@ -19,7 +19,8 @@ point-in-time figure from an older round; run `just corpus-stats` rather than tr
 
 _**`NEXT_TASKS_LOOP.md` is stale** — last reconciled 2026-08-04, 18 days ago, and its own
 header says the ranking "should be re-derived rather than trusted if much has merged
-since". ~25 PRs have merged since. Do not read it as current._
+since". **197 PRs have merged since** (2026-08-04 through 2026-08-22; 08-07 and
+08-08 alone merged 106). Do not read it as current._
 
 ## ⚠️ ARO draft backlog — measured 2026-08-10, superseding the figures further down
 
@@ -74,10 +75,20 @@ durable backlog: the long threads, the context, and what has shipped._
 
 ## The infrastructure and gates thread (2026-08-13 → 2026-08-22) — **the active thread**
 
-**None of this was in this file until 2026-08-22.** Roughly 25 PRs merged in twelve days
-and the backlog recorded none of them, because the 2026-08-10 reconcile scoped itself to
+**None of this was in this file until 2026-08-22.** **32 PRs merged in twelve days** — 33
+between 2026-08-13 and 2026-08-22, less #561, which landed after this reconcile was written
+— and the backlog recorded none of them, because the 2026-08-10 reconcile scoped itself to
 ARO. The thread has one subject: **a gate nobody runs is indistinguishable from one that
 passes**, and nearly every item below is a case of that.
+
+The "Shipped" list below names **26** of those 32. The other six are recorded nowhere in
+this section; they are logged here rather than dropped (#566 tracks the same failure in the
+source table, this one is #565): **#420** and **#421** (identity-gate exit code, and a red
+`main` where the `--update-baseline` guard banned its own test), **#487** (provider-triage
+deep research), **#502** (the `fetch-source` skill), **#507** (parity doc: the claw
+dependency decision does not exist), and **#525** (`check_vendored_sync.sh` curl hardening).
+_A reconcile section that itself drops 19% of the window is the thesis restated: reconciling
+is not self-verifying._
 
 **Shipped.** Snippet backlog closed at 0 with an identity baseline, not just a ceiling
 (#422/#425/#426, PRs #423/#427/#429/#431) · Pfam and InterPro definitions taken from the
@@ -114,12 +125,15 @@ The 2026-08-21 adversarial review of the seven-PR batch filed **#531–#545**; #
 | **Licensing / registry** | **#542**, #521, #517 | 353 ELM records from a source `download.yaml` marks `rejected`. See the ELM block above. |
 | **New rules with no test that would catch their recurrence** | #536, #543, #544, #545, #539 | measured by mutation: **12 of 12** mutations survive #528's registry rules; #529's cross-shard completeness is *provably* correct (400 random filter combinations, 0 under-fetch) but a `.some()`→`.every()` mutation leaves all 6 tests green; #523's parametrize iterates the constant it checks. |
 | **CI reliability** | **#558**, #500, #537 | order-dependent test pollution (`write_validated_record` ImportError only under a full-suite run); tests share `reports/instance_validation_failures.tsv`; `uv.lock` is not a validation-scope input, so a linkml bump can skip corpus validation. |
-| **Residuals and stale claims** | #531, #532, #533, #535, #538, #541, #546–#552 | including this file's own genre of defect: #531 was filed with the wrong counts (17/32) and corrected to **11 of 40 recipes migrated, 23 still on bare curl**. |
+| **Residuals and stale claims** | open: #531, #532, #533, #535, #538, #541 · ~~#546–#552, all seven now closed~~ | including this file's own genre of defect: #531 was filed with the wrong counts (17/32) and corrected to **11 of 40 recipes migrated, 23 still on bare curl** — and its title still carries the wrong figures. The #546–#552 block closed between 2026-08-21 and 2026-08-26; listing issue numbers in a defect table reads as open work, so they are struck rather than deleted (#567). |
 
-**Two new skill PRs are open** and both add a row at the same anchor in `CLAUDE.md`'s
-task-to-skill router, so the second to merge takes a one-line conflict: **#556**
-(`next-tasks`, the skill that maintains *this* file) and **#557** (`review-open-issues`,
-whole-queue triage). Neither touches `NEXT_TASKS.md`.
+**One of the two skill PRs has merged.** Both add a row at the same anchor in `CLAUDE.md`'s
+task-to-skill router, so the second to merge takes a one-line conflict. **#557**
+(`review-open-issues`, whole-queue triage) **merged 2026-08-23**, which leaves **#556**
+(`next-tasks`, the skill that maintains *this* file) open and holding that conflict. Neither
+touches `NEXT_TASKS.md`. _State as of 2026-08-26 (#568): the original sentence here was false
+within 24 hours of being written, which is why live PR state carries a date in this file and
+historical claims ("were still open on 2026-08-22") do not need one._
 
 ---
 
@@ -393,7 +407,8 @@ cleared._
 _Assessed 2026-07-31 against UniProt's own database registry
 (`rest.uniprot.org/database`, category **"Family and domain databases"** — 18
 entries), `download.yaml`, and a corpus-wide identifier census.
-**Three rows re-measured 2026-08-22 and all three were wrong** — see the correction below._
+**Three rows re-measured 2026-08-22 and all three were wrong** — see the correction below.
+**A fourth, PROSITE, was also wrong and that pass missed it** (#566)._
 
 **7 of 18 are ingested as first-class trait records; 6 are not in `download.yaml`
 at all.** (Was 6 and 7 — PANTHER was ingested on 2026-07-31, PR #89.)
@@ -404,7 +419,7 @@ at all.** (Was 6 and 7 — PANTHER was ingested on 2026-07-31, PR #89.)
 | Pfam | seeded | 31,025 |
 | CDD | seeded | 38,218 |
 | NCBIfam | seeded | 38,394 |
-| PROSITE | seeded (patterns + profiles) | 6,174 |
+| PROSITE | seeded (patterns + profiles) | ~~6,174~~ **3,425** |
 | Gene3D | seeded as CATH-Gene3D | 8,151 |
 | DisProt | seeded, but as the IDPO disorder *vocabulary*, not DisProt entries | 35 |
 | IDEAL | "seeded" — exactly one concept (`proteintraitsmech:IDEAL_PROS`) | 1 |
@@ -412,7 +427,7 @@ at all.** (Was 6 and 7 — PANTHER was ingested on 2026-07-31, PR #89.)
 | **PANTHER** | **seeded 2026-07-31 (PR #89), CC-BY 4.0 — families only** | **15,489** |
 | PIRSF · ~~PRINTS~~ · SMART · SUPERFAMILY · AntiFam · CATH-FunFam | ~~**absent from the manifest**~~ **PRINTS is seeded**; the other five are still absent | ~~0~~ |
 
-### Correction (2026-08-22) — three of these shipped and the ranking below never noticed
+### Correction — three of these shipped and the ranking never noticed (2026-08-22), plus one stale count (2026-08-26)
 
 Measured by counting YAMLs under each source directory and reading `download.yaml`:
 
@@ -421,8 +436,9 @@ Measured by counting YAMLs under each source directory and reading `download.yam
 | **SFLD** | `candidate`, no seeder, 0 records, *"the cheapest real promotion"* (ranked #2) | **`seeded`, 303 records**, via `seed_interpro_members.py`, CC0-1.0 |
 | **HAMAP** | *"licence-blocked (CC BY-NC-ND), NOT cheap, do not rank with SFLD"* | **`seeded`, 2,394 records**, and `download.yaml` licenses it **CC-BY 4.0** — the NoDerivatives claim was wrong. A second `candidate` block covers HAMAP's *annotation rules* (prose), which is a different artefact and genuinely not ingested. |
 | **PRINTS** | *"absent from the manifest"*, ranked #3 | **`seeded`, 2,106 records**, CC0-1.0 via InterPro's dedication |
+| **PROSITE** | 6,174 records | **3,425** — 1,445 `SEQ_DOMAIN` + 1,980 `SEQ_FAMILY`, the only two `prosite` directories in the corpus. Never 6,174 in this era: the count is 3,425 at `4e6ab83cc62` and at this branch's base too. Stale, not a two-block sum — `download.yaml` carries one PROSITE block. Caught reviewing this PR, not by the pass above (#566). |
 
-All three came in through `seed_interpro_members.py` — one seeder, three sources, which is
+The first three came in through `seed_interpro_members.py` — one seeder, three sources, which is
 why no single ingestion round shows up against their names. **#167 is still open and still
 real**, but it is now a *modelling* gap on seeded data (a PRINTS fingerprint is an ordered
 set of motifs, seeded as one flat record), not the absence this file recorded. Same for
