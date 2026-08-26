@@ -143,12 +143,12 @@ validate-history *args:
         --schema src/proteintraitsmech/schema/history.yaml --target-class HistoryRecord "$target"
     fi
 
-# Drift check for the files vendored BYTE-IDENTICAL from the canonical hub
-# (CultureBotAI/CultureMech at scripts/.vendored_canon_ref). A local edit to any of them
-# fails here -- which is the point: the fleet's shared modules must not fork silently.
-# curl + diff only, so it runs as a fast blocking CI job with no Python dependency.
+# Drift check for the files vendored BYTE-IDENTICAL from canonical claw at the immutable
+# commit in scripts/.vendored_canon_ref. The claw manifest is the sole artifact list; a
+# local edit to any governed path fails here so the fleet's shared modules cannot fork
+# silently. Standard-library Python only, with no project dependency installation.
 #
-# Fail if a byte-identical vendored file has drifted from the hub
+# Fail if a governed vendored file has drifted from canonical claw
 check-vendored-sync:
     bash scripts/check_vendored_sync.sh
 
