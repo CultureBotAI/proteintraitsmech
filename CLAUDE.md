@@ -82,6 +82,7 @@ The five paths and axes are:
 ```bash
 just install
 just corpus-stats                         # current JSON metrics; no Pages build required
+just validate <file.yaml>                 # closed-mode validation of ONE record
 just validate-all [path-or-glob]          # closed-mode record validation
 just audit-schema
 just audit-graphs [path]

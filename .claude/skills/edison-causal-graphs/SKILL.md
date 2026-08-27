@@ -128,11 +128,10 @@ page (and the cited paper) before writing the edge.
    first; only then write YAML.
 6. **Write the YAML** onto the record's `causal_graphs:` (skeleton below). Flip
    `mapping_status: SEEDED → REVIEWED` and add a `curation_history` event.
-7. **Validate + gate.** `just validate <file>` (closed-mode — enforces the required
-   evidence + CURIE patterns). Run `just audit-graphs` if the audit script exists;
-   if `scripts/audit_causal_graphs.py` is still absent (it is referenced by the
-   recipe but not yet written), say so and lean on `just validate` — do **not**
-   claim a structural audit that didn't run.
+7. **Validate + gate.** `just validate <file>` runs the same closed-mode validator as
+   `validate-all`, scoped to one record; it enforces required evidence, CURIE patterns,
+   and rejects unknown slots. Then run `just audit-graphs <file>` for graph-internal
+   checks such as dangling node references that LinkML validation does not express.
 8. **Write the round report** (template below). No report → the round didn't happen.
 
 ## Enumerate the gap (reproducible audit)
@@ -254,8 +253,7 @@ records touched: N · edges written: M · all edges cited: yes/no · status → 
    put the RO CURIE in `predicate_id`.
 5. **Flip status + audit-trail.** Adding a graph makes the record REVIEWED; append a
    `curation_history` CurationEvent (`llm_assisted: true`).
-6. **Validate closed-mode; don't over-claim the audit.** `just validate` is the gate
-   that runs today; `just audit-graphs` needs `scripts/audit_causal_graphs.py`,
-   which is currently missing — flag it rather than imply it ran.
+6. **Run both gates.** `just validate <file>` is closed-mode schema validation;
+   `just audit-graphs <file>` checks graph-internal consistency. Report both results.
 7. **Write the report even for one graph.** The Edison rule: no `research/` file →
    the round didn't happen.

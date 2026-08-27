@@ -60,20 +60,24 @@ def _get_validator() -> Validator:
 # Classifier regexes — keep narrow so each category is meaningful and the rest
 # fall into "other" for manual review rather than getting silently bucketed.
 _CATEGORY_RULES: list[tuple[str, re.Pattern[str]]] = [
-    ("unexpected_field",
-     re.compile(r"Additional properties are not allowed \('(?P<key>[^']+)' was unexpected\) in (?P<path>\S+)")),
-    ("missing_required",
-     re.compile(r"'(?P<key>[^']+)' is a required property in (?P<path>\S+)")),
-    ("enum_mismatch",
-     re.compile(r"'(?P<value>[^']+)' is not one of \[(?P<choices>[^\]]+)\]")),
-    ("type_mismatch",
-     re.compile(r"(?P<value>'[^']+'|\S+) is not of type '(?P<type>[^']+)'")),
-    ("pattern_mismatch",
-     re.compile(r"(?P<value>'[^']+'|\S+) does not match (?P<pattern>'[^']+')")),
-    ("format_mismatch",
-     re.compile(r"(?P<value>'[^']+'|\S+) is not a '(?P<format>[^']+)'")),
-    ("range_violation",
-     re.compile(r"(?P<value>\S+) is (less than|greater than) (?P<bound>\S+)")),
+    # jsonschema says "'a' was unexpected" for one key and "'a', 'b' were
+    # unexpected" for several.  Matching only the singular bucketed every
+    # multi-key record as "other" -- under-reporting the one category closed
+    # mode exists to produce, and exactly the shape a generator emitting
+    # undeclared slots produces, since it emits several at once (#541).
+    (
+        "unexpected_field",
+        re.compile(
+            r"Additional properties are not allowed \((?P<key>'[^']+'(?:, '[^']+')*)"
+            r" (?:was|were) unexpected\) in (?P<path>\S+)"
+        ),
+    ),
+    ("missing_required", re.compile(r"'(?P<key>[^']+)' is a required property in (?P<path>\S+)")),
+    ("enum_mismatch", re.compile(r"'(?P<value>[^']+)' is not one of \[(?P<choices>[^\]]+)\]")),
+    ("type_mismatch", re.compile(r"(?P<value>'[^']+'|\S+) is not of type '(?P<type>[^']+)'")),
+    ("pattern_mismatch", re.compile(r"(?P<value>'[^']+'|\S+) does not match (?P<pattern>'[^']+')")),
+    ("format_mismatch", re.compile(r"(?P<value>'[^']+'|\S+) is not a '(?P<format>[^']+)'")),
+    ("range_violation", re.compile(r"(?P<value>\S+) is (less than|greater than) (?P<bound>\S+)")),
 ]
 
 
@@ -95,45 +99,53 @@ def validate_one(path: Path) -> list[dict]:
         with path.open() as f:
             instance = yaml.safe_load(f)
     except yaml.YAMLError as e:
-        return [{
-            "file": str(path),
-            "category": "yaml_parse_error",
-            "detail": "",
-            "path": "",
-            "message": str(e).splitlines()[0][:300],
-        }]
+        return [
+            {
+                "file": str(path),
+                "category": "yaml_parse_error",
+                "detail": "",
+                "path": "",
+                "message": str(e).splitlines()[0][:300],
+            }
+        ]
     if instance is None:
-        return [{
-            "file": str(path),
-            "category": "empty_file",
-            "detail": "",
-            "path": "",
-            "message": "file parsed as None",
-        }]
+        return [
+            {
+                "file": str(path),
+                "category": "empty_file",
+                "detail": "",
+                "path": "",
+                "message": "file parsed as None",
+            }
+        ]
 
     try:
         report = validator.validate(instance, target_class=TARGET_CLASS)
     except Exception as e:  # noqa: BLE001 — surface anything weird as a row
-        return [{
-            "file": str(path),
-            "category": "validator_crash",
-            "detail": type(e).__name__,
-            "path": "",
-            "message": str(e)[:300],
-        }]
+        return [
+            {
+                "file": str(path),
+                "category": "validator_crash",
+                "detail": type(e).__name__,
+                "path": "",
+                "message": str(e)[:300],
+            }
+        ]
 
     rows = []
     for result in report.results:
         if result.severity != Severity.ERROR:
             continue
         category, detail = classify(result.message)
-        rows.append({
-            "file": str(path),
-            "category": category,
-            "detail": detail,
-            "path": result.instance_index or "",
-            "message": result.message[:300],
-        })
+        rows.append(
+            {
+                "file": str(path),
+                "category": category,
+                "detail": detail,
+                "path": result.instance_index or "",
+                "message": result.message[:300],
+            }
+        )
     return rows
 
 
@@ -155,18 +167,40 @@ def iter_yaml_files(paths: Iterable[Path]) -> list[Path]:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("paths", nargs="*", type=Path,
-                        help="Files or directories. Defaults to data/traits/.")
-    parser.add_argument("--out", type=Path, default=Path("reports/instance_validation_failures.tsv"),
-                        help="TSV output path.")
-    parser.add_argument("--sample", type=int, metavar="N",
-                        help="Validate only the first N files (after sorting). Useful for smoke tests.")
-    parser.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 4) - 1),
-                        help="Process pool size. Default: ncpu - 1.")
-    parser.add_argument("--fail-on", choices=("error", "never"), default="error",
-                        help="Exit non-zero policy. 'error' (default) exits 1 if any ERROR row was emitted.")
-    parser.add_argument("--quiet", action="store_true",
-                        help="Suppress per-file progress dots.")
+    parser.add_argument(
+        "paths", nargs="*", type=Path, help="Files or directories. Defaults to data/traits/."
+    )
+    parser.add_argument(
+        "--out",
+        type=Path,
+        default=Path("reports/instance_validation_failures.tsv"),
+        help="TSV output path.",
+    )
+    parser.add_argument(
+        "--sample",
+        type=int,
+        metavar="N",
+        help="Validate only the first N files (after sorting). Useful for smoke tests.",
+    )
+    parser.add_argument(
+        "--workers",
+        type=int,
+        default=max(1, (os.cpu_count() or 4) - 1),
+        help="Process pool size. Default: ncpu - 1.",
+    )
+    parser.add_argument(
+        "--fail-on",
+        choices=("error", "never"),
+        default="error",
+        help="Exit non-zero policy. 'error' (default) exits 1 if any ERROR row was emitted.",
+    )
+    parser.add_argument(
+        "--allow-missing",
+        action="store_true",
+        help="exit 0 when every supplied path is missing; for the CI diff "
+        "caller, whose file list can be deletion-only (#540)",
+    )
+    parser.add_argument("--quiet", action="store_true", help="Suppress per-file progress dots.")
     args = parser.parse_args(argv)
 
     roots = args.paths or DEFAULT_ROOTS
@@ -175,19 +209,34 @@ def main(argv: list[str] | None = None) -> int:
         files = files[: args.sample]
     if not files:
         if args.paths:
-            # Explicit paths were given (e.g. a CI diff) but none exist on disk —
-            # a deletion-only change, not an error. iter_yaml_files already
-            # dropped missing paths silently; distinguish that from "no scope".
-            print("All supplied paths were missing (e.g. deleted files) — nothing to validate.",
-                  file=sys.stderr)
-            return 0
+            # Explicit paths were given but none exist on disk. For the CI diff
+            # caller that is a deletion-only change and fine; for a human typing
+            # `just validate <path>` it is a typo, and returning 0 reported
+            # "validated" for a file that was never read -- weaker than the open
+            # mode CLI this replaced, which exits 2 (#540). Opt in, do not assume.
+            if args.allow_missing:
+                print(
+                    "All supplied paths were missing (e.g. deleted files) — nothing to validate.",
+                    file=sys.stderr,
+                )
+                return 0
+            listed = ", ".join(str(path) for path in args.paths[:5])
+            more = "" if len(args.paths) <= 5 else f" (+{len(args.paths) - 5} more)"
+            print(
+                f"None of the supplied paths exist: {listed}{more}. Nothing was validated; "
+                f"pass --allow-missing if a deletion-only file list is expected.",
+                file=sys.stderr,
+            )
+            return 2
         print("No YAML files found.", file=sys.stderr)
         return 2
 
     args.out.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"Validating {len(files)} files with {args.workers} workers; schema={SCHEMA_PATH}",
-          file=sys.stderr)
+    print(
+        f"Validating {len(files)} files with {args.workers} workers; schema={SCHEMA_PATH}",
+        file=sys.stderr,
+    )
 
     all_rows: list[dict] = []
     with ProcessPoolExecutor(max_workers=args.workers) as pool:
@@ -198,8 +247,10 @@ def main(argv: list[str] | None = None) -> int:
             rows = fut.result()
             all_rows.extend(rows)
             if not args.quiet and done % 2000 == 0:
-                print(f"  {done}/{len(files)} files processed, {len(all_rows)} ERROR rows so far",
-                      file=sys.stderr)
+                print(
+                    f"  {done}/{len(files)} files processed, {len(all_rows)} ERROR rows so far",
+                    file=sys.stderr,
+                )
 
     # Sort for deterministic TSV output (avoids noisy diffs from worker scheduling).
     all_rows.sort(key=lambda r: (r["file"], r["path"], r["category"], r["message"]))
