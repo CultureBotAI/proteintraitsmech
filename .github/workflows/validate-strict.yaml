@@ -19,6 +19,7 @@ on:
       - "data/traits/**"
       - "scripts/validate_strict.py"
       - "scripts/audit_causal_graphs.py"
+      - "scripts/validation_scope.py"
       - ".github/workflows/validate-strict.yaml"
       - "pyproject.toml"
   push:
@@ -31,6 +32,7 @@ on:
       - "data/traits/**"
       - "scripts/validate_strict.py"
       - "scripts/audit_causal_graphs.py"
+      - "scripts/validation_scope.py"
       - ".github/workflows/validate-strict.yaml"
       - "pyproject.toml"
   workflow_dispatch:
@@ -61,21 +63,15 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" != "pull_request" ]; then
             echo "mode=full" >> "$GITHUB_OUTPUT"
+            echo "changed_count=0" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           BASE="${{ github.event.pull_request.base.sha }}"
           HEAD="${{ github.event.pull_request.head.sha }}"
-          CHANGED=$(git diff --name-only "$BASE" "$HEAD")
-          if echo "$CHANGED" | grep -qE '^(src/proteintraitsmech/schema/proteintraitsmech\.yaml|scripts/validate_strict\.py|scripts/audit_causal_graphs\.py|pyproject\.toml|\.github/workflows/validate-strict\.yaml)$'; then
-            echo "A schema or validator change can affect records outside this PR's diff — running full corpus."
-            echo "mode=full" >> "$GITHUB_OUTPUT"
-          else
-            echo "$CHANGED" | grep -E '^data/traits/.*\.ya?ml$' > changed_traits.txt || true
-            n=$(wc -l < changed_traits.txt)
-            echo "mode=changed" >> "$GITHUB_OUTPUT"
-            echo "changed_count=$n" >> "$GITHUB_OUTPUT"
-            echo "$n changed trait file(s)"
-          fi
+          uv run python scripts/validation_scope.py \
+            --base "$BASE" --head "$HEAD" \
+            --github-output "$GITHUB_OUTPUT" \
+            --changed-traits changed_traits.txt
 
       - name: Strict validation (changed files)
         if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
