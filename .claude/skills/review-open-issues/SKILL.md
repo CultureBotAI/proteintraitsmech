@@ -155,8 +155,11 @@ Treat these as P0 when live:
   `candidate`.** In a CC0-dedicated repo this is licensing exposure, not
   bookkeeping (the ELM case, #542; policy in #517).
 - **A trait record written through an unaudited route** — anything that is not a
-  seeder via `record_io.write_record`, a registered in-place editor, a
-  registered validated promoter, or a declared bypass. `just audit-writers`.
+  seeder via `record_io.write_record`, a registered in-place editor, or a declared
+  bypass. `just audit-writers`. Those are the three routes `CLAUDE.md` and
+  `audit_writers.py` implement on `main`; a fourth, a registered validated
+  promoter, is proposed but unmerged, so do not expect its registry to exist
+  (#574).
 - **A gate that passes without reading anything.** The recurring defect class in
   this repo: `audit-schema` reporting "internally coherent" having read zero
   records, `validate` exiting 0 on a mistyped path (#534, #540). A green gate
@@ -255,10 +258,13 @@ Before citing any of the following, confirm how it was obtained:
   silently is wrong. PROSITE read 6,174 for months against an actual 3,425
   (#566). State the basis with the count.
 - **`-path "*name*"` false positives.** Matching a source name against a whole
-  path collides with category directories — `-path "*superfamily*"` also matches
-  `seq_homologous_superfamily`, inventing tens of thousands of records for a
-  source that has none. Enumerate real source directories at a fixed depth
-  instead (`find data/traits -mindepth 3 -maxdepth 3 -type d`).
+  path collides with category directories. `-path "*superfamily*"` matches
+  `data/traits/sequence/homologous_superfamily` and
+  `data/traits/structure/homologous_superfamily`, so
+  `find data/traits -path '*superfamily*' -name '*.yaml'` returns **22,902** files
+  while `find data/traits -mindepth 3 -maxdepth 3 -type d -name superfamily`
+  returns **0** — ~23k records invented for a source that has none. Enumerate real
+  source directories at a fixed depth instead (#575).
 - **Squash-merge breaks ancestry.** `git branch --merged main` gives false
   negatives for squash-merged branches. Prove a branch is safe to delete by
   **content** (`git diff <branch> origin/main -- <files>`), never by
@@ -267,8 +273,11 @@ Before citing any of the following, confirm how it was obtained:
   status, so a fail-closed tool looks like it succeeded. Use
   `cmd >/tmp/o 2>/tmp/e; echo $?` or `${PIPESTATUS[0]}`.
 - **Whitespace-splitting file lists.** `git status --porcelain | awk '{print $2}'`
-  turns one path containing spaces into several bogus entries. Use
-  `--porcelain -z | tr '\0' '\n'`.
+  truncates a path at its first space rather than multiplying it: for
+  `a path with spaces.txt` it yields the single entry `"a` and silently drops the
+  rest — the leading quote is real, because git quotes such paths by default
+  (`core.quotePath` defaults to true). Use `--porcelain -z | tr '\0' '\n'`
+  (#575).
 - **Glob patterns tested by shape.** A regex check on a `.gitignore` pattern
   tests what it looks like; `git check-ignore --no-index <path>` tests what it
   does. Only the second is evidence.
@@ -291,9 +300,11 @@ Before citing any of the following, confirm how it was obtained:
 - Cross-repo issues (a defect described once but relevant to several Mechs) are
   common in this org. Note when a fix should propagate, but do not open issues
   in sibling repos without being asked.
-- The local checkout can lag `origin/main` significantly, and a feature branch
-  can predate skills that already merged. Verify against `origin/main` or
-  `gh api`, not the working tree.
+- The local checkout can diverge from `origin/main` in **either** direction: a
+  feature branch can predate skills that already merged, and a dirty tree can
+  carry unmerged work that makes a rule look stricter than the one in force. The
+  second is the likelier case mid-session, and is how #574 happened. Verify
+  against `origin/main` or `gh api`, never the working tree.
 - No @-mentions in issue comments, tracker updates, or reports without explicit
   per-mention authorization (standing rule).
 
