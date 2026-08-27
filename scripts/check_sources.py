@@ -1,5 +1,23 @@
 #!/usr/bin/env python3
-"""Validate download.yaml as the enforced source and script registry."""
+"""Validate download.yaml as the enforced source and script registry.
+
+The manifest contract, restored here because the previous docstring recorded it and
+deleting it left `STATUSES` as an unexplained set literal (#543):
+
+* every block declares a `url`;
+* a block carrying `status:` also declares `source:`, so it joins a source group and
+  is reachable by the per-source rules below -- without it the block is checked for
+  `url` and nothing else (#543);
+* `seeder`/`fetcher`/`enricher` name a script that exists, under its role's prefix;
+* a source with any `seeded` block names a seeder somewhere in that group;
+* a restrictive or missing-open licence declares a `license_review` disposition;
+* every `seed_*.py` on disk is either source-backed or classified as a helper.
+
+`STATUSES` is not an arbitrary set. `superseded` and `enrichment` exist because #91
+needed to distinguish a block replaced by a newer release from one that only adds
+fields to records another block seeded; both are legitimate terminal states that are
+not `seeded`, and dropping either silently reclassifies real blocks as invalid.
+"""
 
 from __future__ import annotations
 
@@ -94,10 +112,27 @@ def validate_registry(
         role = block.get("role", "primary")
         if role not in BLOCK_ROLES:
             errors.append(f"[{tag}] invalid role {role!r}")
+        if role == "api" and status == "seeded":
+            # Nothing linked role to status, so a per-accession API block could call
+            # itself seeded while a sibling in the same source group supplied the
+            # seeder -- the shape #458 was filed about, closed at one site but never
+            # as a rule (#543).
+            errors.append(
+                f"[{tag}] role: api may not be status: seeded; an API endpoint "
+                "is a lookup route, not a seeded source"
+            )
 
         source = block.get("source")
         if source:
             source_blocks[str(source)].append(block)
+        elif status is not None:
+            # Grouping is by `source:`, and every per-source rule below iterates those
+            # groups. A block with a status but no source was therefore checked for
+            # `url` and nothing else -- including the seeded-needs-a-seeder rule (#543).
+            errors.append(
+                f"[{tag}] declares status {status!r} but no source: it joins no "
+                "source group, so no per-source rule can see it"
+            )
 
         for field in ("seeder", "fetcher", "enricher"):
             if field not in block:
@@ -109,13 +144,17 @@ def validate_registry(
                 errors.append(f"[{tag}] {field} script not found: scripts/{script}")
             if field == "seeder":
                 if not script.startswith("seed_"):
-                    errors.append(
-                        f"[{tag}] seeder must name a seed_*.py script, not {script!r}"
-                    )
+                    errors.append(f"[{tag}] seeder must name a seed_*.py script, not {script!r}")
                 else:
                     referenced_seeders.add(script)
             elif field == "fetcher" and not script.startswith("fetch_"):
                 errors.append(f"[{tag}] fetcher must name a fetch_*.py script, not {script!r}")
+            elif field == "enricher" and script.startswith(("seed_", "fetch_")):
+                # `enricher` had no naming rule at all, so `enricher: fetch_thing.py`
+                # passed and read as a fetch route to anyone scanning the manifest (#543).
+                errors.append(
+                    f"[{tag}] enricher must not be named like a seeder or fetcher, not {script!r}"
+                )
 
         license_review = block.get("license_review")
         if license_review is not None and license_review not in LICENSE_REVIEWS:
@@ -129,6 +168,25 @@ def validate_registry(
                 )
             elif license_review == "pending":
                 notices.append(f"[{tag}] licence disposition pending under #517")
+            elif license_review == "approved":
+                # `approved` on a FLAGGED block produced zero errors AND zero notices,
+                # so a restrictive licence could be waved through leaving no approver,
+                # date or issue behind (#543). It must name who decided, and it stays
+                # visible in the report rather than vanishing.
+                reference = str(block.get("license_review_ref") or "").strip()
+                if not reference:
+                    errors.append(
+                        f"[{tag}] license_review: approved must carry "
+                        "license_review_ref naming an approver or issue"
+                    )
+                else:
+                    notices.append(f"[{tag}] restrictive licence approved: {reference}")
+        elif not str(block.get("license", "")).strip():
+            # The error text says "restrictive/missing-open", but a block with no
+            # licence at all was never asked for a review state (#543). Reported as a
+            # notice: 11 blocks in the manifest are in this state today, and deciding
+            # them is #517's licensing question, not this checker's.
+            notices.append(f"[{tag}] no licence recorded; disposition unresolved under #517")
 
     for source, grouped in sorted(source_blocks.items()):
         if any(block.get("status") == "seeded" for block in grouped):
@@ -159,6 +217,18 @@ def validate_registry(
         if script in referenced_seeders:
             errors.append(f"[{tag}] seeder is both source-backed and helper-classified")
         helper_scripts.add(script)
+
+    referenced_fetchers = {
+        _script_name(block["fetcher"], "fetcher", "", [])
+        for block in blocks
+        if isinstance(block, dict) and block.get("fetcher")
+    }
+    for script in sorted(scripts.glob("fetch_*.py")):
+        if script.name not in referenced_fetchers:
+            # Orphan detection globbed seed_*.py only, so an unregistered fetch route was
+            # invisible (#543). A notice, not an error: six are unregistered today, and
+            # registering them is a manifest decision rather than this PR's to make.
+            notices.append(f"fetcher scripts/{script.name} is not referenced by any block")
 
     classified = referenced_seeders | helper_scripts
     for script in sorted(scripts.glob("seed_*.py")):
