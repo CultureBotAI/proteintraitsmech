@@ -597,10 +597,24 @@ def _walked_candidate_paths(traits_root: Path) -> set[Path]:
     paths drift apart (#539), and the drift would be silent.  Over-inclusion
     cannot change the result, because every candidate is parsed below; it only
     costs time.  ``followlinks=False`` matches ripgrep's default traversal.
+
+    Both refusals below exist because ``os.walk`` reports an unreadable or absent
+    tree as an empty one, while ripgrep exits non-zero (#573).  Without them the
+    fallback would scan nothing and report success, and the semantic-shadow sweep
+    over the wider trait root -- the entire reason this scan is not confined to the
+    canonical Rhea route -- would silently cover no files at all.
     """
 
+    if not traits_root.is_dir():
+        raise RheaStageError(f"cannot scan Rhea trait root {traits_root}: not a directory")
+
+    def _refuse(error: OSError) -> None:
+        raise RheaStageError(f"cannot scan Rhea trait root {traits_root}: {error}") from error
+
     paths: set[Path] = set()
-    for directory, _subdirectories, filenames in os.walk(traits_root, followlinks=False):
+    for directory, _subdirectories, filenames in os.walk(
+        traits_root, followlinks=False, onerror=_refuse
+    ):
         for filename in filenames:
             if os.path.splitext(filename)[1].lower() in {".yaml", ".yml"}:
                 paths.add(Path(directory) / filename)

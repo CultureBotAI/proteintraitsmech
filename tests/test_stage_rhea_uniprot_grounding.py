@@ -673,3 +673,32 @@ def test_yml_semantic_shadow_still_fails_closed_without_ripgrep(
     assert stage._ripgrep_candidate_paths(case["traits_root"]) is None
     with pytest.raises(stage.RheaStageError, match="semantic shadow"):
         _build(case)
+
+
+def test_both_prefilter_paths_refuse_an_unscannable_trait_root(tmp_path: Path) -> None:
+    """The fallback must fail closed exactly where ripgrep does (#573).
+
+    ``os.walk`` reports a missing or unreadable tree as an empty one, so without
+    an explicit guard the fallback would scan nothing, find no semantic shadows,
+    and report success -- the #540 shape, in the one environment (no ripgrep)
+    the fallback exists to serve.
+    """
+
+    missing = tmp_path / "no-such-trait-root"
+    with pytest.raises(stage.RheaStageError, match="not a directory"):
+        stage._walked_candidate_paths(missing)
+    if stage.shutil.which("rg") is not None:
+        with pytest.raises(stage.RheaStageError, match="prefilter failed"):
+            stage._ripgrep_candidate_paths(missing)
+
+    unreadable = tmp_path / "unreadable"
+    (unreadable / "nested").mkdir(parents=True)
+    _write(unreadable / "nested" / "trait.yaml", "identifier: RHEA:10000\n")
+    os.chmod(unreadable / "nested", 0o000)
+    try:
+        if os.access(unreadable / "nested", os.R_OK):
+            pytest.skip("running as a user that ignores directory permissions")
+        with pytest.raises(stage.RheaStageError, match="cannot scan Rhea trait root"):
+            stage._walked_candidate_paths(unreadable)
+    finally:
+        os.chmod(unreadable / "nested", 0o700)
