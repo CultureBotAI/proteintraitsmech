@@ -62,11 +62,18 @@ ProteinTraitsMech-specific traps when judging "done":
   or Codex deep-research reports) are *inputs*. An item is only DONE when
   DOI/PMID-backed claims have actually been applied to the `ProteinTraitRecord`
   YAML, not when a report merely exists.
-- **`research/traits/**` is tracked, not gitignored.** Unlike some sibling
-  Mechs where `research/` is scratch, here it holds real curation deliverables
-  under git. A `rm -rf reports research` cleanup habit safe in another repo
-  can silently delete committed work here. Always run `git status --short`
-  before staging/committing and before any destructive cleanup command.
+- **`research/` holds committed deliverables, unlike some sibling Mechs where
+  it is scratch.** `.gitignore` ignores `research/*` and then un-ignores
+  `research/*.md` and `research/traits/`. The committed work a `rm -rf reports
+  research` habit would destroy is the **171 markdown reports directly under
+  `research/`** (measured on `main`; `research/prompts/` holds 4 more, which
+  `!research/*.md` does not reach); `research/traits/` is reserved and
+  un-ignored but currently holds **0** tracked files (#579). Always run
+  `git status --short` before staging and before any destructive cleanup.
+  Beware when checking this: `git check-ignore -v research/traits` reports the
+  directory *ignored* by `research/*`, while `research/traits/x.md` reports
+  *not ignored* — testing the directory gives the opposite answer to the one
+  that matters, which the `.gitignore` comment above the rules explains.
 
 ### Step 2 — Present the menu
 
@@ -88,9 +95,22 @@ recommend and proceed on confirmation.
   / TraitMech), flag divergence — but do not edit sibling repos unless asked.
 
 Commit the reconciliation. Doc-only changes may show "no checks reported" on
-the path-filtered `validate-strict` workflow — that's `MERGEABLE`/`CLEAN`, not
-a failure; `checks` (lint, `audit-schema`, `audit-writers`,
-`validate-internal-id-labels`, `test`) still runs on every PR regardless.
+the path-filtered `validate-strict` workflow — that is expected, not a failure,
+because that workflow filters on schema/`data/traits/**`/validator paths.
+
+`checks` (lint, `audit-schema`, `audit-writers`, `validate-internal-id-labels`,
+`test`) is `on: pull_request` with no path filter, so it *should* run on every
+PR — but do not treat that as evidence. On #559 the second commit triggered **no
+workflow runs at all** while `mergeStateStatus` still read `CLEAN`, which looks
+exactly like a healthy doc-only PR (#580). Confirm a run exists for the head SHA
+before calling it green:
+
+```bash
+gh pr checks <N>          # "no checks reported" is not "passed"
+gh api repos/{owner}/{repo}/commits/<sha>/check-runs --jq .total_count
+```
+
+A count of `0` means the gates did not run, whatever the merge state says.
 
 ### Step 4 — Pick it up (only if the user says to)
 

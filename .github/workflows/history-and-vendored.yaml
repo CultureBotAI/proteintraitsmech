@@ -2,9 +2,8 @@
 #
 # BOTH USE SPARSE CHECKOUT, and that is not premature optimisation: this repo is ~431,000
 # files and ~768 MB, essentially all of it `data/traits/`, and neither job reads a single
-# record. `vendored-sync`'s stated property is that it fails in seconds — a full checkout
-# costs orders of magnitude more than the six curl+diff calls it exists to run, which
-# would have made that claim false on arrival.
+# record. `vendored-sync` reads claw's manifest and governed payloads at one immutable
+# commit — a full checkout would dominate the bounded standard-library HTTPS checks.
 name: history-and-vendored
 
 on:
@@ -17,12 +16,14 @@ permissions:
   contents: read
 
 jobs:
-  # curl + diff only: no uv, no Python, no dependency resolution. It fetches the hub's
-  # copies at the pinned commit and diffs. Deliberately NOT a self-generated checksum —
-  # a pin the repo computes from its own file passes whatever that file happens to say,
-  # which is the blind spot this design replaced.
+  # Standard-library Python only: no uv or dependency resolution. The checker fetches
+  # claw's single manifest and governed payloads at the pinned immutable commit, verifies
+  # their manifest digests, and compares local bytes and modes. Deliberately NOT a
+  # self-generated checksum — a pin the repo computes from its own file passes whatever
+  # that file happens to say, which is the blind spot this design replaced.
   vendored-sync:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
         with:
@@ -30,8 +31,39 @@ jobs:
             scripts
             src
             tests
+            prompts
           sparse-checkout-cone-mode: true
-      - run: bash scripts/check_vendored_sync.sh
+      # Keep retry policy in the workflow rather than forking the byte-governed launcher.
+      # Exit 1 is the checker's retryable class; exit 2 is a local governance precondition
+      # failure, so another network attempt cannot change its outcome.
+      - name: Verify vendored files match canonical claw
+        run: |
+          set -uo pipefail
+          for attempt in 1 2 3; do
+            status=0
+            bash scripts/check_vendored_sync.sh || status=$?
+            case "$status" in
+              0)
+                exit 0
+                ;;
+              1)
+                ;;
+              2)
+                echo "::error::vendored-sync governance precondition failed" >&2
+                exit 2
+                ;;
+              *)
+                echo "::error::vendored-sync returned unexpected exit $status" >&2
+                exit "$status"
+                ;;
+            esac
+            if [ "$attempt" -lt 3 ]; then
+              echo "::warning::vendored-sync attempt $attempt failed (exit $status); retrying in 5s" >&2
+              sleep 5
+            fi
+          done
+          echo "::error::vendored files differ from canonical claw, or claw could not be reached after 3 attempts" >&2
+          exit 1
 
   # Enforces the split the shared schema documents: a history record that EXISTS must be
   # schema-valid (hard), while a PR that writes none is not blocked. See history/README.md

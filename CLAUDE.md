@@ -3,6 +3,36 @@
 Operational guidance for agents working in ProteinTraitsMech. Mutable corpus metrics do
 not belong here; run `just corpus-stats` for current machine-readable counts.
 
+## Fact-based answers only
+
+Never state a comparison, count, status, or historical claim without having
+verified it in the current conversation via a tool call (`gh`, `git`, `grep`,
+`just`, `Read`, etc.). "I recall," "this is typically the case," or a prior
+summary are not verification — code, issue/PR state, and the corpus change
+between turns and across concurrent sessions. The corpus-metrics rule above is
+one instance of this broader rule, not a separate concern: `just corpus-stats`
+exists precisely because a remembered or written-down count goes stale, and
+the same logic applies to every other kind of claim, not just corpus size.
+
+- Prefer a live check over memory: `gh api`/`gh pr view`/`gh issue view` over
+  a remembered issue list; `git log`/`git blame` over a recalled commit; a
+  fresh `Read` over trusting an earlier read of the same file; `just
+  corpus-stats`/`just validate-all` over a remembered figure.
+- This repo's local checkout can lag `origin/main` significantly (see also
+  the `review-open-issues` skill's note to the same effect). Verify against
+  `gh api` or a fresh `git fetch` against `origin/main`, not the working
+  tree on disk, before asserting what the repo currently contains.
+- Re-verify rather than repeat: restating an earlier claim in this same
+  conversation without re-checking it is exactly the failure mode this rule
+  exists to prevent. `review-open-issues`'s "evidence over vibes" convention
+  is the same principle applied to backlog state specifically. Skill
+  directories land via separate PRs and may not be present yet — check that
+  `.claude/skills/next-tasks/` exists before citing its "measure, don't trust
+  a stale count" trap, per the rule above, rather than trusting a note about
+  whether it exists written at some earlier point in time.
+- If a claim can't be verified this session, say so ("I did not check X" /
+  "I don't know") instead of presenting a plausible guess as fact.
+
 ## Purpose and invariant
 
 ProteinTraitsMech is a LinkML-governed knowledge base of protein trait classes. The
@@ -25,8 +55,10 @@ The five paths and axes are:
 
 ## Safety rules
 
-- Files named by `scripts/check_vendored_sync.sh` are byte-identical fleet assets. Change
-  them in the canonical hub, then bump and re-vendor; do not patch them locally.
+- Files selected for this repository by claw's vendored-artifact manifest are
+  byte-identical fleet assets. Change them in canonical
+  `CultureBotAI/culturebotai-claw`, then sync and pin that full immutable commit; do not
+  patch them locally.
 - Record writes must use an audited route: a seeder through `record_io.write_record`, a
   registered in-place editor, or a declared bypass. Run `just audit-writers` after writer
   changes.
@@ -86,6 +118,7 @@ claims; do not upgrade status merely because a machine generated content.
 | Audit embedding fields | [embedding-field-audit](.claude/skills/embedding-field-audit/SKILL.md) |
 | Measure Git/Pages scale | [scalability-check](.claude/skills/scalability-check/SKILL.md) |
 | Assess/maintain the backlog ("what's next") | [next-tasks](.claude/skills/next-tasks/SKILL.md) |
+| Full open-issue queue triage | [review-open-issues](.claude/skills/review-open-issues/SKILL.md) |
 
 ## Change-to-gate matrix
 

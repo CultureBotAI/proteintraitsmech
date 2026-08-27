@@ -3,27 +3,24 @@
 Where ProteinTraitsMech stands against the sibling Mech knowledge bases on the shared
 curation foundation (#484).
 
-**Everything below was checked against the sibling repositories, not against the issue
-text.** The fleet review the issue cites
-(`CultureBotAI/culturebotai-claw docs/reviews/five_mech_shared_functionality_review.md`)
-is not present in that repository — the `docs/` tree there holds `AUTONOMOUS_LOOPS.md`
-and `proposals/`, and an org-wide code search for the filename returns nothing. So the
-siblings' own implementations are the specification used here, primarily
-[TraitMech](https://github.com/CultureBotAI/TraitMech) as the closest sibling and
-[CultureMech](https://github.com/CultureBotAI/CultureMech) as the vendoring hub.
+The sibling repositories remain the source for domain-specific behavior. General
+byte-identical artifacts are now governed by the public
+[`CultureBotAI/culturebotai-claw`](https://github.com/CultureBotAI/culturebotai-claw)
+manifest at the full immutable commit in `scripts/.vendored_canon_ref`; no Mech is a
+vendoring hub.
 
 ## Status
 
 | # | Capability | Before | Now | Notes |
 |---|---|---|---|---|
-| 1 | `mech_shared.yaml` with `Discussion` + `Dataset` | ✗ | **✓** | Vendored byte-identical from the hub; `discussions` / `datasets` on `ProteinTraitRecord` |
+| 1 | `mech_shared.yaml` with `Discussion` + `Dataset` | ✗ | **✓** | Vendored byte-identical from claw; `discussions` / `datasets` on `ProteinTraitRecord` |
 | 2 | Append-only history schema + presence gate | ✗ | **✓** | `history.yaml` vendored **and governed**, `history/` tree, CI job. Presence advisory — see below |
 | 3 | `new-history` / `validate-history` recipes | ✗ | **✓** | Claw-preferred, local fallback scaffolder |
 | 4 | Validated-write helper + writer-safety audit | ✗ | **✓** | Atomic closed-schema helper; registered editors enforced; bulk seeders explicitly retain fast merge path — **#492** |
 | 5 | ID-to-label correspondence validation | ✗ | **✓** | Fleet YAML adapter + offline count-and-identity gate for actionable internal groundings — **#493** |
 | 6 | Evidence snippet / reference validation | **✓** | **✓** | Pre-existing: `just audit-snippets` |
 | 7 | Knowledge-gap scan + shared QC dashboard | ✗ | ✗ | **Not a gap.** No sibling has this in CI or as a dependency — see below |
-| 8 | Vendored shared-file drift enforcement | ✗ | **✓** | `just check-vendored-sync` over **7** files + blocking CI job |
+| 8 | Vendored shared-file drift enforcement | ✗ | **✓** | `just check-vendored-sync` over the claw manifest's applicable artifacts + blocking CI job |
 
 Capabilities this repo already had, which the issue does not mention:
 `just validate-strict` (closed-schema, in-process — #485), `just audit-graphs`,
@@ -49,18 +46,15 @@ Implementing the stronger reading here would make this repo's history layer mean
 something different from its siblings', which is the opposite of what a parity issue is
 for. Validity is enforced hard; presence is not. Tightening it is a fleet decision.
 
-**The pin was bumped during review, and that mattered.** The first version pinned
-`6be694f3` and concluded `history.yaml` was not in the hub's governed set. It was not — *at
-that commit*. The hub added it on 2026-08-01, 92 commits later, at exactly the path a
-`MAPPED` entry uses and byte-identical to the copy here. So the conclusion "not governable"
-was an artefact of a stale pin, and `CLAUDE.md` had already been written claiming CI
-enforcement that did not exist. The pin now tracks hub HEAD, `history.yaml` is governed,
-and re-vendoring brought three upstream files forward (hydration-state handling in the
-id-label validator — CultureMech curation logic, irrelevant here but part of the canon,
-and its 15 new tests come with it).
+**The pin and artifact membership are external to this repository.** The former checker
+embedded `FILES` and `MAPPED` arrays and compared against a CultureMech commit. The
+current checker requires one full claw commit, fetches the single manifest from exactly
+that revision, verifies each canonical payload digest, expands this consumer's package
+path, and compares the applicable local bytes and modes. The shell launcher therefore
+contains no second artifact list that can silently diverge from governance.
 
-**`chem_formula.py` is vendored despite being chemistry.** It is in the hub's governed
-file list because `validate_id_label_correspondence.py` imports it. Dropping it would
+**`chem_formula.py` is vendored despite being chemistry.** It is in claw's governed
+manifest because `validate_id_label_correspondence.py` imports it. Dropping it would
 mean maintaining a local fork of the validator — precisely the drift the contract
 forbids. It is carried, unused, on purpose.
 
@@ -97,12 +91,11 @@ Checked against the siblings, there is no such decision to make:
   neither `gen-qc-dashboard` nor `knowledge-gap-scan` is in the 16-recipe `qc` aggregate
   that CI actually invokes.
 
-They are developer conveniences, run by a human who happens to have a checkout. Adopting
-them as a dependency would make this repo the only one in the fleet that has one — and
-`culturebotai-claw` is not a published package but a working repo (~60 status markdown
-files at its root), so depending on it means pinning a moving checkout. That is the failure
-the vendoring contract exists to prevent, and the one that already bit this work once when
-a 92-commit-stale pin made `history.yaml` look ungovernable.
+They are developer conveniences, run by a human who happens to have a checkout. The
+governance integration does not create a runtime claw dependency: its standalone checker
+is vendored and reads only the manifest and payloads at the immutable claw revision.
+Making unrelated dashboard tools depend on a moving checkout would be a separate and
+unnecessary coupling.
 
 The convention is already in place: `just new-history` prefers claw when `CLAW_SRC`
 resolves and falls back otherwise. If the dashboard is ever wanted, add the recipes with
@@ -116,7 +109,7 @@ Note also that the *schema* side of knowledge-gap capture already landed: `Discu
 ## Verifying
 
 ```bash
-just check-vendored-sync     # byte-identity against the hub at scripts/.vendored_canon_ref
+just check-vendored-sync     # bytes/modes against claw's pinned immutable manifest
 just validate-history        # every history record against the vendored schema
 just validate-strict         # closed-schema over the corpus
 just validate-internal-id-labels  # offline internal grounding identity gate
