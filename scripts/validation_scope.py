@@ -16,15 +16,17 @@ from pathlib import Path
 from typing import Iterable
 
 
-FULL_VALIDATION_PATHS = frozenset({
-    ".github/workflows/validate-strict.yaml",
-    "pyproject.toml",
-    "scripts/audit_causal_graphs.py",
-    "scripts/validate_strict.py",
-    "scripts/validation_scope.py",
-    "src/proteintraitsmech/schema/mech_shared.yaml",
-    "src/proteintraitsmech/schema/proteintraitsmech.yaml",
-})
+FULL_VALIDATION_PATHS = frozenset(
+    {
+        ".github/workflows/validate-strict.yaml",
+        "pyproject.toml",
+        "scripts/audit_causal_graphs.py",
+        "scripts/validate_strict.py",
+        "scripts/validation_scope.py",
+        "src/proteintraitsmech/schema/mech_shared.yaml",
+        "src/proteintraitsmech/schema/proteintraitsmech.yaml",
+    }
+)
 
 
 def choose_scope(changed_paths: Iterable[str]) -> tuple[str, list[str]]:
@@ -33,8 +35,9 @@ def choose_scope(changed_paths: Iterable[str]) -> tuple[str, list[str]]:
     if changed & FULL_VALIDATION_PATHS:
         return "full", []
     traits = sorted(
-        path for path in changed
-        if path.startswith("data/traits/") and Path(path).suffix in {".yaml", ".yml"}
+        path
+        for path in changed
+        if path.startswith("data/traits/") and Path(path).suffix.lower() in {".yaml", ".yml"}
     )
     return "changed", traits
 
@@ -46,8 +49,11 @@ def git_changed_paths(base: str, head: str) -> list[str]:
         check=True,
         capture_output=True,
     )
-    return [part.decode("utf-8", errors="surrogateescape")
-            for part in result.stdout.split(b"\0") if part]
+    return [
+        part.decode("utf-8", errors="surrogateescape")
+        for part in result.stdout.split(b"\0")
+        if part
+    ]
 
 
 def write_outputs(
