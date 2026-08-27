@@ -47,6 +47,15 @@ default:
 install:
     uv sync --extra dev
 
+# Deterministic machine-readable corpus + generated-site metrics. Does not depend on a
+# current Pages build; missing docs/data artifacts are reported as zero.
+corpus-stats output="-" *args:
+    uv run python scripts/corpus_stats.py --output {{quote(output)}} {{args}}
+
+# Audit a built Pages tree against conf/pages_budgets.json.
+audit-pages *args:
+    uv run python scripts/audit_pages_size.py {{args}}
+
 # Generate Python dataclasses from LinkML schema
 gen-schema:
     uv run gen-pydantic src/proteintraitsmech/schema/proteintraitsmech.yaml > src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py
@@ -139,12 +148,12 @@ validate-history *args:
         --schema src/proteintraitsmech/schema/history.yaml --target-class HistoryRecord "$target"
     fi
 
-# Drift check for the files vendored BYTE-IDENTICAL from the canonical hub
-# (CultureBotAI/CultureMech at scripts/.vendored_canon_ref). A local edit to any of them
-# fails here -- which is the point: the fleet's shared modules must not fork silently.
-# curl + diff only, so it runs as a fast blocking CI job with no Python dependency.
+# Drift check for the files vendored BYTE-IDENTICAL from canonical claw at the immutable
+# commit in scripts/.vendored_canon_ref. The claw manifest is the sole artifact list; a
+# local edit to any governed path fails here so the fleet's shared modules cannot fork
+# silently. Standard-library Python only, with no project dependency installation.
 #
-# Fail if a byte-identical vendored file has drifted from the hub
+# Fail if a governed vendored file has drifted from canonical claw
 check-vendored-sync:
     bash scripts/check_vendored_sync.sh
 
@@ -158,9 +167,20 @@ check-vendored-sync:
 measure-id-label-drift *args:
     uv run python scripts/measure_id_label_drift.py {{args}}
 
+# Fleet id-label adapter over causal nodes and canonical examples. Report-first:
+# requires locally installed OAK sqlite adapters and emits the known drift backlog.
+report-id-labels *args:
+    uv run python scripts/validate_id_label_correspondence.py --report reports/id_label_drift.tsv {{args}}
+
+# Blocking, offline subset: proteintraitsmech: node labels resolve against this corpus.
+# Pins mismatch count AND identity, so an equal-count swap still fails.
+validate-internal-id-labels *args:
+    uv run python scripts/validate_internal_id_labels.py {{args}}
+
 # Who may write a trait record, and by what route? (#492)
-# Three legitimate routes -- a seeder through record_io.write_record, a registered in-place
-# definition editor, or a declared bypass with a reason -- and anything else is a finding.
+# Three legitimate routes -- a bulk seeder through record_io.write_record, a registered
+# in-place editor through atomic write_validated_record, or a declared bypass with a
+# reason -- and anything else is a finding.
 # Needs no data/raw: it reads scripts/ and the guard test. CI-able.
 audit-writers *args:
     uv run python scripts/audit_writers.py {{args}}
@@ -238,10 +258,10 @@ seed-lsf *args:
 # gitignored — regenerate any time with this recipe.
 fetch-prosite:
     mkdir -p data/raw
-    curl -sS --fail --max-time 300 -o data/raw/prosite.dat  ftp://ftp.expasy.org/databases/prosite/prosite.dat
-    curl -sS --fail --max-time 120 -o data/raw/prorule.dat  ftp://ftp.expasy.org/databases/prosite/prorule.dat
-    curl -sS --fail --max-time 300 -o data/raw/prosite.doc  ftp://ftp.expasy.org/databases/prosite/prosite.doc
-    curl -sS --fail --max-time  30 -o data/raw/ps_reldt.txt ftp://ftp.expasy.org/databases/prosite/ps_reldt.txt
+    python3 scripts/fetch_source.py ftp://ftp.expasy.org/databases/prosite/prosite.dat data/raw/prosite.dat --max-time 300 --min-bytes 1000
+    python3 scripts/fetch_source.py ftp://ftp.expasy.org/databases/prosite/prorule.dat data/raw/prorule.dat --max-time 120 --min-bytes 1000
+    python3 scripts/fetch_source.py ftp://ftp.expasy.org/databases/prosite/prosite.doc data/raw/prosite.doc --max-time 300 --min-bytes 1000
+    python3 scripts/fetch_source.py ftp://ftp.expasy.org/databases/prosite/ps_reldt.txt data/raw/ps_reldt.txt --max-time 30 --min-bytes 10
     @cat data/raw/ps_reldt.txt
 
 # Seed data/traits/ from PROSITE patterns / profiles / ProRules.
@@ -260,10 +280,8 @@ seed-prosite-pdoc *args:
 # catalogues from Zenodo (DOI:10.5281/zenodo.13908086, CC-BY 4.0).
 fetch-ted:
     mkdir -p data/raw
-    curl -sSLf --max-time 300 -o data/raw/ted_novel_folds.tsv.gz \
-      https://zenodo.org/records/13908086/files/novel_folds_set.domain_summary.tsv.gz
-    curl -sSLf --max-time 300 -o data/raw/ted_high_symmetry_folds.tsv.gz \
-      https://zenodo.org/records/13908086/files/high_symmetry_folds_set.domain_summary.tsv.gz
+    python3 scripts/fetch_source.py https://zenodo.org/records/13908086/files/novel_folds_set.domain_summary.tsv.gz data/raw/ted_novel_folds.tsv.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
+    python3 scripts/fetch_source.py https://zenodo.org/records/13908086/files/high_symmetry_folds_set.domain_summary.tsv.gz data/raw/ted_high_symmetry_folds.tsv.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
     @ls -la data/raw/ted_*.tsv.gz
 
 # Seed data/traits/structure/fold/ from the TED novel + high-symmetry fold
@@ -299,8 +317,7 @@ seed-scope *args:
 # grows past 1 GB.
 fetch-ecod:
     mkdir -p data/raw
-    curl -sSLf --max-time 1800 -o data/raw/ecod.latest.domains.txt \
-      http://prodata.swmed.edu/ecod/distributions/ecod.latest.domains.txt
+    python3 scripts/fetch_source.py http://prodata.swmed.edu/ecod/distributions/ecod.latest.domains.txt data/raw/ecod.latest.domains.txt --max-time 1800 --min-bytes 1000000
     @ls -la data/raw/ecod.latest.domains.txt
 
 # Seed data/traits/structure/{architecture,homologous_superfamily,
@@ -332,8 +349,7 @@ seed-tcdb *args:
 # terms with CERM before redistribution. ~40 MB gzip, gitignored.
 fetch-metalpdb:
     mkdir -p data/raw/metalpdb
-    curl -sSLf --max-time 600 -o data/raw/metalpdb/flat_db_file.xml.gz \
-      "https://metalpdb.cerm.unifi.it/download?t=flatdb&id=flat_db_file.xml.gz"
+    python3 scripts/fetch_source.py "https://metalpdb.cerm.unifi.it/download?t=flatdb&id=flat_db_file.xml.gz" data/raw/metalpdb/flat_db_file.xml.gz --max-time 600 --min-bytes 1000 --prefix-hex 1f8b
     @ls -la data/raw/metalpdb/flat_db_file.xml.gz
 
 # Seed data/traits/structure/metal_site/metalpdb/ — one STRUCT_METAL_SITE class
@@ -347,7 +363,7 @@ seed-metalpdb *args:
 # representative PDBs. Dry-run by default; --apply.
 fetch-3did:
     mkdir -p data/raw/3did
-    curl -sSLf --max-time 300 -o data/raw/3did/3did_flat.gz https://3did.irbbarcelona.org/download/current/3did_flat.gz
+    python3 scripts/fetch_source.py https://3did.irbbarcelona.org/download/current/3did_flat.gz data/raw/3did/3did_flat.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
     @ls -la data/raw/3did/3did_flat.gz
 
 seed-3did *args:
@@ -357,11 +373,11 @@ seed-3did *args:
 # (Yang/Zhang group). Free for academic use, no explicit open license (FLAGGED).
 fetch-biolip:
     mkdir -p data/raw/biolip
-    curl -sSLf --max-time 300 -o data/raw/biolip/BioLiP_nr.txt.gz https://zhanggroup.org/BioLiP/download/BioLiP_nr.txt.gz
+    python3 scripts/fetch_source.py https://zhanggroup.org/BioLiP/download/BioLiP_nr.txt.gz data/raw/biolip/BioLiP_nr.txt.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
     gunzip -f data/raw/biolip/BioLiP_nr.txt.gz
-    curl -sSLf --max-time 300 -o data/raw/biolip/ligand.tsv.gz https://zhanggroup.org/BioLiP/data/ligand.tsv.gz
+    python3 scripts/fetch_source.py https://zhanggroup.org/BioLiP/data/ligand.tsv.gz data/raw/biolip/ligand.tsv.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
     gunzip -f data/raw/biolip/ligand.tsv.gz
-    curl -sSLf --max-time 60  -o data/raw/biolip/readme.txt https://zhanggroup.org/BioLiP/download/readme.txt
+    python3 scripts/fetch_source.py https://zhanggroup.org/BioLiP/download/readme.txt data/raw/biolip/readme.txt --max-time 60 --min-bytes 100
     @wc -l data/raw/biolip/BioLiP_nr.txt data/raw/biolip/ligand.tsv
 
 # Aggregate BioLiP rows into ligand-keyed STRUCT_BINDING_SITE classes.
@@ -402,11 +418,11 @@ seed-ec *args:
 
 fetch-chebi:
     mkdir -p data/raw/chebi
-    curl -sSLf --max-time 300 -o data/raw/chebi/compounds.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/compounds.tsv.gz
-    curl -sSLf --max-time 300 -o data/raw/chebi/chemical_data.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/chemical_data.tsv.gz
-    curl -sSLf --max-time 600 -o data/raw/chebi/structures.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/structures.tsv.gz
+    python3 scripts/fetch_source.py https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/compounds.tsv.gz data/raw/chebi/compounds.tsv.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
+    python3 scripts/fetch_source.py https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/chemical_data.tsv.gz data/raw/chebi/chemical_data.tsv.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
+    python3 scripts/fetch_source.py https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/structures.tsv.gz data/raw/chebi/structures.tsv.gz --max-time 600 --min-bytes 1000 --prefix-hex 1f8b
     # relation.tsv.gz (is_a / has_role edges) drives the cofactor role subtree
-    curl -sSLf --max-time 300 -o data/raw/chebi/relation.tsv.gz https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/relation.tsv.gz
+    python3 scripts/fetch_source.py https://ftp.ebi.ac.uk/pub/databases/chebi/flat_files/relation.tsv.gz data/raw/chebi/relation.tsv.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
 
 # Build docs/data/chebi.json (name/formula/InChIKey for referenced ChEBI ids)
 build-chebi:
@@ -464,9 +480,8 @@ seed-opm *args:
 # --level (default broad domain clades) + capped (--limit); the OGs table is ~128 MB.
 fetch-orthodb:
     mkdir -p data/raw/orthodb
-    base=https://data.orthodb.org/v12/download/odb_data_dump; \
-    curl -sSLf --max-time 600 -o data/raw/orthodb/odb12v2_OGs.tab.gz "$base/odb12v2_OGs.tab.gz"; \
-    curl -sSLf --max-time 60  -o data/raw/orthodb/odb12v2_levels.tab.gz "$base/odb12v2_levels.tab.gz"
+    python3 scripts/fetch_source.py https://data.orthodb.org/v12/download/odb_data_dump/odb12v2_OGs.tab.gz data/raw/orthodb/odb12v2_OGs.tab.gz --max-time 600 --min-bytes 1000 --prefix-hex 1f8b
+    python3 scripts/fetch_source.py https://data.orthodb.org/v12/download/odb_data_dump/odb12v2_levels.tab.gz data/raw/orthodb/odb12v2_levels.tab.gz --max-time 60 --min-bytes 1000 --prefix-hex 1f8b
     @ls -la data/raw/orthodb/*.gz
 
 seed-orthodb *args:
@@ -482,8 +497,7 @@ seed-oma *args:
 # ~2M-row epitope export (1 GB) to UniProt-grounded epitope classes, capped.
 fetch-iedb:
     mkdir -p data/raw/iedb
-    curl -sSLf --max-time 300 -o data/raw/iedb/epitope_full_v3.zip \
-      "https://www.iedb.org/downloader.php?file_name=doc/epitope_full_v3.zip"
+    python3 scripts/fetch_source.py "https://www.iedb.org/downloader.php?file_name=doc/epitope_full_v3.zip" data/raw/iedb/epitope_full_v3.zip --max-time 300 --min-bytes 1000000 --prefix-hex 504b
     cd data/raw/iedb && unzip -o -q epitope_full_v3.zip
     @ls -la data/raw/iedb/epitope_full_v3.csv
 
@@ -745,12 +759,9 @@ fetch-scope-parse:
 # entry/abstract/hierarchy files — NOT the multi-TB match files.
 fetch-interpro:
     mkdir -p data/raw/interpro
-    curl -sSLf --max-time 120 -o data/raw/interpro/entry.list \
-      https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/entry.list
-    curl -sSLf --max-time 120 -o data/raw/interpro/ParentChildTreeFile.txt \
-      https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/ParentChildTreeFile.txt
-    curl -sSLf --max-time 600 -o data/raw/interpro/interpro.xml.gz \
-      https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/interpro.xml.gz
+    python3 scripts/fetch_source.py https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/entry.list data/raw/interpro/entry.list --max-time 120 --min-bytes 1000
+    python3 scripts/fetch_source.py https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/ParentChildTreeFile.txt data/raw/interpro/ParentChildTreeFile.txt --max-time 120 --min-bytes 1000
+    python3 scripts/fetch_source.py https://ftp.ebi.ac.uk/pub/databases/interpro/current_release/interpro.xml.gz data/raw/interpro/interpro.xml.gz --max-time 600 --min-bytes 1000000 --prefix-hex 1f8b
     @ls -la data/raw/interpro/
 
 # Fetch InterPro member-database signature lists (PIRSF/PRINTS/SSF/SFLD/SMART/HAMAP)
@@ -809,10 +820,10 @@ seed-obo *args:
 # Download Pfam-A + mappings (public domain). Pfam-B is discontinued (Pfam 28).
 fetch-pfam:
     mkdir -p data/raw/pfam data/raw/mappings
-    curl -sSLf --max-time 300 -o data/raw/pfam/Pfam-A.clans.tsv.gz https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.clans.tsv.gz
-    curl -sSLf --max-time 300 -o data/raw/pfam/Pfam-A.hmm.dat.gz  https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.dat.gz
+    python3 scripts/fetch_source.py https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.clans.tsv.gz data/raw/pfam/Pfam-A.clans.tsv.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
+    python3 scripts/fetch_source.py https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.dat.gz data/raw/pfam/Pfam-A.hmm.dat.gz --max-time 300 --min-bytes 1000 --prefix-hex 1f8b
     gzcat data/raw/pfam/Pfam-A.hmm.dat.gz | awk '/^#=GF AC/{ac=$3; sub(/\\..*/,"",ac)} /^#=GF TP/{print ac"\\t"$3}' > data/raw/pfam/pfam_types.tsv
-    curl -sSLf --max-time 120 -o data/raw/mappings/pfam2go https://current.geneontology.org/ontology/external2go/pfam2go
+    python3 scripts/fetch_source.py https://current.geneontology.org/ontology/external2go/pfam2go data/raw/mappings/pfam2go --max-time 120 --min-bytes 1000
     @echo 'pfam2interpro.tsv is derived from data/raw/interpro/interpro.xml.gz (run fetch-interpro)'
     @echo 'NOTE (#344): that TSV is AMBIGUOUS — it mixes "PF is a member signature of IPR"'
     @echo '  with "IPR abstract mentions PF", and 467 accessions carry both. Nothing reads'

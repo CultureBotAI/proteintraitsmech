@@ -20,7 +20,8 @@ git rev-list --count HEAD                             # commits
 # largest blobs ever committed (history bloat)
 git rev-list --objects --all | git cat-file --batch-check='%(objecttype) %(objectname) %(objectsize) %(rest)' \
   | awk '/^blob/{print $3,$4}' | sort -rn | head
-# Pages / browser load
+# Pages / browser load (uses the checked-in budgets)
+just audit-pages --site docs
 ls -la docs/data/records.*.json                      # sum = bytes the browser fetches+parses
 python3 -c "import json,glob;print(sum(len(json.load(open(f))) for f in glob.glob('docs/data/records.*.json')),'records loaded in-memory')"
 ```
@@ -47,17 +48,17 @@ GitHub Actions Pages workflow (`build-docs` → `actions/upload-pages-artifact` 
 `actions/deploy-pages`; set Pages source = GitHub Actions). Also gives control
 over the deploy (fixes flaky branch-based Pages).
 
-**B. Lean index + lazy detail (browser scalability).** The browser loads every
-shard and parses all records — the practical ceiling is ~150k. Precompute a lean
-index (id, label, axis, cat, src only — ~5× smaller, gzips to ~1 MB per 100k)
-for the list/search view, and fetch each record's full JSON on demand (the same
-pattern the sequence sidecars already use). Decouples browser perf from corpus
-size → scales past 500k. Keep facet counts in facets.json.
+**B. Lean index + lazy detail (browser scalability).** This is the current design:
+`browse.js` selects lean record shards from active axis, category, source, and status
+filters, and opens full record data from bucketed detail sidecars. Measure the largest
+shard and detail bucket with `just audit-pages`; if either breaches the adopted budget,
+reduce `MAX_SHARD_RECORDS` or the detail-bucket target. Keep global facet counts in
+`facets.json` so the landing page does not need to fetch record shards.
 
-**C. Shard sizing.** Keep every `records.<AXIS>[.NN].json` under the git 50 MB
-warning via `MAX_SHARD_RECORDS` in `build_docs_index.py`; bucket per-record
-sidecars (seq, and any future per-record blob) into a fixed small number of
-files so the Pages deploy never sees thousands of files.
+**C. Shard sizing.** Keep every `records.<AXIS>.<CATEGORY>[.NN].json` below the
+configured Pages budget via `MAX_SHARD_RECORDS` in `build_docs_index.py`; bucket
+per-record sidecars into a dynamically calculated, bounded-size set of files so
+individual detail fetches stay small without creating thousands of deploy files.
 
 **D. File-count tier for bulk sources.** One-YAML-per-record is the core model
 and fine to ~100–200k. For very high-volume machine-seeded sources (e.g. a full

@@ -36,6 +36,8 @@ from __future__ import annotations
 import atexit
 import os
 import re
+import tempfile
+from pathlib import Path
 
 import yaml
 
@@ -636,7 +638,59 @@ def _merge_definitions(old_block: str, new_block: str) -> str | None:
     return append_to_section(old_block, "definitions", tail)
 
 
-def write_record(path, text: str, encoding: str = "utf-8", *, merge: bool = True) -> None:
+class RecordValidationError(ValueError):
+    """A candidate record failed strict validation and was not installed."""
+
+    def __init__(self, path: Path, errors: list[dict]):
+        self.path = path
+        self.errors = errors
+        details = "; ".join(
+            f"{row.get('category', 'error')}: {row.get('message', '')}" for row in errors[:3]
+        )
+        super().__init__(f"strict validation refused {path}: {details}")
+
+
+def _strict_validation_errors(path: Path) -> list[dict]:
+    """Validate one temporary record through the repository's closed-schema gate."""
+    from validate_strict import validate_one  # local import: bulk seeders pay no startup cost
+
+    return validate_one(path)
+
+
+def write_validated_record(
+    path, text: str, encoding: str = "utf-8"
+) -> None:
+    """Atomically replace one record only after strict closed-schema validation.
+
+    The candidate is written beside the destination, validated there, and moved
+    into place with ``os.replace``. A parse/schema error therefore leaves an
+    existing record byte-for-byte untouched and never exposes a partial write.
+    """
+    path = Path(path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, tmp_name = tempfile.mkstemp(
+        # Not `.yaml`: concurrent corpus globs must not observe the candidate
+        # before validation and atomic commit complete.
+        prefix=f".{path.name}.", suffix=".tmp", dir=path.parent
+    )
+    os.close(descriptor)
+    candidate = Path(tmp_name)
+    try:
+        candidate.write_text(text, encoding=encoding)
+        errors = _strict_validation_errors(candidate)
+        if errors:
+            raise RecordValidationError(path, errors)
+        mode = (path.stat().st_mode & 0o777) if path.exists() else 0o644
+        candidate.chmod(mode)
+        os.replace(candidate, path)
+    finally:
+        candidate.unlink(missing_ok=True)
+
+
+def write_record(
+    path, text: str, encoding: str = "utf-8", *, merge: bool = True,
+    validate: bool = False,
+) -> None:
     """Write a seeded record, folding it into whatever curation the file already has.
 
     The single choke point for #100. Seeders called `path.write_text(...)` directly,
@@ -674,4 +728,7 @@ def write_record(path, text: str, encoding: str = "utf-8", *, merge: bool = True
     """
     if merge and path.exists():
         text = merge_on_reseed(path.read_text(encoding=encoding), text)
-    path.write_text(text, encoding=encoding)
+    if validate:
+        write_validated_record(path, text, encoding=encoding)
+    else:
+        path.write_text(text, encoding=encoding)

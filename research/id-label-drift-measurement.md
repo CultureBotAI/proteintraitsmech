@@ -108,6 +108,17 @@ The first version classified this prefix as "a database" and skipped it. **It ne
 Canonical-label matching across CHEBI remains the wrong gate — but on 13,998, not on the
 77,122 the first version used to argue it.
 
+## Implemented
+
+The first recommendation is now a blocking CI gate. The committed baseline covers
+429,271 records and 5,799 `proteintraitsmech:` nodes, with 5,543 mismatches and identity
+SHA-256 `a0a4bc7cc9ae760658f967346149cbad500cdaf53dd0b8c42b675f32522f7456`.
+The exact identity hash is required in addition to the count, so equal-count swaps fail.
+
+The wider YAML surface is configured in `conf/id_label_targets.yaml` for the vendored
+cross-ontology validator. It remains report-first and local because its OAK sqlite
+adapters are not committed CI inputs.
+
 ## Scope note
 
 Local and offline: `aro.obo`, `go.obo`, CHEBI `compounds.tsv.gz` / `names.tsv.gz`. No OAK

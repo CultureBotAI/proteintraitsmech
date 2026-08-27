@@ -3,20 +3,24 @@
 Three things are worth pinning here, and none of them is "does LinkML work".
 
   * the VENDORING CONTRACT — `mech_shared.yaml` and the id-label validator are carried
-    byte-identical from the hub, so the failure to catch is a well-meant local edit;
+    byte-identical from claw, so the failure to catch is a well-meant local edit;
   * the WIRING — the schema imports the shared module and exposes its classes, which is
     the difference between vendoring a file and adopting it;
   * the HISTORY LAYER's split enforcement — validity hard, presence advisory. That split
     is easy to state and easy to implement backwards, and neither half was checked by
     anything until this file.
 
-The drift check itself is network-bound (it fetches the hub at a pinned commit), so the
-tests here assert the things that hold offline: that the contract's inputs exist, that
-the local copies are the ones the check governs, and that the schema really uses them.
+The production drift check is network-bound (it fetches claw at a pinned commit), so the
+tests here inject local manifest/payload fixtures and exercise the checker and workflow
+offline. They also prove that the schema really uses the governed shared modules.
 """
 
 from __future__ import annotations
 
+import hashlib
+import importlib.util
+import json
+import os
 import pathlib
 import re
 import subprocess
@@ -27,6 +31,19 @@ import yaml
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
 SCHEMA_DIR = REPO / "src" / "proteintraitsmech" / "schema"
+CHECKER_PATH = REPO / "scripts" / "check_vendored_sync.py"
+
+
+def _load_vendored_checker():
+    spec = importlib.util.spec_from_file_location(
+        "proteintraitsmech_vendored_sync_checker", CHECKER_PATH
+    )
+    assert spec is not None and spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    # dataclasses resolves postponed annotations through the defining module.
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
 
 
 # --- the vendoring contract --------------------------------------------------------------
@@ -38,42 +55,85 @@ def test_the_pinned_canon_ref_exists_and_is_a_commit_sha():
     assert re.fullmatch(r"[0-9a-f]{40}", ref), f"not a full commit sha: {ref!r}"
 
 
-def test_every_governed_file_is_actually_present():
-    """`check_vendored_sync.sh` reports MISSING and fails for an absent file. This says the
-    same thing without a network round trip, so the common case is caught in the unit
-    suite rather than only in CI."""
-    script = (REPO / "scripts" / "check_vendored_sync.sh").read_text()
-    same_path = re.search(r"^FILES=\(\n(.*?)^\)", script, re.M | re.S).group(1)
-    # THE SET'S MEMBERSHIP, not just "every listed file exists". Emptying `FILES=()`
-    # made this pass while the gate cheerfully reported "OK: all 1 vendored files" --
-    # a test that certifies a contract is only as good as its check that the contract
-    # still has anything in it. Named explicitly so dropping one to "simplify" fails
-    # here rather than silently freeing that file to drift.
-    listed = {ln.strip() for ln in same_path.strip().splitlines()
-              if ln.strip() and not ln.strip().startswith("#")}
-    assert listed == {
-        "scripts/validate_id_label_correspondence.py",
-        "scripts/chem_formula.py",
-        "tests/test_id_label_empty_adapter.py",
-        "tests/test_id_label_unknown_prefix.py",
-        "tests/test_id_label_plausibility.py",
-    }, f"the governed same-path set changed: {sorted(listed)}"
-    for line in same_path.strip().splitlines():
-        rel = line.strip()
-        if not rel or rel.startswith("#"):
-            continue
-        assert (REPO / rel).is_file(), f"governed file missing: {rel}"
-    mapped = re.search(r"^MAPPED=\(\n(.*?)^\)", script, re.M | re.S).group(1)
-    for line in mapped.strip().splitlines():
-        entry = line.strip().strip('"')
-        if not entry or entry.startswith("#"):
-            continue
-        glob = entry.split("|", 1)[0]
-        assert list(REPO.glob(glob)), f"no local file matches governed glob: {glob}"
+def test_the_launcher_delegates_to_the_manifest_driven_checker_in_isolated_mode():
+    """The shell no longer carries a second FILES/MAPPED source of truth."""
+    launcher = (REPO / "scripts" / "check_vendored_sync.sh").read_text()
+    assert "FILES=(" not in launcher
+    assert "MAPPED=(" not in launcher
+    assert 'exec python3 -I "${SCRIPT_DIR}/check_vendored_sync.py" "$@"' in launcher
+    checker = _load_vendored_checker()
+    assert checker.CANONICAL_REPOSITORY == "CultureBotAI/culturebotai-claw"
+    assert checker.CANONICAL_MANIFEST_PATH.endswith("/vendored_artifacts.json")
+
+
+def test_the_checker_reads_a_claw_manifest_and_expands_the_protein_package_offline(tmp_path):
+    """Exercise the new manifest contract without fetching claw or any paid service."""
+    checker = _load_vendored_checker()
+    root = tmp_path / "consumer"
+    root.mkdir()
+    subprocess.run(["git", "init", "-q"], cwd=root, check=True)
+    subprocess.run(
+        [
+            "git",
+            "remote",
+            "add",
+            "origin",
+            "https://github.com/CultureBotAI/proteintraitsmech.git",
+        ],
+        cwd=root,
+        check=True,
+    )
+
+    pin = "a" * 40
+    pin_path = root / "scripts" / ".vendored_canon_ref"
+    pin_path.parent.mkdir()
+    pin_path.write_text(pin + "\n", encoding="ascii")
+    payload = b"name: governed-history\n"
+    source = "src/kg_microbe_governance/artifacts/schema/history.yaml"
+    target = root / "src" / "proteintraitsmech" / "schema" / "history.yaml"
+    target.parent.mkdir(parents=True)
+    target.write_bytes(payload)
+    manifest = json.dumps(
+        {
+            "version": 1,
+            "canonical_repository": "CultureBotAI/culturebotai-claw",
+            "pin_path": "scripts/.vendored_canon_ref",
+            "consumers": {
+                "proteintraitsmech": {
+                    "github": "CultureBotAI/proteintraitsmech",
+                    "package_path": "src/proteintraitsmech",
+                }
+            },
+            "artifacts": [
+                {
+                    "id": "history_schema",
+                    "source": source,
+                    "target": "{package_path}/schema/history.yaml",
+                    "consumers": "all",
+                    "sha256": hashlib.sha256(payload).hexdigest(),
+                    "mode": "0644",
+                }
+            ],
+        }
+    ).encode()
+    responses = {
+        checker.raw_url(pin, checker.CANONICAL_MANIFEST_PATH): manifest,
+        checker.raw_url(pin, source): payload,
+    }
+    requested = []
+
+    def fetch(url):
+        requested.append(url)
+        return responses[url]
+
+    checked, problems = checker.check_repository(root, fetch=fetch)
+    assert checked == 1
+    assert problems == ()
+    assert requested == list(responses)
 
 
 def test_the_vendored_module_is_not_edited_locally_in_the_obvious_way():
-    """A full byte-comparison needs the hub, so this catches only the crude tell: a local
+    """A full byte-comparison needs claw, so this catches only the crude tell: a local
     edit that leaves a marker behind. The real gate is `just check-vendored-sync`; this is
     the cheap one that runs on every `just test`."""
     text = (SCHEMA_DIR / "mech_shared.yaml").read_text()
@@ -236,10 +296,107 @@ def test_validate_strict_fires_when_the_SHARED_module_changes():
         "mech_shared must be in BOTH the pull_request and push path filters")
 
 
-def test_the_vendored_sync_job_needs_no_python():
-    """It is a fast blocking job on purpose. If it grows a uv/linkml dependency it stops
-    being able to fail in seconds, and the fleet loses its cheapest guard."""
-    wf = yaml.safe_load((REPO / ".github" / "workflows" / "history-and-vendored.yaml")
-                        .read_text())
+def _vendored_sync_workflow():
+    return yaml.safe_load(
+        (REPO / ".github" / "workflows" / "history-and-vendored.yaml").read_text()
+    )
+
+
+def _run_vendored_sync_workflow(tmp_path, statuses):
+    """Run the checked-in Actions shell block against a deterministic offline checker."""
+    wf = _vendored_sync_workflow()
     steps = wf["jobs"]["vendored-sync"]["steps"]
-    assert not any("uv" in str(s).lower() or "python" in str(s).lower() for s in steps), steps
+    run = next(step["run"] for step in steps if step.get("name") ==
+               "Verify vendored files match canonical claw")
+
+    sandbox = tmp_path / "workflow"
+    scripts = sandbox / "scripts"
+    fake_bin = sandbox / "bin"
+    scripts.mkdir(parents=True)
+    fake_bin.mkdir()
+    attempts = sandbox / "attempts"
+    attempts.write_text("", encoding="ascii")
+    sequence = sandbox / "statuses"
+    sequence.write_text("".join(f"{status}\n" for status in statuses), encoding="ascii")
+    sleeps = sandbox / "sleeps"
+    sleeps.write_text("", encoding="ascii")
+    (scripts / "check_vendored_sync.sh").write_text(
+        """#!/usr/bin/env bash
+set -u
+attempt=$(( $(wc -l < "${ATTEMPT_LOG:?}") + 1 ))
+printf '%s\\n' "$attempt" >> "$ATTEMPT_LOG"
+status=$(sed -n "${attempt}p" "${STATUS_SEQUENCE:?}")
+exit "$status"
+""",
+        encoding="ascii",
+    )
+    sleep = fake_bin / "sleep"
+    sleep.write_text(
+        "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\" >> \"${SLEEP_LOG:?}\"\n",
+        encoding="ascii",
+    )
+    sleep.chmod(0o755)
+    result = subprocess.run(
+        ["bash", "-c", run],
+        cwd=sandbox,
+        text=True,
+        capture_output=True,
+        env={
+            **os.environ,
+            "PATH": f"{fake_bin}{os.pathsep}{os.environ['PATH']}",
+            "ATTEMPT_LOG": str(attempts),
+            "STATUS_SEQUENCE": str(sequence),
+            "SLEEP_LOG": str(sleeps),
+        },
+    )
+    return result, attempts.read_text().splitlines(), sleeps.read_text().splitlines()
+
+
+def test_the_vendored_sync_job_needs_no_project_dependency_install():
+    """The standard-library checker remains a cheap blocking job with no uv install."""
+    wf = _vendored_sync_workflow()
+    triggers = wf.get("on", wf.get(True))
+    steps = wf["jobs"]["vendored-sync"]["steps"]
+    serialized = " ".join(str(step).lower() for step in steps)
+    assert all("paths" not in (config or {}) for config in triggers.values())
+    assert wf["jobs"]["vendored-sync"]["timeout-minutes"] == 5
+    assert "setup-uv" not in serialized
+    assert "pip install" not in serialized
+    assert "uv sync" not in serialized
+
+
+def test_vendored_sync_retries_exit_one_and_recovers_offline(tmp_path):
+    result, attempts, sleeps = _run_vendored_sync_workflow(tmp_path, [1, 0])
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert attempts == ["1", "2"]
+    assert sleeps == ["5"]
+
+
+def test_vendored_sync_retries_exit_one_three_times_then_fails_offline(tmp_path):
+    result, attempts, sleeps = _run_vendored_sync_workflow(tmp_path, [1, 1, 1])
+    assert result.returncode == 1, result.stdout + result.stderr
+    assert attempts == ["1", "2", "3"]
+    assert sleeps == ["5", "5"]
+
+
+def test_vendored_sync_exit_two_is_an_immediate_precondition_failure_offline(tmp_path):
+    result, attempts, sleeps = _run_vendored_sync_workflow(tmp_path, [2])
+    assert result.returncode == 2, result.stdout + result.stderr
+    assert attempts == ["1"]
+    assert sleeps == []
+
+
+def test_vendored_sync_unexpected_exit_fails_closed_without_retry_offline(tmp_path):
+    result, attempts, sleeps = _run_vendored_sync_workflow(tmp_path, [99])
+    assert result.returncode == 99, result.stdout + result.stderr
+    assert attempts == ["1"]
+    assert sleeps == []
+
+
+def test_vendored_sync_sparse_checkout_carries_every_governed_directory():
+    """A governed file omitted by sparse checkout looks missing only in CI."""
+    wf = yaml.safe_load(
+        (REPO / ".github" / "workflows" / "history-and-vendored.yaml").read_text()
+    )
+    checkout = wf["jobs"]["vendored-sync"]["steps"][0]["with"]["sparse-checkout"]
+    assert set(checkout.split()) >= {"scripts", "src", "tests", "prompts"}

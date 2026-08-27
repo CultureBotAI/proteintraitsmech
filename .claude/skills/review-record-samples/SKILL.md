@@ -1,6 +1,17 @@
 ---
 name: review-record-samples
-description: Use this skill to spot-check the CONTENT and STRUCTURE quality of ProteinTraitRecords by sampling 5 random records from every trait_category and reviewing each record individually AND each five-record set as a whole. It is the content-quality gate that complements `just validate-all` (schema only) and the `review-source-categories` skill (per-source category footprint): those never open a record to ask "is this a well-formed, correctly-categorised, class-level trait with a real definition and the right groundings?" — this does. Trigger when asked to review record quality, spot-check/audit trait records, sample records per category, "review 5 random per category", check definitions/structure/content of records, or as a periodic content-quality sweep after seeding.
+description: >-
+  Use this skill to spot-check the CONTENT and STRUCTURE quality of
+  ProteinTraitRecords by sampling 5 random records from every trait_category
+  and reviewing each record individually AND each five-record set as a whole.
+  It is the content-quality gate that complements `just validate-all` (schema
+  only) and the `review-source-categories` skill (per-source category
+  footprint): those never open a record to ask "is this a well-formed,
+  correctly-categorised, class-level trait with a real definition and the right
+  groundings?" — this does. Trigger when asked to review record quality,
+  spot-check/audit trait records, sample records per category, "review 5 random
+  per category", check definitions/structure/content of records, or as a
+  periodic content-quality sweep after seeding.
 ---
 
 # Review Record Samples
@@ -25,11 +36,11 @@ seen across the five is fixed **at the seeder**, not by hand-editing YAMLs.
 Fixed seed → the same sample every run, so findings are reproducible and re-checkable.
 Set `PER` — records per **(trait_axis, trait_category) cell**:
 
-- **`PER = 1`** — one random record per axis-category cell (~48 records): a
+- **`PER = 1`** — one random record per live axis-category cell: a
   taxonomy-wide **snapshot**. Part A per record + Part B applied *across* cells
   (coherence of the whole taxonomy, category granularity, systemic patterns).
   The quick default sweep.
-- **`PER = 5`** — five per cell (~240 records): enables the within-category
+- **`PER = 5`** — up to five per live cell: enables the within-category
   **set** review (Part B per five). Use for a deep pass on flagged categories.
 
 ```bash
@@ -55,7 +66,7 @@ PY
 
 Scope when needed: filter `by_cell` keys to one axis. For `PER = 5` fan out **one
 subagent per axis** (or per category) so every set gets focused reading; for
-`PER = 1` a single reviewer over the ~48 cells is enough. Always `Read` each
+`PER = 1` a single reviewer can cover the taxonomy-wide snapshot. Always `Read` each
 sampled file in full before judging it.
 
 ---

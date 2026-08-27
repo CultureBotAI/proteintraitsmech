@@ -35,8 +35,9 @@ Mirror an existing seeder (`seed_interpro.py` for hierarchical DBs,
 `seed_traitontomap.py` for tabular, `seed_obo.py` for OBO, `seed_stability.py`
 for curated). Non-negotiables:
 
-- **stdlib-only**, hand-formatted YAML (reuse `yaml_escape` / folded-scalar
-  helpers); no PyYAML dependency for writing.
+- use project dependencies where they improve correctness (many seeders use PyYAML),
+  and reuse `record_io.write_record` plus existing YAML helpers rather than inventing a
+  writer;
 - **identifier**: source-anchored CURIE when possible (`Pfam:PF00069`,
   `EC:2.7.11.1`); else `proteintraitsmech:<SLUG>`.
 - emit `label`, folded `definition`, `definition_source`, `trait_axis`,
@@ -109,7 +110,7 @@ commit `data/raw/` (gitignored). Push only when asked.
 - [ ] registered in download.yaml with verified licence
 - [ ] fetched to data/raw/<source>/ (gitignored) + fetch recipe
 - [ ] scope decided (axis/category, subset, redundancy, groundings)
-- [ ] seeder written (stdlib, idempotent, dry-run default)
+- [ ] seeder written (audited writer route, idempotent, dry-run default)
 - [ ] `just validate-all <dir>` → N/N (schema enum added if needed)
 - [ ] `just analyze-merges` reviewed; unequivocal dups consolidated
 - [ ] infer_source + recipes + gitignore + download.yaml seeded

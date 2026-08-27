@@ -21,7 +21,7 @@ import re
 import sys
 from pathlib import Path
 
-from record_io import insert_before_license
+from record_io import insert_before_license, write_validated_record
 from yaml_emit import yaml_escape  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
@@ -172,7 +172,7 @@ def main() -> int:
             if changed:
                 counts["cdd"] += 1
                 if args.apply:
-                    path.write_text(new, encoding="utf-8")
+                    write_validated_record(path, new, encoding="utf-8")
     if args.source in ("ncbifam", "both"):
         ncbi = load_ncbifam()
         for path in TRAITS.rglob("*.yaml"):
@@ -192,7 +192,7 @@ def main() -> int:
             if changed:
                 counts["ncbifam"] += 1
                 if args.apply:
-                    path.write_text(new, encoding="utf-8")
+                    write_validated_record(path, new, encoding="utf-8")
 
     verb = "updated" if args.apply else "would update"
     if curated:

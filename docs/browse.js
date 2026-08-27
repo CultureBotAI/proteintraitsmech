@@ -1,7 +1,7 @@
 /* ProteinTraitsMech client-side faceted browser.
  *
- * Data source: docs/data/records.json (single flat array, ~8 MB uncompressed;
- * gzipped by Pages so wire size is far smaller).
+ * Data source: filter-aware docs/data/records.*.json shards. The landing page
+ * fetches no record shard; active facets determine the smallest useful subset.
  *
  * Views:
  *   #                    → paged, faceted list
@@ -97,60 +97,26 @@ let FILTERED_CACHE = null;
 /* Boot                                                               */
 /* ------------------------------------------------------------------ */
 
-// Records are sharded by axis (records.<AXIS>[.NN].json). At ~274k records
-// loading every shard upfront is ~95 MB — most of it STRUCTURE, which a
-// SEQUENCE/FUNCTION/EVOLUTION browse never needs. So we load shards LAZILY,
-// per axis, driven by the active filter: the facet panel + counts come from
-// the tiny precomputed facets.json, and an axis's records are fetched only
-// when a filter/search actually needs them.
-let AXIS_SHARDS = {};                 // axis → [shard file]
-const LOADED_AXES = new Set();
-const AXIS_FETCH = new Map();         // axis → in-flight promise (dedup)
-const CAT_AXIS = { SEQ: "SEQUENCE", STRUCT: "STRUCTURE",
-                   MIXED: "SEQUENCE_STRUCTURE", FUNC: "FUNCTION", EVO: "EVOLUTION" };
-
-function axisOfShard(file) {
-  const m = file.match(/^records\.([A-Z_]+?)(?:\.\d+)?\.json$/);
-  return m ? m[1] : "OTHER";
-}
-
-function loadAxis(axis) {
-  if (LOADED_AXES.has(axis)) return Promise.resolve();
-  if (!AXIS_FETCH.has(axis)) {
-    const files = AXIS_SHARDS[axis] || [];
-    AXIS_FETCH.set(axis, Promise.all(files.map(f =>
-      fetch("data/" + f).then(r => (r.ok ? r.json() : [])).catch(() => [])
-    )).then(parts => {
-      for (const p of parts) for (const rec of p) {
-        RECORDS.push(rec); ID_INDEX.set(rec.id, rec);
-      }
-      LOADED_AXES.add(axis);
-      FILTERED_CACHE = null;
-    }));
+// Records are partitioned by axis/category. facets.json keeps global counts and a
+// manifest describing each shard's category/source/status coverage, so narrow filters
+// fetch only intersecting shards. A free-text query with no facets still searches all
+// shards; a dedicated search index would be needed to avoid that explicit tradeoff.
+let SHARD_MANIFEST = [];
+const SHARD_LOADER = BrowseShards.createLoader(
+  file => fetch("data/" + file),
+  part => {
+    for (const rec of part) {
+      RECORDS.push(rec); ID_INDEX.set(rec.id, rec);
+    }
+    FILTERED_CACHE = null;
   }
-  return AXIS_FETCH.get(axis);
-}
-const loadAxes = axes => Promise.all([...axes].map(loadAxis));
-const loadAllAxes = () => loadAxes(Object.keys(AXIS_SHARDS));
+);
+const LOADED_SHARDS = SHARD_LOADER.loaded;
+const loadShards = files => SHARD_LOADER.loadMany(files);
+const loadAllShards = () => loadShards(BrowseShards.allShardFiles(SHARD_MANIFEST));
 
-// Which axis shards the current selection/query needs. Empty = landing (load
-// nothing); a bare text query with no narrowing filter = the whole corpus.
-function neededAxes() {
-  const need = new Set();
-  const axesBy = FACETS.axesBy || { src: {}, cat: {}, sta: {} };
-  SELECTED.axis.forEach(a => need.add(a));
-  // Prefer the precomputed cat→axis map (handles prefix-less categories like
-  // UPPER); fall back to the category-prefix heuristic.
-  SELECTED.cat.forEach(c => {
-    const mapped = axesBy.cat[c];
-    if (mapped && mapped.length) { mapped.forEach(a => need.add(a)); return; }
-    const a = CAT_AXIS[c.split("_")[0]];
-    if (a) need.add(a);
-  });
-  SELECTED.src.forEach(s => (axesBy.src[s] || []).forEach(a => need.add(a)));
-  SELECTED.sta.forEach(s => (axesBy.sta[s] || []).forEach(a => need.add(a)));
-  if (QUERY && need.size === 0) return new Set(Object.keys(AXIS_SHARDS));
-  return need;
+function neededShards() {
+  return BrowseShards.selectShardFiles(SHARD_MANIFEST, SELECTED, QUERY);
 }
 
 async function boot() {
@@ -163,10 +129,8 @@ async function boot() {
     results.innerHTML = `<div class="empty">Failed to load index: ${e.message}</div>`;
     return;
   }
-  const shards = (FACETS.shards && FACETS.shards.length)
-    ? FACETS.shards.map(s => s.file) : ["records.json"];
-  AXIS_SHARDS = {};
-  for (const f of shards) (AXIS_SHARDS[axisOfShard(f)] ||= []).push(f);
+  SHARD_MANIFEST = (FACETS.shards && FACETS.shards.length)
+    ? FACETS.shards : [{ file: "records.json" }];
 
   document.getElementById("record-count").textContent =
     FACETS.total.toLocaleString() + " records";
@@ -190,7 +154,11 @@ async function route() {
       // one-time full load, then look it up.
       document.getElementById("results").innerHTML =
         `<div class="empty">Loading record…</div>`;
-      await loadAllAxes();
+      try {
+        await loadAllShards();
+      } catch (error) {
+        return renderShardLoadFailure(error);
+      }
       rec = ID_INDEX.get(id);
     }
     if (rec) return renderDetail(rec);
@@ -323,68 +291,24 @@ function updateActiveCount() {
   el.textContent = n ? `${n} active` : "";
 }
 
-// Facet counts for the CURRENT filtered subset. For each group we count values
-// across records that match all the OTHER active groups (and the search query)
-// — standard faceted-search semantics, so each number is "how many records you
-// get if you also pick this value". Values with 0 in the subset are returned as
-// absent and hidden by refreshFacetCounts(). With no filters this equals the
-// global counts. O(records × groups²) ≈ a few M ops — recomputed on each change.
-function computeFacetCounts() {
-  const groups = FACET_GROUPS.map(g => g.key);   // axis, src, cat, sta
-  const counts = {};
-  groups.forEach(k => (counts[k] = Object.create(null)));
-  const qs = QUERY;
-  for (const r of RECORDS) {
-    if (qs && !(
-      (r.id && r.id.toLowerCase().includes(qs)) ||
-      (r.label && r.label.toLowerCase().includes(qs)) ||
-      (r.def && r.def.toLowerCase().includes(qs)) ||
-      (r.chem && r.chem.some(n => n.toLowerCase().includes(qs))) ||
-      (r.chemx && r.chemx.some(n => n.toLowerCase().includes(qs))))) continue;
-    for (const k of groups) {
-      let ok = true;
-      for (const k2 of groups) {
-        if (k2 === k) continue;
-        const sel = SELECTED[k2];
-        if (sel.size && !sel.has(r[k2])) { ok = false; break; }
-      }
-      if (!ok) continue;
-      const v = r[k];
-      if (v != null && v !== "") counts[k][v] = (counts[k][v] || 0) + 1;
-    }
-  }
-  return counts;
-}
-
-// Push counts into the sidebar DOM. With lazy loading there are two regimes:
-//  • nothing loaded yet → show the GLOBAL counts (from facets.json) and hide
-//    nothing, so every value stays clickable (clicking loads its axis);
-//  • axes loaded → show subset counts over the loaded records and hide empties,
-//    EXCEPT the axis group, which always shows global counts so any axis stays
-//    switchable (picking it lazily loads that shard).
+// Always use pre-computed global counts. Counts derived from the partially loaded
+// RECORDS array would hide valid choices after a narrow query or after clearing a
+// filter. Result totals remain exact because all matching shards load before filtering.
 function refreshFacetCounts() {
-  const global = LOADED_AXES.size === 0;
-  const counts = global ? null : computeFacetCounts();
   const gcounts = (FACETS.counts) || {};
   document.querySelectorAll("#facet-scroll .facet-group").forEach(group => {
     const key = group.dataset.key;
-    const useGlobal = global || key === "axis";
-    const c = useGlobal ? (gcounts[key] || {}) : (counts[key] || {});
-    let visible = 0;
+    const c = gcounts[key] || {};
     group.querySelectorAll(".facet-item").forEach(item => {
       const el = item.querySelector("input[type=checkbox]");
       if (!el) return;
       const n = c[el.value] || 0;
       const cnt = item.querySelector(".count");
       if (cnt) cnt.textContent = n.toLocaleString();
-      const selected = SELECTED[key] && SELECTED[key].has(el.value);
-      const empty = !useGlobal && n === 0 && !selected;
-      item.classList.toggle("is-empty", empty);
-      if (!empty) visible++;
     });
     const btn = group.querySelector(".facet-toggle");
     if (btn && !group.classList.contains("expanded"))
-      btn.textContent = `Show all (${visible})`;
+      btn.textContent = `Show all (${group.querySelectorAll(".facet-item").length})`;
   });
 }
 
@@ -443,11 +367,12 @@ function filterRecords() {
 
 async function renderList() {
   const results = document.getElementById("results");
-  const need = neededAxes();
+  const need = neededShards();
+  const hasSelection = QUERY || Object.values(SELECTED).some(values => values.size > 0);
 
   // Landing: nothing selected and no query — don't bulk-load the corpus; the
   // facet panel (global counts) is already shown, so prompt the user to pick.
-  if (need.size === 0) {
+  if (need.length === 0 && !hasSelection) {
     const axisCounts = (FACETS.counts && FACETS.counts.axis) || {};
     const cards = Object.entries(axisCounts).sort((a, b) => b[1] - a[1])
       .map(([a, n]) => `<a class="axis-card" href="#axis=${encodeURIComponent(a)}">
@@ -455,16 +380,20 @@ async function renderList() {
     results.innerHTML = `<div class="landing">
       <p><strong>${FACETS.total.toLocaleString()} trait records.</strong>
       Pick an axis, category or source on the left — or search — to load records.
-      (Records are loaded per axis on demand to keep the page light.)</p>
+      (Records are loaded from filter-aware shards on demand.)</p>
       <div class="axis-cards">${cards}</div></div>`;
     return;
   }
 
-  // Load only the axis shards this view needs; show a spinner while fetching.
-  const missing = [...need].filter(a => !LOADED_AXES.has(a));
+  // Load only shards intersecting every active facet; show a spinner while fetching.
+  const missing = need.filter(file => !LOADED_SHARDS.has(file));
   if (missing.length) {
-    results.innerHTML = `<div class="empty">Loading ${missing.join(", ")}…</div>`;
-    await loadAxes(need);
+    results.innerHTML = `<div class="empty">Loading ${missing.length} shard${missing.length === 1 ? "" : "s"}…</div>`;
+    try {
+      await loadShards(need);
+    } catch (error) {
+      return renderShardLoadFailure(error);
+    }
     refreshFacetCounts();
   }
 
@@ -521,6 +450,15 @@ window._go = function (delta) {
   renderList();
   window.scrollTo({ top: 0, behavior: "smooth" });
 };
+
+function renderShardLoadFailure(error) {
+  const message = error && error.message ? error.message : String(error);
+  document.getElementById("results").innerHTML =
+    `<div class="empty">Failed to load records: ${escapeHTML(message)}. ` +
+    `<button onclick="_retryShardLoad()">Retry</button></div>`;
+}
+
+window._retryShardLoad = function () { route(); };
 
 /* ------------------------------------------------------------------ */
 /* Detail view                                                        */
@@ -752,7 +690,7 @@ function loadChebi() {
 
 // id → label sidecar (data/labels.json): every corpus record's label, so any id
 // the detail view renders shows as `<CURIE> — <label>`. ~4 MB gzipped, fetched
-// once on first detail view and cached (independent of lazy axis-shard loading).
+// once on first detail view and cached (independent of lazy record-shard loading).
 let LABELS = null;
 let LABELS_PROMISE = null;
 function loadLabels() {

@@ -6,8 +6,9 @@ PROVENANCE. Adapted from CultureBotAI/TraitMech@84322ab67d71
 things: the vendored schema path, the repo URL, and an example path in the usage text.
 
 NOT covered by `just check-vendored-sync`, deliberately -- that gate enforces BYTE
-identity against the hub, and this file cannot be byte-identical because those three
-strings are repo-specific. It is a fallback scaffolder: claw's `kg_microbe_history`
+identity against canonical claw's pinned manifest, and this file cannot be
+byte-identical because those three strings are repo-specific. It is a fallback
+scaffolder: claw's `kg_microbe_history`
 is the canonical one when a checkout is available, and both write against the same
 vendored `history.yaml` that `just validate-history` and CI check. The schema is the
 contract; this is one of two producers of it.
