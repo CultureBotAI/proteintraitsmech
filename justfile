@@ -60,8 +60,9 @@ audit-pages *args:
 gen-schema:
     uv run gen-pydantic src/proteintraitsmech/schema/proteintraitsmech.yaml > src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py
 
-# Validate one ProteinTraitRecord in strict closed mode. One worker avoids paying the
-# multiprocess startup cost for a single file; semantics are identical to validate-all.
+# Validate one ProteinTraitRecord in strict closed mode. One worker reduces the
+# multiprocess startup cost to a single child rather than avoiding it -- the pool is
+# still built and the schema still parsed there. Semantics are identical to validate-all.
 validate file:
     uv run python scripts/validate_strict.py --workers 1 {{quote(file)}}
 

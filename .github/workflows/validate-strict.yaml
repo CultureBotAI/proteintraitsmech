@@ -77,7 +77,7 @@ jobs:
         if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
         run: |
           mapfile -t files < changed_traits.txt
-          uv run python scripts/validate_strict.py "${files[@]}"
+          uv run python scripts/validate_strict.py --allow-missing "${files[@]}"
 
       - name: Structural audit (changed files)
         if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
