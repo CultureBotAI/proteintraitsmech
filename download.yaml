@@ -35,6 +35,7 @@
   source: prosite
   license: CC BY-NC-ND 4.0 (SIB) — commercial fee; NonCommercial + NoDerivatives — FLAGGED
   license_url: https://prosite.expasy.org/prosite_license.html
+  license_review: pending
   status: seeded
   hierarchy: partial
   trait_categories: [SEQ_MOTIF, SEQ_MODIFIED_RESIDUE, SEQ_GLYCOSYLATION_SITE, SEQ_CROSSLINK_SITE, SEQ_DOMAIN, SEQ_FAMILY]
@@ -143,9 +144,10 @@
   source: interpro
   license: public domain
   license_url: https://www.ebi.ac.uk/licencing/
-  status: seeded
+  status: enrichment
+  role: api
   trait_categories: [SEQ_DOMAIN, SEQ_HOMOLOGOUS_SUPERFAMILY, SEQ_REPEAT, SEQ_CONSERVATION, SEQ_ACTIVE_SITE, SEQ_BINDING_SITE, SEQ_PTM_SITE, SEQ_FAMILY]
-  seeder: fetch_interpro_missing_abstracts.py
+  fetcher: fetch_interpro_missing_abstracts.py
   note: >-
     NOT a bulk download and not kghub-downloader-shaped -- a per-accession REST call, ~209
     of them, for the entries whose interpro.xml.gz record ships no <abstract> (#445). The
@@ -558,6 +560,7 @@
   source: merops
   license: LGPL (data) / EBI terms
   status: candidate
+  seeder: seed_merops.py
   hierarchy: true
   trait_categories: [SEQ_FAMILY]
 -
@@ -637,6 +640,7 @@
   # ⚠ FLAGGED: 3did (IRB Barcelona) states no explicit open license (like
   # BioLiP2/MetalPDB). Every record carries the flag; excluded from the CC0 grant.
   license: 3did (IRB Barcelona) — no explicit open license (FLAGGED)
+  license_review: pending
   status: seeded
   hierarchy: false
   trait_categories: [STRUCT_INTERFACE]
@@ -654,6 +658,7 @@
   # explicit open license. The corpus is otherwise CC0-1.0, so every BioLiP
   # record carries this license string and is excluded from the CC0 grant.
   license: BioLiP2 — free for academic use (Zhang Lab); no explicit open license (FLAGGED)
+  license_review: pending
   status: candidate
   hierarchy: false
   trait_categories: [STRUCT_BINDING_SITE]
@@ -675,6 +680,7 @@
   license: free (CERM)
   status: candidate
   trait_categories: [STRUCT_METAL_SITE]
+  seeder: seed_metalpdb.py
 -
   url: https://www.cazy.org/
   name: CAZy (Carbohydrate-Active enZymes) — family classification
@@ -683,6 +689,7 @@
   # use, NOT openly licensed. The corpus is otherwise CC0-1.0, so every CAZy
   # record carries this license string and is excluded from the CC0 grant.
   license: CAZy (© CNRS - Aix-Marseille Université - INRAE, AFMB) — academic use, not openly licensed (FLAGGED)
+  license_review: pending
   status: seeded
   hierarchy: true (class → clan → family)
   trait_categories: [SEQ_FAMILY]
@@ -832,7 +839,9 @@
   source: chebi
   license: CC-BY 4.0
   status: enrichment
-  seeder: build_chebi_sidecar.py
+  role: enrichment
+  seeder: seed_chebi_cofactor.py
+  enricher: build_chebi_sidecar.py
   files: [compounds.tsv.gz, chemical_data.tsv.gz, structures.tsv.gz]
   note: >-
     Chemistry hub. Per research/chemistry-integration-round1.md: chemistry is a
@@ -840,6 +849,16 @@
     Formula/InChIKey/name resolve from the ChEBI id via a compact committed
     sidecar docs/data/chebi.json (15,037 entries: 14,736 formula, 12,105
     InChIKey), built for only the ~15.7k ChEBI ids the corpus references.
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/intact/complex/current/complextab/
+  name: EBI Complex Portal (curated macromolecular complexes)
+  source: complexportal
+  license: CC0
+  status: seeded
+  seeder: seed_complexportal.py
+  hierarchy: false
+  trait_categories: [FUNC_INTERACTION_PARTNER]
+  note: Per-species ComplexTAB releases; the fetch recipe downloads the current TSV set.
 -
   url: https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.dead.gz
   name: eggNOG / NOGs
@@ -921,5 +940,7 @@
   name: ELM (Eukaryotic Linear Motif)
   source: elm
   license: NonCommercial (ELM Software License Agreement) — FLAGGED
+  license_review: pending
   status: rejected
+  seeder: seed_elm.py
   note: non-commercial licence incompatible with CC0 redistribution; link/reference only.
