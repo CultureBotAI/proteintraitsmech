@@ -41,12 +41,28 @@ def _run(schema: dict, tmp_path) -> subprocess.CompletedProcess:
     traits = tmp_path / "traits"
     traits.mkdir(exist_ok=True)
     return subprocess.run(
-        [sys.executable, str(SCRIPT), "--schema", str(path), "--traits", str(traits)],
-        capture_output=True, text=True, cwd=REPO)
+        [
+            sys.executable,
+            str(SCRIPT),
+            "--schema",
+            str(path),
+            "--traits",
+            str(traits),
+            "--allow-empty-corpus",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=REPO,
+    )
 
 
-def test_the_real_schema_passes(tmp_path):
-    """Schema structure does not require a second real-corpus enum-usage scan."""
+def test_the_real_schema_is_structurally_coherent(tmp_path):
+    """Schema structure does not require a second real-corpus enum-usage scan.
+
+    Named for what it checks. It runs with an empty corpus, so it demonstrates the
+    schema's internal coherence and NOT an end-to-end `just audit-schema` as CI runs
+    it; the end-to-end path is gated by the recipe in checks.yml (#532).
+    """
     out = _run(REAL, tmp_path)
     assert out.returncode == 0, out.stdout[-1500:]
     assert "OK: schema is internally coherent" in out.stdout
@@ -77,11 +93,13 @@ def test_a_rule_that_CANNOT_FIRE_fails(tmp_path):
     """A rule whose pattern matches no category enforces nothing while looking exactly
     like enforcement — the same shape as the missing script this file is about."""
     broken = yaml.safe_load(yaml.safe_dump(REAL))
-    broken["classes"]["ProteinTraitRecord"]["rules"].append({
-        "title": "ghost_rule",
-        "preconditions": {"slot_conditions": {"trait_category": {"pattern": "^NOSUCH_"}}},
-        "postconditions": {"slot_conditions": {"trait_axis": {"equals_string": "SEQUENCE"}}},
-    })
+    broken["classes"]["ProteinTraitRecord"]["rules"].append(
+        {
+            "title": "ghost_rule",
+            "preconditions": {"slot_conditions": {"trait_category": {"pattern": "^NOSUCH_"}}},
+            "postconditions": {"slot_conditions": {"trait_axis": {"equals_string": "SEQUENCE"}}},
+        }
+    )
     out = _run(broken, tmp_path)
     assert out.returncode == 1, out.stdout
     assert "ghost_rule" in out.stdout
@@ -92,7 +110,8 @@ def test_a_category_prefix_NO_RULE_COVERS_fails(tmp_path):
     on ANY axis, and every record carrying it validates."""
     broken = yaml.safe_load(yaml.safe_dump(REAL))
     broken["enums"]["ProteinTraitCategoryEnum"]["permissible_values"]["ROGUE_THING"] = {
-        "description": "bound to no axis"}
+        "description": "bound to no axis"
+    }
     out = _run(broken, tmp_path)
     assert out.returncode == 1, out.stdout
     assert "ROGUE_" in out.stdout
@@ -123,7 +142,10 @@ def test_unused_enum_values_are_REPORTED_not_failed(tmp_path):
     path.write_text(yaml.safe_dump(REAL, sort_keys=False), encoding="utf-8")
     out = subprocess.run(
         [sys.executable, str(SCRIPT), "--schema", str(path), "--traits", str(traits)],
-        capture_output=True, text=True, cwd=REPO)
+        capture_output=True,
+        text=True,
+        cwd=REPO,
+    )
     assert out.returncode == 0
     assert "unused permissible values" in out.stdout
     assert "total unused:" in out.stdout
@@ -167,11 +189,15 @@ def test_a_precondition_this_probe_cannot_EVALUATE_is_reported(tmp_path):
     was unauditable -- and a LIVE one would have made the coverage check emit a false
     failure, since its categories never entered `covered`."""
     broken = yaml.safe_load(yaml.safe_dump(REAL))
-    broken["classes"]["ProteinTraitRecord"]["rules"].append({
-        "title": "opaque_rule",
-        "preconditions": {"slot_conditions": {"trait_category": {"equals_string": "SEQ_DOMAIN"}}},
-        "postconditions": {"slot_conditions": {"trait_axis": {"equals_string": "SEQUENCE"}}},
-    })
+    broken["classes"]["ProteinTraitRecord"]["rules"].append(
+        {
+            "title": "opaque_rule",
+            "preconditions": {
+                "slot_conditions": {"trait_category": {"equals_string": "SEQ_DOMAIN"}}
+            },
+            "postconditions": {"slot_conditions": {"trait_axis": {"equals_string": "SEQUENCE"}}},
+        }
+    )
     out = _run(broken, tmp_path)
     assert out.returncode == 1, out.stdout
     assert "cannot evaluate" in out.stdout
@@ -202,7 +228,8 @@ def test_the_axis_free_exemption_is_EXACT_not_a_prefix(tmp_path):
     that naming is not hypothetical."""
     broken = yaml.safe_load(yaml.safe_dump(REAL))
     broken["enums"]["ProteinTraitCategoryEnum"]["permissible_values"]["OTHER_UNBOUND_THING"] = {
-        "description": "bound to no axis"}
+        "description": "bound to no axis"
+    }
     out = _run(broken, tmp_path)
     assert out.returncode == 1, out.stdout
     assert "OTHER_UNBOUND_THING" in out.stdout
@@ -214,13 +241,47 @@ def test_enum_usage_counts_LIST_ITEM_keys(tmp_path):
     traits = tmp_path / "traits"
     traits.mkdir()
     (traits / "one.yaml").write_text(
-        "definitions:\n"
-        "  - kind: GENERAL\n"
-        "  - kind: MECHANISTIC\n"
-        "  - kind: STRUCTURAL\n",
+        "definitions:\n  - kind: GENERAL\n  - kind: MECHANISTIC\n  - kind: STRUCTURAL\n",
         encoding="utf-8",
     )
-    usage = A.enum_usage(REAL, traits)
+    usage, _records = A.enum_usage(REAL, traits)
     kinds = usage.get("DefinitionKindEnum", {})
     assert set(kinds) >= {"GENERAL", "MECHANISTIC", "STRUCTURAL"}, dict(kinds)
     assert sum(kinds.values()) == 3, sum(kinds.values())
+
+
+def test_an_unreadable_corpus_is_a_failure_not_a_clean_pass(tmp_path):
+    """A probe that read no records must not report a coherent schema (#534).
+
+    The existing guard covered an empty *schema*. Nothing covered an empty *corpus*,
+    so a reorganisation, a wrong --traits default, or an early out in enum_usage
+    produced a green `just audit-schema` in CI having measured nothing. That is the
+    defect class this repo has filed #418, #432, #469 and #500 about.
+    """
+    path = tmp_path / "s.yaml"
+    path.write_text(yaml.safe_dump(REAL, sort_keys=False), encoding="utf-8")
+    result = subprocess.run(
+        [sys.executable, str(SCRIPT), "--schema", str(path), "--traits", str(tmp_path / "gone")],
+        capture_output=True,
+        text=True,
+        cwd=REPO,
+    )
+    assert result.returncode == 1, result.stdout
+    assert "read no records" in result.stdout
+
+
+def test_enum_usage_reports_how_many_records_it_read(tmp_path):
+    """The count must come from the scan, not be inferred from empty counters.
+
+    An empty counter cannot tell "read nothing" from "read a corpus using no enum
+    values", and only the first is a broken audit.
+    """
+    traits = tmp_path / "traits"
+    (traits / "sequence" / "domain" / "pfam").mkdir(parents=True)
+    (traits / "sequence" / "domain" / "pfam" / "a.yaml").write_text(
+        "trait_axis: SEQUENCE\n", encoding="utf-8"
+    )
+    _usage, records = A.enum_usage(REAL, traits)
+    assert records == 1
+    _usage, records = A.enum_usage(REAL, tmp_path / "absent")
+    assert records == 0

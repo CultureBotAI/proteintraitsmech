@@ -95,7 +95,7 @@ def reachable_classes(schema: dict) -> set[str]:
         seen.add(name)
         cls = classes[name]
         if not isinstance(cls, dict):
-            continue                    # malformed entry; probe 1 is not the schema linter
+            continue  # malformed entry; probe 1 is not the schema linter
         for attr in (cls.get("attributes") or {}).values():
             if not isinstance(attr, dict):
                 continue
@@ -104,7 +104,7 @@ def reachable_classes(schema: dict) -> set[str]:
                 stack.append(rng)
         for key in ("is_a", "mixins"):
             val = cls.get(key)
-            for parent in ([val] if isinstance(val, str) else (val or [])):
+            for parent in [val] if isinstance(val, str) else (val or []):
                 stack.append(parent)
     # anything that inherits FROM a reachable class is itself reachable
     for _ in range(len(classes)):
@@ -121,8 +121,12 @@ def reachable_classes(schema: dict) -> set[str]:
     return seen
 
 
-def enum_usage(schema: dict, traits: Path) -> dict[str, collections.Counter]:
-    """enum name -> Counter of permissible values seen on disk.
+def enum_usage(schema: dict, traits: Path) -> tuple[dict[str, collections.Counter], int]:
+    """``(enum name -> Counter of permissible values seen on disk, records read)``.
+
+    The record count is returned, not inferred from the counters, because an empty
+    counter cannot distinguish "read nothing" from "read a corpus that happens to
+    use no enum values" -- and only the first is a broken audit (#534).
 
     Counted by a line-anchored scan of the slots whose range is that enum, not by parsing
     429,271 records: the values are single-token scalars and the scan is seconds rather
@@ -141,7 +145,7 @@ def enum_usage(schema: dict, traits: Path) -> dict[str, collections.Counter]:
                 slot_to_enum[slot] = rng
     counts: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
     if not traits.is_dir():
-        return counts
+        return counts, 0
     # `(?:-[ \t]+)?` -- a LIST ITEM's key is `- kind: STRUCTURAL`, not `kind:`. Anchoring
     # on `^\s*kind:` missed 156,386 uses and reported DefinitionKindEnum as 3-of-3 unused
     # when all three are used ~154k times. That is an audit reporting a design as a defect,
@@ -150,13 +154,17 @@ def enum_usage(schema: dict, traits: Path) -> dict[str, collections.Counter]:
     # `[^\s]` for the value, and `[ \t]` not `\s` after the colon: `\s` matches a newline,
     # so `trait_axis:\n    range: TraitAxisEnum` captured `range` as a value.
     pattern = re.compile(
-        r"^[ \t]*(?:-[ \t]+)?(" + "|".join(re.escape(s) for s in slot_to_enum)
+        r"^[ \t]*(?:-[ \t]+)?("
+        + "|".join(re.escape(s) for s in slot_to_enum)
         + r"):[ \t]*[\"']?([A-Za-z0-9_]+)",
-        re.M)
+        re.M,
+    )
+    records_read = 0
     for path in traits.rglob("*.yaml"):
+        records_read += 1
         for slot, value in pattern.findall(path.read_text(encoding="utf-8")):
             counts[slot_to_enum[slot]][value] += 1
-    return counts
+    return counts, records_read
 
 
 def rule_coverage(schema: dict) -> tuple[list[str], list[str]]:
@@ -166,13 +174,17 @@ def rule_coverage(schema: dict) -> tuple[list[str], list[str]]:
     the SEQUENCE axis can be filed on any axis, and every record carrying it validates.
     """
     cls = (schema.get("classes") or {}).get("ProteinTraitRecord") or {}
-    categories = list(((schema.get("enums") or {})
-                       .get("ProteinTraitCategoryEnum") or {}).get("permissible_values") or {})
+    categories = list(
+        ((schema.get("enums") or {}).get("ProteinTraitCategoryEnum") or {}).get(
+            "permissible_values"
+        )
+        or {}
+    )
     dead: list[str] = []
     covered: set[str] = set()
     for rule in cls.get("rules") or []:
         title = rule.get("title", "<untitled>")
-        pre = ((rule.get("preconditions") or {}).get("slot_conditions") or {})
+        pre = (rule.get("preconditions") or {}).get("slot_conditions") or {}
         cond = pre.get("trait_category") or {}
         pattern = cond.get("pattern")
         if not pattern:
@@ -181,8 +193,10 @@ def rule_coverage(schema: dict) -> tuple[list[str], list[str]]:
             # a LIVE one of that shape would make the coverage check below emit a false
             # failure, because its categories never entered `covered`.
             if cond:
-                dead.append(f"{title}: precondition on trait_category uses "
-                            f"{sorted(cond)} which this probe cannot evaluate")
+                dead.append(
+                    f"{title}: precondition on trait_category uses "
+                    f"{sorted(cond)} which this probe cannot evaluate"
+                )
             continue
         matching = [c for c in categories if re.search(pattern, c)]
         if not matching:
@@ -191,25 +205,37 @@ def rule_coverage(schema: dict) -> tuple[list[str], list[str]]:
         # THE AXIS IT ASSERTS, not merely that it asserts one. A rule matching every
         # FUNC_* category and requiring `EVOLUTION` would previously have passed as
         # "bound to an axis", while requiring every FUNC record to be mis-axised.
-        want = (((rule.get("postconditions") or {}).get("slot_conditions") or {})
-                .get("trait_axis") or {}).get("equals_string")
+        want = (
+            ((rule.get("postconditions") or {}).get("slot_conditions") or {}).get("trait_axis")
+            or {}
+        ).get("equals_string")
         prefixes = {c.split("_")[0] for c in matching if "_" in c}
         for prefix in sorted(prefixes):
             expected = PREFIX_AXIS.get(prefix)
             if expected and want and want != expected:
-                dead.append(f"{title}: matches {prefix}_* but asserts trait_axis "
-                            f"{want!r}, and the README binds {prefix}_* to {expected!r}")
+                dead.append(
+                    f"{title}: matches {prefix}_* but asserts trait_axis "
+                    f"{want!r}, and the README binds {prefix}_* to {expected!r}"
+                )
         covered.update(matching)
     uncovered = sorted(set(categories) - covered - AXIS_FREE_CATEGORIES)
     return dead, uncovered
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     ap.add_argument("--schema", default=str(SCHEMA))
     ap.add_argument("--traits", default=str(TRAITS))
     ap.add_argument("--show", type=int, default=12)
+    ap.add_argument(
+        "--allow-empty-corpus",
+        action="store_true",
+        help="permit a run that reads no records; for schema-only unit tests. "
+        "Without it an unreadable corpus is a failure, not a clean pass "
+        "(#534)",
+    )
     args = ap.parse_args()
 
     schema_path = Path(args.schema)
@@ -233,24 +259,31 @@ def main() -> int:
     ghost_roots = [r for r in ROOT_CLASSES if r not in classes]
     if ghost_roots:
         failures += 1
-        print(f"\nFAIL: ROOT_CLASSES names {len(ghost_roots)} class(es) the schema no "
-              f"longer declares: {', '.join(ghost_roots)}")
-    all_categories = set(((enums.get("ProteinTraitCategoryEnum") or {})
-                          .get("permissible_values") or {}))
+        print(
+            f"\nFAIL: ROOT_CLASSES names {len(ghost_roots)} class(es) the schema no "
+            f"longer declares: {', '.join(ghost_roots)}"
+        )
+    all_categories = set(
+        ((enums.get("ProteinTraitCategoryEnum") or {}).get("permissible_values") or {})
+    )
     ghost_free = sorted(AXIS_FREE_CATEGORIES - all_categories)
     if ghost_free and all_categories:
         failures += 1
-        print(f"\nFAIL: AXIS_FREE_CATEGORIES names {len(ghost_free)} value(s) the enum no "
-              f"longer declares: {', '.join(ghost_free)}")
+        print(
+            f"\nFAIL: AXIS_FREE_CATEGORIES names {len(ghost_free)} value(s) the enum no "
+            f"longer declares: {', '.join(ghost_free)}"
+        )
 
     reachable = reachable_classes(schema)
     orphans = sorted(set(classes) - reachable)
     if orphans:
         failures += 1
-        print(f"\nFAIL: {len(orphans)} class(es) unreachable from any root "
-              f"({', '.join(ROOT_CLASSES)}) -- no slot "
-              f"ranges over them and nothing inherits from them:")
-        for name in orphans[:args.show]:
+        print(
+            f"\nFAIL: {len(orphans)} class(es) unreachable from any root "
+            f"({', '.join(ROOT_CLASSES)}) -- no slot "
+            f"ranges over them and nothing inherits from them:"
+        )
+        for name in orphans[: args.show]:
             print(f"  {name}")
     else:
         print(f"  every class reachable from a root: yes ({len(reachable)})")
@@ -258,23 +291,36 @@ def main() -> int:
     dead_rules, uncovered = rule_coverage(schema)
     if dead_rules:
         failures += 1
-        print(f"\nFAIL: {len(dead_rules)} rule(s) whose precondition matches no category. "
-              f"A rule matching nothing enforces nothing while looking like enforcement:")
+        print(
+            f"\nFAIL: {len(dead_rules)} rule(s) whose precondition matches no category. "
+            f"A rule matching nothing enforces nothing while looking like enforcement:"
+        )
         for line in dead_rules:
             print(f"  {line}")
     if uncovered:
         failures += 1
-        print(f"\nFAIL: {len(uncovered)} categor(ies) no axis rule covers. A "
-              f"category with no rule binding it to an axis can be filed on ANY axis:")
-        for category in uncovered[:args.show]:
+        print(
+            f"\nFAIL: {len(uncovered)} categor(ies) no axis rule covers. A "
+            f"category with no rule binding it to an axis can be filed on ANY axis:"
+        )
+        for category in uncovered[: args.show]:
             print(f"  {category}")
     if not dead_rules and not uncovered:
         print("  every category prefix is bound to an axis by a rule: yes")
 
-    usage = enum_usage(schema, Path(args.traits))
+    usage, records_read = enum_usage(schema, Path(args.traits))
+    if records_read == 0 and not args.allow_empty_corpus:
+        # The guard above covers an empty SCHEMA. This covers an empty CORPUS, which
+        # the original missed: a reorganisation, a wrong --traits default, or an early
+        # out in enum_usage produced a green `just audit-schema` in CI having measured
+        # nothing at all (#534).
+        print(
+            f"\nFAIL: read no records under {args.traits}; enum usage was not measured. "
+            f"Pass --allow-empty-corpus if that is intended."
+        )
+        return 1
     if usage:
-        print("\nunused permissible values (reported, not failed -- a value may be "
-              "aspirational):")
+        print("\nunused permissible values (reported, not failed -- a value may be aspirational):")
         total_unused = 0
         for name, spec in sorted(enums.items()):
             values = set((spec.get("permissible_values") or {}))

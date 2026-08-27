@@ -20,20 +20,45 @@ import sys
 import pytest
 
 REPO = pathlib.Path(__file__).resolve().parent.parent
+
+
+sys.path.insert(0, str(REPO / "scripts"))
+
+
+def _load_module(name: str, path: pathlib.Path):
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(name, path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+AUDIT = _load_module(
+    "audit_equivalence_consistency", REPO / "scripts" / "audit_equivalence_consistency.py"
+)
+records_in_source_directories = _load_module(
+    "record_scope", REPO / "scripts" / "record_scope.py"
+).records_in_source_directories
 sys.path.insert(0, str(REPO / "scripts"))
 
 SCRIPT = REPO / "scripts" / "audit_equivalence_consistency.py"
 
-TSV = ("subject\tpredicate\tobject\trelation_source\n"
-       "Pfam:PF00575\tbiolink:close_match\tInterPro:IPR003029\tinterpro:pfam\n"
-       "Pfam:PF00246\tbiolink:close_match\tInterPro:IPR000834\tinterpro:pfam\n")
+TSV = (
+    "subject\tpredicate\tobject\trelation_source\n"
+    "Pfam:PF00575\tbiolink:close_match\tInterPro:IPR003029\tinterpro:pfam\n"
+    "Pfam:PF00246\tbiolink:close_match\tInterPro:IPR000834\tinterpro:pfam\n"
+)
 
 
 def _rec(ipr):
-    return ("identifier: Pfam:PF00575\n"
-            "mapped_xrefs:\n"
-            f"- object: InterPro:{ipr}\n"
-            "  mapping_source: pfam2interpro\n")
+    return (
+        "identifier: Pfam:PF00575\n"
+        "mapped_xrefs:\n"
+        f"- object: InterPro:{ipr}\n"
+        "  mapping_source: pfam2interpro\n"
+    )
 
 
 def _run(tmp_path, record_text, tsv=TSV):
@@ -43,8 +68,11 @@ def _run(tmp_path, record_text, tsv=TSV):
     t = tmp_path / "cs.tsv"
     t.write_text(tsv, encoding="utf-8")
     return subprocess.run(
-        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"),
-         "--tsv", str(t)], capture_output=True, text=True, cwd=REPO)
+        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"), "--tsv", str(t)],
+        capture_output=True,
+        text=True,
+        cwd=REPO,
+    )
 
 
 def test_it_fires_on_the_disagreement_that_was_344(tmp_path):
@@ -87,12 +115,16 @@ def test_it_reports_what_it_could_not_check(tmp_path):
     (traits / "b.yaml").write_text(
         "identifier: Pfam:PF11111\n"
         "mapped_xrefs:\n- object: InterPro:IPR999999\n  mapping_source: pfam2interpro\n",
-        encoding="utf-8")
+        encoding="utf-8",
+    )
     t = tmp_path / "cs.tsv"
     t.write_text(TSV, encoding="utf-8")
     out = subprocess.run(
-        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"),
-         "--tsv", str(t)], capture_output=True, text=True, cwd=REPO)
+        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"), "--tsv", str(t)],
+        capture_output=True,
+        text=True,
+        cwd=REPO,
+    )
     assert out.returncode == 0, out.stdout
     assert "record asserts an xref, no overlay row" in out.stdout, out.stdout
     assert "  1  record asserts an xref" in out.stdout, out.stdout
@@ -102,11 +134,13 @@ def test_it_sees_an_xref_carrying_a_predicate(tmp_path):
     """Same latent hole the #344 gates had: `MappedXref` has an optional `predicate` slot
     and 127 xrefs in this field already use it, so requiring adjacency makes a wrong
     record invisible."""
-    three_key = ("identifier: Pfam:PF00575\n"
-                 "mapped_xrefs:\n"
-                 "- object: InterPro:IPR059328\n"
-                 "  predicate: skos:relatedMatch\n"
-                 "  mapping_source: pfam2interpro\n")
+    three_key = (
+        "identifier: Pfam:PF00575\n"
+        "mapped_xrefs:\n"
+        "- object: InterPro:IPR059328\n"
+        "  predicate: skos:relatedMatch\n"
+        "  mapping_source: pfam2interpro\n"
+    )
     out = _run(tmp_path, three_key)
     assert out.returncode == 1, out.stdout
     assert "DISAGREE:                     1" in out.stdout
@@ -119,10 +153,10 @@ def test_the_committed_corpus_agrees_with_the_committed_overlay():
     script's own guard, but pinning the count here means a future change that quietly
     narrows the sweep is visible rather than silently green.
     """
-    out = subprocess.run([sys.executable, str(SCRIPT)], capture_output=True, text=True,
-                         cwd=REPO)
+    out = subprocess.run([sys.executable, str(SCRIPT)], capture_output=True, text=True, cwd=REPO)
     assert out.returncode == 0, out.stdout[-1500:]
     import re
+
     def _n(label):
         m = re.search(rf"^{label}:\s+([\d,]+)", out.stdout, re.M)
         assert m, f"{label} missing from output:\n{out.stdout[:800]}"
@@ -144,6 +178,7 @@ def test_the_committed_corpus_agrees_with_the_committed_overlay():
 # for, and a pool worker's exception was undiagnosable.
 # ---------------------------------------------------------------------------------------
 
+
 def test_an_unreadable_xref_shape_fails_loud_instead_of_silently_counting_zero(tmp_path):
     """`XREF` is a regex over YAML text. For `mapping_source` before `object`, a quoted
     object, CRLF or flow style it matches nothing -- and "matches nothing" is
@@ -158,13 +193,18 @@ def test_an_unreadable_xref_shape_fails_loud_instead_of_silently_counting_zero(t
     (traits / "r.yaml").write_text(
         "identifier: Pfam:PF00575\n"
         "mapped_xrefs:\n"
-        "- mapping_source: pfam2interpro\n"          # key order reversed
-        "  object: InterPro:IPR003029\n", encoding="utf-8")
+        "- mapping_source: pfam2interpro\n"  # key order reversed
+        "  object: InterPro:IPR003029\n",
+        encoding="utf-8",
+    )
     t = tmp_path / "cs.tsv"
     t.write_text(TSV, encoding="utf-8")
     out = subprocess.run(
-        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"),
-         "--tsv", str(t)], capture_output=True, text=True, cwd=REPO)
+        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"), "--tsv", str(t)],
+        capture_output=True,
+        text=True,
+        cwd=REPO,
+    )
     assert out.returncode == 1, out.stdout
     assert "not matched by XREF" in out.stderr, out.stderr[-600:]
     assert "do not raise the threshold" in out.stderr
@@ -194,14 +234,55 @@ def test_the_coverage_report_names_both_uncovered_directions(tmp_path):
     (traits / "b.yaml").write_text(
         "identifier: PANTHER:PTHR10000\n"
         "mapped_xrefs:\n- object: InterPro:IPR000001\n"
-        "  mapping_source: interpro-member-list\n", encoding="utf-8")
+        "  mapping_source: interpro-member-list\n",
+        encoding="utf-8",
+    )
     t = tmp_path / "cs.tsv"
     t.write_text(TSV, encoding="utf-8")
     out = subprocess.run(
-        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"),
-         "--tsv", str(t)], capture_output=True, text=True, cwd=REPO)
+        [sys.executable, str(SCRIPT), "--traits-root", str(tmp_path / "traits"), "--tsv", str(t)],
+        capture_output=True,
+        text=True,
+        cwd=REPO,
+    )
     assert out.returncode == 0, out.stdout
     assert "source outside the overlay's vocabulary (PANTHER 1)" in out.stdout, out.stdout
     assert "overlay row, record asserts no xref (Pfam 1)" in out.stdout, out.stdout
     # and the percentage is over what it COULD compare, not over a padded denominator
     assert "of the 1 this check COULD compare, it compares 100.0%" in out.stdout, out.stdout
+
+
+def test_scope_covers_every_member_db_writer():
+    """The audit's scope must follow the writers, not trail them (#538).
+
+    ASSERTION_SOURCE_DIRECTORIES was the five directories that have records today.
+    seed_interpro_members.MEMBER_DBS can already emit into three more -- pirsf, smart
+    and superfamily -- blocked on licence, not on code. A lower-bound record count can
+    never notice a new writer in a sixth directory, so tie the scope to the seeder.
+    """
+    seeder = _load_module("seed_interpro_members", REPO / "scripts" / "seed_interpro_members.py")
+    writer_directories = {fallback for _prefix, fallback, _pattern in seeder.MEMBER_DBS.values()}
+    uncovered = writer_directories - AUDIT.ASSERTION_SOURCE_DIRECTORIES
+    assert not uncovered, (
+        f"seed_interpro_members can write {sorted(uncovered)}, which the equivalence "
+        f"audit does not scan; widen ASSERTION_SOURCE_DIRECTORIES"
+    )
+
+
+def test_every_scoped_directory_with_records_actually_contributes():
+    """A lower bound cannot see a directory silently dropped from the scope (#538).
+
+    `records asserting an xref >= 43_000` stays green if sfld's 163 records vanish from
+    the frozenset. Assert per directory instead: every scoped directory that exists in
+    the corpus must yield at least one record, so dropping one is visible.
+    """
+    traits = REPO / "data" / "traits"
+    present = {
+        directory
+        for directory in AUDIT.ASSERTION_SOURCE_DIRECTORIES
+        if any(traits.glob(f"*/*/{directory}"))
+    }
+    assert present, "no scoped source directory exists in the corpus"
+    for directory in sorted(present):
+        found = list(records_in_source_directories(traits, [directory]))
+        assert found, f"{directory} is in the audit scope but yielded no records"

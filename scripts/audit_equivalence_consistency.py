@@ -60,9 +60,12 @@ IDENT = re.compile(r"^identifier: (\S+)$", re.M)
 # future-proofing, not a live matcher. The 127 three-key xrefs that do exist carry
 # `object: CAZy:*`, which this pattern could never match anyway. Kept because the shape is
 # schema-legal and a miss here is silent (see `load_records`).
-XREF = re.compile(r"^[ ]*- object: (InterPro:IPR\d+)[ \t]*\n"
-                  r"(?:[ ]*  predicate: .*\n)?"
-                  r"[ ]*  mapping_source: (\S+)[ \t]*$", re.M)
+XREF = re.compile(
+    r"^[ ]*- object: (InterPro:IPR\d+)[ \t]*\n"
+    r"(?:[ ]*  predicate: .*\n)?"
+    r"[ ]*  mapping_source: (\S+)[ \t]*$",
+    re.M,
+)
 
 # `mapping_source` values that assert "this signature IS that InterPro entry" -- the claim
 # the overlay also makes. Both labels name the same derivation from `member_list`; they
@@ -80,7 +83,26 @@ ACCEPTED_SOURCES = frozenset({"pfam2interpro", "interpro-member-list"})
 # Adding a writer for either mapping_source therefore requires adding its output source
 # directory here.  The real-corpus test pins both sides of the coverage report so an
 # accidental narrowing of these directories is visible.
-ASSERTION_SOURCE_DIRECTORIES = frozenset({"hamap", "panther", "pfam", "prints", "sfld"})
+# Every directory a KNOWN WRITER can emit into, not only those with records today.
+# The five with records are hamap, panther, pfam, prints and sfld; the other three are
+# the remaining seed_interpro_members.MEMBER_DBS targets, blocked on licence rather than
+# on code. Naming them now costs nothing -- records_in_source_directories skips a source
+# directory that does not exist -- and means the gate already covers PIRSF, SMART or
+# SUPERFAMILY on the day they land, instead of silently ignoring them until someone
+# notices (#538). test_scope_covers_every_member_db_writer keeps this tied to the seeder,
+# so a seventh member DB fails loudly here rather than opening the same hole again.
+ASSERTION_SOURCE_DIRECTORIES = frozenset(
+    {
+        "hamap",
+        "panther",
+        "pfam",
+        "prints",
+        "sfld",
+        "pirsf",
+        "smart",
+        "superfamily",
+    }
+)
 
 
 def load_tsv(path: Path) -> dict[str, set[str]]:
@@ -141,21 +163,25 @@ def load_records(traits: Path, workers: int = 8) -> dict[str, set[str]]:
             # whose whole output is "0 disagreements". Nothing in the corpus uses them
             # today; this counts the difference so a serializer change is reported rather
             # than absorbed.
-            missed += (text.count("mapping_source: pfam2interpro")
-                       + text.count("mapping_source: interpro-member-list")
-                       - sum(1 for _o, s in XREF.findall(text) if s in ACCEPTED_SOURCES))
+            missed += (
+                text.count("mapping_source: pfam2interpro")
+                + text.count("mapping_source: interpro-member-list")
+                - sum(1 for _o, s in XREF.findall(text) if s in ACCEPTED_SOURCES)
+            )
     if missed:
         raise ValueError(
             f"{missed} `mapping_source` line(s) naming an accepted source were not matched "
             f"by XREF. The records use a mapped_xrefs shape this check cannot read, so its "
             f"'0 disagreements' would be meaningless. Fix the pattern, do not raise the "
-            f"threshold.")
+            f"threshold."
+        )
     return out
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     ap.add_argument("--show", type=int, default=12)
     ap.add_argument("--traits-root", default="")
     ap.add_argument("--tsv", default="")
@@ -189,30 +215,44 @@ def main() -> int:
     print(f"COMPARABLE (in both):         {len(common):,}")
     if not common:
         # A gate that compared nothing must not report a clean corpus (#418, #432).
-        print("FAIL: nothing was comparable. Either the overlay or the records lost their "
-              "InterPro assertions; both are a defect, and 0 disagreements is not.")
+        print(
+            "FAIL: nothing was comparable. Either the overlay or the records lost their "
+            "InterPro assertions; both are a defect, and 0 disagreements is not."
+        )
         return 1
     achievable = len(common) + len(absent_from_overlay)
-    print(f"  of the {achievable:,} this check COULD compare, it compares "
-          f"{100 * len(common) / achievable:.1f}%")
-    print("\nNOT compared, and why -- both directions, because reporting one of them and "
-          "framing the other away is how a partial gate reads as a complete one:")
-    print(f"  {len(absent_from_overlay):,}  record asserts an xref, no overlay row "
-          f"(the InterPro record is not seeded) -- `just audit-pfam-interpro` covers these")
-    print(f"  {len(unrepresentable):,}  source outside the overlay's vocabulary "
-          f"({_by_prefix(unrepresentable)}) -- NOTHING covers these (#450)")
-    print(f"  {len(tsv_only):,}  overlay row, record asserts no xref "
-          f"({_by_prefix(tsv_only)}) -- NOTHING covers these either")
+    print(
+        f"  of the {achievable:,} this check COULD compare, it compares "
+        f"{100 * len(common) / achievable:.1f}%"
+    )
+    print(
+        "\nNOT compared, and why -- both directions, because reporting one of them and "
+        "framing the other away is how a partial gate reads as a complete one:"
+    )
+    print(
+        f"  {len(absent_from_overlay):,}  record asserts an xref, no overlay row "
+        f"(the InterPro record is not seeded) -- `just audit-pfam-interpro` covers these"
+    )
+    print(
+        f"  {len(unrepresentable):,}  source outside the overlay's vocabulary "
+        f"({_by_prefix(unrepresentable)}) -- NOTHING covers these (#450)"
+    )
+    print(
+        f"  {len(tsv_only):,}  overlay row, record asserts no xref "
+        f"({_by_prefix(tsv_only)}) -- NOTHING covers these either"
+    )
 
     bad = [(s, sorted(tsv[s]), sorted(rec[s])) for s in common if tsv[s] != rec[s]]
     print(f"\nDISAGREE:                     {len(bad):,}")
-    for subj, want, got in bad[:args.show]:
+    for subj, want, got in bad[: args.show]:
         print(f"  {subj}  overlay says {', '.join(want)}  record says {', '.join(got)}")
     if bad:
-        print("\nFAIL: a record and the equivalence overlay disagree about the same "
-              "mapping. Both derive from interpro.xml's member_list, so one of them was "
-              "written from something else — run `just audit-pfam-interpro` to find out "
-              "which.")
+        print(
+            "\nFAIL: a record and the equivalence overlay disagree about the same "
+            "mapping. Both derive from interpro.xml's member_list, so one of them was "
+            "written from something else — run `just audit-pfam-interpro` to find out "
+            "which."
+        )
         return 1
     return 0
 

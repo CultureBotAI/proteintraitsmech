@@ -3,6 +3,8 @@ from __future__ import annotations
 import pathlib
 import sys
 
+import pytest
+
 REPO = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
@@ -34,3 +36,26 @@ def test_it_supports_nested_records_and_multiple_axes(tmp_path):
 def test_missing_root_or_empty_scope_yields_nothing(tmp_path):
     assert list(records_in_source_directories(tmp_path / "missing", {"pfam"})) == []
     assert list(records_in_source_directories(tmp_path, set())) == []
+
+
+def test_a_broken_symlink_aborts_rather_than_being_skipped(tmp_path):
+    """Fail loud, not fail open (#538).
+
+    `is_file()` is False for a broken symlink, so skipping it quietly turned an
+    aborting check into one that reports DISAGREE: 0 and exits 0 — the same shape as
+    #534, one directory down.
+    """
+    source = tmp_path / "sequence" / "domain" / "pfam"
+    source.mkdir(parents=True)
+    (source / "real.yaml").write_text("id: x\n", encoding="utf-8")
+    (source / "broken.yaml").symlink_to(tmp_path / "nowhere")
+    with pytest.raises(OSError, match="not a readable regular file"):
+        list(records_in_source_directories(tmp_path, ["pfam"]))
+
+
+def test_a_directory_named_yaml_aborts_rather_than_being_skipped(tmp_path):
+    source = tmp_path / "sequence" / "domain" / "pfam"
+    source.mkdir(parents=True)
+    (source / "trap.yaml").mkdir()
+    with pytest.raises(OSError, match="not a readable regular file"):
+        list(records_in_source_directories(tmp_path, ["pfam"]))

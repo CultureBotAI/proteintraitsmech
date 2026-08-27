@@ -33,6 +33,13 @@ def records_in_source_directories(
                 if not source_root.is_dir():
                     continue
                 for path in sorted(source_root.rglob("*.yaml")):
-                    if path.is_file() and path not in seen:
-                        seen.add(path)
-                        yield path
+                    if path in seen:
+                        continue
+                    if not path.is_file():
+                        # Skipping quietly turned a fail-loud check into a fail-open one:
+                        # a broken symlink or a directory named *.yaml under a selected
+                        # source used to abort the caller with OSError, and would instead
+                        # have reported DISAGREE: 0 and exited 0 (#538).
+                        raise OSError(f"could not read {path}: not a readable regular file")
+                    seen.add(path)
+                    yield path
