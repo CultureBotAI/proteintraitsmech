@@ -117,6 +117,7 @@ claims; do not upgrade status merely because a machine generated content.
 | Review schema/hierarchy | [codex-schema-hierarchy-review](.claude/skills/codex-schema-hierarchy-review/SKILL.md) |
 | Audit embedding fields | [embedding-field-audit](.claude/skills/embedding-field-audit/SKILL.md) |
 | Measure Git/Pages scale | [scalability-check](.claude/skills/scalability-check/SKILL.md) |
+| Assess/maintain the backlog ("what's next") | [next-tasks](.claude/skills/next-tasks/SKILL.md) |
 | Full open-issue queue triage | [review-open-issues](.claude/skills/review-open-issues/SKILL.md) |
 
 ## Change-to-gate matrix
