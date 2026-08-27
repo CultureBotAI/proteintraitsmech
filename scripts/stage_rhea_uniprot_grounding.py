@@ -27,6 +27,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import stat
 import subprocess
 import sys
@@ -535,8 +536,26 @@ def _candidate_rhea_trait_paths(traits_root: Path, route_paths: Sequence[Path]) 
     alternate-extension semantic shadows cannot evade namespace inventory.
     """
 
+    paths = _ripgrep_candidate_paths(traits_root)
+    if paths is None:
+        paths = _walked_candidate_paths(traits_root)
+    paths.update(route_paths)
+    return tuple(sorted(_lexical_absolute(path) for path in paths))
+
+
+def _ripgrep_candidate_paths(traits_root: Path) -> set[Path] | None:
+    """Ripgrep's candidate set, or ``None`` when ripgrep is not installed.
+
+    Ripgrep is not a declared dependency of this repository and CI does not
+    install it (#571), so its absence must be a fallback and not a failure.
+    An `rg` that is present but errors is still fatal.
+    """
+
+    executable = shutil.which("rg")
+    if executable is None:
+        return None
     command = [
-        "rg",
+        executable,
         "--null",
         "-l",
         "--text",
@@ -563,13 +582,29 @@ def _candidate_rhea_trait_paths(traits_root: Path, route_paths: Sequence[Path]) 
         detail = completed.stderr.decode("utf-8", errors="replace").strip()
         raise RheaStageError(f"Rhea trait prefilter failed: {detail}")
     try:
-        paths = {
+        return {
             Path(raw_path.decode("utf-8")) for raw_path in completed.stdout.split(b"\0") if raw_path
         }
     except UnicodeDecodeError as exc:
         raise RheaStageError(f"ripgrep returned a non-UTF-8 trait path: {exc}") from exc
-    paths.update(route_paths)
-    return tuple(sorted(_lexical_absolute(path) for path in paths))
+
+
+def _walked_candidate_paths(traits_root: Path) -> set[Path]:
+    """Every YAML file under the root: a strict superset of the ripgrep prefilter.
+
+    Deliberately not a reimplementation of ripgrep's matching.  Reproducing its
+    escape, NUL, and UTF-16 semantics in a second matcher is exactly how two
+    paths drift apart (#539), and the drift would be silent.  Over-inclusion
+    cannot change the result, because every candidate is parsed below; it only
+    costs time.  ``followlinks=False`` matches ripgrep's default traversal.
+    """
+
+    paths: set[Path] = set()
+    for directory, _subdirectories, filenames in os.walk(traits_root, followlinks=False):
+        for filename in filenames:
+            if os.path.splitext(filename)[1].lower() in {".yaml", ".yml"}:
+                paths.add(Path(directory) / filename)
+    return paths
 
 
 def _scan_rhea_trait_paths(
