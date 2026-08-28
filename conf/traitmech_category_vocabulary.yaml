@@ -9,6 +9,9 @@ source_repository: CultureBotAI/TraitMech
 source_path: src/traitmech/schema/traitmech.yaml
 source_enum: TraitCategoryEnum
 pinned_ref: adcc34162435081ebda1933ae024e1672ea71afe
+governed_tokens:
+- OTHER
+- UPPER
 permissible_values:
   DETECTION:
     description: Differential / selective media growth, biochemical assays.
@@ -34,3 +37,8 @@ permissible_values:
     description: Datatype property carrying a numeric value (e.g. has_pH_optimum).
   UPPER:
     description: Upper-level classifier (e.g. "quality", "biological process").
+_governed_comment: The shared surface this audit governs, recorded rather than computed. The
+  two vocabularies are disjoint by design, so 'in the pin but not local' cannot mean a token
+  was dropped -- nine TraitMech values are legitimately absent here. Listing the intersection
+  at pin time makes 'governed' a reviewed decision, and lets a governed token going missing
+  be a finding (#583).

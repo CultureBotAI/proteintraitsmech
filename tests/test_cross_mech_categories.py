@@ -157,3 +157,55 @@ def test_verify_pin_detects_a_stale_pin(tmp_path):
 
 def test_verify_pin_reports_a_missing_checkout(tmp_path):
     assert AUDIT.verify_pin(tmp_path / "not-a-checkout") == 2
+
+
+def test_refresh_does_not_churn_the_ref_when_the_vocabulary_is_unchanged(tmp_path):
+    """pinned_ref means "where these values came from", not "last ref seen".
+
+    TraitMech commits for reasons that have nothing to do with its category enum.
+    Rewriting a reviewed pin for each of those buries the refs that did change something.
+    """
+    root = tmp_path / "TraitMech"
+    (root / "src" / "traitmech" / "schema").mkdir(parents=True)
+    (root / "src" / "traitmech" / "schema" / "traitmech.yaml").write_text(
+        yaml.safe_dump(
+            {
+                "enums": {
+                    "TraitCategoryEnum": {"permissible_values": {"ALPHA": {"description": "a"}}}
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    pin = tmp_path / "pin.yaml"
+    pin.write_text(
+        yaml.safe_dump(
+            {
+                "source_repository": "CultureBotAI/TraitMech",
+                "source_path": "src/traitmech/schema/traitmech.yaml",
+                "source_enum": "TraitCategoryEnum",
+                "pinned_ref": "originalref0000",
+                "governed_tokens": [],
+                "permissible_values": {"ALPHA": {"description": "a"}},
+            }
+        ),
+        encoding="utf-8",
+    )
+    before = pin.read_text(encoding="utf-8")
+    assert AUDIT.refresh(root, pin) == 0
+    assert pin.read_text(encoding="utf-8") == before, "unchanged vocabulary rewrote the pin"
+
+    (root / "src" / "traitmech" / "schema" / "traitmech.yaml").write_text(
+        yaml.safe_dump(
+            {
+                "enums": {
+                    "TraitCategoryEnum": {
+                        "permissible_values": {"ALPHA": {"description": "CHANGED"}}
+                    }
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    assert AUDIT.refresh(root, pin) == 0
+    assert "CHANGED" in pin.read_text(encoding="utf-8"), "a real change was not re-pinned"

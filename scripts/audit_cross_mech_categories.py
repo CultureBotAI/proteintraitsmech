@@ -156,6 +156,19 @@ def refresh(traitmech_root: Path, pinned_path: Path = PINNED) -> int:
         ["git", "-C", str(traitmech_root), "rev-parse", "HEAD"], capture_output=True, text=True
     )
     document = yaml.safe_load(pinned_path.read_text(encoding="utf-8"))
+    existing = {
+        str(name): (body or {}).get("description")
+        for name, body in (document.get("permissible_values") or {}).items()
+    }
+    if existing == values:
+        # pinned_ref means "the ref these values came from", not "the last ref seen".
+        # Rewriting it for an upstream commit that did not touch the vocabulary churns
+        # a reviewed file for no reason and buries the refs that did change something.
+        print(
+            f"unchanged: {len(values)} TraitMech values already pinned; ref left at "
+            f"{str(document.get('pinned_ref', 'unknown'))[:11]}"
+        )
+        return 0
     document["pinned_ref"] = head.stdout.strip() or "unknown"
     document["permissible_values"] = {
         name: {"description": values[name]} for name in sorted(values)
