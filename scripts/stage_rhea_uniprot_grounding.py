@@ -27,9 +27,7 @@ import hashlib
 import json
 import os
 import re
-import shutil
 import stat
-import subprocess
 import sys
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -37,6 +35,8 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 import yaml
+
+import ripgrep_prefilter
 
 
 SCHEMA_VERSION = 1
@@ -543,82 +543,35 @@ def _candidate_rhea_trait_paths(traits_root: Path, route_paths: Sequence[Path]) 
     return tuple(sorted(_lexical_absolute(path) for path in paths))
 
 
+# The Rhea shapes a record can hide a RHEA: identity in: the literal text, an escape
+# (hence a backslash), or NUL bytes under UTF-16/32.
+_RHEA_PREFILTER_PATTERNS = ("RHEA:", r"\\", r"\x00")
+_RHEA_PREFILTER_LABEL = "Rhea trait"
+
+
 def _ripgrep_candidate_paths(traits_root: Path) -> set[Path] | None:
     """Ripgrep's candidate set, or ``None`` when ripgrep is not installed.
 
-    Ripgrep is not a declared dependency of this repository and CI does not
-    install it (#571), so its absence must be a fallback and not a failure.
-    An `rg` that is present but errors is still fatal.
+    Delegates to the shared prefilter (#571). The guard and the fail-closed fallback
+    were written out in nine scripts, and each copy re-derived the same two easy
+    mistakes; they now live in one tested place.
     """
 
-    executable = shutil.which("rg")
-    if executable is None:
-        return None
-    command = [
-        executable,
-        "--null",
-        "-l",
-        "--text",
-        "--hidden",
-        "--no-ignore",
-        "--iglob",
-        "*.yaml",
-        "--iglob",
-        "*.yml",
-        "-e",
-        "RHEA:",
-        "-e",
-        r"\\",
-        "-e",
-        r"\x00",
-        "--",
-        os.fspath(traits_root),
-    ]
     try:
-        completed = subprocess.run(command, check=False, capture_output=True)
-    except OSError as exc:
-        raise RheaStageError(f"cannot run ripgrep Rhea trait prefilter: {exc}") from exc
-    if completed.returncode not in {0, 1}:
-        detail = completed.stderr.decode("utf-8", errors="replace").strip()
-        raise RheaStageError(f"Rhea trait prefilter failed: {detail}")
-    try:
-        return {
-            Path(raw_path.decode("utf-8")) for raw_path in completed.stdout.split(b"\0") if raw_path
-        }
-    except UnicodeDecodeError as exc:
-        raise RheaStageError(f"ripgrep returned a non-UTF-8 trait path: {exc}") from exc
+        return ripgrep_prefilter.ripgrep_paths(
+            traits_root, _RHEA_PREFILTER_PATTERNS, _RHEA_PREFILTER_LABEL
+        )
+    except ripgrep_prefilter.PrefilterError as exc:
+        raise RheaStageError(str(exc)) from exc
 
 
 def _walked_candidate_paths(traits_root: Path) -> set[Path]:
-    """Every YAML file under the root: a strict superset of the ripgrep prefilter.
+    """Every YAML under the root: a strict superset of the ripgrep prefilter."""
 
-    Deliberately not a reimplementation of ripgrep's matching.  Reproducing its
-    escape, NUL, and UTF-16 semantics in a second matcher is exactly how two
-    paths drift apart (#539), and the drift would be silent.  Over-inclusion
-    cannot change the result, because every candidate is parsed below; it only
-    costs time.  ``followlinks=False`` matches ripgrep's default traversal.
-
-    Both refusals below exist because ``os.walk`` reports an unreadable or absent
-    tree as an empty one, while ripgrep exits non-zero (#573).  Without them the
-    fallback would scan nothing and report success, and the semantic-shadow sweep
-    over the wider trait root -- the entire reason this scan is not confined to the
-    canonical Rhea route -- would silently cover no files at all.
-    """
-
-    if not traits_root.is_dir():
-        raise RheaStageError(f"cannot scan Rhea trait root {traits_root}: not a directory")
-
-    def _refuse(error: OSError) -> None:
-        raise RheaStageError(f"cannot scan Rhea trait root {traits_root}: {error}") from error
-
-    paths: set[Path] = set()
-    for directory, _subdirectories, filenames in os.walk(
-        traits_root, followlinks=False, onerror=_refuse
-    ):
-        for filename in filenames:
-            if os.path.splitext(filename)[1].lower() in {".yaml", ".yml"}:
-                paths.add(Path(directory) / filename)
-    return paths
+    try:
+        return ripgrep_prefilter.walked_paths(traits_root, _RHEA_PREFILTER_LABEL)
+    except ripgrep_prefilter.PrefilterError as exc:
+        raise RheaStageError(str(exc)) from exc
 
 
 def _scan_rhea_trait_paths(
