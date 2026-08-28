@@ -209,6 +209,12 @@ lint *args:
 
 # Enforce download.yaml and scripts/source_helpers.yaml as the source/script registry.
 # Restrictive terms require an explicit review state; pending #517 decisions are notices.
+# Govern the trait-category vocabulary: unknown categories in download.yaml, and
+# tokens shared with TraitMech that have drifted apart in meaning (#581). Advisory:
+# it reports and exits 0. Pass --fail-on any to make findings blocking.
+audit-cross-mech-categories *args:
+    uv run python scripts/audit_cross_mech_categories.py {{args}}
+
 # Validate the data-source registry
 sources-check:
     uv run python scripts/check_sources.py
