@@ -42,6 +42,10 @@ jobs:
       # Enforce download.yaml's script roles and fail on unclassified seeders, missing
       # scripts, invalid statuses/roles, or restrictive terms lacking a review state.
       - run: just sources-check
+      # Advisory on purpose: the audit exits 0 whatever it finds, so the report is
+      # visible on every PR before it can block anyone. Flipping it to
+      # `--fail-on any` is a deliberate follow-up, not a silent promotion.
+      - run: just audit-cross-mech-categories
 
       # Schema-quality probes (#496). In CI on purpose: this recipe existed for the life
       # of the repo pointing at a script that was never written, and because nothing ran
