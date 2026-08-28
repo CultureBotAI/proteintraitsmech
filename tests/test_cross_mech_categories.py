@@ -66,7 +66,7 @@ def test_the_real_repository_has_no_unknown_manifest_category():
 
 
 def test_the_pin_records_where_it_came_from():
-    pinned, ref = AUDIT.pinned_vocabulary()
+    pinned, ref, _governed = AUDIT.pinned_vocabulary()
     assert pinned, "the pin lists no values"
     assert len(ref) >= 7, "the pin does not record a source ref"
     document = yaml.safe_load(AUDIT.PINNED.read_text(encoding="utf-8"))
@@ -97,3 +97,63 @@ def test_the_audit_is_advisory_by_default_and_blocking_on_request(capsys):
         assert code == 1
     else:
         assert code == 0
+
+
+def test_a_governed_token_dropped_from_this_mech_is_reported():
+    """The class the docstring promised and the code did not emit (#583).
+
+    "In the pin but not local" cannot mean dropped -- nine TraitMech values are
+    legitimately absent here -- so the governed surface is read from the pin rather
+    than computed as an intersection.
+    """
+    results = AUDIT.findings(
+        local={"OTHER": None},
+        pinned={"OTHER": None, "UPPER": "x"},
+        declared={},
+        governed={"OTHER", "UPPER"},
+    )
+    assert [kind for kind, _ in results] == ["SHARED_TOKEN_DROPPED"]
+    assert "UPPER" in results[0][1]
+
+
+def test_an_ungoverned_token_absent_here_is_not_a_drop():
+    """METABOLISM is TraitMech's and was never shared; its absence is by design."""
+    assert (
+        AUDIT.findings(
+            local={"SEQ_DOMAIN": "d"},
+            pinned={"METABOLISM": "organism"},
+            declared={},
+            governed={"OTHER"} & set(),
+        )
+        == []
+    )
+
+
+def test_the_pin_records_its_governed_surface():
+    _values, _ref, governed = AUDIT.pinned_vocabulary()
+    assert governed, "the pin records no governed_tokens"
+    local = AUDIT.local_vocabulary()
+    assert governed <= set(local), "a governed token is missing from this Mech's enum"
+
+
+def test_verify_pin_detects_a_stale_pin(tmp_path):
+    """CI has only this repo, so pin staleness is otherwise invisible (#584)."""
+    root = tmp_path / "TraitMech"
+    (root / "src" / "traitmech" / "schema").mkdir(parents=True)
+    (root / "src" / "traitmech" / "schema" / "traitmech.yaml").write_text(
+        yaml.safe_dump(
+            {
+                "enums": {
+                    "TraitCategoryEnum": {
+                        "permissible_values": {"UPPER": {"description": "something else entirely"}}
+                    }
+                }
+            }
+        ),
+        encoding="utf-8",
+    )
+    assert AUDIT.verify_pin(root) == 1
+
+
+def test_verify_pin_reports_a_missing_checkout(tmp_path):
+    assert AUDIT.verify_pin(tmp_path / "not-a-checkout") == 2

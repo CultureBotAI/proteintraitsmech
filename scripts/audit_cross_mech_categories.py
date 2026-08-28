@@ -69,7 +69,15 @@ def local_vocabulary(schema_path: Path = SCHEMA) -> dict[str, str | None]:
     return values
 
 
-def pinned_vocabulary(pinned_path: Path = PINNED) -> tuple[dict[str, str | None], str]:
+def pinned_vocabulary(
+    pinned_path: Path = PINNED,
+) -> tuple[dict[str, str | None], str, set[str]]:
+    """``(values, pinned ref, governed tokens)``.
+
+    The governed set is read, not computed as an intersection: the vocabularies are
+    disjoint by design, so "in the pin but not local" cannot distinguish a token that
+    was never shared from one that was dropped (#583).
+    """
     document = yaml.safe_load(pinned_path.read_text(encoding="utf-8"))
     values = {
         str(name): (body or {}).get("description")
@@ -77,7 +85,8 @@ def pinned_vocabulary(pinned_path: Path = PINNED) -> tuple[dict[str, str | None]
     }
     if not values:
         raise SystemExit(f"FAIL: {pinned_path} pins no values")
-    return values, str(document.get("pinned_ref", "unknown"))
+    governed = {str(token) for token in (document.get("governed_tokens") or [])}
+    return values, str(document.get("pinned_ref", "unknown")), governed
 
 
 def manifest_categories(manifest_path: Path = MANIFEST) -> dict[str, list[str]]:
@@ -97,6 +106,7 @@ def findings(
     local: dict[str, str | None],
     pinned: dict[str, str | None],
     declared: dict[str, list[str]],
+    governed: set[str] | None = None,
 ) -> list[tuple[str, str]]:
     """``(class, message)`` pairs, deterministically ordered."""
     out: list[tuple[str, str]] = []
@@ -117,6 +127,15 @@ def findings(
                     "SHARED_TOKEN_MEANING_DRIFT",
                     f"{token!r} means {local[token]!r} here and {pinned[token]!r} in "
                     f"TraitMech; a shared token must not mean two things",
+                )
+            )
+    for token in sorted(governed or set()):
+        if token not in local:
+            out.append(
+                (
+                    "SHARED_TOKEN_DROPPED",
+                    f"{token!r} is a governed cross-Mech token but is no longer a "
+                    f"permissible value of {LOCAL_ENUM}",
                 )
             )
     return out
@@ -148,6 +167,35 @@ def refresh(traitmech_root: Path, pinned_path: Path = PINNED) -> int:
     return 0
 
 
+def verify_pin(traitmech_root: Path, pinned_path: Path = PINNED) -> int:
+    """Fail when a local TraitMech checkout disagrees with the pin (#584).
+
+    The fleet's other cross-repo check fetches the hub live, so hub drift is caught
+    without anyone acting. This pin is static, so TraitMech drift is invisible to CI,
+    which has only this repository. This is the offline half: run it anywhere both
+    repositories exist.
+    """
+    source = traitmech_root / "src" / "traitmech" / "schema" / "traitmech.yaml"
+    if not source.is_file():
+        print(f"ERROR: no TraitMech schema at {source}", file=sys.stderr)
+        return 2
+    live = _permissible_values(
+        yaml.safe_load(source.read_text(encoding="utf-8")), "TraitCategoryEnum"
+    )
+    pinned, pinned_ref, _governed = pinned_vocabulary(pinned_path)
+    if live == pinned:
+        print(f"OK: pin {pinned_ref[:11]} matches {source}")
+        return 0
+    for token in sorted(set(live) | set(pinned)):
+        if live.get(token) != pinned.get(token):
+            print(
+                f"  PIN_STALE: {token!r} pinned as {pinned.get(token)!r}, "
+                f"TraitMech now has {live.get(token)!r}"
+            )
+    print("\nThe pin is stale; re-pin with --refresh after reviewing the change.")
+    return 1
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -156,6 +204,13 @@ def main(argv: list[str] | None = None) -> int:
         metavar="TRAITMECH_ROOT",
         help="re-pin conf/traitmech_category_vocabulary.yaml from a local "
         "TraitMech checkout, then exit",
+    )
+    parser.add_argument(
+        "--verify-pin",
+        type=Path,
+        metavar="TRAITMECH_ROOT",
+        help="fail if a local TraitMech checkout disagrees with the pin. CI has only "
+        "this repository, so pin staleness is otherwise invisible (#584)",
     )
     parser.add_argument(
         "--fail-on",
@@ -168,19 +223,21 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.refresh is not None:
         return refresh(args.refresh)
+    if args.verify_pin is not None:
+        return verify_pin(args.verify_pin)
 
     local = local_vocabulary()
-    pinned, pinned_ref = pinned_vocabulary()
+    pinned, pinned_ref, governed = pinned_vocabulary()
     declared = manifest_categories()
-    shared = sorted(set(local) & set(pinned))
+    shared = sorted(governed)
 
     print(
         f"{LOCAL_ENUM}: {len(local)} values; TraitMech pin {pinned_ref[:11]}: "
-        f"{len(pinned)} values; shared tokens: {len(shared)} ({', '.join(shared) or 'none'})"
+        f"{len(pinned)} values; governed tokens: {len(shared)} ({', '.join(shared) or 'none'})"
     )
     print(f"download.yaml declares {len(declared)} distinct categories")
 
-    results = findings(local, pinned, declared)
+    results = findings(local, pinned, declared, governed)
     for kind, message in results:
         print(f"  {kind}: {message}")
     if not results:
