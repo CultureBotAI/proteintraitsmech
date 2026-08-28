@@ -42,9 +42,12 @@ jobs:
       # Enforce download.yaml's script roles and fail on unclassified seeders, missing
       # scripts, invalid statuses/roles, or restrictive terms lacking a review state.
       - run: just sources-check
-      # Advisory on purpose: the audit exits 0 whatever it finds, so the report is
-      # visible on every PR before it can block anyone. Flipping it to
-      # `--fail-on any` is a deliberate follow-up, not a silent promotion.
+      # Gates the two classes this repository can fix -- its manifest disagreeing
+      # with its own schema, and its enum dropping a token it agreed to govern.
+      # Cross-Mech description drift stays a NOTICE and is printed on every run:
+      # TraitMech can reword its own description at any time, and that must not
+      # fail pull requests here until someone reconciles a vocabulary they may not
+      # own (#585). `--fail-on any` blocks on that too, when the fleet wants it.
       - run: just audit-cross-mech-categories
 
       # Schema-quality probes (#496). In CI on purpose: this recipe existed for the life

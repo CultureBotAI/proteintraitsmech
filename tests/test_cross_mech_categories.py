@@ -85,18 +85,19 @@ def test_an_empty_local_vocabulary_fails_rather_than_reporting_agreement(tmp_pat
         AUDIT.local_vocabulary(empty)
 
 
-def test_the_audit_is_advisory_by_default_and_blocking_on_request(capsys):
-    assert AUDIT.main([]) == 0
-    advisory = capsys.readouterr().out
-    assert "Advisory run" in advisory or "OK:" in advisory
-    # --fail-on any is what a future CI gate would pass; it must actually bite when
-    # there is something to bite on.
-    code = AUDIT.main(["--fail-on", "any"])
-    strict = capsys.readouterr().out
-    if "finding(s)" in strict:
-        assert code == 1
-    else:
-        assert code == 0
+def test_the_exit_contract_across_all_three_policies(capsys):
+    """Default is no longer advisory (#585): it gates on what this repo can fix.
+
+    Replaces an earlier test that asserted advisory-by-default, which is exactly the
+    behaviour this change removes.
+    """
+    assert AUDIT.main(["--fail-on", "never"]) == 0
+    capsys.readouterr()
+    assert AUDIT.main([]) == 0  # today: one notice, nothing blocking
+    default_out = capsys.readouterr().out
+    assert "--fail-on error" in default_out
+    assert AUDIT.main(["--fail-on", "any"]) == 1  # the notice blocks under 'any'
+    capsys.readouterr()
 
 
 def test_a_governed_token_dropped_from_this_mech_is_reported():
@@ -209,3 +210,91 @@ def test_refresh_does_not_churn_the_ref_when_the_vocabulary_is_unchanged(tmp_pat
     )
     assert AUDIT.refresh(root, pin) == 0
     assert "CHANGED" in pin.read_text(encoding="utf-8"), "a real change was not re-pinned"
+
+
+# ---------------------------------------------------------------------------------------
+# Promotion from advisory to a gate (#585). The point of the severity split is that the
+# classes differ in WHO CAN FIX THEM, so they must differ in whether they block.
+# ---------------------------------------------------------------------------------------
+
+
+def test_every_finding_class_has_a_declared_severity():
+    """A class with no entry defaults to error; make that a decision, not an accident."""
+    emitted = {"MANIFEST_UNKNOWN_CATEGORY", "SHARED_TOKEN_MEANING_DRIFT", "SHARED_TOKEN_DROPPED"}
+    assert emitted == set(AUDIT.SEVERITY), "a finding class has no declared severity"
+
+
+def test_the_repo_fixable_classes_block_and_the_sibling_claim_does_not():
+    assert AUDIT._blocks("MANIFEST_UNKNOWN_CATEGORY", "error") is True
+    assert AUDIT._blocks("SHARED_TOKEN_DROPPED", "error") is True
+    assert AUDIT._blocks("SHARED_TOKEN_MEANING_DRIFT", "error") is False
+
+
+def test_fail_on_any_blocks_the_sibling_claim_too():
+    assert AUDIT._blocks("SHARED_TOKEN_MEANING_DRIFT", "any") is True
+
+
+def test_fail_on_never_blocks_nothing():
+    for kind in AUDIT.SEVERITY:
+        assert AUDIT._blocks(kind, "never") is False
+
+
+def test_an_unknown_manifest_category_gates_by_default(tmp_path, monkeypatch, capsys):
+    """The promotion itself: a category this repo can fix now fails the run."""
+    manifest = tmp_path / "download.yaml"
+    manifest.write_text(
+        yaml.safe_dump([{"name": "X", "trait_categories": ["SEQ_NOT_A_REAL_CATEGORY"]}]),
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(AUDIT, "MANIFEST", manifest)
+    assert AUDIT.main([]) == 1
+    assert "ERROR MANIFEST_UNKNOWN_CATEGORY" in capsys.readouterr().out
+
+
+def test_cross_mech_drift_alone_does_not_gate_by_default(capsys):
+    """Today's real state: one notice, and CI stays green.
+
+    If this ever fails, the pin and this Mech agree again -- delete the drift, not
+    the test.
+    """
+    assert AUDIT.main([]) == 0
+    out = capsys.readouterr().out
+    assert "NOTICE SHARED_TOKEN_MEANING_DRIFT" in out
+    assert "None blocking" in out
+
+
+def test_ci_runs_the_audit_without_disabling_the_gate():
+    """`just audit-cross-mech-categories --fail-on never` in CI would be a no-op gate."""
+    workflow = (REPO / ".github" / "workflows" / "checks.yml").read_text(encoding="utf-8")
+    invocation = [
+        line
+        for line in workflow.splitlines()
+        if "audit-cross-mech-categories" in line and line.strip().startswith("- run:")
+    ]
+    assert len(invocation) == 1, invocation
+    assert "--fail-on never" not in invocation[0]
+
+
+@pytest.mark.parametrize(
+    ("what", "attribute"),
+    [
+        ("the TraitMech category pin", "PINNED"),
+        ("download.yaml", "MANIFEST"),
+        ("the schema", "SCHEMA"),
+    ],
+)
+def test_an_unreadable_input_fails_with_a_sentence_not_a_traceback(
+    what, attribute, tmp_path, monkeypatch
+):
+    """This runs in a gate now; a traceback there reads as the audit having crashed (#589)."""
+    monkeypatch.setattr(AUDIT, attribute, tmp_path / "absent.yaml")
+    with pytest.raises(SystemExit, match=f"cannot read {what}"):
+        AUDIT.main([])
+
+
+def test_a_corrupt_pin_names_the_file_and_the_remedy(tmp_path, monkeypatch):
+    bad = tmp_path / "pin.yaml"
+    bad.write_text("permissible_values: [unclosed\n", encoding="utf-8")
+    monkeypatch.setattr(AUDIT, "PINNED", bad)
+    with pytest.raises(SystemExit, match="not valid YAML"):
+        AUDIT.main([])

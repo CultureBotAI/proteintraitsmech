@@ -38,6 +38,7 @@ what a CI gate would pass once the report has been quiet for a while.
 from __future__ import annotations
 
 import argparse
+import collections
 import subprocess
 import sys
 from pathlib import Path
@@ -50,6 +51,44 @@ MANIFEST = REPO_ROOT / "download.yaml"
 PINNED = REPO_ROOT / "conf" / "traitmech_category_vocabulary.yaml"
 LOCAL_ENUM = "ProteinTraitCategoryEnum"
 
+# Severity is per class, because the classes differ in who can fix them (#585).
+#
+# The two ERROR classes are entirely within this repository's control: its own
+# manifest disagreeing with its own schema, and its own enum dropping a token it
+# agreed to govern. Blocking a pull request on those is fair -- the author can fix
+# them here.
+#
+# SHARED_TOKEN_MEANING_DRIFT is a claim about a SIBLING repository. TraitMech can
+# reword its own description at any time, and doing so would then fail every pull
+# request opened here until someone reconciled a vocabulary they may not own. That
+# is a bad trade for a correctness signal that is real but not urgent, so it stays
+# a notice: reported on every run, never blocking.
+SEVERITY = {
+    "MANIFEST_UNKNOWN_CATEGORY": "error",
+    "SHARED_TOKEN_DROPPED": "error",
+    "SHARED_TOKEN_MEANING_DRIFT": "notice",
+}
+
+
+def _load_yaml(path: Path, what: str, remedy: str = "") -> dict:
+    """Read a YAML document, failing with a sentence instead of a traceback (#589).
+
+    This runs in a CI gate. An unhandled OSError there reads as the audit having
+    crashed, and sends the reader to the wrong place -- the tool, rather than the
+    file it could not open.
+    """
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as error:
+        raise SystemExit(f"FAIL: cannot read {what} at {path}: {error}.{remedy}") from error
+    try:
+        document = yaml.safe_load(text)
+    except yaml.YAMLError as error:
+        raise SystemExit(f"FAIL: {what} at {path} is not valid YAML: {error}") from error
+    if document is None:
+        raise SystemExit(f"FAIL: {what} at {path} is empty")
+    return document
+
 
 def _permissible_values(schema: dict, enum_name: str) -> dict[str, str | None]:
     """``value -> description`` for one enum, tolerating a bare value with no body."""
@@ -61,7 +100,7 @@ def _permissible_values(schema: dict, enum_name: str) -> dict[str, str | None]:
 
 
 def local_vocabulary(schema_path: Path = SCHEMA) -> dict[str, str | None]:
-    schema = yaml.safe_load(schema_path.read_text(encoding="utf-8"))
+    schema = _load_yaml(schema_path, "the schema")
     values = _permissible_values(schema, LOCAL_ENUM)
     if not values:
         # A vocabulary audit that read no vocabulary must not report agreement.
@@ -78,7 +117,11 @@ def pinned_vocabulary(
     disjoint by design, so "in the pin but not local" cannot distinguish a token that
     was never shared from one that was dropped (#583).
     """
-    document = yaml.safe_load(pinned_path.read_text(encoding="utf-8"))
+    document = _load_yaml(
+        pinned_path,
+        "the TraitMech category pin",
+        " Regenerate it with 'just audit-cross-mech-categories --refresh <path-to-TraitMech>'.",
+    )
     values = {
         str(name): (body or {}).get("description")
         for name, body in (document.get("permissible_values") or {}).items()
@@ -91,7 +134,7 @@ def pinned_vocabulary(
 
 def manifest_categories(manifest_path: Path = MANIFEST) -> dict[str, list[str]]:
     """``category -> block names declaring it``."""
-    blocks = yaml.safe_load(manifest_path.read_text(encoding="utf-8")) or []
+    blocks = _load_yaml(manifest_path, "download.yaml") or []
     declared: dict[str, list[str]] = {}
     for index, block in enumerate(blocks):
         if not isinstance(block, dict):
@@ -209,6 +252,15 @@ def verify_pin(traitmech_root: Path, pinned_path: Path = PINNED) -> int:
     return 1
 
 
+def _blocks(kind: str, fail_on: str) -> bool:
+    """Whether a finding of this class should fail the run under this policy."""
+    if fail_on == "never":
+        return False
+    if fail_on == "any":
+        return True
+    return SEVERITY.get(kind, "error") == "error"
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -227,10 +279,12 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument(
         "--fail-on",
-        choices=("never", "any"),
-        default="never",
-        help="'never' (default) reports and exits 0; 'any' makes every "
-        "finding an error, for use once this gates CI",
+        choices=("never", "error", "any"),
+        default="error",
+        help="'error' (default) fails on findings this repository can fix -- an "
+        "unknown manifest category, or a governed token dropped from its own enum. "
+        "'never' reports and exits 0. 'any' also fails on cross-Mech description "
+        "drift, which a sibling repository can cause (#585)",
     )
     args = parser.parse_args(argv)
 
@@ -239,9 +293,12 @@ def main(argv: list[str] | None = None) -> int:
     if args.verify_pin is not None:
         return verify_pin(args.verify_pin)
 
-    local = local_vocabulary()
-    pinned, pinned_ref, governed = pinned_vocabulary()
-    declared = manifest_categories()
+    # Passed explicitly rather than relying on the default arguments: a default binds
+    # at definition, so a test that redirects MANIFEST would be silently ignored and
+    # would assert against the real manifest instead.
+    local = local_vocabulary(SCHEMA)
+    pinned, pinned_ref, governed = pinned_vocabulary(PINNED)
+    declared = manifest_categories(MANIFEST)
     shared = sorted(governed)
 
     print(
@@ -252,14 +309,22 @@ def main(argv: list[str] | None = None) -> int:
 
     results = findings(local, pinned, declared, governed)
     for kind, message in results:
-        print(f"  {kind}: {message}")
+        print(f"  {SEVERITY.get(kind, 'error').upper()} {kind}: {message}")
     if not results:
         print("\nOK: no unknown manifest category, no shared-token drift.")
         return 0
-    print(f"\n{len(results)} finding(s).")
-    if args.fail_on == "any":
+
+    blocking = [kind for kind, _ in results if _blocks(kind, args.fail_on)]
+    counts = collections.Counter(SEVERITY.get(kind, "error") for kind, _ in results)
+    summary = ", ".join(f"{n} {name}" for name, n in sorted(counts.items()))
+    print(f"\n{len(results)} finding(s): {summary}.")
+    if blocking:
+        print(f"{len(blocking)} blocking under --fail-on {args.fail_on}.")
         return 1
-    print("Advisory run (--fail-on never): reported, not failed.")
+    print(
+        f"None blocking under --fail-on {args.fail_on}; a notice is reported on every "
+        f"run and never gates. Use --fail-on any to block on it too."
+    )
     return 0
 
 
