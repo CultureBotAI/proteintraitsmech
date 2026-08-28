@@ -6,6 +6,7 @@ import hashlib
 import importlib
 import json
 import os
+import shutil
 import sys
 from pathlib import Path
 from typing import Any, Callable
@@ -687,7 +688,7 @@ def test_both_prefilter_paths_refuse_an_unscannable_trait_root(tmp_path: Path) -
     missing = tmp_path / "no-such-trait-root"
     with pytest.raises(stage.RheaStageError, match="not a directory"):
         stage._walked_candidate_paths(missing)
-    if stage.shutil.which("rg") is not None:
+    if shutil.which("rg") is not None:
         with pytest.raises(stage.RheaStageError, match="prefilter failed"):
             stage._ripgrep_candidate_paths(missing)
 
