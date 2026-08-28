@@ -70,6 +70,26 @@ SEVERITY = {
 }
 
 
+def _load_yaml(path: Path, what: str, remedy: str = "") -> dict:
+    """Read a YAML document, failing with a sentence instead of a traceback (#589).
+
+    This runs in a CI gate. An unhandled OSError there reads as the audit having
+    crashed, and sends the reader to the wrong place -- the tool, rather than the
+    file it could not open.
+    """
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as error:
+        raise SystemExit(f"FAIL: cannot read {what} at {path}: {error}.{remedy}") from error
+    try:
+        document = yaml.safe_load(text)
+    except yaml.YAMLError as error:
+        raise SystemExit(f"FAIL: {what} at {path} is not valid YAML: {error}") from error
+    if document is None:
+        raise SystemExit(f"FAIL: {what} at {path} is empty")
+    return document
+
+
 def _permissible_values(schema: dict, enum_name: str) -> dict[str, str | None]:
     """``value -> description`` for one enum, tolerating a bare value with no body."""
     spec = (schema.get("enums") or {}).get(enum_name) or {}
@@ -80,7 +100,7 @@ def _permissible_values(schema: dict, enum_name: str) -> dict[str, str | None]:
 
 
 def local_vocabulary(schema_path: Path = SCHEMA) -> dict[str, str | None]:
-    schema = yaml.safe_load(schema_path.read_text(encoding="utf-8"))
+    schema = _load_yaml(schema_path, "the schema")
     values = _permissible_values(schema, LOCAL_ENUM)
     if not values:
         # A vocabulary audit that read no vocabulary must not report agreement.
@@ -97,7 +117,11 @@ def pinned_vocabulary(
     disjoint by design, so "in the pin but not local" cannot distinguish a token that
     was never shared from one that was dropped (#583).
     """
-    document = yaml.safe_load(pinned_path.read_text(encoding="utf-8"))
+    document = _load_yaml(
+        pinned_path,
+        "the TraitMech category pin",
+        " Regenerate it with 'just audit-cross-mech-categories --refresh <path-to-TraitMech>'.",
+    )
     values = {
         str(name): (body or {}).get("description")
         for name, body in (document.get("permissible_values") or {}).items()
@@ -110,7 +134,7 @@ def pinned_vocabulary(
 
 def manifest_categories(manifest_path: Path = MANIFEST) -> dict[str, list[str]]:
     """``category -> block names declaring it``."""
-    blocks = yaml.safe_load(manifest_path.read_text(encoding="utf-8")) or []
+    blocks = _load_yaml(manifest_path, "download.yaml") or []
     declared: dict[str, list[str]] = {}
     for index, block in enumerate(blocks):
         if not isinstance(block, dict):

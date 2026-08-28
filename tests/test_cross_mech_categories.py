@@ -273,3 +273,28 @@ def test_ci_runs_the_audit_without_disabling_the_gate():
     ]
     assert len(invocation) == 1, invocation
     assert "--fail-on never" not in invocation[0]
+
+
+@pytest.mark.parametrize(
+    ("what", "attribute"),
+    [
+        ("the TraitMech category pin", "PINNED"),
+        ("download.yaml", "MANIFEST"),
+        ("the schema", "SCHEMA"),
+    ],
+)
+def test_an_unreadable_input_fails_with_a_sentence_not_a_traceback(
+    what, attribute, tmp_path, monkeypatch
+):
+    """This runs in a gate now; a traceback there reads as the audit having crashed (#589)."""
+    monkeypatch.setattr(AUDIT, attribute, tmp_path / "absent.yaml")
+    with pytest.raises(SystemExit, match=f"cannot read {what}"):
+        AUDIT.main([])
+
+
+def test_a_corrupt_pin_names_the_file_and_the_remedy(tmp_path, monkeypatch):
+    bad = tmp_path / "pin.yaml"
+    bad.write_text("permissible_values: [unclosed\n", encoding="utf-8")
+    monkeypatch.setattr(AUDIT, "PINNED", bad)
+    with pytest.raises(SystemExit, match="not valid YAML"):
+        AUDIT.main([])
