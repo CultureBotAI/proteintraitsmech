@@ -351,10 +351,17 @@ def test_neither_remote_class_can_fail_a_build():
         assert AUDIT._blocks(kind, "error") is False
 
 
-def test_the_report_says_whether_the_pin_was_checked(capsys):
-    """A green run means different things with and without the live check."""
+def test_the_report_says_whether_the_pin_was_checked(capsys, monkeypatch):
+    """A green run means different things with and without the live check.
+
+    The fetch is stubbed rather than performed: no test in this suite should need a
+    network, and the earlier version of this test passed offline anyway -- the fetch
+    failed, the header still said "checked live", and the assertion held. It touched
+    the network without depending on it, which is the worst of both (#592).
+    """
     AUDIT.main([])
     assert "NOT checked" in capsys.readouterr().out
+    monkeypatch.setattr(AUDIT, "fetch_traitmech_vocabulary", lambda *a, **k: {})
     AUDIT.main(["--check-remote"])
     assert "checked live" in capsys.readouterr().out
 
@@ -369,3 +376,77 @@ def test_ci_turns_the_remote_check_on():
     ]
     assert len(invocation) == 1, invocation
     assert "--check-remote" in invocation[0]
+
+
+# ---------------------------------------------------------------------------------------
+# The fetch's own guards (#591). Every one of these was unreachable by any test, including
+# the redirect check that stops the audit parsing a vocabulary from an arbitrary host.
+# ---------------------------------------------------------------------------------------
+
+
+class _FakeResponse:
+    def __init__(self, body: bytes, *, url: str, status: int = 200) -> None:
+        self._body, self._url, self.status = body, url, status
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_exc):
+        return False
+
+    def geturl(self) -> str:
+        return self._url
+
+    def read(self, size: int = -1) -> bytes:
+        return self._body[:size] if size and size > 0 else self._body
+
+
+GOOD_URL = "https://raw.githubusercontent.com/CultureBotAI/TraitMech/main/x.yaml"
+GOOD_BODY = yaml.safe_dump(
+    {"enums": {"TraitCategoryEnum": {"permissible_values": {"ALPHA": {"description": "a"}}}}}
+).encode("utf-8")
+
+
+def _opener(body: bytes, *, url: str = GOOD_URL, status: int = 200):
+    return lambda _request, **_kwargs: _FakeResponse(body, url=url, status=status)
+
+
+def test_a_well_formed_response_is_parsed():
+    values = AUDIT.fetch_traitmech_vocabulary(opener=_opener(GOOD_BODY))
+    assert values == {"ALPHA": "a"}
+
+
+def test_a_redirect_off_raw_githubusercontent_is_refused():
+    """The guard that stops this audit parsing a vocabulary from an arbitrary host."""
+    evil = _opener(GOOD_BODY, url="https://example.org/anything.yaml")
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="redirected off"):
+        AUDIT.fetch_traitmech_vocabulary(opener=evil)
+
+
+def test_a_plain_http_redirect_is_refused():
+    downgraded = _opener(GOOD_BODY, url="http://raw.githubusercontent.com/x.yaml")
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="redirected off"):
+        AUDIT.fetch_traitmech_vocabulary(opener=downgraded)
+
+
+def test_a_non_200_response_is_refused():
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="HTTP 404"):
+        AUDIT.fetch_traitmech_vocabulary(opener=_opener(GOOD_BODY, status=404))
+
+
+def test_an_oversize_body_is_refused():
+    huge = b"x" * (AUDIT._FETCH_MAX_BYTES + 1)
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="exceeds"):
+        AUDIT.fetch_traitmech_vocabulary(opener=_opener(huge))
+
+
+def test_unreadable_yaml_is_refused():
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="not readable YAML"):
+        AUDIT.fetch_traitmech_vocabulary(opener=_opener(b"enums: [unclosed\n"))
+
+
+def test_a_response_without_the_enum_is_refused():
+    """An empty vocabulary must not be read as 'TraitMech dropped everything'."""
+    empty = yaml.safe_dump({"enums": {}}).encode("utf-8")
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="declares no TraitCategoryEnum"):
+        AUDIT.fetch_traitmech_vocabulary(opener=_opener(empty))

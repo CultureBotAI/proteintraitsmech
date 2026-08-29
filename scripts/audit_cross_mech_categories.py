@@ -45,6 +45,7 @@ import urllib.parse
 import urllib.request
 import sys
 from pathlib import Path
+from typing import Any, Callable
 
 import yaml
 
@@ -244,7 +245,10 @@ def refresh(traitmech_root: Path, pinned_path: Path = PINNED) -> int:
 
 
 def fetch_traitmech_vocabulary(
-    ref: str = "main", *, timeout: int = _FETCH_TIMEOUT_SECONDS
+    ref: str = "main",
+    *,
+    timeout: int = _FETCH_TIMEOUT_SECONDS,
+    opener: Callable[..., Any] = urllib.request.urlopen,
 ) -> dict[str, str | None]:
     """TraitMech's category vocabulary as it stands right now, over HTTPS.
 
@@ -255,7 +259,9 @@ def fetch_traitmech_vocabulary(
 
     url = f"https://raw.githubusercontent.com/{TRAITMECH_REPOSITORY}/{ref}/{TRAITMECH_SCHEMA_PATH}"
     request = urllib.request.Request(url, headers={"User-Agent": "ProteinTraitsMech-audit/1"})
-    with urllib.request.urlopen(request, timeout=timeout) as response:  # noqa: S310
+    # Injectable so the guards below are testable without a network (#591); the same
+    # shape acquire_rhea_sources.py uses for exactly this reason.
+    with opener(request, timeout=timeout) as response:
         final = urllib.parse.urlparse(response.geturl())
         if final.scheme != "https" or final.hostname != "raw.githubusercontent.com":
             raise RemoteVocabularyError(f"fetch redirected off raw.githubusercontent.com: {final}")
