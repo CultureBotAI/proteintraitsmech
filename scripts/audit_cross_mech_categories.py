@@ -40,8 +40,12 @@ from __future__ import annotations
 import argparse
 import collections
 import subprocess
+import urllib.error
+import urllib.parse
+import urllib.request
 import sys
 from pathlib import Path
+from typing import Any, Callable
 
 import yaml
 
@@ -67,7 +71,24 @@ SEVERITY = {
     "MANIFEST_UNKNOWN_CATEGORY": "error",
     "SHARED_TOKEN_DROPPED": "error",
     "SHARED_TOKEN_MEANING_DRIFT": "notice",
+    # Both remote classes are notices for the same reason SHARED_TOKEN_MEANING_DRIFT
+    # is: they describe a sibling repository, which can change without warning and
+    # must not redden builds here. PIN_UNCHECKED is separate from PIN_STALE on
+    # purpose -- "I could not look" and "I looked and it matches" must never print
+    # the same thing (#584).
+    "PIN_STALE": "notice",
+    "PIN_UNCHECKED": "notice",
 }
+
+TRAITMECH_REPOSITORY = "CultureBotAI/TraitMech"
+TRAITMECH_SCHEMA_PATH = "src/traitmech/schema/traitmech.yaml"
+TRAITMECH_ENUM = "TraitCategoryEnum"
+_FETCH_TIMEOUT_SECONDS = 20
+_FETCH_MAX_BYTES = 4 * 1024 * 1024
+
+
+class RemoteVocabularyError(RuntimeError):
+    """Raised when TraitMech's live vocabulary could not be obtained."""
 
 
 def _load_yaml(path: Path, what: str, remedy: str = "") -> dict:
@@ -223,6 +244,59 @@ def refresh(traitmech_root: Path, pinned_path: Path = PINNED) -> int:
     return 0
 
 
+def fetch_traitmech_vocabulary(
+    ref: str = "main",
+    *,
+    timeout: int = _FETCH_TIMEOUT_SECONDS,
+    opener: Callable[..., Any] = urllib.request.urlopen,
+) -> dict[str, str | None]:
+    """TraitMech's category vocabulary as it stands right now, over HTTPS.
+
+    Same mechanism and same host as scripts/check_vendored_sync.py already uses for
+    the canonical hub, including the redirect check: this is a second use of an
+    established route, not a new network dependency for the repository.
+    """
+
+    url = f"https://raw.githubusercontent.com/{TRAITMECH_REPOSITORY}/{ref}/{TRAITMECH_SCHEMA_PATH}"
+    request = urllib.request.Request(url, headers={"User-Agent": "ProteinTraitsMech-audit/1"})
+    # Injectable so the guards below are testable without a network (#591); the same
+    # shape acquire_rhea_sources.py uses for exactly this reason.
+    with opener(request, timeout=timeout) as response:
+        final = urllib.parse.urlparse(response.geturl())
+        if final.scheme != "https" or final.hostname != "raw.githubusercontent.com":
+            raise RemoteVocabularyError(f"fetch redirected off raw.githubusercontent.com: {final}")
+        if response.status != 200:
+            raise RemoteVocabularyError(f"{url} returned HTTP {response.status}")
+        raw = response.read(_FETCH_MAX_BYTES + 1)
+    if len(raw) > _FETCH_MAX_BYTES:
+        raise RemoteVocabularyError(f"{url} exceeds {_FETCH_MAX_BYTES} bytes")
+    try:
+        document = yaml.safe_load(raw.decode("utf-8"))
+    except (UnicodeDecodeError, yaml.YAMLError) as error:
+        raise RemoteVocabularyError(f"{url} is not readable YAML: {error}") from error
+    values = _permissible_values(document or {}, TRAITMECH_ENUM)
+    if not values:
+        raise RemoteVocabularyError(f"{url} declares no {TRAITMECH_ENUM} values")
+    return values
+
+
+def remote_findings(
+    pinned: dict[str, str | None], live: dict[str, str | None]
+) -> list[tuple[str, str]]:
+    """Report where the reviewed pin no longer matches TraitMech."""
+    out: list[tuple[str, str]] = []
+    for token in sorted(set(pinned) | set(live)):
+        if pinned.get(token) != live.get(token):
+            out.append(
+                (
+                    "PIN_STALE",
+                    f"{token!r} is pinned as {pinned.get(token)!r} but TraitMech now has "
+                    f"{live.get(token)!r}; re-pin with --refresh after reviewing the change",
+                )
+            )
+    return out
+
+
 def verify_pin(traitmech_root: Path, pinned_path: Path = PINNED) -> int:
     """Fail when a local TraitMech checkout disagrees with the pin (#584).
 
@@ -278,6 +352,13 @@ def main(argv: list[str] | None = None) -> int:
         "this repository, so pin staleness is otherwise invisible (#584)",
     )
     parser.add_argument(
+        "--check-remote",
+        action="store_true",
+        help="fetch TraitMech's vocabulary over HTTPS and report where the reviewed pin "
+        "has gone stale. Off by default so offline and local runs are unaffected; CI "
+        "turns it on (#584)",
+    )
+    parser.add_argument(
         "--fail-on",
         choices=("never", "error", "any"),
         default="error",
@@ -301,17 +382,38 @@ def main(argv: list[str] | None = None) -> int:
     declared = manifest_categories(MANIFEST)
     shared = sorted(governed)
 
+    # Stated on every run, not only clean ones. Whether the pin was compared against
+    # the live repository changes what a green result means, and disclosing it only
+    # when there are no findings would never have printed at all while the UPPER
+    # drift stands (#584).
+    pin_state = "checked live" if args.check_remote else "NOT checked, --check-remote off"
     print(
-        f"{LOCAL_ENUM}: {len(local)} values; TraitMech pin {pinned_ref[:11]}: "
-        f"{len(pinned)} values; governed tokens: {len(shared)} ({', '.join(shared) or 'none'})"
+        f"{LOCAL_ENUM}: {len(local)} values; TraitMech pin {pinned_ref[:11]} "
+        f"[{pin_state}]: {len(pinned)} values; governed tokens: {len(shared)} "
+        f"({', '.join(shared) or 'none'})"
     )
     print(f"download.yaml declares {len(declared)} distinct categories")
 
     results = findings(local, pinned, declared, governed)
+    if args.check_remote:
+        try:
+            results += remote_findings(pinned, fetch_traitmech_vocabulary())
+        except (RemoteVocabularyError, urllib.error.URLError, OSError, TimeoutError) as error:
+            # NOT silence, and not a failure. A remote check that could not run must
+            # say so: reporting nothing here would be indistinguishable from a pin
+            # that was checked and matched, which is the #534 shape.
+            results.append(
+                (
+                    "PIN_UNCHECKED",
+                    f"could not read TraitMech's vocabulary ({error}); the pin was NOT "
+                    f"verified against it on this run",
+                )
+            )
     for kind, message in results:
         print(f"  {SEVERITY.get(kind, 'error').upper()} {kind}: {message}")
     if not results:
-        print("\nOK: no unknown manifest category, no shared-token drift.")
+        checked = "pin verified against TraitMech" if args.check_remote else "pin not checked"
+        print(f"\nOK: no unknown manifest category, no shared-token drift ({checked}).")
         return 0
 
     blocking = [kind for kind, _ in results if _blocks(kind, args.fail_on)]

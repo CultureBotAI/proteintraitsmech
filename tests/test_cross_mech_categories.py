@@ -220,7 +220,13 @@ def test_refresh_does_not_churn_the_ref_when_the_vocabulary_is_unchanged(tmp_pat
 
 def test_every_finding_class_has_a_declared_severity():
     """A class with no entry defaults to error; make that a decision, not an accident."""
-    emitted = {"MANIFEST_UNKNOWN_CATEGORY", "SHARED_TOKEN_MEANING_DRIFT", "SHARED_TOKEN_DROPPED"}
+    emitted = {
+        "MANIFEST_UNKNOWN_CATEGORY",
+        "SHARED_TOKEN_MEANING_DRIFT",
+        "SHARED_TOKEN_DROPPED",
+        "PIN_STALE",
+        "PIN_UNCHECKED",
+    }
     assert emitted == set(AUDIT.SEVERITY), "a finding class has no declared severity"
 
 
@@ -298,3 +304,149 @@ def test_a_corrupt_pin_names_the_file_and_the_remedy(tmp_path, monkeypatch):
     monkeypatch.setattr(AUDIT, "PINNED", bad)
     with pytest.raises(SystemExit, match="not valid YAML"):
         AUDIT.main([])
+
+
+# ---------------------------------------------------------------------------------------
+# Pin staleness (#584). The fleet's other cross-repo check fetches live; this pin was
+# static, so TraitMech-side drift was invisible until someone remembered to --refresh.
+# ---------------------------------------------------------------------------------------
+
+
+def test_a_stale_pin_is_reported():
+    stale = AUDIT.remote_findings({"UPPER": "old wording"}, {"UPPER": "new wording"})
+    assert [kind for kind, _ in stale] == ["PIN_STALE"]
+    assert "re-pin" in stale[0][1]
+
+
+def test_a_matching_pin_reports_nothing():
+    assert AUDIT.remote_findings({"UPPER": "same"}, {"UPPER": "same"}) == []
+
+
+def test_a_value_added_or_removed_upstream_is_reported():
+    assert [k for k, _ in AUDIT.remote_findings({}, {"NEW": "x"})] == ["PIN_STALE"]
+    assert [k for k, _ in AUDIT.remote_findings({"GONE": "x"}, {})] == ["PIN_STALE"]
+
+
+def test_an_unreachable_traitmech_says_so_instead_of_reporting_agreement(monkeypatch, capsys):
+    """'I could not look' must never print like 'I looked and it matches' (#584).
+
+    Silence here would be the #534 shape: a check reporting nothing because it ran
+    nothing, indistinguishable from one that ran and found nothing.
+    """
+
+    def boom(*_args, **_kwargs):
+        raise AUDIT.RemoteVocabularyError("synthetic outage")
+
+    monkeypatch.setattr(AUDIT, "fetch_traitmech_vocabulary", boom)
+    assert AUDIT.main(["--check-remote"]) == 0
+    out = capsys.readouterr().out
+    assert "PIN_UNCHECKED" in out
+    assert "NOT verified" in out
+
+
+def test_neither_remote_class_can_fail_a_build():
+    """A sibling's edit, or a flaky network, must not redden a pull request here."""
+    for kind in ("PIN_STALE", "PIN_UNCHECKED"):
+        assert AUDIT.SEVERITY[kind] == "notice"
+        assert AUDIT._blocks(kind, "error") is False
+
+
+def test_the_report_says_whether_the_pin_was_checked(capsys, monkeypatch):
+    """A green run means different things with and without the live check.
+
+    The fetch is stubbed rather than performed: no test in this suite should need a
+    network, and the earlier version of this test passed offline anyway -- the fetch
+    failed, the header still said "checked live", and the assertion held. It touched
+    the network without depending on it, which is the worst of both (#592).
+    """
+    AUDIT.main([])
+    assert "NOT checked" in capsys.readouterr().out
+    monkeypatch.setattr(AUDIT, "fetch_traitmech_vocabulary", lambda *a, **k: {})
+    AUDIT.main(["--check-remote"])
+    assert "checked live" in capsys.readouterr().out
+
+
+def test_ci_turns_the_remote_check_on():
+    """Otherwise the pin silently goes back to being unverified."""
+    workflow = (REPO / ".github" / "workflows" / "checks.yml").read_text(encoding="utf-8")
+    invocation = [
+        line
+        for line in workflow.splitlines()
+        if "audit-cross-mech-categories" in line and line.strip().startswith("- run:")
+    ]
+    assert len(invocation) == 1, invocation
+    assert "--check-remote" in invocation[0]
+
+
+# ---------------------------------------------------------------------------------------
+# The fetch's own guards (#591). Every one of these was unreachable by any test, including
+# the redirect check that stops the audit parsing a vocabulary from an arbitrary host.
+# ---------------------------------------------------------------------------------------
+
+
+class _FakeResponse:
+    def __init__(self, body: bytes, *, url: str, status: int = 200) -> None:
+        self._body, self._url, self.status = body, url, status
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_exc):
+        return False
+
+    def geturl(self) -> str:
+        return self._url
+
+    def read(self, size: int = -1) -> bytes:
+        return self._body[:size] if size and size > 0 else self._body
+
+
+GOOD_URL = "https://raw.githubusercontent.com/CultureBotAI/TraitMech/main/x.yaml"
+GOOD_BODY = yaml.safe_dump(
+    {"enums": {"TraitCategoryEnum": {"permissible_values": {"ALPHA": {"description": "a"}}}}}
+).encode("utf-8")
+
+
+def _opener(body: bytes, *, url: str = GOOD_URL, status: int = 200):
+    return lambda _request, **_kwargs: _FakeResponse(body, url=url, status=status)
+
+
+def test_a_well_formed_response_is_parsed():
+    values = AUDIT.fetch_traitmech_vocabulary(opener=_opener(GOOD_BODY))
+    assert values == {"ALPHA": "a"}
+
+
+def test_a_redirect_off_raw_githubusercontent_is_refused():
+    """The guard that stops this audit parsing a vocabulary from an arbitrary host."""
+    evil = _opener(GOOD_BODY, url="https://example.org/anything.yaml")
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="redirected off"):
+        AUDIT.fetch_traitmech_vocabulary(opener=evil)
+
+
+def test_a_plain_http_redirect_is_refused():
+    downgraded = _opener(GOOD_BODY, url="http://raw.githubusercontent.com/x.yaml")
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="redirected off"):
+        AUDIT.fetch_traitmech_vocabulary(opener=downgraded)
+
+
+def test_a_non_200_response_is_refused():
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="HTTP 404"):
+        AUDIT.fetch_traitmech_vocabulary(opener=_opener(GOOD_BODY, status=404))
+
+
+def test_an_oversize_body_is_refused():
+    huge = b"x" * (AUDIT._FETCH_MAX_BYTES + 1)
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="exceeds"):
+        AUDIT.fetch_traitmech_vocabulary(opener=_opener(huge))
+
+
+def test_unreadable_yaml_is_refused():
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="not readable YAML"):
+        AUDIT.fetch_traitmech_vocabulary(opener=_opener(b"enums: [unclosed\n"))
+
+
+def test_a_response_without_the_enum_is_refused():
+    """An empty vocabulary must not be read as 'TraitMech dropped everything'."""
+    empty = yaml.safe_dump({"enums": {}}).encode("utf-8")
+    with pytest.raises(AUDIT.RemoteVocabularyError, match="declares no TraitCategoryEnum"):
+        AUDIT.fetch_traitmech_vocabulary(opener=_opener(empty))

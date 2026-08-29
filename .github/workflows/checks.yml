@@ -48,7 +48,13 @@ jobs:
       # TraitMech can reword its own description at any time, and that must not
       # fail pull requests here until someone reconciles a vocabulary they may not
       # own (#585). `--fail-on any` blocks on that too, when the fleet wants it.
-      - run: just audit-cross-mech-categories
+      # --check-remote compares the reviewed TraitMech pin against the live
+      # repository, so pin staleness is visible here instead of waiting for
+      # someone to run --refresh (#584). Same host this repo already fetches for
+      # the canonical hub. Both remote classes are NOTICES: a sibling repository
+      # editing its own vocabulary, or an unreachable network, must not fail a
+      # pull request here.
+      - run: just audit-cross-mech-categories --check-remote
 
       # Schema-quality probes (#496). In CI on purpose: this recipe existed for the life
       # of the repo pointing at a script that was never written, and because nothing ran
