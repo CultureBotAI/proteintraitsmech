@@ -263,9 +263,15 @@ def test_the_committed_history_records_are_valid():
 
 
 def test_the_scaffolder_writes_a_valid_record_with_a_collision_free_name(tmp_path):
-    """Two runs for the same target must not produce the same filename -- that property is
-    the entire reason for the directory-per-slug + shortid layout, and nothing else checks
-    it."""
+    """Two runs for the same target must not produce the same filename.
+
+    This passed by wall-clock luck until #593. The timestamp was second-granular and
+    the suffix is content-derived, so identical arguments produced an identical name
+    whenever both invocations landed in the same second -- the second run then
+    refused, correctly, because records are append-only, and the test failed. Locally
+    each subprocess takes ~2s and straddles a second boundary; a fast CI runner does
+    not, which is where it surfaced.
+    """
     names = set()
     for _ in range(2):
         out = subprocess.run(
@@ -283,6 +289,31 @@ def test_the_scaffolder_writes_a_valid_record_with_a_collision_free_name(tmp_pat
         doc = yaml.safe_load(path.read_text())
         assert doc["target"]["kind"] == "record"
         assert doc["events"][0]["type"] == "EDIT"
+
+
+def test_an_explicitly_timestamped_rerun_reproduces_the_same_id(tmp_path):
+    """The other half of the contract, which nothing checked (#593).
+
+    The suffix is derived from content rather than random precisely so a pinned re-run
+    is reproducible instead of appending a duplicate. Only the collision-freedom half
+    was tested, so a change making the suffix random -- which would look like a fix for
+    the flake this test used to have -- would have passed.
+    """
+    def run(history_root):
+        out = subprocess.run(
+            [sys.executable, str(REPO / "scripts" / "new_history_record.py"),
+             "--kind", "record", "--slug", "same-target", "--path", "data/traits/x.yaml",
+             "--event", "EDIT", "--outcome", "changed", "--summary", "s",
+             "--timestamp", "2026-01-02T03:04:05Z",
+             "--history-root", str(history_root)],
+            capture_output=True, text=True, cwd=REPO)
+        assert out.returncode == 0, out.stdout + out.stderr
+        return pathlib.Path(out.stdout.strip().splitlines()[-1]).name
+
+    first = run(tmp_path / "a")
+    second = run(tmp_path / "b")
+    assert first == second, f"a pinned re-run produced a different id: {first} vs {second}"
+    assert first.startswith("2026-01-02T030405Z-"), first
 
 
 # --- the CI wiring, which is where a gate quietly stops running --------------------------
@@ -400,3 +431,48 @@ def test_vendored_sync_sparse_checkout_carries_every_governed_directory():
     )
     checkout = wf["jobs"]["vendored-sync"]["steps"][0]["with"]["sparse-checkout"]
     assert set(checkout.split()) >= {"scripts", "src", "tests", "prompts"}
+
+
+def _session_id():
+    """The scaffolder's id builder, imported rather than driven through a subprocess."""
+    spec = importlib.util.spec_from_file_location(
+        "new_history_record", REPO / "scripts" / "new_history_record.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.session_id
+
+
+def test_ids_differ_within_one_second_without_relying_on_the_clock():
+    """Pins the fix for #593 deterministically.
+
+    The subprocess test above cannot: locally each invocation takes ~2s, so the two
+    straddle a second boundary and pass even with the bug present -- verified by
+    mutation, where reverting to second-granular timestamps left it green. Feeding
+    two timestamps that differ only below the second proves the property directly.
+    """
+    session_id = _session_id()
+    first = session_id("2026-01-02T03:04:05.111111Z", "claude-code", "same-seed")
+    second = session_id("2026-01-02T03:04:05.222222Z", "claude-code", "same-seed")
+    assert first != second, f"two sub-second invocations collided: {first}"
+
+
+def test_the_default_timestamp_carries_sub_second_precision(tmp_path):
+    """A second-granular default is the bug itself, whatever the id builder does."""
+    out = subprocess.run(
+        [sys.executable, str(REPO / "scripts" / "new_history_record.py"),
+         "--kind", "record", "--slug", "precision", "--path", "data/traits/x.yaml",
+         "--event", "EDIT", "--outcome", "changed", "--summary", "s",
+         "--history-root", str(tmp_path)],
+        capture_output=True, text=True, cwd=REPO)
+    assert out.returncode == 0, out.stdout + out.stderr
+    name = pathlib.Path(out.stdout.strip().splitlines()[-1]).name
+    clock = name.split("T", 1)[1].split("Z", 1)[0]
+    assert len(clock) > len("HHMMSS"), (
+        f"the default timestamp is second-granular ({clock!r}); two invocations in "
+        f"one second would collide (#593)"
+    )
+    # The committed record (2026-08-19T035351Z-claude-code-18d0e2) has a digits-only
+    # clock. Sub-second precision must not smuggle a '.' into the name: that is a
+    # format convention rather than a correctness property, so nothing else pins it.
+    assert clock.isdigit(), f"the id's clock component is not digits-only: {clock!r}"

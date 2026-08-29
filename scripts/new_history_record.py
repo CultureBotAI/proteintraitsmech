@@ -81,14 +81,24 @@ KINDS = ("record", "schema", "mapping", "report", "infrastructure", "other")
 def session_id(timestamp: str, tool: str, seed: str) -> str:
     """`<compact-timestamp>-<tool>-<6 hex>`, matching the existing records.
 
-    The suffix disambiguates two sessions that start in the same second; it is
-    derived from the content rather than random so a re-run with identical
-    arguments produces an identical id instead of a duplicate record.
+    Two properties, and they only looked mutually exclusive while the timestamp
+    was second-granular (#593):
+
+    * the default timestamp carries microseconds, so two invocations in the same
+      second get distinct names -- collision-freedom by construction rather than
+      by wall-clock luck;
+    * the suffix is derived from content rather than random, so an explicitly
+      ``--timestamp``ed re-run with identical arguments reproduces the same id
+      instead of appending a duplicate record.
+
+    Making the suffix random would buy the first property, which the timestamp
+    already provides, and destroy the second, which is the only reason it is
+    content-derived.
     """
     # Date hyphens kept, time colons stripped — matching the existing records
     # (`2026-08-03T230903Z-claude-code-90a277`) rather than inventing a variant.
     date, _, clock = timestamp.partition("T")
-    stamp = f"{date}T{clock.replace(':', '')}"
+    stamp = f"{date}T{clock.replace(':', '').replace('.', '')}"
     digest = hashlib.sha256(seed.encode()).hexdigest()[:6]
     return f"{stamp}-{tool}-{digest}"
 
@@ -222,8 +232,9 @@ def main(argv: list[str] | None = None) -> int:
                     help="ISO-8601 UTC; defaults to now. Set it for a reproducible id.")
     args = ap.parse_args(argv)
 
-    timestamp = args.timestamp or _dt.datetime.now(
-        _dt.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+    timestamp = args.timestamp or _dt.datetime.now(_dt.timezone.utc).strftime(
+        "%Y-%m-%dT%H:%M:%S.%fZ"
+    )
     record, out_path = build(args, timestamp)
 
     if out_path.exists() and not args.force:
