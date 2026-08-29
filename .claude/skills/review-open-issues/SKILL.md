@@ -8,13 +8,11 @@ description: Sweep and triage ProteinTraitsMech's complete open GitHub issue que
 ## Overview
 
 **Purpose**: the raw GitHub issue queue and `NEXT_TASKS.md` are different
-surfaces. `next-tasks` (added in the companion PR #556 — check
-`.claude/skills/next-tasks/` exists before relying on it; #556 may not have
-merged yet) reconciles a small, curated, actively-maintained backlog file. This
-skill sweeps the *entire* open-issue queue — which grows much larger and drifts
-independently (issues opened by review passes, other agents, or humans, many of
-which are never transcribed into `NEXT_TASKS.md`) — and produces an honest,
-current priority ranking. This repo in particular has accumulated many issues
+surfaces. `next-tasks` reconciles a small, curated, actively-maintained backlog
+file. This skill sweeps the *entire* open-issue queue — which grows much larger
+and drifts independently (issues opened by review passes, other agents, or
+humans, many of which are never transcribed into `NEXT_TASKS.md`) — and
+produces an honest, current priority ranking. This repo in particular has accumulated many issues
 filed by automated review passes on recent PRs — exactly the kind of backlog
 this skill exists to sort through.
 
