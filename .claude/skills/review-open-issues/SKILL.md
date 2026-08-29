@@ -8,13 +8,11 @@ description: Sweep and triage ProteinTraitsMech's complete open GitHub issue que
 ## Overview
 
 **Purpose**: the raw GitHub issue queue and `NEXT_TASKS.md` are different
-surfaces. `next-tasks` (added in the companion PR #556 — check
-`.claude/skills/next-tasks/` exists before relying on it; #556 may not have
-merged yet) reconciles a small, curated, actively-maintained backlog file. This
-skill sweeps the *entire* open-issue queue — which grows much larger and drifts
-independently (issues opened by review passes, other agents, or humans, many of
-which are never transcribed into `NEXT_TASKS.md`) — and produces an honest,
-current priority ranking. This repo in particular has accumulated many issues
+surfaces. `next-tasks` reconciles a small, curated, actively-maintained backlog
+file. This skill sweeps the *entire* open-issue queue — which grows much larger
+and drifts independently (issues opened by review passes, other agents, or
+humans, many of which are never transcribed into `NEXT_TASKS.md`) — and
+produces an honest, current priority ranking. This repo in particular has accumulated many issues
 filed by automated review passes on recent PRs — exactly the kind of backlog
 this skill exists to sort through.
 
@@ -110,9 +108,14 @@ For each issue record, when applicable: pipeline stage; affected source and
 release; `trait_axis` / category and whether the axis follows the
 representation; record counts and the **basis** used to count them; the write
 route involved; prerequisites, blockers, duplicates and supersessions; the
-cheapest decisive evidence and its acceptance test; and a cost class —
-read-only audit, single-file check, scoped `validate-all`, full-corpus
-validation, docs rebuild, or a network fetch.
+cheapest decisive evidence and its acceptance test; **which gate would have
+caught it, and whether that gate exists**; and a cost class — read-only audit,
+single-file check, scoped `validate-all`, full-corpus validation, a corpus-wide
+writer (dry-run and canary required), docs rebuild, or a network fetch.
+
+"Which gate would have caught it" is the question that turns a fix into a
+guard. An issue whose answer is "none" is usually two pieces of work, and the
+second is the one that stops it recurring.
 
 ### Step 3 — Group and dedupe
 
@@ -175,9 +178,51 @@ Treat these as P0 when live:
 - **An outward claim contradicting measurement** — a README, `NEXT_TASKS.md`, or
   site figure that `just corpus-stats` no longer supports.
 
+- **A gate baseline raised to make a run pass**, rather than lowered as the
+  backlog is repaired. `audit/*baseline.json` and
+  `conf/internal_id_label_baseline.yaml` record what the gates currently accept;
+  moving one up converts a regression into the new normal, silently and with a
+  green build.
+- **A corpus-wide writer run without a canary**, where the cost of being wrong
+  multiplies across every record it touches. Seeders are dry-run by default for
+  this reason; a diff of one record proves the shape before the batch does not.
+- **A bulk mutator that destroys curated content while reporting success** —
+  definitions, evidence, or causal graphs replaced by a re-run that believed it
+  was refreshing them.
+- **An invented or unverified identifier, label, or citation** — a CURIE that
+  resolves to nothing, or a definition attributed to a source that does not say
+  it.
+- **A derived artifact committed as authoritative** — a generated shard, report,
+  or `data/raw/` release treated as a source rather than as output.
+
 Calibrate P0 sparingly. Closed-mode validation being *enabled* is not P0;
 closed-mode validation silently not running over the records it claims to cover
 is.
+
+**Prefer a gate run to prose as evidence — after checking whether the gate runs
+on its own.** These block a pull request today:
+
+| workflow | gates |
+| --- | --- |
+| `checks.yml`, every PR | `just lint`, `sources-check`, `audit-cross-mech-categories --check-remote`, `audit-schema`, `audit-writers`, `validate-internal-id-labels`, `just test` |
+| `validate-strict.yaml`, path-filtered | `validate_strict.py`, `audit_causal_graphs.py` |
+| `history-and-vendored.yaml` | `check_vendored_sync.sh`, `just validate-history` |
+
+An issue asserting a defect one of *these* already blocks is P2 unless it shows
+the gate is porous — which is a real category here, and worth checking rather
+than assuming: `audit-schema` once passed having read zero records (#534), and
+`validate` exited 0 on a mistyped path (#540).
+
+Note that `audit-graphs` **is** gated, despite not appearing above: the
+workflow runs `scripts/audit_causal_graphs.py` directly rather than through the
+recipe. Check the script a recipe wraps, not the recipe name, before concluding
+a check is unrun.
+
+Everything else — `audit-drafts`, `audit-equivalence-consistency`, `audit-fit`,
+`audit-pages`, `audit-pfam-interpro`, `audit-prose`, `audit-reproducible`,
+`audit-roles`, `audit-snippets`, `audit-text` — runs only when someone types the
+command, so a green PR is no evidence about any of them. Run one yourself before
+citing it.
 
 ### Step 6 — Assign priority and execution order
 
@@ -269,6 +314,24 @@ Before citing any of the following, confirm how it was obtained:
   negatives for squash-merged branches. Prove a branch is safe to delete by
   **content** (`git diff <branch> origin/main -- <files>`), never by
   reachability.
+- **A green diff is not an unchanged file.** A YAML round-trip can reflow an
+  entire record while the node you meant to change is correct. Review the diff,
+  not just the value — and see the 214-file lesson below.
+- **Repo-wide formatters are not tidy-ups.** This repository was never
+  ruff-format-normalised, so `ruff format scripts/ tests/` rewrites **210** files
+  in a clean checkout (measured; the figure is higher in a dirty tree, because
+  untracked scripts are counted too — which is the previous bullet biting),
+  and `git add -A` will carry every one into a focused PR — including vendored
+  fleet assets that must stay byte-identical to the hub. Format the files you
+  touched, by name.
+- **Derived files are not sources.** A count read from a committed report under
+  `reports/`, from a generated docs shard, or from an audit baseline can predate
+  what it describes. Confirm against the immediate source, or regenerate.
+- **Local git state is not repository state.** Sibling clones and `/tmp`
+  worktrees hold untracked scratch copies, and a dirty tree can be *ahead* of
+  `main` — which is how a rule got documented here that `main` does not
+  implement (#574). Verify with `git show main:<path>` or `gh api`, never the
+  working tree.
 - **Exit codes through pipes.** `cmd | tail -3; echo $?` reports `tail`'s
   status, so a fail-closed tool looks like it succeeded. Use
   `cmd >/tmp/o 2>/tmp/e; echo $?` or `${PIPESTATUS[0]}`.
