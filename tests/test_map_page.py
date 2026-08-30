@@ -10,12 +10,14 @@ tooltip's own background.
 
 from __future__ import annotations
 
+import json
 import pathlib
 import re
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 MAP_HTML = ROOT / "docs" / "map.html"
 PROTEIN_MAP = ROOT / "scripts" / "build_protein_map.py"
+MAP_DATA = ROOT / "docs" / "data"
 
 # Tooltip text is .78rem bold — under 18.66px, so WCAG's large-text 3:1
 # allowance does not apply and normal-text AA is the bar.
@@ -76,9 +78,40 @@ def _tooltip_backgrounds() -> list[str]:
 
 
 def _palette(text: str, name: str) -> dict[str, str]:
+    """Parse a flat name -> hex palette, refusing to read it partially.
+
+    Skipping an entry the pattern cannot match would let the contrast check pass
+    having measured fewer hues than the palette holds -- green because it looked
+    at less, the failure shape of #540 and #573. So every declared key must come
+    back with a colour.
+    """
     block = re.search(rf"{name}\s*=\s*\{{(.*?)\}}", text, re.S)
     assert block, f"{name} not found"
-    return dict(re.findall(r'"?([A-Za-z_]+)"?\s*:\s*"(#[0-9a-fA-F]{3,6})"', block.group(1)))
+    body = block.group(1)
+    parsed = dict(re.findall(r'"?([A-Za-z_]+)"?\s*:\s*"(#[0-9a-fA-F]{3,6})"', body))
+    unreadable = sorted(set(re.findall(r'"?([A-Za-z_][A-Za-z_0-9]*)"?\s*:', body)) - set(parsed))
+    assert not unreadable, (
+        f"{name} declares {unreadable} but they did not parse as double-quoted "
+        f"hex; the contrast check would silently skip those hues"
+    )
+    return parsed
+
+
+def _shipped_palettes() -> dict[str, str]:
+    """Hues in the built map files, which are what `colorOf` actually returns.
+
+    The source constants and the built JSON agree today only because
+    build_protein_map.py wrote the JSON. A hand-edited file, or a future map
+    whose palette comes from elsewhere, would render hues no source constant
+    mentions -- so the shipped data is checked directly.
+    """
+    shipped: dict[str, str] = {}
+    for path in sorted(MAP_DATA.glob("*map*.json")):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        for key in ("colors", "colors_dark"):
+            for group, color in (data.get(key) or {}).items():
+                shipped[f"{path.name} {key}:{group}"] = color
+    return shipped
 
 
 def _all_marker_colors() -> dict[str, str]:
@@ -99,7 +132,27 @@ def _all_marker_colors() -> dict[str, str]:
         assert entries, f"{pal} parsed empty"
         for group, color in entries.items():
             flat[f"{pal}:{group}"] = color
+    flat.update(_shipped_palettes())
     return flat
+
+
+def test_light_and_dark_palettes_cover_the_same_groups():
+    """An asymmetry is how a silently dropped palette entry shows itself.
+
+    A hue present in one theme and missing from the other is either an entry the
+    parser could not read or a group with no dark-mode colour. Both are worth
+    failing on, and neither is visible to a check that only measures what it
+    managed to read.
+    """
+    html = MAP_HTML.read_text(encoding="utf-8")
+    protein = PROTEIN_MAP.read_text(encoding="utf-8")
+    for source, light, dark in (
+        (html, "AXIS_COLORS_LIGHT", "AXIS_COLORS_DARK"),
+        (protein, "DOMAIN_COLORS_LIGHT", "DOMAIN_COLORS_DARK"),
+    ):
+        assert set(_palette(source, light)) == set(_palette(source, dark)), (
+            f"{light} and {dark} cover different groups"
+        )
 
 
 def test_tooltip_identifier_is_tinted_with_the_hovered_marker_colour():
@@ -116,6 +169,15 @@ def test_tooltip_identifier_is_tinted_with_the_hovered_marker_colour():
     assert re.search(r"#tip b\{color:var\(--tip-id,", html), (
         "#tip b must consume --tip-id, or the tint set on hover is inert"
     )
+
+    # The tint is set once per mousemove, so a palette change repaints the
+    # markers underneath it while the identifier keeps the previous theme's hue.
+    # Reaching the theme toggle fires mouseleave; an OS-driven flip does not.
+    assert "tip.style.opacity=0; buildLegend(); draw();" in html, (
+        "a palette change must hide the tooltip, or the tint outlives its marker"
+    )
+    assert html.count("MutationObserver(repaint)") == 1
+    assert html.count('.addEventListener("change", repaint)') == 1
 
 
 def test_every_marker_hue_stays_legible_on_the_tooltip():

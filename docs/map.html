@@ -199,10 +199,14 @@
     loadMap(b.dataset.map);
   }));
   // The canvas is painted, not styled, so a CSS theme flip does not repaint it.
-  new MutationObserver(() => { if (DATA) { buildLegend(); draw(); } })
+  // The tooltip's identifier is tinted from the palette at hover time, so a
+  // palette change would leave it on the previous theme's hue above a marker
+  // already repainted in the new one. Hiding it re-tints on the next move.
+  // Reaching the theme toggle fires mouseleave, but an OS-driven flip does not.
+  const repaint = () => { if (DATA) { tip.style.opacity=0; buildLegend(); draw(); } };
+  new MutationObserver(repaint)
     .observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
-  window.matchMedia("(prefers-color-scheme: dark)")
-    .addEventListener("change", () => { if (DATA) { buildLegend(); draw(); } });
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", repaint);
 
   // Deep-link a tab: the landing links straight to #proteins, and a shared URL
   // should reopen the same view rather than always the full-record corpus map.
