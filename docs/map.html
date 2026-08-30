@@ -38,8 +38,11 @@
   .legend .cnt{color:var(--muted);font-variant-numeric:tabular-nums}
   #stage{position:relative;background:var(--stage-bg);border:1px solid var(--line);border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08)}
   canvas{display:block;width:100%;height:auto;cursor:crosshair}
-  #tip{position:absolute;pointer-events:none;background:rgba(0,0,0,.9);color:#fff;font-size:.78rem;line-height:1.4;padding:.5em .6em;border-radius:6px;opacity:0;transition:opacity .15s;transform:translate(-50%,-118%);white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;z-index:5}
-  #tip b{color:#ffd700;font-weight:600}
+  #tip{position:absolute;pointer-events:none;background:#000;color:#fff;font-size:.78rem;line-height:1.4;padding:.5em .6em;border-radius:6px;opacity:0;transition:opacity .15s;transform:translate(-50%,-118%);white-space:nowrap;max-width:320px;overflow:hidden;text-overflow:ellipsis;z-index:5}
+  /* Set per hover to the marker colour of the point under the cursor, so the
+     identifier and its dot read as one object. Worst-case contrast on the
+     opaque tooltip is 4.76:1 (light SEQUENCE #2a78d6), clearing AA. */
+  #tip b{color:var(--tip-id,#ffd700);font-weight:600}
   #tip .t-sub{color:#cfcfcf}
   .hint{color:var(--muted);font-size:.82rem;margin-top:.6rem}
   .dataview{margin-top:1rem;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem}
@@ -331,6 +334,7 @@
       const mx=(ev.x-r.left)*sx, my=(ev.y-r.top)*sy;
       const p=nearest(mx,my);
       if(p){
+        tip.style.setProperty("--tip-id", colorOf(DATA.axes[p[2]]));
         const org=(DATA.orgs && p[5]!==undefined) ? DATA.orgs[p[5]] : null;
         tip.innerHTML=`<b>${esc(p[3])}</b><br><span class="t-sub">`
           + (org ? esc(org)+" · " : "")
