@@ -29,6 +29,10 @@ research-providers:
 research-provider provider:
     uv run --extra dev deep-research-client providers --provider {{quote(provider)}}
 
+# Non-billing provider checks; see docs/DEEP_RESEARCH_PROVIDERS.md.
+deep-research-canary provider="all" *args="":
+    uv run --extra dev python scripts/deep_research_contract.py {{quote(provider)}} {{args}}
+
 # Rank providers for mechanism or family-grounding work.
 deep-research-providers focus="mechanism" *args="":
     uv run --extra dev python scripts/deep_research_provider.py \
