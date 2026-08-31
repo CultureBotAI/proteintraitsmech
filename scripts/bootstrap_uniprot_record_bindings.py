@@ -49,6 +49,9 @@ CLEAN_SUFFIX = ".receipts-incomplete-clean.jsonl"
 BLOCKED_SUFFIX = ".receipts-blocked.jsonl"
 MANIFEST_SUFFIX = ".receipts-manifest.json"
 INCOMPLETE_EXIT = 3
+# Distinct from the generic error exit: an already-promoted batch is a state, not a
+# fault, and reporting it as one sent readers looking for data corruption (#607).
+ALREADY_INSTALLED_EXIT = 4
 
 
 @dataclass(frozen=True)
@@ -97,6 +100,19 @@ HISTORICAL_UNAPPROVED_STAGING_FINDING = "sfld_provider_receipt_required"
 
 class BootstrapError(RuntimeError):
     """The historical state cannot be reconstructed without ambiguity."""
+
+
+class BootstrapAlreadyInstalled(BootstrapError):
+    """The batch this dry run replays has already been promoted and committed.
+
+    Not a fault. The preimage check below reads each record's pre-promotion text
+    from the CURRENT Git HEAD, so it can only match while the promotion is
+    uncommitted. Once the batch lands, HEAD returns the promoted record and the
+    hashes disagree -- which is indistinguishable, by hash alone, from a record
+    that drifted since review. Raising a separate type lets the two be told apart
+    and stops the second message being printed for the first situation.
+    """
+
 
 
 @dataclass(frozen=True)
@@ -433,6 +449,24 @@ def _head_text(record_path: str) -> str:
         raise BootstrapError(f"historical record is not UTF-8: HEAD:{record_path}") from exc
 
 
+def _carries_evidence(record: object, evidence_id: str) -> bool:
+    """True when this record already declares that exact grounding evidence id.
+
+    Structural rather than a substring search: the id has to appear as an actual
+    ``source_evidence_id`` on a trait occurrence, so a mention in a comment or an
+    unrelated field cannot be read as an installation.
+    """
+    if not isinstance(record, dict):
+        return False
+    for example in record.get("canonical_examples") or []:
+        if not isinstance(example, dict):
+            continue
+        for occurrence in example.get("trait_occurrences") or []:
+            if isinstance(occurrence, dict) and occurrence.get("source_evidence_id") == evidence_id:
+                return True
+    return False
+
+
 def _load_installed_records(
     approved: list[dict[str, Any]],
     durable_evidence: Mapping[str, dict[str, Any]],
@@ -460,6 +494,16 @@ def _load_installed_records(
 
         preimage = _head_text(str(row["record_path"]))
         if _sha256_text(preimage) != row.get("record_sha256"):
+            # Two different situations produce one hash mismatch. Ask the record
+            # on disk which it is: if it already carries this candidate's
+            # evidence id, the promotion happened and HEAD is simply showing the
+            # result of it. Anything else is a genuine drift since review.
+            if _carries_evidence(record, evidence_id):
+                raise BootstrapAlreadyInstalled(
+                    f"{candidate_id}: this batch is already promoted and committed; "
+                    f"the pre-promotion dry run cannot be replayed against HEAD "
+                    f"(evidence {evidence_id} is installed in {row['record_path']})"
+                )
             raise BootstrapError(f"{candidate_id}: historical record preimage is stale")
         try:
             preimage_record = yaml.safe_load(preimage)
@@ -811,6 +855,9 @@ def _parser() -> argparse.ArgumentParser:
 def main(argv: list[str] | None = None) -> int:
     try:
         return run(_parser().parse_args(argv))
+    except BootstrapAlreadyInstalled as exc:
+        print(f"already installed: {exc}", file=sys.stderr)
+        return ALREADY_INSTALLED_EXIT
     except (BootstrapError, FinalizationError, ground.GroundingError, OSError) as exc:
         print(f"error: {exc}", file=sys.stderr)
         return 2

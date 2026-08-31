@@ -512,11 +512,10 @@ def test_real_batch001_dry_run_when_ignored_fixture_is_available(capsys):
     # skip instead of failing on a state change that is not a regression.
     # The HEAD coupling itself is filed separately.
     preimage_row = json.loads(required["resolved"].read_text(encoding="utf-8").splitlines()[0])
-    if (
+    already_promoted = (
         bootstrap._sha256_text(bootstrap._head_text(str(preimage_row["record_path"])))
         != preimage_row["record_sha256"]
-    ):
-        pytest.skip("Batch-001 is committed at HEAD; its pre-promotion dry run cannot be replayed")
+    )
 
     clean = batch / "pytest-batch001.receipts-incomplete-clean.jsonl"
     blocked = batch / "pytest-batch001.receipts-blocked.jsonl"
@@ -545,8 +544,59 @@ def test_real_batch001_dry_run_when_ignored_fixture_is_available(capsys):
         str(manifest),
     ]
 
+    if already_promoted:
+        # Batch-001 is committed, so the pre-promotion replay is impossible. That
+        # is a state, not a fault, and the tool now says so with its own exit
+        # code instead of reporting a stale preimage, which read like data
+        # corruption (#607). Asserting it beats skipping: this is the state the
+        # repository is actually in after #608, so it is the branch that runs.
+        assert bootstrap.main(args) == bootstrap.ALREADY_INSTALLED_EXIT
+        assert "already promoted and committed" in capsys.readouterr().err
+        assert not any(path.exists() for path in (clean, blocked, manifest))
+        return
+
     assert bootstrap.main(args) == bootstrap.INCOMPLETE_EXIT
     output = capsys.readouterr().out
     assert "120 gate-clean incomplete receipt(s), 7 hard-blocked claim(s)" in output
     assert "bbac03ec6d82e3e8e43a07b5fcd4b887c3ceee5f8537517ea41fb98e304416e9" in output
     assert not any(path.exists() for path in (clean, blocked, manifest))
+
+
+def test_carries_evidence_is_structural_not_a_substring_search():
+    """An installation is a trait occurrence, not a mention (#607).
+
+    This predicate is what separates "already promoted" from "drifted since
+    review", and both raise on a hash mismatch. If it matched loosely, a record
+    that merely names the id -- in prose, in a note, in an unrelated field --
+    would be reported as installed, which is the more dangerous direction: it
+    turns a genuine drift into a benign-looking state.
+    """
+    evidence_id = "ug-evidence:" + "a" * 64
+    installed = {
+        "canonical_examples": [
+            {"trait_occurrences": [{"source_evidence_id": evidence_id}]}
+        ]
+    }
+    assert bootstrap._carries_evidence(installed, evidence_id)
+
+    for near_miss in (
+        {"notes": f"see {evidence_id}"},
+        {"canonical_examples": [{"notes": evidence_id}]},
+        {"canonical_examples": [{"trait_occurrences": [{"other_field": evidence_id}]}]},
+        {"canonical_examples": [{"trait_occurrences": [{"source_evidence_id": "ug-evidence:b"}]}]},
+        {"canonical_examples": "not a list"},
+        None,
+    ):
+        assert not bootstrap._carries_evidence(near_miss, evidence_id), near_miss
+
+
+def test_a_drifted_record_is_still_reported_as_stale_not_as_installed():
+    """The failure mode the new branch must not introduce.
+
+    A record that changed since review, and does NOT carry the batch's evidence,
+    must keep raising the stale-preimage error rather than being waved through as
+    already promoted.
+    """
+    assert issubclass(bootstrap.BootstrapAlreadyInstalled, bootstrap.BootstrapError)
+    assert bootstrap.ALREADY_INSTALLED_EXIT != 2
+    assert not bootstrap._carries_evidence({"canonical_examples": []}, "ug-evidence:x")
