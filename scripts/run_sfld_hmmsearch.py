@@ -228,7 +228,10 @@ def _validate_staging_output_path(output_dir: Path) -> tuple[Path, Path, str]:
         resolved_parent = lexical.parent.resolve(strict=True)
     except OSError as error:
         raise SfldHmmsearchRunError(f"output parent does not exist: {lexical.parent}") from error
-    allowed_reports = REPORTS_ROOT.resolve(strict=True)
+    # Non-strict: reports/ is gitignored and absent in a clean checkout, and a
+    # missing directory is a legitimate "not beneath it" rather than a crash.
+    # strict=True made 13 tests pass only where the directory already existed (#610).
+    allowed_reports = REPORTS_ROOT.resolve()
     if not (
         _path_is_within(resolved_parent, allowed_reports)
         or _path_is_within(resolved_parent, TEMP_ROOT)

@@ -548,3 +548,28 @@ def test_current_production_sources_support_exact_dry_plan_without_hmmer_executi
     assert captured.err == ""
     assert captured.out == receipt.canonical_json(plan) + "\n"
     assert not output_dir.exists()
+
+
+def test_output_validation_works_when_reports_does_not_exist(tmp_path, monkeypatch):
+    """Pins #610: `reports/` is gitignored and absent in a clean checkout.
+
+    `REPORTS_ROOT.resolve(strict=True)` raised FileNotFoundError before the
+    containment check could run, so 13 tests in this module passed only on a
+    machine where the directory happened to exist. A missing `reports/` is a
+    legitimate "not beneath it", not a crash.
+    """
+    monkeypatch.setattr(runner, "REPORTS_ROOT", tmp_path / "no-such-reports")
+
+    # a path under the system temp root is still accepted
+    allowed = pathlib.Path(runner.TEMP_ROOT) / "sfld-under-temp"
+    lexical, parent, leaf = runner._validate_staging_output_path(allowed)
+    assert leaf == "sfld-under-temp"
+    assert parent == lexical.parent
+
+    # and one outside both roots is still refused -- for the right reason, not
+    # because a directory was missing. Not tmp_path: pytest's tmp_path lives
+    # under the system temp root on macOS, so it is legitimately *inside* the
+    # allowed set and proves nothing here.
+    outside = runner.REPO_ROOT / "data" / "sfld-outside-both-roots"
+    with pytest.raises(runner.SfldHmmsearchRunError, match="beneath reports/"):
+        runner._validate_staging_output_path(outside)

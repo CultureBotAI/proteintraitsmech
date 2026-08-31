@@ -968,3 +968,38 @@ def test_pinned_production_full_plan_matches_golden_source_replay(capsys):
         assert row["proposed_record_sha256"] is None
         row_sha256 = row.pop("row_sha256")
         assert row_sha256 == migration.value_sha256(row)
+
+
+def test_symlink_loop_classification_survives_a_resolve_that_raises(source, tmp_path, monkeypatch):
+    """Pins #611 on an interpreter that does not exhibit the bug.
+
+    Non-strict `Path.resolve()` disagrees across supported versions on a symlink
+    loop: 3.13 returns the path unchanged, 3.12 raises RuntimeError. The test
+    above therefore passes on 3.13 whether or not the planner depends on that,
+    and it was CI on 3.12 that showed the whole plan aborting for one bad record.
+
+    Making `Path.resolve` raise for the looping path reproduces 3.12's behaviour
+    here. The planner must still classify, which it can only do by not going
+    through `resolve()` for this.
+    """
+    route_parent = tmp_path / "data/traits/sequence/family"
+    route_parent.mkdir(parents=True)
+    (route_parent / "prints").symlink_to("prints", target_is_directory=True)
+
+    original = pathlib.Path.resolve
+
+    def resolve_like_python_312(self, *args, **kwargs):
+        if "prints" in self.parts and str(self).startswith(str(tmp_path)):
+            raise RuntimeError(f"Symlink loop from {str(self)!r}")
+        return original(self, *args, **kwargs)
+
+    monkeypatch.setattr(pathlib.Path, "resolve", resolve_like_python_312)
+
+    row = _plan(
+        source,
+        source[-1],
+        path=route_parent / "prints/test-pr00001.yaml",
+        repo_root=tmp_path,
+    )
+    assert row["path_status"] == "WRONG_MEMBER_ROUTE"
+    assert row["classification"] == "PATH_REVIEW_REQUIRED"

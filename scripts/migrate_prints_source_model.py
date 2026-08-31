@@ -1115,10 +1115,17 @@ def plan_record(
 
     member_route = _route(member_type)
     lexical_path = Path(os.path.abspath(path))
+    # os.path.realpath, not Path.resolve: non-strict resolve() disagrees across
+    # supported interpreters on a symlink loop -- 3.13 returns the path unchanged
+    # while 3.12 raises RuntimeError("Symlink loop from ...") -- so the same
+    # record produced a review row locally and aborted the whole plan in CI
+    # (#611). realpath resolves as far as it can and never raises for a loop, on
+    # every version this project supports (requires-python >= 3.10), which leaves
+    # an unresolvable route to be classified below rather than to end the run.
     try:
-        resolved_root = repo_root.resolve()
-        resolved_path = lexical_path.resolve()
-    except (OSError, RuntimeError) as error:
+        resolved_root = Path(os.path.realpath(repo_root))
+        resolved_path = Path(os.path.realpath(lexical_path))
+    except OSError as error:
         raise PrintsMigrationError(
             f"{fingerprint.accession}: cannot resolve repository/record path: {path}: {error}"
         ) from error

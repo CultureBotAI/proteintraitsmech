@@ -1884,6 +1884,33 @@ def _prepare_low_coverage_panther_fixture(local_sources) -> None:
     _jsonl(local_sources["queue"], [candidate])
 
 
+def _require_pinned_record_content_sources() -> None:
+    """Skip when the record-content replay's pinned downloads are absent (#610).
+
+    The replay verifies each source against a pinned SHA-256, so a synthetic
+    fixture cannot stand in without also overriding four hashes. These tests
+    assumed the downloads were present rather than gating on them, which made
+    them green only on a machine that had already fetched them -- the #569 shape.
+
+    Skipping is this repo's existing pattern for artifact-conditional tests, and
+    it carries the same cost: the assertions below never run in CI. A synthetic
+    source set with overridden pins would be strictly better, noted on #610.
+    """
+    gate = importlib.import_module("uniprot_record_content_gate")
+    missing = [
+        path.name
+        for path in (
+            gate.DEFAULT_INTERPRO_XML,
+            gate.DEFAULT_PFAM_CLANS,
+            gate.DEFAULT_PFAM_TYPES,
+            gate.DEFAULT_PANTHER_CLASSIFICATIONS,
+        )
+        if not path.is_file()
+    ]
+    if missing:
+        pytest.skip(f"pinned record-content sources are unavailable: {', '.join(missing)}")
+
+
 def _prepare_panther_identity_fixture(local_sources, *, conflicting: bool) -> None:
     identifier = "PANTHER:PTHR10459"
     label = "DNA LIGASE" if conflicting else "ADP-ribosyltransferase PARP"
@@ -1970,6 +1997,7 @@ def test_resolver_attaches_low_panther_coverage_as_review_only(local_sources):
 
 
 def test_resolver_hard_rejects_panther_family_identity_conflict(local_sources):
+    _require_pinned_record_content_sources()
     _prepare_panther_identity_fixture(local_sources, conflicting=True)
 
     assert ground.main(_resolve_args(local_sources)) == 0
@@ -1997,6 +2025,7 @@ def test_promoter_recomputes_but_does_not_hard_block_low_panther_coverage(
 
 
 def test_promoter_independently_recomputes_panther_identity_conflict(local_sources, capsys):
+    _require_pinned_record_content_sources()
     _prepare_panther_identity_fixture(local_sources, conflicting=False)
     assert ground.main(_resolve_args(local_sources)) == 0
     assert _resolved(local_sources)["qualification_status"] == "QUALIFIED"
@@ -3186,7 +3215,7 @@ def test_promoter_apply_rejects_case_alias_before_any_durable_or_trait_write(loc
 
 
 def test_named_review_batch_resolver_is_receipt_bound_and_rejects_overrides():
-    source = (REPO / "Justfile").read_text(encoding="utf-8")
+    source = (REPO / "justfile").read_text(encoding="utf-8")
     generic_marker = "resolve-uniprot-grounding *args:\n"
     generic = source.split(generic_marker, 1)[1].split("\n\n", 1)[0]
     assert "--allow-unreceipted-inputs" in generic
