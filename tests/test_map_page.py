@@ -195,3 +195,45 @@ def test_every_marker_hue_stays_legible_on_the_tooltip():
         if _contrast(color, bg) < MIN_CONTRAST
     ]
     assert not too_dim, "marker hues below AA on the tooltip:\n  " + "\n  ".join(too_dim)
+
+
+# Fetched map JSON reaching innerHTML is the one injection surface on this page:
+# `axes`, `cats`, `orgs`, and `colors` all come from docs/data/*.json.
+_INNER_HTML_ASSIGNMENT = re.compile(r"\.innerHTML\s*=\s*(`(?:[^`\\]|\\.)*`)", re.S)
+_INTERPOLATION = re.compile(r"\$\{\s*([^}]*)\}")
+# esc() escapes & < > "; fmt() formats a number through toLocaleString.
+_SAFE_INTERPOLATION = re.compile(r"^(esc|fmt)\s*\(")
+
+
+def test_no_fetched_value_reaches_innerHTML_unescaped():
+    """Every interpolation into markup must go through esc() or fmt().
+
+    buildLegend used to interpolate a group name and a palette colour straight
+    into an innerHTML template (#602) -- the only place on the page where fetched
+    data reached markup unescaped, while every other interpolation already used
+    esc().
+    """
+    html = MAP_HTML.read_text(encoding="utf-8")
+    assignments = _INNER_HTML_ASSIGNMENT.findall(html)
+    assert assignments, "no templated innerHTML assignment found; has the page changed shape?"
+    raw = [
+        expression.strip()
+        for template in assignments
+        for expression in _INTERPOLATION.findall(template)
+        if not _SAFE_INTERPOLATION.match(expression.strip())
+    ]
+    assert not raw, "values interpolated into innerHTML without esc()/fmt():\n  " + "\n  ".join(raw)
+
+
+def test_the_legend_is_built_from_nodes_not_markup():
+    """A colour assigned through CSSOM cannot add declarations; one written into
+    a style attribute can, and esc() would not stop it. textContent cannot express
+    markup at all. Structural, so it does not depend on remembering to call esc().
+    """
+    html = MAP_HTML.read_text(encoding="utf-8")
+    assert "sw.style.background=colorOf(ax)" in html
+    assert "cnt.textContent=fmt(axisCount(ax))" in html
+    assert "b.append(sw," in html
+    assert 'style="background:${' not in html, (
+        "a palette colour is being written into a style attribute again"
+    )

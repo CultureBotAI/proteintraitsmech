@@ -250,7 +250,11 @@
     const leg=document.getElementById("legend"); leg.innerHTML="";
     DATA.axes.forEach(ax=>{
       const b=document.createElement("button");
-      b.innerHTML=`<span class="sw" style="background:${colorOf(ax)}"></span>${ax} <span class="cnt">${fmt(axisCount(ax))}</span>`;
+      const sw=document.createElement("span");
+      sw.className="sw"; sw.style.background=colorOf(ax);
+      const cnt=document.createElement("span");
+      cnt.className="cnt"; cnt.textContent=fmt(axisCount(ax));
+      b.append(sw, `${ax} `, cnt);
       b.addEventListener("click",()=>{
         if(activeAxes.has(ax)) activeAxes.delete(ax); else activeAxes.add(ax);
         b.classList.toggle("off",!activeAxes.has(ax));
