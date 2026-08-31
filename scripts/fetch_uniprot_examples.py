@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
-"""Populate `canonical_examples` on ProteinTraitRecord YAMLs by querying
-the UniProtKB REST API for entries carrying each trait's anchoring
-signature.
+"""Emit UniProt grounding candidates for ProteinTraitRecord YAMLs.
+
+This is a candidate producer, not a trait-record writer. It queries the
+UniProtKB REST API for proteins carrying a record's exact signature (or a
+documented weaker anchor), writes those hits to a deterministic JSONL ledger,
+and leaves ``data/traits`` byte-for-byte unchanged. Resolution, semantic
+validation, review, and promotion belong to ``ground_uniprot_examples.py``.
 
 Dispatch rules for building the UniProt search query, per record:
 
@@ -14,7 +18,7 @@ Dispatch rules for building the UniProt search query, per record:
     InterPro:IPRxxxxxx  → xref:interpro-IPRxxxxxx
     SMART:SMxxxxx       → xref:smart-SMxxxxx
     HAMAP:MF_xxxxxx     → xref:hamap-MF_xxxxxx
-    CATH:...            → xref:cath-<local>
+    CATH:...            → xref:gene3d-<local>
     proteintraitsmech:UNIPROTKB_<ACC>_...  → direct: accession:<ACC>
                            (canonical example for a UniProt-seeded record
                            is the source entry itself)
@@ -24,41 +28,54 @@ Everything is filtered by `reviewed:true` (Swiss-Prot) by default so
 API examples are annotated entries, not TrEMBL guesses. Override with
 `--include-unreviewed`.
 
-Per accession returned by search, one CanonicalExample is written with:
+Per accession returned by search, one candidate row is emitted with:
   protein_id, protein_label, taxon_id, taxon_label,
   sequence_length, reviewed, annotation_score,
   family_classifications (Pfam / InterPro / HAMAP / SMART / CATH refs on
-  that specific entry), note (the UniProt query used), source =
-  UNIPROTKB_API, fetched_at (today, UTC ISO date).
+that specific entry), and the exact query/anchor. Metadata-only search hits
+remain candidates until a resolver obtains a release-pinned full sequence,
+checksum, and record-specific occurrence evidence.
 
-Idempotent — accessions already listed on the record are skipped unless
---force is passed. Dry-run by default; --apply to write.
+Only an exact xref query for a schema-permitted whole-protein record enters the
+``ready-uniprot-membership`` batch. Even there the query hit is discovery only:
+qualification requires the exact database+ID to reappear in the independent,
+same-response membership snapshot built by ``fetch_uniprot_registry.py``.
+
+Output is deterministic and atomically replaced. ``--apply`` is retained only
+to fail loudly for old invocations; direct canonical-example writes are retired.
 
 Rate: 4 req/s soft cap + exponential backoff on 429/503. Stdlib-only.
 
 Usage:
   python3 scripts/fetch_uniprot_examples.py \\
       data/traits/sequence/pattern/1433-1.yaml \\
-      --limit 5 --apply
+      --limit 5 --out reports/uniprot-grounding/uniprot-api-candidates.jsonl
   python3 scripts/fetch_uniprot_examples.py \\
-      data/traits/sequence/pattern/ --limit 3 --apply
+      data/traits/sequence/pattern/ --limit 3
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import os
 import re
 import sys
+import tempfile
 import time
 import urllib.error
 import urllib.parse
 import urllib.request
-from datetime import datetime, timezone
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 TRAITS_DIR = REPO_ROOT / "data" / "traits"
+DEFAULT_CANDIDATES = (
+    REPO_ROOT / "reports" / "uniprot-grounding" / "uniprot-api-candidates.jsonl"
+)
+READY_MEMBERSHIP_BATCH = "ready-uniprot-membership"
+NEEDS_OCCURRENCE_BATCH = "needs-occurrence-evidence"
 
 # Reuse the mature FT-line parser + FT-type routing dispatch that
 # `seed_uniprot.py` uses when it converts a UniProt flat file into
@@ -80,10 +97,16 @@ UNIPROT_FIELDS = ",".join([
     "reviewed",
     "annotation_score",
     "xref_pfam",
+    "xref_cdd",
     "xref_interpro",
     "xref_prosite",
     "xref_smart",
     "xref_hamap",
+    "xref_ncbifam",
+    "xref_panther",
+    "xref_prints",
+    "xref_sfld",
+    "xref_supfam",
     "xref_gene3d",  # UniProt's key for the CATH namespace
 ])
 USER_AGENT = "proteintraitsmech-example-fetcher/0.1"
@@ -92,12 +115,11 @@ USER_AGENT = "proteintraitsmech-example-fetcher/0.1"
 # (mostly bounded by fetch latency anyway).
 MIN_INTERVAL_S = 0.25
 _last_req = 0.0
+_last_uniprot_release: str | None = None
 
 
 # ---------------------------------------------------------------------------
-# Trait YAML I/O (minimal — round-trip via PyYAML would reorder keys and
-# blow up existing folded scalars, so we insert examples with light textual
-# manipulation instead)
+# Trait YAML input. Candidate producers never write these paths.
 # ---------------------------------------------------------------------------
 
 
@@ -110,52 +132,6 @@ def read_trait(path: Path) -> dict:
     if not isinstance(data, dict):
         raise ValueError(f"{path}: expected a mapping at top level")
     return data
-
-
-def write_trait(path: Path, data: dict) -> None:
-    """Emit the trait YAML back to disk. We preserve the seeder's key
-    order by rebuilding the file with a fixed order rather than round-
-    tripping through PyYAML's default emitter (which loses folded
-    scalars and reorders keys)."""
-    import yaml
-
-    class FoldedDefinition(str):
-        """Marker so definition strings emit as folded scalars."""
-
-    def _folded_representer(dumper, data):
-        return dumper.represent_scalar(
-            "tag:yaml.org,2002:str", data, style=">"
-        )
-
-    yaml.add_representer(FoldedDefinition, _folded_representer)
-
-    key_order = [
-        "identifier", "label", "definition", "definition_source",
-        "trait_axis", "trait_category", "term_kind", "mapping_status",
-        "parent_traits", "sequence_pattern", "residue_sequence",
-        "xrefs", "canonical_examples", "evidence", "curation_history",
-        "causal_graphs",
-    ]
-    ordered = {}
-    for k in key_order:
-        if k in data:
-            ordered[k] = data[k]
-    for k in data:  # any straggler keys the seeder didn't anticipate
-        if k not in ordered:
-            ordered[k] = data[k]
-
-    if "definition" in ordered and isinstance(ordered["definition"], str):
-        ordered["definition"] = FoldedDefinition(ordered["definition"])
-
-    with path.open("w", encoding="utf-8") as fh:
-        yaml.dump(
-            ordered,
-            fh,
-            default_flow_style=False,
-            sort_keys=False,
-            allow_unicode=True,
-            width=100000,
-        )
 
 
 # ---------------------------------------------------------------------------
@@ -176,10 +152,18 @@ _TED_IDENT_RE = re.compile(
 _XREF_DISPATCH: tuple[tuple[str, str], ...] = (
     ("PROSITE",  "prosite"),
     ("Pfam",     "pfam"),
+    ("CDD",      "cdd"),
+    ("NCBIfam",  "ncbifam"),
+    ("PANTHER",  "panther"),
     ("InterPro", "interpro"),
     ("HAMAP",    "hamap"),
+    ("PRINTS",   "prints"),
+    ("SFLD",     "sfld"),
     ("SMART",    "smart"),
-    ("CATH",     "cath"),
+    ("SUPERFAMILY", "supfam"),
+    # UniProtKB does not expose a raw CATH cross-reference search field.
+    # Its CATH-backed domain assignments are the Gene3D cross-references.
+    ("CATH",     "gene3d"),
 )
 
 
@@ -244,6 +228,7 @@ def _throttle() -> None:
 def _fetch_json(url: str) -> dict:
     """GET a UniProt REST URL and return decoded JSON. Retries with
     exponential backoff on transient HTTP errors (429, 502, 503, 504)."""
+    global _last_uniprot_release
     for attempt in range(5):
         _throttle()
         req = urllib.request.Request(url, headers={
@@ -252,6 +237,9 @@ def _fetch_json(url: str) -> dict:
         })
         try:
             with urllib.request.urlopen(req, timeout=30) as resp:
+                release = resp.headers.get("x-uniprot-release")
+                if release:
+                    _last_uniprot_release = release
                 return json.loads(resp.read().decode("utf-8"))
         except urllib.error.HTTPError as exc:
             if exc.code in (429, 502, 503, 504) and attempt < 4:
@@ -376,11 +364,17 @@ def _extract_family_curies(entry: dict) -> list[str]:
         if not db or not acc:
             continue
         prefix = {
+            "CDD":      "CDD",
             "Pfam":     "Pfam",
             "InterPro": "InterPro",
             "PROSITE":  "PROSITE",
             "SMART":    "SMART",
             "HAMAP":    "HAMAP",
+            "NCBIfam":  "NCBIfam",
+            "PANTHER":  "PANTHER",
+            "PRINTS":   "PRINTS",
+            "SFLD":     "SFLD",
+            "SUPFAM":   "SUPERFAMILY",
             "CATHDB":   "CATH",   # UniProt uses `CATHDB`, our schema uses `CATH`
             "Gene3D":   "CATH",   # Gene3D IDs share the CATH namespace
         }.get(db)
@@ -411,63 +405,167 @@ def _organism(entry: dict) -> tuple[str, str]:
     return taxon_id, label
 
 
-def entry_to_example(entry: dict, query_note: str, today: str) -> dict:
+def _query_anchor(record: dict, query: str) -> str:
+    """The record CURIE that produced ``query``, or the record id for direct hits."""
+    identifier = str(record.get("identifier") or "")
+    if query.startswith("accession:"):
+        return identifier
+    for curie in [identifier, *(record.get("parent_traits") or []), *(record.get("xrefs") or [])]:
+        if not isinstance(curie, str) or ":" not in curie:
+            continue
+        prefix, _, local = curie.partition(":")
+        for known_prefix, database in _XREF_DISPATCH:
+            if prefix == known_prefix and query == f"xref:{database}-{local}":
+                return curie
+    return identifier
+
+
+def _candidate_scope(record: dict) -> str:
+    axis = str(record.get("trait_axis") or "")
+    category = str(record.get("trait_category") or "")
+    namespace = str(record.get("identifier") or "").partition(":")[0]
+    if axis in {"FUNCTION", "EVOLUTION"}:
+        return "WHOLE_PROTEIN"
+    if category in {
+        "SEQ_FAMILY",
+        "SEQ_HOMOLOGOUS_SUPERFAMILY",
+        "FUNC_PROTEIN_FAMILY",
+        "FUNC_ORTHOLOG_GROUP",
+    } \
+            and namespace in {"PANTHER", "NCBIfam", "PIRSF"}:
+        return "WHOLE_PROTEIN"
+    return "LOCALIZED"
+
+
+def _whole_protein_permitted(record: dict) -> bool:
+    """Mirror the semantic validator's explicit WHOLE_PROTEIN boundary."""
+
+    return (
+        record.get("trait_axis") in {"FUNCTION", "EVOLUTION"}
+        or record.get("trait_category") in {"SEQ_FAMILY", "SEQ_HOMOLOGOUS_SUPERFAMILY"}
+    )
+
+
+def _is_exact_whole_protein_membership(
+    *, trait_id: str, source_trait_id: str, scope: str, query: str, permitted: bool
+) -> bool:
+    """Gate the batch whose query can be replayed as an exact UniProt xref fact.
+
+    This only routes candidates; the query hit itself is never trusted as evidence.
+    The resolver must independently find the exact database+ID in the release-pinned
+    membership snapshot produced by ``fetch_uniprot_registry.py``.
+    """
+
+    return (
+        scope == "WHOLE_PROTEIN"
+        and permitted
+        and source_trait_id == trait_id
+        and query.startswith("xref:")
+    )
+
+
+def _candidate_id(row: dict) -> str:
+    identity = {
+        key: row.get(key)
+        for key in (
+            "trait_id",
+            "protein_id",
+            "source_trait_id",
+            "mapping_method",
+            "evidence_source",
+            "source_release",
+            "query",
+        )
+    }
+    payload = json.dumps(identity, sort_keys=True, separators=(",", ":"))
+    return "ug-" + hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def entry_to_candidate(
+    entry: dict,
+    record: dict,
+    record_path: str,
+    query: str,
+    release: str | None,
+) -> dict:
+    """Convert one API search hit into the external candidate-ledger contract."""
     acc = entry.get("primaryAccession")
     if not acc:
         return {}
     taxon_id, taxon_label = _organism(entry)
     ann = entry.get("annotationScore")
-    # UniProt returns annotation_score as 1.0-5.0 (float); the schema
-    # constrains it to an integer 1-5.
     if isinstance(ann, (int, float)):
         ann = int(ann)
-    ex = {
+    trait_id = str(record.get("identifier") or "")
+    anchor = _query_anchor(record, query)
+    scope = _candidate_scope(record)
+    exact_whole_membership = _is_exact_whole_protein_membership(
+        trait_id=trait_id,
+        source_trait_id=anchor,
+        scope=scope,
+        query=query,
+        permitted=_whole_protein_permitted(record),
+    )
+    reasons = ["full release-pinned sequence and checksum require resolution"]
+    if exact_whole_membership:
+        reasons.append(
+            "exact membership must be replayed from a same-response UniProt xref snapshot"
+        )
+    if anchor != trait_id:
+        reasons.append("query anchor is not the record's exact trait identifier")
+    if scope == "LOCALIZED":
+        reasons.append("record-specific occurrence coordinates require resolution")
+    row = {
+        "schema_version": 1,
+        "batch": (
+            READY_MEMBERSHIP_BATCH if exact_whole_membership else NEEDS_OCCURRENCE_BATCH
+        ),
+        "candidate_status": "PROTEIN_RESOLVED",
+        "qualification_status": "CANDIDATE_PROTEIN",
+        "trait_id": trait_id,
+        "record_path": record_path,
+        "trait_axis": record.get("trait_axis"),
+        "trait_category": record.get("trait_category"),
+        "source_namespace": trait_id.partition(":")[0],
         "protein_id": f"UniProtKB:{acc}",
         "protein_label": _protein_label(entry),
         "sequence_length": entry.get("sequence", {}).get("length"),
         "reviewed": entry.get("entryType") == "UniProtKB reviewed (Swiss-Prot)",
         "annotation_score": ann,
         "family_classifications": _extract_family_curies(entry),
-        "note": f"UniProt REST search: {query_note}",
-        "source": "UNIPROTKB_API",
-        "fetched_at": today,
+        "scope": scope,
+        "source_trait_id": anchor,
+        "mapping_method": "SOURCE_MEMBERSHIP",
+        "evidence_source": "UniProtKB",
+        "source_release": release,
+        "evidence_tier": "A" if anchor == trait_id else "D",
+        "query": query,
+        "reasons": reasons,
     }
     if taxon_id:
-        ex["taxon_id"] = f"NCBITaxon:{taxon_id}"
+        row["taxon_id"] = f"NCBITaxon:{taxon_id}"
     if taxon_label:
-        ex["taxon_label"] = taxon_label
-    return ex
+        row["taxon_label"] = taxon_label
+    row = {key: value for key, value in row.items() if value not in (None, "", [])}
+    row["candidate_id"] = _candidate_id(row)
+    return row
 
 
-# ---------------------------------------------------------------------------
-# Merge into record
-# ---------------------------------------------------------------------------
-
-
-def merge_examples(record: dict, new_examples: list[dict], force: bool) -> int:
-    existing = list(record.get("canonical_examples") or [])
-    existing_ids = {e.get("protein_id") for e in existing}
-    if force:
-        # Drop prior UNIPROTKB_API examples so this pass reflects the
-        # latest UniProt state.
-        existing = [
-            e for e in existing
-            if e.get("source") != "UNIPROTKB_API"
-        ]
-        existing_ids = {e.get("protein_id") for e in existing}
-    added = 0
-    for ex in new_examples:
-        if not ex.get("protein_id") or ex["protein_id"] in existing_ids:
-            continue
-        # Strip keys with None values — the schema allows them, but they
-        # bloat the YAML with `sequence_length: null` etc.
-        ex = {k: v for k, v in ex.items() if v not in (None, [], "")}
-        existing.append(ex)
-        existing_ids.add(ex["protein_id"])
-        added += 1
-    if existing:
-        record["canonical_examples"] = existing
-    return added
+def write_candidates(path: Path, rows: list[dict]) -> None:
+    """Atomically replace a deterministic JSONL candidate ledger."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            for row in sorted(rows, key=lambda item: (item["trait_id"], item["protein_id"])):
+                handle.write(json.dumps(row, sort_keys=True, separators=(",", ":")) + "\n")
+        os.replace(temporary, path)
+    except BaseException:
+        try:
+            os.unlink(temporary)
+        except FileNotFoundError:
+            pass
+        raise
 
 
 # ---------------------------------------------------------------------------
@@ -495,107 +593,6 @@ def collect_targets(paths: list[str]) -> list[Path]:
     return files
 
 
-# How many accessions to pack into one `/accessions` request. The endpoint
-# accepts up to 100; 90 leaves headroom. Batching across records is what
-# makes a large category (e.g. ~14k TED folds, ~1 accession each) fetch in
-# minutes rather than hours — one request per record would be ~14k round
-# trips; one request per 90 records is ~150.
-ACCESSION_BATCH = 90
-
-
-def refresh_sequences(
-    targets: list[Path],
-    apply_: bool,
-    stop_on_error: bool,
-) -> tuple[int, int, int, int]:
-    """For every example anchored to a real UniProtKB accession that lacks a
-    `sequence`, fill in `sequence` + `features`. Preserves every other
-    example field (annotation_score, family_classifications, etc.).
-
-    Accessions are pooled across *all* target records and fetched in batches
-    of ACCESSION_BATCH via the `/accessions` endpoint, so a large category is
-    ~N/90 round trips instead of one per record.
-
-    Returns (records_touched, examples_enriched, records_skipped, errored)."""
-    touched = enriched = skipped = errored = 0
-
-    # ---- Pass 1: parse every record, collect the accessions it needs. ----
-    pending: list[tuple[Path, dict]] = []  # records with at least one need
-    all_accs: list[str] = []
-    seen_acc: set[str] = set()
-    for path in targets:
-        rel = path.relative_to(REPO_ROOT)
-        try:
-            record = read_trait(path)
-        except Exception as exc:
-            print(f"WARN {rel}: cannot parse ({exc})", file=sys.stderr)
-            continue
-        need = [
-            e for e in (record.get("canonical_examples") or [])
-            if (e.get("protein_id") or "").startswith("UniProtKB:")
-            and not e.get("sequence")
-        ]
-        if not need:
-            skipped += 1
-            continue
-        pending.append((path, record))
-        for e in need:
-            acc = e["protein_id"].split(":", 1)[1]
-            if acc not in seen_acc:
-                seen_acc.add(acc)
-                all_accs.append(acc)
-
-    if not pending:
-        return (touched, enriched, skipped, errored)
-
-    # ---- Pass 2: batch-fetch the pooled accessions into one lookup. ----
-    by_acc: dict = {}
-    n_batches = (len(all_accs) + ACCESSION_BATCH - 1) // ACCESSION_BATCH
-    for i in range(0, len(all_accs), ACCESSION_BATCH):
-        chunk = all_accs[i:i + ACCESSION_BATCH]
-        try:
-            entries = fetch_flat_entries(chunk)
-        except (urllib.error.HTTPError, urllib.error.URLError) as exc:
-            errored += 1
-            print(f"WARN batch {i // ACCESSION_BATCH + 1}/{n_batches} "
-                  f"failed ({exc})", file=sys.stderr)
-            if stop_on_error:
-                return (touched, enriched, skipped, errored)
-            continue
-        for e in entries:
-            if e.accession:
-                by_acc[e.accession] = e
-        print(f"  fetched batch {i // ACCESSION_BATCH + 1}/{n_batches} "
-              f"({len(by_acc)}/{len(all_accs)} accessions resolved)")
-
-    # ---- Pass 3: fill sequences + features from the lookup, write. ----
-    for path, record in pending:
-        rel = path.relative_to(REPO_ROOT)
-        record_enriched = 0
-        for ex in record.get("canonical_examples") or []:
-            pid = ex.get("protein_id") or ""
-            if ":" not in pid or ex.get("sequence"):
-                continue
-            src_entry = by_acc.get(pid.split(":", 1)[1])
-            if src_entry is None or not src_entry.sequence:
-                continue
-            ex["sequence"] = src_entry.sequence
-            # Only add UniProt FT features when the example has none of its own —
-            # curated features (ELM motif region, DisProt/UniProt-class region)
-            # are the point and must not be clobbered by the whole entry's FTs.
-            if not ex.get("features"):
-                feats = flat_features_for_example(src_entry)
-                if feats:
-                    ex["features"] = feats
-            record_enriched += 1
-        if record_enriched:
-            touched += 1
-            enriched += record_enriched
-            if apply_:
-                write_trait(path, record)
-    return (touched, enriched, skipped, errored)
-
-
 def main(argv: list[str]) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("paths", nargs="*",
@@ -605,44 +602,33 @@ def main(argv: list[str]) -> int:
     parser.add_argument("--include-unreviewed", action="store_true",
                         help="don't restrict to Swiss-Prot reviewed entries")
     parser.add_argument("--apply", action="store_true",
-                        help="write back to disk (default: dry-run)")
-    parser.add_argument("--force", action="store_true",
-                        help="drop existing UNIPROTKB_API examples and re-fetch")
+                        help="retired: direct record writes are refused")
     parser.add_argument("--stop-on-error", action="store_true",
                         help="abort at first HTTP failure (default: skip)")
     parser.add_argument("--refresh-sequences", action="store_true",
-                        help=("fill in `sequence` + `features` on existing "
-                              "UNIPROTKB_API examples via a batch flat-file "
-                              "fetch; does not add new examples"))
+                        help="retired: use the grounding resolver and protein registry")
     parser.add_argument("--skip-with-examples", action="store_true",
                         help=("skip any record that already has a "
-                              "canonical_example — fast resume for a large "
-                              "search run that was interrupted"))
+                              "canonical_example; legacy examples remain unverified"))
+    parser.add_argument("--out", type=Path, default=DEFAULT_CANDIDATES,
+                        help=f"candidate JSONL output (default: {DEFAULT_CANDIDATES})")
     args = parser.parse_args(argv)
+
+    if args.apply or args.refresh_sequences:
+        print(
+            "direct canonical-example mutation is retired; emit candidates and use "
+            "ground_uniprot_examples.py resolve/promote",
+            file=sys.stderr,
+        )
+        return 2
 
     targets = collect_targets(args.paths)
     if not targets:
         print("no YAML files matched", file=sys.stderr)
         return 2
 
-    if args.refresh_sequences:
-        touched, enriched, skipped, errored = refresh_sequences(
-            targets, args.apply, args.stop_on_error,
-        )
-        print()
-        print(f"Scanned {len(targets)} record(s).")
-        print(f"Enriched {enriched} example(s) across {touched} record(s).")
-        if skipped:
-            print(f"Skipped {skipped} record(s) — nothing to enrich.")
-        if errored:
-            print(f"Errored on {errored} record(s).")
-        if not args.apply:
-            print("Dry-run — re-run with --apply to write.")
-        return 0
-
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    total_added = 0
-    total_records = 0
+    rows: list[dict] = []
+    records_with_candidates = 0
     skipped_no_query = 0
     errored = 0
 
@@ -655,18 +641,13 @@ def main(argv: list[str]) -> int:
             continue
         if args.skip_with_examples and record.get("canonical_examples"):
             continue
-        candidates = build_queries(record)
-        if not candidates:
+        queries = build_queries(record)
+        if not queries:
             skipped_no_query += 1
             continue
-        # Try each candidate; take the first that yields at least one
-        # *new* example. A candidate whose only hit is the record's
-        # existing example (common for UniProt-seeded records whose
-        # source entry is already listed) still counts as consumed —
-        # we fall through to the next family-level query.
-        added = 0
-        used_note = ""
-        for query, cand_note in candidates:
+        emitted: list[dict] = []
+        used_query = ""
+        for query, _note in queries:
             try:
                 hits = search_uniprot(
                     query, args.limit, not args.include_unreviewed
@@ -680,29 +661,32 @@ def main(argv: list[str]) -> int:
                 continue
             if not hits:
                 continue
-            examples = [entry_to_example(h, cand_note, today) for h in hits]
-            examples = [e for e in examples if e]
-            added = merge_examples(record, examples, args.force)
-            if added:
-                used_note = cand_note
+            emitted = [
+                entry_to_candidate(h, record, str(rel), query, _last_uniprot_release)
+                for h in hits
+            ]
+            emitted = [row for row in emitted if row]
+            if emitted:
+                used_query = query
                 break
-        if not added:
+        if not emitted:
             continue
-        total_records += 1
-        total_added += added
-        print(f"  {rel}: +{added} example(s) via {used_note}")
-        if args.apply:
-            write_trait(path, record)
+        records_with_candidates += 1
+        rows.extend(emitted)
+        print(f"  {rel}: +{len(emitted)} candidate(s) via {used_query}")
+
+    # De-duplicate query aliases without making result order network-dependent.
+    rows = list({row["candidate_id"]: row for row in rows}.values())
+    write_candidates(args.out, rows)
 
     print()
     print(f"Scanned {len(targets)} record(s).")
-    print(f"Added {total_added} example(s) across {total_records} record(s).")
+    print(f"Emitted {len(rows)} candidate(s) across {records_with_candidates} record(s).")
     if skipped_no_query:
         print(f"Skipped {skipped_no_query} record(s) — no queryable anchor.")
     if errored:
         print(f"Errored on {errored} record(s).")
-    if not args.apply:
-        print("Dry-run — re-run with --apply to write.")
+    print(f"Candidate ledger: {args.out}")
     return 0
 
 

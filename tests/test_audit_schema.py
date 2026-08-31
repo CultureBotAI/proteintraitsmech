@@ -77,16 +77,19 @@ def test_an_UNREACHABLE_class_fails(tmp_path):
     assert "OrphanedThing" in out.stdout
 
 
-def test_a_SECOND_ROOT_is_not_reported_as_dead(tmp_path):
-    """`ProteinProfile` is a real second document type. The first version of this audit
-    assumed one root and reported it and `ProfileTrait` as unreachable — an audit calling
-    a design a defect, which is how a gate loses its credibility."""
+def test_additional_document_roots_are_not_reported_as_dead(tmp_path):
+    """Profiles and release-stamped protein references are real document types.
+
+    The first version assumed one root and reported ProfileTrait as unreachable — an audit
+    calling a design a defect, which is how a gate loses its credibility.
+    """
     out = _run(REAL, tmp_path)
     # returncode FIRST. Asserting only the absence of two substrings passes on empty
     # stdout, i.e. if the script crashes -- a test for "does not report X" that a crash
     # satisfies.
     assert out.returncode == 0, out.stdout[-800:] + out.stderr[-400:]
     assert "ProteinProfile" not in out.stdout and "ProfileTrait" not in out.stdout
+    assert "ProteinReference" not in out.stdout
 
 
 def test_a_rule_that_CANNOT_FIRE_fails(tmp_path):
@@ -209,6 +212,14 @@ def test_a_ROOT_CLASS_the_schema_no_longer_declares_fails(tmp_path):
     broken = yaml.safe_load(yaml.safe_dump(REAL))
     del broken["classes"]["ProteinProfile"]
     del broken["classes"]["ProfileTrait"]
+    out = _run(broken, tmp_path)
+    assert out.returncode == 1, out.stdout
+    assert "ROOT_CLASSES names" in out.stdout
+
+
+def test_removing_the_protein_registry_root_fails(tmp_path):
+    broken = yaml.safe_load(yaml.safe_dump(REAL))
+    del broken["classes"]["ProteinReference"]
     out = _run(broken, tmp_path)
     assert out.returncode == 1, out.stdout
     assert "ROOT_CLASSES names" in out.stdout

@@ -60,8 +60,8 @@ The five paths and axes are:
   `CultureBotAI/culturebotai-claw`, then sync and pin that full immutable commit; do not
   patch them locally.
 - Record writes must use an audited route: a seeder through `record_io.write_record`, a
-  registered in-place editor, or a declared bypass. Run `just audit-writers` after writer
-  changes.
+  registered in-place editor, a registered validated promoter, or a declared bypass. Run
+  `just audit-writers` after writer changes.
 - `data/raw/` contains gitignored, regenerable upstream downloads. Never commit fetched
   releases. Register sources and fetch routes in `download.yaml` and `justfile`. Fixed
   bulk-file recipes must use `scripts/fetch_source.py`, which validates a temporary file,
@@ -69,8 +69,10 @@ The five paths and axes are:
 - Seeders are dry-run by default and must be idempotent. They may use project dependencies;
   invoke them through their `just` recipe unless the recipe explicitly uses `python3`.
 - `seed_uniprot.py` is a retired per-protein demonstration, not the supported class-level
-  ingest route. Add real proteins as `canonical_examples` with
-  `fetch_uniprot_examples.py`.
+  ingest route. `fetch_uniprot_examples.py` and `suggest_canonical_examples.py` produce
+  candidate ledgers only. Add a new canonical example solely through the release-pinned
+  candidate → resolve → semantic validate → reviewed promote workflow documented in
+  `research/uniprot-organism-protein-grounding-plan.md`.
 - Do not assume the root CC0 dedication overrides upstream terms. Preserve per-record
   provenance/license metadata, treat restrictive or missing terms as a release blocker,
   and escalate unresolved source dispositions under issue #517.
@@ -83,7 +85,9 @@ The five paths and axes are:
 just install
 just corpus-stats                         # current JSON metrics; no Pages build required
 just validate <file.yaml>                 # closed-mode validation of ONE record
-just validate-all [path-or-glob]          # closed-mode record validation
+just validate-all [path-or-glob]          # closed-mode + UniProt semantic validation
+just audit-uniprot-grounding              # full read-only grounding funnel/queue
+just select-uniprot-review-batch <id>     # bounded source-stratified review manifest
 just audit-schema
 just audit-graphs [path]
 just audit-text

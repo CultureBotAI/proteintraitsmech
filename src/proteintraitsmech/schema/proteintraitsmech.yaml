@@ -256,6 +256,33 @@ classes:
         inlined_as_list: true
         range: StructuralGeometryRepresentation
 
+      sequence_fingerprint_representations:
+        description: >-
+          Content-addressed ordered multi-motif source summaries, such as a
+          PRINTS fingerprint. The compact motif order/count/length summary is
+          inlined for comparison and validation; aligned training instances and
+          derived position-frequency matrices remain in the pinned source
+          artefact identified by the representation. A PRINTS summary alone is
+          not a replayable InterProScan acceptance model: it does not bind a
+          versioned matcher or the separate PRINTS post-processing relation
+          policy. This is deliberately distinct from `sequence_pattern`, which
+          is a single symbolic PROSITE/regex/ELM pattern.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceFingerprintRepresentation
+
+      sequence_profile_representations:
+        description: >-
+          Content-addressed source-native profile models whose meaning depends
+          on more than an accession label. For SFLD this binds one HMMER3 model
+          and its GA thresholds to the release's correlated site-residue tuples
+          and complete hierarchy. Site rules are model-level evidence and are
+          not interchangeable with a single `sequence_pattern` or a canonical
+          protein example.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceProfileRepresentation
+
       evolutionary_scope:
         description: >-
           The taxon scope + distribution threshold + method that DEFINE an
@@ -538,13 +565,17 @@ classes:
   CanonicalExample:
     description: >-
       An exemplar protein for a trait — a reference sequence that
-      exhibits it. Two kinds of examples coexist on a record:
-      curator-picked archetypes (`source: CURATOR`) and API-fetched hits
-      (`source: UNIPROTKB_API`) discovered by querying UniProtKB for
-      proteins carrying the anchoring signature. Instance-level fields
+      exhibits it. Several provenance-bearing selection routes coexist on a
+      record, including curator-picked archetypes, API-fetched hits, profile
+      selections, and examples promoted through the fail-closed UniProt
+      grounding pipeline. Instance-level fields
       (`sequence_length`, `reviewed`, `annotation_score`,
       `family_classifications`) let downstream consumers rank / filter
-      the API-fetched set without re-querying UniProt.
+      the API-fetched set without re-querying UniProt. `protein_id` is also
+      the key into the release-pinned ProteinReference registry. Existing
+      examples without `qualification_status` are interpreted as
+      LEGACY_UNVERIFIED; they are not evidence that this exact record trait
+      occurs on the protein.
     attributes:
       protein_id:
         description: >-
@@ -604,9 +635,9 @@ classes:
         range: string
       source:
         description: >-
-          Provenance of this example. `CURATOR` = hand-picked archetype;
-          `UNIPROTKB_API` = fetched by `scripts/fetch_uniprot_examples.py`
-          from the UniProt REST search API.
+          Provenance route by which this example was selected or promoted.
+          Record-specific occurrence evidence and its release are stored on
+          TraitOccurrence rather than inferred from this broad route.
         range: ExampleSourceEnum
       fetched_at:
         description: >-
@@ -617,12 +648,47 @@ classes:
       sequence:
         description: >-
           Amino-acid sequence of the exemplar protein (one-letter IUPAC
-          codes, no separators). Optional — populated by
-          `scripts/fetch_uniprot_examples.py` when it uses UniProt's
-          `format=txt` endpoint. Enables the docs browser to render the
-          sequence with trait annotations overlaid.
+          codes, no separators). Optional legacy snapshot used by the docs
+          browser for sequence overlays. Current fetch/suggest commands write
+          candidate ledgers only; a newly promoted example uses
+          `UNIPROT_GROUNDING`, and its authoritative sequence is dereferenced
+          from ProteinReference rather than trusted from this inline copy.
         range: string
         pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+      sequence_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact full sequence in the referenced
+          ProteinReference. Required by semantic validation for a QUALIFIED
+          example, so a later sequence-version change cannot silently retain
+          old occurrence coordinates.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      uniprot_release:
+        description: >-
+          UniProt release from which the example metadata and sequence were
+          resolved (for example `2026_02`). Required for QUALIFIED examples.
+        range: string
+        pattern: "^[0-9]{4}_[0-9]{2}$"
+      sequence_version:
+        description: UniProt sequence version of the resolved entry.
+        range: integer
+        minimum_value: 1
+      qualification_status:
+        description: >-
+          Grounding state of this example. Absence means LEGACY_UNVERIFIED.
+          Candidate and intermediate states belong in the external grounding
+          ledger rather than in canonical_examples; only QUALIFIED assertions
+          may be promoted as new canonical examples.
+        range: GroundingQualificationStatusEnum
+      trait_occurrences:
+        description: >-
+          Record-specific assertions locating or otherwise instantiating this
+          exact trait on the example protein. These differ from `features`,
+          which is the protein's generic UniProt feature track and is not by
+          itself evidence for this record's trait.
+        multivalued: true
+        inlined_as_list: true
+        range: TraitOccurrence
       features:
         description: >-
           UniProt FT-line annotations parsed from the exemplar protein's
@@ -633,6 +699,300 @@ classes:
         multivalued: true
         inlined_as_list: true
         range: SequenceFeatureAnnotation
+
+  ProteinReference:
+    tree_root: true
+    description: >-
+      One release-pinned UniProt protein or explicitly resolved UniProt
+      isoform. ProteinReference objects live in an external JSONL registry,
+      keyed by the exact `protein_id`; trait records refer to them by that key
+      rather than repeating the full sequence on every record.
+    attributes:
+      protein_id:
+        identifier: true
+        required: true
+        description: Exact UniProtKB accession, including an isoform suffix when applicable.
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      protein_label:
+        required: true
+        description: Recommended protein name from the resolved UniProt entry.
+        range: string
+      taxon_id:
+        required: true
+        description: NCBITaxon CURIE from the resolved UniProt entry.
+        range: string
+        pattern: "^NCBITaxon:[0-9]+$"
+      taxon_label:
+        required: true
+        description: Scientific organism name from the resolved UniProt entry.
+        range: string
+      sequence:
+        required: true
+        description: Full sequence in the resolved canonical or isoform frame.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+      sequence_length:
+        required: true
+        description: Full sequence length; semantic validation requires `len(sequence)`.
+        range: integer
+        minimum_value: 1
+      sequence_sha256:
+        required: true
+        description: Lower-case SHA-256 of `sequence` encoded as ASCII.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      isoform:
+        description: >-
+          Positive numeric isoform designator. Required when `protein_id` has
+          an isoform suffix and forbidden for a canonical accession by the
+          semantic validator.
+        range: integer
+        minimum_value: 1
+      reviewed:
+        required: true
+        description: True for a Swiss-Prot reviewed entry; false for TrEMBL.
+        range: boolean
+      uniprot_release:
+        required: true
+        description: UniProt release used to resolve this registry object.
+        range: string
+        pattern: "^[0-9]{4}_[0-9]{2}$"
+      sequence_version:
+        description: >-
+          UniProt sequence version when the pinned release artefact exposes it.
+          A release-pinned sequence and checksum remain authoritative when a
+          local release sidecar does not carry this per-entry value.
+        range: integer
+        minimum_value: 1
+
+  SequenceInterval:
+    description: >-
+      One 1-indexed inclusive interval in a declared UniProt coordinate frame.
+      Discontinuous occurrences use several intervals rather than a collapsed
+      minimum-to-maximum span.
+    attributes:
+      start:
+        required: true
+        range: integer
+        minimum_value: 1
+      end:
+        required: true
+        range: integer
+        minimum_value: 1
+      expected_sequence:
+        description: >-
+          Optional source-asserted sequence for this interval. Semantic
+          validation compares it exactly with the registry sequence.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+
+  TraitOccurrence:
+    description: >-
+      Evidence that one exact ProteinTraitRecord is instantiated by one exact,
+      versioned UniProt protein. LOCALIZED assertions carry UniProt-frame
+      coordinates; WHOLE_PROTEIN assertions carry exact annotation or
+      membership evidence and must not fabricate a 1..length interval.
+    attributes:
+      trait_id:
+        required: true
+        description: Identifier of the ProteinTraitRecord containing this occurrence.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      protein_id:
+        required: true
+        description: Exact ProteinReference key; must equal the containing example's key.
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      scope:
+        required: true
+        range: TraitOccurrenceScopeEnum
+      coordinate_frame:
+        description: Required for LOCALIZED and absent for WHOLE_PROTEIN occurrences.
+        range: ProteinCoordinateFrameEnum
+      intervals:
+        description: Ordered, non-overlapping 1-indexed inclusive intervals.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceInterval
+      residue_positions:
+        description: >-
+          Ordered, unique 1-indexed positions for a discontinuous residue set.
+          Do not replace a residue set with a bounding interval.
+        multivalued: true
+        range: integer
+        minimum_value: 1
+      expected_residues:
+        description: >-
+          Source-asserted residues aligned one-for-one with residue_positions.
+          Semantic validation compares them with the registry sequence.
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+      source_trait_id:
+        required: true
+        description: Exact source identifier asserted on this protein occurrence.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      inheritance_path:
+        description: >-
+          Ordered source-descendant to record-ancestor CURIE path, inclusive of
+          both endpoints. Required when source_trait_id differs from trait_id;
+          an undocumented parent-family hit cannot qualify an example.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      mapping_method:
+        required: true
+        range: TraitOccurrenceMappingMethodEnum
+      evidence_source:
+        required: true
+        description: Database, file, API, or publication supporting this occurrence.
+        range: string
+      source_release:
+        required: true
+        description: Release/version of the occurrence evidence source.
+        range: string
+      source_evidence_id:
+        description: >-
+          Content-addressed key into the external GroundingEvidence registry.
+          Semantic validation requires this field for a QUALIFIED occurrence
+          and verifies that every occurrence fact is reproduced exactly by the
+          dereferenced evidence object. It remains optional in LinkML so legacy
+          examples and candidate-ledger objects remain backward compatible.
+        range: string
+        pattern: "^ug-evidence:[0-9a-f]{64}$"
+      sequence_sha256:
+        required: true
+        description: Checksum of the exact ProteinReference sequence used for verification.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      qualification_status:
+        required: true
+        range: GroundingQualificationStatusEnum
+      structure_id:
+        description: Structure CURIE (normally PDB:xxxx) for structure-derived mapping.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      chain_id:
+        description: Source structure chain identifier used for residue mapping.
+        range: string
+      mapping_completeness:
+        description: >-
+          Completeness of source-residue mapping. SIFTS-derived QUALIFIED
+          occurrences require COMPLETE and equal source/mapped residue counts.
+        range: ResidueMappingCompletenessEnum
+      source_residue_count:
+        description: Number of trait-defining residues in the source coordinate frame.
+        range: integer
+        minimum_value: 1
+      mapped_residue_count:
+        description: Number of trait-defining residues mapped into the UniProt frame.
+        range: integer
+        minimum_value: 1
+
+  GroundingEvidence:
+    tree_root: true
+    description: >-
+      Immutable, content-addressed source evidence for one TraitOccurrence.
+      Objects live one per line in the external occurrence-evidence JSONL
+      registry. `evidence_id` is `ug-evidence:` followed by the lower-case
+      SHA-256 of the validator's canonical JSON projection of every other
+      field. The provider-entry digest binds this normalized assertion to the
+      exact upstream row or object inspected by the resolver.
+    attributes:
+      evidence_id:
+        identifier: true
+        required: true
+        range: string
+        pattern: "^ug-evidence:[0-9a-f]{64}$"
+      trait_id:
+        required: true
+        description: Exact ProteinTraitRecord asserted by the occurrence.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      protein_id:
+        required: true
+        description: Exact canonical or isoform-qualified ProteinReference key.
+        range: string
+        pattern: "^UniProtKB:([OPQ][0-9][A-Z0-9]{3}[0-9]|[A-NR-Z][0-9]([A-Z][A-Z0-9]{2}[0-9]){1,2})([-][0-9]+)?$"
+      source_trait_id:
+        required: true
+        description: Exact identifier found in the source provider entry.
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      inheritance_path:
+        description: >-
+          Exact inclusive source-descendant to record-ancestor path copied to
+          the TraitOccurrence and checked against the record hierarchy.
+        multivalued: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      mapping_method:
+        required: true
+        range: TraitOccurrenceMappingMethodEnum
+      scope:
+        required: true
+        range: TraitOccurrenceScopeEnum
+      coordinate_frame:
+        range: ProteinCoordinateFrameEnum
+      intervals:
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceInterval
+      residue_positions:
+        multivalued: true
+        range: integer
+        minimum_value: 1
+      expected_residues:
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWYUOBZJX*]+$"
+      evidence_source:
+        required: true
+        description: Exact logical database/source name copied to the occurrence.
+        range: string
+      source_release:
+        required: true
+        description: Exact release of the logical occurrence-evidence source.
+        range: string
+      sequence_sha256:
+        required: true
+        description: Checksum of the exact ProteinReference sequence used for verification.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      structure_id:
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      chain_id:
+        range: string
+      mapping_completeness:
+        range: ResidueMappingCompletenessEnum
+      source_residue_count:
+        range: integer
+        minimum_value: 1
+      mapped_residue_count:
+        range: integer
+        minimum_value: 1
+      provider_kind:
+        required: true
+        description: Machine-checkable class of upstream evidence provider.
+        range: GroundingEvidenceProviderKindEnum
+      provider_source:
+        required: true
+        description: >-
+          Stable source artefact identifier or path used by the resolver; this
+          is deliberately distinct from the human-facing evidence_source.
+        range: string
+      provider_release:
+        required: true
+        description: Release/version recorded on the exact provider artefact.
+        range: string
+      provider_entry_sha256:
+        required: true
+        description: >-
+          Lower-case SHA-256 of the resolver's canonical projection of the
+          exact upstream provider entry.
+        range: string
+        pattern: "^[0-9a-f]{64}$"
 
   SequenceFeatureAnnotation:
     description: >-
@@ -934,6 +1294,302 @@ classes:
         range: string
       evidence_source:
         description: CURIE, URL, or source file for the representative selection.
+        range: string
+
+  SequenceFingerprintRepresentation:
+    description: >-
+      A content-addressed ordered multi-motif sequence-fingerprint summary. The
+      exact KDAT release and raw record are bound and ordered motif metadata is
+      carried inline without duplicating aligned training rows. This is not by
+      itself an executable or fully replayable PRINTS matching model: the
+      versioned matcher, derived matrices, and separate InterProScan
+      post-processing relation policy are not bound here.
+    attributes:
+      source_accession:
+        description: CURIE of the source-native fingerprint record.
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      source_release:
+        description: Release/version of the exact source artefact.
+        required: true
+        range: string
+      representation_type:
+        description: Machine-checkable kind of fingerprint representation.
+        required: true
+        range: SequenceFingerprintRepresentationTypeEnum
+      source_artifact:
+        description: Stable repository-relative path or URL for the complete source artefact.
+        required: true
+        range: string
+      source_artifact_sha256:
+        description: Lower-case SHA-256 of the complete source artefact.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_record_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact raw source record bytes, from its
+          record-opening tag up to (but not including) the next record.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      compatible_derivation_tool_hint:
+        description: >-
+          Non-provenance compatibility hint for a tool family that can derive
+          an EMBOSS pscan matrix from PRINTS final motif sets. This field does
+          not claim that the tool ran, does not bind a tool version, and does
+          not describe InterProScan's fingerPRINTScan/prints.pval matcher.
+        required: true
+        range: string
+      motif_count:
+        description: Declared number of ordered motifs in the fingerprint.
+        required: true
+        range: integer
+        minimum_value: 2
+      motifs:
+        description: Motifs in their source-declared fingerprint order.
+        required: true
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceFingerprintMotif
+
+  SequenceFingerprintMotif:
+    description: >-
+      Compact, content-addressed summary of one motif in an ordered sequence
+      fingerprint. Training peptide rows remain in the representation's pinned
+      source artefact.
+    attributes:
+      ordinal:
+        description: 1-based position of this motif in the fingerprint.
+        required: true
+        range: integer
+        minimum_value: 1
+      motif_code:
+        description: Source-native code of this motif block.
+        required: true
+        range: string
+        pattern: "^[A-Za-z0-9._ -]+$"
+      length:
+        description: Number of aligned amino-acid positions in this motif.
+        required: true
+        range: integer
+        minimum_value: 1
+      description:
+        description: Source-native motif description, when supplied.
+        range: string
+      training_instance_count:
+        description: Number of aligned final-set training peptides in the source motif block.
+        required: true
+        range: integer
+        minimum_value: 1
+      source_motif_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact raw fc/fl/ft/fd/KD lines for this
+          source motif block, excluding the inter-block bb separator.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      training_distance_from_previous_min:
+        description: >-
+          Minimum distance observed in the source motif's aligned fd training
+          rows. For the first motif this is the source training row's N-terminal
+          offset. Negative values are valid for overlapping motif windows. This
+          is an observed training-set extremum, not the source KD constraint.
+        required: true
+        range: integer
+      training_distance_from_previous_max:
+        description: >-
+          Maximum distance observed in the source motif's aligned fd training
+          rows. For the first motif this is the source training row's N-terminal
+          offset. Negative values are valid for overlapping motif windows. This
+          is an observed training-set extremum, not the source KD constraint.
+        required: true
+        range: integer
+      inter_motif_distance_constraint:
+        description: >-
+          Optional source-declared KD inter-motif distance constraint for this
+          motif. This preserves PRINTS source metadata; serialization alone does
+          not claim that a matcher enforces the constraint.
+        range: SequenceFingerprintInterMotifDistanceConstraint
+
+  SequenceFingerprintInterMotifDistanceConstraint:
+    description: >-
+      A parsed PRINTS KD INTER_MOTIF_DISTANCE constraint. Region ordinals bind
+      the constraint to one motif transition; the repeat qualifier is preserved
+      literally and is not interpreted here as runtime matching behaviour.
+    attributes:
+      region_start_ordinal:
+        description: Source KD REGION start ordinal; zero denotes the N terminus.
+        required: true
+        range: integer
+        minimum_value: 0
+      region_end_ordinal:
+        description: Source KD REGION end motif ordinal.
+        required: true
+        range: integer
+        minimum_value: 1
+      minimum:
+        description: Source-declared inclusive minimum inter-motif distance.
+        required: true
+        range: integer
+      maximum:
+        description: Source-declared inclusive maximum inter-motif distance.
+        required: true
+        range: integer
+      repeat_qualified:
+        description: >-
+          True exactly when the source KD line ends in /R. This preserves the
+          qualifier without claiming that repository validators enforce its
+          operational matching semantics.
+        required: true
+        range: boolean
+
+  SequenceProfileRepresentation:
+    description: >-
+      A replayable, content-addressed source-native sequence profile. SFLD 4
+      profiles bind an HMMER3/f model and GA thresholds to the matching site
+      block and hierarchy artifact. FEATURE strings remain whole ordered
+      residue tuples: treating their positions as independent allowed-residue
+      sets would create combinations absent from the source.
+    attributes:
+      source_accession:
+        description: CURIE of the source-native profile model.
+        required: true
+        range: string
+        pattern: "^[A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+$"
+      source_release:
+        description: Release/version shared by all artifacts in this representation.
+        required: true
+        range: string
+      representation_type:
+        description: Machine-checkable kind of source-native profile representation.
+        required: true
+        range: SequenceProfileRepresentationTypeEnum
+      source_model_artifact:
+        description: Stable repository-relative path or URL for the complete profile artifact.
+        required: true
+        range: string
+      source_model_artifact_sha256:
+        description: Lower-case SHA-256 of the complete profile artifact.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_model_record_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact raw HMM record bytes, including its
+          HMMER3 opener and // terminator.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_sites_artifact:
+        description: Stable repository-relative path or URL for the complete site artifact.
+        required: true
+        range: string
+      source_sites_artifact_sha256:
+        description: Lower-case SHA-256 of the complete site artifact.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_site_record_sha256:
+        description: >-
+          Lower-case SHA-256 of the exact source ACC site block bytes up to,
+          but not including, the next ACC block.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      source_hierarchy_artifact:
+        description: Stable repository-relative path or URL for the complete hierarchy artifact.
+        required: true
+        range: string
+      source_hierarchy_artifact_sha256:
+        description: Lower-case SHA-256 of the complete hierarchy artifact.
+        required: true
+        range: string
+        pattern: "^[0-9a-f]{64}$"
+      native_classification_level:
+        description: >-
+          Source-declared nominal level of this exact model. In SFLD this is
+          encoded by the S/G/F accession class; it does not substitute for
+          replaying the hierarchy artifact, which can contain nested subgroups.
+        required: true
+        range: SequenceProfileClassificationLevelEnum
+      model_length:
+        description: Number of HMM match states in the source profile.
+        required: true
+        range: integer
+        minimum_value: 1
+      gathering_sequence_score:
+        description: Source HMMER3 GA sequence-score threshold.
+        required: true
+        range: float
+      gathering_domain_score:
+        description: Source HMMER3 GA domain-score threshold.
+        required: true
+        range: float
+      training_sequence_count:
+        description: Source HMM NSEQ value.
+        required: true
+        range: integer
+        minimum_value: 1
+      hmm_checksum:
+        description: Source HMMER3 CKSUM value.
+        required: true
+        range: integer
+        minimum_value: 1
+      profile_search_mode:
+        description: Exact score-cutoff semantics used to search this profile.
+        required: true
+        range: SequenceProfileSearchModeEnum
+      site_coordinate_system:
+        description: Coordinate system used by the inlined site positions.
+        required: true
+        range: SequenceProfileSiteCoordinateSystemEnum
+      site_evidence_scope:
+        description: >-
+          Whether the inlined sites belong to only this directly matched model
+          or can be inherited when a match is propagated through a hierarchy.
+        required: true
+        range: SequenceProfileSiteEvidenceScopeEnum
+      site_count:
+        description: Declared number of ordered SITE rows in the source block.
+        required: true
+        range: integer
+        minimum_value: 0
+      sites:
+        description: Ordered source SITE rows in HMM match-state coordinates.
+        multivalued: true
+        inlined_as_list: true
+        range: SequenceProfileSite
+      site_feature_pattern_count:
+        description: Declared number of correlated FEATURE residue tuples.
+        required: true
+        range: integer
+        minimum_value: 0
+      site_feature_patterns:
+        description: >-
+          Whole ordered amino-acid tuples, one character per SITE row. Each
+          string is one allowed correlated combination; positions must not be
+          flattened into independent residue sets.
+        multivalued: true
+        range: string
+        pattern: "^[ACDEFGHIKLMNPQRSTVWY]+$"
+
+  SequenceProfileSite:
+    description: One source-native functional site in a sequence-profile coordinate system.
+    attributes:
+      ordinal:
+        description: 1-based source order within the profile's site block.
+        required: true
+        range: integer
+        minimum_value: 1
+      model_position:
+        description: 1-based HMM match-state position, not a protein residue coordinate.
+        required: true
+        range: integer
+        minimum_value: 1
+      description:
+        description: Source-native site description, when present.
         range: string
 
   EvolutionaryScope:
@@ -1456,6 +2112,54 @@ enums:
       GENERATED:
         description: LLM-generated from the record's own content; flagged as synthetic.
 
+  SequenceFingerprintRepresentationTypeEnum:
+    description: Supported source-native ordered sequence-fingerprint representations.
+    permissible_values:
+      PRINTS_FINAL_ORDERED_MOTIF_SETS:
+        description: >-
+          Ordered PRINTS final motif sets (fc/fl/ft/fd/KD) summarized from a
+          pinned KDAT record. Operational matching additionally needs a
+          versioned matrix derivation/matcher and the PRINTS post-processing
+          policy, neither of which this value claims to bind.
+
+  SequenceProfileRepresentationTypeEnum:
+    description: Supported content-addressed source-native profile representations.
+    permissible_values:
+      SFLD_4_HMMER3_PROFILE_WITH_CORRELATED_SITES:
+        description: >-
+          One SFLD 4 HMMER3/f model plus its GA thresholds, exact site block,
+          correlated FEATURE residue tuples, and release hierarchy provenance.
+
+  SequenceProfileClassificationLevelEnum:
+    description: Source-native nominal classification level of a sequence profile.
+    permissible_values:
+      SUPERFAMILY:
+        description: SFLD S-class superfamily model.
+      SUBGROUP:
+        description: SFLD G-class subgroup model; subgroups may be nested.
+      FAMILY:
+        description: SFLD F-class family model.
+
+  SequenceProfileSearchModeEnum:
+    description: Supported profile-search threshold semantics.
+    permissible_values:
+      HMMSEARCH_CUT_GA:
+        description: HMMER hmmsearch using the source model's GA sequence/domain thresholds.
+
+  SequenceProfileSiteCoordinateSystemEnum:
+    description: Supported coordinate systems for source profile sites.
+    permissible_values:
+      HMM_MODEL_MATCH_STATE:
+        description: 1-based HMM match-state number in the source model.
+
+  SequenceProfileSiteEvidenceScopeEnum:
+    description: Propagation scope of site evidence attached to a profile match.
+    permissible_values:
+      DIRECT_MODEL_MATCH_ONLY:
+        description: >-
+          Sites belong only to the directly matched source model and are
+          cleared from matches propagated to hierarchy ancestors.
+
   SynonymTypeEnum:
     permissible_values:
       EXACT_SYNONYM:
@@ -1528,21 +2232,96 @@ enums:
         description: Curator-picked archetype (textbook exemplar).
       UNIPROTKB_API:
         description: >-
-          Retrieved by querying the UniProtKB REST search API for entries
-          carrying the trait's anchoring signature (PROSITE / Pfam /
-          InterPro / HAMAP xref, or the accession encoded in the trait
-          identifier).
+          Legacy provenance value for examples historically written directly
+          from a UniProtKB REST search. Current fetch commands emit candidates
+          only; any newly promoted example uses UNIPROT_GROUNDING after strict
+          protein and occurrence-evidence validation.
       SWISSPROT_PROFILE:
         description: >-
-          Selected by `scripts/suggest_canonical_examples.py` from the
-          Swiss-Prot protein × trait profile matrix
-          (`data/profiles/profiles.jsonl`, issue #7). The protein is an
-          observed carrier of the trait; among carriers it is ranked by
-          how many of the trait's empirically coupled cross-axis partners
-          (the seq-encodes-fold / trait-implies-function rules mined in
-          phase 3) it also carries. Unlike `UNIPROTKB_API` this is a
-          selection over an existing local matrix, not a fresh query, and
-          the pick is evidence-ranked rather than first-N-hits.
+          Legacy provenance value for examples historically selected directly
+          from the Swiss-Prot protein × trait profile matrix. Current suggest
+          commands emit candidates only; profile co-occurrence is not
+          occurrence evidence, and a newly promoted example uses
+          UNIPROT_GROUNDING after strict validation.
+      UNIPROT_GROUNDING:
+        description: >-
+          Promoted by `scripts/ground_uniprot_examples.py` after resolving an
+          exact release-pinned ProteinReference and verifying record-specific
+          occurrence evidence. The occurrence records the evidence provider;
+          this value records the promotion route.
+
+  GroundingQualificationStatusEnum:
+    description: >-
+      State of a protein/trait grounding assertion. Intermediate states are
+      used by the external candidate ledger. Existing canonical examples with
+      no value are interpreted as LEGACY_UNVERIFIED; only QUALIFIED assertions
+      may be newly promoted into canonical_examples.
+    permissible_values:
+      LEGACY_UNVERIFIED:
+        description: Existing example without record-specific verified evidence.
+      CANDIDATE_PROTEIN:
+      PROTEIN_RESOLVED:
+      SEQUENCE_VERIFIED:
+      LOCATION_SOURCED:
+      LOCATION_VERIFIED:
+      WHOLE_PROTEIN_EVIDENCE_VERIFIED:
+      QUALIFIED:
+      REJECTED:
+
+  TraitOccurrenceScopeEnum:
+    permissible_values:
+      LOCALIZED:
+        description: Trait occurs at one or more declared sequence positions or intervals.
+      WHOLE_PROTEIN:
+        description: >-
+          Entry/entity-level trait supported by exact annotation or membership;
+          no residue interval is asserted.
+
+  ProteinCoordinateFrameEnum:
+    permissible_values:
+      UNIPROT_CANONICAL:
+        description: Coordinates refer to the resolved canonical UniProt sequence.
+      UNIPROT_ISOFORM:
+        description: Coordinates refer to the exact resolved UniProt isoform sequence.
+
+  TraitOccurrenceMappingMethodEnum:
+    permissible_values:
+      UNIPROT_FEATURE:
+        description: Exact trait-specific UniProt feature annotation.
+      INTERPRO_MATCH:
+        description: Exact InterPro/member-database signature match on the protein.
+      SOURCE_NATIVE_COORDINATES:
+        description: Exact source occurrence already expressed in UniProt coordinates.
+      SIFTS_RESIDUE_MAPPING:
+        description: Chain-aware PDB/source residues mapped residue-by-residue through SIFTS.
+      PATTERN_MATCH:
+        description: Sequence pattern or peptide matched on a source-confirmed carrier.
+      SOURCE_MEMBERSHIP:
+        description: Exact whole-protein membership in the defining source class.
+      SOURCE_ANNOTATION:
+        description: Exact whole-protein annotation to the defining source term.
+
+  ResidueMappingCompletenessEnum:
+    permissible_values:
+      NOT_APPLICABLE:
+      COMPLETE:
+        description: Every trait-defining source residue maps to the target UniProt frame.
+      PARTIAL:
+        description: At least one trait-defining source residue is unmapped; cannot qualify.
+
+  GroundingEvidenceProviderKindEnum:
+    description: Upstream provider class for immutable TraitOccurrence evidence.
+    permissible_values:
+      UNIPROT:
+        description: Release-pinned UniProtKB entry or feature table.
+      INTERPRO:
+        description: Release-pinned InterPro protein-match artefact.
+      SIFTS:
+        description: Release-pinned chain-aware SIFTS residue mapping.
+      SOURCE_DATABASE:
+        description: >-
+          Release-pinned native source database entry for non-structure-derived
+          exact coordinates, membership, annotation, or pattern evidence.
 
   CausalNodeTypeEnum:
     description: Broad categories for nodes in protein-trait causal graphs.

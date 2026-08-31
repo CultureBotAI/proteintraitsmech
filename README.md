@@ -21,7 +21,7 @@ Records anchor to authoritative resources: Pfam, InterPro, PROSITE, SMART, MEROP
 ```bash
 just install                  # uv sync --extra dev
 just gen-schema               # generate dataclasses from LinkML
-just validate-all             # validate every ProteinTraitRecord YAML
+just validate-all             # closed LinkML + UniProt grounding semantics
 ```
 
 ## Schema
@@ -31,6 +31,8 @@ just validate-all             # validate every ProteinTraitRecord YAML
 - **ProteinTraitRecord** — root class, one per YAML file. Carries `identifier` (preferably an existing InterPro / Pfam / PROSITE / CATH / SCOP / MEROPS / PR CURIE), `label`, `definition`, `parent_traits`, `xrefs`, `synonyms`, `trait_axis` (SEQUENCE / STRUCTURE / SEQUENCE_STRUCTURE / FUNCTION / EVOLUTION), `trait_category`, `term_kind`, optional `canonical_examples`, optional `evidence`, optional `curation_history`, and optional inline `causal_graphs`.
 - **CausalGraph / CausalNode / CausalEdge** — evidence-backed causal mechanism graphs. Nodes represent proteins, domains, motifs, residues, PTMs, ligands, pathways, molecular functions, biological processes, phenotypes, or diseases. Every `CausalEdge` must carry at least one `EvidenceItem`.
 - **CanonicalExample** — reference exemplar proteins (UniProtKB accession + taxon) that archetypally exhibit the trait.
+- **ProteinReference / TraitOccurrence** — release-pinned UniProt sequence/organism
+  registry rows and record-specific localized or whole-protein grounding assertions.
 - **TraitSynonym / EvidenceItem / CurationEvent** — ancillary classes.
 - **TraitAxisEnum** — `SEQUENCE` / `STRUCTURE` / `SEQUENCE_STRUCTURE` / `FUNCTION` / `EVOLUTION`.
 - **ProteinTraitCategoryEnum** — `SEQ_*`, `STRUCT_*`, `MIXED_*` fine-grained buckets (see schema for the full list).
@@ -181,72 +183,63 @@ supports them, and can also be added by curators:
     are intentionally unmapped — extend `CATEGORY_MAPPINGS` when a
     non-obsolete term is identified).
 
-- **`canonical_examples`** — reference proteins that exhibit the trait.
-  Two sources coexist on a record:
-    - `source: CURATOR` — hand-picked archetypes. Seeders emit one when
-      the trait itself is anchored to a specific UniProt entry (TED
-      folds, UniProt-seeded FT records).
-    - `source: UNIPROTKB_API` — retrieved by
-      [`scripts/fetch_uniprot_examples.py`](scripts/fetch_uniprot_examples.py)
-      (`just fetch-examples`) by querying UniProtKB REST for entries
-      cross-referenced to the trait's anchoring signature
-      (`xref:prosite-PS00796`, `xref:pfam-PF00244`, etc.). Each hit
-      carries `sequence_length`, `reviewed`, `annotation_score`,
-      `family_classifications` (Pfam / InterPro / HAMAP / SMART / CATH
-      xrefs on that specific entry) and a `fetched_at` date stamp so
-      downstream consumers can rank / filter without re-querying UniProt.
-    - `source: SWISSPROT_PROFILE` — selected by
-      [`scripts/suggest_canonical_examples.py`](scripts/suggest_canonical_examples.py)
-      (`just suggest-examples`) from the Swiss-Prot protein × trait matrix
-      (`data/profiles/profiles.jsonl`, issue #7 — 80,066 reviewed entries
-      across ten proteomes spanning the tree: human, mouse, *Drosophila*,
-      *C. elegans*, *Arabidopsis*, *S. cerevisiae*, *P. falciparum*,
-      *E. coli*, *B. subtilis* and the archaeon *M. jannaschii*). Unlike `UNIPROTKB_API`
-      this is a ranked selection over an existing local matrix rather
-      than a fresh query: among the observed carriers of the trait, the
-      pick maximises how many of the trait's empirically coupled
-      cross-axis partners (the `seq-encodes-fold` /
-      `trait-implies-function` rules) it also carries, then carrier focus
-      and annotation depth weighted by the trait's axis — both as
-      percentiles *within the carrier's own proteome*, since absolute GO
-      counts differ enough between model organisms to otherwise hand
-      every pick to whichever community annotates hardest. The `note`
-      records the derivation and the carrier count. These are
-      **suggestions**, not curator picks, and are swept or re-ranked
-      wholesale by `source` (`--rerank` replaces them and never touches a
-      `CURATOR` / `UNIPROTKB_API` example). See
-      [`research/swissprot-trait-profiles-5.md`](research/swissprot-trait-profiles-5.md)
-      and [`research/swissprot-trait-profiles-6.md`](research/swissprot-trait-profiles-6.md).
+- **`canonical_examples`** — reference proteins that exhibit the exact record trait.
+  The grounding workflow is fail-closed: existing examples without
+  `qualification_status` are interpreted as `LEGACY_UNVERIFIED`, while a newly promoted
+  example must carry `qualification_status: QUALIFIED` and at least one matching
+  `TraitOccurrence`. A qualified occurrence is tied to the same exact UniProt accession,
+  pinned full sequence/checksum, organism, source release, and record-specific evidence.
+  Whole-protein annotations use `scope: WHOLE_PROTEIN`; they never fabricate a
+  `[1, sequence_length]` localized interval.
 
-    ```bash
-    # populate 3 reviewed examples on one PROSITE PATTERN record
-    just fetch-examples data/traits/sequence/pattern/1433-1.yaml --limit 3 --apply
-    # or run over an entire subdirectory
-    just fetch-examples data/traits/sequence/pattern --limit 5 --apply
-    ```
+  Full sequences are normalized in the versioned `ProteinReference` JSONL registry under
+  `data/grounding/`; trait files retain the checksum and occurrence assertion. Exact
+  whole-protein UniProt cross-references are normalized separately in the content-
+  addressed `uniprot_memberships.jsonl` registry and replayed by semantic validation.
+  Generic UniProt feature tracks or discovery-query hits remain useful for display but
+  do not prove that the record's exact trait occurs on that protein.
 
-    Idempotent: existing accessions are not re-added. `--force` drops
-    prior `UNIPROTKB_API` picks and re-queries. Rate-limited
-    (~4 req/s + exponential backoff on 429/503).
+  Discovery commands are candidate-only. `just fetch-examples` queries exact UniProt
+  signature cross-references and `just suggest-examples` ranks carriers from the
+  Swiss-Prot profile matrix; neither command writes trait records, and both reject the
+  retired `--apply` behavior. Evidence-tier-D profile/co-occurrence results remain in the
+  candidate ledger.
 
-    Each example additionally carries its full amino-acid `sequence`
-    and a `features` list (SequenceFeatureAnnotation records: `start`,
-    `end`, `feature_type`, `trait_axis`, `trait_category`, `note`) —
-    populated in a separate `--refresh-sequences` pass that batch-
-    fetches flat files via `/uniprotkb/accessions?format=txt` and
-    routes each FT line through `seed_uniprot.py`'s `FT_TYPE_MAP`.
+  ```bash
+  # 1. Audit and produce explicitly labelled candidate/blocked ledgers.
+  just audit-uniprot-grounding
 
-    ```bash
-    # fill in sequence + features on already-fetched API examples
-    just fetch-examples data/traits/sequence/pattern --refresh-sequences --apply
-    ```
+  # 2. Select one bounded, source-stratified review batch. The first command is a
+  #    dry-run; --apply writes the ignored candidate ledger plus bound manifests.
+  batch=ready-local-review-001
+  just select-uniprot-review-batch "$batch"
+  just select-uniprot-review-batch "$batch" --apply
 
-    The docs browser renders each example's sequence in a 60-aa-per-row
-    monospace viewer with per-residue coloured strips beneath each
-    letter — one strip per feature covering that position, split by
-    equal fractions when multiple features overlap. Colour is by
-    trait axis (SEQUENCE = blue, STRUCTURE = green, SEQUENCE_STRUCTURE
-    = purple). Hover a strip for the raw UniProt FT type + range + note.
+  # 3. Fetch a same-response UniProt metadata+sequence registry for exactly that
+  #    batch, then resolve it without touching traits or durable registries.
+  just fetch-uniprot-review-batch "$batch"
+  just fetch-uniprot-review-batch "$batch" --apply
+  just resolve-uniprot-review-batch "$batch"
+
+  # 4. Review <batch>.review.tsv source by source and save decisions as
+  #    <batch>.approved.tsv. Promotion requires reviewer/date/notes, >=25 decided
+  #    records per promoted source (or every available record when fewer exist), every
+  #    flagged special case decided, every alternative decided for a promoted record,
+  #    at most one approved exemplar per record, and <=1,000 records. Preflight first;
+  #    only the second command installs durable registry rows and validated trait changes.
+  just promote-uniprot-review-batch "$batch"
+  just promote-uniprot-review-batch "$batch" --apply
+  ```
+
+  `promote-uniprot-grounding` is the sole grounding writer. It rechecks release-stamped
+  providers and review digests, runs closed LinkML plus sequence-dependent semantic
+  validation, and uses the repository's validated atomic write route. See
+  [`research/uniprot-organism-protein-grounding-plan.md`](research/uniprot-organism-protein-grounding-plan.md)
+  for source tiers, long-tail queues, review rules, and completion criteria.
+
+  The checked command recipes currently pin UniProt release `2026_02`, matching the
+  local residue frame. If the live API advances, registry fetch intentionally stops;
+  rebuild and re-audit the local frames before updating that pin.
 
 ## Seeds
 
@@ -259,7 +252,7 @@ supports them, and can also be added by curators:
 | [PROSITE PDOC documentation groups](https://prosite.expasy.org/) (`seed_prosite_pdoc.py`) | 1980 | `data/traits/sequence/family/prosite/` (family-level parent of the PROSITE signature records → SEQ_FAMILY) |
 | [TED novel folds](https://ted.cathdb.info/) (Zenodo v5, [DOI:10.5281/zenodo.13908086](https://doi.org/10.5281/zenodo.13908086), CC-BY 4.0) | 7427 | `data/traits/structure/fold/novel/` |
 | [TED highly-symmetric folds](https://ted.cathdb.info/) (same Zenodo record) | 6433 | `data/traits/structure/fold/high_symmetry/` |
-| [UniProtKB](https://www.uniprot.org/) FT/CC/GO demultiplexer (`seed_uniprot.py`) | 0 (demo retired) | per-protein records are instance-level, not trait classes — retired; real entries attach as `canonical_examples` on class traits via `fetch_uniprot_examples.py` |
+| [UniProtKB](https://www.uniprot.org/) FT/CC/GO demultiplexer (`seed_uniprot.py`) | 0 (demo retired) | per-protein records are instance-level, not trait classes — retired; real entries follow the candidate → resolve → validate → promote grounding workflow |
 | [PSI-MOD](https://github.com/HUPO-PSI/psi-mod-CV) (HUPO-PSI protein modification CV, CC-BY-4.0) | 1971 | `data/traits/sequence/{modified_residue,glycosylation,lipidation,crosslink,ptm_ontology}/` |
 | [ECOD](http://prodata.swmed.edu/ecod/) (Evolutionary Classification Of protein Domains, v295) | 45113 | `data/traits/structure/{architecture,homologous_superfamily,topology,fold/ecod}/` (21 + 6,178 + 3,955 + 34,959) |
 | [CATH-Gene3D](https://www.cathdb.info/) hierarchy (`seed_cath.py`, CC-BY 4.0) | 8151 | `data/traits/structure/{class,architecture,topology,homologous_superfamily}/cath/` (unnamed nodes kept, labelled by CATH id + rep-domain xref) |

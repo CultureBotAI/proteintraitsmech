@@ -51,12 +51,29 @@ def test_the_registry_is_READ_from_the_guard_test_not_copied():
 
 def test_no_script_is_in_BOTH_registries():
     assert not (set(A.BYPASS) & A.registered_editors())
+    assert not (set(A.VALIDATED_WRITERS) & set(A.BYPASS))
+    assert not (set(A.VALIDATED_WRITERS) & A.registered_editors())
 
 
 def test_every_bypass_entry_carries_a_reason():
     """"It has always been in the list" is how an allow-list stops being a decision."""
     for name, reason in A.BYPASS.items():
         assert reason and len(reason) > 12, name
+
+
+def test_every_validated_writer_carries_a_reason_and_uses_the_route():
+    for name, reason in A.VALIDATED_WRITERS.items():
+        assert reason and len(reason) > 12, name
+        source = (REPO / "scripts" / f"{name}.py").read_text(encoding="utf-8")
+        tree = ast.parse(source)
+        assert any(
+            isinstance(node, ast.Call)
+            and isinstance(node.func, ast.Name)
+            and node.func.id == "write_validated_record"
+            for node in ast.walk(tree)
+        ), name
+        assert "write_record(" not in source
+        assert not A.writes_trait_records(tree), name
 
 
 # --- the detector, against the four shapes that fooled it -------------------------------
@@ -200,6 +217,26 @@ def test_registered_editor_without_validated_write_fails(tmp_path, monkeypatch):
     monkeypatch.setattr(mod, "SCRIPTS", scripts)
     monkeypatch.setattr(mod, "GUARD_TEST", guard)
     monkeypatch.setattr(mod, "BYPASS", {})
+    monkeypatch.setattr(sys, "argv", ["audit_writers.py"])
+
+    assert mod.main() == 1
+
+
+def test_registered_validated_writer_without_validated_write_fails(tmp_path, monkeypatch):
+    scripts = tmp_path / "scripts"
+    scripts.mkdir()
+    (scripts / "unsafe_promoter.py").write_text("x = 1\n", encoding="utf-8")
+    guard = tmp_path / "guard.py"
+    guard.write_text("EDITORS = [\n]\n", encoding="utf-8")
+    mod = _load()
+    monkeypatch.setattr(mod, "SCRIPTS", scripts)
+    monkeypatch.setattr(mod, "GUARD_TEST", guard)
+    monkeypatch.setattr(mod, "BYPASS", {})
+    monkeypatch.setattr(
+        mod,
+        "VALIDATED_WRITERS",
+        {"unsafe_promoter": "a reason long enough to pass the registry check"},
+    )
     monkeypatch.setattr(sys, "argv", ["audit_writers.py"])
 
     assert mod.main() == 1

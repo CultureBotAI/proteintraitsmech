@@ -58,9 +58,18 @@ magic bytes, stable content markers, or publisher checksums.
 - `fetch-repeatsdb-annotations` — paginated API script.
 - `fetch-cazy-families` — multi-page scraper.
 - `fetch-interpro-members` — paginated API script.
-- `fetch-examples` — UniProt API enrichment with record writes.
+- `fetch-examples` — candidate-only UniProt API discovery; no record writes. Its
+  pagination/retry rules remain source-specific, while promotion is handled by the
+  release-pinned grounding workflow.
 - `fetch-residue-frame` — residue-coordinate API enrichment.
 - `fetch-interpro-frame` — InterPro API enrichment.
+- `fetch-uniprot-registry` — exact-accession, same-response protein metadata/sequence and
+  database-cross-reference snapshots for the grounding workflow; release-header,
+  checksum, exact-membership, and content-address gates are implemented in its Python
+  client. The membership snapshot is evidence; the discovery query itself is not.
+- `fetch-uniprot-review-batch` — bounded wrapper around the same pinned registry client;
+  it derives the exact accession set from one named review ledger and writes only that
+  batch's ignored registry, membership, and blocked-accession staging outputs.
 - `fetch-interpro-missing-abstracts` — API enrichment of existing records.
 
 These should reuse the helper only for any fixed bulk sub-download. Their pagination,

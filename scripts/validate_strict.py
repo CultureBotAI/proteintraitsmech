@@ -37,6 +37,25 @@ from linkml.validator import Validator
 from linkml.validator.plugins import JsonschemaValidationPlugin
 from linkml.validator.report import Severity
 
+from prints_kdat import (
+    PRINTS_42_0_RELEASE,
+    PRINTS_42_0_SHA256,
+    PRINTS_42_0_SOURCE_ARTIFACT,
+)
+from sfld_release import (
+    SFLD_4_HIERARCHY_SHA256,
+    SFLD_4_HIERARCHY_SOURCE_ARTIFACT,
+    SFLD_4_HMM_SHA256,
+    SFLD_4_HMM_SOURCE_ARTIFACT,
+    SFLD_4_PROFILE_SEARCH_MODE,
+    SFLD_4_RELEASE,
+    SFLD_4_REPRESENTATION_TYPE,
+    SFLD_4_SITE_COORDINATE_SYSTEM,
+    SFLD_4_SITE_EVIDENCE_SCOPE,
+    SFLD_4_SITES_SHA256,
+    SFLD_4_SITES_SOURCE_ARTIFACT,
+)
+
 _REPO_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = _REPO_ROOT / "src" / "proteintraitsmech" / "schema" / "proteintraitsmech.yaml"
 DEFAULT_ROOTS = [_REPO_ROOT / "data" / "traits"]
@@ -90,6 +109,298 @@ def classify(message: str) -> tuple[str, str]:
             detail = "|".join(f"{k}={v}" for k, v in parts.items())
             return name, detail
     return "other", ""
+
+
+def _semantic_row(path: Path, instance_path: str, message: str) -> dict:
+    return {
+        "file": str(path),
+        "category": "semantic_invariant",
+        "detail": "",
+        "path": instance_path,
+        "message": message[:300],
+    }
+
+
+def _fingerprint_invariant_errors(path: Path, instance: object) -> list[dict]:
+    """Enforce ordered-fingerprint facts that JSON Schema cannot express."""
+
+    if not isinstance(instance, dict):
+        return []
+    representations = instance.get("sequence_fingerprint_representations")
+    if not isinstance(representations, list):
+        return []
+    rows: list[dict] = []
+    identifier = instance.get("identifier")
+    for representation_index, representation in enumerate(representations):
+        if not isinstance(representation, dict):
+            continue
+        base = f"/sequence_fingerprint_representations/{representation_index}"
+        motifs = representation.get("motifs")
+        motif_count = representation.get("motif_count")
+        if isinstance(motifs, list) and isinstance(motif_count, int):
+            if motif_count != len(motifs):
+                rows.append(
+                    _semantic_row(
+                        path,
+                        base,
+                        f"motif_count {motif_count} does not equal {len(motifs)} motif rows",
+                    )
+                )
+            ordinals = [motif.get("ordinal") for motif in motifs if isinstance(motif, dict)]
+            expected = list(range(1, len(motifs) + 1))
+            if len(ordinals) == len(motifs) and ordinals != expected:
+                rows.append(
+                    _semantic_row(
+                        path,
+                        f"{base}/motifs",
+                        f"motif ordinals must be contiguous source order {expected!r}; "
+                        f"found {ordinals!r}",
+                    )
+                )
+            for motif_index, motif in enumerate(motifs):
+                if not isinstance(motif, dict):
+                    continue
+                minimum = motif.get("training_distance_from_previous_min")
+                maximum = motif.get("training_distance_from_previous_max")
+                if isinstance(minimum, int) and isinstance(maximum, int) and minimum > maximum:
+                    rows.append(
+                        _semantic_row(
+                            path,
+                            f"{base}/motifs/{motif_index}",
+                            "training_distance_from_previous_min exceeds "
+                            "training_distance_from_previous_max",
+                        )
+                    )
+                constraint = motif.get("inter_motif_distance_constraint")
+                if not isinstance(constraint, dict):
+                    continue
+                constraint_minimum = constraint.get("minimum")
+                constraint_maximum = constraint.get("maximum")
+                constraint_base = f"{base}/motifs/{motif_index}/inter_motif_distance_constraint"
+                if (
+                    isinstance(constraint_minimum, int)
+                    and isinstance(constraint_maximum, int)
+                    and constraint_minimum > constraint_maximum
+                ):
+                    rows.append(
+                        _semantic_row(
+                            path,
+                            constraint_base,
+                            "inter-motif constraint minimum exceeds maximum",
+                        )
+                    )
+                ordinal = motif.get("ordinal")
+                region_start = constraint.get("region_start_ordinal")
+                region_end = constraint.get("region_end_ordinal")
+                if (
+                    isinstance(ordinal, int)
+                    and isinstance(region_start, int)
+                    and isinstance(region_end, int)
+                    and (region_start, region_end) != (ordinal - 1, ordinal)
+                ):
+                    rows.append(
+                        _semantic_row(
+                            path,
+                            constraint_base,
+                            f"inter-motif constraint REGION must be {ordinal - 1}-{ordinal} "
+                            f"for motif ordinal {ordinal}; found {region_start}-{region_end}",
+                        )
+                    )
+
+        if representation.get("representation_type") != "PRINTS_FINAL_ORDERED_MOTIF_SETS":
+            continue
+        expected_fields = {
+            "source_accession": identifier,
+            "source_release": PRINTS_42_0_RELEASE,
+            "source_artifact": PRINTS_42_0_SOURCE_ARTIFACT,
+            "source_artifact_sha256": PRINTS_42_0_SHA256,
+            "compatible_derivation_tool_hint": "EMBOSS_PRINTSEXTRACT",
+        }
+        for field_name, expected_value in expected_fields.items():
+            actual_value = representation.get(field_name)
+            if actual_value != expected_value:
+                rows.append(
+                    _semantic_row(
+                        path,
+                        f"{base}/{field_name}",
+                        f"PRINTS 42.0 {field_name} must be {expected_value!r}; "
+                        f"found {actual_value!r}",
+                    )
+                )
+        if instance.get("sequence_pattern") is not None:
+            rows.append(
+                _semantic_row(
+                    path,
+                    "/sequence_pattern",
+                    "a PRINTS ordered fingerprint must not be serialized as one sequence_pattern",
+                )
+            )
+    return rows
+
+
+def _profile_invariant_errors(path: Path, instance: object) -> list[dict]:
+    """Enforce cross-field SFLD profile facts JSON Schema cannot express."""
+
+    if not isinstance(instance, dict):
+        return []
+    representations = instance.get("sequence_profile_representations")
+    if not isinstance(representations, list):
+        return []
+    rows: list[dict] = []
+    identifier = instance.get("identifier")
+    for representation_index, representation in enumerate(representations):
+        if not isinstance(representation, dict):
+            continue
+        base = f"/sequence_profile_representations/{representation_index}"
+        sites = representation.get("sites", [])
+        patterns = representation.get("site_feature_patterns", [])
+        site_count = representation.get("site_count")
+        pattern_count = representation.get("site_feature_pattern_count")
+        if isinstance(sites, list) and isinstance(site_count, int):
+            if site_count != len(sites):
+                rows.append(
+                    _semantic_row(
+                        path,
+                        base,
+                        f"site_count {site_count} does not equal {len(sites)} SITE rows",
+                    )
+                )
+            ordinals = [site.get("ordinal") for site in sites if isinstance(site, dict)]
+            expected_ordinals = list(range(1, len(sites) + 1))
+            if len(ordinals) == len(sites) and ordinals != expected_ordinals:
+                rows.append(
+                    _semantic_row(
+                        path,
+                        f"{base}/sites",
+                        "site ordinals must be contiguous source order "
+                        f"{expected_ordinals!r}; found {ordinals!r}",
+                    )
+                )
+            positions = [site.get("model_position") for site in sites if isinstance(site, dict)]
+            if len(positions) == len(sites) and all(
+                isinstance(position, int) for position in positions
+            ):
+                if positions != sorted(set(positions)):
+                    rows.append(
+                        _semantic_row(
+                            path,
+                            f"{base}/sites",
+                            "site model_position values must be strictly increasing",
+                        )
+                    )
+                model_length = representation.get("model_length")
+                if isinstance(model_length, int) and any(
+                    position > model_length for position in positions
+                ):
+                    rows.append(
+                        _semantic_row(
+                            path,
+                            f"{base}/sites",
+                            f"site model_position exceeds model_length {model_length}",
+                        )
+                    )
+        if isinstance(patterns, list) and isinstance(pattern_count, int):
+            if pattern_count != len(patterns):
+                rows.append(
+                    _semantic_row(
+                        path,
+                        base,
+                        f"site_feature_pattern_count {pattern_count} does not equal "
+                        f"{len(patterns)} FEATURE rows",
+                    )
+                )
+            if isinstance(site_count, int) and any(
+                isinstance(pattern, str) and len(pattern) != site_count for pattern in patterns
+            ):
+                rows.append(
+                    _semantic_row(
+                        path,
+                        f"{base}/site_feature_patterns",
+                        "every correlated FEATURE tuple length must equal site_count",
+                    )
+                )
+            if len(patterns) != len({pattern for pattern in patterns if isinstance(pattern, str)}):
+                rows.append(
+                    _semantic_row(
+                        path,
+                        f"{base}/site_feature_patterns",
+                        "correlated FEATURE tuples must be unique",
+                    )
+                )
+        if (
+            isinstance(site_count, int)
+            and isinstance(pattern_count, int)
+            and (site_count == 0) != (pattern_count == 0)
+        ):
+            rows.append(
+                _semantic_row(
+                    path,
+                    base,
+                    "SFLD sites and correlated FEATURE tuples must both be empty or both present",
+                )
+            )
+
+        if representation.get("representation_type") != SFLD_4_REPRESENTATION_TYPE:
+            continue
+        expected_fields = {
+            "source_accession": identifier,
+            "source_release": SFLD_4_RELEASE,
+            "source_model_artifact": SFLD_4_HMM_SOURCE_ARTIFACT,
+            "source_model_artifact_sha256": SFLD_4_HMM_SHA256,
+            "source_sites_artifact": SFLD_4_SITES_SOURCE_ARTIFACT,
+            "source_sites_artifact_sha256": SFLD_4_SITES_SHA256,
+            "source_hierarchy_artifact": SFLD_4_HIERARCHY_SOURCE_ARTIFACT,
+            "source_hierarchy_artifact_sha256": SFLD_4_HIERARCHY_SHA256,
+            "profile_search_mode": SFLD_4_PROFILE_SEARCH_MODE,
+            "site_coordinate_system": SFLD_4_SITE_COORDINATE_SYSTEM,
+            "site_evidence_scope": SFLD_4_SITE_EVIDENCE_SCOPE,
+        }
+        for field_name, expected_value in expected_fields.items():
+            actual_value = representation.get(field_name)
+            if actual_value != expected_value:
+                rows.append(
+                    _semantic_row(
+                        path,
+                        f"{base}/{field_name}",
+                        f"SFLD 4 {field_name} must be {expected_value!r}; found {actual_value!r}",
+                    )
+                )
+        source_accession = representation.get("source_accession")
+        accession = (
+            source_accession.split(":", 1)[1]
+            if isinstance(source_accession, str) and ":" in source_accession
+            else ""
+        )
+        level_by_prefix = {
+            "SFLDS": "SUPERFAMILY",
+            "SFLDG": "SUBGROUP",
+            "SFLDF": "FAMILY",
+        }
+        expected_level = next(
+            (level for prefix, level in level_by_prefix.items() if accession.startswith(prefix)),
+            None,
+        )
+        if (
+            expected_level is not None
+            and representation.get("native_classification_level") != expected_level
+        ):
+            rows.append(
+                _semantic_row(
+                    path,
+                    f"{base}/native_classification_level",
+                    f"SFLD accession {accession} requires native level {expected_level}",
+                )
+            )
+        if instance.get("sequence_pattern") is not None:
+            rows.append(
+                _semantic_row(
+                    path,
+                    "/sequence_pattern",
+                    "an SFLD HMM plus correlated sites must not be serialized as one "
+                    "sequence_pattern",
+                )
+            )
+    return rows
 
 
 def validate_one(path: Path) -> list[dict]:
@@ -146,6 +457,8 @@ def validate_one(path: Path) -> list[dict]:
                 "message": result.message[:300],
             }
         )
+    rows.extend(_fingerprint_invariant_errors(path, instance))
+    rows.extend(_profile_invariant_errors(path, instance))
     return rows
 
 
@@ -202,6 +515,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--quiet", action="store_true", help="Suppress per-file progress dots.")
     args = parser.parse_args(argv)
+    if args.workers < 1:
+        parser.error("--workers must be at least 1")
 
     roots = args.paths or DEFAULT_ROOTS
     files = iter_yaml_files(roots)
@@ -239,18 +554,31 @@ def main(argv: list[str] | None = None) -> int:
     )
 
     all_rows: list[dict] = []
-    with ProcessPoolExecutor(max_workers=args.workers) as pool:
-        futures = {pool.submit(validate_one, p): p for p in files}
-        done = 0
-        for fut in as_completed(futures):
-            done += 1
-            rows = fut.result()
-            all_rows.extend(rows)
+    if args.workers == 1:
+        # A one-worker run is also the portable path for constrained macOS
+        # environments where ProcessPoolExecutor cannot query POSIX named-
+        # semaphore limits.  Do not construct a process pool when the caller
+        # explicitly requested serial validation.
+        for done, path in enumerate(files, 1):
+            all_rows.extend(validate_one(path))
             if not args.quiet and done % 2000 == 0:
                 print(
                     f"  {done}/{len(files)} files processed, {len(all_rows)} ERROR rows so far",
                     file=sys.stderr,
                 )
+    else:
+        with ProcessPoolExecutor(max_workers=args.workers) as pool:
+            futures = {pool.submit(validate_one, p): p for p in files}
+            done = 0
+            for fut in as_completed(futures):
+                done += 1
+                rows = fut.result()
+                all_rows.extend(rows)
+                if not args.quiet and done % 2000 == 0:
+                    print(
+                        f"  {done}/{len(files)} files processed, {len(all_rows)} ERROR rows so far",
+                        file=sys.stderr,
+                    )
 
     # Sort for deterministic TSV output (avoids noisy diffs from worker scheduling).
     all_rows.sort(key=lambda r: (r["file"], r["path"], r["category"], r["message"]))

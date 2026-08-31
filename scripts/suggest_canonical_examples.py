@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
-"""Suggest `canonical_examples` from the Swiss-Prot profile matrix (issue #7, phase 5).
+"""Emit grounding candidates from the Swiss-Prot profile matrix.
 
-Phases 1-2 built the protein × trait matrix (`data/profiles/profiles.jsonl`);
-phases 3-4 mined and materialised the cross-axis rules ("this sequence signature
-essentially always encodes this fold", "this trait implies this function") into
-`data/equivalence/trait_cooccurrence.tsv`. This phase closes the loop back to
-real proteins: it writes exemplar carriers onto the trait records themselves.
-
-For each corpus trait record that is *observed* in the matrix and has no
-`canonical_examples` yet, the carriers of that trait are ranked and the top few
-are written as `CanonicalExample` entries with `source: SWISSPROT_PROFILE`.
+Phases 1-4 built the protein × trait matrix and cross-axis rules. This
+candidate-first successor to phase 5 keeps their carrier-ranking logic but
+writes only an external JSONL ledger; it never edits trait records. The profile
+matrix does not contain a release-pinned full sequence or a record-specific
+occurrence, so these selections remain unqualified until
+``ground_uniprot_examples.py`` resolves and validates them.
 
 Ranking — the point is to pick the carrier that best *exemplifies* the trait,
 not an arbitrary one:
@@ -30,31 +27,30 @@ not an arbitrary one:
     well-characterised one (0.20 / 0.05). See score_carrier for why these are
     percentiles rather than raw counts.
 
-Ties break on accession, so the output is deterministic and the script is
-idempotent: records that already carry examples are skipped unless --force
-(append) or --rerank (replace this script's own picks).
+Ties break on accession, so output is deterministic and idempotent. Existing
+legacy examples do not suppress a candidate; only an explicitly QUALIFIED
+example does. Profile co-occurrence is evidence tier D, never promotion proof.
 
 Guards: traits carried by more than --max-prevalence of the matrix (default 25%)
-are skipped — a term that generic has no archetype. Every rewritten file is
-re-parsed in memory before it is written, so a malformed emission is reported
-rather than committed.
-
-Dry-run (counts + a sample) unless --apply. Requires PyYAML for the verify pass.
+are skipped — a term that generic has no archetype. The ledger is atomically
+replaced. ``--apply`` remains only to refuse old direct-write invocations.
 
 Usage:
-  python3 scripts/suggest_canonical_examples.py --dry-run
-  python3 scripts/suggest_canonical_examples.py --rule-backed-only --apply
-  python3 scripts/suggest_canonical_examples.py --prefix CATH --max-examples 5 --apply
+  python3 scripts/suggest_canonical_examples.py --prefix CATH --max-examples 5
+  python3 scripts/suggest_canonical_examples.py --rule-backed-only \
+      --candidate-out reports/uniprot-grounding/profile-candidates.jsonl
 """
 
 from __future__ import annotations
 
 import argparse
 import collections
+import hashlib
 import json
+import os
 import re
 import sys
-from datetime import datetime, timezone
+import tempfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -63,9 +59,13 @@ JSONL = REPO_ROOT / "data" / "profiles" / "profiles.jsonl"
 INDEX = REPO_ROOT / "data" / "raw" / "profiles_cache" / "trait_index.json"
 PATHS_CACHE = REPO_ROOT / "data" / "raw" / "profiles_cache" / "record_paths.json"
 RULES = REPO_ROOT / "data" / "equivalence" / "trait_cooccurrence.tsv"
+DEFAULT_CANDIDATES = (
+    REPO_ROOT / "reports" / "uniprot-grounding" / "profile-candidates.jsonl"
+)
 
 _IDENT = re.compile(r"(?m)^identifier:\s*([A-Za-z][A-Za-z0-9._-]*:[A-Za-z0-9._-]+)\s*$")
 _HAS_EXAMPLES = re.compile(r"(?m)^canonical_examples:")
+_HAS_QUALIFIED = re.compile(r"(?m)^\s+qualification_status:\s*QUALIFIED\s*$")
 _LICENSE = re.compile(r"(?m)^license:")
 # a top-level key — column 0, and not a `- ` list item (those are indented or
 # start with a dash, so they never match)
@@ -279,6 +279,102 @@ def score_carrier(prot: dict, trait: str, trait_axis: str, partners: dict) -> tu
     return (score, coverage, len(matched), len(part))
 
 
+def _candidate_scope(trait: str, trait_axis: str, trait_category: str) -> str:
+    namespace = trait.partition(":")[0]
+    if trait_axis in {"FUNCTION", "EVOLUTION"}:
+        return "WHOLE_PROTEIN"
+    if trait_category in {"SEQ_FAMILY", "FUNC_PROTEIN_FAMILY", "FUNC_ORTHOLOG_GROUP"} \
+            and namespace in {"PANTHER", "NCBIfam", "PIRSF"}:
+        return "WHOLE_PROTEIN"
+    return "LOCALIZED"
+
+
+def _candidate_id(row: dict) -> str:
+    identity = {
+        key: row.get(key)
+        for key in (
+            "trait_id",
+            "protein_id",
+            "source_trait_id",
+            "mapping_method",
+            "evidence_source",
+            "scope",
+        )
+    }
+    payload = json.dumps(identity, sort_keys=True, separators=(",", ":"))
+    return "ug-" + hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def profile_candidate(
+    prot: dict,
+    trait: str,
+    trait_axis: str,
+    trait_category: str,
+    record_path: str,
+    score: float,
+    coverage: float,
+    matched: int,
+    total: int,
+) -> dict:
+    """One profile-ranked carrier in the shared candidate-ledger contract."""
+    scope = _candidate_scope(trait, trait_axis, trait_category)
+    reasons = [
+        "profile matrix is not release-stamped",
+        "full release-pinned sequence and checksum require resolution",
+    ]
+    if scope == "LOCALIZED":
+        reasons.append("record-specific occurrence coordinates require resolution")
+    row = {
+        "schema_version": 1,
+        "candidate_status": "PROTEIN_RESOLVED",
+        "qualification_status": "CANDIDATE_PROTEIN",
+        "trait_id": trait,
+        "record_path": record_path,
+        "trait_axis": trait_axis,
+        "trait_category": trait_category,
+        "source_namespace": trait.partition(":")[0],
+        "protein_id": prot["accession"],
+        "protein_label": prot.get("name"),
+        "taxon_id": prot.get("taxon"),
+        "taxon_label": prot.get("taxon_label"),
+        "sequence_length": prot.get("length"),
+        "reviewed": bool(prot.get("reviewed")),
+        "scope": scope,
+        "source_trait_id": trait,
+        "mapping_method": "SOURCE_MEMBERSHIP",
+        "evidence_source": "Swiss-Prot profile matrix",
+        "evidence_tier": "D",
+        "selection_score": round(score, 12),
+        "rule_coverage": round(coverage, 12),
+        "matched_rule_partners": matched,
+        "total_rule_partners": total,
+        "family_classifications": sorted(
+            t for t in prot["_traits"] if t.partition(":")[0] in _CLASSIFICATION_PREFIXES
+        )[:_MAX_CLASSIFICATIONS],
+        "reasons": reasons,
+    }
+    row = {key: value for key, value in row.items() if value not in (None, "", [])}
+    row["candidate_id"] = _candidate_id(row)
+    return row
+
+
+def write_candidate_ledger(path: Path, rows: list[dict]) -> None:
+    """Atomically replace the deterministic profile candidate JSONL."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    descriptor, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
+    try:
+        with os.fdopen(descriptor, "w", encoding="utf-8") as handle:
+            for row in sorted(rows, key=lambda item: (item["trait_id"], item["protein_id"])):
+                handle.write(json.dumps(row, sort_keys=True, separators=(",", ":")) + "\n")
+        os.replace(temporary, path)
+    except BaseException:
+        try:
+            os.unlink(temporary)
+        except FileNotFoundError:
+            pass
+        raise
+
+
 # ---------------------------------------------------------------------------
 # Emission
 # ---------------------------------------------------------------------------
@@ -409,12 +505,13 @@ def duplicate_top_keys(text: str) -> list:
 # ---------------------------------------------------------------------------
 
 
-def main() -> int:
+def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--apply", action="store_true", help="write the records (else dry-run)")
+    ap.add_argument("--apply", action="store_true",
+                    help="retired: direct record writes are refused")
     ap.add_argument("--max-examples", type=int, default=3,
-                    help="exemplars written per record (default 3)")
+                    help="candidate carriers emitted per record (default 3)")
     ap.add_argument("--rule-backed-only", action="store_true",
                     help="only traits that participate in a mined cross-axis rule")
     ap.add_argument("--prefix", action="append",
@@ -425,12 +522,9 @@ def main() -> int:
     ap.add_argument("--min-carriers", type=int, default=1)
     ap.add_argument("--limit", type=int, help="cap the number of records touched")
     ap.add_argument("--rerank", action="store_true",
-                    help="re-rank records whose examples this script wrote, against "
-                         "the current matrix and rule set (replaces them). Records "
-                         "holding any CURATOR / UNIPROTKB_API example are skipped.")
+                    help="compatibility no-op: every candidate run re-ranks the matrix")
     ap.add_argument("--force", action="store_true",
-                    help="also process records that already have canonical_examples "
-                         "(appends; never removes a curator pick)")
+                    help="also emit candidates for records already marked QUALIFIED")
     ap.add_argument("--rules", default=str(RULES))
     ap.add_argument("--mine-rules", action="store_true",
                     help="also mine cross-axis partners in-process over every "
@@ -442,26 +536,21 @@ def main() -> int:
     ap.add_argument("--min-lift", type=float, default=5.0)
     ap.add_argument("--refresh-paths", action="store_true")
     ap.add_argument("--out", help="write the markdown summary here")
-    args = ap.parse_args()
+    ap.add_argument("--candidate-out", type=Path, default=DEFAULT_CANDIDATES,
+                    help=f"candidate JSONL output (default: {DEFAULT_CANDIDATES})")
+    args = ap.parse_args(argv)
 
-    import yaml
+    if args.apply:
+        print(
+            "direct canonical-example mutation is retired; emit candidates and use "
+            "ground_uniprot_examples.py resolve/promote",
+            file=sys.stderr,
+        )
+        return 2
 
-    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
     rows = load_profiles(JSONL)
     idx = json.loads(INDEX.read_text(encoding="utf-8"))
     paths = build_record_paths(args.refresh_paths)
-
-    # Describe the whole matrix, not its most common organism — naming one
-    # organism was correct while the matrix was human-only and became false
-    # provenance the moment it went multi-organism (an E. coli exemplar
-    # annotated "reviewed Homo sapiens entries").
-    organisms = collections.Counter(r.get("taxon_label") or "?" for r in rows)
-    if len(organisms) == 1:
-        who = f"reviewed {next(iter(organisms))} entries"
-    else:
-        who = (f"reviewed entries across {len(organisms)} organisms: "
-               + ", ".join(o.split(" (")[0] for o, _ in organisms.most_common()))
-    matrix_note = f"Swiss-Prot profile matrix ({len(rows):,} {who})"
 
     # trait → carriers. A protein's traits are its matched corpus signatures
     # plus its GO / EC, exactly as the phase-3 mining defined them.
@@ -493,7 +582,8 @@ def main() -> int:
     n_matrix = len(rows)
     stats = collections.Counter()
     per_prefix = collections.Counter()
-    written, samples, failures = 0, [], []
+    candidate_rows: list[dict] = []
+    samples: list[tuple] = []
 
     targets = sorted(carriers)
     if args.prefix:
@@ -527,111 +617,74 @@ def main() -> int:
                       file=sys.stderr)
             stats["skip: unreadable"] += 1
             continue
-        prior_top = None
-        if _HAS_EXAMPLES.search(text):
-            if args.rerank:
-                # Re-rank this script's own picks against the current matrix and
-                # rule set — the phase-5 picks were ranked on a human-only matrix
-                # and a much smaller overlay.
-                ids = _EXAMPLE_ID.findall(text)
-                prior_top = ids[0] if ids else None
-                stripped = strip_suggested_examples(text)
-                if stripped is None:
-                    stats["skip: rerank would touch curated examples"] += 1
-                    continue
-                text, n_dropped = stripped
-                stats["examples re-ranked away"] += n_dropped
-            elif not args.force:
-                stats["skip: already has examples"] += 1
-                continue
+        if _HAS_EXAMPLES.search(text) and _HAS_QUALIFIED.search(text) and not args.force:
+            stats["skip: already qualified"] += 1
+            continue
 
-        trait_axis = (idx.get(trait) or ["", ""])[0]
-        already = existing_example_ids(text)          # only non-empty under --force
-        ranked = [sp for sp in sorted(
+        trait_axis, trait_category = (idx.get(trait) or ["", ""])
+        ranked = list(sorted(
             ((score_carrier(p, trait, trait_axis, partners), p) for p in pool),
             key=lambda sp: (-sp[0][0], sp[1]["accession"]),
-        ) if sp[1]["accession"] not in already][:args.max_examples]
+        ))[:args.max_examples]
         if not ranked:
-            stats["skip: all carriers already listed"] += 1
+            stats["skip: no ranked carrier"] += 1
             continue
 
-        block: list = []
-        for (_score, coverage, matched, total), prot in ranked:
-            block += example_block(prot, trait, trait_axis, coverage, matched,
-                                   total, len(pool), matrix_note, today)
-        new_text = insert_block(text, block)
+        for (score, coverage, matched, total), prot in ranked:
+            candidate_rows.append(
+                profile_candidate(
+                    prot,
+                    trait,
+                    trait_axis,
+                    trait_category,
+                    rel,
+                    score,
+                    coverage,
+                    matched,
+                    total,
+                )
+            )
 
-        # Never write YAML we cannot read back — and never write a duplicate
-        # top-level key, which parses fine but silently discards the earlier
-        # value (see issue #34).
-        try:
-            dupes = duplicate_top_keys(new_text)
-            assert not dupes, f"duplicate top-level key(s): {', '.join(dupes)}"
-            parsed = yaml.safe_load(new_text)
-            got = len(parsed.get("canonical_examples") or [])
-            want = len(already) + len(ranked)
-            assert got == want, f"{got} examples parsed, expected {want}"
-        except Exception as e:                            # noqa: BLE001
-            failures.append(f"{rel}: {e}")
-            stats["skip: verify failed"] += 1
-            continue
-
-        stats["written"] += 1
+        stats["queued"] += 1
         per_prefix[trait.split(":")[0]] += 1
         if partners.get(trait):
             stats["rule-backed"] += 1
-        if args.rerank and prior_top:
-            new_top = ranked[0][1]["accession"]
-            stats["top pick changed" if new_top != prior_top
-                  else "top pick unchanged"] += 1
-            if new_top != prior_top and ranked[0][1].get("taxon") != "NCBITaxon:9606":
-                stats["top pick moved off human"] += 1
-        written += len(ranked)
         if len(samples) < 8:
             samples.append((trait, rel, ranked[0][1]["accession"],
                             ranked[0][1]["name"], ranked[0][0][1]))
-        if args.apply:
-            path.write_text(new_text, encoding="utf-8")
-        if args.limit and stats["written"] >= args.limit:
+        if args.limit and stats["queued"] >= args.limit:
             break
 
-    L = [f"# canonical_examples suggestions ({'APPLIED' if args.apply else 'dry-run'})",
+    candidate_rows = list({row["candidate_id"]: row for row in candidate_rows}.values())
+    write_candidate_ledger(args.candidate_out, candidate_rows)
+
+    L = ["# UniProt grounding candidates from the Swiss-Prot profile matrix",
          "",
          f"matrix: {n_matrix:,} proteins | traits observed in corpus: {len(carriers):,} | "
          f"rule overlay ({Path(args.rules).name}): {n_overlay:,} pairs"
          + (f" | mined in-process: {n_mined:,} pairs" if args.mine_rules else ""),
          "",
-         f"**records to update: {stats['written']:,}** "
+         f"**records queued: {stats['queued']:,}** "
          f"({stats['rule-backed']:,} rule-backed, "
-         f"{stats['written'] - stats['rule-backed']:,} annotation-ranked); "
-         f"examples emitted: {written:,}",
+         f"{stats['queued'] - stats['rule-backed']:,} annotation-ranked); "
+         f"candidates emitted: {len(candidate_rows):,}",
          "",
          "| skipped | n |", "|---|--:|"]
     for k, v in sorted(stats.items()):
         if k.startswith("skip:"):
             L.append(f"| {k[6:]} | {v:,} |")
-    rerank_keys = [k for k in sorted(stats)
-                   if k.startswith("top pick") or k.startswith("examples re-ranked")]
-    if rerank_keys:
-        L += ["", "| re-rank | n |", "|---|--:|"]
-        L += [f"| {k} | {stats[k]:,} |" for k in rerank_keys]
     L += ["", "| namespace | records |", "|---|--:|"]
     for k, v in per_prefix.most_common():
         L.append(f"| {k} | {v:,} |")
     L += ["", "## Sample picks", "", "| trait | top exemplar | rule coverage |", "|---|---|--:|"]
     for trait, _rel, acc, name, cov in samples:
         L.append(f"| {trait} | {acc} — {name} | {cov:.2f} |")
-    if failures:
-        L += ["", f"## Verify failures ({len(failures)})", ""]
-        L += [f"- {f}" for f in failures[:20]]
-
     report = "\n".join(L)
     print(report)
     if args.out:
         Path(args.out).write_text(report + "\n", encoding="utf-8")
-    if not args.apply:
-        print("\nDry-run — pass --apply to write.", file=sys.stderr)
-    return 1 if failures else 0
+    print(f"\nCandidate ledger: {args.candidate_out}", file=sys.stderr)
+    return 0
 
 
 if __name__ == "__main__":
