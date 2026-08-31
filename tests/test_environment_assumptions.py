@@ -21,6 +21,7 @@ like production ones, and a gate with false positives gets suppressed.
 from __future__ import annotations
 
 import ast
+import functools
 import pathlib
 import re
 import subprocess
@@ -30,18 +31,23 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # `REPO / "name"`, `REPO_ROOT / "name"`, `repo_root / "name"` -- the forms used to
 # reach a top-level entry of this repository from code.
 _REPO_JOIN = re.compile(r'(?:REPO|REPO_ROOT|repo_root)\s*/\s*"([^"/]+)"')
-# A module constant naming a path under the repository root.
-_ROOT_CONSTANT = re.compile(r'^([A-Z][A-Z0-9_]*)\s*=\s*REPO_ROOT\s*/\s*"([^"]+)"', re.M)
 
 
-def _tracked(*globs: str) -> list[pathlib.Path]:
+def _tracked(*globs: str) -> list[str]:
+    """Repository-relative paths of tracked files matching ``globs``."""
     out = subprocess.run(
         ["git", "-C", str(ROOT), "ls-files", *globs],
         capture_output=True,
         text=True,
         check=True,
     )
-    return [ROOT / line for line in out.stdout.split("\n") if line]
+    return [line for line in out.stdout.split("\n") if line]
+
+
+@functools.lru_cache(maxsize=1)
+def _tracked_paths() -> frozenset[str]:
+    """Every tracked path, read once. One `git ls-files` beats one per constant."""
+    return frozenset(_tracked())
 
 
 def _absent_from_a_clean_checkout(relative: str) -> bool:
@@ -54,13 +60,51 @@ def _absent_from_a_clean_checkout(relative: str) -> bool:
     for ignored and merely-empty directories alike. (Found by mutation-testing
     this file: the check-ignore version passed while the defect was reinstated.)
     """
-    listed = subprocess.run(
-        ["git", "-C", str(ROOT), "ls-files", "--", relative],
-        capture_output=True,
-        text=True,
-        check=True,
+    prefix = relative.rstrip("/") + "/"
+    return not any(
+        tracked == relative or tracked.startswith(prefix) for tracked in _tracked_paths()
     )
-    return not listed.stdout.strip()
+
+
+def _root_constants(text: str) -> dict[str, str]:
+    """CONSTANT -> repository-relative path, for constants rooted at REPO_ROOT.
+
+    Parsed rather than matched. The first version of this used a single-line
+    regex and silently skipped five real constants written across lines --
+    including DEFAULT_PANTHER_CLASSIFICATIONS, one of the four pinned sources the
+    record-content replay verifies (#619). A gate that is green because it looked
+    at less than it claimed to is the failure this whole file exists to prevent,
+    so it must not be built on a pattern that can quietly miss a shape.
+    """
+    try:
+        tree = ast.parse(text)
+    except SyntaxError:  # pragma: no cover
+        return {}
+
+    def segments(node: ast.AST) -> list[str] | None:
+        """The path parts of a `REPO_ROOT / "a" / "b"` chain, or None."""
+        if isinstance(node, ast.Name):
+            return [] if node.id == "REPO_ROOT" else None
+        if isinstance(node, ast.BinOp) and isinstance(node.op, ast.Div):
+            left = segments(node.left)
+            if left is None or not isinstance(node.right, ast.Constant):
+                return None
+            if not isinstance(node.right.value, str):
+                return None
+            return [*left, node.right.value]
+        return None
+
+    found: dict[str, str] = {}
+    for node in tree.body:
+        if not isinstance(node, ast.Assign) or len(node.targets) != 1:
+            continue
+        target = node.targets[0]
+        if not isinstance(target, ast.Name) or not target.id.isupper():
+            continue
+        parts = segments(node.value)
+        if parts:
+            found[target.id] = "/".join(parts)
+    return found
 
 
 def _function_sources(text: str) -> dict[str, str]:
@@ -124,7 +168,8 @@ def test_repo_path_references_match_the_filesystems_case():
     entries = {path.name for path in ROOT.iterdir()}
     by_lower = {name.lower(): name for name in entries}
     wrong: list[str] = []
-    for path in _tracked("scripts/*.py", "tests/*.py"):
+    for relative_path in _tracked("scripts/*.py", "tests/*.py"):
+        path = ROOT / relative_path
         text = path.read_text(encoding="utf-8")
         sources = _function_sources(text)
         excused = {
@@ -158,9 +203,10 @@ def test_no_root_absent_from_a_clean_checkout_is_resolved_strictly():
     cost the whole module.
     """
     offenders: list[str] = []
-    for path in _tracked("scripts/*.py"):
+    for relative_path in _tracked("scripts/*.py", "tests/*.py"):
+        path = ROOT / relative_path
         text = path.read_text(encoding="utf-8")
-        for name, relative in _ROOT_CONSTANT.findall(text):
+        for name, relative in sorted(_root_constants(text).items()):
             if not re.search(rf"\b{re.escape(name)}\.resolve\(strict=True\)", text):
                 continue
             if _absent_from_a_clean_checkout(relative):
@@ -171,3 +217,44 @@ def test_no_root_absent_from_a_clean_checkout_is_resolved_strictly():
     assert not offenders, (
         "strict resolves of paths absent from a clean checkout:\n  " + "\n  ".join(offenders)
     )
+
+
+def test_root_constants_are_found_in_every_shape_they_are_written():
+    """Pins #619: the regex this replaced saw only single-line assignments.
+
+    It silently skipped five real constants, `DEFAULT_PANTHER_CLASSIFICATIONS`
+    among them, and the gate passed having checked fewer paths than exist. A gate
+    green because it looked at less than it claimed to is the failure this file
+    exists to prevent, so the parser is pinned against the shapes rather than
+    trusted.
+    """
+    module = (
+        "REPO_ROOT = pathlib.Path(__file__).resolve().parent.parent\n"
+        'ONE_LINE = REPO_ROOT / "reports"\n'
+        "MULTI = (\n"
+        '    REPO_ROOT / "data" / "raw" / "panther" / "classifications.tsv"\n'
+        ")\n"
+        'DEEP = REPO_ROOT / "data" / "grounding"\n'
+        'NOT_A_PATH = "reports"\n'
+        'NOT_ROOTED = SOMEWHERE_ELSE / "reports"\n'
+        'lowercase = REPO_ROOT / "reports"\n'
+    )
+    found = _root_constants(module)
+    assert found == {
+        "ONE_LINE": "reports",
+        "MULTI": "data/raw/panther/classifications.tsv",
+        "DEEP": "data/grounding",
+    }, found
+
+
+def test_the_clean_checkout_predicate_distinguishes_tracked_from_untracked():
+    """`reports/` has no tracked files; `data/grounding/` and `scripts/` do.
+
+    The distinction the gate turns on, asserted against the real repository so a
+    change to what is committed cannot quietly invert it.
+    """
+    assert _absent_from_a_clean_checkout("reports")
+    assert not _absent_from_a_clean_checkout("data/grounding")
+    assert not _absent_from_a_clean_checkout("scripts")
+    # A prefix must not match a sibling that merely starts with the same letters.
+    assert _absent_from_a_clean_checkout("script")
