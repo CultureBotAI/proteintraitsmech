@@ -5,9 +5,13 @@
 # `just lint` recipe alone would not have fixed that: a gate nobody runs is the thing
 # being complained about. This is what makes it a gate.
 #
-# `validate-all` and `audit-graphs` run in .github/workflows/validate-strict.yaml
-# instead — not because they need data/raw (neither does; that claim was false, #485),
+# Both halves of `validate-all` — strict record validation and UniProt grounding
+# validation — and `audit-graphs` run in .github/workflows/validate-strict.yaml
+# instead, not because they need data/raw (none does; that claim was false, #485),
 # but because the ~430K-record corpus makes them too slow to bundle here on every PR.
+# That workflow invokes the scripts directly rather than the recipes, so check it
+# against script names: naming the recipe here was accurate until `validate-all`
+# grew a second half, and then said "covered" about something nothing ran (#606).
 # Source-registry structure is checked here; licence dispositions explicitly marked
 # pending remain notices until the owner/legal decision in #517.
 name: checks

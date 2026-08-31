@@ -17,7 +17,12 @@ on:
       # validates -- without this line the gate would not fire on it (#484)
       - "src/proteintraitsmech/schema/mech_shared.yaml"
       - "data/traits/**"
+      # A registry edit can invalidate a QUALIFIED record no diff mentions, the
+      # same argument that puts the schema here (#606).
+      - "data/grounding/**"
       - "scripts/validate_strict.py"
+      - "scripts/validate_uniprot_grounding.py"
+      - "scripts/uniprot_record_content_gate.py"
       - "scripts/audit_causal_graphs.py"
       - "scripts/validation_scope.py"
       - ".github/workflows/validate-strict.yaml"
@@ -30,7 +35,12 @@ on:
       # validates -- without this line the gate would not fire on it (#484)
       - "src/proteintraitsmech/schema/mech_shared.yaml"
       - "data/traits/**"
+      # A registry edit can invalidate a QUALIFIED record no diff mentions, the
+      # same argument that puts the schema here (#606).
+      - "data/grounding/**"
       - "scripts/validate_strict.py"
+      - "scripts/validate_uniprot_grounding.py"
+      - "scripts/uniprot_record_content_gate.py"
       - "scripts/audit_causal_graphs.py"
       - "scripts/validation_scope.py"
       - ".github/workflows/validate-strict.yaml"
@@ -79,6 +89,12 @@ jobs:
           mapfile -t files < changed_traits.txt
           uv run python scripts/validate_strict.py --allow-missing "${files[@]}"
 
+      - name: UniProt grounding validation (changed files)
+        if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
+        run: |
+          mapfile -t files < changed_traits.txt
+          uv run python scripts/validate_uniprot_grounding.py "${files[@]}"
+
       - name: Structural audit (changed files)
         if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
         run: |
@@ -88,6 +104,10 @@ jobs:
       - name: Strict validation (full corpus)
         if: steps.scope.outputs.mode == 'full'
         run: uv run python scripts/validate_strict.py
+
+      - name: UniProt grounding validation (full corpus)
+        if: steps.scope.outputs.mode == 'full'
+        run: uv run python scripts/validate_uniprot_grounding.py
 
       - name: Structural audit (full corpus)
         if: steps.scope.outputs.mode == 'full'

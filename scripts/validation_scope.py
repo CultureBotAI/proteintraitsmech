@@ -21,18 +21,31 @@ FULL_VALIDATION_PATHS = frozenset(
         ".github/workflows/validate-strict.yaml",
         "pyproject.toml",
         "scripts/audit_causal_graphs.py",
+        "scripts/uniprot_record_content_gate.py",
         "scripts/validate_strict.py",
+        "scripts/validate_uniprot_grounding.py",
         "scripts/validation_scope.py",
         "src/proteintraitsmech/schema/mech_shared.yaml",
         "src/proteintraitsmech/schema/proteintraitsmech.yaml",
     }
 )
 
+# Directory inputs, matched by prefix rather than by exact path. A registry edit
+# can invalidate a QUALIFIED record that no diff mentions -- the same argument
+# that puts the schema above -- so it forces a full run. The workflow spells each
+# of these as ``<prefix>**``; tests/test_validation_scope.py holds the two
+# spellings to each other so neither can drift alone.
+FULL_VALIDATION_PREFIXES = frozenset({"data/grounding/"})
+
+TRIGGER_GLOB_SUFFIX = "**"
+
 
 def choose_scope(changed_paths: Iterable[str]) -> tuple[str, list[str]]:
     """Return ``(mode, changed trait YAMLs)`` for repository-relative paths."""
     changed = {path for path in changed_paths if path}
     if changed & FULL_VALIDATION_PATHS:
+        return "full", []
+    if any(path.startswith(prefix) for path in changed for prefix in FULL_VALIDATION_PREFIXES):
         return "full", []
     traits = sorted(
         path
