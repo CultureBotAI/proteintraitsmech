@@ -476,3 +476,70 @@ def test_the_default_timestamp_carries_sub_second_precision(tmp_path):
     # clock. Sub-second precision must not smuggle a '.' into the name: that is a
     # format convention rather than a correctness property, so nothing else pins it.
     assert clock.isdigit(), f"the id's clock component is not digits-only: {clock!r}"
+
+
+def _normalized_utc():
+    """The scaffolder's timestamp normaliser, imported rather than driven through a shell."""
+    spec = importlib.util.spec_from_file_location(
+        "new_history_record", REPO / "scripts" / "new_history_record.py"
+    )
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.normalized_utc
+
+
+def test_an_offset_timestamp_is_normalised_to_utc():
+    """The schema documents this field as UTC; its pattern also admits `+01:00` (#595).
+
+    `history.yaml` is a governed vendored artifact, so narrowing the pattern or
+    correcting the description has to happen in the canonical hub. Normalising in
+    the scaffolder makes the documented UTC true without patching it locally.
+    """
+    normalized_utc = _normalized_utc()
+    assert normalized_utc("2026-01-02T03:04:05+01:00") == "2026-01-02T02:04:05Z"
+    assert normalized_utc("2026-01-02T03:04:05-05:30") == "2026-01-02T08:34:05Z"
+    assert normalized_utc("2026-01-02T03:04:05.123456+01:00") == "2026-01-02T02:04:05.123456Z"
+
+
+def test_normalisation_leaves_utc_and_unparseable_input_alone():
+    """`Z` input must be untouched, or every existing reproducible id changes.
+
+    Unparseable input must pass through so `--timestamp nonsense` still fails in
+    the validation probe with the message that path already produces, rather than
+    with a new one from the normaliser.
+    """
+    normalized_utc = _normalized_utc()
+    assert normalized_utc("2026-01-02T03:04:05Z") == "2026-01-02T03:04:05Z"
+    assert normalized_utc("2026-01-02T03:04:05.111111Z") == "2026-01-02T03:04:05.111111Z"
+    assert normalized_utc("nonsense") == "nonsense"
+    assert normalized_utc("2026-01-02T03:04:05") == "2026-01-02T03:04:05"  # naive: no zone
+
+
+def test_the_same_instant_in_two_zones_produces_one_id():
+    """The property the filename ordering depends on.
+
+    Record names are the append-only log's ordering, and `session_id` strips the
+    colons from the clock without looking at what follows -- so before this, the
+    same instant written in two zones produced two different ids, one of them
+    carrying a `+` into the filename.
+    """
+    session_id, normalized_utc = _session_id(), _normalized_utc()
+    utc = session_id(normalized_utc("2026-01-02T02:04:05Z"), "claude-code", "seed")
+    offset = session_id(normalized_utc("2026-01-02T03:04:05+01:00"), "claude-code", "seed")
+    assert utc == offset, f"same instant, two ids: {utc} vs {offset}"
+    assert "+" not in offset
+
+
+def test_an_offset_timestamp_never_reaches_the_filename(tmp_path):
+    """End to end through the CLI, which is where #595 was actually observed."""
+    out = subprocess.run(
+        [sys.executable, str(REPO / "scripts" / "new_history_record.py"),
+         "--kind", "record", "--slug", "offset", "--path", "data/traits/x.yaml",
+         "--event", "EDIT", "--outcome", "changed", "--summary", "s",
+         "--timestamp", "2026-01-02T03:04:05+01:00",
+         "--history-root", str(tmp_path)],
+        capture_output=True, text=True, cwd=REPO)
+    assert out.returncode == 0, out.stdout + out.stderr
+    name = pathlib.Path(out.stdout.strip().splitlines()[-1]).name
+    assert "+" not in name, f"an offset reached the record filename: {name}"
+    assert name.startswith("2026-01-02T020405Z-"), name
