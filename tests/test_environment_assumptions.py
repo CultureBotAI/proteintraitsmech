@@ -16,6 +16,19 @@ checkout even if no current test touches it.
 Deliberately narrow. A check that guesses at "environment dependency" in general
 would fire on the many tests that legitimately build fixtures under paths shaped
 like production ones, and a gate with false positives gets suppressed.
+
+What these do NOT catch, stated because a gate that is assumed to cover more than
+it does is the same defect as a comment claiming something is gated when it is
+not (#606):
+
+* case errors below the top level -- `scripts/Fetch_source.py` is not checked,
+  only the first segment after the repository root;
+* a strict resolve reached through a local alias, `path = REPORTS_ROOT` then
+  `path.resolve(strict=True)`, since the constant is matched where it is named;
+* every environment assumption that is not one of these two shapes -- a missing
+  binary, a filesystem that reuses inodes, an interpreter whose stdlib behaves
+  differently. CI on a clean Linux checkout is the gate for those, and it caught
+  #610, #611 and #613. Nothing here replaces running the suite somewhere else.
 """
 
 from __future__ import annotations
