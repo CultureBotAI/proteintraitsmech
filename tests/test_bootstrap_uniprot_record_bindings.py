@@ -502,6 +502,22 @@ def test_real_batch001_dry_run_when_ignored_fixture_is_available(capsys):
     }
     if not all(path.is_file() for path in required.values()):
         pytest.skip("ignored Batch-001 migration fixture is unavailable")
+
+    # This replays a PRE-promotion dry run, and the tool reads each record's
+    # historical preimage from the current Git HEAD (_head_text). That makes the
+    # replay possible only while the promotion is uncommitted: once Batch-001 is
+    # committed, HEAD returns the promoted record, its sha256 no longer matches
+    # the reviewed preimage, and the tool reports staleness rather than the
+    # counts below. The assertion is about the pre-promotion state, so say so and
+    # skip instead of failing on a state change that is not a regression.
+    # The HEAD coupling itself is filed separately.
+    preimage_row = json.loads(required["resolved"].read_text(encoding="utf-8").splitlines()[0])
+    if (
+        bootstrap._sha256_text(bootstrap._head_text(str(preimage_row["record_path"])))
+        != preimage_row["record_sha256"]
+    ):
+        pytest.skip("Batch-001 is committed at HEAD; its pre-promotion dry run cannot be replayed")
+
     clean = batch / "pytest-batch001.receipts-incomplete-clean.jsonl"
     blocked = batch / "pytest-batch001.receipts-blocked.jsonl"
     manifest = batch / "pytest-batch001.receipts-manifest.json"
