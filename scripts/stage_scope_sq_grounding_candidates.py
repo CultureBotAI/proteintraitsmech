@@ -37,7 +37,6 @@ import json
 import os
 import re
 import stat
-import subprocess
 import sys
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -45,6 +44,8 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 import yaml
+
+import ripgrep_prefilter
 
 SCHEMA_VERSION = 3
 CANDIDATE_KIND = "SCOPE_SQ_GROUNDING_CANDIDATE"
@@ -948,6 +949,10 @@ def _load_yaml_mapping(raw: bytes, *, path: Path) -> Mapping[str, Any]:
     return value
 
 
+_SCOPE_PREFILTER_PATTERNS = ("(?i)SCOPe?:", r"\\", r"\x00")
+_SCOPE_PREFILTER_LABEL = "SCOP trait"
+
+
 def _candidate_scope_trait_paths(traits_root: Path) -> tuple[Path, ...]:
     """Exhaustively prefilter semantic SCOP identity candidates.
 
@@ -956,43 +961,17 @@ def _candidate_scope_trait_paths(traits_root: Path) -> tuple[Path, ...]:
     UTF-16/32 byte stream containing NUL.  Every admitted file is parsed before
     namespace filtering, so quoted, flow, escaped, and encoding-shadowed
     duplicate identities cannot hide outside the expected routes.
-    """
 
-    command = [
-        "rg",
-        "--null",
-        "-l",
-        "--text",
-        "--hidden",
-        "--no-ignore",
-        "--iglob",
-        "*.yaml",
-        "--iglob",
-        "*.yml",
-        "-e",
-        "(?i)SCOPe?:",
-        "-e",
-        r"\\",
-        "-e",
-        r"\x00",
-        "--",
-        str(traits_root),
-    ]
+    Routed through the one guarded prefilter: ripgrep is not a declared
+    dependency and CI does not install it (#571), and a fallback that treats an
+    unreadable tree as an empty one would silently empty this scan (#573).
+    """
     try:
-        scan = subprocess.run(command, check=False, capture_output=True)
-    except OSError as error:
-        raise ScopeSqStageError(f"cannot run ripgrep SCOP trait prefilter: {error}") from error
-    if scan.returncode not in {0, 1}:
-        detail = scan.stderr.decode("utf-8", errors="replace").strip()
-        raise ScopeSqStageError(f"ripgrep SCOP trait prefilter failed: {detail}")
-    try:
-        return tuple(
-            sorted(
-                Path(raw_path.decode("utf-8")) for raw_path in scan.stdout.split(b"\0") if raw_path
-            )
+        return ripgrep_prefilter.candidate_paths(
+            traits_root, _SCOPE_PREFILTER_PATTERNS, label=_SCOPE_PREFILTER_LABEL
         )
-    except UnicodeDecodeError as error:
-        raise ScopeSqStageError(f"ripgrep returned a non-UTF-8 trait path: {error}") from error
+    except ripgrep_prefilter.PrefilterError as error:
+        raise ScopeSqStageError(str(error)) from error
 
 
 def _reject_trait_tree_symlinks(traits_root: Path) -> None:

@@ -31,7 +31,6 @@ import math
 import os
 import re
 import stat
-import subprocess
 import sys
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -41,6 +40,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import ripgrep_prefilter  # noqa: E402
 import validate_uniprot_grounding as grounding  # noqa: E402
 from yaml_emit import slugify as _slugify  # noqa: E402
 
@@ -885,42 +885,32 @@ def _group_trait_path(traits_root: Path, namespace: str) -> Path:
     return traits_root / "sequence" / "disorder" / NAMESPACE_GROUPS[namespace][3]
 
 
+_IDPO_PREFILTER_PATTERNS = ("(?i)idpo", r"\\", r"\x00")
+_IDPO_PREFILTER_LABEL = "IDPO trait"
+
+
 def _candidate_trait_paths(traits_root: Path, source: ParsedSource) -> tuple[Path, ...]:
-    command = [
-        "rg",
-        "--null",
-        "-l",
-        "--text",
-        "--hidden",
-        "--no-ignore",
-        "-i",
-        "--glob",
-        "*.[yY][aA][mM][lL]",
-        "--glob",
-        "*.[yY][mM][lL]",
-        "-e",
-        "idpo",
-        "-e",
-        r"\\",
-        "-e",
-        r"\x00",
-        "--",
-        str(traits_root),
+    """IDPO candidates, via the one guarded prefilter (#571, #573, #576).
+
+    The case-insensitivity the inline ``rg -i`` provided moves into the pattern,
+    since the shared helper passes no flags of its own. The expected term and
+    group paths are added unconditionally: they must be examined whether or not
+    they currently mention IDPO, which is the whole point of a stage that
+    detects their absence.
+    """
+    extra = [
+        *(_term_trait_path(traits_root, term) for term in source.terms.values()),
+        *(_group_trait_path(traits_root, namespace) for namespace in NAMESPACE_GROUPS),
     ]
     try:
-        scan = subprocess.run(command, check=False, capture_output=True)
-    except OSError as error:
-        raise DisProtStageError(f"cannot run ripgrep IDPO trait prefilter: {error}") from error
-    if scan.returncode not in {0, 1}:
-        detail = scan.stderr.decode("utf-8", errors="replace").strip()
-        raise DisProtStageError(f"ripgrep IDPO trait prefilter failed: {detail}")
-    try:
-        paths = {Path(raw.decode("utf-8")) for raw in scan.stdout.split(b"\0") if raw}
-    except UnicodeDecodeError as error:
-        raise DisProtStageError(f"ripgrep returned a non-UTF-8 path: {error}") from error
-    paths.update(_term_trait_path(traits_root, term) for term in source.terms.values())
-    paths.update(_group_trait_path(traits_root, namespace) for namespace in NAMESPACE_GROUPS)
-    return tuple(sorted(_lexical_absolute(path) for path in paths))
+        return ripgrep_prefilter.candidate_paths(
+            traits_root,
+            _IDPO_PREFILTER_PATTERNS,
+            label=_IDPO_PREFILTER_LABEL,
+            extra=extra,
+        )
+    except ripgrep_prefilter.PrefilterError as error:
+        raise DisProtStageError(str(error)) from error
 
 
 def _normalized_whitespace(value: Any) -> str | None:

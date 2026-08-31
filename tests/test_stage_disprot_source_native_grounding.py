@@ -5,6 +5,8 @@ from __future__ import annotations
 import hashlib
 import importlib
 import json
+import shutil
+import os
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -892,3 +894,65 @@ def test_production_disprot_snapshot_when_artifacts_exist() -> None:
     assert rendered.count("\n") == 12_579
     assert hashlib.sha256(rendered.encode("utf-8")).hexdigest() == FULL_STREAM_SHA256
     assert all(not row["grounding_evidence_emitted"] for row in result.occurrences)
+
+
+def test_absent_ripgrep_falls_back_to_a_superset_with_an_identical_result(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The prefilter must not depend on ripgrep, which CI does not install (#571).
+
+    Without this the fallback is dead code on any machine that has ripgrep --
+    which is every machine where this suite has ever been run green, and never
+    CI, where the fallback is the only path. The fallback is deliberately a
+    strict superset rather than a second matcher, because reproducing ripgrep's
+    escape, NUL, and UTF-16 semantics twice is how the two paths drift apart
+    silently (#539). So assert containment, not set equality, and assert that
+    what the stage actually produces is identical either way.
+    """
+
+    case = _case(tmp_path)
+    root = case["traits"]
+    if shutil.which("rg") is None:
+        pytest.skip("ripgrep is absent here, so the fallback is already the only path")
+
+    matched = stage.ripgrep_prefilter.ripgrep_paths(root, stage._IDPO_PREFILTER_PATTERNS, stage._IDPO_PREFILTER_LABEL)
+    assert matched is not None
+    walked = stage.ripgrep_prefilter.walked_paths(root, stage._IDPO_PREFILTER_LABEL)
+    assert {Path(os.path.abspath(p)) for p in matched} <= {
+        Path(os.path.abspath(p)) for p in walked
+    }
+
+    with_ripgrep = _build(case)
+    monkeypatch.setenv("PATH", "")
+    assert stage.ripgrep_prefilter.ripgrep_paths(root, stage._IDPO_PREFILTER_PATTERNS, stage._IDPO_PREFILTER_LABEL) is None
+    without_ripgrep = _build(case)
+
+    for attribute in ("occurrences", "protein_requests", "summary"):
+        assert stage.canonical_json(getattr(without_ripgrep, attribute)) == stage.canonical_json(
+            getattr(with_ripgrep, attribute)
+        )
+
+
+def test_the_fallback_refuses_an_unscannable_trait_root(tmp_path: Path) -> None:
+    """The fallback must fail closed exactly where ripgrep does (#573).
+
+    ``os.walk`` reports a missing or unreadable tree as an empty one, so without
+    an explicit guard the fallback would scan nothing, find nothing, and report
+    success -- in the one environment (no ripgrep) it exists to serve.
+    """
+
+    missing = tmp_path / "no-such-trait-root"
+    with pytest.raises(stage.ripgrep_prefilter.PrefilterError, match="not a directory"):
+        stage.ripgrep_prefilter.walked_paths(missing, stage._IDPO_PREFILTER_LABEL)
+
+    unreadable = tmp_path / "unreadable"
+    (unreadable / "nested").mkdir(parents=True)
+    (unreadable / "nested" / "trait.yaml").write_text("identifier: X\n", encoding="utf-8")
+    os.chmod(unreadable / "nested", 0o000)
+    try:
+        if os.access(unreadable / "nested", os.R_OK):
+            pytest.skip("running as a user that ignores directory permissions")
+        with pytest.raises(stage.ripgrep_prefilter.PrefilterError, match="cannot scan"):
+            stage.ripgrep_prefilter.walked_paths(unreadable, stage._IDPO_PREFILTER_LABEL)
+    finally:
+        os.chmod(unreadable / "nested", 0o700)
