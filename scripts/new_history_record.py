@@ -78,6 +78,38 @@ OUTCOMES = ("changed", "no_change", "needs_followup", "blocked")
 KINDS = ("record", "schema", "mapping", "report", "infrastructure", "other")
 
 
+def normalized_utc(raw: str) -> str:
+    """Return ``raw`` expressed in UTC, or ``raw`` unchanged if that is not possible.
+
+    The schema calls this field "ISO-8601 UTC start time" but its pattern also
+    admits ``+01:00``, and ``session_id`` strips the colons from the clock
+    without looking at what follows -- so an offset timestamp lands in the
+    record's own filename as ``...T030405+0100-...`` (#595). Those filenames are
+    the append-only log's ordering, so two records an hour apart in real time
+    could sort adjacently or out of order.
+
+    Normalising here makes the documented UTC true in practice. The alternative
+    -- narrowing the pattern, or correcting the description -- edits
+    ``src/proteintraitsmech/schema/history.yaml``, which is a governed vendored
+    artifact (verified: perturbing it fails check_vendored_sync against
+    culturebotai-claw@a8f7c94d). That has to change in the canonical hub and be
+    re-vendored, not patched here.
+
+    Anything unparseable, or a naive timestamp with no zone at all, passes
+    through untouched so that ``--timestamp nonsense`` still fails in the
+    validation probe with the message that path already produces, rather than
+    with a new one from here.
+    """
+    try:
+        parsed = _dt.datetime.fromisoformat(raw)
+    except ValueError:
+        return raw
+    if parsed.tzinfo is None:
+        return raw
+    utc = parsed.astimezone(_dt.timezone.utc)
+    return utc.strftime("%Y-%m-%dT%H:%M:%S.%fZ" if utc.microsecond else "%Y-%m-%dT%H:%M:%SZ")
+
+
 def session_id(timestamp: str, tool: str, seed: str) -> str:
     """`<compact-timestamp>-<tool>-<6 hex>`, matching the existing records.
 
@@ -229,12 +261,13 @@ def main(argv: list[str] | None = None) -> int:
                     help="overwrite an existing record; records are append-only, "
                          "so this is for correcting a mis-scaffolded one")
     ap.add_argument("--timestamp", default="",
-                    help="ISO-8601 UTC; defaults to now. Set it for a reproducible id.")
+                    help="ISO-8601; an offset is normalised to UTC so it cannot "
+                         "reach the id. Defaults to now. Set it for a reproducible id.")
     args = ap.parse_args(argv)
 
-    timestamp = args.timestamp or _dt.datetime.now(_dt.timezone.utc).strftime(
-        "%Y-%m-%dT%H:%M:%S.%fZ"
-    )
+    timestamp = normalized_utc(args.timestamp) if args.timestamp else _dt.datetime.now(
+        _dt.timezone.utc
+    ).strftime("%Y-%m-%dT%H:%M:%S.%fZ")
     record, out_path = build(args, timestamp)
 
     if out_path.exists() and not args.force:
