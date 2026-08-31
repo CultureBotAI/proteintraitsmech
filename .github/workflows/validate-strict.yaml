@@ -17,7 +17,10 @@ on:
       # validates -- without this line the gate would not fire on it (#484)
       - "src/proteintraitsmech/schema/mech_shared.yaml"
       - "data/traits/**"
+      - "data/grounding/**"
       - "scripts/validate_strict.py"
+      - "scripts/validate_uniprot_grounding.py"
+      - "scripts/uniprot_membership_snapshot.py"
       - "scripts/audit_causal_graphs.py"
       - ".github/workflows/validate-strict.yaml"
       - "pyproject.toml"
@@ -29,7 +32,10 @@ on:
       # validates -- without this line the gate would not fire on it (#484)
       - "src/proteintraitsmech/schema/mech_shared.yaml"
       - "data/traits/**"
+      - "data/grounding/**"
       - "scripts/validate_strict.py"
+      - "scripts/validate_uniprot_grounding.py"
+      - "scripts/uniprot_membership_snapshot.py"
       - "scripts/audit_causal_graphs.py"
       - ".github/workflows/validate-strict.yaml"
       - "pyproject.toml"
@@ -66,7 +72,7 @@ jobs:
           BASE="${{ github.event.pull_request.base.sha }}"
           HEAD="${{ github.event.pull_request.head.sha }}"
           CHANGED=$(git diff --name-only "$BASE" "$HEAD")
-          if echo "$CHANGED" | grep -qE '^(src/proteintraitsmech/schema/proteintraitsmech\.yaml|scripts/validate_strict\.py|scripts/audit_causal_graphs\.py|pyproject\.toml|\.github/workflows/validate-strict\.yaml)$'; then
+          if echo "$CHANGED" | grep -qE '^(src/proteintraitsmech/schema/(proteintraitsmech|mech_shared)\.yaml|data/grounding/|scripts/validate_strict\.py|scripts/validate_uniprot_grounding\.py|scripts/uniprot_membership_snapshot\.py|scripts/audit_causal_graphs\.py|pyproject\.toml|\.github/workflows/validate-strict\.yaml)'; then
             echo "A schema or validator change can affect records outside this PR's diff — running full corpus."
             echo "mode=full" >> "$GITHUB_OUTPUT"
           else
@@ -89,6 +95,12 @@ jobs:
           mapfile -t files < changed_traits.txt
           uv run python scripts/audit_causal_graphs.py "${files[@]}"
 
+      - name: UniProt grounding semantics (changed files)
+        if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
+        run: |
+          mapfile -t files < changed_traits.txt
+          uv run python scripts/validate_uniprot_grounding.py "${files[@]}"
+
       - name: Strict validation (full corpus)
         if: steps.scope.outputs.mode == 'full'
         run: uv run python scripts/validate_strict.py
@@ -97,10 +109,16 @@ jobs:
         if: steps.scope.outputs.mode == 'full'
         run: uv run python scripts/audit_causal_graphs.py
 
+      - name: UniProt grounding semantics (full corpus)
+        if: steps.scope.outputs.mode == 'full'
+        run: uv run python scripts/validate_uniprot_grounding.py
+
       - name: Upload failure TSV
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: instance-validation-failures
-          path: reports/instance_validation_failures.tsv
+          path: |
+            reports/instance_validation_failures.tsv
+            reports/uniprot-grounding/validation.tsv
           if-no-files-found: ignore

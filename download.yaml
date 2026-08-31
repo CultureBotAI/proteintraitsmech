@@ -320,10 +320,12 @@
   seeder: seed_interpro_members.py
   note: >-
     2,106 fingerprints routed by signature type (2,013 family, 78 domain, 14
-    repeat, 1 PTM), so the category is per-entry, not per-source. A fingerprint
-    is an ORDERED SET of motifs; one fingerprint becomes one record and the motif
-    count is stated, but individual motifs are not seeded -- there is no
-    SEQ_FINGERPRINT category and the motifs are not in the API. PRINTS 42.0
+    repeat, 1 PTM) in the historical corpus. Source audit found that API type alone
+    is not sufficient for a safe migration: explicit superfamilies and mapped
+    InterPro type conflicts require adjudication. A fingerprint is an ORDERED SET
+    of motifs. The current dry-run seeder emits the KDAT-backed ordered motif model
+    as a structured representation, but all PRINTS --apply paths are disabled until
+    a dedicated validated definition/routing migration is implemented. PRINTS 42.0
     (2012-06-14) is frozen upstream.
 -
   url: https://ftp.ebi.ac.uk/pub/databases/interpro/databases/prints/42.0/prints42_0.kdat
@@ -331,20 +333,24 @@
   source: prints
   status: seeded
   note: >-
-    The real titles. The API's `name` for a fingerprint is its CODE -- PR00001 is
-    "GLABLOOD" there, and the detail endpoint returns {"name": null, "short":
-    "GLABLOOD"}, i.e. no full name exists in the API at all. This file has a
-    title for all 2,106 ("Coagulation factor GLA domain signature") and the
-    motif count.
+    The authoritative source-native titles, gd descriptions, and ordered final
+    fc/fl/ft/fd/KD motif sets and distance constraints. The API's `name` for a fingerprint is its CODE --
+    PR00001 is "GLABLOOD" there, and the detail endpoint returns {"name": null,
+    "short": "GLABLOOD"}. The exact release file is checksum-pinned at SHA-256
+    47b4f0c32002bce2f9b85f335c942cc52deae8bed54c2b4b2eec5e36c5810771.
 -
   url: https://ftp.ebi.ac.uk/pub/databases/interpro/databases/prints/42.0/FingerPRINTShierarchy21Feb2012
   local_name: interpro_members/FingerPRINTShierarchy21Feb2012
   source: prints
   status: seeded
   note: >-
-    Fingerprint hierarchy; the API reports hierarchy null for PRINTS. Field 5
-    lists whole descendant SUBTREES by code, so the immediate parent is the
-    nearest enclosing set. 1,026 of 2,106 records get a parent from it.
+    Despite its filename, InterProScan defines this as a PRINTS post-processing
+    table: fields 3 and 4 are the e-value cutoff and minimum motif count; field 5
+    holds hierarchical/sibling relations, with `*` as a domain flag. These are
+    not subclass descendants. It is normalized to canonical
+    prints_hierarchy.jsonl and bound, with the API, KDAT, and InterPro XML, by
+    prints_snapshot_manifest.json. The former seeder misread field 5 and created
+    1,026 unsupported parents; those records require repair, not hierarchy reuse.
 
 # ============================== DOCUMENTATION / METADATA ENRICHMENT ==========
 # Per-source documentation (prose) + entry-metadata files that enrich existing
@@ -612,14 +618,38 @@
   trait_categories: [FUNC_PROTEIN_FAMILY]
   seeder: seed_interpro_members.py
   note: >-
-    Seeded from the EBI InterPro API, not sfld.rbvi.ucsf.edu: the API is the
-    CC0-dedicated route and carries the signature name, type and integrating
-    entry. FUNC_PROTEIN_FAMILY, not FUNC_ENZYMATIC_ACTIVITY as previously
-    registered -- that category holds reactions (EC, Rhea), and SFLD classes are
-    protein families defined by conserved chemistry, the same test that routes
-    NCBIfam equivalogs to FUNCTION. 303 signatures, of which 163 are integrated
-    into InterPro and take its curated abstract; the other 140 get a composed
-    definition. SFLD release 4 (2018-09-07) is frozen upstream.
+    The 303 historical records were seeded from the EBI InterPro API, but source
+    audit proved that flattening every S/G/F level to whole-protein
+    FUNC_PROTEIN_FAMILY is not a valid executable SFLD model. The API supplies
+    label/type/integration metadata, not the HMM, GA threshold, correlated sites,
+    or hierarchy semantics required to qualify a protein occurrence. All SFLD
+    seeder paths, including dry run, are disabled pending a dedicated
+    source-model/routing migration.
+    SFLD release 4 (2018-09-07) is frozen upstream.
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/databases/sfld/4/sfld.hmm
+  local_name: interpro_members/sfld.hmm
+  name: SFLD 4 HMMER3 profile models
+  source: sfld
+  license: CC0-1.0 (InterPro CC0 dedication names SFLD)
+  license_url: https://interpro-documentation.readthedocs.io/en/latest/license.html
+  status: candidate
+  note: >-
+    299 source-native models with S/G/F level, model length, HMMER3 checksum,
+    training count, and sequence/domain GA thresholds. Checksum-pinned at SHA-256
+    e011a4139e6477a526710b32e8aeaa68203329c799305b015ec35c3b6d09672f.
+-
+  url: https://ftp.ebi.ac.uk/pub/databases/interpro/databases/sfld/4/sfld_sites.annot
+  local_name: interpro_members/sfld_sites.annot
+  name: SFLD 4 correlated functional-site annotations
+  source: sfld
+  license: CC0-1.0 (InterPro CC0 dedication names SFLD)
+  license_url: https://interpro-documentation.readthedocs.io/en/latest/license.html
+  status: candidate
+  note: >-
+    Ordered HMM match-state SITE positions and correlated FEATURE residue tuples
+    for the same 299 models; 274 models have sites. Checksum-pinned at SHA-256
+    60ee2408e5bb2bed2eba4ee2101e219b74dcee7abb2bc03aba9e3e905dcf8c66.
 -
   url: https://ftp.ebi.ac.uk/pub/databases/interpro/databases/sfld/4/sfld_hierarchy_flat.txt
   local_name: interpro_members/sfld_hierarchy_flat.txt
@@ -627,8 +657,9 @@
   status: seeded
   note: >-
     Superfamily/group/family ancestry. The InterPro API reports `hierarchy: null`
-    for every SFLD accession, so this file is the only route to parent_traits;
-    266 of 303 records get a parent from it.
+    for every SFLD accession. The exact transitive closures yield 266 direct
+    parents among the 299 executable models and are checksum-pinned at SHA-256
+    e9d379421227fb9eb3c5eb259d2a925c321a7bf1e697055d361f7397b53f86b9.
 -
   url: https://3did.irbbarcelona.org/download/current/3did_flat.gz
   local_name: 3did_flat.gz

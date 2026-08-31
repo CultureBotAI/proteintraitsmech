@@ -65,15 +65,17 @@ validate file:
     uv run linkml-validate -s src/proteintraitsmech/schema/proteintraitsmech.yaml \
       --target-class ProteinTraitRecord {{file}}
 
-# Validate every YAML under data/traits/. Delegates to validate-strict
-# (closed-mode, rejects unknown top-level and nested fields, exits non-zero
-# on any ERROR). Previous open-mode implementation ran linkml-validate per
+# Validate every YAML under data/traits/. Runs both validate-strict (closed-mode,
+# rejects unknown top-level and nested fields) and the migration-safe UniProt
+# grounding validator (dereferences every explicit QUALIFIED assertion). Previous
+# open-mode implementation ran linkml-validate per
 # file via the CLI (scripts/validate_linkml.py, still present for anyone who
 # wants the reference-CLI diagnostics), which silently accepted unknown
 # fields. See #485.
 # Scope to a subset with a path/glob: just validate-all data/traits/sequence/motif
 validate-all *args:
     @just validate-strict {{args}}
+    @just validate-uniprot-grounding {{args}}
 
 # Strict in-process validation in *closed* mode (rejects unknown fields).
 # Emits reports/instance_validation_failures.tsv and exits 1 on any ERROR.
@@ -84,6 +86,12 @@ validate-strict *args:
 # CLI's name directly.
 validate-linkml *args:
     @just validate-strict {{args}}
+
+# Cross-object/sequence validation for release-pinned UniProt grounding. Legacy
+# examples remain LEGACY_UNVERIFIED during migration; --require-qualified is the
+# corpus-completion gate. Durable registries default under data/grounding/.
+validate-uniprot-grounding *args:
+    uv run python scripts/validate_uniprot_grounding.py {{args}}
 
 # ============== Curation history (#484) ==============
 
@@ -667,6 +675,26 @@ fetch-elm:
 seed-elm *args:
     python3 scripts/seed_elm.py {{args}}
 
+# Read-only, stdout-only ELM source-native occurrence and ProteinReference stage.
+stage-elm-source-native *args:
+    uv run python scripts/stage_elm_source_native_grounding.py {{args}}
+
+# Read-only, stdout-only DisProt IDPO source-native candidate stage.
+stage-disprot-source-native *args:
+    uv run --frozen --offline --no-sync python scripts/stage_disprot_source_native_grounding.py {{args}}
+
+# Read-only, stdout-only ComplexPortal candidate and ProteinReference-request stage.
+stage-complexportal-source-native *args:
+    uv run --frozen --offline --no-sync python scripts/stage_complexportal_grounding_candidates.py {{args}}
+
+# Read-only, stdout-only SCOPe SQ candidate and ProteinReference-request stage.
+stage-scope-source-native *args:
+    uv run --frozen --offline --no-sync python scripts/stage_scope_sq_grounding_candidates.py {{args}}
+
+# Read-only, stdout-only CATH annotation-discovery, native-blocker, and ProteinReference-request stage.
+stage-cath-grounding-discovery *args:
+    uv run --frozen --offline --no-sync python scripts/stage_cath_grounding_candidates.py {{args}}
+
 fetch-merops:
     mkdir -p data/raw/merops
     curl -sSLf --max-time 300 -o data/raw/merops/pepunit.lib https://ftp.ebi.ac.uk/pub/databases/merops/current_release/pepunit.lib
@@ -765,11 +793,29 @@ fetch-interpro:
 fetch-interpro-members *args:
     uv run python scripts/fetch_interpro_members.py {{args}}
 
+# Replay the exact allowlisted PRINTS API/KDAT/hierarchy/InterPro-XML snapshot.
+# No network; dry-run unless --apply installs the canonical derived manifest files.
+verify-prints-snapshot *args:
+    uv run python scripts/prints_snapshot.py {{args}}
+
+# Replay the pinned SFLD HMM/profile-site/hierarchy source model.
+# No network; dry-run unless --apply installs its canonical ignored manifest.
+verify-sfld-release *args:
+    uv run python scripts/sfld_release.py {{args}}
+
 # Seed data/traits/ from an InterPro member database. Requires
 # `just fetch-interpro` and `just fetch-interpro-members --db <db> --apply`.
-# Dry-run by default; --apply to write.
+# Dry-run by default; --apply to write. PRINTS apply and all SFLD invocations
+# fail closed pending dedicated source-model migrations.
 seed-interpro-members *args:
     python3 scripts/seed_interpro_members.py {{args}}
+
+# Diagnose member-signature records that still equal the historical
+# 1,800-character InterPro-abstract slice. Source review proved that applying
+# this to PRINTS would preserve an identity error: PRINTS has its own complete
+# source-native descriptions. The script is diagnostic-only and refuses --apply.
+repair-interpro-member-truncations *args:
+    uv run python scripts/repair_interpro_member_truncations.py {{args}}
 
 # Seed data/traits/ from InterPro entries (Domain, Homologous_superfamily,
 # Repeat, Conserved_site, Active/Binding_site, PTM; Family excluded by
@@ -874,14 +920,229 @@ seed-uniprot *args:
 ground-categories *args:
     uv run python scripts/ground_categories.py {{args}}
 
-# Populate canonical_examples on trait YAMLs by querying the UniProtKB
-# REST API for entries carrying each trait's anchoring signature
-# (PROSITE / Pfam / InterPro / HAMAP / etc.). Dry-run by default; pass
-# --apply to write. Rate-limited (~4 req/s) with backoff.
-#   just fetch-examples data/traits/sequence/pattern/1433-1.yaml --limit 5 --apply
-#   just fetch-examples data/traits/sequence/motif --limit 3 --apply
+# Discover candidate proteins by querying UniProtKB for exact anchoring
+# signatures. Writes only a candidate JSONL ledger under reports/; it never
+# writes trait records and deliberately rejects the retired --apply route.
+#   just fetch-examples data/traits/sequence/pattern/1433-1.yaml --limit 5
+#   just fetch-examples data/traits/sequence/motif --limit 3
 fetch-examples *args:
     uv run python scripts/fetch_uniprot_examples.py {{args}}
+
+# Full read-only UniProt grounding audit and deterministic candidate/blocked ledgers.
+# Uses the release stamps carried by the three local provider artifacts.
+audit-uniprot-grounding *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    uv run python scripts/audit_uniprot_grounding.py \
+      --traits data/traits \
+      --residue-frame data/raw/align_cache/residue_frame.json \
+      --interpro-frame data/raw/align_cache/interpro_frame.json \
+      --profiles data/profiles/profiles.jsonl \
+      --out reports/uniprot-grounding "$@"
+
+# Select a deterministic source-stratified review batch (<=1,000 unique trait
+# records, >=25 per available source, and every recognized special case). Dry-run
+# by default; --apply writes only ignored staging artifacts and their manifests.
+# Prior exclusions are positional quadruples, repeated per batch:
+#   --exclude-reviewed-candidates B.candidates.jsonl --exclude-reviewed-manifest B.manifest.json
+#   --exclude-reviewed-resolved B.resolved.jsonl --exclude-decisions B.review-decisions.jsonl
+# Add --defer-unchanged-all-rejected to suppress only all-rejected groups whose
+# current data/traits bytes still match every resolved row's bound record_sha256.
+# Omit that opt-in after a source snapshot, content gate, provider, or resolver
+# change: record-byte comparison cannot detect those repairs.
+# Select one batch with exact candidate/manifest/resolved/decision exclusion bundles.
+select-uniprot-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    uv run python scripts/select_uniprot_review_batch.py \
+      --queue reports/uniprot-grounding/candidates.jsonl \
+      --batch ready-local --batch-id {{quote(batch_id)}} "$@"
+
+# Build a selector-bound, release-stamped request plan for one exact canonical
+# candidate queue. Save stdout, review it, then supply that exact file together
+# with --apply; only ignored staging outputs and a receipt can be installed.
+fetch-uniprot-registry queue selector_manifest batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift 3
+    request_plan=""
+    apply=false
+    while (($#)); do
+      case "$1" in
+        --request-plan)
+          [[ -z "$request_plan" && $# -ge 2 ]] || { echo "invalid duplicate/missing --request-plan" >&2; exit 2; }
+          [[ -n "$2" ]] || { echo "empty --request-plan" >&2; exit 2; }
+          request_plan="$2"
+          shift 2
+          ;;
+        --apply)
+          [[ "$apply" == false ]] || { echo "duplicate --apply" >&2; exit 2; }
+          apply=true
+          shift
+          ;;
+        *)
+          echo "unsupported fetch option: $1 (only --request-plan FILE --apply is allowed)" >&2
+          exit 2
+          ;;
+      esac
+    done
+    [[ "$apply" == false && -z "$request_plan" ]] || \
+      [[ "$apply" == true && -n "$request_plan" ]] || \
+      { echo "--request-plan FILE and --apply must be supplied together" >&2; exit 2; }
+    if [[ "$apply" == true ]]; then
+      uv run python scripts/fetch_uniprot_registry.py \
+        --queue {{quote(queue)}} \
+        --selector-manifest {{quote(selector_manifest)}} \
+        --batch {{quote(batch_id)}} \
+        --expect-release 2026_02 --request-plan "$request_plan" --apply
+    else
+      uv run python scripts/fetch_uniprot_registry.py \
+        --queue {{quote(queue)}} \
+        --selector-manifest {{quote(selector_manifest)}} \
+        --batch {{quote(batch_id)}} \
+        --expect-release 2026_02
+    fi
+
+# Plan the exact accessions selected for one bounded review batch. Example:
+#   just fetch-uniprot-review-batch B > reports/.../B.uniprot_fetch_plan.json
+# Review that plan, then repeat with:
+#   --request-plan reports/.../B.uniprot_fetch_plan.json --apply
+# The selector manifest is mandatory; the receipt is installed last.
+fetch-uniprot-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    request_plan=""
+    apply=false
+    while (($#)); do
+      case "$1" in
+        --request-plan)
+          [[ -z "$request_plan" && $# -ge 2 ]] || { echo "invalid duplicate/missing --request-plan" >&2; exit 2; }
+          [[ -n "$2" ]] || { echo "empty --request-plan" >&2; exit 2; }
+          request_plan="$2"
+          shift 2
+          ;;
+        --apply)
+          [[ "$apply" == false ]] || { echo "duplicate --apply" >&2; exit 2; }
+          apply=true
+          shift
+          ;;
+        *)
+          echo "unsupported fetch option: $1 (offline fixtures and option overrides are forbidden)" >&2
+          exit 2
+          ;;
+      esac
+    done
+    [[ "$apply" == false && -z "$request_plan" ]] || \
+      [[ "$apply" == true && -n "$request_plan" ]] || \
+      { echo "--request-plan FILE and --apply must be supplied together" >&2; exit 2; }
+    if [[ "$apply" == true ]]; then
+      uv run python scripts/fetch_uniprot_registry.py \
+        --queue reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.candidates.jsonl \
+        --selector-manifest reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.manifest.json \
+        --batch {{quote(batch_id)}} \
+        --expect-release 2026_02 \
+        --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
+        --membership-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
+        --blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
+        --receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json \
+        --request-plan "$request_plan" --apply
+    else
+      uv run python scripts/fetch_uniprot_registry.py \
+        --queue reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.candidates.jsonl \
+        --selector-manifest reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.manifest.json \
+        --batch {{quote(batch_id)}} \
+        --expect-release 2026_02 \
+        --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
+        --membership-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
+        --blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
+        --receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json
+    fi
+
+# Resolve one exact candidate batch without modifying traits. The source registry
+# is the official API snapshot; normalized promotion inputs remain staging outputs.
+resolve-uniprot-grounding *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    uv run python scripts/ground_uniprot_examples.py resolve \
+      --allow-unreceipted-inputs \
+      --queue reports/uniprot-grounding/candidates.jsonl \
+      --providers protein-registry,interpro,uniprot-membership \
+      --protein-registry reports/uniprot-grounding/uniprot_registry.jsonl \
+      --membership-registry reports/uniprot-grounding/uniprot_memberships.jsonl \
+      --batch ready-local "$@"
+
+# Resolve one selected review batch into immutable review/digest/evidence inputs.
+# This never modifies data/traits or the durable data/grounding registries.
+resolve-uniprot-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    for argument in "$@"; do
+      case "$argument" in
+        --queue|--queue=*|--selector-manifest|--selector-manifest=*|--fetch-request-plan|--fetch-request-plan=*|--fetch-receipt|--fetch-receipt=*|--providers|--providers=*|--protein-registry|--protein-registry=*|--membership-registry|--membership-registry=*|--sifts-registry|--sifts-registry=*|--durable-membership-registry|--durable-membership-registry=*|--registry-blocked|--registry-blocked=*|--expect-uniprot-release|--expect-uniprot-release=*|--batch|--batch=*|--out|--out=*|--review|--review=*|--registry-out|--registry-out=*|--evidence-out|--evidence-out=*|--replace-staging-outputs|--replace-staging-outputs=*|--limit|--limit=*|--allow-unreceipted-inputs|--allow-unreceipted-inputs=*|--allow-offline-uniprot-fixture|--allow-offline-uniprot-fixture=*|--allow-offline-sifts-fixtures|--allow-offline-sifts-fixtures=*)
+          echo "ERROR: bounded review resolver argument is fixed by the recipe: $argument" >&2
+          exit 2
+          ;;
+      esac
+    done
+    uv run python scripts/ground_uniprot_examples.py resolve \
+      --queue reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.candidates.jsonl \
+      --selector-manifest reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.manifest.json \
+      --fetch-request-plan reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_plan.json \
+      --fetch-receipt reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_fetch_receipt.json \
+      --providers protein-registry,interpro,uniprot-membership \
+      --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_registry.jsonl \
+      --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
+      --registry-blocked reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.registry_blocked.tsv \
+      --expect-uniprot-release 2026_02 \
+      --batch {{quote(batch_id)}} \
+      --out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.resolved.jsonl \
+      --review reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.review.tsv \
+      --registry-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.protein_registry.jsonl \
+      --evidence-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.occurrence_evidence.jsonl \
+      --replace-staging-outputs \
+      "$@"
+
+# Reconcile disjoint, explicit decision ledgers with one immutable resolved batch.
+# Every partition row must copy the exact resolved-row resolution_digest. Dry-run
+# example: `just finalize-uniprot-review-batch B --decisions B.part-1.jsonl
+# --decisions B.part-2.jsonl`; add --apply only after independent review.
+# Finalize digest-bound explicit review partitions; dry-run unless --apply is passed.
+finalize-uniprot-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    uv run python scripts/finalize_uniprot_review_batch.py \
+      --candidates reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.resolved.jsonl \
+      --review-tsv reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.review.tsv \
+      --decisions-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.review-decisions.jsonl \
+      --approved-out reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.approved.tsv \
+      "$@"
+
+# Dry-run promotion of explicitly reviewed rows. Pass --apply only after source-
+# stratified review and all strict/semantic preflight gates succeed.
+promote-uniprot-grounding *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    uv run python scripts/ground_uniprot_examples.py promote \
+      --resolved reports/uniprot-grounding/resolved.jsonl \
+      --approved reports/uniprot-grounding/approved.tsv "$@"
+
+# Preflight or apply one explicitly reviewed bounded batch. Copy/edit the emitted
+# .review.tsv as .approved.tsv; never edit the resolved/evidence ledgers.
+promote-uniprot-review-batch batch_id *args:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    shift
+    uv run python scripts/ground_uniprot_examples.py promote \
+      --resolved reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.resolved.jsonl \
+      --approved reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.approved.tsv \
+      --protein-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.protein_registry.jsonl \
+      --evidence-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.occurrence_evidence.jsonl \
+      --membership-registry reports/uniprot-grounding/review-batches/{{quote(batch_id)}}.uniprot_memberships.jsonl \
+      "$@"
 
 # Build per-protein trait PROFILES from Swiss-Prot (issue #7): for each entry,
 # which corpus trait classes it carries (matched via Pfam/InterPro/CATH/PROSITE/
@@ -979,13 +1240,11 @@ train-trait-tree *args:
 trait-correlations *args:
     python3 scripts/analyze_trait_correlations.py {{args}}
 
-# Write canonical_examples onto trait records from the protein×trait matrix
-# (issue #7, phase 5) — closes the loop from mined cross-axis rules back to real
-# proteins. Carriers are ranked by how many of the trait's empirically coupled
-# partners (data/equivalence/trait_cooccurrence.tsv) they also carry. Records
-# that already have examples are skipped. Dry-run unless --apply. Needs PyYAML.
-#   just suggest-examples --prefix CATH --apply
-#   just suggest-examples --rule-backed-only --apply
+# Rank candidate proteins from the protein×trait matrix and write a candidate
+# JSONL ledger plus review report. This is evidence tier D and never writes
+# canonical_examples; the retired --apply route is rejected.
+#   just suggest-examples --prefix CATH
+#   just suggest-examples --rule-backed-only
 suggest-examples *args:
     uv run python scripts/suggest_canonical_examples.py {{args}}
 
