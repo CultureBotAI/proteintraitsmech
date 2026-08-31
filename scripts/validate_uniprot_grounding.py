@@ -3202,12 +3202,29 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--fail-on", choices=("error", "never"), default="error", help="Exit policy"
     )
+    parser.add_argument(
+        "--allow-missing",
+        action="store_true",
+        help="exit 0 when every supplied path is missing; for the CI diff "
+        "caller, whose file list can be deletion-only (#616, and #540 for the "
+        "same flag on validate_strict.py)",
+    )
     parser.add_argument("--quiet", action="store_true")
     args = parser.parse_args(argv)
 
     roots = args.paths or [DEFAULT_TRAITS]
     files = iter_yaml_files(roots)
     if not files:
+        # Deletion-only diffs are legitimate; a scan with nothing left to scan is
+        # not a fault. Opt in, so a human typing a mistyped path still gets an
+        # error rather than a silent "validated" -- the distinction #540 drew for
+        # validate_strict.py, kept identical here so the two CI steps agree.
+        if args.allow_missing and args.paths:
+            print(
+                "All supplied paths were missing (e.g. deleted files) — nothing to validate.",
+                file=sys.stderr,
+            )
+            return 0
         print("No trait YAML files found.", file=sys.stderr)
         return 2
 

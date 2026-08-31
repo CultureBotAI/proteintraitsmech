@@ -110,6 +110,21 @@ def test_outputs_are_complete_and_replace_the_changed_file(tmp_path):
 # --- the two lists must agree, in both directions -------------------------
 
 
+def _full_validation_triggers() -> set[str]:
+    """Every full-validation input in the spelling the workflow uses.
+
+    Exact paths appear verbatim; a directory prefix appears as ``<prefix>**``,
+    because a workflow `paths:` entry has to be a glob and `choose_scope` has to
+    match real repository-relative paths. Holding the two spellings to each other
+    here is what stops one from drifting without the other (#606).
+    """
+    return set(SCOPE.FULL_VALIDATION_PATHS) | {
+        prefix + SCOPE.TRIGGER_GLOB_SUFFIX for prefix in SCOPE.FULL_VALIDATION_PREFIXES
+    }
+
+
+
+
 @pytest.mark.parametrize("event", sorted(_triggers()))
 def test_every_trigger_other_than_records_forces_full_validation(event):
     """The #515 direction: a path may not start this workflow and then be ignored.
@@ -117,14 +132,14 @@ def test_every_trigger_other_than_records_forces_full_validation(event):
     Derived from the workflow, compared against the helper. Deleting a path from
     FULL_VALIDATION_PATHS while it still triggers the workflow fails here.
     """
-    ignored = _triggers()[event] - {RECORD_TRIGGER} - SCOPE.FULL_VALIDATION_PATHS
+    ignored = _triggers()[event] - {RECORD_TRIGGER} - _full_validation_triggers()
     assert not ignored, f"{event} triggers on {sorted(ignored)} but scope selection ignores them"
 
 
 @pytest.mark.parametrize("event", sorted(_triggers()))
 def test_every_full_validation_path_triggers_the_workflow(event):
     """The converse: a full-validation input that never starts the run is dead."""
-    unreachable = SCOPE.FULL_VALIDATION_PATHS - _triggers()[event]
+    unreachable = _full_validation_triggers() - _triggers()[event]
     assert not unreachable, f"{event} does not trigger for {sorted(unreachable)}"
 
 
@@ -160,3 +175,71 @@ def test_each_gate_runs_its_command_under_the_right_condition(step_name, command
     if expected_if == "changed":
         assert "steps.scope.outputs.changed_count != '0'" in condition
         assert "changed_traits.txt" in step["run"]
+
+
+def test_a_registry_change_alone_forces_full_validation():
+    """The reason `data/grounding/` is a full-validation input at all (#606).
+
+    A QUALIFIED canonical example is only valid while its registry row exists and
+    agrees, so editing a registry can invalidate records no diff mentions. That is
+    the same argument that puts the schema in FULL_VALIDATION_PATHS, and it is a
+    prefix rather than an exact path because the registries are a directory.
+    """
+    mode, traits = SCOPE.choose_scope(["data/grounding/protein_registry.jsonl"])
+    assert mode == "full"
+    assert traits == []
+
+
+def test_a_prefix_matches_only_beneath_itself():
+    """`data/grounding-notes.md` is not beneath `data/grounding/`.
+
+    A prefix test written against `data/grounding` without the separator would
+    force a full corpus run for any path that merely starts with those letters.
+    """
+    mode, _ = SCOPE.choose_scope(["data/grounding-notes.md"])
+    assert mode == "changed"
+
+
+def test_the_workflow_runs_the_grounding_validator_in_both_modes():
+    """`validate-all` is two halves and only the first was gated (#606).
+
+    Asserting the script name, not the recipe: validate-strict.yaml invokes the
+    scripts directly, so a test looking for `just validate-all` would pass while
+    nothing ran -- and asserting mere presence in the file is satisfied by the
+    `on: paths:` entries alone, which is how #536 slipped through.
+    """
+    steps = _steps()
+    grounding = [
+        step
+        for step in steps
+        if "scripts/validate_uniprot_grounding.py" in step.get("run", "")
+    ]
+    assert len(grounding) == 2, "expected a changed-files and a full-corpus grounding step"
+    conditions = sorted(step.get("if", "") for step in grounding)
+    assert any("mode == 'full'" in condition for condition in conditions)
+    assert any("mode == 'changed'" in condition for condition in conditions)
+
+
+def test_both_changed_file_steps_tolerate_a_deletion_only_list():
+    """The two steps run on ONE file list, so they must agree about it (#616).
+
+    `changed_traits.txt` can name only deleted records. `validate_strict.py` has
+    tolerated that since #540; when the grounding validator joined it on the same
+    list without the flag, a deletion-only PR failed the second step and passed
+    the first. Asserting on both together is what keeps them symmetric, since the
+    asymmetry is invisible when either step is read alone.
+    """
+    changed_steps = [
+        step
+        for step in _steps()
+        if "changed_traits.txt" in step.get("run", "")
+        and "validation_scope.py" not in step.get("run", "")
+    ]
+    assert len(changed_steps) >= 2, "expected at least the strict and grounding changed-file steps"
+    for step in changed_steps:
+        run = step["run"]
+        if "validate_strict.py" in run or "validate_uniprot_grounding.py" in run:
+            assert "--allow-missing" in run, (
+                f"{step.get('name')!r} consumes the CI diff list without --allow-missing; "
+                "a deletion-only change would fail it"
+            )
