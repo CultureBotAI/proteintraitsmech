@@ -2232,3 +2232,36 @@ def test_cli_builds_authoritative_hierarchy_from_trait_inputs(tmp_path):
         == 0
     )
     assert output.read_text(encoding="utf-8").count("\n") == 1
+
+
+def test_a_deletion_only_file_list_is_not_a_failure(tmp_path, capsys):
+    """CI's changed-file list can name only deleted records (#616).
+
+    validate_strict.py grew `--allow-missing` for exactly this (#540). Once the
+    grounding validator runs beside it on the same list, the two have to agree
+    about what a deletion-only diff means, or a PR that only removes records goes
+    red on the half that lacks the flag.
+    """
+    missing = tmp_path / "gone.yaml"
+    assert V.main(["--allow-missing", str(missing)]) == 0
+    assert "nothing to validate" in capsys.readouterr().err
+
+
+def test_a_mistyped_path_still_fails_without_the_flag(tmp_path):
+    """Opt in, do not assume: a human typing a wrong path must not see success.
+
+    Returning 0 for a path that was never read would report "validated" about a
+    file that does not exist -- the weakening #540 explicitly refused.
+    """
+    assert V.main([str(tmp_path / "gone.yaml")]) == 2
+
+
+def test_the_flag_does_not_mask_an_empty_corpus(tmp_path, monkeypatch):
+    """`--allow-missing` covers supplied paths, never a default scan.
+
+    With no paths the validator scans the corpus root; if that finds nothing the
+    checkout is broken, and exiting 0 there would be the fail-open shape of #573
+    -- green because it looked at nothing.
+    """
+    monkeypatch.setattr(V, "DEFAULT_TRAITS", tmp_path / "empty-traits")
+    assert V.main(["--allow-missing"]) == 2

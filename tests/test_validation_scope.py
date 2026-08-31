@@ -218,3 +218,28 @@ def test_the_workflow_runs_the_grounding_validator_in_both_modes():
     conditions = sorted(step.get("if", "") for step in grounding)
     assert any("mode == 'full'" in condition for condition in conditions)
     assert any("mode == 'changed'" in condition for condition in conditions)
+
+
+def test_both_changed_file_steps_tolerate_a_deletion_only_list():
+    """The two steps run on ONE file list, so they must agree about it (#616).
+
+    `changed_traits.txt` can name only deleted records. `validate_strict.py` has
+    tolerated that since #540; when the grounding validator joined it on the same
+    list without the flag, a deletion-only PR failed the second step and passed
+    the first. Asserting on both together is what keeps them symmetric, since the
+    asymmetry is invisible when either step is read alone.
+    """
+    changed_steps = [
+        step
+        for step in _steps()
+        if "changed_traits.txt" in step.get("run", "")
+        and "validation_scope.py" not in step.get("run", "")
+    ]
+    assert len(changed_steps) >= 2, "expected at least the strict and grounding changed-file steps"
+    for step in changed_steps:
+        run = step["run"]
+        if "validate_strict.py" in run or "validate_uniprot_grounding.py" in run:
+            assert "--allow-missing" in run, (
+                f"{step.get('name')!r} consumes the CI diff list without --allow-missing; "
+                "a deletion-only change would fail it"
+            )
