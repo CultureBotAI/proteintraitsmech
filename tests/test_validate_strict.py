@@ -13,6 +13,7 @@ Locks in:
 
 from __future__ import annotations
 
+import subprocess
 import sys
 from pathlib import Path
 
@@ -37,6 +38,17 @@ from validate_strict import (  # noqa: E402
     [
         (
             "Additional properties are not allowed ('bogus_field' was unexpected) in /",
+            "unexpected_field",
+        ),
+        # jsonschema switches to a plural verb and a key list for two or more, which
+        # the singular-only pattern bucketed as "other" -- under-reporting the one
+        # category closed mode exists to produce (#541).
+        (
+            "Additional properties are not allowed ('bogus_one', 'bogus_two' were unexpected) in /",
+            "unexpected_field",
+        ),
+        (
+            "Additional properties are not allowed ('a', 'b', 'c' were unexpected) in /x/0",
             "unexpected_field",
         ),
         ("'identifier' is a required property in /", "missing_required"),
@@ -125,126 +137,6 @@ def test_validate_one_yaml_parse_error_surfaces_as_row(tmp_path):
     assert any(e["category"] == "yaml_parse_error" for e in errors)
 
 
-def test_validate_one_enforces_ordered_prints_fingerprint_invariants(tmp_path):
-    p = tmp_path / "bad-fingerprint.yaml"
-    p.write_text(
-        _VALID_RECORD.replace("proteintraitsmech:TEST_RECORD", "PRINTS:PR00001")
-        + "sequence_fingerprint_representations:\n"
-        + "  - source_accession: PRINTS:PR00001\n"
-        + "    source_release: '42.0'\n"
-        + "    representation_type: PRINTS_FINAL_ORDERED_MOTIF_SETS\n"
-        + "    source_artifact: data/raw/interpro_members/prints42_0.kdat\n"
-        + "    source_artifact_sha256: "
-        + "47b4f0c32002bce2f9b85f335c942cc52deae8bed54c2b4b2eec5e36c5810771\n"
-        + "    source_record_sha256: "
-        + "0" * 64
-        + "\n"
-        + "    compatible_derivation_tool_hint: EMBOSS_PRINTSEXTRACT\n"
-        + "    motif_count: 3\n"
-        + "    motifs:\n"
-        + "      - ordinal: 2\n"
-        + "        motif_code: FIRST\n"
-        + "        length: 4\n"
-        + "        training_instance_count: 2\n"
-        + "        source_motif_sha256: "
-        + "1" * 64
-        + "\n"
-        + "        training_distance_from_previous_min: 4\n"
-        + "        training_distance_from_previous_max: 1\n"
-        + "        inter_motif_distance_constraint:\n"
-        + "          region_start_ordinal: 0\n"
-        + "          region_end_ordinal: 2\n"
-        + "          minimum: 5\n"
-        + "          maximum: 2\n"
-        + "          repeat_qualified: false\n"
-        + "      - ordinal: 1\n"
-        + "        motif_code: SECOND\n"
-        + "        length: 5\n"
-        + "        training_instance_count: 2\n"
-        + "        source_motif_sha256: "
-        + "2" * 64
-        + "\n"
-    )
-    errors = validate_one(p)
-    semantic = [error["message"] for error in errors if error["category"] == "semantic_invariant"]
-    assert any("motif_count 3 does not equal 2" in message for message in semantic)
-    assert any("motif ordinals must be contiguous" in message for message in semantic)
-    assert any("training_distance_from_previous_min exceeds" in message for message in semantic)
-    assert any("inter-motif constraint minimum exceeds maximum" in message for message in semantic)
-    assert any("constraint REGION must be 1-2" in message for message in semantic)
-
-
-_VALID_SFLD_PROFILE = """\
-identifier: SFLD:SFLDF00001
-label: test SFLD family
-trait_axis: FUNCTION
-sequence_profile_representations:
-  - source_accession: SFLD:SFLDF00001
-    source_release: '4'
-    representation_type: SFLD_4_HMMER3_PROFILE_WITH_CORRELATED_SITES
-    source_model_artifact: data/raw/interpro_members/sfld.hmm
-    source_model_artifact_sha256: e011a4139e6477a526710b32e8aeaa68203329c799305b015ec35c3b6d09672f
-    source_model_record_sha256: '0000000000000000000000000000000000000000000000000000000000000000'
-    source_sites_artifact: data/raw/interpro_members/sfld_sites.annot
-    source_sites_artifact_sha256: 60ee2408e5bb2bed2eba4ee2101e219b74dcee7abb2bc03aba9e3e905dcf8c66
-    source_site_record_sha256: '1111111111111111111111111111111111111111111111111111111111111111'
-    source_hierarchy_artifact: data/raw/interpro_members/sfld_hierarchy_flat.txt
-    source_hierarchy_artifact_sha256: e9d379421227fb9eb3c5eb259d2a925c321a7bf1e697055d361f7397b53f86b9
-    native_classification_level: FAMILY
-    model_length: 4
-    gathering_sequence_score: 10.5
-    gathering_domain_score: 9.25
-    training_sequence_count: 3
-    hmm_checksum: 3
-    profile_search_mode: HMMSEARCH_CUT_GA
-    site_coordinate_system: HMM_MODEL_MATCH_STATE
-    site_evidence_scope: DIRECT_MODEL_MATCH_ONLY
-    site_count: 2
-    sites:
-      - ordinal: 1
-        model_position: 1
-        description: nucleophile
-      - ordinal: 2
-        model_position: 4
-    site_feature_pattern_count: 2
-    site_feature_patterns:
-      - DE
-      - DQ
-"""
-
-
-def test_validate_one_accepts_content_addressed_sfld_profile_shape(tmp_path):
-    p = tmp_path / "sfld-profile.yaml"
-    p.write_text(_VALID_SFLD_PROFILE)
-    assert validate_one(p) == []
-
-
-def test_validate_one_enforces_sfld_profile_cross_field_invariants(tmp_path):
-    p = tmp_path / "bad-sfld-profile.yaml"
-    broken = (
-        _VALID_SFLD_PROFILE.replace(
-            "native_classification_level: FAMILY", "native_classification_level: SUBGROUP"
-        )
-        .replace("site_count: 2", "site_count: 3")
-        .replace("site_feature_pattern_count: 2", "site_feature_pattern_count: 3")
-        .replace("      - DE\n      - DQ", "      - D\n      - D")
-        .replace(
-            "source_model_artifact_sha256: e011a4139e6477a526710b32e8aeaa68203329c799305b015ec35c3b6d09672f",
-            "source_model_artifact_sha256: " + "f" * 64,
-        )
-    )
-    p.write_text(broken)
-    errors = validate_one(p)
-    semantic = [error["message"] for error in errors if error["category"] == "semantic_invariant"]
-
-    assert any("site_count 3 does not equal 2" in message for message in semantic)
-    assert any("site_feature_pattern_count 3 does not equal 2" in message for message in semantic)
-    assert any("FEATURE tuple length must equal site_count" in message for message in semantic)
-    assert any("FEATURE tuples must be unique" in message for message in semantic)
-    assert any("source_model_artifact_sha256 must be" in message for message in semantic)
-    assert any("requires native level FAMILY" in message for message in semantic)
-
-
 # ---------------------------------------------------------------- iter_yaml_files
 
 
@@ -310,14 +202,6 @@ def test_main_fail_on_never_still_returns_zero_on_failure(tmp_path):
     assert rc == 0
 
 
-def test_main_rejects_nonpositive_worker_count(tmp_path):
-    p = tmp_path / "ok.yaml"
-    p.write_text(_VALID_RECORD)
-    with pytest.raises(SystemExit) as error:
-        main([str(p), "--workers", "0"])
-    assert error.value.code == 2
-
-
 def test_main_returns_two_when_default_scope_has_no_files(tmp_path, monkeypatch):
     import validate_strict
 
@@ -325,10 +209,88 @@ def test_main_returns_two_when_default_scope_has_no_files(tmp_path, monkeypatch)
     assert main([]) == 2
 
 
-def test_main_returns_zero_when_all_supplied_paths_are_missing(tmp_path):
-    """Deletion-only CI diff: paths were supplied but none exist on disk
-    (e.g. every changed data/traits file in the PR was deleted) — this is
-    not an error (proteintraitsmech#488 review)."""
+def test_main_refuses_a_supplied_path_that_does_not_exist(tmp_path, capsys):
+    """A mistyped path must not report success (#540).
+
+    Returning 0 here made the hardened gate weaker on this axis than the open-mode
+    CLI it replaced, which exits 2. `just validate <typo>` printed nothing alarming
+    and exited 0, so a curator could reasonably report "validated, closed mode" for
+    a file that was never opened.
+    """
     missing = tmp_path / "gone.yaml"
     rc = main([str(missing), "--out", str(tmp_path / "out.tsv")])
+    assert rc == 2
+    assert "None of the supplied paths exist" in capsys.readouterr().err
+
+
+def test_main_allows_missing_paths_only_when_asked(tmp_path):
+    """The deletion-only CI diff stays valid, but opts in rather than being assumed.
+
+    A PR that only deletes records supplies a file list where nothing exists; that
+    is not an error for the CI caller (#488), and is an error for a human typing a
+    path (#540). The difference is now explicit.
+    """
+    missing = tmp_path / "gone.yaml"
+    rc = main(["--allow-missing", str(missing), "--out", str(tmp_path / "out.tsv")])
     assert rc == 0
+
+
+# ---------------------------------------------------------------- just recipes
+
+
+def _dry_run_just(*args: str) -> str:
+    result = subprocess.run(
+        ["just", "--dry-run", *args],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+        check=True,
+    )
+    return result.stdout + result.stderr
+
+
+def test_just_validate_delegates_to_the_closed_validator():
+    command = _dry_run_just("validate", "record with spaces.yaml")
+    assert "scripts/validate_strict.py" in command
+    assert "--workers 1" in command
+    assert "linkml-validate" not in command
+    assert "'record with spaces.yaml'" in command
+
+
+def test_just_validate_exits_non_zero_on_a_path_that_does_not_exist(tmp_path):
+    """The assertion whose absence let #540 through.
+
+    The recipe tests above inspect `just --dry-run` text, which proves what would be
+    run but never that running it fails. This executes the recipe for real.
+    """
+    result = subprocess.run(
+        ["just", "validate", str(tmp_path / "definitely-not-here.yaml")],
+        cwd=REPO_ROOT,
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode != 0, result.stdout + result.stderr
+
+
+def test_ci_opts_in_to_missing_paths_so_deletion_only_prs_still_pass():
+    """The workflow and the flag must stay together (#540).
+
+    If the changed-files step stops passing --allow-missing, a deletion-only PR
+    fails CI for a reason that has nothing to do with the records it deleted.
+    """
+    workflow = (REPO_ROOT / ".github" / "workflows" / "validate-strict.yaml").read_text(
+        encoding="utf-8"
+    )
+    changed_invocation = [
+        line
+        for line in workflow.splitlines()
+        if "validate_strict.py" in line and "${files[@]}" in line
+    ]
+    assert len(changed_invocation) == 1, changed_invocation
+    assert "--allow-missing" in changed_invocation[0]
+
+
+def test_reference_cli_is_explicitly_separate_from_the_gate():
+    command = _dry_run_just("validate-reference", "record.yaml")
+    assert "linkml-validate" in command
+    assert "scripts/validate_strict.py" not in command

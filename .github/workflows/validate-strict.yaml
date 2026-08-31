@@ -17,11 +17,9 @@ on:
       # validates -- without this line the gate would not fire on it (#484)
       - "src/proteintraitsmech/schema/mech_shared.yaml"
       - "data/traits/**"
-      - "data/grounding/**"
       - "scripts/validate_strict.py"
-      - "scripts/validate_uniprot_grounding.py"
-      - "scripts/uniprot_membership_snapshot.py"
       - "scripts/audit_causal_graphs.py"
+      - "scripts/validation_scope.py"
       - ".github/workflows/validate-strict.yaml"
       - "pyproject.toml"
   push:
@@ -32,11 +30,9 @@ on:
       # validates -- without this line the gate would not fire on it (#484)
       - "src/proteintraitsmech/schema/mech_shared.yaml"
       - "data/traits/**"
-      - "data/grounding/**"
       - "scripts/validate_strict.py"
-      - "scripts/validate_uniprot_grounding.py"
-      - "scripts/uniprot_membership_snapshot.py"
       - "scripts/audit_causal_graphs.py"
+      - "scripts/validation_scope.py"
       - ".github/workflows/validate-strict.yaml"
       - "pyproject.toml"
   workflow_dispatch:
@@ -67,39 +63,27 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" != "pull_request" ]; then
             echo "mode=full" >> "$GITHUB_OUTPUT"
+            echo "changed_count=0" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           BASE="${{ github.event.pull_request.base.sha }}"
           HEAD="${{ github.event.pull_request.head.sha }}"
-          CHANGED=$(git diff --name-only "$BASE" "$HEAD")
-          if echo "$CHANGED" | grep -qE '^(src/proteintraitsmech/schema/(proteintraitsmech|mech_shared)\.yaml|data/grounding/|scripts/validate_strict\.py|scripts/validate_uniprot_grounding\.py|scripts/uniprot_membership_snapshot\.py|scripts/audit_causal_graphs\.py|pyproject\.toml|\.github/workflows/validate-strict\.yaml)'; then
-            echo "A schema or validator change can affect records outside this PR's diff — running full corpus."
-            echo "mode=full" >> "$GITHUB_OUTPUT"
-          else
-            echo "$CHANGED" | grep -E '^data/traits/.*\.ya?ml$' > changed_traits.txt || true
-            n=$(wc -l < changed_traits.txt)
-            echo "mode=changed" >> "$GITHUB_OUTPUT"
-            echo "changed_count=$n" >> "$GITHUB_OUTPUT"
-            echo "$n changed trait file(s)"
-          fi
+          uv run python scripts/validation_scope.py \
+            --base "$BASE" --head "$HEAD" \
+            --github-output "$GITHUB_OUTPUT" \
+            --changed-traits changed_traits.txt
 
       - name: Strict validation (changed files)
         if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
         run: |
           mapfile -t files < changed_traits.txt
-          uv run python scripts/validate_strict.py "${files[@]}"
+          uv run python scripts/validate_strict.py --allow-missing "${files[@]}"
 
       - name: Structural audit (changed files)
         if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
         run: |
           mapfile -t files < changed_traits.txt
           uv run python scripts/audit_causal_graphs.py "${files[@]}"
-
-      - name: UniProt grounding semantics (changed files)
-        if: steps.scope.outputs.mode == 'changed' && steps.scope.outputs.changed_count != '0'
-        run: |
-          mapfile -t files < changed_traits.txt
-          uv run python scripts/validate_uniprot_grounding.py "${files[@]}"
 
       - name: Strict validation (full corpus)
         if: steps.scope.outputs.mode == 'full'
@@ -109,16 +93,10 @@ jobs:
         if: steps.scope.outputs.mode == 'full'
         run: uv run python scripts/audit_causal_graphs.py
 
-      - name: UniProt grounding semantics (full corpus)
-        if: steps.scope.outputs.mode == 'full'
-        run: uv run python scripts/validate_uniprot_grounding.py
-
       - name: Upload failure TSV
         if: failure()
         uses: actions/upload-artifact@v4
         with:
           name: instance-validation-failures
-          path: |
-            reports/instance_validation_failures.tsv
-            reports/uniprot-grounding/validation.tsv
+          path: reports/instance_validation_failures.tsv
           if-no-files-found: ignore

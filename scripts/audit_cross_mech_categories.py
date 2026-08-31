@@ -1,0 +1,434 @@
+#!/usr/bin/env python3
+"""Govern the trait-category vocabulary, here and across the Mech fleet (#581).
+
+Two questions, one audit, because both are "is a category value one this project
+recognises":
+
+MANIFEST_UNKNOWN_CATEGORY
+    A ``trait_categories`` entry in ``download.yaml`` that is not a permissible
+    value of ``ProteinTraitCategoryEnum``.  ``check_sources.py`` validates block
+    shape, roles, statuses, script naming and licence disposition, and never
+    looked at categories at all: ``trait_categories: [SEQ_NOT_A_REAL_CATEGORY]``
+    passed with zero errors.  A category renamed in the schema leaves every
+    manifest block silently stale.
+
+SHARED_TOKEN_MEANING_DRIFT
+    A token present in BOTH this Mech's vocabulary and TraitMech's, whose
+    description differs between them.
+
+SHARED_TOKEN_DROPPED
+    A token the pinned snapshot shows in both, now absent here.
+
+The two vocabularies are deliberately NOT converging.  TraitMech's eleven values
+describe organism traits (``METABOLISM``, ``MORPHOLOGY``); this Mech's sixty-eight
+describe protein traits (``SEQ_DOMAIN``, ``FUNC_ENZYMATIC_ACTIVITY``).  They meet
+on two administrative tokens, ``UPPER`` and ``OTHER``, and it is only that shared
+surface this audit governs: the same token must not come to mean two things in two
+repositories that a reader moves between.
+
+TraitMech is a separate repository and is not present in CI, so the comparison runs
+against ``conf/traitmech_category_vocabulary.yaml`` -- a reviewed pin, refreshed on
+purpose with ``--refresh``, the same shape as the vendored-sync ref.
+
+ADVISORY BY DEFAULT: this exits 0 whatever it finds, so it can land and be watched
+before it blocks anyone.  ``--fail-on any`` makes every finding an error, which is
+what a CI gate would pass once the report has been quiet for a while.
+"""
+
+from __future__ import annotations
+
+import argparse
+import collections
+import subprocess
+import urllib.error
+import urllib.parse
+import urllib.request
+import sys
+from pathlib import Path
+from typing import Any, Callable
+
+import yaml
+
+REPO_ROOT = Path(__file__).resolve().parent.parent
+SCHEMA = REPO_ROOT / "src" / "proteintraitsmech" / "schema" / "proteintraitsmech.yaml"
+MANIFEST = REPO_ROOT / "download.yaml"
+PINNED = REPO_ROOT / "conf" / "traitmech_category_vocabulary.yaml"
+LOCAL_ENUM = "ProteinTraitCategoryEnum"
+
+# Severity is per class, because the classes differ in who can fix them (#585).
+#
+# The two ERROR classes are entirely within this repository's control: its own
+# manifest disagreeing with its own schema, and its own enum dropping a token it
+# agreed to govern. Blocking a pull request on those is fair -- the author can fix
+# them here.
+#
+# SHARED_TOKEN_MEANING_DRIFT is a claim about a SIBLING repository. TraitMech can
+# reword its own description at any time, and doing so would then fail every pull
+# request opened here until someone reconciled a vocabulary they may not own. That
+# is a bad trade for a correctness signal that is real but not urgent, so it stays
+# a notice: reported on every run, never blocking.
+SEVERITY = {
+    "MANIFEST_UNKNOWN_CATEGORY": "error",
+    "SHARED_TOKEN_DROPPED": "error",
+    "SHARED_TOKEN_MEANING_DRIFT": "notice",
+    # Both remote classes are notices for the same reason SHARED_TOKEN_MEANING_DRIFT
+    # is: they describe a sibling repository, which can change without warning and
+    # must not redden builds here. PIN_UNCHECKED is separate from PIN_STALE on
+    # purpose -- "I could not look" and "I looked and it matches" must never print
+    # the same thing (#584).
+    "PIN_STALE": "notice",
+    "PIN_UNCHECKED": "notice",
+}
+
+TRAITMECH_REPOSITORY = "CultureBotAI/TraitMech"
+TRAITMECH_SCHEMA_PATH = "src/traitmech/schema/traitmech.yaml"
+TRAITMECH_ENUM = "TraitCategoryEnum"
+_FETCH_TIMEOUT_SECONDS = 20
+_FETCH_MAX_BYTES = 4 * 1024 * 1024
+
+
+class RemoteVocabularyError(RuntimeError):
+    """Raised when TraitMech's live vocabulary could not be obtained."""
+
+
+def _load_yaml(path: Path, what: str, remedy: str = "") -> dict:
+    """Read a YAML document, failing with a sentence instead of a traceback (#589).
+
+    This runs in a CI gate. An unhandled OSError there reads as the audit having
+    crashed, and sends the reader to the wrong place -- the tool, rather than the
+    file it could not open.
+    """
+    try:
+        text = path.read_text(encoding="utf-8")
+    except OSError as error:
+        raise SystemExit(f"FAIL: cannot read {what} at {path}: {error}.{remedy}") from error
+    try:
+        document = yaml.safe_load(text)
+    except yaml.YAMLError as error:
+        raise SystemExit(f"FAIL: {what} at {path} is not valid YAML: {error}") from error
+    if document is None:
+        raise SystemExit(f"FAIL: {what} at {path} is empty")
+    return document
+
+
+def _permissible_values(schema: dict, enum_name: str) -> dict[str, str | None]:
+    """``value -> description`` for one enum, tolerating a bare value with no body."""
+    spec = (schema.get("enums") or {}).get(enum_name) or {}
+    out: dict[str, str | None] = {}
+    for value, body in (spec.get("permissible_values") or {}).items():
+        out[str(value)] = (body or {}).get("description") if isinstance(body, dict) else None
+    return out
+
+
+def local_vocabulary(schema_path: Path = SCHEMA) -> dict[str, str | None]:
+    schema = _load_yaml(schema_path, "the schema")
+    values = _permissible_values(schema, LOCAL_ENUM)
+    if not values:
+        # A vocabulary audit that read no vocabulary must not report agreement.
+        raise SystemExit(f"FAIL: {LOCAL_ENUM} has no permissible values in {schema_path}")
+    return values
+
+
+def pinned_vocabulary(
+    pinned_path: Path = PINNED,
+) -> tuple[dict[str, str | None], str, set[str]]:
+    """``(values, pinned ref, governed tokens)``.
+
+    The governed set is read, not computed as an intersection: the vocabularies are
+    disjoint by design, so "in the pin but not local" cannot distinguish a token that
+    was never shared from one that was dropped (#583).
+    """
+    document = _load_yaml(
+        pinned_path,
+        "the TraitMech category pin",
+        " Regenerate it with 'just audit-cross-mech-categories --refresh <path-to-TraitMech>'.",
+    )
+    values = {
+        str(name): (body or {}).get("description")
+        for name, body in (document.get("permissible_values") or {}).items()
+    }
+    if not values:
+        raise SystemExit(f"FAIL: {pinned_path} pins no values")
+    governed = {str(token) for token in (document.get("governed_tokens") or [])}
+    return values, str(document.get("pinned_ref", "unknown")), governed
+
+
+def manifest_categories(manifest_path: Path = MANIFEST) -> dict[str, list[str]]:
+    """``category -> block names declaring it``."""
+    blocks = _load_yaml(manifest_path, "download.yaml") or []
+    declared: dict[str, list[str]] = {}
+    for index, block in enumerate(blocks):
+        if not isinstance(block, dict):
+            continue
+        tag = str(block.get("name") or block.get("source") or f"block[{index}]")
+        for value in block.get("trait_categories") or []:
+            declared.setdefault(str(value), []).append(tag)
+    return declared
+
+
+def findings(
+    local: dict[str, str | None],
+    pinned: dict[str, str | None],
+    declared: dict[str, list[str]],
+    governed: set[str] | None = None,
+) -> list[tuple[str, str]]:
+    """``(class, message)`` pairs, deterministically ordered."""
+    out: list[tuple[str, str]] = []
+    for category in sorted(declared):
+        if category not in local:
+            blocks = ", ".join(sorted(set(declared[category])))
+            out.append(
+                (
+                    "MANIFEST_UNKNOWN_CATEGORY",
+                    f"{category!r} is declared by {blocks} but is not a permissible value "
+                    f"of {LOCAL_ENUM}",
+                )
+            )
+    for token in sorted(set(local) & set(pinned)):
+        if local[token] != pinned[token]:
+            out.append(
+                (
+                    "SHARED_TOKEN_MEANING_DRIFT",
+                    f"{token!r} means {local[token]!r} here and {pinned[token]!r} in "
+                    f"TraitMech; a shared token must not mean two things",
+                )
+            )
+    for token in sorted(governed or set()):
+        if token not in local:
+            out.append(
+                (
+                    "SHARED_TOKEN_DROPPED",
+                    f"{token!r} is a governed cross-Mech token but is no longer a "
+                    f"permissible value of {LOCAL_ENUM}",
+                )
+            )
+    return out
+
+
+def refresh(traitmech_root: Path, pinned_path: Path = PINNED) -> int:
+    """Re-pin the snapshot from a local TraitMech checkout."""
+    source = traitmech_root / "src" / "traitmech" / "schema" / "traitmech.yaml"
+    if not source.is_file():
+        print(f"ERROR: no TraitMech schema at {source}", file=sys.stderr)
+        return 2
+    schema = yaml.safe_load(source.read_text(encoding="utf-8"))
+    values = _permissible_values(schema, "TraitCategoryEnum")
+    if not values:
+        print(f"ERROR: TraitCategoryEnum has no permissible values in {source}", file=sys.stderr)
+        return 2
+    head = subprocess.run(
+        ["git", "-C", str(traitmech_root), "rev-parse", "HEAD"], capture_output=True, text=True
+    )
+    document = yaml.safe_load(pinned_path.read_text(encoding="utf-8"))
+    existing = {
+        str(name): (body or {}).get("description")
+        for name, body in (document.get("permissible_values") or {}).items()
+    }
+    if existing == values:
+        # pinned_ref means "the ref these values came from", not "the last ref seen".
+        # Rewriting it for an upstream commit that did not touch the vocabulary churns
+        # a reviewed file for no reason and buries the refs that did change something.
+        print(
+            f"unchanged: {len(values)} TraitMech values already pinned; ref left at "
+            f"{str(document.get('pinned_ref', 'unknown'))[:11]}"
+        )
+        return 0
+    document["pinned_ref"] = head.stdout.strip() or "unknown"
+    document["permissible_values"] = {
+        name: {"description": values[name]} for name in sorted(values)
+    }
+    pinned_path.write_text(
+        yaml.safe_dump(document, sort_keys=False, allow_unicode=True, width=88), encoding="utf-8"
+    )
+    print(f"re-pinned {len(values)} TraitMech values at {document['pinned_ref'][:11]}")
+    return 0
+
+
+def fetch_traitmech_vocabulary(
+    ref: str = "main",
+    *,
+    timeout: int = _FETCH_TIMEOUT_SECONDS,
+    opener: Callable[..., Any] = urllib.request.urlopen,
+) -> dict[str, str | None]:
+    """TraitMech's category vocabulary as it stands right now, over HTTPS.
+
+    Same mechanism and same host as scripts/check_vendored_sync.py already uses for
+    the canonical hub, including the redirect check: this is a second use of an
+    established route, not a new network dependency for the repository.
+    """
+
+    url = f"https://raw.githubusercontent.com/{TRAITMECH_REPOSITORY}/{ref}/{TRAITMECH_SCHEMA_PATH}"
+    request = urllib.request.Request(url, headers={"User-Agent": "ProteinTraitsMech-audit/1"})
+    # Injectable so the guards below are testable without a network (#591); the same
+    # shape acquire_rhea_sources.py uses for exactly this reason.
+    with opener(request, timeout=timeout) as response:
+        final = urllib.parse.urlparse(response.geturl())
+        if final.scheme != "https" or final.hostname != "raw.githubusercontent.com":
+            raise RemoteVocabularyError(f"fetch redirected off raw.githubusercontent.com: {final}")
+        if response.status != 200:
+            raise RemoteVocabularyError(f"{url} returned HTTP {response.status}")
+        raw = response.read(_FETCH_MAX_BYTES + 1)
+    if len(raw) > _FETCH_MAX_BYTES:
+        raise RemoteVocabularyError(f"{url} exceeds {_FETCH_MAX_BYTES} bytes")
+    try:
+        document = yaml.safe_load(raw.decode("utf-8"))
+    except (UnicodeDecodeError, yaml.YAMLError) as error:
+        raise RemoteVocabularyError(f"{url} is not readable YAML: {error}") from error
+    values = _permissible_values(document or {}, TRAITMECH_ENUM)
+    if not values:
+        raise RemoteVocabularyError(f"{url} declares no {TRAITMECH_ENUM} values")
+    return values
+
+
+def remote_findings(
+    pinned: dict[str, str | None], live: dict[str, str | None]
+) -> list[tuple[str, str]]:
+    """Report where the reviewed pin no longer matches TraitMech."""
+    out: list[tuple[str, str]] = []
+    for token in sorted(set(pinned) | set(live)):
+        if pinned.get(token) != live.get(token):
+            out.append(
+                (
+                    "PIN_STALE",
+                    f"{token!r} is pinned as {pinned.get(token)!r} but TraitMech now has "
+                    f"{live.get(token)!r}; re-pin with --refresh after reviewing the change",
+                )
+            )
+    return out
+
+
+def verify_pin(traitmech_root: Path, pinned_path: Path = PINNED) -> int:
+    """Fail when a local TraitMech checkout disagrees with the pin (#584).
+
+    The fleet's other cross-repo check fetches the hub live, so hub drift is caught
+    without anyone acting. This pin is static, so TraitMech drift is invisible to CI,
+    which has only this repository. This is the offline half: run it anywhere both
+    repositories exist.
+    """
+    source = traitmech_root / "src" / "traitmech" / "schema" / "traitmech.yaml"
+    if not source.is_file():
+        print(f"ERROR: no TraitMech schema at {source}", file=sys.stderr)
+        return 2
+    live = _permissible_values(
+        yaml.safe_load(source.read_text(encoding="utf-8")), "TraitCategoryEnum"
+    )
+    pinned, pinned_ref, _governed = pinned_vocabulary(pinned_path)
+    if live == pinned:
+        print(f"OK: pin {pinned_ref[:11]} matches {source}")
+        return 0
+    for token in sorted(set(live) | set(pinned)):
+        if live.get(token) != pinned.get(token):
+            print(
+                f"  PIN_STALE: {token!r} pinned as {pinned.get(token)!r}, "
+                f"TraitMech now has {live.get(token)!r}"
+            )
+    print("\nThe pin is stale; re-pin with --refresh after reviewing the change.")
+    return 1
+
+
+def _blocks(kind: str, fail_on: str) -> bool:
+    """Whether a finding of this class should fail the run under this policy."""
+    if fail_on == "never":
+        return False
+    if fail_on == "any":
+        return True
+    return SEVERITY.get(kind, "error") == "error"
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--refresh",
+        type=Path,
+        metavar="TRAITMECH_ROOT",
+        help="re-pin conf/traitmech_category_vocabulary.yaml from a local "
+        "TraitMech checkout, then exit",
+    )
+    parser.add_argument(
+        "--verify-pin",
+        type=Path,
+        metavar="TRAITMECH_ROOT",
+        help="fail if a local TraitMech checkout disagrees with the pin. CI has only "
+        "this repository, so pin staleness is otherwise invisible (#584)",
+    )
+    parser.add_argument(
+        "--check-remote",
+        action="store_true",
+        help="fetch TraitMech's vocabulary over HTTPS and report where the reviewed pin "
+        "has gone stale. Off by default so offline and local runs are unaffected; CI "
+        "turns it on (#584)",
+    )
+    parser.add_argument(
+        "--fail-on",
+        choices=("never", "error", "any"),
+        default="error",
+        help="'error' (default) fails on findings this repository can fix -- an "
+        "unknown manifest category, or a governed token dropped from its own enum. "
+        "'never' reports and exits 0. 'any' also fails on cross-Mech description "
+        "drift, which a sibling repository can cause (#585)",
+    )
+    args = parser.parse_args(argv)
+
+    if args.refresh is not None:
+        return refresh(args.refresh)
+    if args.verify_pin is not None:
+        return verify_pin(args.verify_pin)
+
+    # Passed explicitly rather than relying on the default arguments: a default binds
+    # at definition, so a test that redirects MANIFEST would be silently ignored and
+    # would assert against the real manifest instead.
+    local = local_vocabulary(SCHEMA)
+    pinned, pinned_ref, governed = pinned_vocabulary(PINNED)
+    declared = manifest_categories(MANIFEST)
+    shared = sorted(governed)
+
+    # Stated on every run, not only clean ones. Whether the pin was compared against
+    # the live repository changes what a green result means, and disclosing it only
+    # when there are no findings would never have printed at all while the UPPER
+    # drift stands (#584).
+    pin_state = "checked live" if args.check_remote else "NOT checked, --check-remote off"
+    print(
+        f"{LOCAL_ENUM}: {len(local)} values; TraitMech pin {pinned_ref[:11]} "
+        f"[{pin_state}]: {len(pinned)} values; governed tokens: {len(shared)} "
+        f"({', '.join(shared) or 'none'})"
+    )
+    print(f"download.yaml declares {len(declared)} distinct categories")
+
+    results = findings(local, pinned, declared, governed)
+    if args.check_remote:
+        try:
+            results += remote_findings(pinned, fetch_traitmech_vocabulary())
+        except (RemoteVocabularyError, urllib.error.URLError, OSError, TimeoutError) as error:
+            # NOT silence, and not a failure. A remote check that could not run must
+            # say so: reporting nothing here would be indistinguishable from a pin
+            # that was checked and matched, which is the #534 shape.
+            results.append(
+                (
+                    "PIN_UNCHECKED",
+                    f"could not read TraitMech's vocabulary ({error}); the pin was NOT "
+                    f"verified against it on this run",
+                )
+            )
+    for kind, message in results:
+        print(f"  {SEVERITY.get(kind, 'error').upper()} {kind}: {message}")
+    if not results:
+        checked = "pin verified against TraitMech" if args.check_remote else "pin not checked"
+        print(f"\nOK: no unknown manifest category, no shared-token drift ({checked}).")
+        return 0
+
+    blocking = [kind for kind, _ in results if _blocks(kind, args.fail_on)]
+    counts = collections.Counter(SEVERITY.get(kind, "error") for kind, _ in results)
+    summary = ", ".join(f"{n} {name}" for name, n in sorted(counts.items()))
+    print(f"\n{len(results)} finding(s): {summary}.")
+    if blocking:
+        print(f"{len(blocking)} blocking under --fail-on {args.fail_on}.")
+        return 1
+    print(
+        f"None blocking under --fail-on {args.fail_on}; a notice is reported on every "
+        f"run and never gates. Use --fail-on any to block on it too."
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

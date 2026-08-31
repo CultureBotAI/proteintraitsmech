@@ -60,10 +60,16 @@ audit-pages *args:
 gen-schema:
     uv run gen-pydantic src/proteintraitsmech/schema/proteintraitsmech.yaml > src/proteintraitsmech/schema/proteintraitsmech_dataclasses.py
 
-# Validate a single ProteinTraitRecord YAML against the schema
+# Validate one ProteinTraitRecord in strict closed mode. One worker reduces the
+# multiprocess startup cost to a single child rather than avoiding it -- the pool is
+# still built and the schema still parsed there. Semantics are identical to validate-all.
 validate file:
+    uv run python scripts/validate_strict.py --workers 1 {{quote(file)}}
+
+# Reference LinkML CLI diagnostics (OPEN mode: not the data gate; unknown slots may pass).
+validate-reference file:
     uv run linkml-validate -s src/proteintraitsmech/schema/proteintraitsmech.yaml \
-      --target-class ProteinTraitRecord {{file}}
+      --target-class ProteinTraitRecord {{quote(file)}}
 
 # Validate every YAML under data/traits/. Runs both validate-strict (closed-mode,
 # rejects unknown top-level and nested fields) and the migration-safe UniProt
@@ -151,12 +157,12 @@ validate-history *args:
         --schema src/proteintraitsmech/schema/history.yaml --target-class HistoryRecord "$target"
     fi
 
-# Drift check for the files vendored BYTE-IDENTICAL from the canonical hub
-# (CultureBotAI/CultureMech at scripts/.vendored_canon_ref). A local edit to any of them
-# fails here -- which is the point: the fleet's shared modules must not fork silently.
-# curl + diff only, so it runs as a fast blocking CI job with no Python dependency.
+# Drift check for the files vendored BYTE-IDENTICAL from canonical claw at the immutable
+# commit in scripts/.vendored_canon_ref. The claw manifest is the sole artifact list; a
+# local edit to any governed path fails here so the fleet's shared modules cannot fork
+# silently. Standard-library Python only, with no project dependency installation.
 #
-# Fail if a byte-identical vendored file has drifted from the hub
+# Fail if a governed vendored file has drifted from canonical claw
 check-vendored-sync:
     bash scripts/check_vendored_sync.sh
 
@@ -209,8 +215,14 @@ test *args:
 lint *args:
     uv run ruff check scripts/ tests/ {{args}}
 
-# Cross-checks download.yaml against the seeders; warns on restrictive (NC/ND)
-# licences and orphan seeders.
+# Enforce download.yaml and scripts/source_helpers.yaml as the source/script registry.
+# Restrictive terms require an explicit review state; pending #517 decisions are notices.
+# Govern the trait-category vocabulary: unknown categories in download.yaml, and
+# tokens shared with TraitMech that have drifted apart in meaning (#581). Advisory:
+# it reports and exits 0. Pass --fail-on any to make findings blocking.
+audit-cross-mech-categories *args:
+    uv run python scripts/audit_cross_mech_categories.py {{args}}
+
 # Validate the data-source registry
 sources-check:
     uv run python scripts/check_sources.py

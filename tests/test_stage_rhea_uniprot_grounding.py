@@ -6,6 +6,7 @@ import hashlib
 import importlib
 import json
 import os
+import shutil
 import sys
 from pathlib import Path
 from typing import Any, Callable
@@ -611,3 +612,94 @@ def test_production_reaction_direction_and_trait_sets_replay_with_synthetic_pair
         ("RHEA:10000", "UniProtKB:P12345")
     ]
     assert result.summary["qualification_claimed"] is False
+
+
+def test_absent_ripgrep_falls_back_to_a_superset_with_an_identical_result(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """The prefilter must not depend on ripgrep, which CI does not install (#571).
+
+    The fallback is deliberately a strict superset rather than a second matcher:
+    reproducing ripgrep's escape, NUL, and UTF-16 semantics in two places is how
+    the paths drift apart silently (#539).  So assert containment rather than set
+    equality, and assert that what the stage actually produces is identical either
+    way.  Without this test the fallback is dead code on any machine that has
+    ripgrep installed -- which is every machine where this suite has ever been
+    run green.
+    """
+
+    case = _case(tmp_path)
+    root = case["traits_root"]
+
+    ripgrep_paths = stage._ripgrep_candidate_paths(root)
+    if ripgrep_paths is None:
+        pytest.skip("ripgrep is absent here, so the fallback is already the only path")
+    walked = stage._walked_candidate_paths(root)
+    assert {stage._lexical_absolute(path) for path in ripgrep_paths} <= {
+        stage._lexical_absolute(path) for path in walked
+    }
+
+    with_ripgrep = _build(case)
+    monkeypatch.setenv("PATH", "")
+    assert stage._ripgrep_candidate_paths(root) is None
+    without_ripgrep = _build(case)
+
+    for attribute in ("candidates", "protein_requests", "summary"):
+        assert stage.canonical_json(getattr(without_ripgrep, attribute)) == stage.canonical_json(
+            getattr(with_ripgrep, attribute)
+        )
+
+
+def test_yml_semantic_shadow_still_fails_closed_without_ripgrep(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """Shadow detection must survive ripgrep's absence (#571).
+
+    The parametrized shadow test above covers a `.quoted.yml` shadow, but only
+    along the ripgrep path, because ripgrep is installed on every machine where
+    this suite has been run green.  In CI the fallback is the only path, so a
+    fallback that matched `.yaml` and not `.yml` would let a semantic shadow
+    through precisely where no one is looking.
+    """
+
+    case = _case(tmp_path)
+    shadow = case["traits_root"] / "other" / "shadow.yml"
+    _write(
+        shadow,
+        _trait_text("RHEA:10000", "A + B = C").replace(
+            "identifier: RHEA:10000", 'identifier: "RHEA:10000"'
+        ),
+    )
+    monkeypatch.setenv("PATH", "")
+    assert stage._ripgrep_candidate_paths(case["traits_root"]) is None
+    with pytest.raises(stage.RheaStageError, match="semantic shadow"):
+        _build(case)
+
+
+def test_both_prefilter_paths_refuse_an_unscannable_trait_root(tmp_path: Path) -> None:
+    """The fallback must fail closed exactly where ripgrep does (#573).
+
+    ``os.walk`` reports a missing or unreadable tree as an empty one, so without
+    an explicit guard the fallback would scan nothing, find no semantic shadows,
+    and report success -- the #540 shape, in the one environment (no ripgrep)
+    the fallback exists to serve.
+    """
+
+    missing = tmp_path / "no-such-trait-root"
+    with pytest.raises(stage.RheaStageError, match="not a directory"):
+        stage._walked_candidate_paths(missing)
+    if shutil.which("rg") is not None:
+        with pytest.raises(stage.RheaStageError, match="prefilter failed"):
+            stage._ripgrep_candidate_paths(missing)
+
+    unreadable = tmp_path / "unreadable"
+    (unreadable / "nested").mkdir(parents=True)
+    _write(unreadable / "nested" / "trait.yaml", "identifier: RHEA:10000\n")
+    os.chmod(unreadable / "nested", 0o000)
+    try:
+        if os.access(unreadable / "nested", os.R_OK):
+            pytest.skip("running as a user that ignores directory permissions")
+        with pytest.raises(stage.RheaStageError, match="cannot scan Rhea trait root"):
+            stage._walked_candidate_paths(unreadable)
+    finally:
+        os.chmod(unreadable / "nested", 0o700)

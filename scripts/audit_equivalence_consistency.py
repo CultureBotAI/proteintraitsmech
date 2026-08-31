@@ -48,6 +48,8 @@ from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+from record_scope import records_in_source_directories
+
 ROOT = Path(__file__).resolve().parent.parent
 TRAITS = ROOT / "data" / "traits"
 TSV = ROOT / "data" / "equivalence" / "cross_source.tsv"
@@ -58,9 +60,12 @@ IDENT = re.compile(r"^identifier: (\S+)$", re.M)
 # future-proofing, not a live matcher. The 127 three-key xrefs that do exist carry
 # `object: CAZy:*`, which this pattern could never match anyway. Kept because the shape is
 # schema-legal and a miss here is silent (see `load_records`).
-XREF = re.compile(r"^[ ]*- object: (InterPro:IPR\d+)[ \t]*\n"
-                  r"(?:[ ]*  predicate: .*\n)?"
-                  r"[ ]*  mapping_source: (\S+)[ \t]*$", re.M)
+XREF = re.compile(
+    r"^[ ]*- object: (InterPro:IPR\d+)[ \t]*\n"
+    r"(?:[ ]*  predicate: .*\n)?"
+    r"[ ]*  mapping_source: (\S+)[ \t]*$",
+    re.M,
+)
 
 # `mapping_source` values that assert "this signature IS that InterPro entry" -- the claim
 # the overlay also makes. Both labels name the same derivation from `member_list`; they
@@ -71,6 +76,33 @@ XREF = re.compile(r"^[ ]*- object: (InterPro:IPR\d+)[ \t]*\n"
 # `interpro-member-list -> None` entry asserted a correspondence that does not exist,
 # since no PANTHER/HAMAP/PRINTS/SFLD subject can appear in the overlay at all today.
 ACCEPTED_SOURCES = frozenset({"pfam2interpro", "interpro-member-list"})
+
+# Every current writer of an ACCEPTED_SOURCES assertion routes to one of these source
+# directories.  This list is intentionally explicit: a CURIE-prefix filter would miss
+# overlay subjects stored elsewhere, while a whole-corpus walk made this gate cost ~32s.
+# Adding a writer for either mapping_source therefore requires adding its output source
+# directory here.  The real-corpus test pins both sides of the coverage report so an
+# accidental narrowing of these directories is visible.
+# Every directory a KNOWN WRITER can emit into, not only those with records today.
+# The five with records are hamap, panther, pfam, prints and sfld; the other three are
+# the remaining seed_interpro_members.MEMBER_DBS targets, blocked on licence rather than
+# on code. Naming them now costs nothing -- records_in_source_directories skips a source
+# directory that does not exist -- and means the gate already covers PIRSF, SMART or
+# SUPERFAMILY on the day they land, instead of silently ignoring them until someone
+# notices (#538). test_scope_covers_every_member_db_writer keeps this tied to the seeder,
+# so a seventh member DB fails loudly here rather than opening the same hole again.
+ASSERTION_SOURCE_DIRECTORIES = frozenset(
+    {
+        "hamap",
+        "panther",
+        "pfam",
+        "prints",
+        "sfld",
+        "pirsf",
+        "smart",
+        "superfamily",
+    }
+)
 
 
 def load_tsv(path: Path) -> dict[str, set[str]]:
@@ -86,9 +118,9 @@ def load_tsv(path: Path) -> dict[str, set[str]]:
 def _read(path: Path) -> bytes | None:
     """The file's bytes if it could possibly matter, else None.
 
-    Bytes, and the marker test before any decode: 309,177 of the corpus's 429,271 records
-    mention no InterPro entry at all, and decoding them to throw them away is most of the
-    work.
+    Bytes, and the marker test before any decode: many records in the selected source
+    directories mention no InterPro entry at all, so decoding them just to throw them
+    away is needless work.
 
     Errors are re-raised NAMING THE PATH. Unhandled, a pool worker gives a 20-line
     traceback whose deepest frame is inside `concurrent.futures` -- verified by putting a
@@ -105,23 +137,14 @@ def _read(path: Path) -> bytes | None:
 def load_records(traits: Path, workers: int = 8) -> dict[str, set[str]]:
     """subject CURIE -> {InterPro objects} asserted by that record's mapped_xrefs.
 
-    Threaded because this is pure I/O over 429k small files and #416 is an open complaint
-    about full-corpus tests being slow. Roughly halves it -- 62s to 32s at 8 workers here,
-    nothing past 8 -- though the absolutes move a lot with cache state.
-
-    WHY THE WHOLE CORPUS, stated correctly on the second attempt. The first version said a
-    `*/pfam/`-style filter "would silently stop checking" 2,334 subjects that live outside
-    a directory named after their CURIE prefix. Those 2,334 are all PROSITE, and PROSITE
-    contributes ZERO comparisons today -- every one of the 17,970 comparable subjects is
-    under a `pfam/` directory, so the filter would in fact give the identical result far
-    faster. The honest reason is future-proofing: the moment #450 widens the overlay to
-    PANTHER, or a CDD record starts asserting `mapped_xrefs`, a prefix filter starts
-    hiding real work, and a gate that narrows silently is the failure this file exists to
-    prevent. Walking everything costs ~30s and cannot go stale.
+    Scoped by the source directories of the writers that emit ACCEPTED_SOURCES mappings.
+    This is not a CURIE-prefix shortcut: the scope includes all five current writers,
+    including sources outside the overlay's current vocabulary.  The explicit scope and
+    pinned real-corpus coverage counts make its boundary reviewable.
     """
     out: dict[str, set[str]] = defaultdict(set)
     missed = 0
-    paths = list(traits.rglob("*.yaml"))
+    paths = list(records_in_source_directories(traits, ASSERTION_SOURCE_DIRECTORIES))
     with ThreadPoolExecutor(max_workers=workers) as pool:
         for raw in pool.map(_read, paths, chunksize=256):
             if raw is None:
@@ -140,21 +163,25 @@ def load_records(traits: Path, workers: int = 8) -> dict[str, set[str]]:
             # whose whole output is "0 disagreements". Nothing in the corpus uses them
             # today; this counts the difference so a serializer change is reported rather
             # than absorbed.
-            missed += (text.count("mapping_source: pfam2interpro")
-                       + text.count("mapping_source: interpro-member-list")
-                       - sum(1 for _o, s in XREF.findall(text) if s in ACCEPTED_SOURCES))
+            missed += (
+                text.count("mapping_source: pfam2interpro")
+                + text.count("mapping_source: interpro-member-list")
+                - sum(1 for _o, s in XREF.findall(text) if s in ACCEPTED_SOURCES)
+            )
     if missed:
         raise ValueError(
             f"{missed} `mapping_source` line(s) naming an accepted source were not matched "
             f"by XREF. The records use a mapped_xrefs shape this check cannot read, so its "
             f"'0 disagreements' would be meaningless. Fix the pattern, do not raise the "
-            f"threshold.")
+            f"threshold."
+        )
     return out
 
 
 def main() -> int:
-    ap = argparse.ArgumentParser(description=__doc__,
-                                 formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap = argparse.ArgumentParser(
+        description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter
+    )
     ap.add_argument("--show", type=int, default=12)
     ap.add_argument("--traits-root", default="")
     ap.add_argument("--tsv", default="")
@@ -188,30 +215,44 @@ def main() -> int:
     print(f"COMPARABLE (in both):         {len(common):,}")
     if not common:
         # A gate that compared nothing must not report a clean corpus (#418, #432).
-        print("FAIL: nothing was comparable. Either the overlay or the records lost their "
-              "InterPro assertions; both are a defect, and 0 disagreements is not.")
+        print(
+            "FAIL: nothing was comparable. Either the overlay or the records lost their "
+            "InterPro assertions; both are a defect, and 0 disagreements is not."
+        )
         return 1
     achievable = len(common) + len(absent_from_overlay)
-    print(f"  of the {achievable:,} this check COULD compare, it compares "
-          f"{100 * len(common) / achievable:.1f}%")
-    print("\nNOT compared, and why -- both directions, because reporting one of them and "
-          "framing the other away is how a partial gate reads as a complete one:")
-    print(f"  {len(absent_from_overlay):,}  record asserts an xref, no overlay row "
-          f"(the InterPro record is not seeded) -- `just audit-pfam-interpro` covers these")
-    print(f"  {len(unrepresentable):,}  source outside the overlay's vocabulary "
-          f"({_by_prefix(unrepresentable)}) -- NOTHING covers these (#450)")
-    print(f"  {len(tsv_only):,}  overlay row, record asserts no xref "
-          f"({_by_prefix(tsv_only)}) -- NOTHING covers these either")
+    print(
+        f"  of the {achievable:,} this check COULD compare, it compares "
+        f"{100 * len(common) / achievable:.1f}%"
+    )
+    print(
+        "\nNOT compared, and why -- both directions, because reporting one of them and "
+        "framing the other away is how a partial gate reads as a complete one:"
+    )
+    print(
+        f"  {len(absent_from_overlay):,}  record asserts an xref, no overlay row "
+        f"(the InterPro record is not seeded) -- `just audit-pfam-interpro` covers these"
+    )
+    print(
+        f"  {len(unrepresentable):,}  source outside the overlay's vocabulary "
+        f"({_by_prefix(unrepresentable)}) -- NOTHING covers these (#450)"
+    )
+    print(
+        f"  {len(tsv_only):,}  overlay row, record asserts no xref "
+        f"({_by_prefix(tsv_only)}) -- NOTHING covers these either"
+    )
 
     bad = [(s, sorted(tsv[s]), sorted(rec[s])) for s in common if tsv[s] != rec[s]]
     print(f"\nDISAGREE:                     {len(bad):,}")
-    for subj, want, got in bad[:args.show]:
+    for subj, want, got in bad[: args.show]:
         print(f"  {subj}  overlay says {', '.join(want)}  record says {', '.join(got)}")
     if bad:
-        print("\nFAIL: a record and the equivalence overlay disagree about the same "
-              "mapping. Both derive from interpro.xml's member_list, so one of them was "
-              "written from something else — run `just audit-pfam-interpro` to find out "
-              "which.")
+        print(
+            "\nFAIL: a record and the equivalence overlay disagree about the same "
+            "mapping. Both derive from interpro.xml's member_list, so one of them was "
+            "written from something else — run `just audit-pfam-interpro` to find out "
+            "which."
+        )
         return 1
     return 0
 

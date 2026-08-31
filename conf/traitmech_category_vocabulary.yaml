@@ -1,0 +1,44 @@
+_comment: 'Pinned snapshot of TraitMech''s TraitCategoryEnum, the sibling Mech''s trait-category
+  vocabulary. ProteinTraitsMech cannot read TraitMech''s schema in CI, so the comparison is
+  against this file, refreshed deliberately with ''just audit-cross-mech-categories --refresh
+  <path-to-TraitMech>'' and reviewed like any other pin. The two vocabularies are NOT meant
+  to converge: one describes organism traits, the other protein traits, and they overlap only
+  on administrative tokens. What is governed is that small shared surface -- a token appearing
+  in both must keep the same meaning in both (#581).'
+source_repository: CultureBotAI/TraitMech
+source_path: src/traitmech/schema/traitmech.yaml
+source_enum: TraitCategoryEnum
+pinned_ref: adcc34162435081ebda1933ae024e1672ea71afe
+governed_tokens:
+- OTHER
+- UPPER
+permissible_values:
+  DETECTION:
+    description: Differential / selective media growth, biochemical assays.
+  ECOLOGY:
+    description: Habitat, host association, symbiosis class.
+  ENVIRONMENT:
+    description: pH / temperature / salinity / pressure tolerances and optima.
+  GENOMICS:
+    description: GC content, genome size, ploidy.
+  METABOLISM:
+    description: Substrate utilisation, electron donor/acceptor, fermentation.
+  MORPHOLOGY:
+    description: Cell shape, motility apparatus, Gram type, etc.
+  OBSERVATION:
+    description: Observation-class entries (METPO:1001000 subtree) — not traits per se, but
+      data-collection units (e.g. "growth pH observation", "NaCl range observation") that
+      link a trait to a measurement event.
+  OTHER:
+    description: null
+  PHYSIOLOGY:
+    description: Metabolic mode, oxygen tolerance, fermentation capability.
+  QUANTITATIVE_PROPERTY:
+    description: Datatype property carrying a numeric value (e.g. has_pH_optimum).
+  UPPER:
+    description: Upper-level classifier (e.g. "quality", "biological process").
+_governed_comment: The shared surface this audit governs, recorded rather than computed. The
+  two vocabularies are disjoint by design, so 'in the pin but not local' cannot mean a token
+  was dropped -- nine TraitMech values are legitimately absent here. Listing the intersection
+  at pin time makes 'governed' a reviewed decision, and lets a governed token going missing
+  be a finding (#583).

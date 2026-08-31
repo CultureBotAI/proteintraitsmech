@@ -538,13 +538,20 @@ def test_real_release_141_catalogues_can_build_runner_receipt(tmp_path: Path) ->
     assert result["central_grounding_eligible"] is False
 
 
-def test_provider_plan_binding_and_production_absence_are_unchanged() -> None:
+def test_provider_plan_binding_and_production_absence_are_unchanged(tmp_path: Path) -> None:
+    # Derived against a temporary repo root, not the production tree: data/raw/rhea/ is
+    # gitignored and absent in a clean checkout, so binding it here made this test pass
+    # only on a machine that already held the release (#569). Both identifiers below are
+    # constants of the pinned provider plan and do not depend on output-directory state.
     assert runner.PLAN_KIND == "RHEA_PROVIDER_ACQUISITION_EXECUTION_PLAN"
-    assert runner.derive_execution_plan()["provider_acquisition_plan_id"] == (
+    plan = runner.derive_execution_plan(repo_root=_case(tmp_path)["repo"])
+    assert plan["provider_acquisition_plan_id"] == (
         "rhea-uniprot-source-acquisition-plan:"
         "f1c4ab1847503d811f13d466f6dc1ac47c59edb25b8902da832ee89a5f29cb4f"
     )
-    assert runner.derive_execution_plan()["provider_acquisition_plan_row_sha256"] == (
+    assert plan["provider_acquisition_plan_row_sha256"] == (
         "019b9ed111c7bb8706fbd5dfb3db11737ee2884393ab5805486355be27484cad"
     )
+    # The production receipt must still be absent; this assertion is correct in a clean
+    # tree, where DEFAULT_RECEIPT simply does not exist.
     assert not receipt.DEFAULT_RECEIPT.exists()

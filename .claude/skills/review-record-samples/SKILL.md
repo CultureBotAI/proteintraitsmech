@@ -1,6 +1,17 @@
 ---
 name: review-record-samples
-description: Use this skill to spot-check the CONTENT and STRUCTURE quality of ProteinTraitRecords by sampling 5 random records from every trait_category and reviewing each record individually AND each five-record set as a whole. It is the content-quality gate that complements `just validate-all` (schema only) and the `review-source-categories` skill (per-source category footprint): those never open a record to ask "is this a well-formed, correctly-categorised, class-level trait with a real definition and the right groundings?" — this does. Trigger when asked to review record quality, spot-check/audit trait records, sample records per category, "review 5 random per category", check definitions/structure/content of records, or as a periodic content-quality sweep after seeding.
+description: >-
+  Use this skill to spot-check the CONTENT and STRUCTURE quality of
+  ProteinTraitRecords by sampling 5 random records from every trait_category
+  and reviewing each record individually AND each five-record set as a whole.
+  It is the content-quality gate that complements `just validate-all` (schema
+  only) and the `review-source-categories` skill (per-source category
+  footprint): those never open a record to ask "is this a well-formed,
+  correctly-categorised, class-level trait with a real definition and the right
+  groundings?" — this does. Trigger when asked to review record quality,
+  spot-check/audit trait records, sample records per category, "review 5 random
+  per category", check definitions/structure/content of records, or as a
+  periodic content-quality sweep after seeding.
 ---
 
 # Review Record Samples

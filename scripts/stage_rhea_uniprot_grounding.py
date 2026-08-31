@@ -28,7 +28,6 @@ import json
 import os
 import re
 import stat
-import subprocess
 import sys
 from collections import Counter, defaultdict
 from dataclasses import dataclass
@@ -36,6 +35,8 @@ from pathlib import Path
 from typing import Any, Iterable, Mapping, Sequence
 
 import yaml
+
+import ripgrep_prefilter
 
 
 SCHEMA_VERSION = 1
@@ -535,41 +536,42 @@ def _candidate_rhea_trait_paths(traits_root: Path, route_paths: Sequence[Path]) 
     alternate-extension semantic shadows cannot evade namespace inventory.
     """
 
-    command = [
-        "rg",
-        "--null",
-        "-l",
-        "--text",
-        "--hidden",
-        "--no-ignore",
-        "--iglob",
-        "*.yaml",
-        "--iglob",
-        "*.yml",
-        "-e",
-        "RHEA:",
-        "-e",
-        r"\\",
-        "-e",
-        r"\x00",
-        "--",
-        os.fspath(traits_root),
-    ]
-    try:
-        completed = subprocess.run(command, check=False, capture_output=True)
-    except OSError as exc:
-        raise RheaStageError(f"cannot run ripgrep Rhea trait prefilter: {exc}") from exc
-    if completed.returncode not in {0, 1}:
-        detail = completed.stderr.decode("utf-8", errors="replace").strip()
-        raise RheaStageError(f"Rhea trait prefilter failed: {detail}")
-    try:
-        paths = {
-            Path(raw_path.decode("utf-8")) for raw_path in completed.stdout.split(b"\0") if raw_path
-        }
-    except UnicodeDecodeError as exc:
-        raise RheaStageError(f"ripgrep returned a non-UTF-8 trait path: {exc}") from exc
+    paths = _ripgrep_candidate_paths(traits_root)
+    if paths is None:
+        paths = _walked_candidate_paths(traits_root)
     paths.update(route_paths)
     return tuple(sorted(_lexical_absolute(path) for path in paths))
+
+
+# The Rhea shapes a record can hide a RHEA: identity in: the literal text, an escape
+# (hence a backslash), or NUL bytes under UTF-16/32.
+_RHEA_PREFILTER_PATTERNS = ("RHEA:", r"\\", r"\x00")
+_RHEA_PREFILTER_LABEL = "Rhea trait"
+
+
+def _ripgrep_candidate_paths(traits_root: Path) -> set[Path] | None:
+    """Ripgrep's candidate set, or ``None`` when ripgrep is not installed.
+
+    Delegates to the shared prefilter (#571). The guard and the fail-closed fallback
+    were written out in nine scripts, and each copy re-derived the same two easy
+    mistakes; they now live in one tested place.
+    """
+
+    try:
+        return ripgrep_prefilter.ripgrep_paths(
+            traits_root, _RHEA_PREFILTER_PATTERNS, _RHEA_PREFILTER_LABEL
+        )
+    except ripgrep_prefilter.PrefilterError as exc:
+        raise RheaStageError(str(exc)) from exc
+
+
+def _walked_candidate_paths(traits_root: Path) -> set[Path]:
+    """Every YAML under the root: a strict superset of the ripgrep prefilter."""
+
+    try:
+        return ripgrep_prefilter.walked_paths(traits_root, _RHEA_PREFILTER_LABEL)
+    except ripgrep_prefilter.PrefilterError as exc:
+        raise RheaStageError(str(exc)) from exc
 
 
 def _scan_rhea_trait_paths(

@@ -95,10 +95,10 @@ default_range: string
 imports:
   - linkml:types
   # Shared, byte-identical Mech module: Discussion (knowledge gaps) + Dataset.
-  # Vendored from CultureBotAI/CultureMech at the commit in
-  # `scripts/.vendored_canon_ref` and guarded by `just check-vendored-sync`.
-  # DO NOT EDIT THE LOCAL COPY -- the drift check compares it against the hub and
-  # a local fix is exactly what it exists to catch (#484).
+  # Vendored from CultureBotAI/culturebotai-claw at the full commit in
+  # `scripts/.vendored_canon_ref` and guarded by `just check-vendored-sync`,
+  # which compares it against claw's pinned manifest. DO NOT EDIT THE LOCAL COPY:
+  # a one-repository fix is exactly what the drift check exists to catch (#484).
   - mech_shared
 
 # ================================================================
@@ -1648,6 +1648,7 @@ classes:
       timestamp:
         range: datetime
         required: true
+        pattern: "^20[0-9]{2}-"
       curator:
         range: string
       action:

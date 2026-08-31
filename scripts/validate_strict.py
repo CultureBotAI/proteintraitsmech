@@ -79,10 +79,16 @@ def _get_validator() -> Validator:
 # Classifier regexes — keep narrow so each category is meaningful and the rest
 # fall into "other" for manual review rather than getting silently bucketed.
 _CATEGORY_RULES: list[tuple[str, re.Pattern[str]]] = [
+    # jsonschema says "'a' was unexpected" for one key and "'a', 'b' were
+    # unexpected" for several.  Matching only the singular bucketed every
+    # multi-key record as "other" -- under-reporting the one category closed
+    # mode exists to produce, and exactly the shape a generator emitting
+    # undeclared slots produces, since it emits several at once (#541).
     (
         "unexpected_field",
         re.compile(
-            r"Additional properties are not allowed \('(?P<key>[^']+)' was unexpected\) in (?P<path>\S+)"
+            r"Additional properties are not allowed \((?P<key>'[^']+'(?:, '[^']+')*)"
+            r" (?:was|were) unexpected\) in (?P<path>\S+)"
         ),
     ),
     ("missing_required", re.compile(r"'(?P<key>[^']+)' is a required property in (?P<path>\S+)")),
@@ -501,6 +507,12 @@ def main(argv: list[str] | None = None) -> int:
         default="error",
         help="Exit non-zero policy. 'error' (default) exits 1 if any ERROR row was emitted.",
     )
+    parser.add_argument(
+        "--allow-missing",
+        action="store_true",
+        help="exit 0 when every supplied path is missing; for the CI diff "
+        "caller, whose file list can be deletion-only (#540)",
+    )
     parser.add_argument("--quiet", action="store_true", help="Suppress per-file progress dots.")
     args = parser.parse_args(argv)
     if args.workers < 1:
@@ -512,14 +524,25 @@ def main(argv: list[str] | None = None) -> int:
         files = files[: args.sample]
     if not files:
         if args.paths:
-            # Explicit paths were given (e.g. a CI diff) but none exist on disk —
-            # a deletion-only change, not an error. iter_yaml_files already
-            # dropped missing paths silently; distinguish that from "no scope".
+            # Explicit paths were given but none exist on disk. For the CI diff
+            # caller that is a deletion-only change and fine; for a human typing
+            # `just validate <path>` it is a typo, and returning 0 reported
+            # "validated" for a file that was never read -- weaker than the open
+            # mode CLI this replaced, which exits 2 (#540). Opt in, do not assume.
+            if args.allow_missing:
+                print(
+                    "All supplied paths were missing (e.g. deleted files) — nothing to validate.",
+                    file=sys.stderr,
+                )
+                return 0
+            listed = ", ".join(str(path) for path in args.paths[:5])
+            more = "" if len(args.paths) <= 5 else f" (+{len(args.paths) - 5} more)"
             print(
-                "All supplied paths were missing (e.g. deleted files) — nothing to validate.",
+                f"None of the supplied paths exist: {listed}{more}. Nothing was validated; "
+                f"pass --allow-missing if a deletion-only file list is expected.",
                 file=sys.stderr,
             )
-            return 0
+            return 2
         print("No YAML files found.", file=sys.stderr)
         return 2
 

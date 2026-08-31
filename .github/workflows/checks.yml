@@ -8,7 +8,8 @@
 # `validate-all` and `audit-graphs` run in .github/workflows/validate-strict.yaml
 # instead — not because they need data/raw (neither does; that claim was false, #485),
 # but because the ~430K-record corpus makes them too slow to bundle here on every PR.
-# `sources-check` is not yet wired into CI (#485 follow-up).
+# Source-registry structure is checked here; licence dispositions explicitly marked
+# pending remain notices until the owner/legal decision in #517.
 name: checks
 
 on:
@@ -37,6 +38,23 @@ jobs:
       # line runs, so the import-time test added in #108 passes over it — exactly how
       # `write_record` reached a PR uncalled and undefined in seed_ncbifam (#100).
       - run: just lint
+
+      # Enforce download.yaml's script roles and fail on unclassified seeders, missing
+      # scripts, invalid statuses/roles, or restrictive terms lacking a review state.
+      - run: just sources-check
+      # Gates the two classes this repository can fix -- its manifest disagreeing
+      # with its own schema, and its enum dropping a token it agreed to govern.
+      # Cross-Mech description drift stays a NOTICE and is printed on every run:
+      # TraitMech can reword its own description at any time, and that must not
+      # fail pull requests here until someone reconciles a vocabulary they may not
+      # own (#585). `--fail-on any` blocks on that too, when the fleet wants it.
+      # --check-remote compares the reviewed TraitMech pin against the live
+      # repository, so pin staleness is visible here instead of waiting for
+      # someone to run --refresh (#584). Same host this repo already fetches for
+      # the canonical hub. Both remote classes are NOTICES: a sibling repository
+      # editing its own vocabulary, or an unreachable network, must not fail a
+      # pull request here.
+      - run: just audit-cross-mech-categories --check-remote
 
       # Schema-quality probes (#496). In CI on purpose: this recipe existed for the life
       # of the repo pointing at a script that was never written, and because nothing ran

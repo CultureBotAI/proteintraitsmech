@@ -25,6 +25,7 @@ REPO = pathlib.Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(REPO / "scripts"))
 
 from interpro_text import clean_api_description  # noqa: E402
+from record_scope import records_in_source_directories  # noqa: E402
 
 MISSING = REPO / "data" / "raw" / "interpro" / "missing_abstracts.json"
 
@@ -142,7 +143,14 @@ def test_records_sourced_from_the_api_say_so_and_not_abstract():
     """
     import audit_pfam_interpro as A
     n_api = 0
-    for path in (REPO / "data" / "traits").rglob("*.yaml"):
+    # The two writers that emit this exact provenance marker write only InterPro- and
+    # Pfam-source directories.  Scoping by those writer-owned directories avoids reading
+    # every unrelated record; it is safe here because this check is about that marker,
+    # not about arbitrary CURIE prefixes.
+    paths = records_in_source_directories(
+        REPO / "data" / "traits", {"interpro", "pfam"}
+    )
+    for path in paths:
         text = path.read_text(encoding="utf-8")
         if "InterPro API; this entry ships no abstract" not in text:
             continue

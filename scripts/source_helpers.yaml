@@ -1,0 +1,21 @@
+# Seed-shaped scripts that do not independently ingest an external source.
+# External-source seeders belong on their source block in download.yaml instead.
+---
+- script: seed_cofactor_alignment.py
+  role: helper_seeder
+  reason: Aligns already-grounded ChEBI cofactor traits with sibling-project vocabularies.
+- script: seed_grouping_parents.py
+  role: helper_seeder
+  reason: Materializes residual parent nodes from sources already registered in download.yaml.
+- script: seed_pfam_clans.py
+  role: helper_seeder
+  reason: Materializes Pfam hierarchy nodes consumed by the registered Pfam seeder.
+- script: seed_prosite_pdoc.py
+  role: helper_seeder
+  reason: Materializes PROSITE documentation-group parents for registered PROSITE records.
+- script: seed_secondary_structure.py
+  role: local_generator
+  reason: Generates the project-authored secondary-structure trait taxonomy without an upstream release.
+- script: seed_uniprot_peptide_classes.py
+  role: local_generator
+  reason: Generates a bounded project trait taxonomy and uses UniProt only for canonical examples.

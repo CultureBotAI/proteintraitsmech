@@ -6,8 +6,9 @@ PROVENANCE. Adapted from CultureBotAI/TraitMech@84322ab67d71
 things: the vendored schema path, the repo URL, and an example path in the usage text.
 
 NOT covered by `just check-vendored-sync`, deliberately -- that gate enforces BYTE
-identity against the hub, and this file cannot be byte-identical because those three
-strings are repo-specific. It is a fallback scaffolder: claw's `kg_microbe_history`
+identity against canonical claw's pinned manifest, and this file cannot be
+byte-identical because those three strings are repo-specific. It is a fallback
+scaffolder: claw's `kg_microbe_history`
 is the canonical one when a checkout is available, and both write against the same
 vendored `history.yaml` that `just validate-history` and CI check. The schema is the
 contract; this is one of two producers of it.
@@ -80,10 +81,19 @@ KINDS = ("record", "schema", "mapping", "report", "infrastructure", "other")
 def session_id(timestamp: str, tool: str, seed: str) -> str:
     """`<compact-timestamp>-<tool>-<6 hex>`, matching the existing records.
 
-    The default timestamp includes microseconds so distinct invocations in the
-    same second remain append-only records.  The suffix is derived from content
-    rather than random, so an explicitly timestamped re-run with identical
-    arguments remains reproducible.
+    Two properties, and they only looked mutually exclusive while the timestamp
+    was second-granular (#593):
+
+    * the default timestamp carries microseconds, so two invocations in the same
+      second get distinct names -- collision-freedom by construction rather than
+      by wall-clock luck;
+    * the suffix is derived from content rather than random, so an explicitly
+      ``--timestamp``ed re-run with identical arguments reproduces the same id
+      instead of appending a duplicate record.
+
+    Making the suffix random would buy the first property, which the timestamp
+    already provides, and destroy the second, which is the only reason it is
+    content-derived.
     """
     # Date hyphens kept, time colons stripped — matching the existing records
     # (`2026-08-03T230903Z-claude-code-90a277`) rather than inventing a variant.
@@ -173,11 +183,8 @@ def validate(path: Path) -> None:
     validate-history would fail on a file the author believed was generated
     correctly, in a directory that is append-only by policy.
     """
-    environment_validator = Path(sys.executable).with_name("linkml-validate")
-    validator_command = [str(environment_validator)] \
-        if environment_validator.is_file() else ["uv", "run", "linkml-validate"]
     result = subprocess.run(
-        [*validator_command, "--schema", str(SCHEMA),
+        ["uv", "run", "linkml-validate", "--schema", str(SCHEMA),
          "--target-class", "HistoryRecord", str(path)],
         cwd=REPO_ROOT, capture_output=True, text=True)
     if result.returncode != 0:
